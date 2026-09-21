@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contract signals</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">Public-contract data explorer · DECP, BOAMP and public reports</p>
+    <h1>Contract signals</h1>
+    <p>A few simple indicators applied to French public procurement.</p>
+  </header>
+  <aside class="disclaimer" aria-label="Disclaimer">
+    <strong>The indicators below flag anomalies or characteristics that may deserve review. They are not proof of irregularity, favoritism or corruption.</strong>
+    <p>Public data can contain errors. The indicators are heuristics: a flag does not imply illegal behavior. The absence of a flag does not guarantee that a contract is regular.</p>
+  </aside>
+  <label class="dataset-selector">Dataset
+    <select id="dataset">
+      <option value="decp">DECP history · Paris and Ardèche · 2024–2025</option>
+      <option value="tours">Tours · full BOAMP/TED notices · 2025 and linked references</option>
+      <option value="cities">DECP history · six additional municipalities · 2024–2025</option>
+      <option value="consultations">BOAMP consultations · 3 February 2025 · 10 notices</option>
+      <option value="boamp">BOAMP sample and eight official findings</option>
+    </select>
+  </label>
+  <details class="dataset-details">
+    <summary>Data scope and limits</summary>
+  <p id="dataset-note" class="dataset-note">Exploratory 24-month history: 2,594 DECP contracts from Paris and Ardèche, notified in 2024–2025. Modifications published may be later than 2025. This is not a guarantee of exhaustiveness of actual purchases.</p>
+  <p class="dataset-note">The datasets are not merged: they may describe the same purchases. Do not sum their amounts. No fictional examples. “—” means unknown, not absence of risk. <a id="coverage-link" href="data/decp-coverage.json">Coverage and provenance of the provided dataset (JSON)</a>.</p>
+  <p id="completeness" class="dataset-note" aria-live="polite"></p>
+  </details>
+  <section class="controls" aria-label="Search and filter">
+    <label class="search">Search<input id="search" type="search" placeholder="Buyer, SIRET, CPV, subject…"></label>
+    <label>Minimum amount (€)<input id="minimum" type="number" min="0" step="any" placeholder="0"></label>
+    <label>Sort by<select id="sort"><option value="score">Index · descending</option><option value="score-asc">Index · ascending</option><option value="official">Official findings first · outside the index</option><option value="amount">Amount · descending</option><option value="amount-asc">Amount · ascending</option><option value="date">Date · newest first</option><option value="date-asc">Date · oldest first</option><option value="publication">Notice publication · newest first</option><option value="publication-asc">Notice publication · oldest first</option><option value="sector">CPV sector · A–Z</option><option value="sector-desc">CPV sector · Z–A</option><option value="buyer">Buyer · A–Z</option><option value="supplier">Supplier · A–Z</option><option value="offers">Offers · ascending</option><option value="increase">Amount increase (%) · descending</option></select></label>
+    <label>CPV purchase sector<select id="sector"><option value="">All sectors</option></select></label>
+    <label>Group by<select id="group-by"><option value="">No grouping</option><option value="project">Documented project</option><option value="sector">CPV sector</option><option value="buyer">Buyer</option><option value="supplier">Supplier (SIREN)</option></select></label>
+    <label>Project<select id="project"><option value="">All records</option></select></label>
+    <label>Assessment<select id="assessment"><option value="">All records</option><option value="unevaluated">Not assessed / excluded</option><option value="partial">Partial coverage</option><option value="zero">Zero after at least one evaluated check</option></select></label>
+    <label>Minimum index<select id="min-score"><option value="0">All indices</option><option value="20">20 and more</option><option value="40">40 and more</option><option value="70">70 and more</option></select></label>
+    <label>Indicator<select id="indicator"><option value="">All indicators</option><option value="short-bidding-period">Short bidding period (if assessable)</option><option value="amount-increase">Declared amount increase</option><option value="repeated-single-bid">Repeated low competition</option><option value="single-bid">Single offer</option><option value="direct-award">Award without competition · all amounts</option><option value="long-contract">Duration ≥ 10 years</option><option value="official-finding">Official finding</option><option value="supplier-concentration">Concentrated awards</option><option value="repeated-direct-award">Repeated direct awards</option></select></label>
+    <label>Notice content · no points<select id="notice-context"><option value="">All records</option><option value="explanation">Procedure text / published reason</option><option value="criteria">Award criteria present</option><option value="correction">Correction identified</option><option value="ted">Matched TED XML</option></select></label>
+    <label>Legal context · no points<select id="legal"><option value="">All contexts</option><option value="direct">Declared without competition · all amounts</option><option value="cited">Article R2122 cited</option><option value="R2122-1">R2122-1 cited · imperative urgency</option><option value="R2122-3">R2122-3 cited · artistic, technical or exclusive-rights reasons</option></select></label>
+    <label class="checkbox"><input id="flagged" type="checkbox">Show only heuristic signals</label>
+    <label class="checkbox"><input id="official" type="checkbox">Show only official findings</label>
+  </section>
+  <section id="file-help" hidden>
+    <p>Your browser may block automatic loading of a local file. Select <code id="file-path">data/decp-history.json</code> below, or serve this folder with <code>python -m http.server 8000</code>.</p>
+    <label>Open the local JSON dataset <input id="file" type="file" accept=".json,application/json"></label>
+  </section>
+  <div class="score-legend" aria-label="Vigilance scale, not a regularity measure">
+    <span class="score-chip level-none">0 · no threshold crossed in the evaluated checks</span><span class="score-chip level-low">1–19 · low</span><span class="score-chip level-moderate">20–39 · moderate</span><span class="score-chip level-high">40–69 · high</span><span class="score-chip level-extreme">70–100 · very high</span><span class="score-chip level-unknown">Not assessed ≠ zero</span><span class="badge official">Official finding · outside the index</span>
+  </div>
+  <p class="dataset-note">Index v3: zero requires at least one evaluated check and certifies nothing. Unknown applicable checks and undetermined applicabilities are displayed separately. Neither an amount nor an official finding increases the points. The index remains editorial, never a probability.</p>
+  <section id="project-panel" class="project-panel" aria-label="Documented project dossier" hidden></section>
+  <p id="status" role="status" aria-live="polite">Loading data…</p>
+  <nav id="pagination" class="pagination" aria-label="Table pagination" hidden>
+    <button id="previous" type="button">← Previous</button>
+    <span id="page-status" aria-live="polite"></span>
+    <button id="next" type="button">Next →</button>
+  </nav>
+  <div class="table-wrap" tabindex="0" role="region" aria-label="Contracts table, horizontal scrolling possible">
+    <table class="main-table">
+      <caption>Contracts and documented records — click a subject to open the details and history.</caption>
+      <thead><tr><th scope="col">Date</th><th scope="col">Buyer</th><th scope="col">Supplier</th><th scope="col">Subject</th><th scope="col" title="Purchase sector, not the supplier’s NAF activity">CPV sector</th><th scope="col" class="numeric" title="Declared financial stake, outside the index; not necessarily an expense">Declared amount</th><th scope="col" class="numeric">Offers</th><th scope="col">Indicators</th><th scope="col" class="numeric" title="Vigilance index">Index</th></tr></thead>
+      <tbody id="contracts"></tbody>
+    </table>
+  </div>
+  <details class="method">
+    <summary>Method: vigilance index</summary>
+    <p><strong>Version 3.0.</strong> Score = competition maximum (up to 60) + execution/duration maximum (up to 40), with no renormalization by coverage, dataset or filter. Official findings are separate documentary elements, never points. No amount-based uplift. No target proportion of flagged contracts.</p>
+    <p><strong>Coverage:</strong> eight checks, each flagged, evaluated without a threshold crossed, not assessable, or out of scope. The evaluated/established-applicable ratio does not count unknown applicabilities: those are reported in addition, not as negative cases. All conflicting groups, duplicated identifiers and unverified records are excluded. Aggregate audit dossiers receive no individual index. No evaluated check = “Not assessed”, never zero.</p>
+    <p><strong>Weights:</strong> a single offer in an explicitly competitive procedure: 12; direct award: 18, all amounts. Bounded linear progressions rounded to the tenth: single-offer repetition and concentration, 12 at 60 % up to 40 at 100 %; direct repetition, 18 at 3 contracts up to 60 at 10; duration, 8 at 120 months up to 40 at 360 months; relative increase strictly &gt; 20 %, 8 near the threshold up to 40 at +100 %; period &lt; 15 days, 8 near the threshold up to 40 at 3 days. Entry/reliability thresholds remain: a graduated progression does not erase them. No points for an offer expected in a direct award.</p>
+    <p>Editorial choices, not calibrated to predict irregularity. <a href="data/score-v3-review.json">Comparison v2.1/v3 and ranking sensitivity (JSON)</a>. Software verification is not legal or statistical validation. Flagged and unflagged cases must be reviewed. <a href="docs/score-v3.md">Full method and excerpt review</a> · <a href="docs/international-pilots.md">Countries proposed for upcoming pilots</a>.</p>
+    <p><strong>Tours full notices:</strong> the declared explanations have procedure-wide scope, possibly on other lots. The criteria displayed come only from the indicated lot; candidate-selection criteria and award criteria are distinct. Weighting codes and values are kept without converting an unknown unit into a percentage. No points for a legal reason or a price weight. Documents without an assessable period display “Not assessed”, not a zero score. Publications and dispatches are distinguished; no merging with DECP.</p>
+    <p><strong>Six additional municipalities:</strong> Rennes, Nantes, Bordeaux, Grenoble, Dijon and Tours, chosen before the scores. Groups with ambiguous versions or identifiers are excluded from all calculations and remain visible. The enriched names are a current snapshot of the legal unit via the Annuaire des entreprises, not a historical verification: SIREN/SIRET and source are kept, with no effect on the score. Deterministic sample of 100 SIRENs out of 703 identified; no name is inferred for the others.</p>
+    <p><strong>Short bidding period:</strong> fewer than 15 calendar days, upper bound from midnight UTC on the day of the initial publication to the last explicit deadline, after extensions. Only explicitly open non-accelerated procedure, identified lot and procedure, verified chain without conflict. Reduction, reopening or unknown information: no calculation. Graduated weight from 8 to 40, competition family (maximum, not a sum). Editorial threshold, not legal nor statistically calibrated. Among the 10 imported notices, no period is assessable: corrections may be missing. Result dates are never used as the start.</p>
+    <p><strong>Concentrated awards:</strong> same buyer/CPV to three digits, DECP cohorts 2024–2025 computed separately, at least 10 contracts to the single identified holder, coverage ≥ 80 %, same SIREN receiving ≥ 60 % of the known contracts. <strong>Repeated direct awards:</strong> at least three distinct contracts explicitly without competition, all amounts, same buyer/CPV/SIREN, same period. Groups in conflict, ambiguous identifiers and unmatched co-holders are excluded. A repetition may have a legal justification; the results describe only the published data of this cohort.</p>
+    <p><strong>Groupings:</strong> CPV = purchase sector, not the company’s activity. Projects are linked only by an explicit documentary match; neither the scores nor the amounts of contracts are summed. The other groupings are navigation tools, not proof of a common project. Groups are ordered by their first contract in the chosen sort, then their contracts follow that sort. The block without a documented project comes after the documented projects. Unknown values come last in the sorts.</p>
+    <p><strong>Declared amount increase:</strong> last newly published amount greater than the initial one by more than 20 %, with no euro threshold, price exclusively declared final and firm, with no conflicts of initial versions and no identified change of holder. A decrease or an ambiguous chronology triggers nothing. Modified amounts are never summed. An increase may fund additional services; it is not a measure of excess cost nor of final spending. The published history may be incomplete.</p>
+    <p><strong>Repeated low competition:</strong> only for single-offer contracts of the DECP cohort. Same buyer, three-digit CPV group, notifications 2024–2025, explicitly competitive procedures: at least 10 contracts with a known number of offers, at least 80 % coverage and at least 60 % at a single offer. Undetermined adapted procedures and groups in conflict are excluded. The statistics are computed over the whole file before filtering; they describe the published purchases retrospectively, not the regularity of a supplier. No repetition computation on the BOAMP sample.</p>
+    <p>The former thresholds of €100k (direct award) and €50k (absolute increase) no longer enter the score. Unknown values trigger no indicator. Amounts: “≥” indicates a lower bound, “&gt;” a strict bound and “≈” a rounded value; the sort and the filter use the cited numeric value, not an assumed exact amount. These rules do not take account of legal exceptions or the context of each purchase.</p>
+  </details>
+  <footer>Source links must be kept. Every official finding must point to the document of the originating authority and to its relevant passage. Always consult the complete document and any responses from the organization concerned.</footer>
+  <noscript><p>Enable JavaScript to load and explore the data.</p></noscript>
+</main>
+</body>
+</html>
