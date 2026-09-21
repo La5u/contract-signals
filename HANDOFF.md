@@ -97,6 +97,7 @@ Recommendation order stands: **Colombia/SECOP II first** (verified anonymous HTT
 - Dataset-embedded French strings surface in the UI (e.g. Tours `notes`, `exclusions`) — that is intended provenance display, not a missed translation.
 - The browser test regex `/lots other than/` depends on the exact English wording of the notice-evidence panel; keep them in sync.
 - Commit convention: single-purpose commits; the root commit message documents the migration.
+- **No AI-attribution trailers, ever.** Commits must not contain AI-tool attribution trailers (“Generated with …”, “Co-Authored-By: <AI tool>”) or any equivalent. A permanent global `commit-msg` hook at `~/.config/git/hooks/commit-msg` (via `core.hooksPath`) blocks such trailers in every repo of this machine — do not remove or bypass it, and never add agent attributions to commit messages, authorship, READMEs or docs.
 
 ## 9. Next steps for the next session
 
