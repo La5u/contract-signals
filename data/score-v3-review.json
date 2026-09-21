@@ -1,0 +1,598 @@
+{
+  "version": "3.0",
+  "generatedAt": "2026-09-21T19:37:00.224Z",
+  "sourceCodeHashes": {
+    "v21": "7055ce9a7cf02702232bb7dcb91a3858579c440e31e967a8adbb6f2ab13b6c87",
+    "v3": "252b2897b00121dbd520b46deaa33ff82baf9422569c900c1abe62b32f1a4110"
+  },
+  "interpretation": "Editorial triage, not probability. Threshold eligibility is not statistical calibration. Null is unevaluated, not a negative. Official findings are separate evidence. No target fraction of flagged contracts.",
+  "coverageDefinition": "evaluated/applicable-known checks plus separately displayed unknown-applicability checks; no normalization by missingness",
+  "changes": [
+    "Amounts do not amplify scores; direct awards and direct repetition include all amounts.",
+    "Amount evolution uses comparable relative increase >20%, no EUR50000 threshold.",
+    "Single-bid rule requires explicitly competitive procedure, not presumed from missing directAward.",
+    "All initial/modification conflicts, duplicate DECP identifiers, unverified dossiers excluded; aggregate audits not individual scoring units.",
+    "Official findings removed from heuristic points, still available as evidence/filter/sort."
+  ],
+  "sensitivityMethod": "Diagnostic reweighting of competition/execution by 0.8/1.2 and 1.2/0.8. Same eligibility, maxima and cap. Spearman uses average ranks for ties, positive baseline scores only, null/zero excluded. Top-20 uses id tie-break solely for reproducibility; ties at cutoff reported. Not validation against ground truth.",
+  "reviewMethod": "Queues selected by SHA256(id), two per signal/zero/unevaluated stratum per dataset. This is a reproducible reading queue, NOT completed human review or labelled ground truth.",
+  "datasets": {
+    "contracts": {
+      "rows": 3010,
+      "inputSha256": "3e31196107cca044fbdc056f36b220a541f0a8528a8767697b205c0aa5a790f7",
+      "officialFindings": 8,
+      "v21": {
+        "positive": 284,
+        "zero": 2726
+      },
+      "v3": {
+        "positive": 277,
+        "zero": 2665,
+        "unevaluated": 68,
+        "excluded": 0,
+        "indicators": {
+          "single-bid": 241,
+          "direct-award": 28,
+          "long-contract": 8
+        },
+        "meanEvaluatedChecks": 1.69
+      },
+      "transitions": {
+        "positiveToZero": 1,
+        "positiveToUnevaluated": 9,
+        "zeroToPositive": 3
+      },
+      "sensitivity": {
+        "competitionLower": {
+          "multipliers": {
+            "competition": 0.8,
+            "execution": 1.2
+          },
+          "spearmanPositiveOnly": 0.773,
+          "positiveRows": 277,
+          "topK": 20,
+          "topKOverlap": 20,
+          "baselineCutoff": 18,
+          "baselineCutoffTies": 28,
+          "scenarioCutoffTies": 28
+        },
+        "executionLower": {
+          "multipliers": {
+            "competition": 1.2,
+            "execution": 0.8
+          },
+          "spearmanPositiveOnly": 1,
+          "positiveRows": 277,
+          "topK": 20,
+          "topKOverlap": 20,
+          "baselineCutoff": 18,
+          "baselineCutoffTies": 28,
+          "scenarioCutoffTies": 28
+        }
+      },
+      "reviewQueue": [
+        {
+          "stratum": "signal",
+          "id": "boamp-25-29702-lot-0000",
+          "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-29702",
+          "oldScore": 11,
+          "v3Score": 12,
+          "signals": [
+            "single-bid"
+          ],
+          "evaluated": 3,
+          "applicableKnown": 5,
+          "unknownApplicability": 2,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "signal",
+          "id": "boamp-25-13291-lot-0009",
+          "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-13291",
+          "oldScore": 8,
+          "v3Score": 12,
+          "signals": [
+            "single-bid"
+          ],
+          "evaluated": 2,
+          "applicableKnown": 5,
+          "unknownApplicability": 2,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "zero",
+          "id": "boamp-25-15690-lot-0001",
+          "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-15690",
+          "oldScore": 0,
+          "v3Score": 0,
+          "signals": [],
+          "evaluated": 1,
+          "applicableKnown": 4,
+          "unknownApplicability": 3,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "zero",
+          "id": "boamp-25-24560-lot-0006",
+          "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-24560",
+          "oldScore": 0,
+          "v3Score": 0,
+          "signals": [],
+          "evaluated": 1,
+          "applicableKnown": 4,
+          "unknownApplicability": 3,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "unevaluated",
+          "id": "boamp-25-37237-lot-0001",
+          "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-37237",
+          "oldScore": 0,
+          "v3Score": null,
+          "signals": [],
+          "evaluated": 0,
+          "applicableKnown": 3,
+          "unknownApplicability": 5,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "unevaluated",
+          "id": "boamp-25-48619-lot-0001",
+          "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-48619",
+          "oldScore": 0,
+          "v3Score": null,
+          "signals": [],
+          "evaluated": 0,
+          "applicableKnown": 3,
+          "unknownApplicability": 5,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        }
+      ]
+    },
+    "decp-history": {
+      "rows": 2594,
+      "inputSha256": "ce1e48e79a2b3340351a1ecf3ea03fc140b4406121b2f5e548e08360d73c262e",
+      "officialFindings": 0,
+      "v21": {
+        "positive": 734,
+        "zero": 1860
+      },
+      "v3": {
+        "positive": 404,
+        "zero": 1835,
+        "unevaluated": 355,
+        "excluded": 355,
+        "indicators": {
+          "single-bid": 119,
+          "direct-award": 262,
+          "supplier-concentration": 8,
+          "repeated-direct-award": 28,
+          "repeated-single-bid": 9,
+          "long-contract": 1,
+          "amount-increase": 24
+        },
+        "meanEvaluatedChecks": 2.38
+      },
+      "transitions": {
+        "positiveToZero": 323,
+        "positiveToUnevaluated": 37,
+        "zeroToPositive": 30
+      },
+      "sensitivity": {
+        "competitionLower": {
+          "multipliers": {
+            "competition": 0.8,
+            "execution": 1.2
+          },
+          "spearmanPositiveOnly": 0.9791,
+          "positiveRows": 404,
+          "topK": 20,
+          "topKOverlap": 18,
+          "baselineCutoff": 26,
+          "baselineCutoffTies": 8,
+          "scenarioCutoffTies": 1
+        },
+        "executionLower": {
+          "multipliers": {
+            "competition": 1.2,
+            "execution": 0.8
+          },
+          "spearmanPositiveOnly": 0.9822,
+          "positiveRows": 404,
+          "topK": 20,
+          "topKOverlap": 17,
+          "baselineCutoff": 26,
+          "baselineCutoffTies": 8,
+          "scenarioCutoffTies": 8
+        }
+      },
+      "reviewQueue": [
+        {
+          "stratum": "signal",
+          "id": "decp-21750001600019-2023F12498",
+          "source": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272023F12498%27&limit=100",
+          "oldScore": 5,
+          "v3Score": 18,
+          "signals": [
+            "direct-award"
+          ],
+          "evaluated": 3,
+          "applicableKnown": 5,
+          "unknownApplicability": 0,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "signal",
+          "id": "decp-21750001600019-2025T02786",
+          "source": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272025T02786%27&limit=100",
+          "oldScore": 5,
+          "v3Score": 18,
+          "signals": [
+            "direct-award"
+          ],
+          "evaluated": 4,
+          "applicableKnown": 5,
+          "unknownApplicability": 0,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "zero",
+          "id": "decp-21750001600019-2025T03045",
+          "source": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272025T03045%27&limit=100",
+          "oldScore": 0,
+          "v3Score": 0,
+          "signals": [],
+          "evaluated": 2,
+          "applicableKnown": 3,
+          "unknownApplicability": 3,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "zero",
+          "id": "decp-22070001700019-2025TESH246",
+          "source": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2722070001700019%27+AND+id%3D%272025TESH246%27&limit=100",
+          "oldScore": 0,
+          "v3Score": 0,
+          "signals": [],
+          "evaluated": 4,
+          "applicableKnown": 5,
+          "unknownApplicability": 1,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "unevaluated",
+          "id": "decp-21750001600019-2024S07238",
+          "source": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272024S07238%27&limit=100",
+          "oldScore": 0,
+          "v3Score": null,
+          "signals": [],
+          "evaluated": 0,
+          "applicableKnown": 0,
+          "unknownApplicability": 8,
+          "excludedReason": "Conflicting versions: calculations excluded.",
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "unevaluated",
+          "id": "decp-21750001600019-2024T10203",
+          "source": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272024T10203%27&limit=100",
+          "oldScore": 0,
+          "v3Score": null,
+          "signals": [],
+          "evaluated": 0,
+          "applicableKnown": 0,
+          "unknownApplicability": 8,
+          "excludedReason": "Conflicting versions: calculations excluded.",
+          "reviewStatus": "queued-not-ground-truth"
+        }
+      ]
+    },
+    "decp-cities": {
+      "rows": 1270,
+      "inputSha256": "7ac62e784385cca8ec79d841474e583ab735c855b2d6980a4d71e97e44b181d6",
+      "officialFindings": 0,
+      "v21": {
+        "positive": 233,
+        "zero": 1037
+      },
+      "v3": {
+        "positive": 124,
+        "zero": 974,
+        "unevaluated": 172,
+        "excluded": 172,
+        "indicators": {
+          "single-bid": 52,
+          "long-contract": 4,
+          "direct-award": 66,
+          "repeated-direct-award": 3,
+          "amount-increase": 2,
+          "repeated-single-bid": 11
+        },
+        "meanEvaluatedChecks": 1.96
+      },
+      "transitions": {
+        "positiveToZero": 113,
+        "positiveToUnevaluated": 0,
+        "zeroToPositive": 4
+      },
+      "sensitivity": {
+        "competitionLower": {
+          "multipliers": {
+            "competition": 0.8,
+            "execution": 1.2
+          },
+          "spearmanPositiveOnly": 0.9578,
+          "positiveRows": 124,
+          "topK": 20,
+          "topKOverlap": 18,
+          "baselineCutoff": 18,
+          "baselineCutoffTies": 66,
+          "scenarioCutoffTies": 66
+        },
+        "executionLower": {
+          "multipliers": {
+            "competition": 1.2,
+            "execution": 0.8
+          },
+          "spearmanPositiveOnly": 0.9863,
+          "positiveRows": 124,
+          "topK": 20,
+          "topKOverlap": 20,
+          "baselineCutoff": 18,
+          "baselineCutoffTies": 66,
+          "scenarioCutoffTies": 66
+        }
+      },
+      "reviewQueue": [
+        {
+          "stratum": "signal",
+          "id": "decp-21440109300015-2025S00012",
+          "source": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721440109300015%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27+AND+id%3D%272025S00012%27&limit=100&order_by=datenotification+asc%2Cid+asc",
+          "oldScore": 5,
+          "v3Score": 18,
+          "signals": [
+            "direct-award"
+          ],
+          "evaluated": 3,
+          "applicableKnown": 5,
+          "unknownApplicability": 0,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "signal",
+          "id": "decp-21350238800019-2024S00060",
+          "source": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721350238800019%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27+AND+id%3D%272024S00060%27&limit=100&order_by=datenotification+asc%2Cid+asc",
+          "oldScore": 5,
+          "v3Score": 18,
+          "signals": [
+            "direct-award"
+          ],
+          "evaluated": 4,
+          "applicableKnown": 5,
+          "unknownApplicability": 0,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "zero",
+          "id": "decp-21440109300015-2025T00219",
+          "source": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721440109300015%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27+AND+id%3D%272025T00219%27&limit=100&order_by=datenotification+asc%2Cid+asc",
+          "oldScore": 0,
+          "v3Score": 0,
+          "signals": [],
+          "evaluated": 2,
+          "applicableKnown": 3,
+          "unknownApplicability": 3,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "zero",
+          "id": "decp-21210231300013-2024DMPA06",
+          "source": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721210231300013%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27+AND+id%3D%272024DMPA06%27&limit=100&order_by=datenotification+asc%2Cid+asc",
+          "oldScore": 0,
+          "v3Score": 0,
+          "signals": [],
+          "evaluated": 1,
+          "applicableKnown": 4,
+          "unknownApplicability": 3,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "unevaluated",
+          "id": "decp-21440109300015-2024F00023",
+          "source": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721440109300015%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27+AND+id%3D%272024F00023%27&limit=100&order_by=datenotification+asc%2Cid+asc",
+          "oldScore": 0,
+          "v3Score": null,
+          "signals": [],
+          "evaluated": 0,
+          "applicableKnown": 0,
+          "unknownApplicability": 8,
+          "excludedReason": "Conflicting versions: calculations excluded.",
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "unevaluated",
+          "id": "decp-21330063500017-2025G0",
+          "source": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721330063500017%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27+AND+id%3D%272025G0%27&limit=100&order_by=datenotification+asc%2Cid+asc",
+          "oldScore": 0,
+          "v3Score": null,
+          "signals": [],
+          "evaluated": 0,
+          "applicableKnown": 0,
+          "unknownApplicability": 8,
+          "excludedReason": "Conflicting versions: calculations excluded.",
+          "reviewStatus": "queued-not-ground-truth"
+        }
+      ]
+    },
+    "consultations": {
+      "rows": 10,
+      "inputSha256": "3bacd53cad545018ca51720273f639f535fdc7951059ee05d9b7fbf8231c3680",
+      "officialFindings": 0,
+      "v21": {
+        "positive": 0,
+        "zero": 10
+      },
+      "v3": {
+        "positive": 0,
+        "zero": 0,
+        "unevaluated": 10,
+        "excluded": 0,
+        "indicators": {},
+        "meanEvaluatedChecks": 0
+      },
+      "transitions": {
+        "positiveToZero": 0,
+        "positiveToUnevaluated": 0,
+        "zeroToPositive": 0
+      },
+      "sensitivity": {
+        "competitionLower": {
+          "multipliers": {
+            "competition": 0.8,
+            "execution": 1.2
+          },
+          "spearmanPositiveOnly": null,
+          "positiveRows": 0,
+          "topK": 0,
+          "topKOverlap": 0,
+          "baselineCutoff": null,
+          "baselineCutoffTies": 0,
+          "scenarioCutoffTies": 0
+        },
+        "executionLower": {
+          "multipliers": {
+            "competition": 1.2,
+            "execution": 0.8
+          },
+          "spearmanPositiveOnly": null,
+          "positiveRows": 0,
+          "topK": 0,
+          "topKOverlap": 0,
+          "baselineCutoff": null,
+          "baselineCutoffTies": 0,
+          "scenarioCutoffTies": 0
+        }
+      },
+      "reviewQueue": [
+        {
+          "stratum": "unevaluated",
+          "id": "boamp-consultation-25-12212",
+          "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-12212",
+          "oldScore": 0,
+          "v3Score": null,
+          "signals": [],
+          "evaluated": 0,
+          "applicableKnown": 0,
+          "unknownApplicability": 0,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "unevaluated",
+          "id": "boamp-consultation-25-12216",
+          "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-12216",
+          "oldScore": 0,
+          "v3Score": null,
+          "signals": [],
+          "evaluated": 0,
+          "applicableKnown": 0,
+          "unknownApplicability": 0,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        }
+      ]
+    },
+    "tours-notices": {
+      "rows": 66,
+      "inputSha256": "d7f6e50a7348c046847f9705c42fa78109f3be3048931929a8efad0e29d9a147",
+      "officialFindings": 0,
+      "v21": {
+        "positive": 0,
+        "zero": 66
+      },
+      "v3": {
+        "positive": 0,
+        "zero": 0,
+        "unevaluated": 66,
+        "excluded": 0,
+        "indicators": {},
+        "meanEvaluatedChecks": 0
+      },
+      "transitions": {
+        "positiveToZero": 0,
+        "positiveToUnevaluated": 0,
+        "zeroToPositive": 0
+      },
+      "sensitivity": {
+        "competitionLower": {
+          "multipliers": {
+            "competition": 0.8,
+            "execution": 1.2
+          },
+          "spearmanPositiveOnly": null,
+          "positiveRows": 0,
+          "topK": 0,
+          "topKOverlap": 0,
+          "baselineCutoff": null,
+          "baselineCutoffTies": 0,
+          "scenarioCutoffTies": 0
+        },
+        "executionLower": {
+          "multipliers": {
+            "competition": 1.2,
+            "execution": 0.8
+          },
+          "spearmanPositiveOnly": null,
+          "positiveRows": 0,
+          "topK": 0,
+          "topKOverlap": 0,
+          "baselineCutoff": null,
+          "baselineCutoffTies": 0,
+          "scenarioCutoffTies": 0
+        }
+      },
+      "reviewQueue": [
+        {
+          "stratum": "unevaluated",
+          "id": "tours-notice-25-127197-LOT-0003",
+          "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-127197",
+          "oldScore": 0,
+          "v3Score": null,
+          "signals": [],
+          "evaluated": 0,
+          "applicableKnown": 0,
+          "unknownApplicability": 1,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "unevaluated",
+          "id": "tours-notice-25-53171-LOT-0001",
+          "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-53171",
+          "oldScore": 0,
+          "v3Score": null,
+          "signals": [],
+          "evaluated": 0,
+          "applicableKnown": 1,
+          "unknownApplicability": 0,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        }
+      ]
+    }
+  }
+}

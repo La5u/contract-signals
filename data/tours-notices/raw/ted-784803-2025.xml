@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><ContractAwardNotice xmlns="urn:oasis:names:specification:ubl:schema:xsd:ContractAwardNotice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:efac="http://data.europa.eu/p27/eforms-ubl-extension-aggregate-components/1" xmlns:efbc="http://data.europa.eu/p27/eforms-ubl-extension-basic-components/1" xmlns:efext="http://data.europa.eu/p27/eforms-ubl-extensions/1" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <ext:UBLExtensions>
+      <ext:UBLExtension>
+         <ext:ExtensionContent>
+            <efext:EformsExtension>
+               <efac:NoticeResult>
+                  <cbc:TotalAmount currencyID="EUR">4</cbc:TotalAmount>
+                  <efac:LotResult>
+                     <cbc:ID schemeName="result">RES-0001</cbc:ID>
+                     <cbc:TenderResultCode listName="winner-selection-status">selec-w</cbc:TenderResultCode>
+                     <efac:LotTender>
+                        <cbc:ID>TEN-0001</cbc:ID>
+                     </efac:LotTender>
+                     <efac:ReceivedSubmissionsStatistics>
+                        <efbc:StatisticsCode listName="received-submission-type">t-esubm</efbc:StatisticsCode>
+                        <efbc:StatisticsNumeric>1</efbc:StatisticsNumeric>
+                     </efac:ReceivedSubmissionsStatistics>
+                     <efac:SettledContract>
+                        <cbc:ID>CON-0001</cbc:ID>
+                     </efac:SettledContract>
+                     <efac:TenderLot>
+                        <cbc:ID>LOT-0001</cbc:ID>
+                     </efac:TenderLot>
+                  </efac:LotResult>
+                  <efac:LotTender>
+                     <cbc:ID schemeName="tender">TEN-0001</cbc:ID>
+                     <efbc:TenderVariantIndicator>true</efbc:TenderVariantIndicator>
+                     <cac:LegalMonetaryTotal>
+                        <cbc:PayableAmount currencyID="EUR">4363439</cbc:PayableAmount>
+                     </cac:LegalMonetaryTotal>
+                     <efac:TenderingParty>
+                        <cbc:ID>TPA-0001</cbc:ID>
+                     </efac:TenderingParty>
+                     <efac:TenderLot>
+                        <cbc:ID>LOT-0001</cbc:ID>
+                     </efac:TenderLot>
+                     <efac:TenderReference>
+                        <cbc:ID>offre 1</cbc:ID>
+                     </efac:TenderReference>
+                  </efac:LotTender>
+                  <efac:SettledContract>
+                     <cbc:ID schemeName="contract">CON-0001</cbc:ID>
+                     <cbc:AwardDate>2025-10-06+02:00</cbc:AwardDate>
+                     <cbc:IssueDate>2025-10-27+02:00</cbc:IssueDate>
+                     <cbc:Title languageID="FRA">Contrat de délégation de service public pour la gestion et l'exploitation du Marché de gros de Tours</cbc:Title>
+                     <cac:SignatoryParty>
+                        <cac:PartyIdentification>
+                           <cbc:ID>ORG-0001</cbc:ID>
+                        </cac:PartyIdentification>
+                     </cac:SignatoryParty>
+                     <efac:ContractReference>
+                        <cbc:ID>Contrat de délégation de service public pour la gestion et l'exploitation du Marché de gros de Tours</cbc:ID>
+                     </efac:ContractReference>
+                     <efac:LotTender>
+                        <cbc:ID>TEN-0001</cbc:ID>
+                     </efac:LotTender>
+                  </efac:SettledContract>
+                  <efac:TenderingParty>
+                     <cbc:ID schemeName="tendering-party">TPA-0001</cbc:ID>
+                     <cbc:Name>Offre 1</cbc:Name>
+                     <efac:Tenderer>
+                        <cbc:ID>ORG-0002</cbc:ID>
+                     </efac:Tenderer>
+                  </efac:TenderingParty>
+               </efac:NoticeResult>
+               <efac:NoticeSubType>
+                  <cbc:SubTypeCode listName="notice-subtype">32</cbc:SubTypeCode>
+               </efac:NoticeSubType>
+               <efac:Organizations>
+                  <efac:Organization>
+                     <efac:Company>
+                        <cac:PartyIdentification>
+                           <cbc:ID schemeName="organization">ORG-0001</cbc:ID>
+                        </cac:PartyIdentification>
+                        <cac:PartyName>
+                           <cbc:Name languageID="FRA">commune de Tours</cbc:Name>
+                        </cac:PartyName>
+                        <cac:PostalAddress>
+                           <cbc:CityName>Tours</cbc:CityName>
+                           <cbc:PostalZone>37000</cbc:PostalZone>
+                           <cbc:CountrySubentityCode listName="nuts">FRB04</cbc:CountrySubentityCode>
+                           <cac:Country>
+                              <cbc:IdentificationCode listName="country">FRA</cbc:IdentificationCode>
+                           </cac:Country>
+                        </cac:PostalAddress>
+                        <cac:PartyLegalEntity>
+                           <cbc:CompanyID>21370261600011</cbc:CompanyID>
+                        </cac:PartyLegalEntity>
+                        <cac:Contact>
+                           <cbc:Name>Marion BOUILLAUD - Ville de Tours - Direction des affaires juridiques et de la commande publique</cbc:Name>
+                           <cbc:Telephone>0247216368</cbc:Telephone>
+                           <cbc:ElectronicMail>m.bouillaud@ville-tours.fr</cbc:ElectronicMail>
+                        </cac:Contact>
+                     </efac:Company>
+                  </efac:Organization>
+                  <efac:Organization>
+                     <efac:Company>
+                        <cac:PartyIdentification>
+                           <cbc:ID schemeName="organization">ORG-0003</cbc:ID>
+                        </cac:PartyIdentification>
+                        <cac:PartyName>
+                           <cbc:Name languageID="FRA">Tribunal administratif d'orléans</cbc:Name>
+                        </cac:PartyName>
+                        <cac:PostalAddress>
+                           <cbc:CityName>Orléans</cbc:CityName>
+                           <cbc:PostalZone>45000</cbc:PostalZone>
+                           <cbc:CountrySubentityCode listName="nuts">FRB06</cbc:CountrySubentityCode>
+                           <cac:Country>
+                              <cbc:IdentificationCode listName="country">FRA</cbc:IdentificationCode>
+                           </cac:Country>
+                        </cac:PostalAddress>
+                        <cac:PartyLegalEntity>
+                           <cbc:CompanyID>174 500 058 00022</cbc:CompanyID>
+                        </cac:PartyLegalEntity>
+                     </efac:Company>
+                  </efac:Organization>
+                  <efac:Organization>
+                     <efac:Company>
+                        <cbc:WebsiteURI>https://marchedegrosdetours.fr/</cbc:WebsiteURI>
+                        <efbc:CompanySizeCode listName="economic-operator-size">sme</efbc:CompanySizeCode>
+                        <cac:PartyIdentification>
+                           <cbc:ID schemeName="organization">ORG-0002</cbc:ID>
+                        </cac:PartyIdentification>
+                        <cac:PartyName>
+                           <cbc:Name languageID="FRA">Société de Gestion du Marché de Gros</cbc:Name>
+                        </cac:PartyName>
+                        <cac:PostalAddress>
+                           <cbc:StreetName>avenue Vatel</cbc:StreetName>
+                           <cbc:CityName>Tours</cbc:CityName>
+                           <cbc:PostalZone>37000</cbc:PostalZone>
+                           <cbc:CountrySubentityCode listName="nuts">FRB04</cbc:CountrySubentityCode>
+                           <cac:Country>
+                              <cbc:IdentificationCode listName="country">FRA</cbc:IdentificationCode>
+                           </cac:Country>
+                        </cac:PostalAddress>
+                        <cac:PartyLegalEntity>
+                           <cbc:CompanyID>777 336 850 00014</cbc:CompanyID>
+                        </cac:PartyLegalEntity>
+                        <cac:Contact>
+                           <cbc:Name>Valérie Fouillet - DGD</cbc:Name>
+                           <cbc:ElectronicMail>v.fouillet@marchedegrosdetours.fr</cbc:ElectronicMail>
+                        </cac:Contact>
+                     </efac:Company>
+                  </efac:Organization>
+               </efac:Organizations>
+            <efac:Publication><efbc:NoticePublicationID schemeName="ojs-notice-id">00784803-2025</efbc:NoticePublicationID><efbc:GazetteID schemeName="ojs-id">228/2025</efbc:GazetteID><efbc:PublicationDate>2025-11-26+01:00</efbc:PublicationDate></efac:Publication></efext:EformsExtension>
+         </ext:ExtensionContent>
+      </ext:UBLExtension>
+   </ext:UBLExtensions>
+   <cbc:UBLVersionID>2.3</cbc:UBLVersionID>
+   <cbc:CustomizationID>eforms-sdk-1.13</cbc:CustomizationID>
+   <cbc:ID schemeName="notice-id">bdf306a6-64e4-4691-a791-b08aa7f6334a</cbc:ID>
+   <cbc:ContractFolderID>77e86081-9032-420e-ad1f-0720c0982a5d</cbc:ContractFolderID>
+   <cbc:IssueDate>2025-11-25+02:00</cbc:IssueDate>
+   <cbc:IssueTime>09:44:27+02:00</cbc:IssueTime>
+   <cbc:VersionID>01</cbc:VersionID>
+   <cbc:RegulatoryDomain>32014L0023</cbc:RegulatoryDomain>
+   <cbc:NoticeTypeCode listName="result">can-standard</cbc:NoticeTypeCode>
+   <cbc:NoticeLanguageCode listName="language">FRA</cbc:NoticeLanguageCode>
+   <cac:ContractingParty>
+      <cbc:BuyerProfileURI>https://www.achatpublic.com/sdm/ent2/gen/index.jsp</cbc:BuyerProfileURI>
+      <cac:ContractingPartyType>
+         <cbc:PartyTypeCode listName="buyer-legal-type">la</cbc:PartyTypeCode>
+      </cac:ContractingPartyType>
+      <cac:ContractingPartyType>
+         <cbc:PartyTypeCode listName="buyer-contracting-type">not-cont-ent</cbc:PartyTypeCode>
+      </cac:ContractingPartyType>
+      <cac:ContractingActivity>
+         <cbc:ActivityTypeCode listName="authority-activity">gen-pub</cbc:ActivityTypeCode>
+      </cac:ContractingActivity>
+      <cac:Party>
+         <cac:PartyIdentification>
+            <cbc:ID>ORG-0001</cbc:ID>
+         </cac:PartyIdentification>
+      </cac:Party>
+   </cac:ContractingParty>
+   <cac:TenderingProcess>
+      <cbc:ProcedureCode listName="procurement-procedure-type">innovation</cbc:ProcedureCode>
+   </cac:TenderingProcess>
+   <cac:ProcurementProject>
+      <cbc:ID>DSP_24_MG</cbc:ID>
+      <cbc:Name languageID="FRA">Délégation de service public de gestion et d'exploitation du Marché de gros de Tours</cbc:Name>
+      <cbc:Description languageID="FRA">Contrat de délégation de service public pour gestion et d'exploitation du Marché de gros de Tours</cbc:Description>
+      <cbc:ProcurementTypeCode listName="contract-nature">services</cbc:ProcurementTypeCode>
+      <cac:RequestedTenderTotal>
+         <cbc:EstimatedOverallContractAmount currencyID="EUR">4100000</cbc:EstimatedOverallContractAmount>
+      </cac:RequestedTenderTotal>
+      <cac:MainCommodityClassification>
+         <cbc:ItemClassificationCode listName="cpv">98390000</cbc:ItemClassificationCode>
+      </cac:MainCommodityClassification>
+      <cac:RealizedLocation>
+         <cac:Address>
+            <cbc:StreetName>Avenue Vatel</cbc:StreetName>
+            <cbc:CityName>Tours</cbc:CityName>
+            <cbc:PostalZone>37000</cbc:PostalZone>
+            <cbc:CountrySubentityCode listName="nuts">FRB04</cbc:CountrySubentityCode>
+            <cac:Country>
+               <cbc:IdentificationCode listName="country">FRA</cbc:IdentificationCode>
+            </cac:Country>
+         </cac:Address>
+      </cac:RealizedLocation>
+   </cac:ProcurementProject>
+   <cac:ProcurementProjectLot>
+      <cbc:ID schemeName="Lot">LOT-0001</cbc:ID>
+      <cac:TenderingTerms>
+         <cbc:FundingProgramCode listName="eu-funded">no-eu-funds</cbc:FundingProgramCode>
+         <cac:AwardingTerms>
+            <cac:AwardingCriterion>
+               <cac:SubordinateAwardingCriterion>
+                  <ext:UBLExtensions>
+                     <ext:UBLExtension>
+                        <ext:ExtensionContent>
+                           <efext:EformsExtension>
+                              <efac:AwardCriterionParameter>
+                                 <efbc:ParameterCode listName="number-weight">ord-imp</efbc:ParameterCode>
+                                 <efbc:ParameterNumeric>1</efbc:ParameterNumeric>
+                              </efac:AwardCriterionParameter>
+                           </efext:EformsExtension>
+                        </ext:ExtensionContent>
+                     </ext:UBLExtension>
+                  </ext:UBLExtensions>
+                  <cbc:AwardingCriterionTypeCode listName="award-criterion-type">quality</cbc:AwardingCriterionTypeCode>
+                  <cbc:Description languageID="FRA">Qualité du projet d'exploitation et d'entretien technique du site proposé. Appréciée au regard
+des aspects ci-dessous : Adéquation des moyens techniques et humains dédiés ; Actions de promotion menées pour limiter le taux de vacance des locaux et optimiser le développement commercial du site ; Adéquation des politiques commerciales et tarifaire aux objectifs de politiques publiques ; Pertinence des programmes d'investissement et GER proposés pour entretenir le site, améliorer les installations et optimiser les différents espaces ; Qualité des méthodes de travail envisagées avec l'Autorité Délégante ; Moyens proposés pour évaluer la qualité du service ; Appréhension des enjeux du Marché de gros de demain et capacité à accompagner le Délégant quant à la mutabilité du service.</cbc:Description>
+               </cac:SubordinateAwardingCriterion>
+               <cac:SubordinateAwardingCriterion>
+                  <ext:UBLExtensions>
+                     <ext:UBLExtension>
+                        <ext:ExtensionContent>
+                           <efext:EformsExtension>
+                              <efac:AwardCriterionParameter>
+                                 <efbc:ParameterCode listName="number-weight">ord-imp</efbc:ParameterCode>
+                                 <efbc:ParameterNumeric>2</efbc:ParameterNumeric>
+                              </efac:AwardCriterionParameter>
+                           </efext:EformsExtension>
+                        </ext:ExtensionContent>
+                     </ext:UBLExtension>
+                  </ext:UBLExtensions>
+                  <cbc:AwardingCriterionTypeCode listName="award-criterion-type">quality</cbc:AwardingCriterionTypeCode>
+                  <cbc:Description languageID="FRA">Durabilité et caractère innovant de l'offre. Apprécié au regard des aspects ci dessous : Pertinence de l'offre de services (animation et accueil, digitalisation, virage qualitatif des produits, besoins en matière de transformation, accompagner les acteurs du territoire dans le développement de leur politique d'achat durable et responsable, etc.) ; Moyens mobilisés pour fédérer les acteurs des filières et contribuer à la structuration de la chaine alimentaire locale ; Qualité des engagements et des actions en faveur du développement durable (gestion des déchets, efficacité énergétique, protection de l'environnement, gaspillage alimentaire, logistique du dernier kilomètre, etc.) ;</cbc:Description>
+               </cac:SubordinateAwardingCriterion>
+               <cac:SubordinateAwardingCriterion>
+                  <ext:UBLExtensions>
+                     <ext:UBLExtension>
+                        <ext:ExtensionContent>
+                           <efext:EformsExtension>
+                              <efac:AwardCriterionParameter>
+                                 <efbc:ParameterCode listName="number-weight">ord-imp</efbc:ParameterCode>
+                                 <efbc:ParameterNumeric>3</efbc:ParameterNumeric>
+                              </efac:AwardCriterionParameter>
+                           </efext:EformsExtension>
+                        </ext:ExtensionContent>
+                     </ext:UBLExtension>
+                  </ext:UBLExtensions>
+                  <cbc:AwardingCriterionTypeCode listName="award-criterion-type">cost</cbc:AwardingCriterionTypeCode>
+                  <cbc:Description languageID="FRA">Performance économique et financière de l'offre. Apprécié au regard des aspects ci dessous :
+Cohérence et robustesse de la proposition financière (VAN, TRI, etc.) ; Montant demandé à l'Autorité Délégante pour l'éventuelle compensation des obligations de service public et pour toute autre prise en charge d'investissements aux titres des PGER / PPI ; Montant de redevance proposée.</cbc:Description>
+               </cac:SubordinateAwardingCriterion>
+               <cac:SubordinateAwardingCriterion>
+                  <ext:UBLExtensions>
+                     <ext:UBLExtension>
+                        <ext:ExtensionContent>
+                           <efext:EformsExtension>
+                              <efac:AwardCriterionParameter>
+                                 <efbc:ParameterCode listName="number-weight">ord-imp</efbc:ParameterCode>
+                                 <efbc:ParameterNumeric>4</efbc:ParameterNumeric>
+                              </efac:AwardCriterionParameter>
+                           </efext:EformsExtension>
+                        </ext:ExtensionContent>
+                     </ext:UBLExtension>
+                  </ext:UBLExtensions>
+                  <cbc:AwardingCriterionTypeCode listName="award-criterion-type">quality</cbc:AwardingCriterionTypeCode>
+                  <cbc:Description languageID="FRA">Cohérence de l'offre avec les projets de planification dans lesquels s'inscrit le Marché. Apprécié au regard des aspects ci-dessous : Prise en compte des engagements et enjeux identifiés au sein des documents planification suivants : Projets Alimentaires territorial et Départemental, Projet partenarial d'aménagement porte Est métropolitaine, Schémas régionaux d'aménagement, de développement durable et d'égalité des territoires SRADDET, Mieux aménager les territoires en mutation exposés aux risques naturels AMITER, Zones à faibles émissions mobilité ZFEm, etc. Moyens mobilisés et actions planifiées pour participer à leur mise en oeuvre.</cbc:Description>
+               </cac:SubordinateAwardingCriterion>
+            </cac:AwardingCriterion>
+         </cac:AwardingTerms>
+         <cac:AdditionalInformationParty>
+            <cac:PartyIdentification>
+               <cbc:ID>ORG-0001</cbc:ID>
+            </cac:PartyIdentification>
+         </cac:AdditionalInformationParty>
+         <cac:AppealTerms>
+            <cac:PresentationPeriod>
+               <cbc:Description languageID="FRA">Le tribunal territorialement compétent est le Tribunal Administratif d'Orléans
+28 rue de la Bretonnerie - 45057 ORLEANS CEDEX 1
+Tél : 02 38 77 59 00
+Télécopie : 02 38 53 85 16
+Courriel : greffe.ta-orleans@juradm.fr
+Adresse internet (U.R.L) : https://orleans.tribunal-administratif.fr/
+Les voies de recours ouvertes aux candidats sont les suivantes :
+- Référé précontractuel prévu aux articles L.551-1 à L.551-12 du Code de justice administrative (CJA), et
+pouvant être exercé avant la signature du contrat.
+- Référé contractuel prévu aux articles L.551-13 à L.551-23 du CJA, et pouvant être exercé dans les délais
+prévus à l'article R. 551-7 du CJA.
+- Recours de pleine juridiction ouvert aux tiers justifiant d’un intérêt lésé, et pouvant être exercé dans les
+deux mois suivant la date à laquelle la conclusion du contrat est rendue publique.
+- Recours en excès de pouvoir pour contester les clauses règlementaires, devant le tribunal administratif,
+dans un délai de deux mois.
+Le tribunal administratif peut être saisi par l’application informatique « Télérecours citoyens » accessible par le site
+Internet http://www.telerecours.fr</cbc:Description>
+            </cac:PresentationPeriod>
+            <cac:AppealReceiverParty>
+               <cac:PartyIdentification>
+                  <cbc:ID>ORG-0003</cbc:ID>
+               </cac:PartyIdentification>
+            </cac:AppealReceiverParty>
+         </cac:AppealTerms>
+      </cac:TenderingTerms>
+      <cac:TenderingProcess>
+         <cac:AuctionTerms>
+            <cbc:AuctionConstraintIndicator>true</cbc:AuctionConstraintIndicator>
+         </cac:AuctionTerms>
+      </cac:TenderingProcess>
+      <cac:ProcurementProject>
+         <cbc:ID>DSP_24_MG</cbc:ID>
+         <cbc:Name languageID="FRA">Délégation de service public de gestion et d'exploitation du Marché de gros de Tours</cbc:Name>
+         <cbc:Description languageID="FRA">Contrat de délégation de service public pour la gestion et l'exploitation du Marché de gros de Tours</cbc:Description>
+         <cbc:ProcurementTypeCode listName="contract-nature">services</cbc:ProcurementTypeCode>
+         <cac:RequestedTenderTotal>
+            <cbc:EstimatedOverallContractAmount currencyID="EUR">4100000</cbc:EstimatedOverallContractAmount>
+         </cac:RequestedTenderTotal>
+         <cac:MainCommodityClassification>
+            <cbc:ItemClassificationCode listName="cpv">98390000</cbc:ItemClassificationCode>
+         </cac:MainCommodityClassification>
+         <cac:AdditionalCommodityClassification>
+            <cbc:ItemClassificationCode listName="cpv">55523000</cbc:ItemClassificationCode>
+         </cac:AdditionalCommodityClassification>
+         <cac:RealizedLocation>
+            <cac:Address>
+               <cbc:StreetName>Avenue Vatel</cbc:StreetName>
+               <cbc:CityName>Tours</cbc:CityName>
+               <cbc:PostalZone>37000</cbc:PostalZone>
+               <cbc:CountrySubentityCode listName="nuts">FRB04</cbc:CountrySubentityCode>
+               <cac:Country>
+                  <cbc:IdentificationCode listName="country">FRA</cbc:IdentificationCode>
+               </cac:Country>
+            </cac:Address>
+         </cac:RealizedLocation>
+         <cac:PlannedPeriod>
+            <cbc:StartDate>2026-01-01+02:00</cbc:StartDate>
+            <cbc:EndDate>2030-12-31+02:00</cbc:EndDate>
+         </cac:PlannedPeriod>
+         <cac:ContractExtension>
+            <cbc:MaximumNumberNumeric>0</cbc:MaximumNumberNumeric>
+         </cac:ContractExtension>
+      </cac:ProcurementProject>
+   </cac:ProcurementProjectLot>
+   <cac:TenderResult>
+      <cbc:AwardDate>2000-01-01Z</cbc:AwardDate>
+   </cac:TenderResult>
+</ContractAwardNotice>

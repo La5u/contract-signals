@@ -1,0 +1,734 @@
+{
+  "retrievedAt": "2026-09-15T23:01:36.676181Z",
+  "source": "API publique Recherche d’entreprises / Annuaire des entreprises — current public identity by SIREN; not independently verified historical Sirene/RNE names",
+  "api": "https://recherche-entreprises.api.gouv.fr/search",
+  "scope": "Current administrative information only; no RNE or Sirene historical claim. No addresses, officers, personal contacts, or raw API responses retained.",
+  "selection": {
+    "method": "first 100 distinct typed French supplier SIRENs sorted by SHA256",
+    "selectedSirens": [
+      "813933777",
+      "918579335",
+      "323657510",
+      "480544527",
+      "498383959",
+      "493503767",
+      "393088588",
+      "440296721",
+      "383446721",
+      "908456353",
+      "939014064",
+      "016550113",
+      "392707113",
+      "493570337",
+      "505037044",
+      "530214287",
+      "510246580",
+      "450758404",
+      "399131218",
+      "389755612",
+      "953245131",
+      "007080054",
+      "487673543",
+      "313087249",
+      "887934800",
+      "323682732",
+      "556150175",
+      "584801724",
+      "637020785",
+      "823299342",
+      "881301980",
+      "501383251",
+      "453860546",
+      "338329469",
+      "379009947",
+      "412430449",
+      "799708276",
+      "521720359",
+      "433584703",
+      "753471044",
+      "340360403",
+      "800780124",
+      "813394558",
+      "388772105",
+      "408635738",
+      "424035947",
+      "399274174",
+      "809953052",
+      "353271067",
+      "834337370",
+      "494736226",
+      "709200174",
+      "310369764",
+      "524278397",
+      "518344411",
+      "393365135",
+      "753553114",
+      "840527279",
+      "522120799",
+      "316549021",
+      "444523526",
+      "385314075",
+      "383122512",
+      "442185500",
+      "390633204",
+      "388773772",
+      "878031590",
+      "405271032",
+      "877900050",
+      "378186787",
+      "442519690",
+      "343691374",
+      "481208650",
+      "403526577",
+      "337884647",
+      "390898179",
+      "341250181",
+      "809061278",
+      "849792833",
+      "310709852",
+      "347956336",
+      "493016257",
+      "444617690",
+      "790184675",
+      "479624470",
+      "443382916",
+      "950613240",
+      "408422525",
+      "392997540",
+      "432341139",
+      "829991439",
+      "626520126",
+      "878345891",
+      "443069455",
+      "500778030",
+      "478804289",
+      "344313861",
+      "421349713",
+      "892922550",
+      "898361191"
+    ]
+  },
+  "counts": {
+    "universe": 703,
+    "selected": 100,
+    "queried": 100,
+    "available": 100,
+    "unavailable": 0,
+    "excludedFromSelection": 603
+  },
+  "unavailableReasons": {},
+  "queries": {
+    "count": 100,
+    "minimumIntervalSeconds": 0.3,
+    "retries": 4,
+    "dates": {
+      "retrievedAt": "2026-09-15T23:01:36.676181Z",
+      "lastRequestAt": "2026-09-15T23:02:12.152108Z"
+    },
+    "log": [
+      {
+        "siren": "813933777",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=813933777&per_page=25",
+        "queriedAt": "2026-09-15T23:01:36.676247Z",
+        "status": "available"
+      },
+      {
+        "siren": "918579335",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=918579335&per_page=25",
+        "queriedAt": "2026-09-15T23:01:37.036324Z",
+        "status": "available"
+      },
+      {
+        "siren": "323657510",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=323657510&per_page=25",
+        "queriedAt": "2026-09-15T23:01:37.379994Z",
+        "status": "available"
+      },
+      {
+        "siren": "480544527",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=480544527&per_page=25",
+        "queriedAt": "2026-09-15T23:01:37.723092Z",
+        "status": "available"
+      },
+      {
+        "siren": "498383959",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=498383959&per_page=25",
+        "queriedAt": "2026-09-15T23:01:38.069702Z",
+        "status": "available"
+      },
+      {
+        "siren": "493503767",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=493503767&per_page=25",
+        "queriedAt": "2026-09-15T23:01:38.500600Z",
+        "status": "available"
+      },
+      {
+        "siren": "393088588",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=393088588&per_page=25",
+        "queriedAt": "2026-09-15T23:01:38.861966Z",
+        "status": "available"
+      },
+      {
+        "siren": "440296721",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=440296721&per_page=25",
+        "queriedAt": "2026-09-15T23:01:39.219985Z",
+        "status": "available"
+      },
+      {
+        "siren": "383446721",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=383446721&per_page=25",
+        "queriedAt": "2026-09-15T23:01:39.574092Z",
+        "status": "available"
+      },
+      {
+        "siren": "908456353",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=908456353&per_page=25",
+        "queriedAt": "2026-09-15T23:01:39.919262Z",
+        "status": "available"
+      },
+      {
+        "siren": "939014064",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=939014064&per_page=25",
+        "queriedAt": "2026-09-15T23:01:40.326749Z",
+        "status": "available"
+      },
+      {
+        "siren": "016550113",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=016550113&per_page=25",
+        "queriedAt": "2026-09-15T23:01:40.675865Z",
+        "status": "available"
+      },
+      {
+        "siren": "392707113",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=392707113&per_page=25",
+        "queriedAt": "2026-09-15T23:01:41.020332Z",
+        "status": "available"
+      },
+      {
+        "siren": "493570337",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=493570337&per_page=25",
+        "queriedAt": "2026-09-15T23:01:41.373077Z",
+        "status": "available"
+      },
+      {
+        "siren": "505037044",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=505037044&per_page=25",
+        "queriedAt": "2026-09-15T23:01:41.723132Z",
+        "status": "available"
+      },
+      {
+        "siren": "530214287",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=530214287&per_page=25",
+        "queriedAt": "2026-09-15T23:01:42.077472Z",
+        "status": "available"
+      },
+      {
+        "siren": "510246580",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=510246580&per_page=25",
+        "queriedAt": "2026-09-15T23:01:42.421209Z",
+        "status": "available"
+      },
+      {
+        "siren": "450758404",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=450758404&per_page=25",
+        "queriedAt": "2026-09-15T23:01:42.773589Z",
+        "status": "available"
+      },
+      {
+        "siren": "399131218",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=399131218&per_page=25",
+        "queriedAt": "2026-09-15T23:01:43.129628Z",
+        "status": "available"
+      },
+      {
+        "siren": "389755612",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=389755612&per_page=25",
+        "queriedAt": "2026-09-15T23:01:43.481059Z",
+        "status": "available"
+      },
+      {
+        "siren": "953245131",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=953245131&per_page=25",
+        "queriedAt": "2026-09-15T23:01:43.825417Z",
+        "status": "available"
+      },
+      {
+        "siren": "007080054",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=007080054&per_page=25",
+        "queriedAt": "2026-09-15T23:01:44.171715Z",
+        "status": "available"
+      },
+      {
+        "siren": "487673543",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=487673543&per_page=25",
+        "queriedAt": "2026-09-15T23:01:44.547300Z",
+        "status": "available"
+      },
+      {
+        "siren": "313087249",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=313087249&per_page=25",
+        "queriedAt": "2026-09-15T23:01:44.897836Z",
+        "status": "available"
+      },
+      {
+        "siren": "887934800",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=887934800&per_page=25",
+        "queriedAt": "2026-09-15T23:01:45.250877Z",
+        "status": "available"
+      },
+      {
+        "siren": "323682732",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=323682732&per_page=25",
+        "queriedAt": "2026-09-15T23:01:45.607397Z",
+        "status": "available"
+      },
+      {
+        "siren": "556150175",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=556150175&per_page=25",
+        "queriedAt": "2026-09-15T23:01:45.961584Z",
+        "status": "available"
+      },
+      {
+        "siren": "584801724",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=584801724&per_page=25",
+        "queriedAt": "2026-09-15T23:01:46.312425Z",
+        "status": "available"
+      },
+      {
+        "siren": "637020785",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=637020785&per_page=25",
+        "queriedAt": "2026-09-15T23:01:46.843288Z",
+        "status": "available"
+      },
+      {
+        "siren": "823299342",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=823299342&per_page=25",
+        "queriedAt": "2026-09-15T23:01:47.195268Z",
+        "status": "available"
+      },
+      {
+        "siren": "881301980",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=881301980&per_page=25",
+        "queriedAt": "2026-09-15T23:01:47.578018Z",
+        "status": "available"
+      },
+      {
+        "siren": "501383251",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=501383251&per_page=25",
+        "queriedAt": "2026-09-15T23:01:47.922486Z",
+        "status": "available"
+      },
+      {
+        "siren": "453860546",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=453860546&per_page=25",
+        "queriedAt": "2026-09-15T23:01:48.290903Z",
+        "status": "available"
+      },
+      {
+        "siren": "338329469",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=338329469&per_page=25",
+        "queriedAt": "2026-09-15T23:01:48.637279Z",
+        "status": "available"
+      },
+      {
+        "siren": "379009947",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=379009947&per_page=25",
+        "queriedAt": "2026-09-15T23:01:48.983556Z",
+        "status": "available"
+      },
+      {
+        "siren": "412430449",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=412430449&per_page=25",
+        "queriedAt": "2026-09-15T23:01:49.341886Z",
+        "status": "available"
+      },
+      {
+        "siren": "799708276",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=799708276&per_page=25",
+        "queriedAt": "2026-09-15T23:01:49.687035Z",
+        "status": "available"
+      },
+      {
+        "siren": "521720359",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=521720359&per_page=25",
+        "queriedAt": "2026-09-15T23:01:50.034456Z",
+        "status": "available"
+      },
+      {
+        "siren": "433584703",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=433584703&per_page=25",
+        "queriedAt": "2026-09-15T23:01:50.424225Z",
+        "status": "available"
+      },
+      {
+        "siren": "753471044",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=753471044&per_page=25",
+        "queriedAt": "2026-09-15T23:01:50.874268Z",
+        "status": "available"
+      },
+      {
+        "siren": "340360403",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=340360403&per_page=25",
+        "queriedAt": "2026-09-15T23:01:51.219760Z",
+        "status": "available"
+      },
+      {
+        "siren": "800780124",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=800780124&per_page=25",
+        "queriedAt": "2026-09-15T23:01:51.570567Z",
+        "status": "available"
+      },
+      {
+        "siren": "813394558",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=813394558&per_page=25",
+        "queriedAt": "2026-09-15T23:01:51.921519Z",
+        "status": "available"
+      },
+      {
+        "siren": "388772105",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=388772105&per_page=25",
+        "queriedAt": "2026-09-15T23:01:52.274719Z",
+        "status": "available"
+      },
+      {
+        "siren": "408635738",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=408635738&per_page=25",
+        "queriedAt": "2026-09-15T23:01:52.622097Z",
+        "status": "available"
+      },
+      {
+        "siren": "424035947",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=424035947&per_page=25",
+        "queriedAt": "2026-09-15T23:01:52.973016Z",
+        "status": "available"
+      },
+      {
+        "siren": "399274174",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=399274174&per_page=25",
+        "queriedAt": "2026-09-15T23:01:53.328266Z",
+        "status": "available"
+      },
+      {
+        "siren": "809953052",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=809953052&per_page=25",
+        "queriedAt": "2026-09-15T23:01:53.677882Z",
+        "status": "available"
+      },
+      {
+        "siren": "353271067",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=353271067&per_page=25",
+        "queriedAt": "2026-09-15T23:01:54.027357Z",
+        "status": "available"
+      },
+      {
+        "siren": "834337370",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=834337370&per_page=25",
+        "queriedAt": "2026-09-15T23:01:54.373818Z",
+        "status": "available"
+      },
+      {
+        "siren": "494736226",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=494736226&per_page=25",
+        "queriedAt": "2026-09-15T23:01:54.722019Z",
+        "status": "available"
+      },
+      {
+        "siren": "709200174",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=709200174&per_page=25",
+        "queriedAt": "2026-09-15T23:01:55.073092Z",
+        "status": "available"
+      },
+      {
+        "siren": "310369764",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=310369764&per_page=25",
+        "queriedAt": "2026-09-15T23:01:55.417879Z",
+        "status": "available"
+      },
+      {
+        "siren": "524278397",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=524278397&per_page=25",
+        "queriedAt": "2026-09-15T23:01:55.764018Z",
+        "status": "available"
+      },
+      {
+        "siren": "518344411",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=518344411&per_page=25",
+        "queriedAt": "2026-09-15T23:01:56.117601Z",
+        "status": "available"
+      },
+      {
+        "siren": "393365135",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=393365135&per_page=25",
+        "queriedAt": "2026-09-15T23:01:56.461747Z",
+        "status": "available"
+      },
+      {
+        "siren": "753553114",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=753553114&per_page=25",
+        "queriedAt": "2026-09-15T23:01:56.812444Z",
+        "status": "available"
+      },
+      {
+        "siren": "840527279",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=840527279&per_page=25",
+        "queriedAt": "2026-09-15T23:01:57.170414Z",
+        "status": "available"
+      },
+      {
+        "siren": "522120799",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=522120799&per_page=25",
+        "queriedAt": "2026-09-15T23:01:57.515925Z",
+        "status": "available"
+      },
+      {
+        "siren": "316549021",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=316549021&per_page=25",
+        "queriedAt": "2026-09-15T23:01:57.924727Z",
+        "status": "available"
+      },
+      {
+        "siren": "444523526",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=444523526&per_page=25",
+        "queriedAt": "2026-09-15T23:01:58.289001Z",
+        "status": "available"
+      },
+      {
+        "siren": "385314075",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=385314075&per_page=25",
+        "queriedAt": "2026-09-15T23:01:58.642077Z",
+        "status": "available"
+      },
+      {
+        "siren": "383122512",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=383122512&per_page=25",
+        "queriedAt": "2026-09-15T23:01:58.993247Z",
+        "status": "available"
+      },
+      {
+        "siren": "442185500",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=442185500&per_page=25",
+        "queriedAt": "2026-09-15T23:01:59.340943Z",
+        "status": "available"
+      },
+      {
+        "siren": "390633204",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=390633204&per_page=25",
+        "queriedAt": "2026-09-15T23:01:59.741169Z",
+        "status": "available"
+      },
+      {
+        "siren": "388773772",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=388773772&per_page=25",
+        "queriedAt": "2026-09-15T23:02:00.091490Z",
+        "status": "available"
+      },
+      {
+        "siren": "878031590",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=878031590&per_page=25",
+        "queriedAt": "2026-09-15T23:02:00.443312Z",
+        "status": "available"
+      },
+      {
+        "siren": "405271032",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=405271032&per_page=25",
+        "queriedAt": "2026-09-15T23:02:00.789996Z",
+        "status": "available"
+      },
+      {
+        "siren": "877900050",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=877900050&per_page=25",
+        "queriedAt": "2026-09-15T23:02:01.136354Z",
+        "status": "available"
+      },
+      {
+        "siren": "378186787",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=378186787&per_page=25",
+        "queriedAt": "2026-09-15T23:02:01.480549Z",
+        "status": "available"
+      },
+      {
+        "siren": "442519690",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=442519690&per_page=25",
+        "queriedAt": "2026-09-15T23:02:01.827036Z",
+        "status": "available"
+      },
+      {
+        "siren": "343691374",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=343691374&per_page=25",
+        "queriedAt": "2026-09-15T23:02:02.174332Z",
+        "status": "available"
+      },
+      {
+        "siren": "481208650",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=481208650&per_page=25",
+        "queriedAt": "2026-09-15T23:02:02.518909Z",
+        "status": "available"
+      },
+      {
+        "siren": "403526577",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=403526577&per_page=25",
+        "queriedAt": "2026-09-15T23:02:02.865034Z",
+        "status": "available"
+      },
+      {
+        "siren": "337884647",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=337884647&per_page=25",
+        "queriedAt": "2026-09-15T23:02:03.215693Z",
+        "status": "available"
+      },
+      {
+        "siren": "390898179",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=390898179&per_page=25",
+        "queriedAt": "2026-09-15T23:02:03.565064Z",
+        "status": "available"
+      },
+      {
+        "siren": "341250181",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=341250181&per_page=25",
+        "queriedAt": "2026-09-15T23:02:03.910085Z",
+        "status": "available"
+      },
+      {
+        "siren": "809061278",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=809061278&per_page=25",
+        "queriedAt": "2026-09-15T23:02:04.255658Z",
+        "status": "available"
+      },
+      {
+        "siren": "849792833",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=849792833&per_page=25",
+        "queriedAt": "2026-09-15T23:02:04.599803Z",
+        "status": "available"
+      },
+      {
+        "siren": "310709852",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=310709852&per_page=25",
+        "queriedAt": "2026-09-15T23:02:05.006593Z",
+        "status": "available"
+      },
+      {
+        "siren": "347956336",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=347956336&per_page=25",
+        "queriedAt": "2026-09-15T23:02:05.372625Z",
+        "status": "available"
+      },
+      {
+        "siren": "493016257",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=493016257&per_page=25",
+        "queriedAt": "2026-09-15T23:02:05.737041Z",
+        "status": "available"
+      },
+      {
+        "siren": "444617690",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=444617690&per_page=25",
+        "queriedAt": "2026-09-15T23:02:06.094302Z",
+        "status": "available"
+      },
+      {
+        "siren": "790184675",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=790184675&per_page=25",
+        "queriedAt": "2026-09-15T23:02:06.464246Z",
+        "status": "available"
+      },
+      {
+        "siren": "479624470",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=479624470&per_page=25",
+        "queriedAt": "2026-09-15T23:02:06.843775Z",
+        "status": "available"
+      },
+      {
+        "siren": "443382916",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=443382916&per_page=25",
+        "queriedAt": "2026-09-15T23:02:07.189395Z",
+        "status": "available"
+      },
+      {
+        "siren": "950613240",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=950613240&per_page=25",
+        "queriedAt": "2026-09-15T23:02:07.539050Z",
+        "status": "available"
+      },
+      {
+        "siren": "408422525",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=408422525&per_page=25",
+        "queriedAt": "2026-09-15T23:02:07.886715Z",
+        "status": "available"
+      },
+      {
+        "siren": "392997540",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=392997540&per_page=25",
+        "queriedAt": "2026-09-15T23:02:08.233321Z",
+        "status": "available"
+      },
+      {
+        "siren": "432341139",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=432341139&per_page=25",
+        "queriedAt": "2026-09-15T23:02:08.578733Z",
+        "status": "available"
+      },
+      {
+        "siren": "829991439",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=829991439&per_page=25",
+        "queriedAt": "2026-09-15T23:02:09.011851Z",
+        "status": "available"
+      },
+      {
+        "siren": "626520126",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=626520126&per_page=25",
+        "queriedAt": "2026-09-15T23:02:09.358612Z",
+        "status": "available"
+      },
+      {
+        "siren": "878345891",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=878345891&per_page=25",
+        "queriedAt": "2026-09-15T23:02:09.709151Z",
+        "status": "available"
+      },
+      {
+        "siren": "443069455",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=443069455&per_page=25",
+        "queriedAt": "2026-09-15T23:02:10.059225Z",
+        "status": "available"
+      },
+      {
+        "siren": "500778030",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=500778030&per_page=25",
+        "queriedAt": "2026-09-15T23:02:10.404478Z",
+        "status": "available"
+      },
+      {
+        "siren": "478804289",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=478804289&per_page=25",
+        "queriedAt": "2026-09-15T23:02:10.754007Z",
+        "status": "available"
+      },
+      {
+        "siren": "344313861",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=344313861&per_page=25",
+        "queriedAt": "2026-09-15T23:02:11.100300Z",
+        "status": "available"
+      },
+      {
+        "siren": "421349713",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=421349713&per_page=25",
+        "queriedAt": "2026-09-15T23:02:11.455324Z",
+        "status": "available"
+      },
+      {
+        "siren": "892922550",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=892922550&per_page=25",
+        "queriedAt": "2026-09-15T23:02:11.802894Z",
+        "status": "available"
+      },
+      {
+        "siren": "898361191",
+        "url": "https://recherche-entreprises.api.gouv.fr/search?q=898361191&per_page=25",
+        "queriedAt": "2026-09-15T23:02:12.152108Z",
+        "status": "available"
+      }
+    ]
+  },
+  "conservativeDiffusionChoice": "Only statut_diffusion == O permits retaining nom_complet. Missing statut_diffusion is unavailable; no field is fabricated.",
+  "temporalScope": "retrievedAt identifies the beginning of this snapshot extraction (also copied to its identity entries). Request timestamps in queries.log run through the lastRequestAt; no historical name or establishment-state claim.",
+  "selectionDenominator": "703 distinct typed supplier SIRENs in normalized supplierIds. Conflicting initial supplier variants are not assigned a name; 100 selected before examining identity names or states, 603 not queried. Some groups with other conflicts may have an unambiguous supplier; their identity context does not enable scores."
+}

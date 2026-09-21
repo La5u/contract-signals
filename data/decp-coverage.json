@@ -1,0 +1,155 @@
+{
+  "schemaVersion": "2.0",
+  "title": "Cohorte DECP — Ville de Paris et Département de l’Ardèche, notifications 2024–2025",
+  "language": "fr",
+  "source": {
+    "dataset": "decp-2022-marches-valides",
+    "api": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records",
+    "metadata": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides",
+    "schemaSource": "https://github.com/139bercy/decp-arr2022/blob/main/schemes/schema_decp_v2.0.4.json",
+    "datasetRecordsCount": 702092,
+    "queries": [
+      "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27&limit=100",
+      "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2722070001700019%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27&limit=100"
+    ],
+    "buyerLookups": [
+      "https://recherche-entreprises.api.gouv.fr/search?q=21750001600019",
+      "https://recherche-entreprises.api.gouv.fr/search?q=22070001700019"
+    ]
+  },
+  "scope": {
+    "cohortId": "decp-paris-ardeche-2024-2025",
+    "buyers": [
+      {
+        "siret": "21750001600019",
+        "name": "Ville de Paris"
+      },
+      {
+        "siret": "22070001700019",
+        "name": "Département de l’Ardèche"
+      }
+    ],
+    "notificationFrom": "2024-01-01",
+    "notificationTo": "2025-12-31",
+    "selection": "Paris choisi pour le volume de marchés ; Ardèche ajouté pour la disponibilité de modifications de montant. Choix exploratoire non représentatif. Toutes les lignes de chaque SIRET et période ont ensuite été conservées, sans filtre sur score ni montant.",
+    "modificationsObservedThrough": "2026-09-13"
+  },
+  "counts": {
+    "rawRows": 2949,
+    "contracts": 2594,
+    "buyerCounts": {
+      "21750001600019": 2040,
+      "22070001700019": 554
+    },
+    "rawRowsByBuyer": {
+      "21750001600019": 2395,
+      "22070001700019": 554
+    },
+    "groupsWithInitialConflicts": 355,
+    "contractsWithPublishedModifications": 276,
+    "publishedModificationEvents": 276
+  },
+  "fields": {
+    "cpv": "codecpv",
+    "offers": "offresrecues (texte; CDL/INX remain unknown)",
+    "priceForm": "formeprix",
+    "priceType": "typesprix",
+    "modificationId": "idmodification",
+    "modificationAmount": "montantmodification (texte; CDL/INX remain unknown)",
+    "modificationNotificationDate": "datenotificationmodificationmodification",
+    "supplierIds": "titulaire_id_1..3"
+  },
+  "modificationSemantics": "Le schéma officiel DECP v2.0.4, definitions/marche/definitions/Modification/properties/montant, est intitulé « Nouveau montant ». Transcription comme montant total révisé déclaré, jamais additionné au montant initial. La conformité des saisies réelles n’est pas garantie.",
+  "downloadedAt": "2026-09-13T20:55:09.634227+00:00",
+  "fieldAvailability": {
+    "amount": 2239,
+    "offers": 2581,
+    "date": 2594,
+    "durationMonths": 2594,
+    "cpv": 2594,
+    "directAward": 1276
+  },
+  "limitations": [
+    "Une entrée par SIRET acheteur + identifiant de marché, qui peut désigner un lot. Les identifiants ne prouvent pas à eux seuls une opération économique distincte.",
+    "Les valeurs initiales divergentes sont mises à null et conservées comme alternatives sans leur inventer un ordre chronologique. Les groupes en conflit sont exclus des deux nouveaux indicateurs.",
+    "Le schéma définit le montant de modification comme nouveau montant, mais la saisie peut être erronée (certains montants ressemblent à des incréments). Aucun incrément n’est additionné.",
+    "L’API ne garantit pas l’historique complet des avenants ; absence de modification publiée ne signifie pas absence de modification réelle.",
+    "Les champs offresrecues sont des déclarations de l’acheteur, non une vérification de recevabilité.",
+    "Les taux de concurrence décrivent les seuls contrats concurrentiels admissibles publiés de la cohorte, pas tout le marché sectoriel ni toute l’activité de la collectivité.",
+    "Pas de fusion automatique avec BOAMP/TED : recoupements possibles, ne pas sommer les deux jeux."
+  ],
+  "retrieval": {
+    "pageSize": 100,
+    "pagination": "offset=0,100,200,… jusqu’au total_count ; les URL queries montrent la première page seulement.",
+    "orderBy": "datenotification asc,id asc",
+    "pagesByBuyer": {
+      "21750001600019": 24,
+      "22070001700019": 6
+    },
+    "offsetsByBuyer": {
+      "21750001600019": "0..2300 par 100",
+      "22070001700019": "0..500 par 100"
+    },
+    "rawRowsExpected": 2949,
+    "rawRowsDownloaded": 2949
+  },
+  "rules": {
+    "version": "2.0",
+    "amountIncrease": {
+      "percentageStrictlyGreaterThan": 20,
+      "absoluteIncreaseStrictlyGreaterThanEUR": 50000,
+      "priceType": "Définitif ferme",
+      "availableComparisons": 104,
+      "triggeredContracts": 13
+    },
+    "repeatedSingleBid": {
+      "grouping": "SIRET acheteur + CPV trois chiffres, notifications2024–2025, procédures explicitement concurrentielles, sans conflits initiaux",
+      "minimumKnownOffersContracts": 10,
+      "minimumKnownOffersCoverage": 0.8,
+      "minimumSingleBidShare": 0.6,
+      "eligibleGroups": 127,
+      "sufficientGroups": 14,
+      "triggeredContracts": 9
+    },
+    "score": {
+      "scale": "0–100, pas une probabilité, pas de renormalisation par filtre ou jeu",
+      "formula": "min(100, max(concurrence) + max(exécution/durée) + constat officiel)",
+      "amountThresholdsEUR": [
+        100000,
+        500000,
+        1000000,
+        5000000,
+        10000000
+      ],
+      "documentation": "README.md — Score 2.0 et méthode affichée dans la page"
+    },
+    "supplierConcentration": {
+      "minimumKnownSingleHolderContracts": 10,
+      "minimumIdentifierCoverage": 0.8,
+      "minimumShare": 0.6,
+      "triggeredContracts": 8
+    },
+    "repeatedDirectAward": {
+      "minimumDistinctAwards": 3,
+      "minimumIndividualAmountEUR": 100000,
+      "grouping": "SIRET acheteur / CPV3 / SIREN, 2024–2025, sans conflit ni identité ambiguë",
+      "triggeredContracts": 0
+    }
+  },
+  "lastPreparedAt": "2026-09-14T21:31:11.089890+00:00",
+  "documentaryProjects": {
+    "count": 1,
+    "linkedContracts": 3,
+    "method": "Rapprochement manuel par objet explicite, acheteur et événement. Aucun score collectif, aucune somme financière, aucune propagation de constat officiel.",
+    "projectIds": [
+      "paris-commemoration-13-novembre-2025"
+    ],
+    "supplierNames": "Trois dénominations confirmées par l’API publique Recherche d’entreprises, SIRET conservé.",
+    "pressEvidence": "RMC 26/07/2025 et Le Parisien 17/10/2025 ; faits rapportés, pas preuve d’un contrat ou d’un paiement antérieur."
+  },
+  "currentIndex": {
+    "version": "3.0",
+    "report": "score-v3-review.json",
+    "note": "Earlier rule/count sections describe their preparation version, not the active v3 index. Source cohorts unchanged; unknown scores are null, findings separate."
+  }
+}

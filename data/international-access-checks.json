@@ -1,0 +1,121 @@
+{
+  "retrieved_utc_note": "Per-request start timestamps; small anonymous metadata/API checks, not bulk cohorts. HTML access does not establish API availability or a reuse licence. Failed attempts are retained.",
+  "checks": [
+    {
+      "label": "Paraguay DNCP OCDS API Swagger",
+      "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/swagger.json",
+      "retrieved_utc": "2026-09-21T09:02:11.452550Z",
+      "http_status": 200,
+      "response_type": "application/json",
+      "bytes_read": 27139,
+      "documented_path_count": 30,
+      "global_security": [
+        {
+          "Bearer Auth": []
+        }
+      ],
+      "api_version": "1.0"
+    },
+    {
+      "label": "Colombia SECOP II dataset metadata",
+      "url": "https://www.datos.gov.co/api/views/jbjy-vk9h",
+      "retrieved_utc": "2026-09-21T09:02:13.181176Z",
+      "http_status": 200,
+      "response_type": "application/json",
+      "bytes_read": 32740,
+      "dataset_name": "SECOP II - Contratos Electrónicos",
+      "license_id": "CC_40_BY_SA",
+      "publication_stage": "published",
+      "description": "Información de los contratos registrados en SECOP II desde su lanzamiento"
+    },
+    {
+      "label": "Colombia SECOP II one-row API",
+      "url": "https://www.datos.gov.co/resource/jbjy-vk9h.json?$limit=1",
+      "retrieved_utc": "2026-09-21T09:02:14.295179Z",
+      "http_status": 200,
+      "response_type": "application/json",
+      "bytes_read": 4030,
+      "json_array_count": 1,
+      "sample_preserved": false
+    },
+    {
+      "label": "Brazil PNCP contracts API one-page query",
+      "url": "https://pncp.gov.br/api/consulta/v1/contratos?dataInicial=20240101&dataFinal=20240102&pagina=1&tamanhoPagina=1",
+      "retrieved_utc": "2026-09-21T09:02:15.440984Z",
+      "http_status": 400,
+      "response_type": "application/json",
+      "bytes_read": 160,
+      "error": "HTTP error; no interpretation of body"
+    },
+    {
+      "label": "Paraguay DNCP API documentation UI",
+      "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/",
+      "retrieved_utc": "2026-09-21T09:02:39.191956Z",
+      "http_status": 200,
+      "response_type": "text/html",
+      "bytes_read": 9510
+    },
+    {
+      "label": "Brazil PNCP contracts API default-page query (timed out)",
+      "url": "https://pncp.gov.br/api/consulta/v1/contratos?dataInicial=20240101&dataFinal=20240102&pagina=1",
+      "retrieved_utc": "2026-09-21T09:03:40.882793Z",
+      "error": "TimeoutError('The read operation timed out')"
+    },
+    {
+      "label": "Brazil PNCP bounded page, 10 maximum requested",
+      "url": "https://pncp.gov.br/api/consulta/v1/contratos?dataInicial=20250101&dataFinal=20250101&pagina=1&tamanhoPagina=10",
+      "retrieved_utc": "2026-09-21T09:12:50.300065+00:00",
+      "authentication": "no token or credentials sent",
+      "error": "The read operation timed out"
+    },
+    {
+      "label": "Moldova official open-data page",
+      "url": "https://mtender.gov.md/public/open-data",
+      "retrieved_utc": "2026-09-21T09:12:50.302520+00:00",
+      "authentication": "no token or credentials sent",
+      "http_status": 200,
+      "response_type": "text/html; charset=UTF-8",
+      "bytes_read": 21517,
+      "truncated": false,
+      "sample_preserved": false
+    },
+    {
+      "label": "Ukraine Prozorro public tender index, one item",
+      "url": "https://public.api.openprocurement.org/api/2.5/tenders?limit=1",
+      "retrieved_utc": "2026-09-21T09:12:50.304069+00:00",
+      "authentication": "no token or credentials sent",
+      "http_status": 200,
+      "response_type": "application/json",
+      "bytes_read": 413,
+      "truncated": false,
+      "top_level_keys": [
+        "data",
+        "next_page"
+      ],
+      "data_array_count": 1,
+      "sample_preserved": false
+    },
+    {
+      "label": "TED official XML for an already UUID-verified notice",
+      "url": "https://ted.europa.eu/en/notice/8206-2025/xml",
+      "retrieved_utc": "2026-09-21T09:12:50.305677+00:00",
+      "authentication": "no token or credentials sent",
+      "http_status": 200,
+      "response_type": "application/xml",
+      "bytes_read": 14193,
+      "truncated": false,
+      "sample_preserved": false
+    },
+    {
+      "label": "Paraguay DNCP official data portal",
+      "url": "https://www.contrataciones.gov.py/datos/",
+      "retrieved_utc": "2026-09-21T09:12:50.308424+00:00",
+      "authentication": "no token or credentials sent",
+      "http_status": 200,
+      "response_type": "text/html; charset=UTF-8",
+      "bytes_read": 11893,
+      "truncated": false,
+      "sample_preserved": false
+    }
+  ]
+}

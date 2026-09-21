@@ -1,0 +1,90 @@
+{
+  "source": "BOAMP / DILA — données publiques des avis d’attribution",
+  "endpoint": "https://www.boamp.fr/api/explore/v2.1/catalog/datasets/boamp/records",
+  "query": "nature='ATTRIBUTION' AND dateparution >= '2025-02-01' AND dateparution < '2025-05-01'",
+  "retrievedAt": "2026-09-13T15:59:28.796214+00:00",
+  "period": {
+    "startInclusive": "2025-02-01",
+    "endExclusive": "2025-05-01",
+    "basis": "Date de publication BOAMP, pas date de signature"
+  },
+  "retrieval": {
+    "apiTotalCount": 8386,
+    "recordsDownloaded": 8386,
+    "pageSize": 100,
+    "offsets": "0..8300"
+  },
+  "processing": {
+    "records": 8386,
+    "eligible_awarded_supplier": 16002,
+    "distinct_notice_lot_ids": 15432,
+    "conflicting_notice_lot_ids_excluded": 236,
+    "identical_duplicate_rows": 0,
+    "unique_eligible_lots": 15196,
+    "unsupportedSchemaRecords": 2153
+  },
+  "sampling": {
+    "method": "Après exclusion des cas ambigus et déduplication des lignes identiques : tri SHA-256 de l’identifiant boamp-{idweb}-{lot-id en minuscules}, puis 3 000 premières lignes. Aucun filtre sur montant, nombre d’offres ou score.",
+    "selectedLots": 3000,
+    "retainedMaugesLots": 2,
+    "retainedAuditCases": 8,
+    "totalRows": 3010
+  },
+  "fieldAvailabilityImported": {
+    "date": 2978,
+    "amount": 2248,
+    "offers": 1188,
+    "durationMonths": 979,
+    "directAward": 2926
+  },
+  "mapping": {
+    "supplier": "LotResult attribué (selec-w) → LotTender → TenderingParty → tous les Tenderer → Organizations/Company. Tous les membres identifiés sont réunis dans le champ fournisseur.",
+    "amount": "LotTender/cac:LegalMonetaryTotal/cbc:PayableAmount, uniquement EUR, fini et non négatif. Aucune substitution par total d’avis ou plafond.",
+    "offers": "ReceivedSubmissionsStatistics, efbc:StatisticsCode exactement tenders, nombre entier non négatif. Jamais t-esubm (offres électroniques seulement), part-req, offres de PME ou autres sous-ensembles.",
+    "durationMonths": "ProcurementProjectLot/ProcurementProject/PlannedPeriod/DurationMeasure uniquement unitCode MONTH ; durée initiale, sans conversion ni reconductions.",
+    "date": "SettledContract/IssueDate, partie date ; pas la date de publication.",
+    "directAward": "true seulement neg-wo-call ; false pour open, restricted, comp-dial, neg-w-call, innovation ; null sinon.",
+    "officialFinding": "null pour tous les lots importés : aucun rapprochement automatique avec des audits.",
+    "dataStatus": "verified signifie transcription structurée depuis une source publique avec contrôles de schéma et vérifications ponctuelles ; pas examen humain exhaustif ni certification juridique."
+  },
+  "limitations": [
+    "Échantillon non exhaustif, non représentatif de toute la commande publique française ; biais de couverture BOAMP, de période, de format et de disponibilité des champs.",
+    "2 153 avis hors structure eForms ContractAwardNotice attendue sont exclus, notamment FNSimple.",
+    "Les résultats sans attribution selec-w, sans titulaire résolu, avec plusieurs références LotTender ou plusieurs contrats SettledContract sont exclus. Les identifiants avis/lot présentant des variantes contradictoires sont exclus plutôt que de choisir arbitrairement un gagnant.",
+    "Des avis distincts peuvent encore concerner un même achat, notamment des rectificatifs : pas de déduplication inter-avis ni de total national des dépenses.",
+    "Les durées en jours, années ou dates de début/fin restent inconnues dans ce premier import conservateur.",
+    "Un total d’offres absent reste inconnu même si un nombre d’offres électroniques est présent.",
+    "Les valeurs publiées peuvent comporter des erreurs ; les montants ne sont pas nécessairement les paiements définitifs. Les dates de signature peuvent être antérieures à la fenêtre de publication.",
+    "Aucun exemple fictif. Huit dossiers CRC documentés manuellement, dont Rognac qui agrège plusieurs contrats."
+  ],
+  "auditFindings": {
+    "count": 8,
+    "newCases": 5,
+    "newSourceReports": 2,
+    "matching": "Dossiers CRC autonomes, sans rattachement présumé aux lots BOAMP de 2025. Aucun constat propagé aux autres marchés d’une commune ou d’un fournisseur.",
+    "scopes": {
+      "contract": 3,
+      "aggregate": 5
+    },
+    "sources": [
+      "https://www.ccomptes.fr/fr/publications/commune-de-rognac-bouches-du-rhone-1",
+      "https://www.ccomptes.fr/fr/publications/commune-de-saint-sebastien-sur-loire-loire-atlantique-1",
+      "https://www.ccomptes.fr/fr/publications/commune-de-la-chapelle-sur-erdre-loire-atlantique-1",
+      "https://www.ccomptes.fr/fr/publications/commune-de-saint-andre-la-reunion-cahier-ndeg-2-la-situation-financiere-la-gestion-des",
+      "https://www.ccomptes.fr/fr/publications/commune-de-mamoudzou-mayotte-cahier-ndeg2-la-commande-publique"
+    ],
+    "verifiedAt": "2026-09-13T20:46:02.908199+00:00"
+  },
+  "identifierEnrichment": {
+    "boampLots": 3002,
+    "buyerSiretKnown": 1858,
+    "cpvKnown": 3002,
+    "mapping": "eForms ContractingParty et Organizations pour les identifiants acheteur, LotTender/TenderingParty pour les titulaires. Identifiants CON/LOT locaux à l’avis, pas équivalents à un identifiant DECP.",
+    "crossSourceMerge": false
+  },
+  "currentIndex": {
+    "version": "3.0",
+    "report": "score-v3-review.json",
+    "note": "Earlier rule/count sections describe their preparation version, not the active v3 index. Source cohorts unchanged; unknown scores are null, findings separate."
+  }
+}
