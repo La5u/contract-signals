@@ -11,8 +11,8 @@ The working project is at:
 ```
 
 - The user confirmed the final repository/product name: **`contract-signals`** (the directory rename was intentional). The handoff’s earlier candidates are obsolete.
-- Git is now **initialized on branch `main`** with a single root commit `aab438f` containing all 130 files (datasets, PDFs, raw BOAMP/TED evidence included). Working tree is clean.
-- No remote is configured yet. Publishing to GitHub under `contract-signals` is the outstanding step; ask/let the user do it (do not push without explicit request).
+- Git is now **initialized on branch `main`** with a root commit `aab438f` (migration) and `718e4fd` (handoff refresh). Working tree is clean.
+- **Published**: remote `origin = git@github.com:La5u/contract-signals.git`, `main` pushed and tracking (SHA-verified). No `gh` CLI on this machine; pushes go through the SSH remote.
 - `HANDOFF.md` itself is committed; update it as work continues.
 
 ## 2. Product direction — English-first migration COMPLETE
@@ -100,6 +100,6 @@ Recommendation order stands: **Colombia/SECOP II first** (verified anonymous HTT
 
 ## 9. Next steps for the next session
 
-1. **Publish to GitHub** as `contract-signals` (user should create/push, or give explicit go-ahead).
+1. ~~Publish to GitHub~~ — **done** (`git@github.com:La5u/contract-signals.git`, pushed 2026-09-21).
 2. Optionally start the **Colombia SECOP II pilot scoping** (3 pre-selected buyers, 24-month window, verify process–contract–supplier joins before any indicator claims).
 3. If a French UI is ever requested again, plan a proper string-extraction pass first (no dictionary exists yet).
