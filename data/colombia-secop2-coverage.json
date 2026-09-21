@@ -1,0 +1,111 @@
+{
+ "source": "https://www.datos.gov.co/resource/jbjy-vk9h.json",
+ "metadataUrl": "https://www.datos.gov.co/api/views/jbjy-vk9h",
+ "license": "Creative Commons Attribution | Share Alike 4.0 International (CC BY-SA 4.0)",
+ "attribution": "Agencia Nacional de Contratación Pública - Colombia Compra Eficiente, Bogotá D.C.",
+ "userAgent": "contract-signals/0.1 (static transparency explorer; offline-first)",
+ "cohort": {
+  "announcedBeforeDownload": true,
+  "selectionBasis": "Administrative-level diversity and documented volumes only (count queries); no score, indicator or anomaly was consulted.",
+  "window": {
+   "field": "fecha_de_firma",
+   "startInclusive": "2024-09-01",
+   "endExclusive": "2026-09-01"
+  },
+  "buyers": [
+   {
+    "key": "men",
+    "level": "Nacional",
+    "nit": "899999001",
+    "name": "MINISTERIO DE EDUCACION NACION (MEN)",
+    "match": {
+     "field": "nit_entidad",
+     "value": "899999001"
+    }
+   },
+   {
+    "key": "caldas",
+    "level": "Departamental",
+    "nit": "890801052",
+    "name": "GOBERNACION DE CALDAS",
+    "match": {
+     "field": "nit_entidad",
+     "value": "890801052"
+    }
+   },
+   {
+    "key": "usaquen",
+    "level": "Municipal-local (Bogotá)",
+    "nit": "899999061",
+    "name": "ALCALDIA LOCAL DE USAQUEN",
+    "match": {
+     "field": "nombre_entidad",
+     "value": "ALCALDIA LOCAL DE USAQUEN"
+    },
+    "note": "Generic shared district NIT; exact entity-name match, NIT kept as-is."
+   }
+  ]
+ },
+ "retrieval": {
+  "startedAt": "2026-09-21T23:13:04.407712+00:00",
+  "finishedAt": "2026-09-21T23:14:38.127584+00:00",
+  "totalRawRows": 7560,
+  "pageSize": 1000
+ },
+ "normalization": {
+  "language": "Original Spanish preserved verbatim; no translation.",
+  "currency": "COP only; no conversion, no cross-currency sums.",
+  "duration": "duraci_n_del_contrato kept as original free text; never parsed into months.",
+  "identityCaveat": "Bogotá alcaldías locales share the generic NIT 899999061; Usaquén is matched by exact entity name and the shared NIT is kept as-is. Entity names keep their original noise (//, *, etc.).",
+  "rowIdentity": "secop2-{buyerKey}-{id_contrato}; verified unique below."
+ },
+ "counts": {
+  "rawRows": 7560,
+  "normalizedRows": 7560,
+  "perBuyer": {
+   "Departamental": {
+    "rows": 3696,
+    "withAmount": 3696,
+    "withSupplierId": 3696
+   },
+   "Municipal-local (Bogotá)": {
+    "rows": 1246,
+    "withAmount": 1246,
+    "withSupplierId": 1246
+   },
+   "Nacional": {
+    "rows": 2618,
+    "withAmount": 2618,
+    "withSupplierId": 2618
+   }
+  }
+ },
+ "joinVerification": {
+  "rows": 7560,
+  "rowsWithContractId": 7560,
+  "rowsWithProcessId": 7560,
+  "rowsWithSupplierName": 7560,
+  "rowsWithSupplierIdentifier": 7560,
+  "rowsWithProcessUrl": 7560,
+  "rowsWithDeclaredAmount": 7560,
+  "duplicateExtractIds": 0,
+  "verdict": "Each SECOP II row already carries its process, contract and supplier declaration; the join is intra-row, so it does not depend on a second source. Completeness is documented above, not assumed.",
+  "notClaimed": "No offers/proposals and no payment-reconciliation indicators are claimed: this dataset alone does not provide an offers table, and paid amounts are declarations, not audited payments."
+ },
+ "limitations": [
+  "Not exhaustive: only the three announced buyers in the 24-month window.",
+  "SECOP II contract rows are declarations; amounts and statuses are not audited payments.",
+  "No offers/proposals table was downloaded; competition indicators are NOT claimed.",
+  "No country ranking, no currency conversion, no comparison with French cohorts.",
+  "No heuristic indicators are implemented for Colombia yet; every row stays 'Not assessed'."
+ ],
+ "reproduction": [
+  "python tools/import-colombia-secop2.py --download",
+  "python tools/import-colombia-secop2.py --offline",
+  "node tests/colombia.cjs"
+ ],
+ "currentIndex": {
+  "version": "3.0",
+  "note": "Pointer to the active French method; no Colombian scoring exists yet."
+ }
+}

@@ -1,6 +1,6 @@
 # Project handoff
 
-Updated: 2026-09-21 (evening — after the English-first migration)
+Updated: 2026-09-22 (Colombia/SECOP II pilot implemented)
 
 ## 1. Location, name and repository — RESOLVED
 
@@ -86,9 +86,11 @@ Playwright is test-only in `/tmp/procurement-browser` (still installed; Chromium
 - `data/score-v3-review.json` — regenerated (new script hash).
 - `.gitignore` — new (`__pycache__/`, `*.pyc`, OS cruft).
 
-## 7. International expansion (unchanged, next workstream)
+## 7. International expansion — COLOMBIA PILOT IMPLEMENTED, next is Paraguay
 
-Recommendation order stands: **Colombia/SECOP II first** (verified anonymous HTTP 200, `CC_40_BY_SA`), Paraguay conditionally (Bearer security declared; no real OCID yet), Brazil later (PNCP access not established), Ukraine/Moldova/TED-EU as lighter options. Details: `docs/international-pilots.md` (English), checks: `data/international-access-checks.json`, checker: `tools/check-international-access.py`. No foreign country imported yet; no CPI-driven selection.
+**Colombia/SECOP II (done, 2026-09-22):** first international cohort. Three buyers announced before download (MEN national / Gobernación de Caldas departmental / Alcaldía Local de Usaquén municipal-local), 7,560 rows, 24-month signature window, raw pages under `data/colombia-secop2/raw/` (28 MB), extract 15 MB, coverage with `joinVerification` (100 % intra-row join: contract + process + typed supplier ID + URL on every row). Spanish verbatim, COP only, no conversion. **Zero Colombian heuristics: every row “Not assessed”** — do not port French rules; “Contratación directa” ≈ 82 % of the cohort is legal context, not a signal. Importer: `tools/import-colombia-secop2.py` (--download / --offline). Tests: `tests/colombia.cjs` (68,068 assertions) + browser checks. Licence CC BY-SA 4.0 verified.
+
+**Next: Paraguay (conditional)** — DNCP/OCDS reachable but global Bearer security declared; confirm authorized access, quotas, licence and one real OCID before importing anything. **Brazil** stays blocked (PNCP access not established). Ukraine/Moldova/TED-EU remain lighter options. Checks: `data/international-access-checks.json`, checker: `tools/check-international-access.py`. No CPI-driven selection, ever.
 
 ## 8. Cautions carried forward
 
@@ -102,5 +104,5 @@ Recommendation order stands: **Colombia/SECOP II first** (verified anonymous HTT
 ## 9. Next steps for the next session
 
 1. ~~Publish to GitHub~~ — **done** (`git@github.com:La5u/contract-signals.git`, pushed 2026-09-21).
-2. Optionally start the **Colombia SECOP II pilot scoping** (3 pre-selected buyers, 24-month window, verify process–contract–supplier joins before any indicator claims).
+2. ~~Colombia SECOP II pilot~~ — **implemented** (see section 7). Next: design jurisdiction-specific Colombian indicators from the imported fields (modality + justification, supplier repetition, amounts) without copying French thresholds, then the Paraguay access validation.
 3. If a French UI is ever requested again, plan a proper string-extraction pass first (no dictionary exists yet).

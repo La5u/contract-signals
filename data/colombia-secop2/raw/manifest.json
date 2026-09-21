@@ -1,0 +1,114 @@
+{
+ "dataset": "https://www.datos.gov.co/resource/jbjy-vk9h.json",
+ "metadata": "https://www.datos.gov.co/api/views/jbjy-vk9h",
+ "license": "Creative Commons Attribution | Share Alike 4.0 International (CC BY-SA 4.0)",
+ "attribution": "Agencia Nacional de Contratación Pública - Colombia Compra Eficiente, Bogotá D.C.",
+ "window": {
+  "startInclusive": "2024-09-01",
+  "endExclusive": "2026-09-01",
+  "basis": "fecha_de_firma (signature date), per cohort announcement"
+ },
+ "cohortAnnouncedBeforeDownload": true,
+ "retrievalStartedAt": "2026-09-21T23:13:04.407712+00:00",
+ "buyers": [
+  {
+   "key": "men",
+   "level": "Nacional",
+   "nit": "899999001",
+   "name": "MINISTERIO DE EDUCACION NACION (MEN)",
+   "match": {
+    "field": "nit_entidad",
+    "value": "899999001"
+   }
+  },
+  {
+   "key": "caldas",
+   "level": "Departamental",
+   "nit": "890801052",
+   "name": "GOBERNACION DE CALDAS",
+   "match": {
+    "field": "nit_entidad",
+    "value": "890801052"
+   }
+  },
+  {
+   "key": "usaquen",
+   "level": "Municipal-local (Bogotá)",
+   "nit": "899999061",
+   "name": "ALCALDIA LOCAL DE USAQUEN",
+   "match": {
+    "field": "nombre_entidad",
+    "value": "ALCALDIA LOCAL DE USAQUEN"
+   },
+   "note": "Generic shared district NIT; exact entity-name match, NIT kept as-is."
+  }
+ ],
+ "pageSize": 1000,
+ "pages": [
+  {
+   "buyer": "men",
+   "offset": 0,
+   "rows": 1000,
+   "file": "data/colombia-secop2/raw/page-men-00000.json",
+   "url": "https://www.datos.gov.co/resource/jbjy-vk9h.json?%24limit=1000&%24offset=0&%24where=fecha_de_firma+%3E%3D+%272024-09-01%27+AND+fecha_de_firma+%3C+%272026-09-01%27+AND+nit_entidad+%3D+%27899999001%27&%24order=id_contrato%2C+proceso_de_compra"
+  },
+  {
+   "buyer": "men",
+   "offset": 1000,
+   "rows": 1000,
+   "file": "data/colombia-secop2/raw/page-men-00001.json",
+   "url": "https://www.datos.gov.co/resource/jbjy-vk9h.json?%24limit=1000&%24offset=1000&%24where=fecha_de_firma+%3E%3D+%272024-09-01%27+AND+fecha_de_firma+%3C+%272026-09-01%27+AND+nit_entidad+%3D+%27899999001%27&%24order=id_contrato%2C+proceso_de_compra"
+  },
+  {
+   "buyer": "men",
+   "offset": 2000,
+   "rows": 618,
+   "file": "data/colombia-secop2/raw/page-men-00002.json",
+   "url": "https://www.datos.gov.co/resource/jbjy-vk9h.json?%24limit=1000&%24offset=2000&%24where=fecha_de_firma+%3E%3D+%272024-09-01%27+AND+fecha_de_firma+%3C+%272026-09-01%27+AND+nit_entidad+%3D+%27899999001%27&%24order=id_contrato%2C+proceso_de_compra"
+  },
+  {
+   "buyer": "caldas",
+   "offset": 0,
+   "rows": 1000,
+   "file": "data/colombia-secop2/raw/page-caldas-00000.json",
+   "url": "https://www.datos.gov.co/resource/jbjy-vk9h.json?%24limit=1000&%24offset=0&%24where=fecha_de_firma+%3E%3D+%272024-09-01%27+AND+fecha_de_firma+%3C+%272026-09-01%27+AND+nit_entidad+%3D+%27890801052%27&%24order=id_contrato%2C+proceso_de_compra"
+  },
+  {
+   "buyer": "caldas",
+   "offset": 1000,
+   "rows": 1000,
+   "file": "data/colombia-secop2/raw/page-caldas-00001.json",
+   "url": "https://www.datos.gov.co/resource/jbjy-vk9h.json?%24limit=1000&%24offset=1000&%24where=fecha_de_firma+%3E%3D+%272024-09-01%27+AND+fecha_de_firma+%3C+%272026-09-01%27+AND+nit_entidad+%3D+%27890801052%27&%24order=id_contrato%2C+proceso_de_compra"
+  },
+  {
+   "buyer": "caldas",
+   "offset": 2000,
+   "rows": 1000,
+   "file": "data/colombia-secop2/raw/page-caldas-00002.json",
+   "url": "https://www.datos.gov.co/resource/jbjy-vk9h.json?%24limit=1000&%24offset=2000&%24where=fecha_de_firma+%3E%3D+%272024-09-01%27+AND+fecha_de_firma+%3C+%272026-09-01%27+AND+nit_entidad+%3D+%27890801052%27&%24order=id_contrato%2C+proceso_de_compra"
+  },
+  {
+   "buyer": "caldas",
+   "offset": 3000,
+   "rows": 696,
+   "file": "data/colombia-secop2/raw/page-caldas-00003.json",
+   "url": "https://www.datos.gov.co/resource/jbjy-vk9h.json?%24limit=1000&%24offset=3000&%24where=fecha_de_firma+%3E%3D+%272024-09-01%27+AND+fecha_de_firma+%3C+%272026-09-01%27+AND+nit_entidad+%3D+%27890801052%27&%24order=id_contrato%2C+proceso_de_compra"
+  },
+  {
+   "buyer": "usaquen",
+   "offset": 0,
+   "rows": 1000,
+   "file": "data/colombia-secop2/raw/page-usaquen-00000.json",
+   "url": "https://www.datos.gov.co/resource/jbjy-vk9h.json?%24limit=1000&%24offset=0&%24where=fecha_de_firma+%3E%3D+%272024-09-01%27+AND+fecha_de_firma+%3C+%272026-09-01%27+AND+nombre_entidad+%3D+%27ALCALDIA+LOCAL+DE+USAQUEN%27&%24order=id_contrato%2C+proceso_de_compra"
+  },
+  {
+   "buyer": "usaquen",
+   "offset": 1000,
+   "rows": 246,
+   "file": "data/colombia-secop2/raw/page-usaquen-00001.json",
+   "url": "https://www.datos.gov.co/resource/jbjy-vk9h.json?%24limit=1000&%24offset=1000&%24where=fecha_de_firma+%3E%3D+%272024-09-01%27+AND+fecha_de_firma+%3C+%272026-09-01%27+AND+nombre_entidad+%3D+%27ALCALDIA+LOCAL+DE+USAQUEN%27&%24order=id_contrato%2C+proceso_de_compra"
+  }
+ ],
+ "retrievalFinishedAt": "2026-09-21T23:14:38.127584+00:00",
+ "totalRows": 7560
+}
