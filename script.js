@@ -185,7 +185,7 @@ function getVigilanceScore(contract) { return getScoreBreakdown(contract).score;
 
 function getAmountEvolution(contract) {
   const unavailable = reason => ({ status: 'unavailable', reason });
-  if (contract.dataFamily !== 'decp' || !Array.isArray(contract.history)) return unavailable('DECP history not available.');
+  if (contract.dataFamily !== 'decp' || !Array.isArray(contract.history)) return unavailable('Published contract history not available for this record; increase check not applicable.');
   if (contract.identityAmbiguous) return unavailable('Duplicate identifier: calculation excluded.');
   if (!Array.isArray(contract.initialConflicts) || contract.initialConflicts.length) return unavailable('Diverging initial values: no increase calculation.');
   if (Array.isArray(contract.modificationConflicts) && contract.modificationConflicts.length) return unavailable('Diverging modification values for the same identifier: no increase calculation.');
@@ -390,7 +390,7 @@ function validateContracts(data) {
     }
     if (c.findingScope != null && !['contract', 'aggregate'].includes(c.findingScope)) throw new Error(`${c.id} : invalid finding scope.`);
     if (c.amountQualifier != null && !['at-least', 'more-than', 'approximate'].includes(c.amountQualifier)) throw new Error(`${c.id} : invalid amount qualifier.`);
-    if (c.dataFamily != null && !['decp', 'boamp', 'audit'].includes(c.dataFamily)) throw new Error(`${c.id} : invalid data family.`);
+    if (c.dataFamily != null && !['decp', 'boamp', 'audit', 'secop2'].includes(c.dataFamily)) throw new Error(`${c.id} : invalid data family.`);
     if (c.buyerSiret != null && !/^\d{14}$/.test(c.buyerSiret)) throw new Error(`${c.id} : invalid buyer SIRET.`);
     if (c.supplierIds != null && (!Array.isArray(c.supplierIds) || c.supplierIds.some(s => !s || typeof s.id !== 'string' || (s.identifierType != null && typeof s.identifierType !== 'string')))) throw new Error(`${c.id} : invalid supplier identifiers.`);
     if (c.supplierProfiles != null) {
@@ -538,10 +538,13 @@ function startExplorer() {
     cities: { path: 'data/decp-cities.json', coverage: 'data/decp-cities-coverage.json', note: 'Six pre-selected municipalities: Rennes, Nantes, Bordeaux, Grenoble, Dijon and Tours (not the metro areas). Notifications 2024–2025: 1,865 published rows, 1,270 buyer/identifier groups, of which 172 ambiguous ones excluded from calculations. 355 groups with published modifications. Non-representative cohort, not all spending. 100 SIRENs enriched out of 703 identified: current names and status, not verified at the contract date. Separate datasets, no cross-source sums.' },
     consultations: { path: 'data/consultations.json', coverage: 'data/consultations-coverage.json', note: '10 initial BOAMP notices from 3 February 2025, first identifiers among 200, selected before any calculation. One correction and three award notices linked explicitly. Notice-level rows, not attributed contracts or expenses. Chains not certified complete: no bidding-period score in this extract. No independent TED download.' },
     decp: { path: 'data/decp-history.json', coverage: 'data/decp-coverage.json', note: 'Exploratory 24-month history: 2,594 DECP contracts from Paris and Ardèche, notified in 2024–2025. Every row returned by the source for these two SIRETs was examined; this does not guarantee that all actual purchases were published. Paris was chosen for volume, Ardèche for the availability of modifications: this choice is not representative. Modifications may be later than 2025. Suppliers identified by SIRET; three names in the Paris dossier are confirmed by the Annuaire des entreprises. The eight official findings are in the other dataset.' },
-    boamp: { path: 'data/contracts.json', coverage: 'data/coverage.json', note: '3,010 records: 3,000 BOAMP lots sampled from February–April 2025 publications, two Mauges lots and eight documented CRC dossiers. Some findings concern sets of orders, not an individual award. A finding does not extend to a municipality’s other purchases. This sample does not allow an exhaustive competition history to be computed.' }
+    boamp: { path: 'data/contracts.json', coverage: 'data/coverage.json', note: '3,010 records: 3,000 BOAMP lots sampled from February–April 2025 publications, two Mauges lots and eight documented CRC dossiers. Some findings concern sets of orders, not an individual award. A finding does not extend to a municipality’s other purchases. This sample does not allow an exhaustive competition history to be computed.' },
+    colombia: { path: 'data/colombia-secop2.json', coverage: 'data/colombia-secop2-coverage.json', note: 'SECOP II pilot · Colombia · three buyers announced before download · signatures 2024-09 → 2026-09: 7,560 contracts (Ministerio de Educación Nacional 2,618, national; Gobernación de Caldas 3,696, departmental; Alcaldía Local de Usaquén 1,246, municipal-local). Fields kept verbatim in Spanish; amounts in COP, never converted. The declared modality and its published justification are documentary context without points. No Colombian indicator exists yet: every row stays “Not assessed”, never zero. Licence CC BY-SA 4.0 (Colombia Compra Eficiente); not exhaustive of each buyer’s procurement; no offers table was imported, so no competition indicator is claimed.' }
   };
   const provenance = { verified: 'Documented · public source', unverified: 'To verify · research lead', synthetic: 'Fictional · pedagogical comparison' };
   const money = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2 });
+  const moneyCop = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
+  const moneyFor = c => c.dataFamily === 'secop2' ? moneyCop : money;
   const dateFormat = new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'short', year: 'numeric' });
   let contracts = [];
   let loaded = false;
@@ -668,7 +671,7 @@ function startExplorer() {
       const sector = getSector(c);
       const sectorCell = element('td', sector.label);
       sectorCell.append(element('small', c.cpv || 'unknown CPV', 'provenance'));
-      row.append(objectCell, sectorCell, element('td', c.amount == null ? '—' : amountPrefix + money.format(c.amount), 'numeric'), element('td', c.offers ?? '—', 'numeric'));
+      row.append(objectCell, sectorCell, element('td', c.amount == null ? '—' : amountPrefix + moneyFor(c).format(c.amount), 'numeric'), element('td', c.offers ?? '—', 'numeric'));
       const badges = element('td');
       if (indicators.length) indicators.forEach(i => {
         const badge = element('span', `${i.label} · ${i.weight} pts · ${i.severityLabel.toLocaleLowerCase('en')}`, `badge severity-${i.severity}${i.id === 'official-finding' ? ' official' : ''}`);
@@ -756,7 +759,22 @@ function startExplorer() {
         (timeline.exclusions || []).forEach(reason => cell.append(element('p', reason)));
         cell.append(element('p', 'An award notice linked to this notice does not prove a match for every lot; no amount, holder or finding is transferred.'));
       }
-      if (c.dataFamily === 'decp') {
+      if (c.dataFamily === 'secop2') {
+        cell.append(element('h3', 'SECOP II — declared procedure and justification'),
+          element('p', `Declared modality: ${c.procedure || '—'} · Contract status: ${c.contractStatus || '—'} · Contract type: ${c.contractType || '—'}.`),
+          element('p', `Published justification of the modality: ${c.procedureJustification || '—'}. This is the buyer’s declared ground, kept verbatim in Spanish. It is documentary context: it earns no points and its legal validity is not assessed here.`));
+        if (c.processUrl) {
+          const processParagraph = element('p', 'Process page on the official portal: ');
+          const processLink = element('a', 'SECOP II — detalle del proceso');
+          processLink.href = safeSource(c.processUrl); processLink.target = '_blank'; processLink.rel = 'noopener noreferrer';
+          processParagraph.append(processLink);
+          cell.append(processParagraph);
+        }
+        cell.append(
+          element('p', `Amounts: declared ${c.amount == null ? '—' : moneyCop.format(c.amount)} · paid ${c.amountPaid == null ? '—' : moneyCop.format(c.amountPaid)} · invoiced ${c.amountInvoiced == null ? '—' : moneyCop.format(c.amountInvoiced)}. Paid and invoiced values are platform declarations, not audited payments, and are never summed. Amounts play no role in the (not yet defined) Colombian indicators.`));
+        if (c.supplierIds?.length) cell.append(element('p', `Supplier document: ${c.supplierIds[0].identifierType} ${c.supplierIds[0].id}. A personal or tax identifier identifies the declared holder; it implies no suspicion and no link to other contracts by itself.`));
+        cell.append(element('p', `Pilot cohort: ${c.buyerLevel} buyer, signature window 2024-09 → 2026-09. Not exhaustive of the buyer’s procurement; no offers table was imported, so no competition indicator is computed. All rows remain “Not assessed” until jurisdiction-specific rules are designed and documented.`));
+      } else if (c.dataFamily === 'decp') {
         cell.append(element('h3', 'Published contract history'));
         cell.append(element('p', `Price form: ${c.priceForm || '—'} · Type: ${c.priceType || '—'}. Declared amounts, not observed payments.`));
         if (c.initialConflicts?.length) {
