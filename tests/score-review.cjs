@@ -13,9 +13,12 @@ for(const [name,d] of Object.entries(report.datasets)){
  }
  assert(d.reviewQueue.every(x=>x.reviewStatus==='queued-not-ground-truth'));
 }
-for(const f of ['coverage','decp-coverage','decp-cities-coverage','consultations-coverage','tours-notices-coverage'])assert.equal(JSON.parse(fs.readFileSync(`data/${f}.json`)).currentIndex.version,'3.0');
+for(const f of ['coverage','decp-coverage','decp-cities-coverage','consultations-coverage','tours-notices-coverage','colombia-secop2-coverage'])assert.equal(JSON.parse(fs.readFileSync(`data/${f}.json`)).currentIndex.version,'3.0');
 const checks=JSON.parse(fs.readFileSync('data/international-access-checks.json')).checks;
 assert(checks.some(c=>c.url.includes('jbjy-vk9h.json')&&c.http_status===200));
 assert(checks.some(c=>c.url.includes('swagger.json')&&c.global_security));
 assert(checks.filter(c=>c.url.includes('pncp.gov.br/api')).every(c=>c.http_status!==200),'No successful PNCP response was recorded in these checks.');
+assert(checks.some(c=>c.url.includes('/ocds/record/ocds-03ad3f')&&c.http_status===200&&c.license&&c.license.includes('creativecommons.org/licenses/by/4.0')),'Paraguay record must be 200 with CC BY 4.0.');
+assert(checks.some(c=>c.url.includes('/search/processes')&&c.http_status===200),'Paraguay date-filtered search must be 200.');
+assert(checks.some(c=>c.url.includes('/parameters/parameters')&&c.http_status===200),'Paraguay parameters catalogue must be 200.');
 console.log('Review report source hashes, counts, sensitivity bounds, version pointers and international access claims verified.');

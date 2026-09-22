@@ -78,6 +78,65 @@ function getSupplierIdentity(contract) {
   return (contract.supplierIds || []).length === 1 && ids.length === 1 ? ids[0] : null;
 }
 
+// ------------------------------------------------------------------
+// SECOP II (Colombia pilot) — jurisdiction-specific check set.
+// Framework v3.0 (families, maxima, null semantics) with Colombian
+// eligibility and thresholds; method: docs/score-colombia.md.
+// French thresholds are never applied to these rows.
+// ------------------------------------------------------------------
+const CO_COMPETITIVE_MODALITIES = new Set([
+  'Licitación pública', 'Licitación pública Obra Publica',
+  'Selección Abreviada de Menor Cuantía', 'Selección abreviada subasta inversa',
+  'Concurso de méritos abierto', 'Seleccion Abreviada Menor Cuantia Sin Manifestacion Interes',
+]);
+const CO_DIRECT_MODALITIES = new Set([
+  'Contratación directa', 'Contratación Directa (con ofertas)',
+  'Contratación régimen especial', 'Contratación régimen especial (con ofertas)',
+  'Mínima cuantía',
+]);
+// Published modality justifications that themselves declare competition
+// avoidance (no plurality of suppliers / manifest urgency). Ordinary
+// grounds — professional services, interadministrative agreements,
+// minimum-amount rules, regime statutes — never enter this set.
+const CO_AVOIDANCE_JUSTIFICATIONS = new Set([
+  'No existe pluralidad de oferentes en el mercado',
+  'Urgencia manifiesta',
+]);
+const CO_DURATION_ENTRY_MONTHS = 36;
+const CO_DURATION_MAX_MONTHS = 120;
+const CO_REPETITION_ENTRY = 3;
+const CO_REPETITION_MAX = 10;
+const CO_CONCENTRATION_GROUP_MIN = 10;
+const CO_CONCENTRATION_COVERAGE = 0.8;
+const CO_CONCENTRATION_ENTRY_SHARE = 0.6;
+
+function secop2ModalityState(procedure) {
+  if (typeof procedure !== 'string' || !procedure.trim()) return 'unknown';
+  if (CO_COMPETITIVE_MODALITIES.has(procedure)) return 'competitive';
+  if (CO_DIRECT_MODALITIES.has(procedure)) return 'direct';
+  return 'unknown';
+}
+
+function secop2AvoidanceJustified(contract) {
+  return CO_AVOIDANCE_JUSTIFICATIONS.has(contract.procedureJustification);
+}
+
+// Read-only parse of the published free text duraci_n_del_contrato
+// ("6 Mes(es)", "345 Dia(s)", "12 Semana(s)", "5 Año(s)"); the extract
+// text itself is never rewritten. Hours and anything else stay null.
+function secop2DurationMonths(text) {
+  if (typeof text !== 'string' || !text.trim()) return null;
+  let match = text.match(/^(\d+)\s*Mes/i);
+  if (match) return Number(match[1]);
+  match = text.match(/^(\d+)\s*Dia/i);
+  if (match) return Math.round(Number(match[1]) / 30.4375 * 10) / 10;
+  match = text.match(/^(\d+)\s*Semana/i);
+  if (match) return Math.round(Number(match[1]) / 4.348 * 10) / 10;
+  match = text.match(/^(\d+)\s*Año/i) || text.match(/^(\d+)\s*Ano/i);
+  if (match) return Number(match[1]) * 12;
+  return null;
+}
+
 function indicatorSeverity(weight) {
   if (weight >= 40) return { id: 'extreme', label: 'Very high' };
   if (weight >= 25) return { id: 'high', label: 'High' };
@@ -122,6 +181,7 @@ function graduated(value, start, end, low, high) {
 // Eight heuristic checks, with explicit applicability and evaluation states.
 // Official findings and financial amounts are separate evidence/context, not points.
 function getAssessment(c) {
+  if (c.dataFamily === 'secop2') return getAssessmentSecop2(c);
   const excludedReason = c.initialConflicts?.length || c.modificationConflicts?.length ? 'Conflicting versions: calculations excluded.' :
     c.identityAmbiguous ? 'Duplicate contract identifier: calculations excluded.' :
     c.dataStatus === 'unverified' ? 'Unverified record: calculations excluded.' : null;
@@ -173,6 +233,72 @@ function getAssessment(c) {
     notApplicable: checks.filter(r => r.status === 'not-applicable').length,
     signals: checks.filter(r => r.status === 'signal').length, excludedReason };
 }
+// SECOP II assessment: four jurisdiction-specific checks plus the four
+// French checks that stay out of scope here (no offers table, no
+// publication–deadline chronology, no published amendment history).
+// Always eight checks, same status vocabulary as the French method.
+function getAssessmentSecop2(c) {
+  const excludedReason = c.initialConflicts?.length || c.modificationConflicts?.length ? 'Conflicting versions: calculations excluded.' :
+    c.identityAmbiguous ? 'Duplicate contract identifier: calculations excluded.' :
+    c.dataStatus === 'unverified' ? 'Unverified record: calculations excluded.' : null;
+  const checks = [];
+  function add(id, label, family, applicability, evaluable, triggered, weight, reason) {
+    if (excludedReason) { applicability = 'unknown'; evaluable = false; reason = excludedReason; }
+    const status = applicability === 'no' ? 'not-applicable' : applicability !== 'yes' || !evaluable ? 'unknown' : triggered ? 'signal' : 'clear';
+    const severity = indicatorSeverity(weight || 0);
+    checks.push({ id, label, family, applicability, status, weight: status === 'signal' ? weight : null,
+      reason, explanation: reason, severity: severity.id, severityLabel: severity.label });
+  }
+  const modality = secop2ModalityState(c.procedure);
+  const justified = secop2AvoidanceJustified(c);
+  add('secop2-plurality-award', 'Award declared without supplier plurality or under manifest urgency', 'competition',
+    modality === 'competitive' ? 'no' : modality === 'direct' ? 'yes' : 'unknown',
+    typeof c.procedureJustification === 'string' && Boolean(c.procedureJustification.trim()),
+    justified, 18,
+    modality === 'competitive' ? 'Explicitly competitive modality (licitación, selección abreviada, subasta, concurso): this award-without-plurality rule is out of scope.' :
+    modality === 'unknown' ? 'Declared modality missing or outside the known SECOP II list: applicability not established.' :
+    typeof c.procedureJustification !== 'string' || !c.procedureJustification.trim() ? 'Published justification of the modality missing: not assessable.' :
+    justified ? `Non-competitive modality (${c.procedure}) with the published justification “${c.procedureJustification}”: the file itself declares an absent plurality of suppliers or manifest urgency. 18 points, all amounts. Ordinary grounds (professional services, interadministrative agreements, minimum-amount rules, regime statutes) add nothing; legality is not assessed here.` :
+    `Non-competitive modality (${c.procedure}) with the published justification “${c.procedureJustification}”: an ordinary declared ground in this cohort, not a plurality/urgency claim. Threshold not crossed — not a conclusion of regularity.`);
+  const repetition = c.secop2Repetition;
+  add('secop2-repeated-plurality', 'Repeated awards declared without supplier plurality', 'competition',
+    justified ? 'yes' : 'no', Boolean(repetition),
+    Boolean(repetition && repetition.count >= CO_REPETITION_ENTRY),
+    graduated(repetition?.count || 0, CO_REPETITION_ENTRY, CO_REPETITION_MAX, 18, 60),
+    !justified ? 'This contract is not among the awards declared without supplier plurality or under manifest urgency: outside the repetition scope.' :
+    repetition ? `Same buyer and supplier document: ${repetition.count} award(s) of this cohort declared without supplier plurality. From 18 points at ${CO_REPETITION_ENTRY} contracts, linear to 60 at ${CO_REPETITION_MAX}. Published declarations only; a lawful ground may still apply.` : 'No identified holder for a repetition computation.');
+  const concentration = c.secop2Concentration;
+  add('secop2-concentration', 'Concentrated awards within a contract type', 'competition',
+    (c.supplierIds || []).length > 1 ? 'no' : (c.supplierIds || []).length === 1 ? 'yes' : 'unknown',
+    Boolean(concentration?.sufficient), Boolean(concentration && concentration.share >= CO_CONCENTRATION_ENTRY_SHARE),
+    graduated(concentration?.share || 0, CO_CONCENTRATION_ENTRY_SHARE, 1, 12, 40),
+    concentration ? `Same buyer and contract type (${concentration.contractType || 'unspecified'}): ${concentration.wins}/${concentration.known} contracts to this holder, out of ${concentration.total} in the group (${Math.round(concentration.coverage * 100)} % coverage). Minimum ${CO_CONCENTRATION_GROUP_MIN} identified contracts and ${Math.round(CO_CONCENTRATION_COVERAGE * 100)} % coverage; from 12 points at ${Math.round(CO_CONCENTRATION_ENTRY_SHARE * 100)} % to 40 at 100 %. ${concentration.sufficient ? '' : 'Insufficient sample or coverage: not assessed.'} Specialisation may explain a share; computed over the whole cohort, before filters.` :
+    (c.supplierIds || []).length === 1 ? 'No eligible buyer/contract-type group for this holder: not assessed.' :
+    (c.supplierIds || []).length > 1 ? 'Several declared holders: concentration of a single holder out of scope.' : 'Holder identity unknown: applicability not established.');
+  const durationText = c.durationOriginal;
+  const durationMonths = secop2DurationMonths(durationText);
+  add('secop2-long-duration', `Long declared duration (≥ ${CO_DURATION_ENTRY_MONTHS} months)`, 'execution',
+    typeof durationText === 'string' && durationText.trim() ? 'yes' : 'unknown',
+    durationMonths != null, durationMonths != null && durationMonths >= CO_DURATION_ENTRY_MONTHS,
+    graduated(durationMonths || 0, CO_DURATION_ENTRY_MONTHS, CO_DURATION_MAX_MONTHS, 8, 40),
+    durationMonths == null ? (typeof durationText === 'string' && durationText.trim() ? `Declared duration “${durationText}” not comparable to months: not assessed.` : 'Declared duration field missing: applicability not established.') :
+    durationMonths >= CO_DURATION_ENTRY_MONTHS ? `${durationMonths} months declared (parsed read-only from “${durationText}”). From ${CO_DURATION_ENTRY_MONTHS} months: 8 points, linear to 40 at ${CO_DURATION_MAX_MONTHS} months. Editorial threshold for this cohort, not a Colombian legal threshold; renewals are not invented.` :
+    `${durationMonths} months declared (parsed read-only from “${durationText}”): below the ${CO_DURATION_ENTRY_MONTHS}-month entry threshold. Not a conclusion of regularity.`);
+  add('single-bid', 'Single offer in a competitive procedure', 'competition', 'no', false, false, null,
+    'No offers/proposals table in this SECOP II extract: the number of offers was never imported; out of scope.');
+  add('short-bidding-period', 'Short bidding period', 'competition', 'no', false, false, null,
+    'No publication–deadline chronology in this extract: bidding period out of scope.');
+  add('amount-increase', 'Relative increase in declared amount', 'execution', 'no', false, false, null,
+    'No published amendment history with comparable amounts in this extract: increase out of scope. Declared COP amounts add no weight.');
+  add('repeated-single-bid', 'Repeated low competition', 'competition', 'no', false, false, null,
+    'Depends on offer counts, absent from this extract: repetition of low competition out of scope.');
+  const applicable = checks.filter(r => r.applicability === 'yes').length;
+  const evaluated = checks.filter(r => r.status === 'signal' || r.status === 'clear').length;
+  return { checks, applicable, evaluated, unknown: checks.filter(r => r.applicability === 'yes' && r.status === 'unknown').length,
+    unknownApplicability: checks.filter(r => r.applicability === 'unknown').length,
+    notApplicable: checks.filter(r => r.status === 'not-applicable').length,
+    signals: checks.filter(r => r.status === 'signal').length, excludedReason };
+}
 function getIndicators(contract) { return getAssessment(contract).checks.filter(r => r.status === 'signal'); }
 function getScoreBreakdown(contract) {
   const assessment = getAssessment(contract);
@@ -212,7 +338,7 @@ function getAmountEvolution(contract) {
 
 // Retrospective context on the COMPLETE loaded cohort, never on filtered/page rows.
 function prepareContracts(data) {
-  const contracts = validateContracts(data).map(c => ({ ...c, competitionContext: null, supplierContext: null, identityAmbiguous: false }));
+  const contracts = validateContracts(data).map(c => ({ ...c, competitionContext: null, supplierContext: null, identityAmbiguous: false, secop2Concentration: null, secop2Repetition: null }));
   const groups = new Map();
   const supplierGroups = new Map();
   const identityCounts = new Map();
@@ -267,6 +393,42 @@ function prepareContracts(data) {
         supplierContracts: supplierRows.length };
       c.supplierContext = context;
     });
+  }
+  // SECOP II: buyer/contract-type concentration over the whole cohort, and
+  // repetition of awards declared without supplier plurality, per buyer+supplier document.
+  const coConcentrationGroups = new Map();
+  const coRepetitionGroups = new Map();
+  for (const c of contracts) {
+    if (c.dataFamily !== 'secop2') continue;
+    const buyerKey = c.buyerNit || c.buyer;
+    const typeKey = `${buyerKey}|${c.contractType || ''}`;
+    if (!coConcentrationGroups.has(typeKey)) coConcentrationGroups.set(typeKey, []);
+    coConcentrationGroups.get(typeKey).push(c);
+    const supplierId = c.supplierIds?.length === 1 ? c.supplierIds[0].id : null;
+    if (secop2AvoidanceJustified(c) && supplierId != null) {
+      const pairKey = `${buyerKey}|${supplierId}`;
+      if (!coRepetitionGroups.has(pairKey)) coRepetitionGroups.set(pairKey, []);
+      coRepetitionGroups.get(pairKey).push(c);
+    }
+  }
+  for (const group of coConcentrationGroups.values()) {
+    const known = group.filter(c => c.supplierIds?.length === 1);
+    const winsBySupplier = new Map();
+    for (const c of known) {
+      const id = c.supplierIds[0].id;
+      winsBySupplier.set(id, (winsBySupplier.get(id) || 0) + 1);
+    }
+    for (const c of group) {
+      if (c.supplierIds?.length !== 1) continue;
+      const id = c.supplierIds[0].id;
+      const coverage = known.length / group.length;
+      c.secop2Concentration = { contractType: group[0].contractType || '', total: group.length, known: known.length,
+        wins: winsBySupplier.get(id) || 0, share: known.length ? (winsBySupplier.get(id) || 0) / known.length : null,
+        coverage, sufficient: known.length >= CO_CONCENTRATION_GROUP_MIN && coverage >= CO_CONCENTRATION_COVERAGE };
+    }
+  }
+  for (const group of coRepetitionGroups.values()) {
+    for (const c of group) c.secop2Repetition = { count: group.length };
   }
   return contracts;
 }
@@ -539,7 +701,7 @@ function startExplorer() {
     consultations: { path: 'data/consultations.json', coverage: 'data/consultations-coverage.json', note: '10 initial BOAMP notices from 3 February 2025, first identifiers among 200, selected before any calculation. One correction and three award notices linked explicitly. Notice-level rows, not attributed contracts or expenses. Chains not certified complete: no bidding-period score in this extract. No independent TED download.' },
     decp: { path: 'data/decp-history.json', coverage: 'data/decp-coverage.json', note: 'Exploratory 24-month history: 2,594 DECP contracts from Paris and Ardèche, notified in 2024–2025. Every row returned by the source for these two SIRETs was examined; this does not guarantee that all actual purchases were published. Paris was chosen for volume, Ardèche for the availability of modifications: this choice is not representative. Modifications may be later than 2025. Suppliers identified by SIRET; three names in the Paris dossier are confirmed by the Annuaire des entreprises. The eight official findings are in the other dataset.' },
     boamp: { path: 'data/contracts.json', coverage: 'data/coverage.json', note: '3,010 records: 3,000 BOAMP lots sampled from February–April 2025 publications, two Mauges lots and eight documented CRC dossiers. Some findings concern sets of orders, not an individual award. A finding does not extend to a municipality’s other purchases. This sample does not allow an exhaustive competition history to be computed.' },
-    colombia: { path: 'data/colombia-secop2.json', coverage: 'data/colombia-secop2-coverage.json', note: 'SECOP II pilot · Colombia · three buyers announced before download · signatures 2024-09 → 2026-09: 7,560 contracts (Ministerio de Educación Nacional 2,618, national; Gobernación de Caldas 3,696, departmental; Alcaldía Local de Usaquén 1,246, municipal-local). Fields kept verbatim in Spanish; amounts in COP, never converted. The declared modality and its published justification are documentary context without points. No Colombian indicator exists yet: every row stays “Not assessed”, never zero. Licence CC BY-SA 4.0 (Colombia Compra Eficiente); not exhaustive of each buyer’s procurement; no offers table was imported, so no competition indicator is claimed.' }
+    colombia: { path: 'data/colombia-secop2.json', coverage: 'data/colombia-secop2-coverage.json', note: 'SECOP II pilot · Colombia · three buyers announced before download · signatures 2024-09 → 2026-09: 7,560 contracts (Ministerio de Educación Nacional 2,618, national; Gobernación de Caldas 3,696, departmental; Alcaldía Local de Usaquén 1,246, municipal-local). Fields kept verbatim in Spanish; amounts in COP, never converted. Jurisdiction-specific indicators (docs/score-colombia.md): declared absence of supplier plurality or manifest urgency, repetition of such awards, concentration within buyer and contract type, declared duration ≥ 36 months. The bare direct-family modality (≈82 % of the cohort) and ordinary justifications add no points; amounts sort only. Licence CC BY-SA 4.0 (Colombia Compra Eficiente); not exhaustive of each buyer’s procurement; no offers table was imported, so no offer-count indicator exists.' }
   };
   const provenance = { verified: 'Documented · public source', unverified: 'To verify · research lead', synthetic: 'Fictional · pedagogical comparison' };
   const money = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2 });
@@ -697,7 +859,7 @@ function startExplorer() {
       detail.hidden = !expanded.has(c.id);
       const cell = element('td');
       cell.colSpan = 9;
-      cell.append(element('p', `${provenance[c.dataStatus]} · Reference: ${c.id}`), element('p', `Procedure: ${c.procedure || 'not specified'} · Duration: ${c.durationMonths == null ? 'not specified' : `${c.durationMonths} months`}`));
+      cell.append(element('p', `${provenance[c.dataStatus]} · Reference: ${c.id}`), element('p', `Procedure: ${c.procedure || 'not specified'} · Duration: ${c.durationMonths != null ? `${c.durationMonths} months` : c.durationOriginal || 'not specified'}`));
       if (c.findingScope) cell.append(element('p', c.findingScope === 'aggregate' ? 'Scope: a set of orders or services examined by the CRC, not an individual award. This finding is not extended to the buyer’s or supplier’s other contracts.' : 'Scope: the contract described in this record. This finding is not extended to the buyer’s or supplier’s other contracts.'));
       if (c.dateNote) cell.append(element('p', `Date: ${c.dateNote}`));
       if (c.amountBasis) cell.append(element('p', `Amount scope: ${c.amountBasis}`));
@@ -762,7 +924,7 @@ function startExplorer() {
       if (c.dataFamily === 'secop2') {
         cell.append(element('h3', 'SECOP II — declared procedure and justification'),
           element('p', `Declared modality: ${c.procedure || '—'} · Contract status: ${c.contractStatus || '—'} · Contract type: ${c.contractType || '—'}.`),
-          element('p', `Published justification of the modality: ${c.procedureJustification || '—'}. This is the buyer’s declared ground, kept verbatim in Spanish. It is documentary context: it earns no points and its legal validity is not assessed here.`));
+          element('p', `Published justification of the modality: ${c.procedureJustification || '—'}. This is the buyer’s declared ground, kept verbatim in Spanish; its legal validity is not assessed here. Ordinary grounds (professional services, interadministrative agreements, minimum-amount rules, regime statutes) add no points; only a declared absence of supplier plurality or manifest urgency enters the Colombian check (docs/score-colombia.md).`));
         if (c.processUrl) {
           const processParagraph = element('p', 'Process page on the official portal: ');
           const processLink = element('a', 'SECOP II — detalle del proceso');
@@ -771,9 +933,9 @@ function startExplorer() {
           cell.append(processParagraph);
         }
         cell.append(
-          element('p', `Amounts: declared ${c.amount == null ? '—' : moneyCop.format(c.amount)} · paid ${c.amountPaid == null ? '—' : moneyCop.format(c.amountPaid)} · invoiced ${c.amountInvoiced == null ? '—' : moneyCop.format(c.amountInvoiced)}. Paid and invoiced values are platform declarations, not audited payments, and are never summed. Amounts play no role in the (not yet defined) Colombian indicators.`));
+          element('p', `Amounts: declared ${c.amount == null ? '—' : moneyCop.format(c.amount)} · paid ${c.amountPaid == null ? '—' : moneyCop.format(c.amountPaid)} · invoiced ${c.amountInvoiced == null ? '—' : moneyCop.format(c.amountInvoiced)}. Paid and invoiced values are platform declarations, not audited payments, and are never summed. Declared amounts stay visible and sortable but add no weight to the index.`));
         if (c.supplierIds?.length) cell.append(element('p', `Supplier document: ${c.supplierIds[0].identifierType} ${c.supplierIds[0].id}. A personal or tax identifier identifies the declared holder; it implies no suspicion and no link to other contracts by itself.`));
-        cell.append(element('p', `Pilot cohort: ${c.buyerLevel} buyer, signature window 2024-09 → 2026-09. Not exhaustive of the buyer’s procurement; no offers table was imported, so no competition indicator is computed. All rows remain “Not assessed” until jurisdiction-specific rules are designed and documented.`));
+        cell.append(element('p', `Pilot cohort: ${c.buyerLevel} buyer, signature window 2024-09 → 2026-09. Not exhaustive of the buyer’s procurement; no offers table was imported, so the offer-count checks are out of scope. The four Colombian checks and their editorial thresholds are documented in docs/score-colombia.md; a signal is not a finding of irregularity.`));
       } else if (c.dataFamily === 'decp') {
         cell.append(element('h3', 'Published contract history'));
         cell.append(element('p', `Price form: ${c.priceForm || '—'} · Type: ${c.priceType || '—'}. Declared amounts, not observed payments.`));
@@ -870,7 +1032,7 @@ function startExplorer() {
     const conflictCount = contracts.filter(c => c.initialConflicts?.length).length;
     const withMods = contracts.filter(c => c.history?.some(event => event.kind === 'modification')).length;
     const enrichedCount = contracts.filter(c => c.supplierProfiles?.length).length;
-    document.querySelector('#completeness').textContent = `In the loaded file: ${missing('amount')} amounts, ${missing('offers')} offer counts and ${missing('durationMonths')} durations not provided out of ${contracts.length} records. ${conflictCount} groups with diverging initial values; ${withMods} histories containing a published modification. ${enrichedCount ? `${enrichedCount} records with an enriched current public name (not historical). ` : ''}Official findings are not subject to an exhaustive automatic search.`;
+    document.querySelector('#completeness').textContent = `In the loaded file: ${missing('amount')} amounts, ${missing('offers')} offer counts and ${contracts.filter(c => c.durationMonths == null && !c.durationOriginal).length} durations not provided out of ${contracts.length} records. ${conflictCount} groups with diverging initial values; ${withMods} histories containing a published modification. ${enrichedCount ? `${enrichedCount} records with an enriched current public name (not historical). ` : ''}Official findings are not subject to an exhaustive automatic search.`;
     expanded.clear();
     render();
   }
