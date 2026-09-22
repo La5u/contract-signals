@@ -11,8 +11,8 @@ Rules inherited from the project charter:
 - stdlib only; no build step; no runtime API calls from the site;
 - original Spanish text is never translated or normalized;
 - amounts stay in COP (never converted to euros);
-- no French thresholds or heuristics are applied; all rows remain
-  "Not assessed" until jurisdiction-specific rules are designed;
+- no French threshold is applied to Colombian rows: jurisdiction-specific
+  indicators live in script.js and docs/score-colombia.md;
 - no score-based selection: the cohort was announced before download.
 
 Usage:
@@ -233,7 +233,7 @@ def normalize_row(raw: dict, buyer: dict) -> dict:
         "lastUpdated": raw.get("ultima_actualizacion") or None,
         "postConflict": raw.get("espostconflicto"),
         "reversion": raw.get("reversion"),
-        "liquidation": raw.get("liquidación"),
+        "liquidation": raw.get("liquidaci_n"),
         "source": DATASET_URL,
         "sourceLabel": "SECOP II — Contratos Electrónicos (datos.gov.co, JSON)",
         "amountBasis": "Valor del contrato declarado (COP); no convert, no sum with other currencies.",
@@ -283,6 +283,14 @@ def per_buyer_counts(rows: list) -> dict:
     return counts
 
 
+def liquidation_counts(rows: list) -> dict:
+    counts = {}
+    for row in rows:
+        key = row["liquidation"] if row["liquidation"] is not None else "unknown"
+        counts[key] = counts.get(key, 0) + 1
+    return counts
+
+
 def offline() -> None:
     manifest_path = os.path.join(RAW_DIR, "manifest.json")
     if not os.path.exists(manifest_path):
@@ -325,7 +333,8 @@ def offline() -> None:
         "normalization": {
             "language": "Original Spanish preserved verbatim; no translation.",
             "currency": "COP only; no conversion, no cross-currency sums.",
-            "duration": "duraci_n_del_contrato kept as original free text; never parsed into months.",
+            "duration": ("duraci_n_del_contrato kept as original free text at import; never rewritten. "
+                         "The explorer parses it read-only for the duration check (docs/score-colombia.md)."),
             "identityCaveat": ("Bogotá alcaldías locales share the generic NIT 899999061; "
                                "Usaquén is matched by exact entity name and the shared NIT is "
                                "kept as-is. Entity names keep their original noise (//, *, etc.)."),
@@ -335,22 +344,40 @@ def offline() -> None:
             "rawRows": len(raw_rows),
             "normalizedRows": len(rows),
             "perBuyer": per_buyer_counts(rows),
+            "liquidation": liquidation_counts(rows),
         },
         "joinVerification": join_verification(rows),
+        "indicators": {
+            "status": "implemented",
+            "since": "2026-09-22",
+            "framework": "3.0",
+            "method": "docs/score-colombia.md",
+            "checks": ["secop2-plurality-award", "secop2-repeated-plurality",
+                       "secop2-concentration", "secop2-long-duration"],
+            "outOfScopeFrenchChecks": ["single-bid", "short-bidding-period",
+                                       "amount-increase", "repeated-single-bid"],
+            "note": ("Jurisdiction-specific eligibility and thresholds; the bare declared "
+                     "modality (direct family ≈ 82 % of this cohort) and ordinary justifications "
+                     "(professional services, interadministrative agreements, minimum-amount "
+                     "rules) add no points. Amounts in COP stay visible and sort only. "
+                     "No offers-based indicator: no offers table was imported."),
+        },
         "limitations": [
             "Not exhaustive: only the three announced buyers in the 24-month window.",
             "SECOP II contract rows are declarations; amounts and statuses are not audited payments.",
-            "No offers/proposals table was downloaded; competition indicators are NOT claimed.",
+            "No offers/proposals table was downloaded; no offer-count indicator exists for Colombia.",
             "No country ranking, no currency conversion, no comparison with French cohorts.",
-            "No heuristic indicators are implemented for Colombia yet; every row stays 'Not assessed'.",
+            "Editorial thresholds of docs/score-colombia.md are not Colombian legal thresholds; "
+            "a signal is not a finding of irregularity, and no flag proves regularity.",
         ],
         "reproduction": [
             "python tools/import-colombia-secop2.py --download",
             "python tools/import-colombia-secop2.py --offline",
             "node tests/colombia.cjs",
         ],
-        "currentIndex": {"version": "3.0", "note": "Pointer to the active French method; "
-                          "no Colombian scoring exists yet."},
+        "currentIndex": {"version": "3.0", "note": ("v3.0 framework with the jurisdiction-specific "
+                          "SECOP II check set: docs/score-v3.md (French cohorts) and "
+                          "docs/score-colombia.md (Colombia pilot).")},
     }
     with open(os.path.join(ROOT, "data", "colombia-secop2-coverage.json"), "w", encoding="utf-8") as handle:
         json.dump(coverage, handle, ensure_ascii=False, indent=1)

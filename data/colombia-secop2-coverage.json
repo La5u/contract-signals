@@ -55,7 +55,7 @@
  "normalization": {
   "language": "Original Spanish preserved verbatim; no translation.",
   "currency": "COP only; no conversion, no cross-currency sums.",
-  "duration": "duraci_n_del_contrato kept as original free text; never parsed into months.",
+  "duration": "duraci_n_del_contrato kept as original free text at import; never rewritten. The explorer parses it read-only for the duration check (docs/score-colombia.md).",
   "identityCaveat": "Bogotá alcaldías locales share the generic NIT 899999061; Usaquén is matched by exact entity name and the shared NIT is kept as-is. Entity names keep their original noise (//, *, etc.).",
   "rowIdentity": "secop2-{buyerKey}-{id_contrato}; verified unique below."
  },
@@ -78,6 +78,10 @@
     "withAmount": 2618,
     "withSupplierId": 2618
    }
+  },
+  "liquidation": {
+   "No": 6018,
+   "Si": 1542
   }
  },
  "joinVerification": {
@@ -92,12 +96,31 @@
   "verdict": "Each SECOP II row already carries its process, contract and supplier declaration; the join is intra-row, so it does not depend on a second source. Completeness is documented above, not assumed.",
   "notClaimed": "No offers/proposals and no payment-reconciliation indicators are claimed: this dataset alone does not provide an offers table, and paid amounts are declarations, not audited payments."
  },
+ "indicators": {
+  "status": "implemented",
+  "since": "2026-09-22",
+  "framework": "3.0",
+  "method": "docs/score-colombia.md",
+  "checks": [
+   "secop2-plurality-award",
+   "secop2-repeated-plurality",
+   "secop2-concentration",
+   "secop2-long-duration"
+  ],
+  "outOfScopeFrenchChecks": [
+   "single-bid",
+   "short-bidding-period",
+   "amount-increase",
+   "repeated-single-bid"
+  ],
+  "note": "Jurisdiction-specific eligibility and thresholds; the bare declared modality (direct family ≈ 82 % of this cohort) and ordinary justifications (professional services, interadministrative agreements, minimum-amount rules) add no points. Amounts in COP stay visible and sort only. No offers-based indicator: no offers table was imported."
+ },
  "limitations": [
   "Not exhaustive: only the three announced buyers in the 24-month window.",
   "SECOP II contract rows are declarations; amounts and statuses are not audited payments.",
-  "No offers/proposals table was downloaded; competition indicators are NOT claimed.",
+  "No offers/proposals table was downloaded; no offer-count indicator exists for Colombia.",
   "No country ranking, no currency conversion, no comparison with French cohorts.",
-  "No heuristic indicators are implemented for Colombia yet; every row stays 'Not assessed'."
+  "Editorial thresholds of docs/score-colombia.md are not Colombian legal thresholds; a signal is not a finding of irregularity, and no flag proves regularity."
  ],
  "reproduction": [
   "python tools/import-colombia-secop2.py --download",
@@ -106,6 +129,6 @@
  ],
  "currentIndex": {
   "version": "3.0",
-  "note": "Pointer to the active French method; no Colombian scoring exists yet."
+  "note": "v3.0 framework with the jurisdiction-specific SECOP II check set: docs/score-v3.md (French cohorts) and docs/score-colombia.md (Colombia pilot)."
  }
 }

@@ -10,9 +10,9 @@ From this folder:
 python -m http.server 8000
 ```
 
-Then open **http://localhost:8000**. The browser loads the selected dataset with `fetch`: `data/decp-history.json` by default, `data/contracts.json` for the BOAMP sample and official findings, `data/consultations.json` for the initial notices and their documented links, **`data/decp-cities.json`** for the six additional municipalities, or **`data/tours-notices.json`** for the full Tours notices with criteria, explanations and TED versions.
+Then open **http://localhost:8000**. The browser loads the selected dataset with `fetch`: `data/decp-history.json` by default, `data/contracts.json` for the BOAMP sample and official findings, `data/consultations.json` for the initial notices and their documented links, **`data/decp-cities.json`** for the six additional municipalities, **`data/tours-notices.json`** for the full Tours notices with criteria, explanations and TED versions, or **`data/colombia-secop2.json`** for the SECOP II Colombia pilot.
 
-You can also open `index.html` directly. Browsers generally block `fetch` under `file://`: in that case select **data/decp-history.json** or **data/contracts.json**, **data/consultations.json**, **data/decp-cities.json** or **data/tours-notices.json**, depending on the chosen dataset, with the displayed file picker. This mode requires no server and transmits no file. There is no second embedded copy of the dataset.
+You can also open `index.html` directly. Browsers generally block `fetch` under `file://`: in that case select **data/decp-history.json** or **data/contracts.json**, **data/consultations.json**, **data/decp-cities.json**, **data/tours-notices.json** or **data/colombia-secop2.json**, depending on the chosen dataset, with the displayed file picker. This mode requires no server and transmits no file. There is no second embedded copy of the dataset.
 
 ## Active version: index 3.0 (21 September 2026)
 
@@ -46,35 +46,35 @@ node tests/scoring-v3.cjs        # 31,032 assertions of the active engine
 node tests/rules.cjs             # 124 assertions of the frozen, non-active v2.1 reference
 node tests/cities.cjs            # 4,835 assertions, score expectations migrated to v3
 node tests/tours.cjs             # 831 assertions, documents without a calendar = null
-node tests/colombia.cjs          # 68,068 assertions, SECOP II pilot: no premature heuristics
+node tests/colombia.cjs          # 181,492 assertions, SECOP II pilot: cohort, join, Colombian indicators
 python -m unittest discover -s tests -p 'test_*.py'
 node tools/review-score-v3.cjs    # report and currentIndex pointers of the coverages
 # With HTTP server on 8765 and test-only Playwright outside the project:
 node tests/browser.cjs
 ```
 
-The 17 Python tests and the Chromium HTTP / `file://` checks pass, including assessment filters, eight detailed checks, findings outside the index and pagination without page shift. No preparation/test script is needed to browse the site.
+The 26 Python tests and the Chromium HTTP / `file://` checks pass, including assessment filters, eight detailed checks, findings outside the index and pagination without page shift. No preparation/test script is needed to browse the site.
 
-### Countries to add: a verified recommendation, not yet an import
+### Countries: Colombia imported; Paraguay access validated; Brazil blocked
 
-**Colombia first**, with 3 pre-selected buyers over 24 months: SECOP II metadata and a small sample were accessible anonymously during the test. **Paraguay next, subject to authorized access and licence**: OCDS documentation accessible, Bearer security declared, but no real OCID tested. **Brazil as a more ambitious project**: the PNCP requests tested failed or timed out; do not announce demonstrated operational access. A small TED scope in another EU country is an alternative for technical reuse, not a guarantee of national exhaustiveness.
+**Colombia is imported** (three pre-selected buyers over 24 months) with its own documented indicator set, [docs/score-colombia.md](docs/score-colombia.md): declared absence of supplier plurality or manifest urgency, its repetition, buyer/contract-type concentration and declared duration — never the bare direct modality, never French thresholds. **Paraguay: anonymous data access validated 22 September 2026** — record (example OCID), date-filtered search and parameters catalogue all HTTP 200 without a token, licence CC BY 4.0 in the payload (despite the Swagger’s global Bearer declaration); base path `/datos/api/v3/doc`. Probes logged in `data/international-access-checks.json`. Next for Paraguay: quotas/exhaustiveness, then one bounded buyer cohort — not yet imported. **Brazil as a more ambitious project**: the PNCP requests tested failed or timed out; do not announce demonstrated operational access. A small TED scope in another EU country is an alternative for technical reuse, not a guarantee of national exhaustiveness.
 
 See [the detailed recommendation](docs/international-pilots.md) and [the timestamped HTTP checks](data/international-access-checks.json). The CPI figures and volumes of the proposed text were not taken over without verification. No score comparison between countries, no mixing of currencies, spending or grants.
 
 ## SECOP II pilot · Colombia — first international cohort (22 September 2026)
 
-Implemented per the verified plan: a bounded, pre-announced cohort, original-language evidence, and **no scoring yet**. Selector entry: **“SECOP II · Colombia pilot · three buyers · 2024–2026”**, file `data/colombia-secop2.json`.
+Implemented per the verified plan: a bounded, pre-announced cohort, original-language evidence, and **jurisdiction-specific scoring** ([docs/score-colombia.md](docs/score-colombia.md)). Selector entry: **“SECOP II · Colombia pilot · three buyers · 2024–2026”**, file `data/colombia-secop2.json`.
 
 - **Cohort announced before download** (2026-09-22), after volume-only count queries: Ministerio de Educación Nacional (national, NIT `899999001`, 2,618 contracts), Gobernación de Caldas (departmental, NIT `890801052`, 3,696), Alcaldía Local de Usaquén (municipal-local, matched by exact name because Bogotá’s alcaldías share the generic district NIT `899999061`, 1,246). **7,560 rows**, signature window 2024-09-01 → 2026-09-01 on `fecha_de_firma`.
 - **Process–contract–supplier join verified on every row**: each SECOP II contract row carries its own `proceso_de_compra`, `id_contrato`, supplier name and typed supplier document (Cédula/NIT), plus the official process URL. Completeness is documented in `data/colombia-secop2-coverage.json` (`joinVerification`), not assumed.
-- **No indicator is claimed**: no offers/proposals table was imported, so nothing about competition is computed; paid/invoiced amounts are platform declarations, not audited payments. Notably, the declared modality “Contratación directa” covers ≈82 % of the cohort — legal context, not a signal; it earns no points.
-- **Language and currency**: every source field stays verbatim in Spanish (objects, modalities, justifications, statuses); amounts stay in COP, never converted or summed against EUR data. All rows display “Not assessed”, never zero.
-- Licence **CC BY-SA 4.0** (Colombia Compra Eficiente) verified in the dataset metadata; attribution kept in the coverage file. Raw paginated responses are preserved under `data/colombia-secop2/raw/` with a URL manifest.
+- **Colombian indicators, not French ones**: four checks — declared absence of supplier plurality / manifest urgency (176 signals), repetition of such awards to the same buyer and supplier document (15), concentration within buyer and contract type (0; max observed share 31.3 % < 60 %), declared duration ≥ 36 months (39). The four French offer/timetable/history checks are out of scope with an explicit reason (no offers table, no chronology, no amendment history). Totals: **215 flagged, 7,345 zero after evaluation, 0 not assessed, 56 partial**. The declared modality “Contratación directa” covers ≈82 % of the cohort — ordinary legal context; the bare modality and ordinary justifications earn no points. Amounts in COP stay visible and sort only.
+- **Language and currency**: every source field stays verbatim in Spanish (objects, modalities, justifications, statuses); amounts stay in COP, never converted or summed against EUR data.
+- Licence **CC BY-SA 4.0** (Colombia Compra Eficiente) verified in the dataset metadata; attribution kept in the coverage file. Raw paginated responses are preserved under `data/colombia-secop2/raw/` (about 28 MB) with a URL manifest; the normalized extract is about 15 MB.
 
 ```sh
 python tools/import-colombia-secop2.py --download  # new network snapshot of the announced cohort
 python tools/import-colombia-secop2.py --offline   # deterministic re-normalization from the raw pages
-node tests/colombia.cjs                            # 68,068 assertions: cohort, join, no premature heuristics
+node tests/colombia.cjs                            # 181,492 assertions: cohort, join, Colombian indicators
 ```
 
 ## Files
@@ -89,7 +89,7 @@ node tests/colombia.cjs                            # 68,068 assertions: cohort, 
 - `data/decp-cities.json`: **1,270 buyer/identifier groups**, six additional municipalities, notifications 2024–2025, variants and current public profiles embedded for file mode.
 - `data/decp-cities-raw.json` and `data/decp-cities-coverage.json`: **1,865 source rows**, exact queries, scope, exclusions and counts.
 - `data/supplier-identities.json` and `data/supplier-identities-coverage.json`: minimized public snapshot of **100 SIRENs out of 703 identified**, sources and temporal limits; no network loading of these APIs while browsing the site.
-- `data/colombia-secop2.json` and `data/colombia-secop2-coverage.json`: **7,560 SECOP II contracts** of the three announced Colombian buyers (2024–2026), Spanish preserved, COP only, provenance and join verification embedded; raw pages under `data/colombia-secop2/raw/` (about 43 MB total).
+- `data/colombia-secop2.json` and `data/colombia-secop2-coverage.json`: **7,560 SECOP II contracts** of the three announced Colombian buyers (2024–2026), Spanish preserved, COP only, provenance and join verification embedded; raw pages under `data/colombia-secop2/raw/` (about 28 MB); method in [`docs/score-colombia.md`](docs/score-colombia.md).
 
 Search is insensitive to accents and case, over dossier/contract/lot/notice identifiers, buyer, supplier, SIRET/SIREN, CPV, subject and procedure. All searched words must be present. Unknown amounts are excluded when a positive minimum is requested. Available sorts: index, amount and date in both directions; CPV sector A–Z/Z–A; buyer and supplier A–Z; offer count ascending; analysable increase as a descending percentage. Unknown values are always last, even in ascending sort. Search, filters and sorting apply to **the whole dataset**, then the table displays 50 rows per page. Click a row or activate its subject button with Enter/Space to show the details.
 
