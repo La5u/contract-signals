@@ -2,7 +2,7 @@ import importlib.util
 import unittest
 from pathlib import Path
 
-spec = importlib.util.spec_from_file_location('supplier_enrichment', Path(__file__).parents[1] / 'tools/enrich-city-suppliers.py')
+spec = importlib.util.spec_from_file_location('supplier_enrichment', Path(__file__).parents[1] / 'tools/enrich-suppliers.py')
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
 
@@ -35,7 +35,7 @@ class SupplierIdentities(unittest.TestCase):
         rows=[{'supplierIds':[{'identifierType':'SIRET','id':f'{i:09d}00011'}],'score':i,'supplier':str(i)} for i in range(120)]
         original=mod.selection(rows)[1]
         self.assertEqual(original,mod.selection([{**r,'score':1000,'supplier':'same'} for r in reversed(rows)])[1])
-        self.assertEqual(len(original),100)
+        self.assertEqual(len(original),120)
         self.assertEqual(mod.suppliers([{'supplierIds':[{'identifierType':'foreign','id':'12345678900011'}]}]),{})
 
 if __name__=='__main__':
