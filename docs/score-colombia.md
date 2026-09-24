@@ -67,7 +67,7 @@ node tests/colombia.cjs                            # exact counts above
 node tools/review-score-v3.cjs                     # after any script.js change (French datasets)
 node tests/score-review.cjs
 python -m unittest discover -s tests -p 'test_*.py'
-node tests/browser.cjs                             # server on 8765, test-only Playwright
+node tests/browser.cjs                             # own server on a free port, test-only Playwright
 ```
 
 French method: [score-v3.md](score-v3.md). Country order and access checks: [international-pilots.md](international-pilots.md).
