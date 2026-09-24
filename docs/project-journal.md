@@ -1,6 +1,6 @@
-# Contract signals
+# Project journal
 
-A minimalist static explorer, in English. No framework, no runtime remote service, no backend, no database, no dependency or build step. Source procurement documents, citations and quotations remain in their original language (mostly French).
+The former README, kept verbatim as the dated record of each delivery: selection choices, counts, reproduction commands and superseded v2.x rules. For current usage see the [README](../README.md); for the active method see [score-v3.md](score-v3.md) and [score-colombia.md](score-colombia.md). Commands below may predate later changes — the browser test now starts its own server (`node tests/browser.cjs`), and supplier names come from `tools/enrich-suppliers.py`.
 
 ## Run it
 
@@ -16,7 +16,7 @@ You can also open `index.html` directly. Browsers generally block `fetch` under 
 
 ## Active version: index 3.0 (21 September 2026)
 
-**The active method is now [the v3 index](docs/score-v3.md).** The dated deliveries and v2.x tables below keep the history of choices and counts; their old weights and signal numbers **no longer describe the active engine**. The source contracts, notices, identifiers, explanations and PDFs are preserved.
+**The active method is now [the v3 index](score-v3.md).** The dated deliveries and v2.x tables below keep the history of choices and counts; their old weights and signal numbers **no longer describe the active engine**. The source contracts, notices, identifiers, explanations and PDFs are preserved.
 
 Effective changes:
 - **Not assessed ≠ zero**, on all datasets. `getVigilanceScore` returns `null` if no check can be evaluated. A zero requires at least one evaluated check. Dedicated filters, and unknowns always last, in both sort directions.
@@ -39,7 +39,7 @@ v2 flagged a single offer even when the competitive character remained undetermi
 
 ### Ranking review and tests
 
-[`data/score-v3-review.json`](data/score-v3-review.json) compares v2.1/v3 on the same files, logs the transitions, and tests competition/execution ×0.8/1.2 then the reverse. Rankings are sensitive to these choices: positive-only correlation from 0.773 to 1 depending on dataset/scenario, many ties. **This diagnostic is not a validation of corruption detection.** The method also contains a limited review of six flagged/zero/excluded extracts, with counterexamples and benign explanations; no ground-truth labelling is derived from it.
+[`data/score-v3-review.json`](../data/score-v3-review.json) compares v2.1/v3 on the same files, logs the transitions, and tests competition/execution ×0.8/1.2 then the reverse. Rankings are sensitive to these choices: positive-only correlation from 0.773 to 1 depending on dataset/scenario, many ties. **This diagnostic is not a validation of corruption detection.** The method also contains a limited review of six flagged/zero/excluded extracts, with counterexamples and benign explanations; no ground-truth labelling is derived from it.
 
 ```sh
 node tests/scoring-v3.cjs        # 31,032 assertions of the active engine
@@ -57,17 +57,17 @@ The 26 Python tests and the Chromium HTTP / `file://` checks pass, including ass
 
 ### Countries: Colombia imported; Paraguay access validated; Brazil blocked
 
-**Colombia is imported** (three pre-selected buyers over 24 months) with its own documented indicator set, [docs/score-colombia.md](docs/score-colombia.md): declared absence of supplier plurality or manifest urgency, its repetition, buyer/contract-type concentration and declared duration — never the bare direct modality, never French thresholds. **Paraguay: anonymous data access validated 22 September 2026** — record (example OCID), date-filtered search and parameters catalogue all HTTP 200 without a token, licence CC BY 4.0 in the payload (despite the Swagger’s global Bearer declaration); base path `/datos/api/v3/doc`. Probes logged in `data/international-access-checks.json`. Next for Paraguay: quotas/exhaustiveness, then one bounded buyer cohort — not yet imported. **Brazil as a more ambitious project**: the PNCP requests tested failed or timed out; do not announce demonstrated operational access. A small TED scope in another EU country is an alternative for technical reuse, not a guarantee of national exhaustiveness.
+**Colombia is imported** (three pre-selected buyers over 24 months) with its own documented indicator set, [docs/score-colombia.md](score-colombia.md): declared absence of supplier plurality or manifest urgency, its repetition, buyer/contract-type concentration and declared duration — never the bare direct modality, never French thresholds. **Paraguay: anonymous data access validated 22 September 2026** — record (example OCID), date-filtered search and parameters catalogue all HTTP 200 without a token, licence CC BY 4.0 in the payload (despite the Swagger’s global Bearer declaration); base path `/datos/api/v3/doc`. Probes logged in `data/international-access-checks.json`. Next for Paraguay: quotas/exhaustiveness, then one bounded buyer cohort — not yet imported. **Brazil as a more ambitious project**: the PNCP requests tested failed or timed out; do not announce demonstrated operational access. A small TED scope in another EU country is an alternative for technical reuse, not a guarantee of national exhaustiveness.
 
-See [the detailed recommendation](docs/international-pilots.md) and [the timestamped HTTP checks](data/international-access-checks.json). The CPI figures and volumes of the proposed text were not taken over without verification. No score comparison between countries, no mixing of currencies, spending or grants.
+See [the detailed recommendation](international-pilots.md) and [the timestamped HTTP checks](../data/international-access-checks.json). The CPI figures and volumes of the proposed text were not taken over without verification. No score comparison between countries, no mixing of currencies, spending or grants.
 
 ## Contract-linked adjudicated outcomes · separate from signals
 
-The explorer can show/filter a **final corruption judgment linked to a particular contract** only if an official decision, proof of finality, exact contract linkage and passage are documented. **There are currently zero such labels in all provided French, Colombian and Paraguayan datasets.** A separate, dated press-lead label applies only to the Station Nuage dossier: a September 2024 report of a search linked to the project, **not a finding of guilt or evidence that an investigation is still open**. The eight French CRC findings are audit observations, **not corruption convictions**. Unlabelled does *not* mean cleared or not corrupt; neither audit findings nor adjudicated outcomes affect the heuristic score. Criteria and schema: [`docs/adjudicated-outcomes.md`](docs/adjudicated-outcomes.md); regression: `node tests/outcomes.cjs`. Cross-country comparison of model accuracy requires independently reviewed, comparable positives and negatives, not unlabeled rows treated as negatives.
+The explorer can show/filter a **final corruption judgment linked to a particular contract** only if an official decision, proof of finality, exact contract linkage and passage are documented. **There are currently zero such labels in all provided French, Colombian and Paraguayan datasets.** A separate, dated press-lead label applies only to the Station Nuage dossier: a September 2024 report of a search linked to the project, **not a finding of guilt or evidence that an investigation is still open**. The eight French CRC findings are audit observations, **not corruption convictions**. Unlabelled does *not* mean cleared or not corrupt; neither audit findings nor adjudicated outcomes affect the heuristic score. Criteria and schema: [`docs/adjudicated-outcomes.md`](adjudicated-outcomes.md); regression: `node tests/outcomes.cjs`. Cross-country comparison of model accuracy requires independently reviewed, comparable positives and negatives, not unlabeled rows treated as negatives.
 
 ## DNCP OCDS pilot · Paraguay — documentary, not scored
 
-One pre-selected buyer, Municipalidad de Fernando de la Mora (`DNCP-SICP-CODE-66`), calls published 2024-09-01 → 2025-09-01. Official anonymous OCDS 1.1 API search: **88 processes**; full records retained in `data/paraguay-dncp/raw/`; **84 linked contract entries** in `data/paraguay-dncp.json`. Source award/contract join by `awardID`, PYG only, CC BY 4.0 with DNCP attribution. The displayed contract date is the published period start, **not a signature date** (none supplied). 80 rows have links *typed* as signed-contract documents, but their contents have not been independently reviewed. This is not an exhaustive national dataset or an audit of payments. **All 84 rows are Not assessed**, never zero: Paraguayan rules require local validation before scoring; French/Colombian checks do not transfer. Scope, exclusions and reproducibility: [`docs/paraguay-pilot.md`](docs/paraguay-pilot.md), `data/paraguay-dncp-coverage.json`.
+One pre-selected buyer, Municipalidad de Fernando de la Mora (`DNCP-SICP-CODE-66`), calls published 2024-09-01 → 2025-09-01. Official anonymous OCDS 1.1 API search: **88 processes**; full records retained in `data/paraguay-dncp/raw/`; **84 linked contract entries** in `data/paraguay-dncp.json`. Source award/contract join by `awardID`, PYG only, CC BY 4.0 with DNCP attribution. The displayed contract date is the published period start, **not a signature date** (none supplied). 80 rows have links *typed* as signed-contract documents, but their contents have not been independently reviewed. This is not an exhaustive national dataset or an audit of payments. **All 84 rows are Not assessed**, never zero: Paraguayan rules require local validation before scoring; French/Colombian checks do not transfer. Scope, exclusions and reproducibility: [`docs/paraguay-pilot.md`](paraguay-pilot.md), `data/paraguay-dncp-coverage.json`.
 
 ```sh
 python tools/import-paraguay-dncp.py --offline
@@ -76,7 +76,7 @@ node tests/paraguay.cjs
 
 ## SECOP II pilot · Colombia — first international cohort (22 September 2026)
 
-Implemented per the verified plan: a bounded, pre-announced cohort, original-language evidence, and **jurisdiction-specific scoring** ([docs/score-colombia.md](docs/score-colombia.md)). Selector entry: **“SECOP II · Colombia pilot · three buyers · 2024–2026”**, file `data/colombia-secop2.json`.
+Implemented per the verified plan: a bounded, pre-announced cohort, original-language evidence, and **jurisdiction-specific scoring** ([docs/score-colombia.md](score-colombia.md)). Selector entry: **“SECOP II · Colombia pilot · three buyers · 2024–2026”**, file `data/colombia-secop2.json`.
 
 - **Cohort announced before download** (2026-09-22), after volume-only count queries: Ministerio de Educación Nacional (national, NIT `899999001`, 2,618 contracts), Gobernación de Caldas (departmental, NIT `890801052`, 3,696), Alcaldía Local de Usaquén (municipal-local, matched by exact name because Bogotá’s alcaldías share the generic district NIT `899999061`, 1,246). **7,560 rows**, signature window 2024-09-01 → 2026-09-01 on `fecha_de_firma`.
 - **Intra-row process–contract–supplier fields checked**: all 7,560 SECOP II rows carry `proceso_de_compra`, `id_contrato`, a supplier name and process URL; **7,553** have a usable typed supplier document (seven published placeholders are unknown for identity-based checks). This is not an independent verification of each contract document. See `data/colombia-secop2-coverage.json` (`joinVerification`).
@@ -102,7 +102,7 @@ node tests/colombia.cjs                            # cohort, join, identity, Col
 - `data/decp-cities.json`: **1,270 buyer/identifier groups**, six additional municipalities, notifications 2024–2025, variants and current public profiles embedded for file mode.
 - `data/decp-cities-raw.json` and `data/decp-cities-coverage.json`: **1,865 source rows**, exact queries, scope, exclusions and counts.
 - `data/supplier-identities.json` and `data/supplier-identities-coverage.json`: minimized public snapshot of **100 SIRENs out of 703 identified**, sources and temporal limits; no network loading of these APIs while browsing the site.
-- `data/colombia-secop2.json` and `data/colombia-secop2-coverage.json`: **7,560 SECOP II contracts** of the three announced Colombian buyers (2024–2026), Spanish preserved, COP only, provenance and join verification embedded; raw pages under `data/colombia-secop2/raw/` (about 28 MB); method in [`docs/score-colombia.md`](docs/score-colombia.md).
+- `data/colombia-secop2.json` and `data/colombia-secop2-coverage.json`: **7,560 SECOP II contracts** of the three announced Colombian buyers (2024–2026), Spanish preserved, COP only, provenance and join verification embedded; raw pages under `data/colombia-secop2/raw/` (about 28 MB); method in [`docs/score-colombia.md`](score-colombia.md).
 
 Search is insensitive to accents and case, over dossier/contract/lot/notice identifiers, buyer, supplier, SIRET/SIREN, CPV, subject and procedure. All searched words must be present. Unknown amounts are excluded when a positive minimum is requested. Available sorts: index, amount and date in both directions; CPV sector A–Z/Z–A; buyer and supplier A–Z; offer count ascending; analysable increase as a descending percentage. Unknown values are always last, even in ascending sort. Search, filters and sorting apply to **the whole dataset**, then the table displays 50 rows per page. Click a row or activate its subject button with Enter/Space to show the details.
 
@@ -132,7 +132,7 @@ The matching rests on the DECP subjects explicitly mentioning the event, the sam
 
 The “Project” selector or a row’s project link opens the dossier and its sources: RMC announcement of 26 July 2025, DECP notification of 16 October, coverage reported by Le Parisien on 17 October, then the two notifications of 3 November. The texts expose the difference between public declaration and contractual commitment. Steps resting on unrevised sources are not added. **The chronology adds no points** and never becomes an “official finding”.
 
-The `project: { id, title, basis, source, evidence }` metadata is embedded in the three rows to keep file-mode loading self-contained. Each piece of evidence has a date, label, description, type and HTTP(S) URL. Incompatible metadata under the same project identifier is rejected. To add a dossier, its links must be documented explicitly; do not propagate a flag or an audit to the other contracts of the project. The user’s two PDFs were preserved unmodified and are not published as additional authority evidence.
+The `project: { id, title, basis, source, evidence }` metadata is embedded in the three rows to keep file-mode loading self-contained. Each piece of evidence has a date, label, description, type and HTTP(S) URL. Incompatible metadata under the same project identifier is rejected. To add a dossier, its links must be documented explicitly; do not propagate a flag or an audit to the other contracts of the project. The user’s two PDFs were preserved unmodified (now in [`sources/paris-13-november-2025/`](sources/paris-13-november-2025/)) and are not published as additional authority evidence.
 
 ## R2122 legal context — no additional points
 
@@ -506,7 +506,7 @@ Verified: **107 rule/data assertions** (15-day threshold, unknowns, conflicts/du
 
 ## Improvement leads — history of the v2.x proposals
 
-The separation of findings and coverage proposed in this section has since been implemented in v3; the weight proposals below remain an archive. Refer to [the active method](docs/score-v3.md).
+The separation of findings and coverage proposed in this section has since been implemented in v3; the weight proposals below remain an archive. Refer to [the active method](score-v3.md).
 
 The conservative variants **declared amount increase**, **repeated low competition**, **concentration by award count** and **repeated direct awards** are active on the DECP history. Concentration by value and the other proposals below remain unactivated. None of these choices is statistically or legally validated; the current ranking is described at the end of the document.
 

@@ -96,7 +96,7 @@ node tests/cities.cjs
 node tests/tours.cjs
 python -m unittest discover -s tests -p 'test_*.py'
 node tools/review-score-v3.cjs   # diagnostics and currentIndex pointers of the coverages
-# Server on 8765, test-only Playwright outside the project:
+# Starts its own server on a free port; test-only Playwright outside the project:
 node tests/browser.cjs
 ```
 
