@@ -1,0 +1,995 @@
+{
+ "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/ocds-03ad3f-472986-1",
+ "publishedDate": "2026-09-22T17:52:37Z",
+ "publisher": {
+  "name": "Dirección Nacional de Contrataciones Públicas, Paraguay"
+ },
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "publicationPolicy": "https://www.contrataciones.gov.py/datos/legal",
+ "version": "1.1",
+ "extensions": [
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_breakdown_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_and_spend_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_enquiry_extension/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/enquiriesAddress/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/legalEntityTypeDetail/master/extension.json",
+  "https://raw.githubusercontent.com/gitMHOCDS/transactions/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_investmentproject_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_clarification_meetings_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_attributes_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_items_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_contract_suppliers_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_location_extension/v1.1.4/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_activityType_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_notifiedsuppliers_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_lots_details_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_memberOf_extension/master/extension.json",
+  "https://raw.githubusercontent.com/portaledcahn/ocds_tenderDatePublished_extension/master/extension.json",
+  "https://raw.githubusercontent.com/INAImexico/ocds_guarantees_extension/master/extension.json",
+  "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_requirements_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bidOpening_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_coveredBy_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_qualification_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_publicEntitiesDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_items_subItems_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_statusdetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_mainProcurementCategoryDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_identifier_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_estimatedDate_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_participationFee_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_amendments_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_lot_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_transaction_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_financialprogress_financialcode_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_categories_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_complaints_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_minQuantity_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_purchaseOrder_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_document_type_details/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_cancellations_amendments_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_milestone_documents_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_techniques_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bid_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_bid_items_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_auctions_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_secondStage_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_beneficiaries_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/Crown-Commercial-Service/ocds_tender_suitability_extension/main/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_subcontracting_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_sustainability_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_reportedpayment_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_milestone_deliveries_extension/raw/master/extension.json"
+ ],
+ "records": [
+  {
+   "ocid": "ocds-03ad3f-472986-1",
+   "releases": [
+    {
+     "date": "2025-10-10T17:11:58-04:00",
+     "tag": [
+      "tender",
+      "award",
+      "contract",
+      "implementation"
+     ],
+     "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/releases/id/1f063cfe-a9cf-6ecc-b83c-9df36ea01e50-1760116318"
+    }
+   ],
+   "compiledRelease": {
+    "id": "1f063cfe-a9cf-6ecc-b83c-9df36ea01e50-1760116318",
+    "awards": [
+     {
+      "id": "1f08e697-3514-62aa-843f-81e46361d01c",
+      "status": "active",
+      "statusDetails": "publicado",
+      "date": "2025-09-08T00:00:00-04:00",
+      "value": {
+       "amount": 500000000,
+       "currency": "PYG"
+      },
+      "suppliers": [
+       {
+        "name": "FELIX MARTIN ROMERO ALVARENGA",
+        "id": "PY-RUC-2132761-0"
+       }
+      ],
+      "documents": [
+       {
+        "id": "1f08e6a3-9b1a-6e94-a609-0b6e9f95c228",
+        "datePublished": "2025-09-10T14:18:53-04:00",
+        "title": "cc-id-47298610092025-68c1b2fd5888f.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f08e68e-251d-6cce-9bc5-09c56df0b918/files/4cbcc883-655f-41e6-8b7d-8f3a56d77a28/download",
+        "language": "es",
+        "documentTypeDetails": "Cuadro Comparativo de Ofertas"
+       },
+       {
+        "id": "1f08e6a2-d6f2-6cec-a92f-85d5199e47c2",
+        "datePublished": "2025-09-10T14:18:32-04:00",
+        "title": "resol-1811-id-47298610092025-68c1b2e8bfba9.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f08e68e-251d-6cce-9bc5-09c56df0b918/files/876bbd6c-ceef-41c7-8f60-569a7b59caea/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "dix2iRRDbik=",
+        "title": "URL de la Adjudicación",
+        "url": "https://www.contrataciones.gov.py/licitaciones/adjudicacion/1f08e68e-251d-6cce-9bc5-09c56df0b918/resumen-adjudicacion.html",
+        "language": "es",
+        "documentType": "awardNotice",
+        "format": "text/html"
+       },
+       {
+        "id": "1f08e6a4-3154-64fa-b605-2d7786074998",
+        "datePublished": "2025-09-10T14:19:09-04:00",
+        "title": "info-eva-id-47298610092025-68c1b30d1ad95.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f08e68e-251d-6cce-9bc5-09c56df0b918/files/d88f9f49-f8ea-4229-aff6-bfb1572fa3a4/download",
+        "language": "es",
+        "documentTypeDetails": "Informe de Evaluación"
+       }
+      ],
+      "items": [
+       {
+        "id": "1f07538f-06a5-671c-9f47-add250914a23",
+        "description": "Pintura asfaltica COLOR AMARILLO, LATA DE 18 LTS.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "31211508-007",
+         "description": "Pintura asfaltica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/31211508-007"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "31211508",
+          "description": "Pinturas acrilicas o sinteticas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/31211508"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 502000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f075389-a15e-6b1a-bb51-e171aebeeba7",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "INVIPINT SACI",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BAMBI",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "1",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "N/A",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f07538f-06ac-6bf2-acec-add250914a23",
+        "description": "Pintura asfaltica COLOR BLANCO, LATA DE 18 LTS.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "31211508-007",
+         "description": "Pintura asfaltica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/31211508-007"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "31211508",
+          "description": "Pinturas acrilicas o sinteticas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/31211508"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 510000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f075389-a15e-6b1a-bb51-e171aebeeba7",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "INVIPINT SACI",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BAMBI",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "2",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "N/A",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f07538f-06b3-63ee-a621-add250914a23",
+        "description": "Solvente para pintura BALDE DE 20 LTS",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "31211803-003",
+         "description": "Solvente para pintura",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/31211803-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "31211803",
+          "description": "Disolventes y Diluyentes para pinturas y barnices",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/31211803"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 340000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f075389-a15e-6b1a-bb51-e171aebeeba7",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "INVIPIT SACI",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BAMBI",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "3",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "N/A",
+          "id": "317"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "tender": {
+     "id": "1f063cfe-a9cf-6ecc-b83c-9df36ea01e50",
+     "title": "ADQUISICION DE PINTURA ASFALTICA",
+     "status": "complete",
+     "awardCriteria": "priceOnly",
+     "awardCriteriaDetails": "Por Total",
+     "submissionMethod": [
+      "inPerson"
+     ],
+     "bidOpening": {
+      "date": "2025-08-29T14:30:00-04:00",
+      "address": {
+       "streetAddress": "Municipalidad de Fernando de la Mora, oficina UOC"
+      }
+     },
+     "submissionMethodDetails": "Lugar entrega ofertas: Municipalidad de Fernando de la Mora, oficina UOC",
+     "statusDetails": "Adjudicada",
+     "enquiriesAddress": {
+      "streetAddress": "SICP"
+     },
+     "clarificationMeetings": [
+      {
+       "address": {
+        "streetAddress": "N/A"
+       },
+       "id": "1"
+      }
+     ],
+     "mainProcurementCategoryDetails": "Bienes - Componentes y Suministros de Fabricacion",
+     "hasEnquiries": false,
+     "value": {
+      "amount": 500000000,
+      "currency": "PYG"
+     },
+     "datePublished": "2025-08-13T14:33:25-04:00",
+     "tenderPeriod": {
+      "startDate": "2025-08-13T14:33:25-04:00",
+      "endDate": "2025-08-29T14:00:00-04:00",
+      "durationInDays": 15
+     },
+     "awardPeriod": {
+      "startDate": "2025-08-29T14:30:00-04:00"
+     },
+     "contractPeriod": {
+      "maxExtentDate": "2025-12-31T00:00:00-04:00"
+     },
+     "enquiryPeriod": {
+      "endDate": "2025-08-26T12:00:00-04:00",
+      "startDate": "2025-08-13T14:33:25-04:00",
+      "durationInDays": 12
+     },
+     "mainProcurementCategory": "services",
+     "additionalProcurementCategories": [
+      "services"
+     ],
+     "procurementMethod": "open",
+     "procurementMethodDetails": "Menor cuantía nacional",
+     "procuringEntity": {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora"
+     },
+     "criteria": [
+      {
+       "id": "1",
+       "title": "Garantía de Mantenimiento de Ofertas",
+       "description": "Los oferentes, proveedores o contratistas deberán garantizar la seriedad de sus ofertas, mediante la garantía de mantenimiento de la oferta",
+       "source": "tenderer",
+       "requirementGroups": [
+        {
+         "id": "1-1",
+         "description": "La garantía debe ser de un cierto porcentaje, periodo y tipo",
+         "requirements": [
+          {
+           "id": "1-1-1",
+           "title": "Porcentaje de la garantia",
+           "expectedValue": "5"
+          },
+          {
+           "id": "1-1-2",
+           "title": "Validez de la garantia en días",
+           "expectedValue": "90"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "enquiries": [
+      {
+       "id": "8747f60f99a500c722c848ae240eebd0-1",
+       "date": "2025-08-25T11:14:24-04:00",
+       "title": "ID 472986 - Adquisicion de pinturas asfalticas",
+       "description": "En las especificaciones técnicas de las pinturas ítem N° 1,  ítem N° 2 e ítem N° 3, solicitan pinturas sintéticas y solventes.   Consulta: se puede ofertar pintura con base al agua??",
+       "answer": "REMITIRSE AL PLIEGO DE BASES Y CONDICIONES.",
+       "dateAnswered": "2025-08-27T15:23:48-04:00"
+      }
+     ],
+     "lots": [
+      {
+       "id": "1f075389-a15e-6b1a-bb51-e171aebeeba7",
+       "title": "1 - 1 - ADQUISICION DE PINTURA ASFALTICA",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 500000000,
+        "currency": "PYG"
+       },
+       "openContractType": "monto",
+       "minValue": {
+        "amount": 250000000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "1"
+        }
+       ]
+      }
+     ],
+     "items": [
+      {
+       "id": "1f07538f-06a5-671c-9f47-add250914a23",
+       "description": "Pintura asfaltica COLOR AMARILLO, LATA DE 18 LTS.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "31211508-007",
+        "description": "Pintura asfaltica",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/31211508-007"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "31211508",
+         "description": "Pinturas acrilicas o sinteticas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/31211508"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 523167,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f075389-a15e-6b1a-bb51-e171aebeeba7",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f07538f-06ac-6bf2-acec-add250914a23",
+       "description": "Pintura asfaltica COLOR BLANCO, LATA DE 18 LTS.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "31211508-007",
+        "description": "Pintura asfaltica",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/31211508-007"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "31211508",
+         "description": "Pinturas acrilicas o sinteticas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/31211508"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 547500,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f075389-a15e-6b1a-bb51-e171aebeeba7",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "2",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f07538f-06b3-63ee-a621-add250914a23",
+       "description": "Solvente para pintura BALDE DE 20 LTS",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "31211803-003",
+        "description": "Solvente para pintura",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/31211803-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "31211803",
+         "description": "Disolventes y Diluyentes para pinturas y barnices",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/31211803"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 377167,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f075389-a15e-6b1a-bb51-e171aebeeba7",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "3",
+         "id": "2"
+        }
+       ]
+      }
+     ],
+     "tenderers": [
+      {
+       "name": "SERVIAM PARAGUAY SOCIEDAD ANONIMA",
+       "id": "PY-RUC-80063648-1"
+      },
+      {
+       "name": "FELIX MARTIN ROMERO ALVARENGA",
+       "id": "PY-RUC-2132761-0"
+      },
+      {
+       "name": "PAMPEIRO S.A.",
+       "id": "PY-RUC-80005544-6"
+      }
+     ],
+     "documents": [
+      {
+       "id": "DADRFonASTg=",
+       "datePublished": "2025-08-13T13:33:24-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 472986 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1f063cfe-a9cf-6ecc-b83c-9df36ea01e50/1",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/pdf"
+      },
+      {
+       "id": "3334e56f-8004-4eec-a7fd-557a86927f3f",
+       "datePublished": "2025-08-09T13:13:37-04:00",
+       "title": "cdp-mcn-id-472986-6897736f59e2f.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f063cfe-a9cf-6ecc-b83c-9df36ea01e50/files/3334e56f-8004-4eec-a7fd-557a86927f3f/download",
+       "language": "es",
+       "documentTypeDetails": "CDP"
+      },
+      {
+       "id": "dix2iRRDbik=",
+       "title": "URL de la Convocatoria",
+       "url": "https://www.contrataciones.gov.py/licitaciones/convocatoria/1f063cfe-a9cf-6ecc-b83c-9df36ea01e50.html",
+       "language": "es",
+       "documentType": "tenderNotice",
+       "format": "text/html"
+      },
+      {
+       "id": "4e613555-ce1d-4efb-8deb-fb7e0a374598",
+       "datePublished": "2025-08-09T13:13:37-04:00",
+       "title": "dictamen-tecnico-mcn-id-472986-689773809621f.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f063cfe-a9cf-6ecc-b83c-9df36ea01e50/files/4e613555-ce1d-4efb-8deb-fb7e0a374598/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen técnico"
+      },
+      {
+       "id": "170cf2b0-35bb-42f0-83fc-d5cc08f4510c",
+       "datePublished": "2025-08-29T14:59:29-04:00",
+       "title": "acta-de-apertura-000047-4144228479456886-68b1ea80d204b.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f063cfe-a9cf-6ecc-b83c-9df36ea01e50/files/170cf2b0-35bb-42f0-83fc-d5cc08f4510c/download",
+       "language": "es",
+       "documentTypeDetails": "Acta de Apertura"
+      },
+      {
+       "id": "499a2787-4879-475d-b4b7-31ea896ce1d4",
+       "datePublished": "2025-08-09T13:13:36-04:00",
+       "title": "justificacion-anticipo-mypimes-mcn-id-472986-6897739d5b5db.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f063cfe-a9cf-6ecc-b83c-9df36ea01e50/files/499a2787-4879-475d-b4b7-31ea896ce1d4/download",
+       "language": "es",
+       "documentTypeDetails": "Nota de Justificación de Anticipo"
+      },
+      {
+       "id": "a99dd4cf-05d0-44b7-aff1-22a45564251a",
+       "datePublished": "2025-08-09T13:13:37-04:00",
+       "title": "resolucion-aprobacion-mcn-id-472986-6897737769602.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f063cfe-a9cf-6ecc-b83c-9df36ea01e50/files/a99dd4cf-05d0-44b7-aff1-22a45564251a/download",
+       "language": "es",
+       "documentTypeDetails": "Aprobación PBC"
+      },
+      {
+       "id": "6d576d7e-027a-400e-9851-b47009b8b925",
+       "datePublished": "2025-08-09T13:13:36-04:00",
+       "title": "dictamen-uoc-justificativo-no-pac-mcn-id-472986-689773a816312.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f063cfe-a9cf-6ecc-b83c-9df36ea01e50/files/6d576d7e-027a-400e-9851-b47009b8b925/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen Justificativo"
+      },
+      {
+       "id": "u3RMG4L1xOim1YP3jgr/4Q==",
+       "datePublished": "2025-08-13T13:33:24-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 472986 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1f063cfe-a9cf-6ecc-b83c-9df36ea01e50/1/json",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/json"
+      },
+      {
+       "id": "964cc75b-6b23-4f18-b9e8-fbb8c6c2ebd7",
+       "datePublished": "2025-08-09T13:13:37-04:00",
+       "title": "dictamen-pr-y-antecedentes-del-pr-mcn-id-472986-6897738e32d1e.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f063cfe-a9cf-6ecc-b83c-9df36ea01e50/files/964cc75b-6b23-4f18-b9e8-fbb8c6c2ebd7/download",
+       "language": "es",
+       "documentTypeDetails": "Antecedentes de la Estimación de Costos"
+      }
+     ],
+     "numberOfTenderers": 3
+    },
+    "language": "es",
+    "ocid": "ocds-03ad3f-472986-1",
+    "date": "2025-10-10T17:11:58-04:00",
+    "initiationType": "tender",
+    "buyer": {
+     "id": "DNCP-SICP-CODE-66",
+     "name": "Municipalidad de Fernando de la Mora"
+    },
+    "sources": [
+     {
+      "id": "dncp-sicp",
+      "name": "Sistema de Información de las Contrataciones Públicas - DNCP",
+      "url": "https://www.contrataciones.gov.py/"
+     }
+    ],
+    "contracts": [
+     {
+      "id": "MN-30173-25-257898",
+      "implementation": {
+       "financialProgress": {
+        "breakdown": [
+         {
+          "id": "2025/30/173/2/2/1/0/11/11/355/30/MN-30173-25-257898",
+          "period": {
+           "startDate": "2025-01-01T00:00:00Z",
+           "endDate": "2025-12-31T00:00:00Z"
+          },
+          "measures": {
+           "monto_a_utilizar": 500000000
+          },
+          "classifications": {
+           "anio": "2025",
+           "nivel": "30",
+           "entidad": "173",
+           "tipo_programa": "2",
+           "programa": "2",
+           "sub_programa": "1",
+           "proyecto": "0",
+           "financiador": "11",
+           "departamento": "11",
+           "objeto_gasto": "355",
+           "fuente_financiamiento": "30",
+           "cdp": "118947"
+          },
+          "financialCode": "MN-30173-25-257898"
+         }
+        ]
+       }
+      },
+      "awardID": "1f08e697-3514-62aa-843f-81e46361d01c",
+      "status": "active",
+      "statusDetails": "publicado",
+      "period": {
+       "startDate": "2025-09-30T00:00:00-04:00"
+      },
+      "value": {
+       "amount": 500000000,
+       "currency": "PYG"
+      },
+      "documents": [
+       {
+        "id": "1f09e1b4-496a-67a4-9d83-5fd775f0898b",
+        "datePublished": "2025-09-30T13:34:00-04:00",
+        "title": "cdp-mcn-id-472986-68dc0677f1839.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f08e697-3514-62aa-843f-81e46361d01c/files/6fedcb98-43c4-4646-9317-25075eeeeefa/download",
+        "language": "es",
+        "documentTypeDetails": "CDP"
+       },
+       {
+        "id": "1f09e1b3-6c62-6c1c-8088-0150f1e7ecba",
+        "datePublished": "2025-09-30T13:33:36-04:00",
+        "title": "contrato-59-id-472986-68dc0660bd454.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f08e697-3514-62aa-843f-81e46361d01c/files/0aa070d6-1426-48d2-8650-8556d976d477/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1f0a3763-4d74-67b4-a1c3-fd8e0a5a82ad",
+        "datePublished": "2025-10-07T09:07:33-04:00",
+        "title": "informe-de-evaluacion-472986-68e502857b2d6.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f08e697-3514-62aa-843f-81e46361d01c/files/743b703e-829d-4fa5-a26e-aa5c3b26f160/download",
+        "language": "es",
+        "documentTypeDetails": "Nota de Contestación"
+       },
+       {
+        "id": "1f09e1b5-7381-62c6-aef4-e991d0937437",
+        "datePublished": "2025-09-30T13:34:31-04:00",
+        "title": "resol-1811-id-47298610092025-68dc06973b702.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f08e697-3514-62aa-843f-81e46361d01c/files/b8f179e3-fee7-44a3-b6e7-c2747864fc69/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       }
+      ]
+     }
+    ],
+    "parties": [
+     {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora",
+      "identifier": {
+       "scheme": "DNCP-SICP-CODE",
+       "id": "66",
+       "legalName": "Municipalidad de Fernando de la Mora"
+      },
+      "contactPoint": {
+       "email": "morauoc@gmail.com",
+       "name": "LIC. ELIGIO ACOSTA",
+       "telephone": "+595 21 513-306"
+      },
+      "roles": [
+       "buyer",
+       "procuringEntity"
+      ],
+      "details": {
+       "level": "Municipalidades",
+       "entityType": "Municipalidades",
+       "type": "Entidad"
+      },
+      "additionalIdentifiers": [
+       {
+        "id": "2025.30.173",
+        "legalName": "Municipalidad de Fernando de la Mora",
+        "scheme": "PY-PGN"
+       }
+      ]
+     },
+     {
+      "name": "FELIX MARTIN ROMERO ALVARENGA",
+      "id": "PY-RUC-2132761-0",
+      "identifier": {
+       "id": "2132761-0",
+       "legalName": "FELIX MARTIN ROMERO ALVARENGA",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer",
+       "supplier"
+      ],
+      "contactPoint": {
+       "name": "FELIX MARTIN ROMERO ALVARENGA",
+       "email": "edisacontabilidad@hotmail.com",
+       "telephone": "0982188476"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "FERNANDO DE LA MORA",
+       "region": "Central",
+       "streetAddress": "RUTA MCAL. ESTIGARRIBIA 723"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Muebles y Enseres",
+         "id": 23
+        },
+        {
+         "name": "Materiales e insumos eléctricos, metálicos y no metálicos, Plásticos, cauchos. Repuestos, herramientas, cámaras y cubiertas.",
+         "id": 18
+        }
+       ]
+      }
+     },
+     {
+      "name": "PAMPEIRO S.A.",
+      "id": "PY-RUC-80005544-6",
+      "identifier": {
+       "id": "80005544-6",
+       "legalName": "PAMPEIRO S.A.",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "PAULO ROBERTO TONIOLO- ALEXANDRE TONIOLO- DANIELA TONIOLO",
+       "email": "licitaciones@pampeiro.com.py",
+       "faxNumber": "527-151",
+       "telephone": "0976-161300",
+       "url": "https://pampeiro.com.py/"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "ASUNCION (DISTRITO)",
+       "region": "Asunción",
+       "streetAddress": "AVDA GUIDO BOGGIANNI 6171"
+      },
+      "details": {
+       "legalEntityTypeDetail": "S.A.",
+       "activityTypes": [
+        "goods"
+       ],
+       "categories": [
+        {
+         "name": "Materiales e insumos eléctricos, metálicos y no metálicos, Plásticos, cauchos. Repuestos, herramientas, cámaras y cubiertas.",
+         "id": 18
+        },
+        {
+         "name": "Adquisición y Locación de inmuebles. Alquiler de muebles",
+         "id": 3
+        },
+        {
+         "name": "Maquinarias, Equipos y herramientas mayores - Equipos de transporte",
+         "id": 22
+        },
+        {
+         "name": "Textiles, vestuarios y calzados",
+         "id": 10
+        }
+       ]
+      }
+     },
+     {
+      "name": "SERVIAM PARAGUAY SOCIEDAD ANONIMA",
+      "id": "PY-RUC-80063648-1",
+      "identifier": {
+       "id": "80063648-1",
+       "legalName": "SERVIAM PARAGUAY SOCIEDAD ANONIMA",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "JOSE MACKINNON - JUAN DIOVERTI",
+       "email": "wilsonriveros@serviam.com.py",
+       "faxNumber": "021/201783",
+       "telephone": "0982/631-600"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "ASUNCION (DISTRITO)",
+       "region": "Central",
+       "streetAddress": "AVDA. GRAL. SANTOS NRO. 327"
+      },
+      "details": {
+       "legalEntityTypeDetail": "S.A.",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Materiales e insumos eléctricos, metálicos y no metálicos, Plásticos, cauchos. Repuestos, herramientas, cámaras y cubiertas.",
+         "id": 18
+        },
+        {
+         "name": "Construcción, Restauración, Reconstrucción o Remodelación y Reparación de Inmuebles",
+         "id": 21
+        },
+        {
+         "name": "Maquinarias, Equipos y herramientas mayores - Equipos de transporte",
+         "id": 22
+        },
+        {
+         "name": "Productos quimicos",
+         "id": 16
+        },
+        {
+         "name": "Publicidad y Propaganda",
+         "id": 8
+        }
+       ]
+      }
+     },
+     {
+      "name": "T - MAX SA",
+      "id": "PY-RUC-80071622-1",
+      "identifier": {
+       "id": "80071622-1",
+       "legalName": "T - MAX SA",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "enquirer"
+      ],
+      "contactPoint": {
+       "name": "FRANCISCO SOLÍS - XIMENA SOLIS MEZA",
+       "email": "t-max_sa@hotmail.com",
+       "faxNumber": "211813",
+       "telephone": "0981-416075"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "asuncion",
+       "region": "Asunción",
+       "streetAddress": "Capitan Rivarola 866 e/ Teodoro S. Mongelos y Herminio Gimenez"
+      },
+      "details": {
+       "scale": "micro",
+       "legalEntityTypeDetail": "S.A.",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Productos Alimenticios",
+         "id": 14
+        },
+        {
+         "name": "Materiales e insumos eléctricos, metálicos y no metálicos, Plásticos, cauchos. Repuestos, herramientas, cámaras y cubiertas.",
+         "id": 18
+        },
+        {
+         "name": "Servicios Técnicos",
+         "id": 7
+        },
+        {
+         "name": "Elementos e insumos de limpieza",
+         "id": 12
+        },
+        {
+         "name": "Servicios de Limpiezas, Mantenimientos y reparaciones menores y mayores de Instalaciones, Maquinarias y Vehículos",
+         "id": 2
+        },
+        {
+         "name": "Construcción, Restauración, Reconstrucción o Remodelación y Reparación de Inmuebles",
+         "id": 21
+        },
+        {
+         "name": "Textiles, vestuarios y calzados",
+         "id": 10
+        }
+       ]
+      }
+     }
+    ],
+    "tag": [
+     "compiled"
+    ]
+   }
+  }
+ ],
+ "pagination": {
+  "total_items": 1,
+  "total_pages": 1,
+  "current_page": 1,
+  "items_per_page": 10,
+  "total_in_page": 1
+ }
+}

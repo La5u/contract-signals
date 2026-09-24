@@ -1,0 +1,2578 @@
+{
+ "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/ocds-03ad3f-470248-1",
+ "publishedDate": "2026-09-22T17:53:45Z",
+ "publisher": {
+  "name": "Dirección Nacional de Contrataciones Públicas, Paraguay"
+ },
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "publicationPolicy": "https://www.contrataciones.gov.py/datos/legal",
+ "version": "1.1",
+ "extensions": [
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_breakdown_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_and_spend_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_enquiry_extension/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/enquiriesAddress/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/legalEntityTypeDetail/master/extension.json",
+  "https://raw.githubusercontent.com/gitMHOCDS/transactions/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_investmentproject_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_clarification_meetings_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_attributes_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_items_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_contract_suppliers_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_location_extension/v1.1.4/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_activityType_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_notifiedsuppliers_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_lots_details_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_memberOf_extension/master/extension.json",
+  "https://raw.githubusercontent.com/portaledcahn/ocds_tenderDatePublished_extension/master/extension.json",
+  "https://raw.githubusercontent.com/INAImexico/ocds_guarantees_extension/master/extension.json",
+  "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_requirements_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bidOpening_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_coveredBy_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_qualification_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_publicEntitiesDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_items_subItems_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_statusdetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_mainProcurementCategoryDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_identifier_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_estimatedDate_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_participationFee_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_amendments_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_lot_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_transaction_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_financialprogress_financialcode_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_categories_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_complaints_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_minQuantity_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_purchaseOrder_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_document_type_details/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_cancellations_amendments_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_milestone_documents_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_techniques_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bid_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_bid_items_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_auctions_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_secondStage_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_beneficiaries_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/Crown-Commercial-Service/ocds_tender_suitability_extension/main/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_subcontracting_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_sustainability_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_reportedpayment_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_milestone_deliveries_extension/raw/master/extension.json"
+ ],
+ "records": [
+  {
+   "ocid": "ocds-03ad3f-470248-1",
+   "releases": [
+    {
+     "date": "2025-05-05T11:47:15-04:00",
+     "tag": [
+      "tender"
+     ],
+     "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/releases/id/1f01931c-0f3e-6574-8f8e-43ec095fbf54-1746445635"
+    }
+   ],
+   "compiledRelease": {
+    "id": "1f01931c-0f3e-6574-8f8e-43ec095fbf54-1746445635",
+    "tender": {
+     "id": "1f01931c-0f3e-6574-8f8e-43ec095fbf54",
+     "title": "REPARACION DE PALA CARGADORA",
+     "status": "complete",
+     "awardCriteria": "priceOnly",
+     "awardCriteriaDetails": "Por Total",
+     "submissionMethod": [
+      "inPerson"
+     ],
+     "bidOpening": {
+      "date": "2025-05-16T08:30:00-04:00",
+      "address": {
+       "streetAddress": "Municipalidad de Fernando de la Mora, oficina UOC"
+      }
+     },
+     "submissionMethodDetails": "Lugar entrega ofertas: Municipalidad de Fernando de la Mora, oficina UOC",
+     "statusDetails": "En Evaluacion (Cerrada)",
+     "enquiriesAddress": {
+      "streetAddress": "SICP"
+     },
+     "clarificationMeetings": [
+      {
+       "address": {
+        "streetAddress": "N/A"
+       },
+       "id": "1"
+      }
+     ],
+     "mainProcurementCategoryDetails": "Servicios - Maquinaria y Accesorios para Generacion y Distribucion de Energia",
+     "hasEnquiries": false,
+     "value": {
+      "amount": 88567934,
+      "currency": "PYG"
+     },
+     "datePublished": "2025-05-05T11:47:15-04:00",
+     "tenderPeriod": {
+      "startDate": "2025-05-05T11:47:15-04:00",
+      "endDate": "2025-05-16T08:00:00-04:00",
+      "durationInDays": 10
+     },
+     "awardPeriod": {
+      "startDate": "2025-05-16T08:30:00-04:00"
+     },
+     "enquiryPeriod": {
+      "endDate": "2025-05-09T12:00:00-04:00",
+      "startDate": "2025-05-05T11:47:15-04:00",
+      "durationInDays": 4
+     },
+     "mainProcurementCategory": "services",
+     "additionalProcurementCategories": [
+      "services"
+     ],
+     "procurementMethod": "open",
+     "procurementMethodDetails": "Menor cuantía nacional",
+     "procuringEntity": {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora"
+     },
+     "criteria": [
+      {
+       "id": "1",
+       "title": "Garantía de Mantenimiento de Ofertas",
+       "description": "Los oferentes, proveedores o contratistas deberán garantizar la seriedad de sus ofertas, mediante la garantía de mantenimiento de la oferta",
+       "source": "tenderer",
+       "requirementGroups": [
+        {
+         "id": "1-1",
+         "description": "La garantía debe ser de un cierto porcentaje, periodo y tipo",
+         "requirements": [
+          {
+           "id": "1-1-1",
+           "title": "Porcentaje de la garantia",
+           "expectedValue": "5"
+          },
+          {
+           "id": "1-1-2",
+           "title": "Validez de la garantia en días",
+           "expectedValue": "120"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "lots": [
+      {
+       "id": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "title": "1 - 1 - REPARACION DE PALA CARGADORA",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 88567934,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "1"
+        }
+       ]
+      }
+     ],
+     "items": [
+      {
+       "id": "1f02046a-ada2-60c0-93a0-db5702f4eee0",
+       "description": "12 Valvulas",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "23151603-966",
+        "description": "Valvula para Maquina/Equipo pesada/o",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/23151603-966"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "23151603",
+         "description": "Maquina / Equipo / Suministros para industria del cemento",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/23151603"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 937575,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "23",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-adc4-61e8-842b-db5702f4eee0",
+       "description": "Alternador 24V",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "25181709-046",
+        "description": "Alternador",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/25181709-046"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "25181709",
+         "description": "Pala cargadora y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/25181709"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 7147563,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "29",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ae55-622e-a80a-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "54",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ae5a-69f4-a747-db5702f4eee0",
+       "description": "Elemento p/ filtro de aire",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "40161505-001",
+        "description": "Filtro de aire para equipo y/o maquinaria pesada",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/40161505-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "40161505",
+         "description": "Filtros de aire",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/40161505"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 578750,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "55",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ae31-689c-a4c3-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "48",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ae03-642e-95af-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "40",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-adf7-6e30-8a94-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "38",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ad96-6f54-9924-db5702f4eee0",
+       "description": "Pico inyectores",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "22101619-038",
+        "description": "Pico inyector",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/22101619-038"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "22101619",
+         "description": "Maquinas niveladoras y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/22101619"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 6496199,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "21",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ad33-6008-9743-db5702f4eee0",
+       "description": "Tapa Motor",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "26101715-003",
+        "description": "Tapa motor para maquinaria pesada",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/26101715-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "26101715",
+         "description": "Tapas o tachos de motor",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/26101715"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 1362589,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "3",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ad86-6564-a489-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "18",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ad38-6698-94f4-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "4",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ad3e-6020-8d5a-db5702f4eee0",
+       "description": "Camisa (6pzas)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "23151603-937",
+        "description": "Camisa metalica para Maquina/Equipo pesada/o",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/23151603-937"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "23151603",
+         "description": "Maquina / Equipo / Suministros para industria del cemento",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/23151603"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 5787500,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "5",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ad59-66fe-9f17-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "10",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ad4e-677c-93bb-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "8",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ae13-6ec8-8253-db5702f4eee0",
+       "description": "Filtro de combustible (2 pzs)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "40161513-005",
+        "description": "Filtro de combustible para maquina pesada",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/40161513-005"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "40161513",
+         "description": "Filtros de combustible",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/40161513"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 231500,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "43",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ad5e-6f28-b1c0-db5702f4eee0",
+       "description": "Perno Piston (6 pzs)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "31161611-008",
+        "description": "Perno piston",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/31161611-008"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "31161611",
+         "description": "Pernos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/31161611"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 520875,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "11",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-adae-66f4-8a20-db5702f4eee0",
+       "description": "Casquillos",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "25131709-094",
+        "description": "Casquillo",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/25131709-094"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "25131709",
+         "description": "Avion de transporte militar",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/25131709"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 1041750,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "25",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ad2d-6496-a18a-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "2",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ae49-6f0a-8707-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "52",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ada8-6cd6-839f-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "24",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ad26-68d0-a179-db5702f4eee0",
+       "description": "Block Motor",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "26101504-020",
+        "description": "Block de motor",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/26101504-020"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "26101504",
+         "description": "Motores diesel, naftero y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/26101504"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 1362589,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-add5-6218-a626-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "32",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ae3d-661a-b59b-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "50",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ad80-67a4-b2df-db5702f4eee0",
+       "description": "Bomba aceite",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "25131707-083",
+        "description": "Bomba de aceite",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/25131707-083"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "25131707",
+         "description": "Aeronave de reconocimiento o vigilancia y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/25131707"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 5251578,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "17",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ae43-6be6-a74e-db5702f4eee0",
+       "description": "Multiple escape",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "26101759-002",
+        "description": "Colector",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/26101759-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "26101759",
+         "description": "Accesorios o Adaptadores del motor de arranque",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/26101759"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 3748281,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "51",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ae25-69a2-af21-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "46",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ae19-68aa-a2be-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "44",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-adfd-6628-b72c-db5702f4eee0",
+       "description": "Filtro de aceite",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "25131903-986",
+        "description": "Filtro de Aceite",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/25131903-986"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "25131903",
+         "description": "Helicopteros de ataque",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/25131903"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 664176,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "39",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ade6-6d24-a1c5-db5702f4eee0",
+       "description": "Bombin",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "25181709-045",
+        "description": "Bombin",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/25181709-045"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "25181709",
+         "description": "Pala cargadora y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/25181709"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 1041750,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "35",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-adc9-6d82-8706-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "30",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ae1f-6642-b76e-db5702f4eee0",
+       "description": "Carter",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "25173810-9998",
+        "description": "Junta de carter",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/25173810-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "25173810",
+         "description": "Juntas, crucetas y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/25173810"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 2968988,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "45",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ae37-67ce-8026-db5702f4eee0",
+       "description": "Tapa balancin",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "25131707-218",
+        "description": "Junta tapa balancin",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/25131707-218"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "25131707",
+         "description": "Aeronave de reconocimiento o vigilancia y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/25131707"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 1600174,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "49",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-addb-6398-9b3d-db5702f4eee0",
+       "description": "Aleta ventilador",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "23151603-946",
+        "description": "Aleta para Maquina/Equipo pesada/o",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/23151603-946"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "23151603",
+         "description": "Maquina / Equipo / Suministros para industria del cemento",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/23151603"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 439850,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "33",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ad7a-6958-93f0-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "16",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ae0e-666c-bf19-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "42",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ae08-6f8c-a17a-db5702f4eee0",
+       "description": "Bielas (6 pzs)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "26101711-9999",
+        "description": "Biela",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/26101711-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "26101711",
+         "description": "Bielas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/26101711"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 2739224,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "41",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-adb9-6496-8ac1-db5702f4eee0",
+       "description": "Motor de Arranque",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "25181709-047",
+        "description": "Motor de arranque",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/25181709-047"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "25181709",
+         "description": "Pala cargadora y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/25181709"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 7147563,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "27",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-adbe-6c20-a51c-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "28",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-adcf-684a-82a6-db5702f4eee0",
+       "description": "Bomba de agua",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "25174002-999",
+        "description": "Bomba de Agua (vehicular)",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/25174002-999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "25174002",
+         "description": "Radiadores de motor y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/25174002"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 1389000,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "31",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ad53-6fec-a0b9-db5702f4eee0",
+       "description": "Juegos aros (6 Juegos)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "26101504-064",
+        "description": "Juego de aros para motor",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/26101504-064"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "26101504",
+         "description": "Motores diesel, naftero y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/26101504"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 2691188,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "9",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ae2b-67da-85c3-db5702f4eee0",
+       "description": "Balancin",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "25131707-218",
+        "description": "Junta tapa balancin",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/25131707-218"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "25131707",
+         "description": "Aeronave de reconocimiento o vigilancia y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/25131707"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 1362589,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "47",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ad75-621e-ab3c-db5702f4eee0",
+       "description": "Cigüeñal",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "26101749-005",
+        "description": "Cigueñal",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/26101749-005"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "26101749",
+         "description": "Cigüenal y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/26101749"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 7203123,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "15",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ad8b-6f64-8814-db5702f4eee0",
+       "description": "Bomba inyectora",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "25172405-008",
+        "description": "Elemento para bomba inyectora",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/25172405-008"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "25172405",
+         "description": "Sistemas de inyeccion de combustible y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/25172405"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 5251578,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "19",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-adec-653a-aaaa-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "36",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ad64-6810-a7f9-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "12",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ad49-61d2-a1b2-db5702f4eee0",
+       "description": "Pistones (6 pzs)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "25181709-974",
+        "description": "Piston para pala cargadora",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/25181709-974"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "25181709",
+         "description": "Pala cargadora y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/25181709"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 2691188,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "7",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ad43-680e-b978-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "6",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ad6a-6288-9418-db5702f4eee0",
+       "description": "Junta tapa",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "25173810-012",
+        "description": "Junta tapa motor",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/25173810-012"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "25173810",
+         "description": "Juntas, crucetas y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/25173810"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 1270605,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "13",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ae60-62a0-a388-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "56",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-adf1-6dc8-87d1-db5702f4eee0",
+       "description": "Filtro de aire",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "40161505-001",
+        "description": "Filtro de aire para equipo y/o maquinaria pesada",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/40161505-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "40161505",
+         "description": "Filtros de aire",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/40161505"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 664176,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "37",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ae4f-6bb2-8254-db5702f4eee0",
+       "description": "Turbo",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "26101720-001",
+        "description": "Turbo para motor",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/26101720-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "26101720",
+         "description": "Turbocargador",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/26101720"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 11069593,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "53",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-adb3-6e6a-9571-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "26",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ad9c-665c-b00a-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "22",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ad91-677a-af76-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "20",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ad6f-6a62-967c-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "14",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f02046a-ade0-6fdc-8404-db5702f4eee0",
+       "description": "Mano de obra item anterior",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "80111613-9999",
+        "description": "Mano de Obra - Mantenimiento y/o reparación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/80111613-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "80111613",
+         "description": "Mano de obra temporanea",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/80111613"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f02045e-8d56-6282-b9f7-c155fd542224",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "34",
+         "id": "2"
+        }
+       ]
+      }
+     ],
+     "tenderers": [
+      {
+       "name": "JORGE CLAUDIO MAURE NAVARRO",
+       "id": "PY-RUC-6505103-3"
+      },
+      {
+       "name": "GOTZE INGENIERIA SA",
+       "id": "PY-RUC-80046302-1"
+      }
+     ],
+     "documents": [
+      {
+       "id": "52135445-fb48-4609-9cea-e436cb23553e",
+       "datePublished": "2025-04-30T08:20:29-04:00",
+       "title": "resolucion-aprobacion-mcn-id-470-248-681206f7702ad.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f01931c-0f3e-6574-8f8e-43ec095fbf54/files/52135445-fb48-4609-9cea-e436cb23553e/download",
+       "language": "es",
+       "documentTypeDetails": "Aprobación PBC"
+      },
+      {
+       "id": "dix2iRRDbik=",
+       "title": "URL de la Convocatoria",
+       "url": "https://www.contrataciones.gov.py/licitaciones/convocatoria/1f01931c-0f3e-6574-8f8e-43ec095fbf54.html",
+       "language": "es",
+       "documentType": "tenderNotice",
+       "format": "text/html"
+      },
+      {
+       "id": "8f7a2e6e-6c31-4229-a8b0-6927085acc1a",
+       "datePublished": "2025-04-23T12:24:20-04:00",
+       "title": "pr-mcn-470248-6808f344a58f2.zip",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f01931c-0f3e-6574-8f8e-43ec095fbf54/files/8f7a2e6e-6c31-4229-a8b0-6927085acc1a/download",
+       "language": "es",
+       "documentTypeDetails": "Antecedentes de la Estimación de Costos"
+      },
+      {
+       "id": "c51e366e-38c5-4e7c-a6ca-3b711bf9e8a8",
+       "datePublished": "2025-05-16T09:08:44-04:00",
+       "title": "acta-de-apertura-000015-4086739340909190-68272acb749ef.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f01931c-0f3e-6574-8f8e-43ec095fbf54/files/c51e366e-38c5-4e7c-a6ca-3b711bf9e8a8/download",
+       "language": "es",
+       "documentTypeDetails": "Acta de Apertura"
+      },
+      {
+       "id": "fDSE3WIbV3osaPBUzqen1Q==",
+       "datePublished": "2025-05-05T10:47:14-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 470248 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1f01931c-0f3e-6574-8f8e-43ec095fbf54/1/json",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/json"
+      },
+      {
+       "id": "a8a0025b-9af7-4940-9724-96552d3b50a1",
+       "datePublished": "2025-04-23T12:24:20-04:00",
+       "title": "dictamen-tecnico-mcn-id-470248-6809061b1470b.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f01931c-0f3e-6574-8f8e-43ec095fbf54/files/a8a0025b-9af7-4940-9724-96552d3b50a1/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen técnico"
+      },
+      {
+       "id": "178cdfcc-3a8c-4156-9cc1-526af8d8d4a4",
+       "datePublished": "2025-04-23T12:24:20-04:00",
+       "title": "cdp-mcn-id-470248-6808f320657e0.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f01931c-0f3e-6574-8f8e-43ec095fbf54/files/178cdfcc-3a8c-4156-9cc1-526af8d8d4a4/download",
+       "language": "es",
+       "documentTypeDetails": "CDP"
+      },
+      {
+       "id": "8f217bff-8fd0-4f4e-8f58-071ade9585d1",
+       "datePublished": "2025-04-23T12:24:20-04:00",
+       "title": "resolucion-aprobacion-mcn-id-470248-6808f32c78c81.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f01931c-0f3e-6574-8f8e-43ec095fbf54/files/8f217bff-8fd0-4f4e-8f58-071ade9585d1/download",
+       "language": "es",
+       "documentTypeDetails": "Aprobación PBC"
+      },
+      {
+       "id": "o7hoKokcp9c=",
+       "datePublished": "2025-05-05T10:47:14-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 470248 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1f01931c-0f3e-6574-8f8e-43ec095fbf54/1",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/pdf"
+      }
+     ],
+     "numberOfTenderers": 2
+    },
+    "language": "es",
+    "ocid": "ocds-03ad3f-470248-1",
+    "date": "2025-05-05T11:47:15-04:00",
+    "initiationType": "tender",
+    "buyer": {
+     "id": "DNCP-SICP-CODE-66",
+     "name": "Municipalidad de Fernando de la Mora"
+    },
+    "sources": [
+     {
+      "id": "dncp-sicp",
+      "name": "Sistema de Información de las Contrataciones Públicas - DNCP",
+      "url": "https://www.contrataciones.gov.py/"
+     }
+    ],
+    "parties": [
+     {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora",
+      "identifier": {
+       "scheme": "DNCP-SICP-CODE",
+       "id": "66",
+       "legalName": "Municipalidad de Fernando de la Mora"
+      },
+      "contactPoint": {
+       "email": "morauoc@gmail.com",
+       "name": "LIC. ELIGIO ACOSTA",
+       "telephone": "+595 21 513-306"
+      },
+      "roles": [
+       "buyer",
+       "procuringEntity"
+      ],
+      "details": {
+       "level": "Municipalidades",
+       "entityType": "Municipalidades",
+       "type": "Entidad"
+      },
+      "additionalIdentifiers": [
+       {
+        "id": "2025.30.173",
+        "legalName": "Municipalidad de Fernando de la Mora",
+        "scheme": "PY-PGN"
+       }
+      ]
+     }
+    ],
+    "tag": [
+     "compiled"
+    ]
+   }
+  }
+ ],
+ "pagination": {
+  "total_items": 1,
+  "total_pages": 1,
+  "current_page": 1,
+  "items_per_page": 10,
+  "total_in_page": 1
+ }
+}

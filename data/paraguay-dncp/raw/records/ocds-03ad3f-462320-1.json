@@ -1,0 +1,5595 @@
+{
+ "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/ocds-03ad3f-462320-1",
+ "publishedDate": "2026-09-22T17:53:19Z",
+ "publisher": {
+  "name": "Dirección Nacional de Contrataciones Públicas, Paraguay"
+ },
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "publicationPolicy": "https://www.contrataciones.gov.py/datos/legal",
+ "version": "1.1",
+ "extensions": [
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_breakdown_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_and_spend_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_enquiry_extension/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/enquiriesAddress/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/legalEntityTypeDetail/master/extension.json",
+  "https://raw.githubusercontent.com/gitMHOCDS/transactions/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_investmentproject_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_clarification_meetings_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_attributes_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_items_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_contract_suppliers_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_location_extension/v1.1.4/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_activityType_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_notifiedsuppliers_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_lots_details_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_memberOf_extension/master/extension.json",
+  "https://raw.githubusercontent.com/portaledcahn/ocds_tenderDatePublished_extension/master/extension.json",
+  "https://raw.githubusercontent.com/INAImexico/ocds_guarantees_extension/master/extension.json",
+  "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_requirements_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bidOpening_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_coveredBy_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_qualification_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_publicEntitiesDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_items_subItems_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_statusdetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_mainProcurementCategoryDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_identifier_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_estimatedDate_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_participationFee_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_amendments_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_lot_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_transaction_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_financialprogress_financialcode_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_categories_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_complaints_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_minQuantity_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_purchaseOrder_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_document_type_details/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_cancellations_amendments_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_milestone_documents_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_techniques_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bid_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_bid_items_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_auctions_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_secondStage_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_beneficiaries_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/Crown-Commercial-Service/ocds_tender_suitability_extension/main/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_subcontracting_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_sustainability_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_reportedpayment_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_milestone_deliveries_extension/raw/master/extension.json"
+ ],
+ "records": [
+  {
+   "ocid": "ocds-03ad3f-462320-1",
+   "releases": [
+    {
+     "date": "2025-08-12T10:36:49-04:00",
+     "tag": [
+      "planning",
+      "tender",
+      "award",
+      "contract",
+      "implementation"
+     ],
+     "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/releases/id/1f034d04-08fc-6cee-b0dd-5d9b4d93f4ea-1754995009"
+    },
+    {
+     "date": "2025-08-12T10:36:49-04:00",
+     "tag": [
+      "planning",
+      "tender",
+      "tenderUpdate"
+     ],
+     "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/releases/id/1effb6b8-c2d6-6dd0-831f-77270abee342-1754995009"
+    }
+   ],
+   "compiledRelease": {
+    "tag": [
+     "compiled"
+    ],
+    "id": "ocds-03ad3f-462320-1-2025-08-12T10:36:49-04:00",
+    "date": "2025-08-12T10:36:49-04:00",
+    "ocid": "ocds-03ad3f-462320-1",
+    "awards": [
+     {
+      "id": "1f0622f6-ff83-649e-845f-41527eb0892e",
+      "status": "active",
+      "statusDetails": "publicado",
+      "date": "2025-07-14T00:00:00-04:00",
+      "value": {
+       "amount": 197971570,
+       "currency": "PYG"
+      },
+      "suppliers": [
+       {
+        "id": "PY-RUC-2971768-0",
+        "name": "FELICIA PORTILLO CABRERA"
+       }
+      ],
+      "documents": [
+       {
+        "id": "1f066311-5b4d-6bee-9436-e530aae09a0c",
+        "datePublished": "2025-07-21T09:49:05-04:00",
+        "title": "cuadro-comparativo-46232018072025-687e374127922.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f0622f1-e4f8-699e-a4f4-5b8609360573/files/dc5ebedb-fb81-4797-a8e6-782ae4023916/download",
+        "language": "es",
+        "documentTypeDetails": "Cuadro Comparativo de Ofertas"
+       },
+       {
+        "id": "dix2iRRDbik=",
+        "title": "URL de la Adjudicación",
+        "url": "https://www.contrataciones.gov.py/licitaciones/adjudicacion/1f0622f1-e4f8-699e-a4f4-5b8609360573/resumen-adjudicacion.html",
+        "language": "es",
+        "documentType": "awardNotice",
+        "format": "text/html"
+       },
+       {
+        "id": "1f066311-f206-65d6-ab59-a3d96f3c1fb3",
+        "datePublished": "2025-07-21T09:49:21-04:00",
+        "title": "informe-de-evaluacion-46232018072025-687e3750e3ee7.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f0622f1-e4f8-699e-a4f4-5b8609360573/files/411423fe-ac59-4388-b52b-1a89f2f0ed69/download",
+        "language": "es",
+        "documentTypeDetails": "Informe de Evaluación"
+       },
+       {
+        "id": "1f066310-a87a-6ff8-bf32-8fa6d01a6082",
+        "datePublished": "2025-07-21T09:48:46-04:00",
+        "title": "resolucion-46232018072025-687e372e62446.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f0622f1-e4f8-699e-a4f4-5b8609360573/files/512506dd-2063-4397-82cd-728b4667b30c/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       }
+      ],
+      "items": [
+       {
+        "id": "1f037ea2-51cc-6b70-8ceb-edb57b760e32",
+        "description": "Locote verde",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50101538-9992",
+         "description": "Locote verde",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101538-9992"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50101538",
+          "description": "Verduras frescas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101538"
+         }
+        ],
+        "quantity": 200,
+        "unit": {
+         "name": "Kilogramos",
+         "id": "kg",
+         "value": {
+          "amount": 13813,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e3a1-6266-b0d1-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "1",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-51d5-668a-a4b3-edb57b760e32",
+        "description": "Repollo",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50101538-022",
+         "description": "Repollo",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101538-022"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50101538",
+          "description": "Verduras frescas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101538"
+         }
+        ],
+        "quantity": 200,
+        "unit": {
+         "name": "Kilogramos",
+         "id": "kg",
+         "value": {
+          "amount": 8938,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e3a8-664c-8c9b-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "2",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-51e1-6cbe-be2e-edb57b760e32",
+        "description": "Perejil",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50101538-010",
+         "description": "Perejil",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101538-010"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50101538",
+          "description": "Verduras frescas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101538"
+         }
+        ],
+        "quantity": 200,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 1625,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e3ad-6f20-9def-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "3",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-51ee-6086-b87c-edb57b760e32",
+        "description": "Ajo por cabeza",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50101538-003",
+         "description": "Ajo",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101538-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50101538",
+          "description": "Verduras frescas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101538"
+         }
+        ],
+        "quantity": 500,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 2519,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e3b3-6696-8853-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "4",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-51f7-6028-b7bc-edb57b760e32",
+        "description": "Jamonada",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50112001-9998",
+         "description": "Jamonada",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50112001-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50112001",
+          "description": "Carnes vacunas frescas o procesadas ",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50112001"
+         }
+        ],
+        "quantity": 250,
+        "unit": {
+         "name": "Kilogramos",
+         "id": "kg",
+         "value": {
+          "amount": 47938,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e3b8-65f6-9886-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "FRIGORIFICO UPISA",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "UPISA",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "5",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-5202-6e50-8a5c-edb57b760e32",
+        "description": "Queso para sandwich",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50131802-007",
+         "description": "Queso para sandwich",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50131802-007"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50131802",
+          "description": "Queso procesado",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50131802"
+         }
+        ],
+        "quantity": 250,
+        "unit": {
+         "name": "Kilogramos",
+         "id": "kg",
+         "value": {
+          "amount": 66300,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e3c1-67aa-90cd-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "FRIGORIFICO UPISA",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "UPISA",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "6",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-5211-6bda-9041-edb57b760e32",
+        "description": "Pan para Sandwich",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50181903-007",
+         "description": "Pancito",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50181903-007"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50181903",
+          "description": "Galletas simples",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50181903"
+         }
+        ],
+        "quantity": 200,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 22750,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e3c7-6b46-8f95-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "GRUPO BIMBO",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIMBO",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "7",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-5219-639e-9387-edb57b760e32",
+        "description": "Mayonesa en sachet de 500 gramos",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50171832-001",
+         "description": "Mayonesa",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50171832-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50171832",
+          "description": "Alino de ensaladas o para mojar",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50171832"
+         }
+        ],
+        "quantity": 140,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 18688,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e3cd-64f6-b8eb-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "argentina",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "HELLMANNS",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "HELLMANNS",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "8",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-5227-6336-8869-edb57b760e32",
+        "description": "Manzana",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50101634-006",
+         "description": "Manzana",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101634-006"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50101634",
+          "description": "Fruta fresca y residuos frutales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101634"
+         }
+        ],
+        "quantity": 200,
+        "unit": {
+         "name": "Kilogramos",
+         "id": "kg",
+         "value": {
+          "amount": 16250,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e3db-6862-8d33-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "9",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-522e-69c4-8e5f-edb57b760e32",
+        "description": "Banana",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50101634-002",
+         "description": "Banana",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101634-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50101634",
+          "description": "Fruta fresca y residuos frutales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101634"
+         }
+        ],
+        "quantity": 350,
+        "unit": {
+         "name": "Kilogramos",
+         "id": "kg",
+         "value": {
+          "amount": 10563,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e3e2-6ac2-972d-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "Las bananas deben estar envasadas en cajas de cartón, madera y/o plástico. Las cajas deben contener al menos 120 unidades de banana. Las bananas pueden presentarse en forma individual o en pencas de hasta 4 unidades.",
+          "name": "Presentacion",
+          "id": "2"
+         },
+         {
+          "name": "Orden",
+          "value": "10",
+          "id": "7"
+         },
+         {
+          "name": "aspecto",
+          "value": "Las bananas deben presentar maduración óptima (coloración amarilla característica). Manchas por golpes o magulladuras máximo en un 20% en cada fruta. La coloración del lote de bananas debe ser pareja.",
+          "id": "34"
+         },
+         {
+          "name": "etiquetado",
+          "value": "Las cajas deben tener etiqueta visible con las siguientes informaciones: Origen del producto (Departamento y Distrito). Número de lote. Fecha de empaquetado. Identificación del productor (Nombre y Apellido). Identificación del empaquetador (Nº de Registro del SENAVE). Identificación de la cámara maduradora (Nº de Registro del SENAVE).  Leyenda que diga «Alimentación Escolar». Cantidad de unidades de banana",
+          "id": "128"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         },
+         {
+          "name": "largo",
+          "value": "El largo mínimo de las bananas debe ser de 15 cm.",
+          "id": "214"
+         },
+         {
+          "name": "diametro",
+          "value": "El diámetro mínimo de las bananas debe ser de 38 mm.",
+          "id": "119"
+         },
+         {
+          "name": "transporte",
+          "value": "El vehículo en que se transporta la banana debe estar registrado en el SENAVE.",
+          "id": "411"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-5237-618c-a01d-edb57b760e32",
+        "description": "Naranja",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50101634-008",
+         "description": "Naranja",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101634-008"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50101634",
+          "description": "Fruta fresca y residuos frutales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101634"
+         }
+        ],
+        "quantity": 200,
+        "unit": {
+         "name": "Kilogramos",
+         "id": "kg",
+         "value": {
+          "amount": 12188,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e3e9-63d6-95f6-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "11",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-523e-6f7c-ade9-edb57b760e32",
+        "description": "Leche entera",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50131702-011",
+         "description": "Leche entera liquida",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50131702-011"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50131702",
+          "description": "Productos de mantequilla o leche en conserva",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50131702"
+         }
+        ],
+        "quantity": 2500,
+        "unit": {
+         "name": "Litros",
+         "id": "LT",
+         "value": {
+          "amount": 8840,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e3ef-6394-a945-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "El producto se presentará en envase tetra brik de 200, 500 o 1000 cm3 o Ml",
+          "name": "Presentacion",
+          "id": "2"
+         },
+         {
+          "value": "COOP. DE PTOS DE LECHE LA HOLANDA LTDA.",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "LACTOLANDA",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "12",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         },
+         {
+          "name": "ingredientes",
+          "value": "I. Obligatorios: Leche entera de vaca. - II. Permitidos: No aplica -  III. No permitidos: No aplica",
+          "id": "209"
+         },
+         {
+          "name": "especificacionesmicrobiologicas",
+          "value": "La leche UAT ó UHT, no debe contener microorganismos capaces de proliferar en ella en las condiciones normales de almacenamiento y distribución, por lo cual, luego de una incubación en envase cerrado a 35 - 37º C durante 7 días, debe cumplir con los requisitos establecidos en las Tablas 3 y 4. Tabla 3: Requisitos microbiológicos para muestra representativa. - Determinación Aerobios Mesófilos/mL - Categorización (I.C.M.S.F) 10 - Criterios de aceptación n=5, c=0, m=100 Tabla 4: Requisitos microbiológicos para muestra indicativa. - Determinación Aerobios Mesófilos/mL (*) - Categorización (I.C.M.S.F) 10 - Criterios de aceptación 100 UFC**/ml *Luego de una incubación a 35 - 37º C en envase cerrado durante 7 días. **UFC (Unidad Formadora de Colonia por mililitro de leche).",
+          "id": "123"
+         },
+         {
+          "name": "especificacionesdelenvase",
+          "value": "a) Especificaciones del envase individual. El envase individual primario deberá ser de tetra brik.  b) Especificaciones del envase secundario - La caja contenedora del alimento debe ser de cartón corrugado o de otro material que no permita el deterioro del envase individual, con la parte superior e inferior lacradas, asegurando total inviolabilidad y protección de los alimentos en ella contenidos.  La caja contenedora deberá ser resistente al apilamiento, según instrucciones del fabricante.",
+          "id": "122"
+         },
+         {
+          "name": "recepciondelproducto",
+          "value": "REQUISITOS ESPECÍFICOS PARA LA RECEPCIÓN DEL PRODUCTO",
+          "id": "380"
+         },
+         {
+          "name": "definicion",
+          "value": "Se denomina Leche UAT (Ultra Alta Temperatura ó Ultra High Temperture - UHT) a la leche homogeneizada, que ha sido sometida durante 2 a 4 segundos a una temperatura entre 130º C y 150º C, mediante un proceso térmico de flujo continuo, inmediatamente enfriada a menos de 32º C y envasada bajo condiciones asépticas en envases estériles y herméticamente cerrados.  El contenido de materia grasa del producto debe contener como mínimo 3,0% m/v.",
+          "id": "102"
+         },
+         {
+          "name": "especificacionesorganolepticasdelproducto",
+          "value": "Aspecto:  liquido - Color: blanco amarillento. - Olor: característico.  - Sabor: agradable, exento de olores extraños (a rancio, quemado, crudo, solventes, etc.)",
+          "id": "124"
+         },
+         {
+          "name": "aditivosalimentarios",
+          "value": "Serán permitidos aquellos aditivos conforme a la Resolución MERCOSUR GMC/RES Nº 78/94 “RTM de Identidad y calidad de leche UAT",
+          "id": "20"
+         },
+         {
+          "name": "composicionfisico-quimicaynutricional",
+          "value": "La composición fisicoquímica y nutricional, deberá estar expresada por 100 mililitros, por producto terminado listo para el consumo, según lo detallado en la Tabla 1 y Tabla 2.   Tabla 1: Composición fisicoquímica por100 mL de producto terminado listo para el consumo - Determinaciones - Límites de Aceptación - Materia Grasa % m/v: Min. 3,0 - Acidez (g ác. Láctico/100 ml): 0,14 a 0,18 - Densidad relativa a 15% C/15º C: Min. 1,028 - Estabilidad al etanol 68% (v/v): Estable - Extracto seco no graso % (m/m): Min. 8,2 - Descenso Crioscópico - ºH: Min. -0,530 Max. -0,550 - °C: Min. -0,512  Max. -0,535 -Tabla 2: Composición nutricional por 100 mL del producto terminado listo para el consumo - Nutriente - Proteínas % (m/m) Mínimo: 3,0  Máximo: --",
+          "id": "87"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-5248-6068-bace-edb57b760e32",
+        "description": "Huevo de gallina",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50131606-002",
+         "description": "Huevo de gallina",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50131606-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50131606",
+          "description": "Huevos frescos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50131606"
+         }
+        ],
+        "quantity": 400,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 41600,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e3f4-68b2-8e9e-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "NO",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "NO",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "13",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-5250-68e4-8f45-edb57b760e32",
+        "description": "Queso tipo Paraguay",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50131801-001",
+         "description": "Queso tipo Paraguay",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50131801-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50131801",
+          "description": "Queso natural",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50131801"
+         }
+        ],
+        "quantity": 350,
+        "unit": {
+         "name": "Kilogramos",
+         "id": "kg",
+         "value": {
+          "amount": 50700,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e408-64ac-a919-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "COOP CHORTITZER LTDA.",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "TREBOL",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "14",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-525a-6dda-9c07-edb57b760e32",
+        "description": "Azucar blanca",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50161509-002",
+         "description": "Azucar blanca",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50161509-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50161509",
+          "description": "Productos de edulcorantes o azucares naturales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50161509"
+         }
+        ],
+        "quantity": 300,
+        "unit": {
+         "name": "Kilogramos",
+         "id": "kg",
+         "value": {
+          "amount": 11050,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e40f-641e-b674-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "AZUCARERA PARAGUAYA",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "AZUKITA",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "15",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-5267-6af8-91ff-edb57b760e32",
+        "description": "Cafe tradicional",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50201706-002",
+         "description": "Cafe concentrado instantaneo",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50201706-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50201706",
+          "description": "Cafe",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50201706"
+         }
+        ],
+        "quantity": 300,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 59800,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e417-6844-99b6-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "NORTE",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "NORTE",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "16",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-526d-6ed0-9881-edb57b760e32",
+        "description": "Pechuga de pollo",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50111510-003",
+         "description": "Pechuga de pollo",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50111510-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50111510",
+          "description": "Carne de ave fresca",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50111510"
+         }
+        ],
+        "quantity": 200,
+        "unit": {
+         "name": "Kilogramos",
+         "id": "kg",
+         "value": {
+          "amount": 19500,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e41c-6ba0-b03d-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "SAN JUAN SRL",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "don juan",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "17",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-5275-6d06-b9ec-edb57b760e32",
+        "description": "Carne molida de primera",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50112001-018",
+         "description": "Carne molida",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50112001-018"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50112001",
+          "description": "Carnes vacunas frescas o procesadas ",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50112001"
+         }
+        ],
+        "quantity": 350,
+        "unit": {
+         "name": "Kilogramos",
+         "id": "kg",
+         "value": {
+          "amount": 59800,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e422-621c-8e4d-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "FRIGORIFICO CONCEPCION S.A",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "CONCEPCION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "18",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-527d-6614-a9d6-edb57b760e32",
+        "description": "Carnaza blanca",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50112001-003",
+         "description": "Carnaza blanca",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50112001-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50112001",
+          "description": "Carnes vacunas frescas o procesadas ",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50112001"
+         }
+        ],
+        "quantity": 350,
+        "unit": {
+         "name": "Kilogramos",
+         "id": "kg",
+         "value": {
+          "amount": 59800,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e427-6438-a6e0-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "FRIGORIFICO CONCEPCION S.A",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "CONCEPCION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "19",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-5285-6634-ad26-edb57b760e32",
+        "description": "Arveja",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50221001-003",
+         "description": "Arveja en lata",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50221001-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50221001",
+          "description": "Granos de Legumbres",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50221001"
+         }
+        ],
+        "quantity": 200,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 5262,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e42c-68b6-bd85-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "NO",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "NO",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "20",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-529b-638a-a75d-edb57b760e32",
+        "description": "Pepino",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50101538-012",
+         "description": "Pepino",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101538-012"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50101538",
+          "description": "Verduras frescas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101538"
+         }
+        ],
+        "quantity": 100,
+        "unit": {
+         "name": "Kilogramos",
+         "id": "kg",
+         "value": {
+          "amount": 10284,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e431-6a78-98b3-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "21",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-52a1-6e1a-b517-edb57b760e32",
+        "description": "Choclo",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50221001-004",
+         "description": "Choclo en lata",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50221001-004"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50221001",
+          "description": "Granos de Legumbres",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50221001"
+         }
+        ],
+        "quantity": 200,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 7150,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e436-6f5a-b08c-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "NO",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "NO",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "22",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-52a8-6828-851e-edb57b760e32",
+        "description": "Jugo Carton",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50202306-004",
+         "description": "Jugo elaborado a base de extracto de frutas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50202306-004"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50202306",
+          "description": "Refrescos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50202306"
+         }
+        ],
+        "quantity": 500,
+        "unit": {
+         "name": "Litros",
+         "id": "LT",
+         "value": {
+          "amount": 10969,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e43c-6ba8-857f-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "CHILE",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "WALTS S.A",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "WALTS",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "23",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-52f4-6c28-bec5-edb57b760e32",
+        "description": "Pan sandwich integral",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50181901-004",
+         "description": "Pan integral",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50181901-004"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50181901",
+          "description": "Panificados",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50181901"
+         }
+        ],
+        "quantity": 250,
+        "unit": {
+         "name": "Kilogramos",
+         "id": "kg",
+         "value": {
+          "amount": 22750,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e442-6260-a1ec-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "GRUPO BIMBO",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIMBO",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "24",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-52fe-64ee-a30a-edb57b760e32",
+        "description": "yogurth",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50131702-013",
+         "description": "Yogurt no dietetico",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50131702-013"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50131702",
+          "description": "Productos de mantequilla o leche en conserva",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50131702"
+         }
+        ],
+        "quantity": 500,
+        "unit": {
+         "name": "Litros",
+         "id": "LT",
+         "value": {
+          "amount": 9750,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e44b-60f4-bb2f-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "COOP. DE PTOS DE LECHE LA HOLANDA LTDA.",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "LACTOLANDA",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "25",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f037ea2-5307-6936-866d-edb57b760e32",
+        "description": "Mostaza",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "50171830-002",
+         "description": "Mostaza",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50171830-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "50171830",
+          "description": "Salsas para pringar o condimentos o para untar o marinar",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50171830"
+         }
+        ],
+        "quantity": 200,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 18343,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f037ea3-e450-6ca2-b372-c11f3c57c84b",
+        "attributes": [
+         {
+          "value": "ARGENTINA",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "SAVORA",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "SAVORA",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "26",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "tender": {
+     "id": "1effb6b8-c2d6-6dd0-831f-77270abee342",
+     "title": "ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+     "status": "complete",
+     "awardCriteria": "priceOnly",
+     "awardCriteriaDetails": "Por Item",
+     "submissionMethod": [
+      "inPerson"
+     ],
+     "bidOpening": {
+      "date": "2025-07-04T09:30:00-04:00",
+      "address": {
+       "streetAddress": "Municipalidad de Fernando de la Mora, oficina UOC"
+      }
+     },
+     "submissionMethodDetails": "Lugar entrega ofertas: Municipalidad de Fernando de la Mora, oficina UOC",
+     "statusDetails": "Adjudicada",
+     "enquiriesAddress": {
+      "streetAddress": "SICP"
+     },
+     "clarificationMeetings": [
+      {
+       "id": "1",
+       "address": {
+        "streetAddress": "N/A"
+       }
+      }
+     ],
+     "mainProcurementCategoryDetails": "Bienes - Alimentos Bebidas y Tabaco",
+     "hasEnquiries": false,
+     "value": {
+      "amount": 197971570,
+      "currency": "PYG"
+     },
+     "datePublished": "2025-06-17T12:14:11-04:00",
+     "tenderPeriod": {
+      "startDate": "2025-06-17T12:14:11-04:00",
+      "endDate": "2025-07-04T09:00:00-04:00",
+      "durationInDays": 16
+     },
+     "awardPeriod": {
+      "startDate": "2025-07-04T09:30:00-04:00"
+     },
+     "enquiryPeriod": {
+      "endDate": "2025-07-01T12:00:00-04:00",
+      "startDate": "2025-06-17T12:14:11-04:00",
+      "durationInDays": 13
+     },
+     "mainProcurementCategory": "services",
+     "additionalProcurementCategories": [
+      "services"
+     ],
+     "procurementMethod": "open",
+     "procurementMethodDetails": "Menor cuantía nacional",
+     "procuringEntity": {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora"
+     },
+     "criteria": [
+      {
+       "id": "1",
+       "title": "Garantía de Mantenimiento de Ofertas",
+       "description": "Los oferentes, proveedores o contratistas deberán garantizar la seriedad de sus ofertas, mediante la garantía de mantenimiento de la oferta",
+       "source": "tenderer",
+       "requirementGroups": [
+        {
+         "id": "1-1",
+         "description": "La garantía debe ser de un cierto porcentaje, periodo y tipo",
+         "requirements": [
+          {
+           "id": "1-1-1",
+           "title": "Porcentaje de la garantia",
+           "expectedValue": "5"
+          },
+          {
+           "id": "1-1-2",
+           "title": "Validez de la garantia en días",
+           "expectedValue": "120"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "lots": [
+      {
+       "id": "1f037ea3-e436-6f5a-b08c-c11f3c57c84b",
+       "title": "22 - 22 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 1430000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "22",
+         "name": "Orden",
+         "value": "22"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e3c1-67aa-90cd-c11f3c57c84b",
+       "title": "6 - 6 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 16575000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "6",
+         "name": "Orden",
+         "value": "6"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e431-6a78-98b3-c11f3c57c84b",
+       "title": "21 - 21 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 1028400,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "21",
+         "name": "Orden",
+         "value": "21"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e3db-6862-8d33-c11f3c57c84b",
+       "title": "9 - 9 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 3250000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "9",
+         "name": "Orden",
+         "value": "9"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e427-6438-a6e0-c11f3c57c84b",
+       "title": "19 - 19 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 20930000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "19",
+         "name": "Orden",
+         "value": "19"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e3ad-6f20-9def-c11f3c57c84b",
+       "title": "3 - 3 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 325000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "3",
+         "name": "Orden",
+         "value": "3"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e3a1-6266-b0d1-c11f3c57c84b",
+       "title": "1 - 1 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 2762600,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "1",
+         "name": "Orden",
+         "value": "1"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e422-621c-8e4d-c11f3c57c84b",
+       "title": "18 - 18 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 20930000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "18",
+         "name": "Orden",
+         "value": "18"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e3b3-6696-8853-c11f3c57c84b",
+       "title": "4 - 4 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 1259500,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "4",
+         "name": "Orden",
+         "value": "4"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e442-6260-a1ec-c11f3c57c84b",
+       "title": "24 - 24 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 5687500,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "24",
+         "name": "Orden",
+         "value": "24"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e450-6ca2-b372-c11f3c57c84b",
+       "title": "26 - 26 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 3668600,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "26",
+         "name": "Orden",
+         "value": "26"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e3e9-63d6-95f6-c11f3c57c84b",
+       "title": "11 - 11 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 2437600,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "11",
+         "name": "Orden",
+         "value": "11"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e41c-6ba0-b03d-c11f3c57c84b",
+       "title": "17 - 17 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 3900000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "17",
+         "name": "Orden",
+         "value": "17"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e3cd-64f6-b8eb-c11f3c57c84b",
+       "title": "8 - 8 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 2616320,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "8",
+         "name": "Orden",
+         "value": "8"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e3e2-6ac2-972d-c11f3c57c84b",
+       "title": "10 - 10 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 3697050,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "10",
+         "name": "Orden",
+         "value": "10"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e3c7-6b46-8f95-c11f3c57c84b",
+       "title": "7 - 7 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 4550000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "7",
+         "name": "Orden",
+         "value": "7"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e3b8-65f6-9886-c11f3c57c84b",
+       "title": "5 - 5 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 0,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "5",
+         "name": "Orden",
+         "value": "5"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e44b-60f4-bb2f-c11f3c57c84b",
+       "title": "25 - 25 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 4875000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "25",
+         "name": "Orden",
+         "value": "25"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e417-6844-99b6-c11f3c57c84b",
+       "title": "16 - 16 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 17940000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "16",
+         "name": "Orden",
+         "value": "16"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e3a8-664c-8c9b-c11f3c57c84b",
+       "title": "2 - 2 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 1787600,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "2",
+         "name": "Orden",
+         "value": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e3ef-6394-a945-c11f3c57c84b",
+       "title": "12 - 12 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 22100000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "12",
+         "name": "Orden",
+         "value": "12"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e43c-6ba8-857f-c11f3c57c84b",
+       "title": "23 - 23 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 5484500,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "23",
+         "name": "Orden",
+         "value": "23"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e3f4-68b2-8e9e-c11f3c57c84b",
+       "title": "13 - 13 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 16640000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "13",
+         "name": "Orden",
+         "value": "13"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e40f-641e-b674-c11f3c57c84b",
+       "title": "15 - 15 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 3315000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "15",
+         "name": "Orden",
+         "value": "15"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e408-64ac-a919-c11f3c57c84b",
+       "title": "14 - 14 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 17745000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "14",
+         "name": "Orden",
+         "value": "14"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea3-e42c-68b6-bd85-c11f3c57c84b",
+       "title": "20 - 20 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 1052400,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "20",
+         "name": "Orden",
+         "value": "20"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-2228-6486-838e-7d7efba54631",
+       "title": "23 - 23 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 5484500,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "23",
+         "name": "Orden",
+         "value": "23"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-21f7-6c14-99f8-7d7efba54631",
+       "title": "11 - 11 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 2437600,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "11",
+         "name": "Orden",
+         "value": "11"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-21da-66c8-a28a-7d7efba54631",
+       "title": "4 - 4 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 1259500,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "4",
+         "name": "Orden",
+         "value": "4"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-2230-6564-8934-7d7efba54631",
+       "title": "25 - 25 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 4875000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "25",
+         "name": "Orden",
+         "value": "25"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-2234-652e-a3e5-7d7efba54631",
+       "title": "26 - 26 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 3668600,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "26",
+         "name": "Orden",
+         "value": "26"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-222c-654a-9817-7d7efba54631",
+       "title": "24 - 24 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 5687500,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "24",
+         "name": "Orden",
+         "value": "24"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-2220-61fa-9b69-7d7efba54631",
+       "title": "21 - 21 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 1028400,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "21",
+         "name": "Orden",
+         "value": "21"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-21e7-6d00-b829-7d7efba54631",
+       "title": "7 - 7 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 4550000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "7",
+         "name": "Orden",
+         "value": "7"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-21df-68ee-83a4-7d7efba54631",
+       "title": "5 - 5 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 11984500,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "5",
+         "name": "Orden",
+         "value": "5"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-2224-6336-9d2a-7d7efba54631",
+       "title": "22 - 22 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 1430000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "22",
+         "name": "Orden",
+         "value": "22"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-21ef-6c62-ac58-7d7efba54631",
+       "title": "9 - 9 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 3250000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "9",
+         "name": "Orden",
+         "value": "9"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-21e3-6c96-a51a-7d7efba54631",
+       "title": "6 - 6 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 16575000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "6",
+         "name": "Orden",
+         "value": "6"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-2217-6cb2-b30e-7d7efba54631",
+       "title": "19 - 19 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 20930000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "19",
+         "name": "Orden",
+         "value": "19"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-21ff-6c52-9d70-7d7efba54631",
+       "title": "13 - 13 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 16640000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "13",
+         "name": "Orden",
+         "value": "13"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-21eb-6cf2-99c5-7d7efba54631",
+       "title": "8 - 8 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 2616320,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "8",
+         "name": "Orden",
+         "value": "8"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-21fb-6d00-be5d-7d7efba54631",
+       "title": "12 - 12 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 22100000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "12",
+         "name": "Orden",
+         "value": "12"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-220b-6b74-a598-7d7efba54631",
+       "title": "16 - 16 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 17940000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "16",
+         "name": "Orden",
+         "value": "16"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-21d5-675e-97dd-7d7efba54631",
+       "title": "3 - 3 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 325000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "3",
+         "name": "Orden",
+         "value": "3"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-21d0-657e-8593-7d7efba54631",
+       "title": "2 - 2 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 1787600,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "2",
+         "name": "Orden",
+         "value": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-220f-6d00-9b53-7d7efba54631",
+       "title": "17 - 17 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 3900000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "17",
+         "name": "Orden",
+         "value": "17"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-2203-6b7c-a3c0-7d7efba54631",
+       "title": "14 - 14 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 17745000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "14",
+         "name": "Orden",
+         "value": "14"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-221b-6ede-837b-7d7efba54631",
+       "title": "20 - 20 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 1052400,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "20",
+         "name": "Orden",
+         "value": "20"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-21cb-6470-9411-7d7efba54631",
+       "title": "1 - 1 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 2762600,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "1",
+         "name": "Orden",
+         "value": "1"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-2213-6d60-9f2f-7d7efba54631",
+       "title": "18 - 18 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 20930000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "18",
+         "name": "Orden",
+         "value": "18"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-21f3-6bc8-9bc4-7d7efba54631",
+       "title": "10 - 10 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 3697050,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "10",
+         "name": "Orden",
+         "value": "10"
+        }
+       ]
+      },
+      {
+       "id": "1effb732-2207-6ae2-a8b1-7d7efba54631",
+       "title": "15 - 15 - ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 3315000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "id": "15",
+         "name": "Orden",
+         "value": "15"
+        }
+       ]
+      }
+     ],
+     "items": [
+      {
+       "id": "1f037ea2-5250-68e4-8f45-edb57b760e32",
+       "description": "Queso tipo Paraguay",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50131801-001",
+        "description": "Queso tipo Paraguay",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50131801-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50131801",
+         "description": "Queso natural",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50131801"
+        }
+       ],
+       "quantity": 350,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 50700,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e408-64ac-a919-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "14",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-5202-6e50-8a5c-edb57b760e32",
+       "description": "Queso para sandwich",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50131802-007",
+        "description": "Queso para sandwich",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50131802-007"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50131802",
+         "description": "Queso procesado",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50131802"
+        }
+       ],
+       "quantity": 250,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 66300,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e3c1-67aa-90cd-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "6",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-52f4-6c28-bec5-edb57b760e32",
+       "description": "Pan sandwich integral",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50181901-004",
+        "description": "Pan integral",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50181901-004"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50181901",
+         "description": "Panificados",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50181901"
+        }
+       ],
+       "quantity": 250,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 22750,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e442-6260-a1ec-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "24",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-51f7-6028-b7bc-edb57b760e32",
+       "description": "Jamonada",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50112001-9998",
+        "description": "Jamonada",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50112001-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50112001",
+         "description": "Carnes vacunas frescas o procesadas ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50112001"
+        }
+       ],
+       "quantity": 250,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 47938,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e3b8-65f6-9886-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "5",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-5211-6bda-9041-edb57b760e32",
+       "description": "Pan para Sandwich",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50181903-007",
+        "description": "Pancito",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50181903-007"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50181903",
+         "description": "Galletas simples",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50181903"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 22750,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e3c7-6b46-8f95-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "7",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-52a8-6828-851e-edb57b760e32",
+       "description": "Jugo Carton",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50202306-004",
+        "description": "Jugo elaborado a base de extracto de frutas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50202306-004"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50202306",
+         "description": "Refrescos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50202306"
+        }
+       ],
+       "quantity": 500,
+       "unit": {
+        "name": "Litros",
+        "id": "LT",
+        "value": {
+         "amount": 10969,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e43c-6ba8-857f-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "23",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-5285-6634-ad26-edb57b760e32",
+       "description": "Arveja",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50221001-003",
+        "description": "Arveja en lata",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50221001-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50221001",
+         "description": "Granos de Legumbres",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50221001"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 5262,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e42c-68b6-bd85-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "20",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-5219-639e-9387-edb57b760e32",
+       "description": "Mayonesa en sachet de 500 gramos",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50171832-001",
+        "description": "Mayonesa",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50171832-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50171832",
+         "description": "Alino de ensaladas o para mojar",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50171832"
+        }
+       ],
+       "quantity": 140,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 18688,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e3cd-64f6-b8eb-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "8",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-5267-6af8-91ff-edb57b760e32",
+       "description": "Cafe tradicional",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50201706-002",
+        "description": "Cafe concentrado instantaneo",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50201706-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50201706",
+         "description": "Cafe",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50201706"
+        }
+       ],
+       "quantity": 300,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 59800,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e417-6844-99b6-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "16",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-5275-6d06-b9ec-edb57b760e32",
+       "description": "Carne molida de primera",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50112001-018",
+        "description": "Carne molida",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50112001-018"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50112001",
+         "description": "Carnes vacunas frescas o procesadas ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50112001"
+        }
+       ],
+       "quantity": 350,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 59800,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e422-621c-8e4d-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "18",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-526d-6ed0-9881-edb57b760e32",
+       "description": "Pechuga de pollo",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50111510-003",
+        "description": "Pechuga de pollo",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50111510-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50111510",
+         "description": "Carne de ave fresca",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50111510"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 19500,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e41c-6ba0-b03d-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "17",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-5237-618c-a01d-edb57b760e32",
+       "description": "Naranja",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50101634-008",
+        "description": "Naranja",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101634-008"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50101634",
+         "description": "Fruta fresca y residuos frutales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101634"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 12188,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e3e9-63d6-95f6-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "11",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-529b-638a-a75d-edb57b760e32",
+       "description": "Pepino",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50101538-012",
+        "description": "Pepino",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101538-012"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50101538",
+         "description": "Verduras frescas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101538"
+        }
+       ],
+       "quantity": 100,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 10284,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e431-6a78-98b3-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "21",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-527d-6614-a9d6-edb57b760e32",
+       "description": "Carnaza blanca",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50112001-003",
+        "description": "Carnaza blanca",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50112001-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50112001",
+         "description": "Carnes vacunas frescas o procesadas ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50112001"
+        }
+       ],
+       "quantity": 350,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 59800,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e427-6438-a6e0-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "19",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-525a-6dda-9c07-edb57b760e32",
+       "description": "Azucar blanca",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50161509-002",
+        "description": "Azucar blanca",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50161509-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50161509",
+         "description": "Productos de edulcorantes o azucares naturales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50161509"
+        }
+       ],
+       "quantity": 300,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 11050,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e40f-641e-b674-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "15",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-522e-69c4-8e5f-edb57b760e32",
+       "description": "Banana",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50101634-002",
+        "description": "Banana",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101634-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50101634",
+         "description": "Fruta fresca y residuos frutales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101634"
+        }
+       ],
+       "quantity": 350,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 10563,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e3e2-6ac2-972d-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "10",
+         "id": "2"
+        },
+        {
+         "name": "DIAMETRO",
+         "value": "El diámetro mínimo de las bananas debe ser de 38 mm.",
+         "id": "6"
+        },
+        {
+         "name": "ASPECTO",
+         "value": "Las bananas deben presentar maduración óptima (coloración amarilla característica). Manchas por golpes o magulladuras máximo en un 20% en cada fruta. La coloración del lote de bananas debe ser pareja.",
+         "id": "8"
+        },
+        {
+         "name": "Presentación",
+         "value": "Las bananas deben estar envasadas en cajas de cartón, madera y/o plástico. Las cajas deben contener al menos 120 unidades de banana. Las bananas pueden presentarse en forma individual o en pencas de hasta 4 unidades.",
+         "id": "3"
+        },
+        {
+         "name": "LARGO",
+         "value": "El largo mínimo de las bananas debe ser de 15 cm.",
+         "id": "5"
+        },
+        {
+         "name": "TRANSPORTE",
+         "value": "El vehículo en que se transporta la banana debe estar registrado en el SENAVE.",
+         "id": "7"
+        },
+        {
+         "name": "ETIQUETADO",
+         "value": "Las cajas deben tener etiqueta visible con las siguientes informaciones: Origen del producto (Departamento y Distrito). Número de lote. Fecha de empaquetado. Identificación del productor (Nombre y Apellido). Identificación del empaquetador (Nº de Registro del SENAVE). Identificación de la cámara maduradora (Nº de Registro del SENAVE).  Leyenda que diga «Alimentación Escolar». Cantidad de unidades de banana ",
+         "id": "4"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-5307-6936-866d-edb57b760e32",
+       "description": "Mostaza",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50171830-002",
+        "description": "Mostaza",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50171830-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50171830",
+         "description": "Salsas para pringar o condimentos o para untar o marinar",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50171830"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 18343,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e450-6ca2-b372-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "26",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-52fe-64ee-a30a-edb57b760e32",
+       "description": "yogurth",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50131702-013",
+        "description": "Yogurt no dietetico",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50131702-013"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50131702",
+         "description": "Productos de mantequilla o leche en conserva",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50131702"
+        }
+       ],
+       "quantity": 500,
+       "unit": {
+        "name": "Litros",
+        "id": "LT",
+        "value": {
+         "amount": 9750,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e44b-60f4-bb2f-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "25",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-523e-6f7c-ade9-edb57b760e32",
+       "description": "Leche entera",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50131702-011",
+        "description": "Leche entera liquida",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50131702-011"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50131702",
+         "description": "Productos de mantequilla o leche en conserva",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50131702"
+        }
+       ],
+       "quantity": 2500,
+       "unit": {
+        "name": "Litros",
+        "id": "LT",
+        "value": {
+         "amount": 8840,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e3ef-6394-a945-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "12",
+         "id": "2"
+        },
+        {
+         "name": "DEFINICION",
+         "value": "Se denomina Leche UAT (Ultra Alta Temperatura ó Ultra High Temperture - UHT) a la leche homogeneizada, que ha sido sometida durante 2 a 4 segundos a una temperatura entre 130º C y 150º C, mediante un proceso térmico de flujo continuo, inmediatamente enfriada a menos de 32º C y envasada bajo condiciones asépticas en envases estériles y herméticamente cerrados.  El contenido de materia grasa del producto debe contener como mínimo 3,0% m/v.",
+         "id": "3"
+        },
+        {
+         "name": "INGREDIENTES",
+         "value": "I. Obligatorios: Leche entera de vaca. - II. Permitidos: No aplica -  III. No permitidos: No aplica",
+         "id": "5"
+        },
+        {
+         "name": "ESPECIFICACIONES DEL ENVASE",
+         "value": "a) Especificaciones del envase individual. El envase individual primario deberá ser de tetra brik.  b) Especificaciones del envase secundario - La caja contenedora del alimento debe ser de cartón corrugado o de otro material que no permita el deterioro del envase individual, con la parte superior e inferior lacradas, asegurando total inviolabilidad y protección de los alimentos en ella contenidos.  La caja contenedora deberá ser resistente al apilamiento, según instrucciones del fabricante.",
+         "id": "10"
+        },
+        {
+         "name": "Aditivos alimentarios",
+         "value": "Serán permitidos aquellos aditivos conforme a la Resolución MERCOSUR GMC/RES Nº 78/94 “RTM de Identidad y calidad de leche UAT",
+         "id": "6"
+        },
+        {
+         "name": "Composición físico-química y nutricional",
+         "value": "La composición fisicoquímica y nutricional, deberá estar expresada por 100 mililitros, por producto terminado listo para el consumo, según lo detallado en la Tabla 1 y Tabla 2.   Tabla 1: Composición fisicoquímica por100 mL de producto terminado listo para el consumo - Determinaciones - Límites de Aceptación - Materia Grasa % m/v: Min. 3,0 - Acidez (g ác. Láctico/100 ml): 0,14 a 0,18 - Densidad relativa a 15% C/15º C: Min. 1,028 - Estabilidad al etanol 68% (v/v): Estable - Extracto seco no graso % (m/m): Min. 8,2 - Descenso Crioscópico - ºH: Min. -0,530 Max. -0,550 - °C: Min. -0,512  Max. -0,535 -Tabla 2: Composición nutricional por 100 mL del producto terminado listo para el consumo - Nutriente - Proteínas % (m/m) Mínimo: 3,0  Máximo: --",
+         "id": "7"
+        },
+        {
+         "name": "Presentación",
+         "value": "El producto se presentará en envase tetra brik de 200, 500 o 1000 cm3 o Ml",
+         "id": "4"
+        },
+        {
+         "name": "Especificaciones organolépticas del producto",
+         "value": "Aspecto:  liquido - Color: blanco amarillento. - Olor: característico.  - Sabor: agradable, exento de olores extraños (a rancio, quemado, crudo, solventes, etc.)",
+         "id": "8"
+        },
+        {
+         "name": "Especificaciones microbiológicas",
+         "value": "La leche UAT ó UHT, no debe contener microorganismos capaces de proliferar en ella en las condiciones normales de almacenamiento y distribución, por lo cual, luego de una incubación en envase cerrado a 35 - 37º C durante 7 días, debe cumplir con los requisitos establecidos en las Tablas 3 y 4. Tabla 3: Requisitos microbiológicos para muestra representativa. - Determinación Aerobios Mesófilos/mL - Categorización (I.C.M.S.F) 10 - Criterios de aceptación n=5, c=0, m=100 Tabla 4: Requisitos microbiológicos para muestra indicativa. - Determinación Aerobios Mesófilos/mL (*) - Categorización (I.C.M.S.F) 10 - Criterios de aceptación 100 UFC**/ml *Luego de una incubación a 35 - 37º C en envase cerrado durante 7 días. **UFC (Unidad Formadora de Colonia por mililitro de leche).",
+         "id": "9"
+        },
+        {
+         "name": "RECEPCION DEL PRODUCTO",
+         "value": "REQUISITOS ESPECÍFICOS PARA LA RECEPCIÓN DEL PRODUCTO",
+         "id": "11"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-51e1-6cbe-be2e-edb57b760e32",
+       "description": "Perejil",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50101538-010",
+        "description": "Perejil",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101538-010"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50101538",
+         "description": "Verduras frescas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101538"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 1625,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e3ad-6f20-9def-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "3",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-51cc-6b70-8ceb-edb57b760e32",
+       "description": "Locote verde",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50101538-9992",
+        "description": "Locote verde",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101538-9992"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50101538",
+         "description": "Verduras frescas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101538"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 13813,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e3a1-6266-b0d1-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-51ee-6086-b87c-edb57b760e32",
+       "description": "Ajo por cabeza",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50101538-003",
+        "description": "Ajo",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101538-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50101538",
+         "description": "Verduras frescas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101538"
+        }
+       ],
+       "quantity": 500,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 2519,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e3b3-6696-8853-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "4",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-52a1-6e1a-b517-edb57b760e32",
+       "description": "Choclo",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50221001-004",
+        "description": "Choclo en lata",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50221001-004"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50221001",
+         "description": "Granos de Legumbres",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50221001"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 7150,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e436-6f5a-b08c-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "22",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-51d5-668a-a4b3-edb57b760e32",
+       "description": "Repollo",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50101538-022",
+        "description": "Repollo",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101538-022"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50101538",
+         "description": "Verduras frescas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101538"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 8938,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e3a8-664c-8c9b-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "2",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-5248-6068-bace-edb57b760e32",
+       "description": "Huevo de gallina",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50131606-002",
+        "description": "Huevo de gallina",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50131606-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50131606",
+         "description": "Huevos frescos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50131606"
+        }
+       ],
+       "quantity": 400,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 41600,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e3f4-68b2-8e9e-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "13",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f037ea2-5227-6336-8869-edb57b760e32",
+       "description": "Manzana",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50101634-006",
+        "description": "Manzana",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101634-006"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50101634",
+         "description": "Fruta fresca y residuos frutales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101634"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 16250,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f037ea3-e3db-6862-8d33-c11f3c57c84b",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "9",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-16e0-6200-a005-45f87041ed92",
+       "description": "yogurth",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50131702-013",
+        "description": "Yogurt no dietetico",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50131702-013"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50131702",
+         "description": "Productos de mantequilla o leche en conserva",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50131702"
+        }
+       ],
+       "quantity": 500,
+       "unit": {
+        "name": "Litros",
+        "id": "LT",
+        "value": {
+         "amount": 9750,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-2230-6564-8934-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "25",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-16a3-6152-95a1-45f87041ed92",
+       "description": "Cafe tradicional",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50201706-002",
+        "description": "Cafe concentrado instantaneo",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50201706-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50201706",
+         "description": "Cafe",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50201706"
+        }
+       ],
+       "quantity": 300,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 59800,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-220b-6b74-a598-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "16",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-16ce-66cc-8758-45f87041ed92",
+       "description": "Choclo",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50221001-004",
+        "description": "Choclo en lata",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50221001-004"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50221001",
+         "description": "Granos de Legumbres",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50221001"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 7150,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-2224-6336-9d2a-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "22",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-1631-691c-9fc3-45f87041ed92",
+       "description": "Mayonesa en sachet de 500 gramos",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50171832-001",
+        "description": "Mayonesa",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50171832-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50171832",
+         "description": "Alino de ensaladas o para mojar",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50171832"
+        }
+       ],
+       "quantity": 140,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 18688,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-21eb-6cf2-99c5-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "8",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-1602-6798-b62b-45f87041ed92",
+       "description": "Perejil",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50101538-010",
+        "description": "Perejil",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101538-010"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50101538",
+         "description": "Verduras frescas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101538"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 1625,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-21d5-675e-97dd-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "3",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-16c7-6c78-abe7-45f87041ed92",
+       "description": "Pepino",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50101538-012",
+        "description": "Pepino",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101538-012"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50101538",
+         "description": "Verduras frescas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101538"
+        }
+       ],
+       "quantity": 100,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 10284,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-2220-61fa-9b69-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "21",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-1699-6cc4-888e-45f87041ed92",
+       "description": "Azucar blanca",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50161509-002",
+        "description": "Azucar blanca",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50161509-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50161509",
+         "description": "Productos de edulcorantes o azucares naturales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50161509"
+        }
+       ],
+       "quantity": 300,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 11050,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-2207-6ae2-a8b1-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "15",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-1662-62e2-ab8f-45f87041ed92",
+       "description": "Naranja",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50101634-008",
+        "description": "Naranja",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101634-008"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50101634",
+         "description": "Fruta fresca y residuos frutales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101634"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 12188,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-21f7-6c14-99f8-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "11",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-164c-6cf8-88f7-45f87041ed92",
+       "description": "Banana",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50101634-002",
+        "description": "Banana",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101634-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50101634",
+         "description": "Fruta fresca y residuos frutales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101634"
+        }
+       ],
+       "quantity": 350,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 10563,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-21f3-6bc8-9bc4-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "10",
+         "id": "2"
+        },
+        {
+         "name": "ETIQUETADO",
+         "value": "Las cajas deben tener etiqueta visible con las siguientes informaciones: Origen del producto (Departamento y Distrito). Número de lote. Fecha de empaquetado. Identificación del productor (Nombre y Apellido). Identificación del empaquetador (Nº de Registro del SENAVE). Identificación de la cámara maduradora (Nº de Registro del SENAVE).  Leyenda que diga «Alimentación Escolar». Cantidad de unidades de banana ",
+         "id": "4"
+        },
+        {
+         "name": "TRANSPORTE",
+         "value": "El vehículo en que se transporta la banana debe estar registrado en el SENAVE.",
+         "id": "7"
+        },
+        {
+         "name": "LARGO",
+         "value": "El largo mínimo de las bananas debe ser de 15 cm.",
+         "id": "5"
+        },
+        {
+         "name": "ASPECTO",
+         "value": "Las bananas deben presentar maduración óptima (coloración amarilla característica). Manchas por golpes o magulladuras máximo en un 20% en cada fruta. La coloración del lote de bananas debe ser pareja.",
+         "id": "8"
+        },
+        {
+         "name": "Presentación",
+         "value": "Las bananas deben estar envasadas en cajas de cartón, madera y/o plástico. Las cajas deben contener al menos 120 unidades de banana. Las bananas pueden presentarse en forma individual o en pencas de hasta 4 unidades.",
+         "id": "3"
+        },
+        {
+         "name": "DIAMETRO",
+         "value": "El diámetro mínimo de las bananas debe ser de 38 mm.",
+         "id": "6"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-163a-6602-803f-45f87041ed92",
+       "description": "Manzana",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50101634-006",
+        "description": "Manzana",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101634-006"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50101634",
+         "description": "Fruta fresca y residuos frutales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101634"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 16250,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-21ef-6c62-ac58-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "9",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-16b3-65e8-b4e0-45f87041ed92",
+       "description": "Carne molida de primera",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50112001-018",
+        "description": "Carne molida",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50112001-018"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50112001",
+         "description": "Carnes vacunas frescas o procesadas ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50112001"
+        }
+       ],
+       "quantity": 350,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 59800,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-2213-6d60-9f2f-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "18",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-168a-644a-9822-45f87041ed92",
+       "description": "Queso tipo Paraguay",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50131801-001",
+        "description": "Queso tipo Paraguay",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50131801-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50131801",
+         "description": "Queso natural",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50131801"
+        }
+       ],
+       "quantity": 350,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 50700,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-2203-6b7c-a3c0-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "14",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-16ab-656e-b92c-45f87041ed92",
+       "description": "Pechuga de pollo",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50111510-003",
+        "description": "Pechuga de pollo",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50111510-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50111510",
+         "description": "Carne de ave fresca",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50111510"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 19500,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-220f-6d00-9b53-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "17",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-16d4-62f2-91ca-45f87041ed92",
+       "description": "Jugo Carton",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50202306-004",
+        "description": "Jugo elaborado a base de extracto de frutas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50202306-004"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50202306",
+         "description": "Refrescos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50202306"
+        }
+       ],
+       "quantity": 500,
+       "unit": {
+        "name": "Litros",
+        "id": "LT",
+        "value": {
+         "amount": 10969,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-2228-6486-838e-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "23",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-1671-604e-ab75-45f87041ed92",
+       "description": "Leche entera",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50131702-011",
+        "description": "Leche entera liquida",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50131702-011"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50131702",
+         "description": "Productos de mantequilla o leche en conserva",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50131702"
+        }
+       ],
+       "quantity": 2500,
+       "unit": {
+        "name": "Litros",
+        "id": "LT",
+        "value": {
+         "amount": 8840,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-21fb-6d00-be5d-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "12",
+         "id": "2"
+        },
+        {
+         "name": "Especificaciones organolépticas del producto",
+         "value": "Aspecto:  liquido - Color: blanco amarillento. - Olor: característico.  - Sabor: agradable, exento de olores extraños (a rancio, quemado, crudo, solventes, etc.)",
+         "id": "8"
+        },
+        {
+         "name": "Aditivos alimentarios",
+         "value": "Serán permitidos aquellos aditivos conforme a la Resolución MERCOSUR GMC/RES Nº 78/94 “RTM de Identidad y calidad de leche UAT",
+         "id": "6"
+        },
+        {
+         "name": "Especificaciones microbiológicas",
+         "value": "La leche UAT ó UHT, no debe contener microorganismos capaces de proliferar en ella en las condiciones normales de almacenamiento y distribución, por lo cual, luego de una incubación en envase cerrado a 35 - 37º C durante 7 días, debe cumplir con los requisitos establecidos en las Tablas 3 y 4. Tabla 3: Requisitos microbiológicos para muestra representativa. - Determinación Aerobios Mesófilos/mL - Categorización (I.C.M.S.F) 10 - Criterios de aceptación n=5, c=0, m=100 Tabla 4: Requisitos microbiológicos para muestra indicativa. - Determinación Aerobios Mesófilos/mL (*) - Categorización (I.C.M.S.F) 10 - Criterios de aceptación 100 UFC**/ml *Luego de una incubación a 35 - 37º C en envase cerrado durante 7 días. **UFC (Unidad Formadora de Colonia por mililitro de leche).",
+         "id": "9"
+        },
+        {
+         "name": "ESPECIFICACIONES DEL ENVASE",
+         "value": "a) Especificaciones del envase individual. El envase individual primario deberá ser de tetra brik.  b) Especificaciones del envase secundario - La caja contenedora del alimento debe ser de cartón corrugado o de otro material que no permita el deterioro del envase individual, con la parte superior e inferior lacradas, asegurando total inviolabilidad y protección de los alimentos en ella contenidos.  La caja contenedora deberá ser resistente al apilamiento, según instrucciones del fabricante.",
+         "id": "10"
+        },
+        {
+         "name": "Presentación",
+         "value": "El producto se presentará en envase tetra brik de 200, 500 o 1000 cm3 o Ml",
+         "id": "4"
+        },
+        {
+         "name": "DEFINICION",
+         "value": "Se denomina Leche UAT (Ultra Alta Temperatura ó Ultra High Temperture - UHT) a la leche homogeneizada, que ha sido sometida durante 2 a 4 segundos a una temperatura entre 130º C y 150º C, mediante un proceso térmico de flujo continuo, inmediatamente enfriada a menos de 32º C y envasada bajo condiciones asépticas en envases estériles y herméticamente cerrados.  El contenido de materia grasa del producto debe contener como mínimo 3,0% m/v.",
+         "id": "3"
+        },
+        {
+         "name": "Composición físico-química y nutricional",
+         "value": "La composición fisicoquímica y nutricional, deberá estar expresada por 100 mililitros, por producto terminado listo para el consumo, según lo detallado en la Tabla 1 y Tabla 2.   Tabla 1: Composición fisicoquímica por100 mL de producto terminado listo para el consumo - Determinaciones - Límites de Aceptación - Materia Grasa % m/v: Min. 3,0 - Acidez (g ác. Láctico/100 ml): 0,14 a 0,18 - Densidad relativa a 15% C/15º C: Min. 1,028 - Estabilidad al etanol 68% (v/v): Estable - Extracto seco no graso % (m/m): Min. 8,2 - Descenso Crioscópico - ºH: Min. -0,530 Max. -0,550 - °C: Min. -0,512  Max. -0,535 -Tabla 2: Composición nutricional por 100 mL del producto terminado listo para el consumo - Nutriente - Proteínas % (m/m) Mínimo: 3,0  Máximo: --",
+         "id": "7"
+        },
+        {
+         "name": "INGREDIENTES",
+         "value": "I. Obligatorios: Leche entera de vaca. - II. Permitidos: No aplica -  III. No permitidos: No aplica",
+         "id": "5"
+        },
+        {
+         "name": "RECEPCION DEL PRODUCTO",
+         "value": "REQUISITOS ESPECÍFICOS PARA LA RECEPCIÓN DEL PRODUCTO",
+         "id": "11"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-15e4-6464-bd9a-45f87041ed92",
+       "description": "Locote verde",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50101538-9992",
+        "description": "Locote verde",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101538-9992"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50101538",
+         "description": "Verduras frescas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101538"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 13813,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-21cb-6470-9411-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-16da-6594-b6a0-45f87041ed92",
+       "description": "Pan sandwich integral",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50181901-004",
+        "description": "Pan integral",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50181901-004"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50181901",
+         "description": "Panificados",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50181901"
+        }
+       ],
+       "quantity": 250,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 22750,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-222c-654a-9817-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "24",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-1629-6af0-8c9a-45f87041ed92",
+       "description": "Pan para Sandwich",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50181903-007",
+        "description": "Pancito",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50181903-007"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50181903",
+         "description": "Galletas simples",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50181903"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 22750,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-21e7-6d00-b829-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "7",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-16ba-619a-86f3-45f87041ed92",
+       "description": "Carnaza blanca",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50112001-003",
+        "description": "Carnaza blanca",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50112001-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50112001",
+         "description": "Carnes vacunas frescas o procesadas ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50112001"
+        }
+       ],
+       "quantity": 350,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 59800,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-2217-6cb2-b30e-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "19",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-1621-60d0-8e4e-45f87041ed92",
+       "description": "Queso para sandwich",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50131802-007",
+        "description": "Queso para sandwich",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50131802-007"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50131802",
+         "description": "Queso procesado",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50131802"
+        }
+       ],
+       "quantity": 250,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 66300,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-21e3-6c96-a51a-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "6",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-160d-6620-bf7b-45f87041ed92",
+       "description": "Ajo por cabeza",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50101538-003",
+        "description": "Ajo",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101538-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50101538",
+         "description": "Verduras frescas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101538"
+        }
+       ],
+       "quantity": 500,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 2519,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-21da-66c8-a28a-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "4",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-15f5-6db8-8822-45f87041ed92",
+       "description": "Repollo",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50101538-022",
+        "description": "Repollo",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50101538-022"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50101538",
+         "description": "Verduras frescas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101538"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 8938,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-21d0-657e-8593-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "2",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-167f-609a-acaf-45f87041ed92",
+       "description": "Huevo de gallina",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50131606-002",
+        "description": "Huevo de gallina",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50131606-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50131606",
+         "description": "Huevos frescos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50131606"
+        }
+       ],
+       "quantity": 400,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 41600,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-21ff-6c52-9d70-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "13",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-16e6-62ea-9f2b-45f87041ed92",
+       "description": "Mostaza",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50171830-002",
+        "description": "Mostaza",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50171830-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50171830",
+         "description": "Salsas para pringar o condimentos o para untar o marinar",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50171830"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 18343,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-2234-652e-a3e5-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "26",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-1617-61a2-a264-45f87041ed92",
+       "description": "Jamonada",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50112001-9998",
+        "description": "Jamonada",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50112001-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50112001",
+         "description": "Carnes vacunas frescas o procesadas ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50112001"
+        }
+       ],
+       "quantity": 250,
+       "unit": {
+        "name": "Kilogramos",
+        "id": "kg",
+        "value": {
+         "amount": 47938,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-21df-68ee-83a4-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "5",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1effb72c-16c0-6b58-b70f-45f87041ed92",
+       "description": "Arveja",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "50221001-003",
+        "description": "Arveja en lata",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/50221001-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "50221001",
+         "description": "Granos de Legumbres",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50221001"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 5262,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1effb732-221b-6ede-837b-7d7efba54631",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "20",
+         "id": "2"
+        }
+       ]
+      }
+     ],
+     "tenderers": [
+      {
+       "id": "PY-RUC-2971768-0",
+       "name": "FELICIA PORTILLO CABRERA"
+      },
+      {
+       "id": "PY-RUC-4073712-8",
+       "name": "Alejandro Carlos Noguera Ricardi"
+      },
+      {
+       "id": "PY-RUC-80008378-4",
+       "name": "GRIMEX S.A."
+      }
+     ],
+     "documents": [
+      {
+       "id": "48f48ea2-0d25-4e15-8c98-bd08759afb6b",
+       "datePublished": "2025-06-12T11:16:29-04:00",
+       "title": "nota-aclaracion-a-observaciones-de-la-mcn-id-462320-684ae0fe59333.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f034d04-08fc-6cee-b0dd-5d9b4d93f4ea/files/48f48ea2-0d25-4e15-8c98-bd08759afb6b/download",
+       "language": "es",
+       "documentTypeDetails": "Nota de Contestación"
+      },
+      {
+       "id": "6e3755c9-9ca7-46c7-a8f1-aa3f0be6411d",
+       "datePublished": "2025-06-13T14:05:03-04:00",
+       "title": "nota-aclaracion-a-observaciones-de-la-mcn-id-462320-13-6-2025-684c5a1fa6b87.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f034d04-08fc-6cee-b0dd-5d9b4d93f4ea/files/6e3755c9-9ca7-46c7-a8f1-aa3f0be6411d/download",
+       "language": "es",
+       "documentTypeDetails": "Nota de Contestación"
+      },
+      {
+       "id": "FZMiB69p4umUU0iZeO/oVQ==",
+       "datePublished": "2025-06-17T11:14:10-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 462320 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1f034d04-08fc-6cee-b0dd-5d9b4d93f4ea/1/json",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/json"
+      },
+      {
+       "id": "605d9c2a-ff72-47a1-b9db-373a1971e0e5",
+       "datePublished": "2025-06-13T14:05:03-04:00",
+       "title": "cdp-actualizado-mcn-id-463320-684c5a09481c8.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f034d04-08fc-6cee-b0dd-5d9b4d93f4ea/files/605d9c2a-ff72-47a1-b9db-373a1971e0e5/download",
+       "language": "es",
+       "documentTypeDetails": "CDP"
+      },
+      {
+       "id": "4ymgqQb50rQ=",
+       "datePublished": "2025-06-17T11:14:10-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 462320 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1f034d04-08fc-6cee-b0dd-5d9b4d93f4ea/1",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/pdf"
+      },
+      {
+       "id": "c8613c62-6101-414d-a3a3-54aa007640f3",
+       "datePublished": "2025-06-13T14:05:03-04:00",
+       "title": "resolucion-aprobacion-actualizado-mcn-id-463320-684c5a12c0e96.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f034d04-08fc-6cee-b0dd-5d9b4d93f4ea/files/c8613c62-6101-414d-a3a3-54aa007640f3/download",
+       "language": "es",
+       "documentTypeDetails": "Aprobación PBC"
+      },
+      {
+       "id": "17177a54-232b-4aaa-8777-39f38ace12f9",
+       "datePublished": "2025-06-12T11:16:29-04:00",
+       "title": "pr-462320-684ae04ab22a1.zip",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f034d04-08fc-6cee-b0dd-5d9b4d93f4ea/files/17177a54-232b-4aaa-8777-39f38ace12f9/download",
+       "language": "es",
+       "documentTypeDetails": "Antecedentes de la Estimación de Costos"
+      },
+      {
+       "id": "daceb21c-4129-4c00-b864-f0fb13e94440",
+       "datePublished": "2025-07-04T10:16:53-04:00",
+       "title": "ap-4623200001-1067928453369157-6867d4444ca72.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f034d04-08fc-6cee-b0dd-5d9b4d93f4ea/files/daceb21c-4129-4c00-b864-f0fb13e94440/download",
+       "language": "es",
+       "documentTypeDetails": "Acta de Apertura"
+      },
+      {
+       "id": "dix2iRRDbik=",
+       "title": "URL de la Convocatoria",
+       "url": "https://www.contrataciones.gov.py/licitaciones/convocatoria/1effb6b8-c2d6-6dd0-831f-77270abee342.html",
+       "language": "es",
+       "documentType": "tenderNotice",
+       "format": "text/html"
+      },
+      {
+       "id": "1ac9ec8e-1048-4d38-9194-76ad3d7cf746",
+       "datePublished": "2025-06-12T11:16:29-04:00",
+       "title": "dictamen-tecnico-462320-684ae03e37f6a.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f034d04-08fc-6cee-b0dd-5d9b4d93f4ea/files/1ac9ec8e-1048-4d38-9194-76ad3d7cf746/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen técnico"
+      },
+      {
+       "id": "OzMW3PHy3Ck=",
+       "datePublished": "2025-03-14T10:48:56-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 462320 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1effb6b8-c2d6-6dd0-831f-77270abee342/1",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/pdf"
+      },
+      {
+       "id": "85c33ca2-0a65-4cd8-b829-ab1733ae5cf3",
+       "datePublished": "2025-03-07T14:00:40-04:00",
+       "title": "cdp-mcn-462320-67cb26064eaeb.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1effb6b8-c2d6-6dd0-831f-77270abee342/files/85c33ca2-0a65-4cd8-b829-ab1733ae5cf3/download",
+       "language": "es",
+       "documentTypeDetails": "CDP"
+      },
+      {
+       "id": "jrXBuZEtQ+t3TAKR8zON6Q==",
+       "datePublished": "2025-03-14T10:48:56-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 462320 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1effb6b8-c2d6-6dd0-831f-77270abee342/1/json",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/json"
+      },
+      {
+       "id": "e5a103d2-e63b-4c43-a923-9b38b0c41a63",
+       "datePublished": "2025-03-07T14:00:40-04:00",
+       "title": "pr-462320-67cb261eb8826.zip",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1effb6b8-c2d6-6dd0-831f-77270abee342/files/e5a103d2-e63b-4c43-a923-9b38b0c41a63/download",
+       "language": "es",
+       "documentTypeDetails": "Antecedentes de la Estimación de Costos"
+      },
+      {
+       "id": "bb091fbf-012c-4f45-9298-53c9afcb9fde",
+       "datePublished": "2025-03-14T10:34:56-04:00",
+       "title": "dictamen-tecnico-462320-67d42feec4b8d.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1effb6b8-c2d6-6dd0-831f-77270abee342/files/bb091fbf-012c-4f45-9298-53c9afcb9fde/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen técnico"
+      },
+      {
+       "id": "752984a3-44ed-48ed-8880-9ca8a0504f14",
+       "datePublished": "2025-03-07T14:00:40-04:00",
+       "title": "resolucion-aprobacion-mcn-462320-67cb261155408.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1effb6b8-c2d6-6dd0-831f-77270abee342/files/752984a3-44ed-48ed-8880-9ca8a0504f14/download",
+       "language": "es",
+       "documentTypeDetails": "Aprobación PBC"
+      },
+      {
+       "id": "734af65f-962d-49e5-b6e5-ed0945a0e2ed",
+       "datePublished": "2025-04-04T09:50:12-04:00",
+       "title": "ap-462320-466957538225245-67efd582771a8.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1effb6b8-c2d6-6dd0-831f-77270abee342/files/734af65f-962d-49e5-b6e5-ed0945a0e2ed/download",
+       "language": "es",
+       "documentTypeDetails": "Acta de Apertura"
+      }
+     ],
+     "numberOfTenderers": 3,
+     "enquiries": [
+      {
+       "id": "7b79108867b9a58bce197d731f3f7064-1",
+       "date": "2025-03-23T20:59:05-04:00",
+       "title": "Experiencia en el Rubro",
+       "description": "solicitamos a la convocante la exclusión del requerimiento en cuanto la experiencia en el Rubro con antigüedad mínima de 5 años, este criterio solicitado resulta limitante para las pequeñas y medianas empresas cuyas actividades secundarias incluyen la provisión de productos al por menor y cuyas antigüedades son menores además que las mayorías de las pequeñas empresas cuantas con actividades diversas y no solo la de provisión de productos alimenticios, por lo cual corresponde la eliminación de dicho criterio bastando para el análisis de la experiencia la provisión de contratos y facturas ya solicitadas."
+      }
+     ]
+    },
+    "language": "es",
+    "initiationType": "tender",
+    "buyer": {
+     "id": "DNCP-SICP-CODE-66",
+     "name": "Municipalidad de Fernando de la Mora"
+    },
+    "sources": [
+     {
+      "id": "dncp-sicp",
+      "name": "Sistema de Información de las Contrataciones Públicas - DNCP",
+      "url": "https://www.contrataciones.gov.py/"
+     }
+    ],
+    "contracts": [
+     {
+      "id": "MN-30173-25-255251",
+      "implementation": {
+       "financialProgress": {
+        "breakdown": [
+         {
+          "id": "2025/30/173/1/1/0/0/1/11/311/30/MN-30173-25-255251",
+          "period": {
+           "startDate": "2025-01-01T00:00:00Z",
+           "endDate": "2025-12-31T00:00:00Z"
+          },
+          "measures": {
+           "monto_a_utilizar": 200000000
+          },
+          "classifications": {
+           "anio": "2025",
+           "nivel": "30",
+           "entidad": "173",
+           "tipo_programa": "1",
+           "programa": "1",
+           "sub_programa": "0",
+           "proyecto": "0",
+           "financiador": "1",
+           "departamento": "11",
+           "objeto_gasto": "311",
+           "fuente_financiamiento": "30",
+           "cdp": "117503"
+          },
+          "financialCode": "MN-30173-25-255251"
+         }
+        ]
+       }
+      },
+      "awardID": "1f0622f6-ff83-649e-845f-41527eb0892e",
+      "status": "active",
+      "statusDetails": "publicado",
+      "period": {
+       "startDate": "2025-08-04T00:00:00-04:00"
+      },
+      "value": {
+       "amount": 197971570,
+       "currency": "PYG"
+      },
+      "documents": [
+       {
+        "id": "1f076d08-bfc3-62fc-bf78-d1255c43fe6c",
+        "datePublished": "2025-08-11T13:30:52-04:00",
+        "title": "cdp-46232011082025-0001-689a1abc2a9be.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f0622f6-ff83-649e-845f-41527eb0892e/files/5a77218e-bf88-488a-bfd7-2970d9ead25a/download",
+        "language": "es",
+        "documentTypeDetails": "CDP"
+       },
+       {
+        "id": "1f07128d-84c8-66d2-acaa-153f582e50e1",
+        "datePublished": "2025-08-04T08:47:49-04:00",
+        "title": "contrato-n32-alimenticios-68909de4e7c76.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f0622f6-ff83-649e-845f-41527eb0892e/files/f4e3b2a5-aaf9-47d2-99c1-4947754fb403/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1f07128e-820f-6d5e-a331-d906fc5ba9ce",
+        "datePublished": "2025-08-04T08:48:15-04:00",
+        "title": "resolucion-46232018072025-68909dff70eb5.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f0622f6-ff83-649e-845f-41527eb0892e/files/2be5b569-e5e7-4442-9ebf-50e3f1cbad8c/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1f07128f-4e5e-6fc2-bc23-1959248ba000",
+        "datePublished": "2025-08-04T08:48:36-04:00",
+        "title": "cdp-actualizado-mcn-id-463320-68909e14e274d.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f0622f6-ff83-649e-845f-41527eb0892e/files/65f79b2c-03bd-49ce-b335-5ed3bf226251/download",
+        "language": "es",
+        "documentTypeDetails": "CDP"
+       },
+       {
+        "id": "1f076cef-6764-63ea-8ae2-c701b764ad9c",
+        "datePublished": "2025-08-11T13:19:31-04:00",
+        "title": "contrato-n-32-46232011082025-689a1813c8cdb.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f0622f6-ff83-649e-845f-41527eb0892e/files/3b306f91-27a5-44e1-9b8c-710d5a8b4dc8/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       }
+      ]
+     }
+    ],
+    "planning": {
+     "identifier": "462320",
+     "estimatedDate": "2025-04-30T00:00:00-04:00",
+     "budget": {
+      "description": "ADQUISICION DE PRODUCTOS ALIMENTICIOS",
+      "amount": {
+       "currency": "PYG",
+       "amount": 200000000
+      },
+      "budgetBreakdown": [
+       {
+        "id": "2025/30/173/1/1/0/0/1/11/311/30-1vTLqsKVMXU=",
+        "sourceParty": {
+         "id": "66",
+         "name": "Municipalidad de Fernando de la Mora"
+        },
+        "period": {
+         "startDate": "2025-01-01T00:00:00Z",
+         "endDate": "2025-12-31T00:00:00Z"
+        },
+        "measures": {
+         "monto_utilizado": 200000000,
+         "monto_a_utilizar": 200000000
+        },
+        "classifications": {
+         "anio": "2025",
+         "nivel": "30",
+         "entidad": "173",
+         "tipo_programa": "1",
+         "programa": "1",
+         "sub_programa": "0",
+         "proyecto": "0",
+         "financiador": "1",
+         "departamento": "11",
+         "objeto_gasto": "311",
+         "fuente_financiamiento": "30",
+         "cdp": "117503"
+        }
+       }
+      ]
+     },
+     "items": [
+      {
+       "id": "1effb699-f073-6276-a350-3172b9d2b81a",
+       "description": "Aceites vegetales, y grasas comestibles",
+       "classification": {
+        "scheme": "UNSPSC",
+        "id": "50151500",
+        "description": "Aceites vegetales, y grasas comestibles",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50151500"
+       }
+      },
+      {
+       "id": "1effb6b6-a695-6b14-be72-79de0e965042",
+       "description": "Chocolates, azucares, edulcorantes productos",
+       "classification": {
+        "scheme": "UNSPSC",
+        "id": "50161500",
+        "description": "Chocolates, azucares, edulcorantes productos",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50161500"
+       }
+      },
+      {
+       "id": "1effb6b7-cb9e-6202-93c5-59220fa805fe",
+       "description": "Hierbas y especias y extractos",
+       "classification": {
+        "scheme": "UNSPSC",
+        "id": "50171500",
+        "description": "Hierbas y especias y extractos",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50171500"
+       }
+      },
+      {
+       "id": "1effb6b7-31ea-6444-9dcc-7f2934279d64",
+       "description": "Frutas",
+       "classification": {
+        "scheme": "UNSPSC",
+        "id": "50101600",
+        "description": "Frutas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50101600"
+       }
+      },
+      {
+       "id": "1effb6b5-9197-622c-a868-1547ed9d7777",
+       "description": "Carnes procesadas y preparadas",
+       "classification": {
+        "scheme": "UNSPSC",
+        "id": "50112000",
+        "description": "Carnes procesadas y preparadas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50112000"
+       }
+      },
+      {
+       "id": "1effb6b6-22f9-65d0-9407-ab5d56e3c05f",
+       "description": "Cereales",
+       "classification": {
+        "scheme": "UNSPSC",
+        "id": "50221100",
+        "description": "Cereales",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/50221100"
+       }
+      }
+     ]
+    },
+    "parties": [
+     {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora",
+      "identifier": {
+       "scheme": "DNCP-SICP-CODE",
+       "id": "66",
+       "legalName": "Municipalidad de Fernando de la Mora"
+      },
+      "contactPoint": {
+       "email": "morauoc@gmail.com",
+       "name": "LIC. ELIGIO ACOSTA",
+       "telephone": "+595 21 513-306"
+      },
+      "roles": [
+       "buyer",
+       "procuringEntity"
+      ],
+      "details": {
+       "level": "Municipalidades",
+       "entityType": "Municipalidades",
+       "type": "Entidad"
+      },
+      "additionalIdentifiers": [
+       {
+        "id": "2025.30.173",
+        "legalName": "Municipalidad de Fernando de la Mora",
+        "scheme": "PY-PGN"
+       }
+      ]
+     },
+     {
+      "id": "PY-RUC-2971768-0",
+      "name": "FELICIA PORTILLO CABRERA",
+      "identifier": {
+       "id": "2971768-0",
+       "legalName": "FELICIA PORTILLO CABRERA",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "supplier",
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "FELICIA PORTILLO CABRERA",
+       "email": "mileniumemprende@hotmail.com",
+       "telephone": "0986671075"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "FERNANDO DE LA MORA",
+       "region": "Central",
+       "streetAddress": "MATEO ESTIGARRIBIA N°2831 C/ PAI MARCOS"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "id": 19,
+         "name": "Bienes e insumos agropecuario y forestal"
+        },
+        {
+         "id": 12,
+         "name": "Elementos e insumos de limpieza"
+        },
+        {
+         "id": 7,
+         "name": "Servicios Técnicos"
+        },
+        {
+         "id": 14,
+         "name": "Productos Alimenticios"
+        },
+        {
+         "id": 21,
+         "name": "Construcción, Restauración, Reconstrucción o Remodelación y Reparación de Inmuebles"
+        },
+        {
+         "id": 18,
+         "name": "Materiales e insumos eléctricos, metálicos y no metálicos, Plásticos, cauchos. Repuestos, herramientas, cámaras y cubiertas."
+        },
+        {
+         "id": 20,
+         "name": "Minerales"
+        },
+        {
+         "id": 22,
+         "name": "Maquinarias, Equipos y herramientas mayores - Equipos de transporte"
+        },
+        {
+         "id": 16,
+         "name": "Productos quimicos"
+        },
+        {
+         "id": 2,
+         "name": "Servicios de Limpiezas, Mantenimientos y reparaciones menores y mayores de Instalaciones, Maquinarias y Vehículos"
+        }
+       ]
+      }
+     },
+     {
+      "id": "PY-RUC-2030261-4",
+      "name": "JOHN FELICIANO OSORIO TORRES",
+      "identifier": {
+       "id": "2030261-4",
+       "legalName": "JOHN FELICIANO OSORIO TORRES",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "enquirer"
+      ],
+      "contactPoint": {
+       "name": "JOHN FELICIANO OSORIO TORRES",
+       "email": "licitaciones.coesa@gmail.com",
+       "faxNumber": "0981255490",
+       "telephone": "0981255490"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "LAMBARE",
+       "region": "Central",
+       "streetAddress": "Avda. carretera de López e/ Avda. cerro Lambare "
+      },
+      "details": {
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "id": 7,
+         "name": "Servicios Técnicos"
+        },
+        {
+         "id": 5,
+         "name": "Consultorías, Asesorías e Investigaciones. Estudios y Proyectos de inversión"
+        }
+       ]
+      }
+     }
+    ],
+    "complaints": [
+     {
+      "id": "104",
+      "events": [
+       {
+        "id": "0yxIpb31Gck=",
+        "type": "Resolución",
+        "period": {
+         "startDate": "2025-04-14T08:30:27-04:00",
+         "endDate": "2025-04-14T08:36:15-04:00"
+        },
+        "description": "Apertura de investigación - N° 969/25",
+        "status": "terminated"
+       },
+       {
+        "id": "gvi5bInr8bo=",
+        "type": "Presentación de contestante",
+        "period": {
+         "startDate": "2025-05-28T12:57:09-04:00",
+         "endDate": "2025-05-28T12:57:35-04:00"
+        },
+        "description": "Formular Manifestaciones - Convocante: Uoc Fernando de la Mora",
+        "status": "terminated"
+       },
+       {
+        "id": "B0JdWIV/coE=",
+        "type": "Contestación",
+        "period": {
+         "startDate": "2025-04-14T08:47:55-04:00",
+         "endDate": "2025-04-23T13:29:59-04:00"
+        },
+        "description": "REF: Apertura de Investigación - N° 3603/25 - Uoc Fernando de la Mora",
+        "status": "terminated"
+       },
+       {
+        "id": "LutPH/vIMfY=",
+        "type": "Resolución",
+        "period": {
+         "startDate": "2025-04-10T09:45:11-04:00",
+         "endDate": "2025-04-10T09:46:01-04:00"
+        },
+        "description": "Apertura de investigación - N° 969/25",
+        "status": "terminated"
+       },
+       {
+        "id": "rC6FBBRYUgc=",
+        "type": "Auto Interlocutorio",
+        "period": {
+         "startDate": "2025-04-14T08:46:13-04:00",
+         "endDate": "2025-04-14T08:46:28-04:00"
+        },
+        "description": "N° 271/25",
+        "status": "terminated"
+       },
+       {
+        "id": "tB031PTKNWc=",
+        "type": "Dictamen del Juez",
+        "period": {
+         "startDate": "2025-06-06T14:12:14-04:00",
+         "endDate": "2025-06-06T14:12:27-04:00"
+        },
+        "description": "N° 5175/25",
+        "status": "terminated"
+       },
+       {
+        "id": "aqmt/2U/urQ=",
+        "type": "Resolución de Cierre",
+        "period": {
+         "startDate": "2025-06-06T14:13:23-04:00",
+         "endDate": "2025-06-06T14:13:44-04:00"
+        },
+        "description": "N° 1436/25",
+        "status": "terminated"
+       },
+       {
+        "id": "aLjfxAqn1TA=",
+        "type": "Notificación inicial",
+        "period": {
+         "startDate": "2025-04-10T09:48:34-04:00",
+         "endDate": "2025-04-10T09:49:15-04:00"
+        },
+        "description": "Apertura de Investigación - N° 3603 - Uoc Fernando de la Mora",
+        "status": "terminated"
+       },
+       {
+        "id": "po04jNsCosM=",
+        "type": "Contestación",
+        "period": {
+         "startDate": "2025-04-10T09:49:16-04:00"
+        },
+        "description": "REF: Apertura de Investigación - N° 3603 - Uoc Fernando de la Mora",
+        "status": "terminated"
+       },
+       {
+        "id": "y2zxX659Tr0=",
+        "type": "Notificación inicial",
+        "period": {
+         "startDate": "2025-04-14T08:30:08-04:00"
+        },
+        "description": "Apertura de Investigación - N° 3603 - Uoc Fernando de la Mora",
+        "status": "terminated"
+       },
+       {
+        "id": "9pFAS9hOyRA=",
+        "type": "Notificación final",
+        "period": {
+         "startDate": "2025-06-06T14:14:43-04:00",
+         "endDate": "2025-06-06T14:16:10-04:00"
+        },
+        "description": "Cierre de Investigación - N° 5200/25 - Uoc Fernando de la Mora",
+        "status": "terminated"
+       },
+       {
+        "id": "rdZHXjrlVHU=",
+        "type": "Auto Interlocutorio",
+        "period": {
+         "startDate": "2025-04-10T09:46:49-04:00",
+         "endDate": "2025-04-10T09:47:02-04:00"
+        },
+        "description": "N° 271/25",
+        "status": "terminated"
+       },
+       {
+        "id": "PgfTxJMY94E=",
+        "type": "Providencia",
+        "period": {
+         "startDate": "2025-06-06T14:11:26-04:00",
+         "endDate": "2025-06-06T14:11:43-04:00"
+        },
+        "description": "Autos para Resolver",
+        "status": "terminated"
+       },
+       {
+        "id": "+MZ88/9CkGo=",
+        "type": "Auto Interlocutorio",
+        "period": {
+         "startDate": "2025-04-14T08:30:05-04:00"
+        },
+        "description": "N° 271/25",
+        "status": "terminated"
+       },
+       {
+        "id": "x7SlRnAKvY0=",
+        "type": "Notificación inicial",
+        "period": {
+         "startDate": "2025-04-14T08:47:10-04:00",
+         "endDate": "2025-04-14T08:47:55-04:00"
+        },
+        "description": "Apertura de Investigación - N° 3603/25 - Uoc Fernando de la Mora",
+        "status": "terminated"
+       }
+      ],
+      "documents": [
+       {
+        "id": "66826",
+        "url": "https://www.contrataciones.gov.py/documentos/download/marco-legal/66826",
+        "language": "es",
+        "title": "res_DNCP_969_25.pdf",
+        "documentTypeDetails": "Resolución DNCP",
+        "datePublished": "2025-04-08T03:00:00-04:00"
+       },
+       {
+        "id": "67271",
+        "url": "https://www.contrataciones.gov.py/documentos/download/marco-legal/67271",
+        "language": "es",
+        "title": "res_DNCP_1436_25.pdf",
+        "documentTypeDetails": "Resolución DNCP",
+        "datePublished": "2025-05-28T03:00:00-04:00"
+       }
+      ],
+      "intervenients": [
+       {
+        "id": "33ZUBxV0/AM=",
+        "name": "Rebecca Thompson Ruiz",
+        "roles": [
+         "judge"
+        ]
+       },
+       {
+        "id": "3fwSC/3cEbc=",
+        "name": "Octavio Augusto Ayala Ruíz",
+        "roles": [
+         "actuary"
+        ]
+       },
+       {
+        "id": "DNCP-SICP-CODE-66",
+        "name": "Municipalidad de Fernando de la Mora / Municipalidades",
+        "roles": [
+         "procuringEntity"
+        ]
+       },
+       {
+        "id": "eT1/0ktn8fA=",
+        "name": "Ariadna Staphania Dos Santos Aguero",
+        "roles": [
+         "judge"
+        ]
+       },
+       {
+        "id": "F+OSvVgqt2o=",
+        "name": "Rebecca Thompson Ruiz",
+        "roles": [
+         "judge"
+        ]
+       },
+       {
+        "id": "SfdEY1Hqesw=",
+        "name": "Octavio Augusto Ayala Ruíz",
+        "roles": [
+         "actuary"
+        ]
+       },
+       {
+        "id": "YN9Hg/uE/A8=",
+        "name": "Denunciante de caso #104"
+       },
+       {
+        "id": "ZKedeT45OZ0=",
+        "name": "Octavio Augusto Ayala Ruíz",
+        "roles": [
+         "actuary"
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  }
+ ],
+ "pagination": {
+  "total_items": 1,
+  "total_pages": 1,
+  "current_page": 1,
+  "items_per_page": 10,
+  "total_in_page": 1
+ }
+}

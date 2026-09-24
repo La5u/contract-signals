@@ -1,0 +1,608 @@
+{
+ "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/ocds-03ad3f-462322-1",
+ "publishedDate": "2026-09-22T17:53:35Z",
+ "publisher": {
+  "name": "Dirección Nacional de Contrataciones Públicas, Paraguay"
+ },
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "publicationPolicy": "https://www.contrataciones.gov.py/datos/legal",
+ "version": "1.1",
+ "extensions": [
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_breakdown_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_and_spend_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_enquiry_extension/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/enquiriesAddress/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/legalEntityTypeDetail/master/extension.json",
+  "https://raw.githubusercontent.com/gitMHOCDS/transactions/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_investmentproject_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_clarification_meetings_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_attributes_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_items_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_contract_suppliers_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_location_extension/v1.1.4/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_activityType_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_notifiedsuppliers_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_lots_details_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_memberOf_extension/master/extension.json",
+  "https://raw.githubusercontent.com/portaledcahn/ocds_tenderDatePublished_extension/master/extension.json",
+  "https://raw.githubusercontent.com/INAImexico/ocds_guarantees_extension/master/extension.json",
+  "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_requirements_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bidOpening_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_coveredBy_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_qualification_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_publicEntitiesDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_items_subItems_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_statusdetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_mainProcurementCategoryDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_identifier_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_estimatedDate_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_participationFee_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_amendments_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_lot_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_transaction_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_financialprogress_financialcode_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_categories_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_complaints_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_minQuantity_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_purchaseOrder_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_document_type_details/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_cancellations_amendments_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_milestone_documents_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_techniques_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bid_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_bid_items_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_auctions_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_secondStage_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_beneficiaries_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/Crown-Commercial-Service/ocds_tender_suitability_extension/main/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_subcontracting_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_sustainability_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_reportedpayment_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_milestone_deliveries_extension/raw/master/extension.json"
+ ],
+ "records": [
+  {
+   "ocid": "ocds-03ad3f-462322-1",
+   "releases": [
+    {
+     "date": "2025-06-09T08:56:23-04:00",
+     "tag": [
+      "tender",
+      "award",
+      "contract",
+      "implementation"
+     ],
+     "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/releases/id/1f005a7b-f9d9-6672-8607-213c4e9728d9-1749459383"
+    }
+   ],
+   "compiledRelease": {
+    "id": "1f005a7b-f9d9-6672-8607-213c4e9728d9-1749459383",
+    "awards": [
+     {
+      "id": "1f0300aa-ef49-6d38-b693-9fbe2c770b24",
+      "status": "active",
+      "statusDetails": "publicado",
+      "date": "2025-05-12T00:00:00-04:00",
+      "value": {
+       "amount": 42000000,
+       "currency": "PYG"
+      },
+      "suppliers": [
+       {
+        "name": "B & D Asociados S.R.L.",
+        "id": "PY-RUC-80063915-4"
+       }
+      ],
+      "documents": [
+       {
+        "id": "1f0300a8-09f2-6aa2-97fa-77e51d4c5358",
+        "datePublished": "2025-05-13T11:56:51-04:00",
+        "title": "nota-a-proveedores-68235db356289.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f0300a6-ac77-698c-85e7-1961df28394b/files/5a8d9f59-cdb0-4b5e-a5c1-5321584f51ff/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "1f0300a8-7c57-614c-8015-a1edbf2ac496",
+        "datePublished": "2025-05-13T11:57:03-04:00",
+        "title": "cuadro-462322-68235dbf56db6.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f0300a6-ac77-698c-85e7-1961df28394b/files/ae0617ea-12b8-44c8-bb50-0622ec6c7f80/download",
+        "language": "es",
+        "documentTypeDetails": "Cuadro Comparativo de Ofertas"
+       },
+       {
+        "id": "1f0300a8-f4e4-69c0-b986-c938b9501992",
+        "datePublished": "2025-05-13T11:57:16-04:00",
+        "title": "inf-eva-462322-68235dcbbc28e.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f0300a6-ac77-698c-85e7-1961df28394b/files/9d4a0207-2f14-4ffb-ad31-5ca9cc63ec56/download",
+        "language": "es",
+        "documentTypeDetails": "Informe de Evaluación"
+       },
+       {
+        "id": "1f0300a7-c399-6de4-bf54-35505aa84a43",
+        "datePublished": "2025-05-13T11:56:44-04:00",
+        "title": "gmail-notificacion-de-adjudicacion-mcn-462-322-68235dabf07ab.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f0300a6-ac77-698c-85e7-1961df28394b/files/217955fb-69b0-47ed-b83d-5021f0d4587b/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "dix2iRRDbik=",
+        "title": "URL de la Adjudicación",
+        "url": "https://www.contrataciones.gov.py/licitaciones/adjudicacion/1f0300a6-ac77-698c-85e7-1961df28394b/resumen-adjudicacion.html",
+        "language": "es",
+        "documentType": "awardNotice",
+        "format": "text/html"
+       },
+       {
+        "id": "1f0300a7-6595-6644-b083-151f62d05435",
+        "datePublished": "2025-05-13T11:56:34-04:00",
+        "title": "res-adj-462322-68235da21b0b6.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f0300a6-ac77-698c-85e7-1961df28394b/files/f8e79bd3-6d10-4a14-bcb0-113e0022102b/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       }
+      ],
+      "items": [
+       {
+        "id": "1f005ab0-6e97-6aca-8339-711643bb1d10",
+        "description": "Mantenimiento y actualizacion de software",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "81111805-004",
+         "description": "Mantenimiento y actualizacion de software ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/81111805-004"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "81111805",
+          "description": "Mantenimiento o apoyo de sistemas informaticos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/81111805"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 420000000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f005aaf-3fbb-637e-ab69-f54f487e07c3",
+        "attributes": [
+         {
+          "value": "Paraguay",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "1",
+          "id": "7"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "tender": {
+     "id": "1f005a7b-f9d9-6672-8607-213c4e9728d9",
+     "title": "Contratacion De Servicios De Asistencia Tecnica, Mantenimiento Del Sistema Informatico De Gestion Municipal Bd Soft",
+     "status": "complete",
+     "awardCriteria": "priceOnly",
+     "awardCriteriaDetails": "Por Total",
+     "submissionMethod": [
+      "inPerson"
+     ],
+     "bidOpening": {
+      "date": "2025-05-02T09:30:00-04:00",
+      "address": {
+       "streetAddress": "Municipalidad de Fernando de la Mora, oficina UOC"
+      }
+     },
+     "submissionMethodDetails": "Lugar entrega ofertas: Municipalidad de Fernando de la Mora, oficina UOC",
+     "statusDetails": "Adjudicada",
+     "enquiriesAddress": {
+      "streetAddress": "SICP"
+     },
+     "clarificationMeetings": [
+      {
+       "address": {
+        "streetAddress": "N/A"
+       },
+       "id": "1"
+      }
+     ],
+     "mainProcurementCategoryDetails": "Servicios - Servicios basados en ingenieria investigacion y tecnologia",
+     "hasEnquiries": false,
+     "value": {
+      "amount": 42000000,
+      "currency": "PYG"
+     },
+     "datePublished": "2025-04-09T16:58:12-04:00",
+     "tenderPeriod": {
+      "startDate": "2025-04-09T16:58:12-04:00",
+      "endDate": "2025-05-02T09:00:00-04:00",
+      "durationInDays": 22
+     },
+     "awardPeriod": {
+      "startDate": "2025-05-02T09:30:00-04:00"
+     },
+     "enquiryPeriod": {
+      "endDate": "2025-04-29T12:00:00-04:00",
+      "startDate": "2025-04-09T16:58:12-04:00",
+      "durationInDays": 19
+     },
+     "mainProcurementCategory": "goods",
+     "procurementMethod": "direct",
+     "procurementMethodDetails": "CVE con difusión previa",
+     "procuringEntity": {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora"
+     },
+     "criteria": [
+      {
+       "id": "1",
+       "title": "Garantía de Mantenimiento de Ofertas",
+       "description": "Los oferentes, proveedores o contratistas deberán garantizar la seriedad de sus ofertas, mediante la garantía de mantenimiento de la oferta",
+       "source": "tenderer",
+       "requirementGroups": [
+        {
+         "id": "1-1",
+         "description": "La garantía debe ser de un cierto porcentaje, periodo y tipo",
+         "requirements": [
+          {
+           "id": "1-1-1",
+           "title": "Porcentaje de la garantia",
+           "expectedValue": "5"
+          },
+          {
+           "id": "1-1-2",
+           "title": "Validez de la garantia en días",
+           "expectedValue": "120"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "items": [
+      {
+       "id": "1f005ab0-6e97-6aca-8339-711643bb1d10",
+       "description": "Mantenimiento y actualizacion de software",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "81111805-004",
+        "description": "Mantenimiento y actualizacion de software ",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/81111805-004"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "81111805",
+         "description": "Mantenimiento o apoyo de sistemas informaticos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/81111805"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 42000000,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f005aaf-3fbb-637e-ab69-f54f487e07c3",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "2"
+        }
+       ]
+      }
+     ],
+     "tenderers": [
+      {
+       "name": "B & D Asociados S.R.L.",
+       "id": "PY-RUC-80063915-4"
+      }
+     ],
+     "documents": [
+      {
+       "id": "bc702329-60f0-4c34-b318-dcd41e2542c8",
+       "datePublished": "2025-05-02T12:20:03-04:00",
+       "title": "acta-de-apertura-000012-2888618870972317-6814e2a313cc9.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f005a7b-f9d9-6672-8607-213c4e9728d9/files/bc702329-60f0-4c34-b318-dcd41e2542c8/download",
+       "language": "es",
+       "documentTypeDetails": "Acta de Apertura"
+      },
+      {
+       "id": "81cb591f-9d37-42ce-af77-5d573fdeaf2d",
+       "datePublished": "2025-03-20T13:48:29-04:00",
+       "title": "dictamen-tecnico-mcn-id-462322-67dc460096db5.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f005a7b-f9d9-6672-8607-213c4e9728d9/files/81cb591f-9d37-42ce-af77-5d573fdeaf2d/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen técnico"
+      },
+      {
+       "id": "9fed4425-6a58-4888-8093-dc7fe972c193",
+       "datePublished": "2025-04-08T10:28:05-04:00",
+       "title": "dictamen-de-via-excepcion-id-462322-67f52413530ae.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f005a7b-f9d9-6672-8607-213c4e9728d9/files/9fed4425-6a58-4888-8093-dc7fe972c193/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen CVE"
+      },
+      {
+       "id": "a1f44b0e-128d-477f-bc86-6cba0bdb3538",
+       "datePublished": "2025-03-20T13:48:28-04:00",
+       "title": "registro-derecho-de-autor-b-d-asociados-srl-67dc4644699f0.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f005a7b-f9d9-6672-8607-213c4e9728d9/files/a1f44b0e-128d-477f-bc86-6cba0bdb3538/download",
+       "language": "es",
+       "documentTypeDetails": "Justificación"
+      },
+      {
+       "id": "ad1f1152-0534-4cf5-99b8-0427a933d342",
+       "datePublished": "2025-03-20T13:48:28-04:00",
+       "title": "registro-de-autor-dinapi-b-d-asociados-srl-67dc4661550d7.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f005a7b-f9d9-6672-8607-213c4e9728d9/files/ad1f1152-0534-4cf5-99b8-0427a933d342/download",
+       "language": "es",
+       "documentTypeDetails": "Justificación"
+      },
+      {
+       "id": "1b57f430-2280-401b-ad43-80820ad67249",
+       "datePublished": "2025-04-01T13:41:37-04:00",
+       "title": "no-aplica-anticipo-cvex-462322-67ec170653cea.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f005a7b-f9d9-6672-8607-213c4e9728d9/files/1b57f430-2280-401b-ad43-80820ad67249/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen de justificación de Anticipo"
+      },
+      {
+       "id": "a30903ed-bc05-47f4-b79e-794e9e4709de",
+       "datePublished": "2025-04-04T10:42:10-04:00",
+       "title": "resolucion-aprobacion-id-462322-67efe077a5ed8.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f005a7b-f9d9-6672-8607-213c4e9728d9/files/a30903ed-bc05-47f4-b79e-794e9e4709de/download",
+       "language": "es",
+       "documentTypeDetails": "Aprobación PBC"
+      },
+      {
+       "id": "d13eccfb-12f3-4bfd-98b7-8130574ec979",
+       "datePublished": "2025-04-01T13:41:37-04:00",
+       "title": "preferencial-462322-67ec161eb89cd.zip",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f005a7b-f9d9-6672-8607-213c4e9728d9/files/d13eccfb-12f3-4bfd-98b7-8130574ec979/download",
+       "language": "es",
+       "documentTypeDetails": "Antecedentes de la Estimación de Costos"
+      },
+      {
+       "id": "531d2a39-7779-425a-ab9f-8498b46e65d3",
+       "datePublished": "2025-03-20T13:48:29-04:00",
+       "title": "cdp-id-462322-67dc45e97ad2f.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f005a7b-f9d9-6672-8607-213c4e9728d9/files/531d2a39-7779-425a-ab9f-8498b46e65d3/download",
+       "language": "es",
+       "documentTypeDetails": "CDP"
+      },
+      {
+       "id": "86e7bb47-409f-4335-8d22-532937b0e8b9",
+       "datePublished": "2025-04-08T10:28:06-04:00",
+       "title": "pbc-bd-soft-cvex-67f524021b95a.zip",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f005a7b-f9d9-6672-8607-213c4e9728d9/files/86e7bb47-409f-4335-8d22-532937b0e8b9/download",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "PBC"
+      },
+      {
+       "id": "dix2iRRDbik=",
+       "title": "URL de la Convocatoria",
+       "url": "https://www.contrataciones.gov.py/licitaciones/convocatoria/1f005a7b-f9d9-6672-8607-213c4e9728d9.html",
+       "language": "es",
+       "documentType": "tenderNotice",
+       "format": "text/html"
+      },
+      {
+       "id": "b6046cc4-5443-4f12-996f-49a05c2d5f02",
+       "datePublished": "2025-03-20T13:48:28-04:00",
+       "title": "registro-de-autor-dinapi-b-d-asociados-srl-67dc46d467b2b.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f005a7b-f9d9-6672-8607-213c4e9728d9/files/b6046cc4-5443-4f12-996f-49a05c2d5f02/download",
+       "language": "es",
+       "documentTypeDetails": "Autorización del MITIC"
+      }
+     ],
+     "numberOfTenderers": 1
+    },
+    "language": "es",
+    "ocid": "ocds-03ad3f-462322-1",
+    "date": "2025-06-09T08:56:23-04:00",
+    "initiationType": "tender",
+    "buyer": {
+     "id": "DNCP-SICP-CODE-66",
+     "name": "Municipalidad de Fernando de la Mora"
+    },
+    "sources": [
+     {
+      "id": "dncp-sicp",
+      "name": "Sistema de Información de las Contrataciones Públicas - DNCP",
+      "url": "https://www.contrataciones.gov.py/"
+     }
+    ],
+    "contracts": [
+     {
+      "id": "CE-30173-25-252836",
+      "implementation": {
+       "financialProgress": {
+        "breakdown": [
+         {
+          "id": "2025/30/173/1/1/0/0/1/11/261/30/CE-30173-25-252836",
+          "period": {
+           "startDate": "2025-01-01T00:00:00Z",
+           "endDate": "2025-12-31T00:00:00Z"
+          },
+          "measures": {
+           "monto_a_utilizar": 42000000
+          },
+          "classifications": {
+           "anio": "2025",
+           "nivel": "30",
+           "entidad": "173",
+           "tipo_programa": "1",
+           "programa": "1",
+           "sub_programa": "0",
+           "proyecto": "0",
+           "financiador": "1",
+           "departamento": "11",
+           "objeto_gasto": "261",
+           "fuente_financiamiento": "30",
+           "cdp": "117523"
+          },
+          "financialCode": "CE-30173-25-252836"
+         }
+        ]
+       }
+      },
+      "awardID": "1f0300aa-ef49-6d38-b693-9fbe2c770b24",
+      "status": "active",
+      "statusDetails": "publicado",
+      "period": {
+       "startDate": "2025-06-02T00:00:00-04:00"
+      },
+      "value": {
+       "amount": 42000000,
+       "currency": "PYG"
+      },
+      "documents": [
+       {
+        "id": "1f03fd95-d55f-6bf0-8201-6dff95f57dc5",
+        "datePublished": "2025-06-02T14:45:25-04:00",
+        "title": "b-d-683de33568fda.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f0300aa-ef49-6d38-b693-9fbe2c770b24/files/14066250-b16c-43aa-ae8f-b23b9c3760c5/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1f03fd97-99d1-6d48-aa10-6db09f3fc0ef",
+        "datePublished": "2025-06-02T14:46:12-04:00",
+        "title": "cdp-id-462322-67dc45e97ad2f-683de364d05f2.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f0300aa-ef49-6d38-b693-9fbe2c770b24/files/ee8d306a-d737-4e5d-a332-a3aa8a4411ce/download",
+        "language": "es",
+        "documentTypeDetails": "CDP"
+       },
+       {
+        "id": "1f03fd96-87ee-6f32-a1ab-975a6d7feb07",
+        "datePublished": "2025-06-02T14:45:44-04:00",
+        "title": "res-adj-462322-68235da21b0b6-683de3482744c.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f0300aa-ef49-6d38-b693-9fbe2c770b24/files/38855b27-33a3-43a3-a4b6-a39d3a8f7818/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       }
+      ]
+     }
+    ],
+    "parties": [
+     {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora",
+      "identifier": {
+       "scheme": "DNCP-SICP-CODE",
+       "id": "66",
+       "legalName": "Municipalidad de Fernando de la Mora"
+      },
+      "contactPoint": {
+       "email": "morauoc@gmail.com",
+       "name": "LIC. ELIGIO ACOSTA",
+       "telephone": "+595 21 513-306"
+      },
+      "roles": [
+       "buyer",
+       "procuringEntity"
+      ],
+      "details": {
+       "level": "Municipalidades",
+       "entityType": "Municipalidades",
+       "type": "Entidad"
+      },
+      "additionalIdentifiers": [
+       {
+        "id": "2025.30.173",
+        "legalName": "Municipalidad de Fernando de la Mora",
+        "scheme": "PY-PGN"
+       }
+      ]
+     },
+     {
+      "name": "B & D Asociados S.R.L.",
+      "id": "PY-RUC-80063915-4",
+      "identifier": {
+       "id": "80063915-4",
+       "legalName": "B & D Asociados S.R.L.",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "supplier",
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "JOSÉ ORLANDO DORIA MARQUEZ",
+       "email": "info@bdasociados.com.py",
+       "telephone": "0983406951",
+       "url": "http://www.bdasociados.com.py"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "Asuncion",
+       "region": "Central",
+       "streetAddress": "Dr. Cesar Lopez Moreira c/Federacion Rusa"
+      },
+      "details": {
+       "legalEntityTypeDetail": "S.R.L.",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Servicios Técnicos",
+         "id": 7
+        },
+        {
+         "name": "Consultorías, Asesorías e Investigaciones. Estudios y Proyectos de inversión",
+         "id": 5
+        },
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        }
+       ]
+      }
+     }
+    ],
+    "tag": [
+     "compiled"
+    ]
+   }
+  }
+ ],
+ "pagination": {
+  "total_items": 1,
+  "total_pages": 1,
+  "current_page": 1,
+  "items_per_page": 10,
+  "total_in_page": 1
+ }
+}

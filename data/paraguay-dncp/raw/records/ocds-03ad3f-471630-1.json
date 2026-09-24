@@ -1,0 +1,615 @@
+{
+ "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/ocds-03ad3f-471630-1",
+ "publishedDate": "2026-09-22T17:53:11Z",
+ "publisher": {
+  "name": "Dirección Nacional de Contrataciones Públicas, Paraguay"
+ },
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "publicationPolicy": "https://www.contrataciones.gov.py/datos/legal",
+ "version": "1.1",
+ "extensions": [
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_breakdown_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_and_spend_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_enquiry_extension/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/enquiriesAddress/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/legalEntityTypeDetail/master/extension.json",
+  "https://raw.githubusercontent.com/gitMHOCDS/transactions/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_investmentproject_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_clarification_meetings_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_attributes_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_items_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_contract_suppliers_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_location_extension/v1.1.4/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_activityType_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_notifiedsuppliers_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_lots_details_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_memberOf_extension/master/extension.json",
+  "https://raw.githubusercontent.com/portaledcahn/ocds_tenderDatePublished_extension/master/extension.json",
+  "https://raw.githubusercontent.com/INAImexico/ocds_guarantees_extension/master/extension.json",
+  "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_requirements_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bidOpening_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_coveredBy_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_qualification_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_publicEntitiesDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_items_subItems_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_statusdetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_mainProcurementCategoryDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_identifier_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_estimatedDate_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_participationFee_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_amendments_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_lot_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_transaction_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_financialprogress_financialcode_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_categories_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_complaints_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_minQuantity_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_purchaseOrder_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_document_type_details/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_cancellations_amendments_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_milestone_documents_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_techniques_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bid_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_bid_items_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_auctions_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_secondStage_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_beneficiaries_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/Crown-Commercial-Service/ocds_tender_suitability_extension/main/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_subcontracting_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_sustainability_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_reportedpayment_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_milestone_deliveries_extension/raw/master/extension.json"
+ ],
+ "records": [
+  {
+   "ocid": "ocds-03ad3f-471630-1",
+   "releases": [
+    {
+     "date": "2025-08-28T13:13:10-04:00",
+     "tag": [
+      "tender",
+      "award",
+      "contract",
+      "implementation"
+     ],
+     "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/releases/id/1f042e1c-3669-6c8c-8b64-9f2be85ad109-1756386790"
+    }
+   ],
+   "compiledRelease": {
+    "id": "1f042e1c-3669-6c8c-8b64-9f2be85ad109-1756386790",
+    "awards": [
+     {
+      "id": "1f07dd6c-1cd9-6f1c-8e63-23fc11c53077",
+      "status": "active",
+      "statusDetails": "publicado",
+      "date": "2025-08-18T00:00:00-04:00",
+      "value": {
+       "amount": 530000000,
+       "currency": "PYG"
+      },
+      "suppliers": [
+       {
+        "name": "MIRNA CELESTE CORONEL AGUAYO",
+        "id": "PY-RUC-3007180-1"
+       }
+      ],
+      "documents": [
+       {
+        "id": "1f07dd71-228e-69ee-b51e-fb486ec56c34",
+        "datePublished": "2025-08-20T12:05:12-04:00",
+        "title": "cuadro-471630-68a5e42862d68.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f07dd6a-a923-618c-b22a-4182c8c842be/files/aacdeaa0-1cbd-46a4-841e-aeeb7f95e63a/download",
+        "language": "es",
+        "documentTypeDetails": "Cuadro Comparativo de Ofertas"
+       },
+       {
+        "id": "1f07dd70-b7c8-697a-937b-4faeeb2b55ba",
+        "datePublished": "2025-08-20T12:05:01-04:00",
+        "title": "res-adj-471630-68a5e41d2f3f9.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f07dd6a-a923-618c-b22a-4182c8c842be/files/a6fbbb07-e4b5-4577-a1d3-93984abf883b/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "1f07dd71-b9bf-63d6-a039-d3347cd1e7a0",
+        "datePublished": "2025-08-20T12:05:28-04:00",
+        "title": "inf-eva-471630-68a5e4383d269.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f07dd6a-a923-618c-b22a-4182c8c842be/files/812f336a-2ce4-46ac-80a7-afc764cfac02/download",
+        "language": "es",
+        "documentTypeDetails": "Informe de Evaluación"
+       },
+       {
+        "id": "dix2iRRDbik=",
+        "title": "URL de la Adjudicación",
+        "url": "https://www.contrataciones.gov.py/licitaciones/adjudicacion/1f07dd6a-a923-618c-b22a-4182c8c842be/resumen-adjudicacion.html",
+        "language": "es",
+        "documentType": "awardNotice",
+        "format": "text/html"
+       }
+      ],
+      "items": [
+       {
+        "id": "1f05364c-2608-6ee0-ae2a-39964bb9f976",
+        "description": "Aceite termico",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "15121530-001",
+         "description": "Aceite o fluido de transferencia de calor",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/15121530-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "15121530",
+          "description": "Aceite o fluido de transferencia de calor",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/15121530"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Litros",
+         "id": "LT",
+         "value": {
+          "amount": 46700,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05364a-970b-65d6-ab60-e7ef4f93a031",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "LUBRICANTES INDUSTRIAL DEL PY",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "LIP",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "1",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "tender": {
+     "id": "1f042e1c-3669-6c8c-8b64-9f2be85ad109",
+     "title": "ADQUISICION DE ACEITE TERMICO",
+     "status": "complete",
+     "awardCriteria": "priceOnly",
+     "awardCriteriaDetails": "Por Total",
+     "submissionMethod": [
+      "inPerson"
+     ],
+     "bidOpening": {
+      "date": "2025-07-25T10:30:00-04:00",
+      "address": {
+       "streetAddress": "Municipalidad de Fernando de la Mora, oficina UOC"
+      }
+     },
+     "submissionMethodDetails": "Lugar entrega ofertas: Municipalidad de Fernando de la Mora, oficina UOC",
+     "statusDetails": "Adjudicada",
+     "enquiriesAddress": {
+      "streetAddress": "SICP"
+     },
+     "clarificationMeetings": [
+      {
+       "address": {
+        "streetAddress": "N/A"
+       },
+       "id": "1"
+      }
+     ],
+     "mainProcurementCategoryDetails": "Bienes - Combustibles Aditivos para combustibles, Lubricantes y Materiales Anticorrosivos",
+     "hasEnquiries": false,
+     "value": {
+      "amount": 530000000,
+      "currency": "PYG"
+     },
+     "datePublished": "2025-07-02T13:03:05-04:00",
+     "tenderPeriod": {
+      "startDate": "2025-07-02T13:03:05-04:00",
+      "endDate": "2025-07-25T10:00:00-04:00",
+      "durationInDays": 22
+     },
+     "awardPeriod": {
+      "startDate": "2025-07-25T10:30:00-04:00"
+     },
+     "contractPeriod": {
+      "maxExtentDate": "2025-12-31T00:00:00-04:00"
+     },
+     "enquiryPeriod": {
+      "endDate": "2025-07-22T12:00:00-04:00",
+      "startDate": "2025-07-02T13:03:05-04:00",
+      "durationInDays": 19
+     },
+     "mainProcurementCategory": "services",
+     "additionalProcurementCategories": [
+      "services"
+     ],
+     "procurementMethod": "open",
+     "procurementMethodDetails": "Menor cuantía nacional",
+     "procuringEntity": {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora"
+     },
+     "criteria": [
+      {
+       "id": "1",
+       "title": "Garantía de Mantenimiento de Ofertas",
+       "description": "Los oferentes, proveedores o contratistas deberán garantizar la seriedad de sus ofertas, mediante la garantía de mantenimiento de la oferta",
+       "source": "tenderer",
+       "requirementGroups": [
+        {
+         "id": "1-1",
+         "description": "La garantía debe ser de un cierto porcentaje, periodo y tipo",
+         "requirements": [
+          {
+           "id": "1-1-1",
+           "title": "Porcentaje de la garantia",
+           "expectedValue": "5"
+          },
+          {
+           "id": "1-1-2",
+           "title": "Validez de la garantia en días",
+           "expectedValue": "120"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "lots": [
+      {
+       "id": "1f05364a-970b-65d6-ab60-e7ef4f93a031",
+       "title": "1 - 1 - ADQUISICION DE ACEITE TERMICO",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 530000000,
+        "currency": "PYG"
+       },
+       "openContractType": "monto",
+       "minValue": {
+        "amount": 26500000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "1"
+        }
+       ]
+      }
+     ],
+     "items": [
+      {
+       "id": "1f05364c-2608-6ee0-ae2a-39964bb9f976",
+       "description": "Aceite termico",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "15121530-001",
+        "description": "Aceite o fluido de transferencia de calor",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/15121530-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "15121530",
+         "description": "Aceite o fluido de transferencia de calor",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/15121530"
+        }
+       ],
+       "unit": {
+        "name": "Litros",
+        "id": "LT",
+        "value": {
+         "amount": 46700,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05364a-970b-65d6-ab60-e7ef4f93a031",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "TAMBOR",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "2"
+        }
+       ]
+      }
+     ],
+     "tenderers": [
+      {
+       "name": "MIRNA CELESTE CORONEL AGUAYO",
+       "id": "PY-RUC-3007180-1"
+      }
+     ],
+     "documents": [
+      {
+       "id": "dix2iRRDbik=",
+       "title": "URL de la Convocatoria",
+       "url": "https://www.contrataciones.gov.py/licitaciones/convocatoria/1f042e1c-3669-6c8c-8b64-9f2be85ad109.html",
+       "language": "es",
+       "documentType": "tenderNotice",
+       "format": "text/html"
+      },
+      {
+       "id": "O5Kuq3FWMumeHzedygfeYA==",
+       "datePublished": "2025-07-02T12:03:04-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 471630 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1f042e1c-3669-6c8c-8b64-9f2be85ad109/1/json",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/json"
+      },
+      {
+       "id": "cd052d3c-3f1e-420d-aa7d-17e21277dbb4",
+       "datePublished": "2025-06-27T12:00:18-04:00",
+       "title": "cdp-mcn-id-471630-685eb1d82ffd7.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f042e1c-3669-6c8c-8b64-9f2be85ad109/files/cd052d3c-3f1e-420d-aa7d-17e21277dbb4/download",
+       "language": "es",
+       "documentTypeDetails": "CDP"
+      },
+      {
+       "id": "c6b9618f-5035-488e-b7ae-868377e448c3",
+       "datePublished": "2025-07-25T11:26:29-04:00",
+       "title": "acta-de-apertura-000032-1107448563190037-6883941465f61.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f042e1c-3669-6c8c-8b64-9f2be85ad109/files/c6b9618f-5035-488e-b7ae-868377e448c3/download",
+       "language": "es",
+       "documentTypeDetails": "Acta de Apertura"
+      },
+      {
+       "id": "9a7ec260-c438-4632-b731-421f319c9f1a",
+       "datePublished": "2025-06-27T12:00:18-04:00",
+       "title": "dictamen-tecnico-mcn-id-471630-685eb1e99151f.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f042e1c-3669-6c8c-8b64-9f2be85ad109/files/9a7ec260-c438-4632-b731-421f319c9f1a/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen técnico"
+      },
+      {
+       "id": "10760362-c0ec-4b9f-85e7-159433cca36c",
+       "datePublished": "2025-06-27T12:00:18-04:00",
+       "title": "resolucion-aprobacion-mcn-id-471630-685eb1e03ec41.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f042e1c-3669-6c8c-8b64-9f2be85ad109/files/10760362-c0ec-4b9f-85e7-159433cca36c/download",
+       "language": "es",
+       "documentTypeDetails": "Aprobación PBC"
+      },
+      {
+       "id": "WJUEzMA/Mg8=",
+       "datePublished": "2025-07-02T12:03:04-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 471630 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1f042e1c-3669-6c8c-8b64-9f2be85ad109/1",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/pdf"
+      },
+      {
+       "id": "c421fc24-0cec-41e7-bc58-261d121401f2",
+       "datePublished": "2025-06-27T12:00:18-04:00",
+       "title": "471630-pr-685eb1f3de858.zip",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f042e1c-3669-6c8c-8b64-9f2be85ad109/files/c421fc24-0cec-41e7-bc58-261d121401f2/download",
+       "language": "es",
+       "documentTypeDetails": "Antecedentes de la Estimación de Costos"
+      }
+     ],
+     "numberOfTenderers": 1
+    },
+    "language": "es",
+    "ocid": "ocds-03ad3f-471630-1",
+    "date": "2025-08-28T13:13:10-04:00",
+    "initiationType": "tender",
+    "buyer": {
+     "id": "DNCP-SICP-CODE-66",
+     "name": "Municipalidad de Fernando de la Mora"
+    },
+    "sources": [
+     {
+      "id": "dncp-sicp",
+      "name": "Sistema de Información de las Contrataciones Públicas - DNCP",
+      "url": "https://www.contrataciones.gov.py/"
+     }
+    ],
+    "contracts": [
+     {
+      "id": "MN-30173-25-255936",
+      "implementation": {
+       "financialProgress": {
+        "breakdown": [
+         {
+          "id": "2025/30/173/2/2/0/0/11/11/420/30/MN-30173-25-255936",
+          "period": {
+           "startDate": "2025-01-01T00:00:00Z",
+           "endDate": "2025-12-31T00:00:00Z"
+          },
+          "measures": {
+           "monto_a_utilizar": 530000000
+          },
+          "classifications": {
+           "anio": "2025",
+           "nivel": "30",
+           "entidad": "173",
+           "tipo_programa": "2",
+           "programa": "2",
+           "sub_programa": "0",
+           "proyecto": "0",
+           "financiador": "11",
+           "departamento": "11",
+           "objeto_gasto": "420",
+           "fuente_financiamiento": "30",
+           "cdp": "118013"
+          },
+          "financialCode": "MN-30173-25-255936"
+         }
+        ]
+       }
+      },
+      "awardID": "1f07dd6c-1cd9-6f1c-8e63-23fc11c53077",
+      "status": "active",
+      "statusDetails": "publicado",
+      "period": {
+       "startDate": "2025-08-26T00:00:00-04:00"
+      },
+      "value": {
+       "amount": 530000000,
+       "currency": "PYG"
+      },
+      "documents": [
+       {
+        "id": "1f082769-6515-65aa-b0c7-b7f8281fa655",
+        "datePublished": "2025-08-26T09:17:08-04:00",
+        "title": "cdp-mcn-id-471630-68ada5c4b9d98.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f07dd6c-1cd9-6f1c-8e63-23fc11c53077/files/1d61e955-4ac5-4caf-ab63-a2987443aebb/download",
+        "language": "es",
+        "documentTypeDetails": "CDP"
+       },
+       {
+        "id": "1f082768-9515-66fc-b77f-d9dd2fff6c0c",
+        "datePublished": "2025-08-26T09:16:47-04:00",
+        "title": "ddjj-plazo-de-protesta-68ada5aee71f0.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f07dd6c-1cd9-6f1c-8e63-23fc11c53077/files/e7883c86-5659-4ab7-9c5b-9ea9efcb1bb6/download",
+        "language": "es",
+        "documentTypeDetails": "Nota de Contestación"
+       },
+       {
+        "id": "1f082766-ef3c-68c6-8f27-29ebe939ecbf",
+        "datePublished": "2025-08-26T09:16:02-04:00",
+        "title": "contrato-41-aceite-termico-68ada582acc67.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f07dd6c-1cd9-6f1c-8e63-23fc11c53077/files/33fabe5f-8597-4be1-9317-34840da52210/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1f082767-7fe0-662a-b99e-231bea286779",
+        "datePublished": "2025-08-26T09:16:17-04:00",
+        "title": "res-adj-471630-68ada591d8415.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f07dd6c-1cd9-6f1c-8e63-23fc11c53077/files/560f8ea8-146f-455c-b489-41c2bd49ced2/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       }
+      ]
+     }
+    ],
+    "parties": [
+     {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora",
+      "identifier": {
+       "scheme": "DNCP-SICP-CODE",
+       "id": "66",
+       "legalName": "Municipalidad de Fernando de la Mora"
+      },
+      "contactPoint": {
+       "email": "morauoc@gmail.com",
+       "name": "LIC. ELIGIO ACOSTA",
+       "telephone": "+595 21 513-306"
+      },
+      "roles": [
+       "buyer",
+       "procuringEntity"
+      ],
+      "details": {
+       "level": "Municipalidades",
+       "entityType": "Municipalidades",
+       "type": "Entidad"
+      },
+      "additionalIdentifiers": [
+       {
+        "id": "2025.30.173",
+        "legalName": "Municipalidad de Fernando de la Mora",
+        "scheme": "PY-PGN"
+       }
+      ]
+     },
+     {
+      "name": "MIRNA CELESTE CORONEL AGUAYO",
+      "id": "PY-RUC-3007180-1",
+      "identifier": {
+       "id": "3007180-1",
+       "legalName": "MIRNA CELESTE CORONEL AGUAYO",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer",
+       "supplier"
+      ],
+      "contactPoint": {
+       "name": "MIRNA CELESTE CORONEL AGUAYO",
+       "email": "myc_distribuidora2008@hotmail.com",
+       "faxNumber": "513-086",
+       "telephone": "0992 417325"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "FERNANDO DE LA MORA",
+       "region": "Central",
+       "streetAddress": "Angel Torres Nro. 512 c/ Monseñor Maricevich"
+      },
+      "details": {
+       "scale": "micro",
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Servicios de ceremonial, gastronomico y funerarios",
+         "id": 9
+        },
+        {
+         "name": "Materiales e insumos eléctricos, metálicos y no metálicos, Plásticos, cauchos. Repuestos, herramientas, cámaras y cubiertas.",
+         "id": 18
+        },
+        {
+         "name": "Construcción, Restauración, Reconstrucción o Remodelación y Reparación de Inmuebles",
+         "id": 21
+        }
+       ]
+      }
+     }
+    ],
+    "tag": [
+     "compiled"
+    ]
+   }
+  }
+ ],
+ "pagination": {
+  "total_items": 1,
+  "total_pages": 1,
+  "current_page": 1,
+  "items_per_page": 10,
+  "total_in_page": 1
+ }
+}

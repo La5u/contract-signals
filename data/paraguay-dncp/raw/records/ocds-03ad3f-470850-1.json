@@ -1,0 +1,2942 @@
+{
+ "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/ocds-03ad3f-470850-1",
+ "publishedDate": "2026-09-22T17:53:21Z",
+ "publisher": {
+  "name": "Dirección Nacional de Contrataciones Públicas, Paraguay"
+ },
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "publicationPolicy": "https://www.contrataciones.gov.py/datos/legal",
+ "version": "1.1",
+ "extensions": [
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_breakdown_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_and_spend_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_enquiry_extension/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/enquiriesAddress/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/legalEntityTypeDetail/master/extension.json",
+  "https://raw.githubusercontent.com/gitMHOCDS/transactions/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_investmentproject_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_clarification_meetings_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_attributes_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_items_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_contract_suppliers_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_location_extension/v1.1.4/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_activityType_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_notifiedsuppliers_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_lots_details_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_memberOf_extension/master/extension.json",
+  "https://raw.githubusercontent.com/portaledcahn/ocds_tenderDatePublished_extension/master/extension.json",
+  "https://raw.githubusercontent.com/INAImexico/ocds_guarantees_extension/master/extension.json",
+  "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_requirements_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bidOpening_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_coveredBy_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_qualification_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_publicEntitiesDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_items_subItems_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_statusdetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_mainProcurementCategoryDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_identifier_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_estimatedDate_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_participationFee_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_amendments_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_lot_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_transaction_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_financialprogress_financialcode_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_categories_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_complaints_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_minQuantity_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_purchaseOrder_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_document_type_details/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_cancellations_amendments_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_milestone_documents_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_techniques_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bid_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_bid_items_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_auctions_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_secondStage_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_beneficiaries_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/Crown-Commercial-Service/ocds_tender_suitability_extension/main/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_subcontracting_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_sustainability_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_reportedpayment_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_milestone_deliveries_extension/raw/master/extension.json"
+ ],
+ "records": [
+  {
+   "ocid": "ocds-03ad3f-470850-1",
+   "releases": [
+    {
+     "date": "2025-08-11T08:53:33-04:00",
+     "tag": [
+      "tender",
+      "award",
+      "contract",
+      "implementation"
+     ],
+     "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/releases/id/1f02ff27-28c7-6e32-96d9-4719a80def0a-1754902413"
+    }
+   ],
+   "compiledRelease": {
+    "id": "1f02ff27-28c7-6e32-96d9-4719a80def0a-1754902413",
+    "awards": [
+     {
+      "id": "1f062456-ae47-66aa-9870-dd003077bee1",
+      "status": "active",
+      "statusDetails": "publicado",
+      "date": "2025-07-14T00:00:00-04:00",
+      "value": {
+       "amount": 100000000,
+       "currency": "PYG"
+      },
+      "suppliers": [
+       {
+        "name": "GRUPO BRIO S.A",
+        "id": "PY-RUC-80105432-0"
+       }
+      ],
+      "documents": [
+       {
+        "id": "1f063234-b86e-6ffc-99da-ff4cde7c608e",
+        "datePublished": "2025-07-17T12:32:49-04:00",
+        "title": "informe-de-evaluacion-47085017072025-687917a0f0cff.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f0623b1-da12-66cc-a71a-dda6ce43ecc2/files/472d38af-4509-4758-ab10-71294507122b/download",
+        "language": "es",
+        "documentTypeDetails": "Informe de Evaluación"
+       },
+       {
+        "id": "1f063232-dbd4-621e-b3f1-991401e05304",
+        "datePublished": "2025-07-17T12:31:59-04:00",
+        "title": "resolucion-47085016072025-6879176f008ed.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f0623b1-da12-66cc-a71a-dda6ce43ecc2/files/dc4d7f95-1e2b-46ed-a575-9f9e450b07fc/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "dix2iRRDbik=",
+        "title": "URL de la Adjudicación",
+        "url": "https://www.contrataciones.gov.py/licitaciones/adjudicacion/1f0623b1-da12-66cc-a71a-dda6ce43ecc2/resumen-adjudicacion.html",
+        "language": "es",
+        "documentType": "awardNotice",
+        "format": "text/html"
+       },
+       {
+        "id": "1f063233-b3ad-694c-9f75-0bd712485da7",
+        "datePublished": "2025-07-17T12:32:21-04:00",
+        "title": "cuadro-comparativo-47085017072025-68791785a01bb.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f0623b1-da12-66cc-a71a-dda6ce43ecc2/files/ae3384f5-f7c6-4925-989f-6542da38c216/download",
+        "language": "es",
+        "documentTypeDetails": "Cuadro Comparativo de Ofertas"
+       }
+      ],
+      "items": [
+       {
+        "id": "1f041519-7d04-64ec-91f7-fb31e02cb6fa",
+        "description": "Balde de Plástico resistente, con mango de metal de 5 litros.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47121804-9998",
+         "description": "Balde de plástico con mango - 5 litros",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47121804-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47121804",
+          "description": "Cubos, baldes y palanganas para limpieza",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47121804"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 7050,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "BRASIL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "PLASNEW INDUSTRIAL",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "PLASNEW",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "1",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7d0c-6ef8-816e-fb31e02cb6fa",
+        "description": "Desodorante para inodoro en pastilla arom醫ica con gancho, de 20 a 40 gr.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47131816-9996",
+         "description": "Desodorante para inodoro/mingitorio - Pastilla",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131816-9996"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47131816",
+          "description": "Desodorantes de limpieza",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131816"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 3300,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "ARGENTINA",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "CLOROX ARGENTINA S.A",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "POETT",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "2",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7d14-6392-8e4c-fb31e02cb6fa",
+        "description": "Detergente líquido desengrasante, concentrado, activo con un medio de 80% biodegradable, por bidón de 5 litros.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47131810-9997",
+         "description": "Detergente líquido concentrado - 5 litros",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131810-9997"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47131810",
+          "description": "Productos para lavar",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131810"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 7800,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "GL VENTAS Y SERVICIOS",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ARDELI",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "3",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7d1b-61ce-ae98-fb31e02cb6fa",
+        "description": "Bolsa de basura de 100 litros, color negro de plástico resistente, por 10 unidades",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47121701-006",
+         "description": "Bolsa para basura de 100 litros",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47121701-006"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47121701",
+          "description": "Bolsas de basura",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47121701"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 2950,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "PROALCA S.A",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "PROALCA",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "4",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         },
+         {
+          "name": "especificacionestecnicas",
+          "value": "Bolsa de polietileno de 100 litros, reforzado de 40 micrones en paquetes de 10 unidades.",
+          "id": "125"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7d2e-6f80-aa15-fb31e02cb6fa",
+        "description": "Bolsa de basura de 150 litros, color negro de plástico resistente, por 10 unidades",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47121701-008",
+         "description": "Bolsa para basura de 150 litros",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47121701-008"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47121701",
+          "description": "Bolsas de basura",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47121701"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 4800,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "PROALCA S.A",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "PROALCA",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "5",
+          "id": "7"
+         },
+         {
+          "name": "especificacionestecnicas",
+          "value": "Bolsa de polietileno de 150 litros, reforzado de 45 micrones como mínimo en paquetes de 10 unidades.",
+          "id": "125"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7d43-69f8-9617-fb31e02cb6fa",
+        "description": "Bolsa de basura de 200 litros, color negro de plástico resistente, por 10 unidades",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47121701-010",
+         "description": "Bolsa para basura de 200 litros",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47121701-010"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47121701",
+          "description": "Bolsas de basura",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47121701"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 4100,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "PROALCA S.A",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "PROALCA",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "6",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         },
+         {
+          "name": "especificacionestecnicas",
+          "value": "Bolsa de polietileno de 200 litros, reforzado de 50 micrones, en paquetes de 10 unidades.",
+          "id": "125"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7d52-6426-9988-fb31e02cb6fa",
+        "description": "Limpiador cremoso de 500 ml",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47131829-9998",
+         "description": "Crema Limpiadora - Mediana",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131829-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47131829",
+          "description": "Productos de limpieza",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131829"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 10300,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "argentina",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "UNILIVER ARGENTINA S.A",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "CIF",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "7",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7d5d-6b0a-9ef0-fb31e02cb6fa",
+        "description": "Frasco de Desodorante de ambiente en aerosol, Neutralizador de olores, desinfecta y mata el 99% de bacterias. Aerosol 400 cc,",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47131816-001",
+         "description": "Desodorante de ambiente en aerosol ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131816-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47131816",
+          "description": "Desodorantes de limpieza",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131816"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 14500,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "ARGENTINA",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "CLOROX ARGENTINA S.A",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "POETT",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "8",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         },
+         {
+          "name": "especificacionestecnicas",
+          "value": "Desodorante de ambiente en aerosol, de diversas fragancias, en envases metálicos de 400 cc.",
+          "id": "125"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7d6b-6368-9b69-fb31e02cb6fa",
+        "description": "Lana de acero, tipo virulana, por paquete de 10 unidades.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47131603-001",
+         "description": "Lana de acero",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131603-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47131603",
+          "description": "Esponjas u otros similares para limpieza",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131603"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 2150,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "BRASIL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "MONTEBELO SRL",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BELD",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "9",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         },
+         {
+          "name": "especificacionestecnicas",
+          "value": "Paquetes de 10 unidades como mínimo en forma tubular.",
+          "id": "125"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7d74-6ff8-9227-fb31e02cb6fa",
+        "description": "Trapo de Franela.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47131502-9999",
+         "description": "Franela de algodón",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131502-9999"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47131502",
+          "description": "Bayetas o trapos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131502"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 5450,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "BRASIL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "SCHWANKE INDUSTRIAL LTDA",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ALKLIN",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "10",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7d7d-6a7c-9879-fb31e02cb6fa",
+        "description": "Escoba de nylon tamaño mediano, con mango de madera resistente, con cepillo de cerdas de nylon, tamaño de cepillo como mínimo 30 cm de largo y 10 cm de ancho",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47131604-9999",
+         "description": "Escoba de poliamida con mango de madera",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131604-9999"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47131604",
+          "description": "Escoba o Escobillon",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131604"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 17100,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "BRASIL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "CONDOR S.A",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "CONDOR",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "11",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7d86-6384-9eb1-fb31e02cb6fa",
+        "description": "Cepillo de inodoro de plástico con hilo de plástico con su base ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47131605-9999",
+         "description": "Cepillo para inodoro con base",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131605-9999"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47131605",
+          "description": "Cepillos de limpieza",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131605"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 6150,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "BRASIL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "MOVEIS DALCIN LTDA",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "DALCIN",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "12",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7d8e-69ee-b915-fb31e02cb6fa",
+        "description": "Escurridor Plástico de 40 cm, con mango de madera de 1.50 metros.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47121806-9996",
+         "description": "Escurridor de doble goma para piso de 40 cm, mango de madera forrada",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47121806-9996"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47121806",
+          "description": "Escurridor de fregasuelos u otros",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47121806"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 27850,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "Brasil",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "MONTEBELO SRL",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "MB",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "13",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7d97-63a0-98a4-fb31e02cb6fa",
+        "description": "Trapo de piso tama匾 grande 100% algod撑, doble tejido con costura en los bordes",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47131502-006",
+         "description": "Trapo de piso",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131502-006"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47131502",
+          "description": "Bayetas o trapos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131502"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 6550,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "Brasil",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "SCHWANKE INDUSTRIAL LTDA",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ALKLIN",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "14",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         },
+         {
+          "name": "especificacionestecnicas",
+          "value": "Trapo de piso para repasar, 100% algodón, doble tejido de algodón con costura en los bordes, medidas 50x60 cm como mínimo.",
+          "id": "125"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7d9f-674e-80bc-fb31e02cb6fa",
+        "description": "Escobill撑 60 cm de telas grande para piso con mango de madera 1. metro 50 cm",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47131604-9995",
+         "description": "Escobillon de 50 cm. ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131604-9995"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47131604",
+          "description": "Escoba o Escobillon",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131604"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 46800,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "Brasil",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "CONDOR S.A",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "CONDOR",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "15",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7da6-6fb2-b517-fb31e02cb6fa",
+        "description": "Escobill撑 de 60 de nailon para patio con mango de madera 1metro 50cm",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47131604-9995",
+         "description": "Escobillon de 50 cm. ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131604-9995"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47131604",
+          "description": "Escoba o Escobillon",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131604"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 46800,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "Brasil",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "CONDOR S.A",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "CONDOR",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "16",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7dae-6262-90f3-fb31e02cb6fa",
+        "description": "Limpia vidrio con atomizador por rasco de 550 ml",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47131824-001",
+         "description": "Limpia vidrio con atomizador ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131824-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47131824",
+          "description": "Productos de limpieza de vidrio",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131824"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 9500,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "GL VENTAS Y SERVICIOS",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ARDELI",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "17",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         },
+         {
+          "name": "especificacionestecnicas",
+          "value": "Limpia vidrios con atomizador de diversas fragancias. Frasco de 550 ml.",
+          "id": "125"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7db5-6242-bd54-fb31e02cb6fa",
+        "description": "Naftalina en bolita por 12 unidades",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "41116015-984",
+         "description": "Acido Naftaleno Acetico p.a.",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/41116015-984"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "41116015",
+          "description": "Reactivos y standares para unidad de control de calidad",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/41116015"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 8600,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "BRASIL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "SANILAR COMERCIAL LTDA",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "SANILAR",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "18",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7dc6-6fe2-b459-fb31e02cb6fa",
+        "description": "Palitas para recoger basura de plastico resistente tama匾 mediano",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47131611-9998",
+         "description": "Palita de plástico - Mediana",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131611-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47131611",
+          "description": "Recogebasuras",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131611"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 11300,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "Brasil",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "MILEVA INDUSTRIAL Y COMERCIO",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "MILEVA",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "19",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7ddc-67de-a471-fb31e02cb6fa",
+        "description": "Palitas para recoger basura de metal resistente tama匾 grande",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47131611-9997",
+         "description": "Palita de plástico - Grande",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131611-9997"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47131611",
+          "description": "Recogebasuras",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131611"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 18500,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "POLIFOAN SRL",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "POLIFOAN",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "20",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7ded-6d2c-8e77-fb31e02cb6fa",
+        "description": "Cera liquida para pisos de 1l",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47131802-9998",
+         "description": "Cera liquida para piso - Mediano",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131802-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47131802",
+          "description": "Abrillantadores o acabados de suelos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131802"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 10250,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "GL VENTAS Y SERVICIOS",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ARDELI",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "21",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7dfa-6680-a733-fb31e02cb6fa",
+        "description": "Desodorante, desinfectante de piso",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47131816-9997",
+         "description": "Desodorante de ambiente líquido 5 LT",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131816-9997"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47131816",
+          "description": "Desodorantes de limpieza",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131816"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 12300,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "GL VENTAS Y SERVICIOS",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ARDELI",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "22",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7e05-6896-93a8-fb31e02cb6fa",
+        "description": "Ácido muriático para limpieza 1 litro",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47131831-001",
+         "description": "Acido muriatico para limpieza",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131831-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47131831",
+          "description": "Acido muriatico",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131831"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 4450,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "INDUSTRIA QUIMICA RESPLANDOR SRL",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "RESPLANDOR",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "23",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041519-7e0e-6ee6-9b48-fb31e02cb6fa",
+        "description": "Hipoclorito liquido",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "47131803-9992",
+         "description": "Hipoclorito de sodio al 8% - 5 litros",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131803-9992"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "47131803",
+          "description": "Desinfectantes domesticos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131803"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 9250,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "GL VENTAS Y SERVICIOS",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ARDELI",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "24",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "tender": {
+     "id": "1f02ff27-28c7-6e32-96d9-4719a80def0a",
+     "title": "ADQUISICION DE PRODUCTOS DE LIMPIEZA",
+     "status": "complete",
+     "awardCriteria": "priceOnly",
+     "awardCriteriaDetails": "Por Total",
+     "submissionMethod": [
+      "inPerson"
+     ],
+     "bidOpening": {
+      "date": "2025-06-30T08:30:00-04:00",
+      "address": {
+       "streetAddress": "Municipalidad de Fernando de la Mora, oficina UOC"
+      }
+     },
+     "submissionMethodDetails": "Lugar entrega ofertas: Municipalidad de Fernando de la Mora, oficina UOC",
+     "statusDetails": "Adjudicada",
+     "enquiriesAddress": {
+      "streetAddress": "SICP"
+     },
+     "clarificationMeetings": [
+      {
+       "address": {
+        "streetAddress": "N/A"
+       },
+       "id": "1"
+      }
+     ],
+     "mainProcurementCategoryDetails": "Bienes - Equipos y Suministros de limpieza",
+     "hasEnquiries": false,
+     "value": {
+      "amount": 100000000,
+      "currency": "PYG"
+     },
+     "datePublished": "2025-06-16T09:39:10-04:00",
+     "tenderPeriod": {
+      "startDate": "2025-06-16T09:39:10-04:00",
+      "endDate": "2025-06-30T08:00:00-04:00",
+      "durationInDays": 13
+     },
+     "awardPeriod": {
+      "startDate": "2025-06-30T08:30:00-04:00"
+     },
+     "contractPeriod": {
+      "maxExtentDate": "2025-12-31T00:00:00-04:00"
+     },
+     "enquiryPeriod": {
+      "endDate": "2025-06-25T12:00:00-04:00",
+      "startDate": "2025-06-16T09:39:10-04:00",
+      "durationInDays": 9
+     },
+     "mainProcurementCategory": "services",
+     "additionalProcurementCategories": [
+      "services"
+     ],
+     "procurementMethod": "open",
+     "procurementMethodDetails": "Menor cuantía nacional",
+     "procuringEntity": {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora"
+     },
+     "criteria": [
+      {
+       "id": "1",
+       "title": "Garantía de Mantenimiento de Ofertas",
+       "description": "Los oferentes, proveedores o contratistas deberán garantizar la seriedad de sus ofertas, mediante la garantía de mantenimiento de la oferta",
+       "source": "tenderer",
+       "requirementGroups": [
+        {
+         "id": "1-1",
+         "description": "La garantía debe ser de un cierto porcentaje, periodo y tipo",
+         "requirements": [
+          {
+           "id": "1-1-1",
+           "title": "Porcentaje de la garantia",
+           "expectedValue": "5"
+          },
+          {
+           "id": "1-1-2",
+           "title": "Validez de la garantia en días",
+           "expectedValue": "120"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "lots": [
+      {
+       "id": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "title": "1 - 1 - ADQUISICION DE PRODUCTOS DE LIMPIEZA",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 100000000,
+        "currency": "PYG"
+       },
+       "openContractType": "monto",
+       "minValue": {
+        "amount": 50000000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "1"
+        }
+       ]
+      }
+     ],
+     "items": [
+      {
+       "id": "1f041519-7dfa-6680-a733-fb31e02cb6fa",
+       "description": "Desodorante, desinfectante de piso",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47131816-9997",
+        "description": "Desodorante de ambiente líquido 5 LT",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131816-9997"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47131816",
+         "description": "Desodorantes de limpieza",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131816"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 15383,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "22",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7dae-6262-90f3-fb31e02cb6fa",
+       "description": "Limpia vidrio con atomizador por rasco de 550 ml",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47131824-001",
+        "description": "Limpia vidrio con atomizador ",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131824-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47131824",
+         "description": "Productos de limpieza de vidrio",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131824"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 11841,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "17",
+         "id": "2"
+        },
+        {
+         "name": "ESPECIFICACIONES TECNICAS",
+         "value": "Limpia vidrios con atomizador de diversas fragancias. Frasco de 550 ml.",
+         "id": "3"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7d74-6ff8-9227-fb31e02cb6fa",
+       "description": "Trapo de Franela.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47131502-9999",
+        "description": "Franela de algodón",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131502-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47131502",
+         "description": "Bayetas o trapos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131502"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 6793,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "10",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7d1b-61ce-ae98-fb31e02cb6fa",
+       "description": "Bolsa de basura de 100 litros, color negro de plástico resistente, por 10 unidades",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47121701-006",
+        "description": "Bolsa para basura de 100 litros",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47121701-006"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47121701",
+         "description": "Bolsas de basura",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47121701"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 3693,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "4",
+         "id": "2"
+        },
+        {
+         "name": "ESPECIFICACIONES TECNICAS",
+         "value": "Bolsa de polietileno de 100 litros, reforzado de 40 micrones en paquetes de 10 unidades.",
+         "id": "3"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7d97-63a0-98a4-fb31e02cb6fa",
+       "description": "Trapo de piso tama匾 grande 100% algod撑, doble tejido con costura en los bordes",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47131502-006",
+        "description": "Trapo de piso",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131502-006"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47131502",
+         "description": "Bayetas o trapos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131502"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 8179,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "14",
+         "id": "2"
+        },
+        {
+         "name": "ESPECIFICACIONES TECNICAS",
+         "value": "Trapo de piso para repasar, 100% algodón, doble tejido de algodón con costura en los bordes, medidas 50x60 cm como mínimo.",
+         "id": "3"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7d14-6392-8e4c-fb31e02cb6fa",
+       "description": "Detergente líquido desengrasante, concentrado, activo con un medio de 80% biodegradable, por bidón de 5 litros.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47131810-9997",
+        "description": "Detergente líquido concentrado - 5 litros",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131810-9997"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47131810",
+         "description": "Productos para lavar",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131810"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 9753,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "3",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7e05-6896-93a8-fb31e02cb6fa",
+       "description": "Ácido muriático para limpieza 1 litro",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47131831-001",
+        "description": "Acido muriatico para limpieza",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131831-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47131831",
+         "description": "Acido muriatico",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131831"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 5575,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "23",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7dc6-6fe2-b459-fb31e02cb6fa",
+       "description": "Palitas para recoger basura de plastico resistente tama匾 mediano",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47131611-9998",
+        "description": "Palita de plástico - Mediana",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131611-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47131611",
+         "description": "Recogebasuras",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131611"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 14147,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "19",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7d2e-6f80-aa15-fb31e02cb6fa",
+       "description": "Bolsa de basura de 150 litros, color negro de plástico resistente, por 10 unidades",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47121701-008",
+        "description": "Bolsa para basura de 150 litros",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47121701-008"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47121701",
+         "description": "Bolsas de basura",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47121701"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 6006,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "5",
+         "id": "2"
+        },
+        {
+         "name": "ESPECIFICACIONES TECNICAS",
+         "value": "Bolsa de polietileno de 150 litros, reforzado de 45 micrones como mínimo en paquetes de 10 unidades.",
+         "id": "3"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7d7d-6a7c-9879-fb31e02cb6fa",
+       "description": "Escoba de nylon tamaño mediano, con mango de madera resistente, con cepillo de cerdas de nylon, tamaño de cepillo como mínimo 30 cm de largo y 10 cm de ancho",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47131604-9999",
+        "description": "Escoba de poliamida con mango de madera",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131604-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47131604",
+         "description": "Escoba o Escobillon",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131604"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 21389,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "11",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7d0c-6ef8-816e-fb31e02cb6fa",
+       "description": "Desodorante para inodoro en pastilla arom醫ica con gancho, de 20 a 40 gr.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47131816-9996",
+        "description": "Desodorante para inodoro/mingitorio - Pastilla",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131816-9996"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47131816",
+         "description": "Desodorantes de limpieza",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131816"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 4107,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "2",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7da6-6fb2-b517-fb31e02cb6fa",
+       "description": "Escobill撑 de 60 de nailon para patio con mango de madera 1metro 50cm",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47131604-9995",
+        "description": "Escobillon de 50 cm. ",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131604-9995"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47131604",
+         "description": "Escoba o Escobillon",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131604"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 58520,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "16",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7d43-69f8-9617-fb31e02cb6fa",
+       "description": "Bolsa de basura de 200 litros, color negro de plástico resistente, por 10 unidades",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47121701-010",
+        "description": "Bolsa para basura de 200 litros",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47121701-010"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47121701",
+         "description": "Bolsas de basura",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47121701"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 5133,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "6",
+         "id": "2"
+        },
+        {
+         "name": "ESPECIFICACIONES TECNICAS",
+         "value": "Bolsa de polietileno de 200 litros, reforzado de 50 micrones, en paquetes de 10 unidades.",
+         "id": "3"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7d04-64ec-91f7-fb31e02cb6fa",
+       "description": "Balde de Plástico resistente, con mango de metal de 5 litros.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47121804-9998",
+        "description": "Balde de plástico con mango - 5 litros",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47121804-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47121804",
+         "description": "Cubos, baldes y palanganas para limpieza",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47121804"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 8829,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7d8e-69ee-b915-fb31e02cb6fa",
+       "description": "Escurridor Plástico de 40 cm, con mango de madera de 1.50 metros.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47121806-9996",
+        "description": "Escurridor de doble goma para piso de 40 cm, mango de madera forrada",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47121806-9996"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47121806",
+         "description": "Escurridor de fregasuelos u otros",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47121806"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 34811,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "13",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7d86-6384-9eb1-fb31e02cb6fa",
+       "description": "Cepillo de inodoro de plástico con hilo de plástico con su base ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47131605-9999",
+        "description": "Cepillo para inodoro con base",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131605-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47131605",
+         "description": "Cepillos de limpieza",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131605"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 7700,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "12",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7d6b-6368-9b69-fb31e02cb6fa",
+       "description": "Lana de acero, tipo virulana, por paquete de 10 unidades.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47131603-001",
+        "description": "Lana de acero",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131603-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47131603",
+         "description": "Esponjas u otros similares para limpieza",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131603"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 2669,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "9",
+         "id": "2"
+        },
+        {
+         "name": "ESPECIFICACIONES TECNICAS",
+         "value": "Paquetes de 10 unidades como mínimo en forma tubular.",
+         "id": "3"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7ddc-67de-a471-fb31e02cb6fa",
+       "description": "Palitas para recoger basura de metal resistente tama匾 grande",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47131611-9997",
+        "description": "Palita de plástico - Grande",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131611-9997"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47131611",
+         "description": "Recogebasuras",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131611"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 23100,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "20",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7d9f-674e-80bc-fb31e02cb6fa",
+       "description": "Escobill撑 60 cm de telas grande para piso con mango de madera 1. metro 50 cm",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47131604-9995",
+        "description": "Escobillon de 50 cm. ",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131604-9995"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47131604",
+         "description": "Escoba o Escobillon",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131604"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 58520,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "15",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7ded-6d2c-8e77-fb31e02cb6fa",
+       "description": "Cera liquida para pisos de 1l",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47131802-9998",
+        "description": "Cera liquida para piso - Mediano",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131802-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47131802",
+         "description": "Abrillantadores o acabados de suelos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131802"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 12799,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "21",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7db5-6242-bd54-fb31e02cb6fa",
+       "description": "Naftalina en bolita por 12 unidades",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "41116015-984",
+        "description": "Acido Naftaleno Acetico p.a.",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/41116015-984"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "41116015",
+         "description": "Reactivos y standares para unidad de control de calidad",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/41116015"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 10780,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "18",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7d52-6426-9988-fb31e02cb6fa",
+       "description": "Limpiador cremoso de 500 ml",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47131829-9998",
+        "description": "Crema Limpiadora - Mediana",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131829-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47131829",
+         "description": "Productos de limpieza",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131829"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 12833,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "7",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7e0e-6ee6-9b48-fb31e02cb6fa",
+       "description": "Hipoclorito liquido",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47131803-9992",
+        "description": "Hipoclorito de sodio al 8% - 5 litros",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131803-9992"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47131803",
+         "description": "Desinfectantes domesticos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131803"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 11550,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "24",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041519-7d5d-6b0a-9ef0-fb31e02cb6fa",
+       "description": "Frasco de Desodorante de ambiente en aerosol, Neutralizador de olores, desinfecta y mata el 99% de bacterias. Aerosol 400 cc,",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "47131816-001",
+        "description": "Desodorante de ambiente en aerosol ",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/47131816-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "47131816",
+         "description": "Desodorantes de limpieza",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/47131816"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 18138,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041511-e2de-6bc6-ba03-1546b466e429",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "8",
+         "id": "2"
+        },
+        {
+         "name": "ESPECIFICACIONES TECNICAS",
+         "value": "Desodorante de ambiente en aerosol, de diversas fragancias, en envases metálicos de 400 cc.",
+         "id": "3"
+        }
+       ]
+      }
+     ],
+     "tenderers": [
+      {
+       "name": "GRUPO BRIO S.A",
+       "id": "PY-RUC-80105432-0"
+      },
+      {
+       "name": "EMPORIO FERRETERIA S.R.L.",
+       "id": "PY-RUC-80002756-6"
+      },
+      {
+       "name": "MEDICAL QUIMICA S.A",
+       "id": "PY-RUC-80088784-0"
+      }
+     ],
+     "documents": [
+      {
+       "id": "rjkSTNVMPbk=",
+       "datePublished": "2025-06-16T08:39:09-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 470850 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1f02ff27-28c7-6e32-96d9-4719a80def0a/1",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/pdf"
+      },
+      {
+       "id": "5aecc376-f9d3-4cb7-8a99-16b0fc4a17af",
+       "datePublished": "2025-06-30T12:43:01-04:00",
+       "title": "acta-de-apertura-000020-731096565965404-6862b084ac6bb.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f02ff27-28c7-6e32-96d9-4719a80def0a/files/5aecc376-f9d3-4cb7-8a99-16b0fc4a17af/download",
+       "language": "es",
+       "documentTypeDetails": "Acta de Apertura"
+      },
+      {
+       "id": "8d4db18d-7a7e-42fc-a324-9a36f6003c26",
+       "datePublished": "2025-06-12T11:42:30-04:00",
+       "title": "resolucion-de-aprobacion-cc-684ae71d4dccd.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f02ff27-28c7-6e32-96d9-4719a80def0a/files/8d4db18d-7a7e-42fc-a324-9a36f6003c26/download",
+       "language": "es",
+       "documentTypeDetails": "Aprobación PBC"
+      },
+      {
+       "id": "d5ab356b-21f1-4107-80f6-506fd43682ea",
+       "datePublished": "2025-06-05T10:14:59-04:00",
+       "title": "pr-750850-6841983e463ed.zip",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f02ff27-28c7-6e32-96d9-4719a80def0a/files/d5ab356b-21f1-4107-80f6-506fd43682ea/download",
+       "language": "es",
+       "documentTypeDetails": "Antecedentes de la Estimación de Costos"
+      },
+      {
+       "id": "12124f94-f7c5-4f79-929b-aadea3bc6eac",
+       "datePublished": "2025-06-05T10:14:59-04:00",
+       "title": "dictamen-tecnico-mcn-id-470850-6840649137f3c.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f02ff27-28c7-6e32-96d9-4719a80def0a/files/12124f94-f7c5-4f79-929b-aadea3bc6eac/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen técnico"
+      },
+      {
+       "id": "dix2iRRDbik=",
+       "title": "URL de la Convocatoria",
+       "url": "https://www.contrataciones.gov.py/licitaciones/convocatoria/1f02ff27-28c7-6e32-96d9-4719a80def0a.html",
+       "language": "es",
+       "documentType": "tenderNotice",
+       "format": "text/html"
+      },
+      {
+       "id": "AzLSZHY6SXrGctAgWyl8kw==",
+       "datePublished": "2025-06-16T08:39:09-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 470850 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1f02ff27-28c7-6e32-96d9-4719a80def0a/1/json",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/json"
+      },
+      {
+       "id": "770890eb-da9e-4d0e-90b4-160fa931b49f",
+       "datePublished": "2025-06-05T10:15:00-04:00",
+       "title": "cdp-mcn-id-470850-6840647e673b1.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f02ff27-28c7-6e32-96d9-4719a80def0a/files/770890eb-da9e-4d0e-90b4-160fa931b49f/download",
+       "language": "es",
+       "documentTypeDetails": "CDP"
+      }
+     ],
+     "numberOfTenderers": 3
+    },
+    "language": "es",
+    "ocid": "ocds-03ad3f-470850-1",
+    "date": "2025-08-11T08:53:33-04:00",
+    "initiationType": "tender",
+    "buyer": {
+     "id": "DNCP-SICP-CODE-66",
+     "name": "Municipalidad de Fernando de la Mora"
+    },
+    "sources": [
+     {
+      "id": "dncp-sicp",
+      "name": "Sistema de Información de las Contrataciones Públicas - DNCP",
+      "url": "https://www.contrataciones.gov.py/"
+     }
+    ],
+    "contracts": [
+     {
+      "id": "MN-30173-25-255186",
+      "implementation": {
+       "financialProgress": {
+        "breakdown": [
+         {
+          "id": "2025/30/173/1/1/1/0/1/11/341/30/MN-30173-25-255186",
+          "period": {
+           "startDate": "2025-01-01T00:00:00Z",
+           "endDate": "2025-12-31T00:00:00Z"
+          },
+          "measures": {
+           "monto_a_utilizar": 100000000
+          },
+          "classifications": {
+           "anio": "2025",
+           "nivel": "30",
+           "entidad": "173",
+           "tipo_programa": "1",
+           "programa": "1",
+           "sub_programa": "1",
+           "proyecto": "0",
+           "financiador": "1",
+           "departamento": "11",
+           "objeto_gasto": "341",
+           "fuente_financiamiento": "30",
+           "cdp": "117900"
+          },
+          "financialCode": "MN-30173-25-255186"
+         }
+        ]
+       }
+      },
+      "awardID": "1f062456-ae47-66aa-9870-dd003077bee1",
+      "status": "active",
+      "statusDetails": "publicado",
+      "period": {
+       "startDate": "2025-08-04T00:00:00-04:00"
+      },
+      "value": {
+       "amount": 100000000,
+       "currency": "PYG"
+      },
+      "documents": [
+       {
+        "id": "1f071277-b93a-680e-99d7-47b654747d67",
+        "datePublished": "2025-08-04T08:38:03-04:00",
+        "title": "resolucion-47085016072025-68909b9bd1820.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f062456-ae47-66aa-9870-dd003077bee1/files/b19bdb79-393b-4183-96c7-fb8c13f6ef2e/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1f071273-f797-64b6-8536-fd26ed069d8b",
+        "datePublished": "2025-08-04T08:36:23-04:00",
+        "title": "contrato-n31-limpieza0001-68909b370d073.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f062456-ae47-66aa-9870-dd003077bee1/files/a59397b5-76ad-41ab-ab07-755f10b0deac/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1f071278-a637-66de-bb3e-353cdeff82b5",
+        "datePublished": "2025-08-04T08:38:28-04:00",
+        "title": "cdp-mcn-id-470850-68909bb4b3ec9.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f062456-ae47-66aa-9870-dd003077bee1/files/6985f454-f0a3-45bc-9e65-c7135c42bc5d/download",
+        "language": "es",
+        "documentTypeDetails": "CDP"
+       }
+      ]
+     }
+    ],
+    "parties": [
+     {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora",
+      "identifier": {
+       "scheme": "DNCP-SICP-CODE",
+       "id": "66",
+       "legalName": "Municipalidad de Fernando de la Mora"
+      },
+      "contactPoint": {
+       "email": "morauoc@gmail.com",
+       "name": "LIC. ELIGIO ACOSTA",
+       "telephone": "+595 21 513-306"
+      },
+      "roles": [
+       "buyer",
+       "procuringEntity"
+      ],
+      "details": {
+       "level": "Municipalidades",
+       "entityType": "Municipalidades",
+       "type": "Entidad"
+      },
+      "additionalIdentifiers": [
+       {
+        "id": "2025.30.173",
+        "legalName": "Municipalidad de Fernando de la Mora",
+        "scheme": "PY-PGN"
+       }
+      ]
+     },
+     {
+      "name": "EMPORIO FERRETERIA S.R.L.",
+      "id": "PY-RUC-80002756-6",
+      "identifier": {
+       "id": "80002756-6",
+       "legalName": "EMPORIO FERRETERIA S.R.L.",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "AXEL CORVALÁN AMIGO.",
+       "email": "emporio.ferre@gmail.com",
+       "faxNumber": "021560220",
+       "telephone": "0981 157 679"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "ASUNCIÓN.",
+       "region": "Asunción",
+       "streetAddress": "PARAÍSO N° 999 ESQ. YUASY'Y."
+      },
+      "details": {
+       "legalEntityTypeDetail": "S.R.L.",
+       "activityTypes": [
+        "goods"
+       ],
+       "categories": [
+        {
+         "name": "Materiales e insumos eléctricos, metálicos y no metálicos, Plásticos, cauchos. Repuestos, herramientas, cámaras y cubiertas.",
+         "id": 18
+        },
+        {
+         "name": "Textiles, vestuarios y calzados",
+         "id": 10
+        },
+        {
+         "name": "Productos quimicos",
+         "id": 16
+        },
+        {
+         "name": "Bienes e insumos agropecuario y forestal",
+         "id": 19
+        },
+        {
+         "name": "Elementos e insumos de limpieza",
+         "id": 12
+        },
+        {
+         "name": "Maquinarias, Equipos y herramientas mayores - Equipos de transporte",
+         "id": 22
+        },
+        {
+         "name": "Muebles y Enseres",
+         "id": 23
+        },
+        {
+         "name": "Utensilios de cocina y comedor, Productos de Porcelana, vidrio y loza",
+         "id": 13
+        }
+       ]
+      }
+     },
+     {
+      "name": "MEDICAL QUIMICA S.A",
+      "id": "PY-RUC-80088784-0",
+      "identifier": {
+       "id": "80088784-0",
+       "legalName": "MEDICAL QUIMICA S.A",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "CESAR COUCHONNAL ORTIZ -LAURA COUCHONAL ",
+       "email": "licita@medicalquimica.com.py",
+       "telephone": "0992 445 627"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "Asuncion",
+       "region": "Central",
+       "streetAddress": "HERRERA ENTRE INDEPENDENCIA NACIONAL Y YEGROS 154"
+      },
+      "details": {
+       "legalEntityTypeDetail": "S.A.",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Equipos, Productos e instrumentales Médicos y de Laboratorio. Servicios asistenciales de salud",
+         "id": 17
+        },
+        {
+         "name": "Productos quimicos",
+         "id": 16
+        }
+       ]
+      }
+     },
+     {
+      "name": "GRUPO BRIO S.A",
+      "id": "PY-RUC-80105432-0",
+      "identifier": {
+       "id": "80105432-0",
+       "legalName": "GRUPO BRIO S.A",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "supplier",
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "CARLOS HERNAN OVIEDO- DIEGO JARA- IVAN FRANCO",
+       "email": "directoriogbriosa@gmail.com",
+       "telephone": "0981970678"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "FERNANDO DE LA MORA ZONA SUR",
+       "region": "Central",
+       "streetAddress": "GRAL MORINIGO CASI 11 DE SETIEMBRE "
+      },
+      "details": {
+       "scale": "sme",
+       "legalEntityTypeDetail": "S.A.",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Productos Alimenticios",
+         "id": 14
+        }
+       ]
+      }
+     }
+    ],
+    "tag": [
+     "compiled"
+    ]
+   }
+  }
+ ],
+ "pagination": {
+  "total_items": 1,
+  "total_pages": 1,
+  "current_page": 1,
+  "items_per_page": 10,
+  "total_in_page": 1
+ }
+}

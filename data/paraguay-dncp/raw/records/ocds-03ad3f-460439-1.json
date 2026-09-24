@@ -1,0 +1,908 @@
+{
+ "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/ocds-03ad3f-460439-1",
+ "publishedDate": "2026-09-22T17:53:58Z",
+ "publisher": {
+  "name": "Dirección Nacional de Contrataciones Públicas, Paraguay"
+ },
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "publicationPolicy": "https://www.contrataciones.gov.py/datos/legal",
+ "version": "1.1",
+ "extensions": [
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_breakdown_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_and_spend_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_enquiry_extension/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/enquiriesAddress/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/legalEntityTypeDetail/master/extension.json",
+  "https://raw.githubusercontent.com/gitMHOCDS/transactions/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_investmentproject_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_clarification_meetings_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_attributes_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_items_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_contract_suppliers_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_location_extension/v1.1.4/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_activityType_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_notifiedsuppliers_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_lots_details_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_memberOf_extension/master/extension.json",
+  "https://raw.githubusercontent.com/portaledcahn/ocds_tenderDatePublished_extension/master/extension.json",
+  "https://raw.githubusercontent.com/INAImexico/ocds_guarantees_extension/master/extension.json",
+  "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_requirements_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bidOpening_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_coveredBy_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_qualification_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_publicEntitiesDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_items_subItems_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_statusdetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_mainProcurementCategoryDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_identifier_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_estimatedDate_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_participationFee_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_amendments_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_lot_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_transaction_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_financialprogress_financialcode_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_categories_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_complaints_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_minQuantity_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_purchaseOrder_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_document_type_details/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_cancellations_amendments_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_milestone_documents_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_techniques_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bid_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_bid_items_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_auctions_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_secondStage_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_beneficiaries_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/Crown-Commercial-Service/ocds_tender_suitability_extension/main/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_subcontracting_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_sustainability_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_reportedpayment_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_milestone_deliveries_extension/raw/master/extension.json"
+ ],
+ "records": [
+  {
+   "ocid": "ocds-03ad3f-460439-1",
+   "releases": [
+    {
+     "date": "2025-02-27T10:02:43-04:00",
+     "tag": [
+      "planning",
+      "tender",
+      "award",
+      "contract",
+      "implementation"
+     ],
+     "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/releases/id/1efd807a-dcda-6374-b893-b5a0a6988454-1740650563"
+    }
+   ],
+   "compiledRelease": {
+    "id": "1efd807a-dcda-6374-b893-b5a0a6988454-1740650563",
+    "awards": [
+     {
+      "id": "1efeedbc-31c8-6f70-a189-25216fdd0a73",
+      "status": "active",
+      "statusDetails": "publicado",
+      "date": "2025-02-17T00:00:00-04:00",
+      "value": {
+       "amount": 11400000,
+       "currency": "PYG"
+      },
+      "suppliers": [
+       {
+        "name": "INNOVACIONES TECNOLÓGICAS S.A.",
+        "id": "PY-RUC-80099045-5"
+       }
+      ],
+      "documents": [
+       {
+        "id": "1efeedb8-ceb2-6e7a-adc0-377e3b4a52bf",
+        "datePublished": "2025-02-19T13:07:00-04:00",
+        "title": "cuadro-460439-67b601a4017e9.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efeedb5-30dd-67de-ae2c-d3cbb63f74ad/files/b9a1ab74-c7c7-46a4-b28a-cfe21c40bd9c/download",
+        "language": "es",
+        "documentTypeDetails": "Cuadro Comparativo de Ofertas"
+       },
+       {
+        "id": "1efeedb9-d5a2-627a-9ab5-0bbc93bf1f8b",
+        "datePublished": "2025-02-19T13:07:27-04:00",
+        "title": "inf-eva-460439-67b601bf8d228.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efeedb5-30dd-67de-ae2c-d3cbb63f74ad/files/8ae446c9-ea39-4a40-a35c-1327a90e5860/download",
+        "language": "es",
+        "documentTypeDetails": "Informe de Evaluación"
+       },
+       {
+        "id": "1efeedb7-f4b8-6904-90a0-6b73396dc400",
+        "datePublished": "2025-02-19T13:06:37-04:00",
+        "title": "gmail-notificacion-de-adjudicacion-mcn-id-460439-67b6018d29f63.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efeedb5-30dd-67de-ae2c-d3cbb63f74ad/files/7021396c-fbca-4463-838a-ed92485e0a87/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "1efeedb8-43f8-62da-9c7b-2b16587492ed",
+        "datePublished": "2025-02-19T13:06:45-04:00",
+        "title": "nota-a-proveedores-67b60194bddf5.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efeedb5-30dd-67de-ae2c-d3cbb63f74ad/files/18ea1987-533e-4894-98f2-bd24dcadfa1e/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "1efeedb7-a64f-6970-9a36-654b1eb03f75",
+        "datePublished": "2025-02-19T13:06:29-04:00",
+        "title": "res-adj-460439-67b60184e52d8.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efeedb5-30dd-67de-ae2c-d3cbb63f74ad/files/2de0f75f-4308-42d8-88fb-7defdbb8ab56/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "dix2iRRDbik=",
+        "title": "URL de la Adjudicación",
+        "url": "https://www.contrataciones.gov.py/licitaciones/adjudicacion/1efeedb5-30dd-67de-ae2c-d3cbb63f74ad/resumen-adjudicacion.html",
+        "language": "es",
+        "documentType": "awardNotice",
+        "format": "text/html"
+       }
+      ],
+      "items": [
+       {
+        "id": "1efd8080-1b4c-6670-8333-65c4ff865dfe",
+        "description": "Escaner",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44101504-001",
+         "description": "Escaner",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44101504-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44101504",
+          "description": "Escaner o Emisores digitales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44101504"
+         }
+        ],
+        "quantity": 3,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 3800000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1efd807e-e6f2-647a-9a5f-5b8afb7113d7",
+        "attributes": [
+         {
+          "value": "JAPON",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "EPSON",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "EPSON",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "1",
+          "id": "7"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "tender": {
+     "id": "1efd807a-dcda-6374-b893-b5a0a6988454",
+     "title": "ADQUISICION DE ESCANER",
+     "status": "complete",
+     "awardCriteria": "priceOnly",
+     "awardCriteriaDetails": "Por Total",
+     "submissionMethod": [
+      "inPerson"
+     ],
+     "bidOpening": {
+      "date": "2025-02-07T09:30:00-04:00",
+      "address": {
+       "streetAddress": "Municipalidad de Fernando de la Mora, oficina UOC"
+      }
+     },
+     "submissionMethodDetails": "Lugar entrega ofertas: Municipalidad de Fernando de la Mora, oficina UOC",
+     "statusDetails": "Adjudicada",
+     "enquiriesAddress": {
+      "streetAddress": "SICP"
+     },
+     "clarificationMeetings": [
+      {
+       "address": {
+        "streetAddress": "N/A"
+       },
+       "id": "1"
+      }
+     ],
+     "mainProcurementCategoryDetails": "Bienes - Equipos Accesorios y Suministros de Oficina",
+     "hasEnquiries": false,
+     "value": {
+      "amount": 18000000,
+      "currency": "PYG"
+     },
+     "datePublished": "2025-01-24T08:59:32-04:00",
+     "tenderPeriod": {
+      "startDate": "2025-01-24T08:59:32-04:00",
+      "endDate": "2025-02-07T09:00:00-04:00",
+      "durationInDays": 14
+     },
+     "awardPeriod": {
+      "startDate": "2025-02-07T09:30:00-04:00"
+     },
+     "enquiryPeriod": {
+      "endDate": "2025-02-04T09:00:00-04:00",
+      "startDate": "2025-01-24T08:59:32-04:00",
+      "durationInDays": 11
+     },
+     "mainProcurementCategory": "services",
+     "additionalProcurementCategories": [
+      "services"
+     ],
+     "procurementMethod": "open",
+     "procurementMethodDetails": "Menor cuantía nacional",
+     "procuringEntity": {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora"
+     },
+     "criteria": [
+      {
+       "id": "1",
+       "title": "Garantía de Mantenimiento de Ofertas",
+       "description": "Los oferentes, proveedores o contratistas deberán garantizar la seriedad de sus ofertas, mediante la garantía de mantenimiento de la oferta",
+       "source": "tenderer",
+       "requirementGroups": [
+        {
+         "id": "1-1",
+         "description": "La garantía debe ser de un cierto porcentaje, periodo y tipo",
+         "requirements": [
+          {
+           "id": "1-1-1",
+           "title": "Porcentaje de la garantia",
+           "expectedValue": "5"
+          },
+          {
+           "id": "1-1-2",
+           "title": "Validez de la garantia en días",
+           "expectedValue": "120"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "enquiries": [
+      {
+       "id": "f4ef92f531637515a37bd6e544861f96-1",
+       "date": "2025-01-25T10:49:30-04:00",
+       "title": "Capacidad Financiera",
+       "description": "Consultamos a la convocante con respecto a la Capacidad Financiera donde solicitan de los años 2021, 2022 y 2023, en caso de no contar con el año 2021 si se tomaria como 0 para sacar el promedio",
+       "answer": "REMITIRSE AL PBC.",
+       "dateAnswered": "2025-01-27T10:48:23-04:00"
+      },
+      {
+       "id": "14fda6fbd0dc2ee50efcc70a4be6756f-1",
+       "date": "2025-01-24T10:44:04-04:00",
+       "title": "En el PBC, Autorización del fabricante - Escáner",
+       "description": "Solicitamos consideren incluir en el PBC el requerimiento de la presentación de la carta de autorización del fabricante del equipo ofertado, de manera a garantizar la mano de obra calificada y autorizada por el mismo fabricante del equipo, para que de esta forma la convocante pueda tener la seguridad y confiabilidad que solo puede brindar un distribuidor autorizado y CAS de la marca. De no ser incluido dicho requerimiento se estaría favoreciendo a empresas prestadoras de servicio técnico no autorizadas y poco calificadas.",
+       "answer": "REMITIRSE AL PBC.",
+       "dateAnswered": "2025-01-27T10:48:11-04:00"
+      },
+      {
+       "id": "32688e48701e51f4ebf647830972622d-1",
+       "date": "2025-01-27T14:54:18-04:00",
+       "title": "Especificaciones técnicas - Gramaje de papel",
+       "description": "Solicitan: Gramaje de papel: 27 g/m2 a 413 g/m2\nSolicitamos a la Convocante que puedan ser aceptados equipos con gramaje de 27 g/m2 a 255 g /m2 como mínimo, teniendo en cuenta que generalmente los equipos del porte solicitado no poseen el soporte de gramaje solicitado, siendo este el soporte mínimo recomendado por varios fabricantes de modelos posibles a proponer y siendo suficiente para soportar los tipos de documentos normalmente utilizados, no afectando el rendimiento del equipo, de mantenerse el requerimiento, solicitamos aclarar la necesidad que posee la convocante de poseer soporte de 27 g/m2 a 413 g/m2, tipos de papeles que dispone por los que está requiriendo esta característica,  actualmente se está limitando la participación de potenciales oferentes. La consulta es cursada de tal forma a no limitar la participación de potenciales oferentes, así también, que no sean solicitadas características que finalmente no son realmente necesarias."
+      },
+      {
+       "id": "1dcf9a5f8c1830302cba7d3946a90f56-1",
+       "date": "2025-01-24T10:59:16-04:00",
+       "title": "En el PBC - Plan de entrega de los bienes",
+       "description": "Solicitan hasta un máximo de 5 (cinco) días hábiles desde la recepción de la Orden de Compra por parte del oferente adjudicado\nSolicitamos a la Convocante extender el plazo de entrega a 25 (veinte y cinco) días hábiles, ya que se necesitaría importar dichos equipos, de mantenerse el requerimiento mencionado, la convocante estaría limitando la participación de posibles oferentes y diferentes marcas y modelos, además de limitar la posibilidad de la convocante de obtener los mejores precios de mercado. Actualmente esta direccionada a una sola marca que es la Epson",
+       "answer": "REMITIRSE AL PBC.",
+       "dateAnswered": "2025-01-27T10:48:16-04:00"
+      }
+     ],
+     "lots": [
+      {
+       "id": "1efd807e-e6f2-647a-9a5f-5b8afb7113d7",
+       "title": "1 - 1 - ESCANER",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 18000000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "1"
+        }
+       ]
+      }
+     ],
+     "items": [
+      {
+       "id": "1efd8080-1b4c-6670-8333-65c4ff865dfe",
+       "description": "Escaner",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44101504-001",
+        "description": "Escaner",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44101504-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44101504",
+         "description": "Escaner o Emisores digitales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44101504"
+        }
+       ],
+       "quantity": 3,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 6000000,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1efd807e-e6f2-647a-9a5f-5b8afb7113d7",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "2"
+        }
+       ]
+      }
+     ],
+     "tenderers": [
+      {
+       "name": "OFFICE COMPU SA",
+       "id": "PY-RUC-80013316-1"
+      },
+      {
+       "name": "SERVICIOS Y SOLUCIONES INTEGRALES SOCIEDAD DE RESPONSABILIDAD LIMITADA",
+       "id": "PY-RUC-80098885-0"
+      },
+      {
+       "name": "SEGEL S.A.",
+       "id": "PY-RUC-80026570-0"
+      },
+      {
+       "name": "INNOVACIONES TECNOLÓGICAS S.A.",
+       "id": "PY-RUC-80099045-5"
+      }
+     ],
+     "documents": [
+      {
+       "id": "K0V8iryh6Wc=",
+       "datePublished": "2025-01-24T08:59:29-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 460439 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1efd807a-dcda-6374-b893-b5a0a6988454/1",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/pdf"
+      },
+      {
+       "id": "659f09b9-181c-44d3-8d2f-7afa8c10c936",
+       "datePublished": "2025-02-07T11:25:08-04:00",
+       "title": "ap-460439-908589717738214-67a617c40d8a0.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1efd807a-dcda-6374-b893-b5a0a6988454/files/659f09b9-181c-44d3-8d2f-7afa8c10c936/download",
+       "language": "es",
+       "documentTypeDetails": "Acta de Apertura"
+      },
+      {
+       "id": "ac8a83f5-ee7f-49ae-888d-c95a48de014a",
+       "datePublished": "2025-01-21T12:08:04-04:00",
+       "title": "dictamen-tecnico-mcn-id-460439001-678fb83e1c064.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1efd807a-dcda-6374-b893-b5a0a6988454/files/ac8a83f5-ee7f-49ae-888d-c95a48de014a/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen técnico"
+      },
+      {
+       "id": "awul/JBYyz0n4vUshHaMug==",
+       "datePublished": "2025-01-24T08:59:29-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 460439 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1efd807a-dcda-6374-b893-b5a0a6988454/1/json",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/json"
+      },
+      {
+       "id": "44455b44-168d-44be-a474-61294300e3b9",
+       "datePublished": "2025-01-21T12:08:04-04:00",
+       "title": "pr-460439-678fb84b864aa.zip",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1efd807a-dcda-6374-b893-b5a0a6988454/files/44455b44-168d-44be-a474-61294300e3b9/download",
+       "language": "es",
+       "documentTypeDetails": "Antecedentes de la Estimación de Costos"
+      },
+      {
+       "id": "dix2iRRDbik=",
+       "title": "URL de la Convocatoria",
+       "url": "https://www.contrataciones.gov.py/licitaciones/convocatoria/1efd807a-dcda-6374-b893-b5a0a6988454.html",
+       "language": "es",
+       "documentType": "tenderNotice",
+       "format": "text/html"
+      },
+      {
+       "id": "7b25fded-3f77-4bdc-9781-da780d8b0422",
+       "datePublished": "2025-01-21T12:08:05-04:00",
+       "title": "cdp-mcn-id-460439001-678fb82c4d9dd.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1efd807a-dcda-6374-b893-b5a0a6988454/files/7b25fded-3f77-4bdc-9781-da780d8b0422/download",
+       "language": "es",
+       "documentTypeDetails": "CDP"
+      },
+      {
+       "id": "d3b85c4b-188a-4439-96a8-ccb6bf945318",
+       "datePublished": "2025-01-21T12:08:04-04:00",
+       "title": "resolucion-mcn-id-460439001-678fb83540ab9.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1efd807a-dcda-6374-b893-b5a0a6988454/files/d3b85c4b-188a-4439-96a8-ccb6bf945318/download",
+       "language": "es",
+       "documentTypeDetails": "Aprobación PBC"
+      }
+     ],
+     "numberOfTenderers": 4
+    },
+    "language": "es",
+    "ocid": "ocds-03ad3f-460439-1",
+    "date": "2025-02-27T10:02:43-04:00",
+    "initiationType": "tender",
+    "buyer": {
+     "id": "DNCP-SICP-CODE-66",
+     "name": "Municipalidad de Fernando de la Mora"
+    },
+    "sources": [
+     {
+      "id": "dncp-sicp",
+      "name": "Sistema de Información de las Contrataciones Públicas - DNCP",
+      "url": "https://www.contrataciones.gov.py/"
+     }
+    ],
+    "contracts": [
+     {
+      "id": "MN-30173-25-250224",
+      "implementation": {
+       "financialProgress": {
+        "breakdown": [
+         {
+          "id": "2025/30/173/1/1/0/0/1/11/543/30/MN-30173-25-250224",
+          "period": {
+           "startDate": "2025-01-01T00:00:00Z",
+           "endDate": "2025-12-31T00:00:00Z"
+          },
+          "measures": {
+           "monto_a_utilizar": 18000000
+          },
+          "classifications": {
+           "anio": "2025",
+           "nivel": "30",
+           "entidad": "173",
+           "tipo_programa": "1",
+           "programa": "1",
+           "sub_programa": "0",
+           "proyecto": "0",
+           "financiador": "1",
+           "departamento": "11",
+           "objeto_gasto": "543",
+           "fuente_financiamiento": "30",
+           "cdp": "117290"
+          },
+          "financialCode": "MN-30173-25-250224"
+         }
+        ]
+       }
+      },
+      "awardID": "1efeedbc-31c8-6f70-a189-25216fdd0a73",
+      "status": "active",
+      "statusDetails": "publicado",
+      "period": {
+       "startDate": "2025-02-25T00:00:00-04:00"
+      },
+      "value": {
+       "amount": 11400000,
+       "currency": "PYG"
+      },
+      "documents": [
+       {
+        "id": "1eff36f4-d0d8-6b70-b6e7-ad420d7ff1a2",
+        "datePublished": "2025-02-25T08:54:43-04:00",
+        "title": "ddjj-plazo-de-protesta-67bdaf8311379.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1efeedbc-31c8-6f70-a189-25216fdd0a73/files/1f1fc720-f3e7-4240-9bb1-a3eabfeef35d/download",
+        "language": "es",
+        "documentTypeDetails": "Nota de Contestación"
+       },
+       {
+        "id": "1eff36f5-976d-6420-8313-eb385b314ebe",
+        "datePublished": "2025-02-25T08:55:03-04:00",
+        "title": "cdp-mcn-id-460439001-67bdaf97d6d3d.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1efeedbc-31c8-6f70-a189-25216fdd0a73/files/69641d4c-21a5-4599-b2cc-c7d23a0d0d6b/download",
+        "language": "es",
+        "documentTypeDetails": "CDP"
+       },
+       {
+        "id": "1eff36f3-c530-6e54-83cb-dd28d6ad724c",
+        "datePublished": "2025-02-25T08:54:15-04:00",
+        "title": "contrato-08-escaner-67bdaf66eee6d.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1efeedbc-31c8-6f70-a189-25216fdd0a73/files/25c3fb36-c12d-41f1-8566-109ebf39e5b7/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1eff36f4-6bc9-616c-92f0-29dc9ca43fa1",
+        "datePublished": "2025-02-25T08:54:32-04:00",
+        "title": "res-adj-460439-67bdaf786f816.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1efeedbc-31c8-6f70-a189-25216fdd0a73/files/aaa2e7ab-1c61-40e4-bb46-80ce9d5f228f/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       }
+      ]
+     }
+    ],
+    "planning": {
+     "identifier": "460439",
+     "estimatedDate": "2025-04-30T00:00:00-04:00",
+     "budget": {
+      "description": "ADQUISICION DE ESCANER",
+      "amount": {
+       "currency": "PYG",
+       "amount": 18000000
+      },
+      "budgetBreakdown": [
+       {
+        "id": "2025/30/173/1/1/0/0/1/11/543/30-imUyLZKppds=",
+        "sourceParty": {
+         "id": "66",
+         "name": "Municipalidad de Fernando de la Mora"
+        },
+        "period": {
+         "startDate": "2025-01-01T00:00:00Z",
+         "endDate": "2025-12-31T00:00:00Z"
+        },
+        "measures": {
+         "monto_utilizado": 18000000,
+         "monto_a_utilizar": 18000000
+        },
+        "classifications": {
+         "anio": "2025",
+         "nivel": "30",
+         "entidad": "173",
+         "tipo_programa": "1",
+         "programa": "1",
+         "sub_programa": "0",
+         "proyecto": "0",
+         "financiador": "1",
+         "departamento": "11",
+         "objeto_gasto": "543",
+         "fuente_financiamiento": "30",
+         "cdp": "117290"
+        }
+       }
+      ]
+     },
+     "items": [
+      {
+       "id": "1efd73c9-edc3-6928-8991-490c29498091",
+       "description": "Multicopistas",
+       "classification": {
+        "scheme": "UNSPSC",
+        "id": "44101500",
+        "description": "Multicopistas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44101500"
+       }
+      }
+     ]
+    },
+    "parties": [
+     {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora",
+      "identifier": {
+       "scheme": "DNCP-SICP-CODE",
+       "id": "66",
+       "legalName": "Municipalidad de Fernando de la Mora"
+      },
+      "contactPoint": {
+       "email": "morauoc@gmail.com",
+       "name": "LIC. ELIGIO ACOSTA",
+       "telephone": "+595 21 513-306"
+      },
+      "roles": [
+       "buyer",
+       "procuringEntity"
+      ],
+      "details": {
+       "level": "Municipalidades",
+       "entityType": "Municipalidades",
+       "type": "Entidad"
+      },
+      "additionalIdentifiers": [
+       {
+        "id": "2025.30.173",
+        "legalName": "Municipalidad de Fernando de la Mora",
+        "scheme": "PY-PGN"
+       }
+      ]
+     },
+     {
+      "name": "Michel Denis Has Baez",
+      "id": "PY-RUC-5607772-6",
+      "identifier": {
+       "id": "5607772-6",
+       "legalName": "Michel Denis Has Baez",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "enquirer"
+      ],
+      "contactPoint": {
+       "name": "Michel Denis Has Baez",
+       "email": "licitacionesmrainformatica20@gmail.com",
+       "telephone": "0971639642"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "Ciudad del Este",
+       "region": "Alto Paraná",
+       "streetAddress": "Av Francisco Solano Lopez casi Amambay B° Santa Ana"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        },
+        {
+         "name": "Utiles de oficina, Productos de papel y cartón e impresos",
+         "id": 11
+        }
+       ]
+      }
+     },
+     {
+      "name": "OFFICE COMPU SA",
+      "id": "PY-RUC-80013316-1",
+      "identifier": {
+       "id": "80013316-1",
+       "legalName": "OFFICE COMPU SA",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "BELINDA M. CASTILLO A. - OLIVIA MERCEDES PETTENGILL - JUAN CARLOS PETTENGILL CASTILLO",
+       "email": "belinda@officecompu.com.py",
+       "faxNumber": "206176/7",
+       "telephone": "0981-401389"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "ASUNCION (DISTRITO)",
+       "region": "Asunción",
+       "streetAddress": "22 de setiembre N° 585 e/Azara - 2° piso"
+      },
+      "details": {
+       "legalEntityTypeDetail": "S.A.",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Utiles de oficina, Productos de papel y cartón e impresos",
+         "id": 11
+        },
+        {
+         "name": "Adquisición y Locación de inmuebles. Alquiler de muebles",
+         "id": 3
+        },
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        },
+        {
+         "name": "Servicios de Limpiezas, Mantenimientos y reparaciones menores y mayores de Instalaciones, Maquinarias y Vehículos",
+         "id": 2
+        }
+       ]
+      }
+     },
+     {
+      "name": "SEGEL S.A.",
+      "id": "PY-RUC-80026570-0",
+      "identifier": {
+       "id": "80026570-0",
+       "legalName": "SEGEL S.A.",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "MICHAEL HERSCHKOWICZ- RUTH SINGER- Ignacia Marlene Pereira",
+       "email": "licitaciones@segel.com.py",
+       "faxNumber": "INTERNO 101",
+       "telephone": "0992267833",
+       "url": "http://www.segel.com.py"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "ASUNCION",
+       "region": "Asunción",
+       "streetAddress": "RCA. DOMINICANA Nº 438 C/AVDA ESPAÑA"
+      },
+      "details": {
+       "legalEntityTypeDetail": "S.A.",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Consultorías, Asesorías e Investigaciones. Estudios y Proyectos de inversión",
+         "id": 5
+        },
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        },
+        {
+         "name": "Servicios Técnicos",
+         "id": 7
+        },
+        {
+         "name": "Adquisición y Locación de inmuebles. Alquiler de muebles",
+         "id": 3
+        }
+       ]
+      }
+     },
+     {
+      "name": "SERVICIOS Y SOLUCIONES INTEGRALES SOCIEDAD DE RESPONSABILIDAD LIMITADA",
+      "id": "PY-RUC-80098885-0",
+      "identifier": {
+       "id": "80098885-0",
+       "legalName": "SERVICIOS Y SOLUCIONES INTEGRALES SOCIEDAD DE RESPONSABILIDAD LIMITADA",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "MONICA LARISSA RAMIREZ BOGADO",
+       "email": "info@sysi.com.py",
+       "telephone": "0971118 336",
+       "url": "https://www.sysi.com.py/"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "ASUNCIÓN",
+       "region": "Asunción",
+       "streetAddress": "GASPAR CENTURION C/ CAPITAN BADO"
+      },
+      "details": {
+       "scale": "sme",
+       "legalEntityTypeDetail": "S.R.L.",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Adquisición y Locación de inmuebles. Alquiler de muebles",
+         "id": 3
+        },
+        {
+         "name": "Utiles de oficina, Productos de papel y cartón e impresos",
+         "id": 11
+        },
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        },
+        {
+         "name": "Servicios Técnicos",
+         "id": 7
+        },
+        {
+         "name": "Publicidad y Propaganda",
+         "id": 8
+        }
+       ]
+      }
+     },
+     {
+      "name": "INNOVACIONES TECNOLÓGICAS S.A.",
+      "id": "PY-RUC-80099045-5",
+      "identifier": {
+       "id": "80099045-5",
+       "legalName": "INNOVACIONES TECNOLÓGICAS S.A.",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "supplier",
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "MATIAS ENRIQUE ROBLES SEGOVIA - RAQUEL ORTIZ SALINAS",
+       "email": "INNOVACIONESTEC.SA@GMAIL.COM",
+       "telephone": "0981792400"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "Ñemby",
+       "region": "Central",
+       "streetAddress": "Acceso Sur esquina Jose Asunción flores"
+      },
+      "details": {
+       "scale": "sme",
+       "legalEntityTypeDetail": "S.A.",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Muebles y Enseres",
+         "id": 23
+        },
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        }
+       ]
+      }
+     }
+    ],
+    "tag": [
+     "compiled"
+    ]
+   }
+  }
+ ],
+ "pagination": {
+  "total_items": 1,
+  "total_pages": 1,
+  "current_page": 1,
+  "items_per_page": 10,
+  "total_in_page": 1
+ }
+}

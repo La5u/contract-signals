@@ -1,0 +1,5368 @@
+{
+ "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/ocds-03ad3f-471705-1",
+ "publishedDate": "2026-09-22T17:53:02Z",
+ "publisher": {
+  "name": "Dirección Nacional de Contrataciones Públicas, Paraguay"
+ },
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "publicationPolicy": "https://www.contrataciones.gov.py/datos/legal",
+ "version": "1.1",
+ "extensions": [
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_breakdown_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_and_spend_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_enquiry_extension/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/enquiriesAddress/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/legalEntityTypeDetail/master/extension.json",
+  "https://raw.githubusercontent.com/gitMHOCDS/transactions/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_investmentproject_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_clarification_meetings_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_attributes_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_items_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_contract_suppliers_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_location_extension/v1.1.4/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_activityType_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_notifiedsuppliers_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_lots_details_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_memberOf_extension/master/extension.json",
+  "https://raw.githubusercontent.com/portaledcahn/ocds_tenderDatePublished_extension/master/extension.json",
+  "https://raw.githubusercontent.com/INAImexico/ocds_guarantees_extension/master/extension.json",
+  "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_requirements_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bidOpening_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_coveredBy_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_qualification_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_publicEntitiesDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_items_subItems_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_statusdetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_mainProcurementCategoryDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_identifier_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_estimatedDate_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_participationFee_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_amendments_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_lot_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_transaction_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_financialprogress_financialcode_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_categories_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_complaints_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_minQuantity_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_purchaseOrder_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_document_type_details/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_cancellations_amendments_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_milestone_documents_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_techniques_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bid_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_bid_items_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_auctions_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_secondStage_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_beneficiaries_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/Crown-Commercial-Service/ocds_tender_suitability_extension/main/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_subcontracting_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_sustainability_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_reportedpayment_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_milestone_deliveries_extension/raw/master/extension.json"
+ ],
+ "records": [
+  {
+   "ocid": "ocds-03ad3f-471705-1",
+   "releases": [
+    {
+     "date": "2025-09-15T14:23:06-04:00",
+     "tag": [
+      "tender",
+      "award",
+      "contract",
+      "implementation"
+     ],
+     "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/releases/id/1f045efb-1367-6dc8-b72e-192d09113e6e-1757946186"
+    }
+   ],
+   "compiledRelease": {
+    "id": "1f045efb-1367-6dc8-b72e-192d09113e6e-1757946186",
+    "awards": [
+     {
+      "id": "1f084c60-ef22-698e-8ff4-0369ff390d54",
+      "status": "active",
+      "statusDetails": "publicado",
+      "date": "2025-08-21T00:00:00-04:00",
+      "value": {
+       "amount": 369963192,
+       "currency": "PYG"
+      },
+      "suppliers": [
+       {
+        "name": "MIGUEL ABDON VERA RODRIGUEZ",
+        "id": "PY-RUC-5806112-6"
+       }
+      ],
+      "documents": [
+       {
+        "id": "1f084cc3-cea6-68e6-8928-fd2727704e7b",
+        "datePublished": "2025-08-29T08:35:17-04:00",
+        "title": "cuadro-471705-68b19075c5358.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f084c5e-ff1b-657c-b0c8-a1923ff8698f/files/57f0ee5d-6342-48a2-9540-230ca95bcab2/download",
+        "language": "es",
+        "documentTypeDetails": "Cuadro Comparativo de Ofertas"
+       },
+       {
+        "id": "1f084cc4-8fd7-65b0-b66e-e79f9df88131",
+        "datePublished": "2025-08-29T08:35:38-04:00",
+        "title": "inf-eva-471705-68b1908a0b235.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f084c5e-ff1b-657c-b0c8-a1923ff8698f/files/67eaaa1a-fee2-4d7d-9e55-512ba02eb63d/download",
+        "language": "es",
+        "documentTypeDetails": "Informe de Evaluación"
+       },
+       {
+        "id": "1f084cc0-f6d4-6316-8305-a11b6212b466",
+        "datePublished": "2025-08-29T08:34:01-04:00",
+        "title": "res-adj-471705-68b1902977683.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f084c5e-ff1b-657c-b0c8-a1923ff8698f/files/9c079b7b-1025-466e-b318-ff02ce9da19e/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "dix2iRRDbik=",
+        "title": "URL de la Adjudicación",
+        "url": "https://www.contrataciones.gov.py/licitaciones/adjudicacion/1f084c5e-ff1b-657c-b0c8-a1923ff8698f/resumen-adjudicacion.html",
+        "language": "es",
+        "documentType": "awardNotice",
+        "format": "text/html"
+       }
+      ],
+      "items": [
+       {
+        "id": "1f05da45-2978-62a4-95f4-0db975f35359",
+        "description": "Limpieza y preparaci撑 del terreno",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-013",
+         "description": "Limpieza de obra",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-013"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 120,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 6150,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "1",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-297e-6b0e-8249-0db975f35359",
+        "description": "Replanteo",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-9974",
+         "description": "Replanteo y marcación",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-9974"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 120,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 14750,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "2",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2984-69fa-9681-0db975f35359",
+        "description": "Excavaci撑 y carga de cimiento en galeria de PBC.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72103004-001",
+         "description": "Servicio de Excavación Estructural",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72103004-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72103004",
+          "description": "Servicios de excavacion",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72103004"
+         }
+        ],
+        "quantity": 9,
+        "unit": {
+         "name": "Metros cúbicos",
+         "id": "M3",
+         "value": {
+          "amount": 498620,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "3",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-298a-6242-a671-0db975f35359",
+        "description": "Excavaci撑 y carga de zapatas de Hｰ Aｰ ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72103004-004",
+         "description": "Servicio de excavacion de bolsones",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72103004-004"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72103004",
+          "description": "Servicios de excavacion",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72103004"
+         }
+        ],
+        "quantity": 7,
+        "unit": {
+         "name": "Metros cúbicos",
+         "id": "M3",
+         "value": {
+          "amount": 2297580,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "4",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-298f-69c2-b355-0db975f35359",
+        "description": "Pilares de Hｰ Aｰ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-015",
+         "description": "Pilar",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-015"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 2,
+        "unit": {
+         "name": "Metros cúbicos",
+         "id": "M3",
+         "value": {
+          "amount": 2604370,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "5",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2995-6778-94cd-0db975f35359",
+        "description": "Vigas de Hｰ Aｰ ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-004",
+         "description": "Colocacion de hormigon armado",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-004"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 9,
+        "unit": {
+         "name": "Metros cúbicos",
+         "id": "M3",
+         "value": {
+          "amount": 2582250,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "6",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-299b-618c-92c7-0db975f35359",
+        "description": "Losa de Hｰ Aｰ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72141510-9998",
+         "description": "Demolición de Losa de H°A°",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72141510-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72141510",
+          "description": "Servicios de demolicion",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72141510"
+         }
+        ],
+        "quantity": 10,
+        "unit": {
+         "name": "Metros cúbicos",
+         "id": "M3",
+         "value": {
+          "amount": 2397800,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "7",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-29a0-6bbe-b7f7-0db975f35359",
+        "description": "Loseta de HｺAｺ sobre puerta de acceso",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-9972",
+         "description": "Loseta sobre puerta",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-9972"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 2,
+        "unit": {
+         "name": "Unidad Medida Global",
+         "id": "GL",
+         "value": {
+          "amount": 363350,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "8",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-29a6-6424-a575-0db975f35359",
+        "description": "De 0,30 cm.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102504-001",
+         "description": "Construcción de muro perimetral",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102504-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102504",
+          "description": "Construccion de muros ",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102504"
+         }
+        ],
+        "quantity": 6,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 221947,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "9",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-29ab-6d02-9d8b-0db975f35359",
+        "description": "Relleno y apisonado de interiores",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102905-001",
+         "description": "Relleno y compactacion de terreno",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102905-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102905",
+          "description": "Mantenimiento y hermoseamiento de terrenos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102905"
+         }
+        ],
+        "quantity": 44,
+        "unit": {
+         "name": "Metros cúbicos",
+         "id": "M3",
+         "value": {
+          "amount": 166613,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "10",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-29b1-65cc-97a4-0db975f35359",
+        "description": "De paredes",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102507-003",
+         "description": "Servicio de aislacion de pared",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102507-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102507",
+          "description": "Instalacion de material aislante",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102507"
+         }
+        ],
+        "quantity": 9,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 106240,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "11",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-29b7-6134-90c4-0db975f35359",
+        "description": "De techo con membrana asfáltica",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102507-001",
+         "description": "Servicio de aislacion de techo",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102507-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102507",
+          "description": "Instalacion de material aislante",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102507"
+         }
+        ],
+        "quantity": 120,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 166245,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "12",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-29bc-6e4a-844d-0db975f35359",
+        "description": "De 0,30 para revocar",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72101703-003",
+         "description": "Construcción de muralla o muro",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72101703-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72101703",
+          "description": "Construccion y reparacion de aceras, canteros, bordillos y murallas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72101703"
+         }
+        ],
+        "quantity": 2,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 219600,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "13",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-29c2-6958-9fa2-0db975f35359",
+        "description": "De 0,15 para revocar",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72101703-003",
+         "description": "Construcción de muralla o muro",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72101703-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72101703",
+          "description": "Construccion y reparacion de aceras, canteros, bordillos y murallas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72101703"
+         }
+        ],
+        "quantity": 9,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 118200,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "14",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-29c8-6b32-9ddd-0db975f35359",
+        "description": "De 0,30 visto ambas caras de ladrillos comunes prensados",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72101703-003",
+         "description": "Construcción de muralla o muro",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72101703-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72101703",
+          "description": "Construccion y reparacion de aceras, canteros, bordillos y murallas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72101703"
+         }
+        ],
+        "quantity": 51,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 301500,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "15",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-29ce-6a28-b6f1-0db975f35359",
+        "description": "De 0,15 visto a una cara de ladrillos comunes prensados",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72101703-003",
+         "description": "Construcción de muralla o muro",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72101703-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72101703",
+          "description": "Construccion y reparacion de aceras, canteros, bordillos y murallas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72101703"
+         }
+        ],
+        "quantity": 54,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 224400,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "16",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-29d4-6edc-ba13-0db975f35359",
+        "description": "Envarillado bajo aberturas 2 ﾘ 8 por hilada ( 2 hiladas )",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "73121602-007",
+         "description": "Servicio de Herreria",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/73121602-007"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "73121602",
+          "description": "Servicios de herreria",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/73121602"
+         }
+        ],
+        "quantity": 24,
+        "unit": {
+         "name": "Metro lineal",
+         "id": "ml",
+         "value": {
+          "amount": 28036,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "17",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-29da-695e-919b-0db975f35359",
+        "description": "De paredes interior y exterior a una capa",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-008",
+         "description": "Revoques",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-008"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 92,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 32400,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "18",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-29e0-6746-82fb-0db975f35359",
+        "description": "De pilares de Hｰ Aｰ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-008",
+         "description": "Revoques",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-008"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 36,
+        "unit": {
+         "name": "Metro lineal",
+         "id": "ml",
+         "value": {
+          "amount": 69161,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "19",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-29e6-668c-92ea-0db975f35359",
+        "description": "De losas y vigas de Hｰ Aｰ ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-008",
+         "description": "Revoques",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-008"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 150,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 68300,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "20",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-29eb-6d3a-8af1-0db975f35359",
+        "description": "Moldura lineal en balancines",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-008",
+         "description": "Revoques",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-008"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 29,
+        "unit": {
+         "name": "Metro lineal",
+         "id": "ml",
+         "value": {
+          "amount": 33380,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "21",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-29f1-6442-865f-0db975f35359",
+        "description": "Contrapiso de Hｰ de cascotes 10 cms.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-009",
+         "description": "Colocacion de pisos - contrapisos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-009"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 111,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 80479,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "22",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-29f7-6306-9869-0db975f35359",
+        "description": "Carpeta de regularizacion para piso ceramico",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-009",
+         "description": "Colocacion de pisos - contrapisos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-009"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 111,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 42381,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "23",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-29fd-630a-ad91-0db975f35359",
+        "description": "Piso cerámico (alto tránsito)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-009",
+         "description": "Colocacion de pisos - contrapisos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-009"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 111,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 203505,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "24",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a02-6bd4-a1ed-0db975f35359",
+        "description": "Zocalo cerámico",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72101607-005",
+         "description": "Instalacion o colocacion de zocalo",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72101607-005"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72101607",
+          "description": "Instalacion, remodelación o reparacion de paredes",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72101607"
+         }
+        ],
+        "quantity": 61,
+        "unit": {
+         "name": "Metro lineal",
+         "id": "ml",
+         "value": {
+          "amount": 91608,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "25",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a08-65ca-bd13-0db975f35359",
+        "description": "Puerta met瀝ica de 1,20 x 2,10 con marco y herrajes",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-010",
+         "description": "Aberturas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-010"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 2,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 1524748,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "26",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a0d-6d22-9ec4-0db975f35359",
+        "description": "Ventanas balancines de 1,50 x 1,68 cms.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-010",
+         "description": "Aberturas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-010"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 15,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 309900,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "27",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a13-6ccc-b5eb-0db975f35359",
+        "description": "De revoque 1 : 3   ( cemento - arena )",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102602-9997",
+         "description": "Revestimiento de puertas y ventanas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102602-9997"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102602",
+          "description": "Instalacion, reparacion y mantenimiento de mobiliarios y aberturas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102602"
+         }
+        ],
+        "quantity": 38,
+        "unit": {
+         "name": "Metro lineal",
+         "id": "ml",
+         "value": {
+          "amount": 17585,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "28",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a1a-6d7e-bc78-0db975f35359",
+        "description": "De paredes a la cal- Base para Latex ( 2 manos y lijado )",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-012",
+         "description": "Servicio de pintura",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-012"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 110,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 20300,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "29",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a20-6a8a-acd9-0db975f35359",
+        "description": "De paredes revocadas al latex ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-012",
+         "description": "Servicio de pintura",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-012"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 110,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 270510,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "30",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a26-6412-91b7-0db975f35359",
+        "description": "De losas y vigas  a la cal-Base latex",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-012",
+         "description": "Servicio de pintura",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-012"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 150,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 20300,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "31",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a2b-6d4a-9ea9-0db975f35359",
+        "description": "De losas y vigas  al latex ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-012",
+         "description": "Servicio de pintura",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-012"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 150,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 27000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "32",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a31-65e2-85f9-0db975f35359",
+        "description": " De aberturas metálicas  con pintura sintética",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-012",
+         "description": "Servicio de pintura",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-012"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 15,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 43030,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "33",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a37-6302-8f23-0db975f35359",
+        "description": "De ladrillos vistos con antimoho incoloro ( limpieza de ladrillos vistos con acido muriatico y patinal D )",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-012",
+         "description": "Servicio de pintura",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-012"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 152,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 28900,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "34",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a3c-6c3a-bdb7-0db975f35359",
+        "description": "De puerta met瀝ica con pintura sintetica ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-012",
+         "description": "Servicio de pintura",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-012"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 14,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 43030,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "35",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a42-661c-b738-0db975f35359",
+        "description": "Vidrios dobles de 4 mm.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102602-004",
+         "description": "Colocacion de vidrios ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102602-004"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102602",
+          "description": "Instalacion, reparacion y mantenimiento de mobiliarios y aberturas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102602"
+         }
+        ],
+        "quantity": 15,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 226425,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "36",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a48-6706-8d52-0db975f35359",
+        "description": "Guarda obra de alisado de cemento con contrapiso",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72153207-001",
+         "description": "Servicio de alisado de superficies de concreto",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72153207-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72153207",
+          "description": "Servicio de alisado de superficies de concreto",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72153207"
+         }
+        ],
+        "quantity": 27,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 89000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "37",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a4e-6412-9a0f-0db975f35359",
+        "description": "Instalaci撑 del tablero TS10 de 10 AG.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-001",
+         "description": "Construccion e instalaciones electricas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 12,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 116812,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "38",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a54-6416-9534-0db975f35359",
+        "description": "Instalaci撑 de tableros de comando TC ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-001",
+         "description": "Construccion e instalaciones electricas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 16,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 116812,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "39",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a5a-68ac-a781-0db975f35359",
+        "description": "Instalaci撑 de los  tableros de comando de ventiladores TCV",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-001",
+         "description": "Construccion e instalaciones electricas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 16,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 116812,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "n.",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "40",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a61-60bc-9652-0db975f35359",
+        "description": "Alimentaci撑 de los circuitos de luces",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102201-9998",
+         "description": "Instalacion de artefactos electricos de iluminacion",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102201",
+          "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+         }
+        ],
+        "quantity": 20,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 129107,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "41",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a66-6eea-a4e5-0db975f35359",
+        "description": "Alimentaci撑 de los circuitos de tomas",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102201-003",
+         "description": "Instalacion de artefactos de energia electrica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102201",
+          "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+         }
+        ],
+        "quantity": 12,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 129107,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "42",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a6c-6c78-a867-0db975f35359",
+        "description": "Alimentaci撑 de los circuitos de  ventiladores",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102201-003",
+         "description": "Instalacion de artefactos de energia electrica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102201",
+          "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+         }
+        ],
+        "quantity": 16,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 129107,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "43",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a72-6ca4-a56d-0db975f35359",
+        "description": "Alimentaci撑 de los circuitos del TC",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102201-003",
+         "description": "Instalacion de artefactos de energia electrica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102201",
+          "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+         }
+        ],
+        "quantity": 16,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 129107,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "44",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a78-662c-957b-0db975f35359",
+        "description": "Alimentacion de los circuitos de A.A",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102201-003",
+         "description": "Instalacion de artefactos de energia electrica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102201",
+          "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+         }
+        ],
+        "quantity": 8,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 129107,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "45",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a7d-6c3a-87a6-0db975f35359",
+        "description": "Alimentacion de los circuitos de tomas de computadoras",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102201-003",
+         "description": "Instalacion de artefactos de energia electrica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102201",
+          "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+         }
+        ],
+        "quantity": 4,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 129107,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "46",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a84-699a-b5a4-0db975f35359",
+        "description": "Alimentaci撑 2 x 6 mm. NYY al tablero existente",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-001",
+         "description": "Construccion e instalaciones electricas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 100,
+        "unit": {
+         "name": "Metro lineal",
+         "id": "ml",
+         "value": {
+          "amount": 79925,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "47",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a8a-62c8-942f-0db975f35359",
+        "description": "Artefactos fluorescentes de 3 x 40 W",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102201-9998",
+         "description": "Instalacion de artefactos electricos de iluminacion",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102201",
+          "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+         }
+        ],
+        "quantity": 4,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 326589,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "48",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a8f-69a8-b351-0db975f35359",
+        "description": "Artefactos fluorescentes de 2 x 40 W",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102201-9998",
+         "description": "Instalacion de artefactos electricos de iluminacion",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102201",
+          "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+         }
+        ],
+        "quantity": 8,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 203383,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "49",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a95-6236-bd3f-0db975f35359",
+        "description": "Artefactos fluorescentes de 1 x 40 W c/ fotocelula en galeria",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102201-9998",
+         "description": "Instalacion de artefactos electricos de iluminacion",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102201",
+          "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+         }
+        ],
+        "quantity": 4,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 148047,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "50",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2a9a-6bd2-8682-0db975f35359",
+        "description": "Tablero TS 10 de 15 AG. con barra de fase y neutro ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102201-003",
+         "description": "Instalacion de artefactos de energia electrica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102201",
+          "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 424224,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "51",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2aa0-60b4-b8a7-0db975f35359",
+        "description": "Tablero TC de 6 AG.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102201-003",
+         "description": "Instalacion de artefactos de energia electrica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102201",
+          "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+         }
+        ],
+        "quantity": 2,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 162312,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "52",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2aa5-6e88-8a7c-0db975f35359",
+        "description": "Tablero TCV para 4 llaves de ventiladores",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102201-012",
+         "description": "Mantenimiento y reparacion de tablero electrico",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-012"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102201",
+          "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+         }
+        ],
+        "quantity": 2,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 162312,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "53",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2aab-66a8-a12a-0db975f35359",
+        "description": "Ventilador de techo de 56 \"",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102201-9997",
+         "description": "Instalacion / Montaje / Desmontaje de Ventilador de techo",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-9997"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102201",
+          "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+         }
+        ],
+        "quantity": 8,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 685684,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "54",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2ab1-64ae-b13a-0db975f35359",
+        "description": "Registro eléctrico de 0,30 x 0,30 x 0,70 m",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102201-003",
+         "description": "Instalacion de artefactos de energia electrica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102201",
+          "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+         }
+        ],
+        "quantity": 5,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 221335,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "55",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2ab7-6980-8bc6-0db975f35359",
+        "description": "Rampa",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-9984",
+         "description": "Construccion de rampa peatonal",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-9984"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad Medida Global",
+         "id": "GL",
+         "value": {
+          "amount": 737781,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "56",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2abd-67fe-9fe9-0db975f35359",
+        "description": "Limpieza final",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-013",
+         "description": "Limpieza de obra",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-013"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 120,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 614810,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "57",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f05da45-2ac3-6ca8-ab0a-0db975f35359",
+        "description": "CARTEL INDICADOR MEDIDA (1,00 X 2,00) m CHAPA Nｰ 24, BASTIDOR CAﾑO DE (25 X 25 ) M, BASE: DOS ESTRUCTURA METALICA TRIANGULAR DE 15CM ., ALTURA 4,00 M ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "82101502-004",
+         "description": "Cartel metalico con soporte",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/82101502-004"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "82101502",
+          "description": "Publicidad en carteles o carteles de indicación",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/82101502"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad Medida Global",
+         "id": "GL",
+         "value": {
+          "amount": 1795265,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "58",
+          "id": "7"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "tender": {
+     "id": "1f045efb-1367-6dc8-b72e-192d09113e6e",
+     "coveredBy": [
+      "fonacide"
+     ],
+     "title": "CONSTRUCCIÓN DE 2 AULAS EN PLANTA BAJA - COLEGIO NACIONAL FDO. DE LA MORA",
+     "status": "complete",
+     "awardCriteria": "priceOnly",
+     "awardCriteriaDetails": "Por Total",
+     "submissionMethod": [
+      "inPerson"
+     ],
+     "bidOpening": {
+      "date": "2025-08-01T08:30:00-04:00",
+      "address": {
+       "streetAddress": "Municipalidad de Fernando de la Mora, oficina UOC"
+      }
+     },
+     "submissionMethodDetails": "Lugar entrega ofertas: Municipalidad de Fernando de la Mora, oficina UOC",
+     "statusDetails": "Adjudicada",
+     "enquiriesAddress": {
+      "streetAddress": "SICP"
+     },
+     "clarificationMeetings": [
+      {
+       "date": "2025-07-28T08:00:00-04:00",
+       "address": {
+        "streetAddress": "INSTITUCIONES EDUCATIVAS INSTITUCIONES EDUCATIVAS,  COLEGIO NACIONAL FDO. DE LA MORA"
+       },
+       "id": "1"
+      }
+     ],
+     "mainProcurementCategoryDetails": "Obras - Servicios de Construccion y Mantenimiento",
+     "hasEnquiries": false,
+     "value": {
+      "amount": 431337245,
+      "currency": "PYG"
+     },
+     "datePublished": "2025-07-22T15:19:18-04:00",
+     "tenderPeriod": {
+      "startDate": "2025-07-22T15:19:18-04:00",
+      "endDate": "2025-08-01T08:00:00-04:00",
+      "durationInDays": 9
+     },
+     "awardPeriod": {
+      "startDate": "2025-08-01T08:30:00-04:00"
+     },
+     "enquiryPeriod": {
+      "endDate": "2025-07-29T12:00:00-04:00",
+      "startDate": "2025-07-22T15:19:18-04:00",
+      "durationInDays": 6
+     },
+     "mainProcurementCategory": "works",
+     "additionalProcurementCategories": [
+      "works"
+     ],
+     "procurementMethod": "open",
+     "procurementMethodDetails": "Menor cuantía nacional",
+     "procuringEntity": {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora"
+     },
+     "criteria": [
+      {
+       "id": "1",
+       "title": "Garantía de Mantenimiento de Ofertas",
+       "description": "Los oferentes, proveedores o contratistas deberán garantizar la seriedad de sus ofertas, mediante la garantía de mantenimiento de la oferta",
+       "source": "tenderer",
+       "requirementGroups": [
+        {
+         "id": "1-1",
+         "description": "La garantía debe ser de un cierto porcentaje, periodo y tipo",
+         "requirements": [
+          {
+           "id": "1-1-1",
+           "title": "Porcentaje de la garantia",
+           "expectedValue": "5"
+          },
+          {
+           "id": "1-1-2",
+           "title": "Validez de la garantia en días",
+           "expectedValue": "120"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "lots": [
+      {
+       "id": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "title": "1 - 1 - CONSTRUCCIÓN DE 2 AULAS EN PLANTA BAJA",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 431337243,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "1"
+        }
+       ]
+      }
+     ],
+     "items": [
+      {
+       "id": "1f05da45-2a8f-69a8-b351-0db975f35359",
+       "description": "Artefactos fluorescentes de 2 x 40 W",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102201-9998",
+        "description": "Instalacion de artefactos electricos de iluminacion",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102201",
+         "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+        }
+       ],
+       "quantity": 8,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 255779,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "49",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a8a-62c8-942f-0db975f35359",
+       "description": "Artefactos fluorescentes de 3 x 40 W",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102201-9998",
+        "description": "Instalacion de artefactos electricos de iluminacion",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102201",
+         "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+        }
+       ],
+       "quantity": 4,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 410729,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "48",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a31-65e2-85f9-0db975f35359",
+       "description": " De aberturas metálicas  con pintura sintética",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-012",
+        "description": "Servicio de pintura",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-012"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 15,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 54125,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "33",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a9a-6bd2-8682-0db975f35359",
+       "description": "Tablero TS 10 de 15 AG. con barra de fase y neutro ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102201-003",
+        "description": "Instalacion de artefactos de energia electrica",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102201",
+         "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 533515,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "51",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a66-6eea-a4e5-0db975f35359",
+       "description": "Alimentaci撑 de los circuitos de tomas",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102201-003",
+        "description": "Instalacion de artefactos de energia electrica",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102201",
+         "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+        }
+       ],
+       "quantity": 12,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 162375,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "42",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a6c-6c78-a867-0db975f35359",
+       "description": "Alimentaci撑 de los circuitos de  ventiladores",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102201-003",
+        "description": "Instalacion de artefactos de energia electrica",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102201",
+         "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+        }
+       ],
+       "quantity": 16,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 162375,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "43",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-29f1-6442-865f-0db975f35359",
+       "description": "Contrapiso de Hｰ de cascotes 10 cms.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-009",
+        "description": "Colocacion de pisos - contrapisos",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-009"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 111,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 101213,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "22",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a02-6bd4-a1ed-0db975f35359",
+       "description": "Zocalo cerámico",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72101607-005",
+        "description": "Instalacion o colocacion de zocalo",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72101607-005"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72101607",
+         "description": "Instalacion, remodelación o reparacion de paredes",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72101607"
+        }
+       ],
+       "quantity": 61,
+       "unit": {
+        "name": "Metro lineal",
+        "id": "ml",
+        "value": {
+         "amount": 115209,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "25",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a2b-6d4a-9ea9-0db975f35359",
+       "description": "De losas y vigas  al latex ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-012",
+        "description": "Servicio de pintura",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-012"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 150,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 34021,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "32",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2ab7-6980-8bc6-0db975f35359",
+       "description": "Rampa",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-9984",
+        "description": "Construccion de rampa peatonal",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-9984"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad Medida Global",
+        "id": "GL",
+        "value": {
+         "amount": 927852,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "56",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a84-699a-b5a4-0db975f35359",
+       "description": "Alimentaci撑 2 x 6 mm. NYY al tablero existente",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-001",
+        "description": "Construccion e instalaciones electricas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 100,
+       "unit": {
+        "name": "Metro lineal",
+        "id": "ml",
+        "value": {
+         "amount": 100518,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "47",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a20-6a8a-acd9-0db975f35359",
+       "description": "De paredes revocadas al latex ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-012",
+        "description": "Servicio de pintura",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-012"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 110,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 34021,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "30",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a5a-68ac-a781-0db975f35359",
+       "description": "Instalaci撑 de los  tableros de comando de ventiladores TCV",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-001",
+        "description": "Construccion e instalaciones electricas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 16,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 146910,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "40",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a61-60bc-9652-0db975f35359",
+       "description": "Alimentaci撑 de los circuitos de luces",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102201-9998",
+        "description": "Instalacion de artefactos electricos de iluminacion",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102201",
+         "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+        }
+       ],
+       "quantity": 20,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 162375,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "41",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-29a6-6424-a575-0db975f35359",
+       "description": "De 0,30 cm.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102504-001",
+        "description": "Construcción de muro perimetral",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102504-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102504",
+         "description": "Construccion de muros ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102504"
+        }
+       ],
+       "quantity": 6,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 279129,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "9",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2995-6778-94cd-0db975f35359",
+       "description": "Vigas de Hｰ Aｰ ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-004",
+        "description": "Colocacion de hormigon armado",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-004"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 9,
+       "unit": {
+        "name": "Metros cúbicos",
+        "id": "M3",
+        "value": {
+         "amount": 3247480,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "6",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a3c-6c3a-bdb7-0db975f35359",
+       "description": "De puerta met瀝ica con pintura sintetica ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-012",
+        "description": "Servicio de pintura",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-012"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 14,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 54125,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "35",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-299b-618c-92c7-0db975f35359",
+       "description": "Losa de Hｰ Aｰ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72141510-9998",
+        "description": "Demolición de Losa de H°A°",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72141510-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72141510",
+         "description": "Servicios de demolicion",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72141510"
+        }
+       ],
+       "quantity": 10,
+       "unit": {
+        "name": "Metros cúbicos",
+        "id": "M3",
+        "value": {
+         "amount": 3015517,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "7",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2aa0-60b4-b8a7-0db975f35359",
+       "description": "Tablero TC de 6 AG.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102201-003",
+        "description": "Instalacion de artefactos de energia electrica",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102201",
+         "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+        }
+       ],
+       "quantity": 2,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 204128,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "52",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a42-661c-b738-0db975f35359",
+       "description": "Vidrios dobles de 4 mm.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102602-004",
+        "description": "Colocacion de vidrios ",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102602-004"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102602",
+         "description": "Instalacion, reparacion y mantenimiento de mobiliarios y aberturas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102602"
+        }
+       ],
+       "quantity": 15,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 284761,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "36",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2978-62a4-95f4-0db975f35359",
+       "description": "Limpieza y preparaci撑 del terreno",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-013",
+        "description": "Limpieza de obra",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-013"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 120,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 7732,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2aa5-6e88-8a7c-0db975f35359",
+       "description": "Tablero TCV para 4 llaves de ventiladores",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102201-012",
+        "description": "Mantenimiento y reparacion de tablero electrico",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-012"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102201",
+         "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+        }
+       ],
+       "quantity": 2,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 204128,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "53",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-29c2-6958-9fa2-0db975f35359",
+       "description": "De 0,15 para revocar",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72101703-003",
+        "description": "Construcción de muralla o muro",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72101703-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72101703",
+         "description": "Construccion y reparacion de aceras, canteros, bordillos y murallas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72101703"
+        }
+       ],
+       "quantity": 9,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 148612,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "14",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a7d-6c3a-87a6-0db975f35359",
+       "description": "Alimentacion de los circuitos de tomas de computadoras",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102201-003",
+        "description": "Instalacion de artefactos de energia electrica",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102201",
+         "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+        }
+       ],
+       "quantity": 4,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 162375,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "46",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-29b7-6134-90c4-0db975f35359",
+       "description": "De techo con membrana asfáltica",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102507-001",
+        "description": "Servicio de aislacion de techo",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102507-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102507",
+         "description": "Instalacion de material aislante",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102507"
+        }
+       ],
+       "quantity": 120,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 209076,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "12",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-29e0-6746-82fb-0db975f35359",
+       "description": "De pilares de Hｰ Aｰ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-008",
+        "description": "Revoques",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-008"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 36,
+       "unit": {
+        "name": "Metro lineal",
+        "id": "ml",
+        "value": {
+         "amount": 86987,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "19",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a54-6416-9534-0db975f35359",
+       "description": "Instalaci撑 de tableros de comando TC ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-001",
+        "description": "Construccion e instalaciones electricas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 16,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 146910,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "39",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-297e-6b0e-8249-0db975f35359",
+       "description": "Replanteo",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-9974",
+        "description": "Replanteo y marcación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-9974"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 120,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 18557,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "2",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-29f7-6306-9869-0db975f35359",
+       "description": "Carpeta de regularizacion para piso ceramico",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-009",
+        "description": "Colocacion de pisos - contrapisos",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-009"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 111,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 53300,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "23",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a95-6236-bd3f-0db975f35359",
+       "description": "Artefactos fluorescentes de 1 x 40 W c/ fotocelula en galeria",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102201-9998",
+        "description": "Instalacion de artefactos electricos de iluminacion",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102201",
+         "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+        }
+       ],
+       "quantity": 4,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 186188,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "50",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2aab-66a8-a12a-0db975f35359",
+       "description": "Ventilador de techo de 56 \"",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102201-9997",
+        "description": "Instalacion / Montaje / Desmontaje de Ventilador de techo",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-9997"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102201",
+         "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+        }
+       ],
+       "quantity": 8,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 862333,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "54",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-29d4-6edc-ba13-0db975f35359",
+       "description": "Envarillado bajo aberturas 2 ﾘ 8 por hilada ( 2 hiladas )",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "73121602-007",
+        "description": "Servicio de Herreria",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/73121602-007"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "73121602",
+         "description": "Servicios de herreria",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/73121602"
+        }
+       ],
+       "quantity": 24,
+       "unit": {
+        "name": "Metro lineal",
+        "id": "ml",
+        "value": {
+         "amount": 35259,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "17",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-29c8-6b32-9ddd-0db975f35359",
+       "description": "De 0,30 visto ambas caras de ladrillos comunes prensados",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72101703-003",
+        "description": "Construcción de muralla o muro",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72101703-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72101703",
+         "description": "Construccion y reparacion de aceras, canteros, bordillos y murallas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72101703"
+        }
+       ],
+       "quantity": 51,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 379183,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "15",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a08-65ca-bd13-0db975f35359",
+       "description": "Puerta met瀝ica de 1,20 x 2,10 con marco y herrajes",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-010",
+        "description": "Aberturas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-010"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 2,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 1917560,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "26",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2984-69fa-9681-0db975f35359",
+       "description": "Excavaci撑 y carga de cimiento en galeria de PBC.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72103004-001",
+        "description": "Servicio de Excavación Estructural",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72103004-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72103004",
+         "description": "Servicios de excavacion",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72103004"
+        }
+       ],
+       "quantity": 9,
+       "unit": {
+        "name": "Metros cúbicos",
+        "id": "M3",
+        "value": {
+         "amount": 627074,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "3",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-29fd-630a-ad91-0db975f35359",
+       "description": "Piso cerámico (alto tránsito)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-009",
+        "description": "Colocacion de pisos - contrapisos",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-009"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 111,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 255933,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "24",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a48-6706-8d52-0db975f35359",
+       "description": "Guarda obra de alisado de cemento con contrapiso",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72153207-001",
+        "description": "Servicio de alisado de superficies de concreto",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72153207-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72153207",
+         "description": "Servicio de alisado de superficies de concreto",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72153207"
+        }
+       ],
+       "quantity": 27,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 111961,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "37",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-29ab-6d02-9d8b-0db975f35359",
+       "description": "Relleno y apisonado de interiores",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102905-001",
+        "description": "Relleno y compactacion de terreno",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102905-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102905",
+         "description": "Mantenimiento y hermoseamiento de terrenos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102905"
+        }
+       ],
+       "quantity": 44,
+       "unit": {
+        "name": "Metros cúbicos",
+        "id": "M3",
+        "value": {
+         "amount": 209542,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "10",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-298f-69c2-b355-0db975f35359",
+       "description": "Pilares de Hｰ Aｰ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-015",
+        "description": "Pilar",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-015"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 2,
+       "unit": {
+        "name": "Metros cúbicos",
+        "id": "M3",
+        "value": {
+         "amount": 3275316,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "5",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a26-6412-91b7-0db975f35359",
+       "description": "De losas y vigas  a la cal-Base latex",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-012",
+        "description": "Servicio de pintura",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-012"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 150,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 25517,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "31",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-29ce-6a28-b6f1-0db975f35359",
+       "description": "De 0,15 visto a una cara de ladrillos comunes prensados",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72101703-003",
+        "description": "Construcción de muralla o muro",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72101703-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72101703",
+         "description": "Construccion y reparacion de aceras, canteros, bordillos y murallas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72101703"
+        }
+       ],
+       "quantity": 54,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 282222,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "16",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-29eb-6d3a-8af1-0db975f35359",
+       "description": "Moldura lineal en balancines",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-008",
+        "description": "Revoques",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-008"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 29,
+       "unit": {
+        "name": "Metro lineal",
+        "id": "ml",
+        "value": {
+         "amount": 41985,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "21",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a0d-6d22-9ec4-0db975f35359",
+       "description": "Ventanas balancines de 1,50 x 1,68 cms.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-010",
+        "description": "Aberturas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-010"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 15,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 389698,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "27",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a4e-6412-9a0f-0db975f35359",
+       "description": "Instalaci撑 del tablero TS10 de 10 AG.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-001",
+        "description": "Construccion e instalaciones electricas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 12,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 146910,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "38",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-29a0-6bbe-b7f7-0db975f35359",
+       "description": "Loseta de HｺAｺ sobre puerta de acceso",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-9972",
+        "description": "Loseta sobre puerta",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-9972"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 2,
+       "unit": {
+        "name": "Unidad Medida Global",
+        "id": "GL",
+        "value": {
+         "amount": 456968,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "8",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a72-6ca4-a56d-0db975f35359",
+       "description": "Alimentaci撑 de los circuitos del TC",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102201-003",
+        "description": "Instalacion de artefactos de energia electrica",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102201",
+         "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+        }
+       ],
+       "quantity": 16,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 162375,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "44",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a78-662c-957b-0db975f35359",
+       "description": "Alimentacion de los circuitos de A.A",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102201-003",
+        "description": "Instalacion de artefactos de energia electrica",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102201",
+         "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+        }
+       ],
+       "quantity": 8,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 162375,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "45",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-29da-695e-919b-0db975f35359",
+       "description": "De paredes interior y exterior a una capa",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-008",
+        "description": "Revoques",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-008"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 92,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 40826,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "18",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2ab1-64ae-b13a-0db975f35359",
+       "description": "Registro eléctrico de 0,30 x 0,30 x 0,70 m",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102201-003",
+        "description": "Instalacion de artefactos de energia electrica",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102201",
+         "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+        }
+       ],
+       "quantity": 5,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 278356,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "55",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-298a-6242-a671-0db975f35359",
+       "description": "Excavaci撑 y carga de zapatas de Hｰ Aｰ ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72103004-004",
+        "description": "Servicio de excavacion de bolsones",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72103004-004"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72103004",
+         "description": "Servicios de excavacion",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72103004"
+        }
+       ],
+       "quantity": 7,
+       "unit": {
+        "name": "Metros cúbicos",
+        "id": "M3",
+        "value": {
+         "amount": 2889485,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "4",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-29bc-6e4a-844d-0db975f35359",
+       "description": "De 0,30 para revocar",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72101703-003",
+        "description": "Construcción de muralla o muro",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72101703-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72101703",
+         "description": "Construccion y reparacion de aceras, canteros, bordillos y murallas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72101703"
+        }
+       ],
+       "quantity": 2,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 276175,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "13",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a1a-6d7e-bc78-0db975f35359",
+       "description": "De paredes a la cal- Base para Latex ( 2 manos y lijado )",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-012",
+        "description": "Servicio de pintura",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-012"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 110,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 25517,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "29",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a13-6ccc-b5eb-0db975f35359",
+       "description": "De revoque 1 : 3   ( cemento - arena )",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102602-9997",
+        "description": "Revestimiento de puertas y ventanas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102602-9997"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102602",
+         "description": "Instalacion, reparacion y mantenimiento de mobiliarios y aberturas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102602"
+        }
+       ],
+       "quantity": 38,
+       "unit": {
+        "name": "Metro lineal",
+        "id": "ml",
+        "value": {
+         "amount": 22116,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "28",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-29b1-65cc-97a4-0db975f35359",
+       "description": "De paredes",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102507-003",
+        "description": "Servicio de aislacion de pared",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102507-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102507",
+         "description": "Instalacion de material aislante",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102507"
+        }
+       ],
+       "quantity": 9,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 133611,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "11",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2abd-67fe-9fe9-0db975f35359",
+       "description": "Limpieza final",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-013",
+        "description": "Limpieza de obra",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-013"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 120,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 773209,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "57",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2a37-6302-8f23-0db975f35359",
+       "description": "De ladrillos vistos con antimoho incoloro ( limpieza de ladrillos vistos con acido muriatico y patinal D )",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-012",
+        "description": "Servicio de pintura",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-012"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 152,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 36341,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "34",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-2ac3-6ca8-ab0a-0db975f35359",
+       "description": "CARTEL INDICADOR MEDIDA (1,00 X 2,00) m CHAPA Nｰ 24, BASTIDOR CAﾑO DE (25 X 25 ) M, BASE: DOS ESTRUCTURA METALICA TRIANGULAR DE 15CM ., ALTURA 4,00 M ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "82101502-004",
+        "description": "Cartel metalico con soporte",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/82101502-004"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "82101502",
+         "description": "Publicidad en carteles o carteles de indicación",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/82101502"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad Medida Global",
+        "id": "GL",
+        "value": {
+         "amount": 2257772,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "58",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f05da45-29e6-668c-92ea-0db975f35359",
+       "description": "De losas y vigas de Hｰ Aｰ ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-008",
+        "description": "Revoques",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-008"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 150,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 85895,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f05d9bb-fa2d-6d98-9097-b3cb25ff3178",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "20",
+         "id": "2"
+        }
+       ]
+      }
+     ],
+     "tenderers": [
+      {
+       "name": "DIEGO JOAQUIN RODRIGUEZ BARRIOS",
+       "id": "PY-RUC-2292560-0"
+      },
+      {
+       "name": "Erico David Meaurio Alonso",
+       "id": "PY-RUC-3637541-1"
+      },
+      {
+       "name": "MIGUEL ABDON VERA RODRIGUEZ",
+       "id": "PY-RUC-5806112-6"
+      }
+     ],
+     "documents": [
+      {
+       "id": "dix2iRRDbik=",
+       "title": "URL de la Convocatoria",
+       "url": "https://www.contrataciones.gov.py/licitaciones/convocatoria/1f045efb-1367-6dc8-b72e-192d09113e6e.html",
+       "language": "es",
+       "documentType": "tenderNotice",
+       "format": "text/html"
+      },
+      {
+       "id": "4f39a3e8-4f9b-4939-889e-41cf34a6cd5f",
+       "datePublished": "2025-07-17T13:42:56-04:00",
+       "title": "aprobacion-mec-mcn-id-471705-68791e500a50a.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f045efb-1367-6dc8-b72e-192d09113e6e/files/4f39a3e8-4f9b-4939-889e-41cf34a6cd5f/download",
+       "language": "es",
+       "documentTypeDetails": "Autorización del MEC"
+      },
+      {
+       "id": "de433898-2886-468f-af4a-58008603b153",
+       "datePublished": "2025-07-17T13:42:56-04:00",
+       "title": "planos-de-aulas-a-construir-colegio-fdo-de-la-mora-68791e3e22d4f.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f045efb-1367-6dc8-b72e-192d09113e6e/files/de433898-2886-468f-af4a-58008603b153/download",
+       "language": "es",
+       "documentTypeDetails": "Planos o cómputos métricos"
+      },
+      {
+       "id": "6db5a18c-2a05-4c19-a9ac-4d60f3c2e503",
+       "datePublished": "2025-07-17T13:42:55-04:00",
+       "title": "pr-471705-687927f81426b.zip",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f045efb-1367-6dc8-b72e-192d09113e6e/files/6db5a18c-2a05-4c19-a9ac-4d60f3c2e503/download",
+       "language": "es",
+       "documentTypeDetails": "Antecedentes de la Estimación de Costos"
+      },
+      {
+       "id": "83132125-53c9-4b1a-8d7b-bac9c3732b69",
+       "datePublished": "2025-07-17T13:42:56-04:00",
+       "title": "resolucion-aprobacion-mcn-id-471705-68791e70e91ba.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f045efb-1367-6dc8-b72e-192d09113e6e/files/83132125-53c9-4b1a-8d7b-bac9c3732b69/download",
+       "language": "es",
+       "documentTypeDetails": "Permiso Municipal"
+      },
+      {
+       "id": "6530ec3c-a197-4a95-bb29-b34cbc3cabef",
+       "datePublished": "2025-07-17T13:42:55-04:00",
+       "title": "dictamen-uoc-justificativo-no-pac-mcn-id-471705-6879273273966.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f045efb-1367-6dc8-b72e-192d09113e6e/files/6530ec3c-a197-4a95-bb29-b34cbc3cabef/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen Justificativo"
+      },
+      {
+       "id": "f6e0cd6d-f8ef-4edc-aa83-48aeea07e1e8",
+       "datePublished": "2025-07-17T13:42:55-04:00",
+       "title": "justificacion-visita-tecnica-obligatoria-y-anticipo-mypimes-mcn-id-471705-687922c9237d0.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f045efb-1367-6dc8-b72e-192d09113e6e/files/f6e0cd6d-f8ef-4edc-aa83-48aeea07e1e8/download",
+       "language": "es",
+       "documentTypeDetails": "Nota de Justificación de Anticipo"
+      },
+      {
+       "id": "f87e6d4a-1c7c-4e4d-ad7d-6df4be48bcdd",
+       "datePublished": "2025-08-01T09:44:07-04:00",
+       "title": "acta-de-apertura-000034-1706105712642623-688cb69689c45.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f045efb-1367-6dc8-b72e-192d09113e6e/files/f87e6d4a-1c7c-4e4d-ad7d-6df4be48bcdd/download",
+       "language": "es",
+       "documentTypeDetails": "Acta de Apertura"
+      },
+      {
+       "id": "f2a60715-342d-4885-81b7-cfe23418f81e",
+       "datePublished": "2025-07-17T13:42:56-04:00",
+       "title": "planta-de-ubicacion-colegio-fdo-de-la-mora-68791e43a603d.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f045efb-1367-6dc8-b72e-192d09113e6e/files/f2a60715-342d-4885-81b7-cfe23418f81e/download",
+       "language": "es",
+       "documentTypeDetails": "Planos o cómputos métricos"
+      },
+      {
+       "id": "f058d47c-d1a3-4ba6-a0ed-5e462ea48ac0",
+       "datePublished": "2025-07-17T13:42:56-04:00",
+       "title": "cdp-mcn-id-471705-68791dfa87670.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f045efb-1367-6dc8-b72e-192d09113e6e/files/f058d47c-d1a3-4ba6-a0ed-5e462ea48ac0/download",
+       "language": "es",
+       "documentTypeDetails": "CDP"
+      },
+      {
+       "id": "dc5a14f9-77f0-4994-b010-25eae5f8bbe1",
+       "datePublished": "2025-07-17T13:42:56-04:00",
+       "title": "471705-construccion-de-2-aulas-en-planta-baja-colegio-nacional-fdo-de-la-mora-68791e27a57ef.zip",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f045efb-1367-6dc8-b72e-192d09113e6e/files/dc5a14f9-77f0-4994-b010-25eae5f8bbe1/download",
+       "language": "es",
+       "documentTypeDetails": "Georeferenciamiento"
+      },
+      {
+       "id": "964809a5-c70e-4773-b359-55f7546fa87f",
+       "datePublished": "2025-07-17T13:42:56-04:00",
+       "title": "ddjj-llamado-mcn-dentro-de-los-limites-del-fonae-mcn-id-471705-68791e97e095c.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f045efb-1367-6dc8-b72e-192d09113e6e/files/964809a5-c70e-4773-b359-55f7546fa87f/download",
+       "language": "es",
+       "documentTypeDetails": "Justificación"
+      },
+      {
+       "id": "397dbe2e-7f14-4430-bdbc-39103fcc33fc",
+       "datePublished": "2025-07-17T13:42:56-04:00",
+       "title": "dictamen-tecnico-mcn-id-471705-68791e0b3a7c4.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f045efb-1367-6dc8-b72e-192d09113e6e/files/397dbe2e-7f14-4430-bdbc-39103fcc33fc/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen técnico"
+      },
+      {
+       "id": "Rc7gA/seDBQ=",
+       "datePublished": "2025-07-22T14:19:17-04:00",
+       "title": "Pliego para la Contratación de Obras - CONVENCIONAL - Ley Nº 7021/22. 471705 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1f045efb-1367-6dc8-b72e-192d09113e6e/1",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/pdf"
+      },
+      {
+       "id": "UjOfvKpIm0dJICIt8iq7kA==",
+       "datePublished": "2025-07-22T14:19:17-04:00",
+       "title": "Pliego para la Contratación de Obras - CONVENCIONAL - Ley Nº 7021/22. 471705 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1f045efb-1367-6dc8-b72e-192d09113e6e/1/json",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/json"
+      },
+      {
+       "id": "58533411-472d-48c8-955b-6b6a17771ae7",
+       "datePublished": "2025-07-17T13:42:56-04:00",
+       "title": "resolucion-aprobacion-mcn-id-471705-68791e0210f47.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f045efb-1367-6dc8-b72e-192d09113e6e/files/58533411-472d-48c8-955b-6b6a17771ae7/download",
+       "language": "es",
+       "documentTypeDetails": "Aprobación PBC"
+      }
+     ],
+     "numberOfTenderers": 3
+    },
+    "language": "es",
+    "ocid": "ocds-03ad3f-471705-1",
+    "date": "2025-09-15T14:23:06-04:00",
+    "initiationType": "tender",
+    "buyer": {
+     "id": "DNCP-SICP-CODE-66",
+     "name": "Municipalidad de Fernando de la Mora"
+    },
+    "sources": [
+     {
+      "id": "dncp-sicp",
+      "name": "Sistema de Información de las Contrataciones Públicas - DNCP",
+      "url": "https://www.contrataciones.gov.py/"
+     }
+    ],
+    "contracts": [
+     {
+      "id": "MN-30173-25-256651",
+      "implementation": {
+       "financialProgress": {
+        "breakdown": [
+         {
+          "id": "2025/30/173/2/4/0/0/92/11/522/30/MN-30173-25-256651",
+          "period": {
+           "startDate": "2025-01-01T00:00:00Z",
+           "endDate": "2025-12-31T00:00:00Z"
+          },
+          "measures": {
+           "monto_a_utilizar": 425000000
+          },
+          "classifications": {
+           "anio": "2025",
+           "nivel": "30",
+           "entidad": "173",
+           "tipo_programa": "2",
+           "programa": "4",
+           "sub_programa": "0",
+           "proyecto": "0",
+           "financiador": "92",
+           "departamento": "11",
+           "objeto_gasto": "522",
+           "fuente_financiamiento": "30",
+           "cdp": "118889"
+          },
+          "financialCode": "MN-30173-25-256651"
+         },
+         {
+          "id": "2025/30/173/2/4/1/0/92/11/541/30/MN-30173-25-256651",
+          "period": {
+           "startDate": "2025-01-01T00:00:00Z",
+           "endDate": "2025-12-31T00:00:00Z"
+          },
+          "measures": {
+           "monto_a_utilizar": 7000000
+          },
+          "classifications": {
+           "anio": "2025",
+           "nivel": "30",
+           "entidad": "173",
+           "tipo_programa": "2",
+           "programa": "4",
+           "sub_programa": "1",
+           "proyecto": "0",
+           "financiador": "92",
+           "departamento": "11",
+           "objeto_gasto": "541",
+           "fuente_financiamiento": "30",
+           "cdp": "118889"
+          },
+          "financialCode": "MN-30173-25-256651"
+         }
+        ]
+       }
+      },
+      "awardID": "1f084c60-ef22-698e-8ff4-0369ff390d54",
+      "status": "active",
+      "statusDetails": "publicado",
+      "period": {
+       "startDate": "2025-09-10T00:00:00-04:00"
+      },
+      "value": {
+       "amount": 369963192,
+       "currency": "PYG"
+      },
+      "documents": [
+       {
+        "id": "1f08e359-1831-6b4c-926c-2988398edb85",
+        "datePublished": "2025-09-10T08:01:57-04:00",
+        "title": "ddjj-plazo-de-protesta-68c15aa55a323.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f084c60-ef22-698e-8ff4-0369ff390d54/files/410dc463-6843-46bd-846f-c62520593e8e/download",
+        "language": "es",
+        "documentTypeDetails": "Nota de Contestación"
+       },
+       {
+        "id": "1f08e35a-3da8-6c1c-b521-f379e08a73d1",
+        "datePublished": "2025-09-10T08:02:28-04:00",
+        "title": "cdp-mcn-id-471705-68c15ac421ecd.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f084c60-ef22-698e-8ff4-0369ff390d54/files/02c8a704-dae9-49d9-b461-98dfe9cf3187/download",
+        "language": "es",
+        "documentTypeDetails": "CDP"
+       },
+       {
+        "id": "1f08e358-386a-66d0-b11f-5fdf051ba199",
+        "datePublished": "2025-09-10T08:01:33-04:00",
+        "title": "contrato-48-fernando-de-la-mora-68c15a8dd25b1.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f084c60-ef22-698e-8ff4-0369ff390d54/files/295e4724-1e1f-44c9-a855-c804b54fe12d/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1f08e358-a5f9-6af2-a5fd-1b61f9aa6f12",
+        "datePublished": "2025-09-10T08:01:45-04:00",
+        "title": "res-adj-471705-68c15a995fcb9.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f084c60-ef22-698e-8ff4-0369ff390d54/files/92ed975e-a8f8-4c72-8657-412072137896/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       }
+      ]
+     }
+    ],
+    "parties": [
+     {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora",
+      "identifier": {
+       "scheme": "DNCP-SICP-CODE",
+       "id": "66",
+       "legalName": "Municipalidad de Fernando de la Mora"
+      },
+      "contactPoint": {
+       "email": "morauoc@gmail.com",
+       "name": "LIC. ELIGIO ACOSTA",
+       "telephone": "+595 21 513-306"
+      },
+      "roles": [
+       "buyer",
+       "procuringEntity"
+      ],
+      "details": {
+       "level": "Municipalidades",
+       "entityType": "Municipalidades",
+       "type": "Entidad"
+      },
+      "additionalIdentifiers": [
+       {
+        "id": "2025.30.173",
+        "legalName": "Municipalidad de Fernando de la Mora",
+        "scheme": "PY-PGN"
+       }
+      ]
+     },
+     {
+      "name": "DIEGO JOAQUIN RODRIGUEZ BARRIOS",
+      "id": "PY-RUC-2292560-0",
+      "identifier": {
+       "id": "2292560-0",
+       "legalName": "DIEGO JOAQUIN RODRIGUEZ BARRIOS",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "DIEGO JOAQUIN RODRIGUEZ BARRIOS",
+       "email": "tesingenieria@gmail.com",
+       "faxNumber": "553407",
+       "telephone": "0981405452",
+       "url": "http://www.tesingenieria.com"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "ASUNCION",
+       "region": "Asunción",
+       "streetAddress": "14 DE ABRIL 3255 CASI PARAISO"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Adquisición y Locación de inmuebles. Alquiler de muebles",
+         "id": 3
+        },
+        {
+         "name": "Productos Alimenticios",
+         "id": 14
+        },
+        {
+         "name": "Consultorías, Asesorías e Investigaciones. Estudios y Proyectos de inversión",
+         "id": 5
+        },
+        {
+         "name": "Utensilios de cocina y comedor, Productos de Porcelana, vidrio y loza",
+         "id": 13
+        },
+        {
+         "name": "Servicios de ceremonial, gastronomico y funerarios",
+         "id": 9
+        },
+        {
+         "name": "Construcción, Restauración, Reconstrucción o Remodelación y Reparación de Inmuebles",
+         "id": 21
+        },
+        {
+         "name": "Combustibles y Lubricantes",
+         "id": 15
+        }
+       ]
+      }
+     },
+     {
+      "name": "Erico David Meaurio Alonso",
+      "id": "PY-RUC-3637541-1",
+      "identifier": {
+       "id": "3637541-1",
+       "legalName": "Erico David Meaurio Alonso",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "Erico David Meaurio Alonso",
+       "email": "e.m.construcciones@outlook.com",
+       "telephone": "0981618347"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "San Lorenzo",
+       "region": "Central",
+       "streetAddress": "Teniente Molas N°216 esquina Luis Irrazabal"
+      },
+      "details": {
+       "scale": "sme",
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Maquinarias, Equipos y herramientas mayores - Equipos de transporte",
+         "id": 22
+        },
+        {
+         "name": "Servicios Técnicos",
+         "id": 7
+        },
+        {
+         "name": "Consultorías, Asesorías e Investigaciones. Estudios y Proyectos de inversión",
+         "id": 5
+        },
+        {
+         "name": "Construcción, Restauración, Reconstrucción o Remodelación y Reparación de Inmuebles",
+         "id": 21
+        },
+        {
+         "name": "Minerales",
+         "id": 20
+        }
+       ]
+      }
+     },
+     {
+      "name": "MIGUEL ABDON VERA RODRIGUEZ",
+      "id": "PY-RUC-5806112-6",
+      "identifier": {
+       "id": "5806112-6",
+       "legalName": "MIGUEL ABDON VERA RODRIGUEZ",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "supplier",
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "MIGUEL ABDON VERA RODRIGUEZ",
+       "email": "constructoramavr@gmail.com",
+       "telephone": "0983453241"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "CARAPEGUA",
+       "region": "Paraguarí",
+       "streetAddress": "AVENIDA, TTE. 1º MANUEL CABELLO E/RUTA 1 MCAL  LOPEZ Y INMACULADA CONCEPCION"
+      },
+      "details": {
+       "scale": "sme",
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Consultorías, Asesorías e Investigaciones. Estudios y Proyectos de inversión",
+         "id": 5
+        },
+        {
+         "name": "Construcción, Restauración, Reconstrucción o Remodelación y Reparación de Inmuebles",
+         "id": 21
+        },
+        {
+         "name": "Servicios Técnicos",
+         "id": 7
+        }
+       ]
+      }
+     }
+    ],
+    "tag": [
+     "compiled"
+    ]
+   }
+  }
+ ],
+ "pagination": {
+  "total_items": 1,
+  "total_pages": 1,
+  "current_page": 1,
+  "items_per_page": 10,
+  "total_in_page": 1
+ }
+}

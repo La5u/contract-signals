@@ -34,7 +34,7 @@ Score = competition maximum + execution/duration maximum, capped at 100, rounded
 
 - **Justifications that declare competition avoidance** (non-plurality of suppliers, manifest urgency) are structured modality-declaration fields — the buyer’s published answer to “why this modality?”. The signal is the declared absence of ordinary competition conditions, not the citation of a legal article. This is distinct from the French treatment of R2122 citations, which remain context without points in the French cohorts (unchanged). Legal validity of a Colombian justification is not assessed.
 - **Duration** is parsed read-only from the published free text (`6 Mes(es)`, `345 Dia(s)`, `12 Semana(s)`, `5 Año(s)`); the extract text is never rewritten. Durations in hours or anything else stay unknown, not zero. No renewal is invented. 36 months is an editorial cutoff for a cohort where durations of 6–12 months are ordinary; it is not a Colombian legal threshold.
-- **Concentration and repetition contexts** are computed over the whole loaded cohort before any filter, like the French contexts. Supplier identity uses the typed document identifier already present on every row (never names). No SIREN/SIRET matching is involved.
+- **Concentration and repetition contexts** are computed over the whole loaded cohort before any filter, like the French contexts. Supplier identity uses a usable typed document identifier (never names); seven published `No Definido` placeholders are treated as unknown, not as a shared supplier. Different document types cannot collide. No SIREN/SIRET matching is involved.
 - **No French field is synthesized**: no `offers`, no `directAward` boolean, no CPV, no SIRET, no `priceType`. Where they are missing, the corresponding check is out of scope with a reason.
 
 ## Results on the pilot cohort (reproduced by `tests/colombia.cjs`)
@@ -43,11 +43,11 @@ Score = competition maximum + execution/duration maximum, capped at 100, rounded
 | --- | ---: | ---: | ---: | ---: |
 | `secop2-plurality-award` | 176 | 7,161 | 0 | 223 |
 | `secop2-repeated-plurality` | 15 | 161 | 0 | 7,384 |
-| `secop2-concentration` | 0 | 7,505 | 55 | 0 |
+| `secop2-concentration` | 0 | 7,490 | 70 | 0 |
 | `secop2-long-duration` | 39 | 7,520 | 1 | 0 |
 | four French out-of-scope checks | 0 | 0 | 0 | 7,560 each |
 
-- Rows with at least one signal: **215** (score > 0); zero after evaluation: **7,345**; not assessed: **0**; partial coverage (≥1 unknown): **56**.
+- Rows with at least one signal: **215** (score > 0); zero after evaluation: **7,345**; not assessed: **0**; partial coverage (≥1 unknown): **71**.
 - The ≈82 % ordinary direct/professional-services rows score **0 or a duration-only score** — the bare modality never fires.
 - Max observed concentration share in an eligible buyer/contract-type group: 31.3 % — below the 60 % entry threshold; the check is evaluated, not absent.
 - These counts are cohort descriptions, not target proportions. No tuning was done to reach them; changing the cohort would change them.

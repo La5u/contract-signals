@@ -1,0 +1,882 @@
+{
+ "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/ocds-03ad3f-462611-1",
+ "publishedDate": "2026-09-22T17:53:37Z",
+ "publisher": {
+  "name": "Dirección Nacional de Contrataciones Públicas, Paraguay"
+ },
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "publicationPolicy": "https://www.contrataciones.gov.py/datos/legal",
+ "version": "1.1",
+ "extensions": [
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_breakdown_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_and_spend_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_enquiry_extension/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/enquiriesAddress/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/legalEntityTypeDetail/master/extension.json",
+  "https://raw.githubusercontent.com/gitMHOCDS/transactions/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_investmentproject_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_clarification_meetings_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_attributes_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_items_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_contract_suppliers_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_location_extension/v1.1.4/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_activityType_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_notifiedsuppliers_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_lots_details_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_memberOf_extension/master/extension.json",
+  "https://raw.githubusercontent.com/portaledcahn/ocds_tenderDatePublished_extension/master/extension.json",
+  "https://raw.githubusercontent.com/INAImexico/ocds_guarantees_extension/master/extension.json",
+  "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_requirements_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bidOpening_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_coveredBy_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_qualification_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_publicEntitiesDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_items_subItems_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_statusdetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_mainProcurementCategoryDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_identifier_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_estimatedDate_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_participationFee_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_amendments_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_lot_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_transaction_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_financialprogress_financialcode_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_categories_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_complaints_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_minQuantity_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_purchaseOrder_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_document_type_details/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_cancellations_amendments_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_milestone_documents_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_techniques_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bid_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_bid_items_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_auctions_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_secondStage_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_beneficiaries_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/Crown-Commercial-Service/ocds_tender_suitability_extension/main/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_subcontracting_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_sustainability_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_reportedpayment_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_milestone_deliveries_extension/raw/master/extension.json"
+ ],
+ "records": [
+  {
+   "ocid": "ocds-03ad3f-462611-1",
+   "releases": [
+    {
+     "date": "2025-06-09T08:54:28-04:00",
+     "tag": [
+      "planning",
+      "tender",
+      "award",
+      "contract",
+      "implementation"
+     ],
+     "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/releases/id/1f005a06-dd3d-6ef2-b6b7-0de8b4f71ff0-1749459268"
+    }
+   ],
+   "compiledRelease": {
+    "id": "1f005a06-dd3d-6ef2-b6b7-0de8b4f71ff0-1749459268",
+    "awards": [
+     {
+      "id": "1f02a6e3-1712-66ac-8d95-d326d5d2a54c",
+      "status": "active",
+      "statusDetails": "publicado",
+      "date": "2025-05-02T00:00:00-04:00",
+      "value": {
+       "amount": 502170000,
+       "currency": "PYG"
+      },
+      "suppliers": [
+       {
+        "name": "Distribuidora Jasy S.A.",
+        "id": "PY-RUC-80087130-8"
+       }
+      ],
+      "documents": [
+       {
+        "id": "1f02a6ea-b893-6b14-b95f-9100d09b37a0",
+        "datePublished": "2025-05-06T08:38:46-04:00",
+        "title": "inf-eva-462-611-6819f4c60414a.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f02a6e1-676b-6c36-b8f9-b99b5a0ca757/files/6b563ddc-bd16-4a45-be5b-2d370dce49b0/download",
+        "language": "es",
+        "documentTypeDetails": "Informe de Evaluación"
+       },
+       {
+        "id": "1f02f3e4-4fc4-6042-8e66-e5954e8fd010",
+        "datePublished": "2025-05-12T11:34:54-04:00",
+        "title": "inf-eva-anexo-6822070deba4f.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f02a6e1-676b-6c36-b8f9-b99b5a0ca757/files/3a8b673b-0738-45b0-a843-505c79af1923/download",
+        "language": "es",
+        "documentTypeDetails": "Informe de Evaluación"
+       },
+       {
+        "id": "1f02a6e9-d422-6d86-8ae0-c151e5c9d811",
+        "datePublished": "2025-05-06T08:38:22-04:00",
+        "title": "nota-a-proveedores-6819f4ae16c43.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f02a6e1-676b-6c36-b8f9-b99b5a0ca757/files/a1f2b905-6c33-4b31-b76f-f2e1be1f2af0/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "dix2iRRDbik=",
+        "title": "URL de la Adjudicación",
+        "url": "https://www.contrataciones.gov.py/licitaciones/adjudicacion/1f02a6e1-676b-6c36-b8f9-b99b5a0ca757/resumen-adjudicacion.html",
+        "language": "es",
+        "documentType": "awardNotice",
+        "format": "text/html"
+       },
+       {
+        "id": "1f02a6e9-4d4d-6af4-9404-fdf34ac84790",
+        "datePublished": "2025-05-06T08:38:08-04:00",
+        "title": "gmail-notificacion-de-adjudicacion-mcn-462-611-6819f49fed444.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f02a6e1-676b-6c36-b8f9-b99b5a0ca757/files/a25db734-078f-4a66-aaa2-8d7d6a2d21ff/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "1f02a6ea-2fb1-6968-86f5-2d76b2016703",
+        "datePublished": "2025-05-06T08:38:31-04:00",
+        "title": "cuadro-comparativo-462-611-6819f4b7a811a.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f02a6e1-676b-6c36-b8f9-b99b5a0ca757/files/da69f378-7b43-4a0e-8eec-e75ef1ef19a5/download",
+        "language": "es",
+        "documentTypeDetails": "Cuadro Comparativo de Ofertas"
+       },
+       {
+        "id": "1f02f3e3-ef14-6e18-822a-3986673df5dd",
+        "datePublished": "2025-05-12T11:34:43-04:00",
+        "title": "resulcion-adj-1006-corregida-68220703ccc01.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f02a6e1-676b-6c36-b8f9-b99b5a0ca757/files/c9439733-1a4d-46cc-8192-deaa864218bd/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "1f02a6e8-ae28-6e6a-852c-b90f6dbc0e63",
+        "datePublished": "2025-05-06T08:37:51-04:00",
+        "title": "res-adj-462-611-6819f48f4249b.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f02a6e1-676b-6c36-b8f9-b99b5a0ca757/files/918d8f91-b489-4e5e-b95f-2583e830a947/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       }
+      ],
+      "items": [
+       {
+        "id": "1f005a15-6814-698c-8f98-4d0e11491515",
+        "description": "Parque infantil completo de hierro",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "49241502-002",
+         "description": "Parque infantil completo de hierro",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/49241502-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "49241502",
+          "description": "Aparatos para parques infantiles",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/49241502"
+         }
+        ],
+        "quantity": 12,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 41847500,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f005a14-1652-66ea-b4d2-c3450f36859e",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "JASY",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "JASY",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "1",
+          "id": "7"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "tender": {
+     "id": "1f005a06-dd3d-6ef2-b6b7-0de8b4f71ff0",
+     "title": "ADQUISICION Y MONTAJE DE PARQUES INFANTILES PARA 12 (DOCE) PLAZAS DE LA CIUDAD DE FERNANDO DE LA MORA",
+     "status": "complete",
+     "awardCriteria": "priceOnly",
+     "awardCriteriaDetails": "Por Total",
+     "submissionMethod": [
+      "inPerson"
+     ],
+     "bidOpening": {
+      "date": "2025-04-15T08:30:00-04:00",
+      "address": {
+       "streetAddress": "Municipalidad de Fernando de la Mora, oficina UOC"
+      }
+     },
+     "submissionMethodDetails": "Lugar entrega ofertas: Municipalidad de Fernando de la Mora, oficina UOC",
+     "statusDetails": "Adjudicada",
+     "enquiriesAddress": {
+      "streetAddress": "SICP"
+     },
+     "clarificationMeetings": [
+      {
+       "address": {
+        "streetAddress": "N/A"
+       },
+       "id": "1"
+      }
+     ],
+     "mainProcurementCategoryDetails": "Bienes - Equipos suministros y accesorios deportivos y recreativos",
+     "hasEnquiries": false,
+     "value": {
+      "amount": 530000000,
+      "currency": "PYG"
+     },
+     "datePublished": "2025-04-01T14:58:38-04:00",
+     "tenderPeriod": {
+      "startDate": "2025-04-01T14:58:38-04:00",
+      "endDate": "2025-04-15T08:00:00-04:00",
+      "durationInDays": 13
+     },
+     "awardPeriod": {
+      "startDate": "2025-04-15T08:30:00-04:00"
+     },
+     "enquiryPeriod": {
+      "endDate": "2025-04-10T12:00:00-04:00",
+      "startDate": "2025-04-01T14:58:38-04:00",
+      "durationInDays": 8
+     },
+     "mainProcurementCategory": "services",
+     "additionalProcurementCategories": [
+      "services"
+     ],
+     "procurementMethod": "open",
+     "procurementMethodDetails": "Menor cuantía nacional",
+     "procuringEntity": {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora"
+     },
+     "criteria": [
+      {
+       "id": "1",
+       "title": "Garantía de Mantenimiento de Ofertas",
+       "description": "Los oferentes, proveedores o contratistas deberán garantizar la seriedad de sus ofertas, mediante la garantía de mantenimiento de la oferta",
+       "source": "tenderer",
+       "requirementGroups": [
+        {
+         "id": "1-1",
+         "description": "La garantía debe ser de un cierto porcentaje, periodo y tipo",
+         "requirements": [
+          {
+           "id": "1-1-1",
+           "title": "Porcentaje de la garantia",
+           "expectedValue": "5"
+          },
+          {
+           "id": "1-1-2",
+           "title": "Validez de la garantia en días",
+           "expectedValue": "120"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "lots": [
+      {
+       "id": "1f005a14-1652-66ea-b4d2-c3450f36859e",
+       "title": "1 - 1 - PARQUES INFANTILES",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 528600000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "1"
+        }
+       ]
+      }
+     ],
+     "items": [
+      {
+       "id": "1f005a15-6814-698c-8f98-4d0e11491515",
+       "description": "Parque infantil completo de hierro",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "49241502-002",
+        "description": "Parque infantil completo de hierro",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/49241502-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "49241502",
+         "description": "Aparatos para parques infantiles",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/49241502"
+        }
+       ],
+       "quantity": 12,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 44050000,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f005a14-1652-66ea-b4d2-c3450f36859e",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "2"
+        }
+       ]
+      }
+     ],
+     "tenderers": [
+      {
+       "name": "ROSANA MAYUMI KASUGA MIRANDA ",
+       "id": "PY-RUC-3739044-9"
+      },
+      {
+       "name": "GERARDO ROLANDO AREVALOS DUARTE",
+       "id": "PY-RUC-2193811-3"
+      },
+      {
+       "name": "Distribuidora Jasy S.A.",
+       "id": "PY-RUC-80087130-8"
+      },
+      {
+       "name": "PEPI de Juan Sebastian Cricco Appleyard",
+       "id": "PY-RUC-1542560-6"
+      }
+     ],
+     "documents": [
+      {
+       "id": "dix2iRRDbik=",
+       "title": "URL de la Convocatoria",
+       "url": "https://www.contrataciones.gov.py/licitaciones/convocatoria/1f005a06-dd3d-6ef2-b6b7-0de8b4f71ff0.html",
+       "language": "es",
+       "documentType": "tenderNotice",
+       "format": "text/html"
+      },
+      {
+       "id": "f7079228-04fb-4aa4-bbad-5855c6312af7",
+       "datePublished": "2025-03-20T13:11:04-04:00",
+       "title": "dictamen-tecnico-mcn-id-462611-67dc3dea5d1de.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f005a06-dd3d-6ef2-b6b7-0de8b4f71ff0/files/f7079228-04fb-4aa4-bbad-5855c6312af7/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen técnico"
+      },
+      {
+       "id": "jc6ascrjBbcggk+wT9HCwg==",
+       "datePublished": "2025-04-01T13:58:37-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 462611 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1f005a06-dd3d-6ef2-b6b7-0de8b4f71ff0/1/json",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/json"
+      },
+      {
+       "id": "vNqSc896u5U=",
+       "datePublished": "2025-04-01T13:58:37-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 462611 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1f005a06-dd3d-6ef2-b6b7-0de8b4f71ff0/1",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/pdf"
+      },
+      {
+       "id": "3d8c81ea-e74b-4693-a181-66c162e78b82",
+       "datePublished": "2025-03-20T13:11:04-04:00",
+       "title": "planos-de-parques-infantiles-67dc3e0347bd6.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f005a06-dd3d-6ef2-b6b7-0de8b4f71ff0/files/3d8c81ea-e74b-4693-a181-66c162e78b82/download",
+       "language": "es",
+       "documentTypeDetails": "Planos o cómputos métricos"
+      },
+      {
+       "id": "a14c4359-2f28-4eae-863d-93cb6a3a459b",
+       "datePublished": "2025-03-28T13:20:48-04:00",
+       "title": "cdp-462611-67e6cc5042702.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f005a06-dd3d-6ef2-b6b7-0de8b4f71ff0/files/a14c4359-2f28-4eae-863d-93cb6a3a459b/download",
+       "language": "es",
+       "documentTypeDetails": "CDP"
+      },
+      {
+       "id": "6bbbc5e4-5ff4-46b3-9ab3-603348f6e39d",
+       "datePublished": "2025-03-28T13:20:48-04:00",
+       "title": "res-parque-67e6ae727b57c.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f005a06-dd3d-6ef2-b6b7-0de8b4f71ff0/files/6bbbc5e4-5ff4-46b3-9ab3-603348f6e39d/download",
+       "language": "es",
+       "documentTypeDetails": "Aprobación PBC"
+      },
+      {
+       "id": "2b3db7cf-78c8-439a-a02e-b4bdbe4273d5",
+       "datePublished": "2025-03-20T13:11:04-04:00",
+       "title": "dictamen-pr-mcn-id-462611-67dc3df3af007.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f005a06-dd3d-6ef2-b6b7-0de8b4f71ff0/files/2b3db7cf-78c8-439a-a02e-b4bdbe4273d5/download",
+       "language": "es",
+       "documentTypeDetails": "Antecedentes de la Estimación de Costos"
+      },
+      {
+       "id": "c19f6d7b-60c2-4968-a622-f9cea1af5cdf",
+       "datePublished": "2025-04-15T13:57:02-04:00",
+       "title": "ap-mcn-id-plazas-1432168716590535-67fe8fdda0de0.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f005a06-dd3d-6ef2-b6b7-0de8b4f71ff0/files/c19f6d7b-60c2-4968-a622-f9cea1af5cdf/download",
+       "language": "es",
+       "documentTypeDetails": "Acta de Apertura"
+      }
+     ],
+     "numberOfTenderers": 4
+    },
+    "language": "es",
+    "ocid": "ocds-03ad3f-462611-1",
+    "date": "2025-06-09T08:54:28-04:00",
+    "initiationType": "tender",
+    "buyer": {
+     "id": "DNCP-SICP-CODE-66",
+     "name": "Municipalidad de Fernando de la Mora"
+    },
+    "sources": [
+     {
+      "id": "dncp-sicp",
+      "name": "Sistema de Información de las Contrataciones Públicas - DNCP",
+      "url": "https://www.contrataciones.gov.py/"
+     }
+    ],
+    "contracts": [
+     {
+      "id": "MN-30173-25-252835",
+      "implementation": {
+       "financialProgress": {
+        "breakdown": [
+         {
+          "id": "2025/30/173/2/2/0/0/11/11/534/30/MN-30173-25-252835",
+          "period": {
+           "startDate": "2025-01-01T00:00:00Z",
+           "endDate": "2025-12-31T00:00:00Z"
+          },
+          "measures": {
+           "monto_a_utilizar": 530000000
+          },
+          "classifications": {
+           "anio": "2025",
+           "nivel": "30",
+           "entidad": "173",
+           "tipo_programa": "2",
+           "programa": "2",
+           "sub_programa": "0",
+           "proyecto": "0",
+           "financiador": "11",
+           "departamento": "11",
+           "objeto_gasto": "534",
+           "fuente_financiamiento": "30",
+           "cdp": "117535"
+          },
+          "financialCode": "MN-30173-25-252835"
+         }
+        ]
+       }
+      },
+      "awardID": "1f02a6e3-1712-66ac-8d95-d326d5d2a54c",
+      "status": "active",
+      "statusDetails": "publicado",
+      "period": {
+       "startDate": "2025-05-24T00:00:00-04:00"
+      },
+      "value": {
+       "amount": 502170000,
+       "currency": "PYG"
+      },
+      "documents": [
+       {
+        "id": "1f03b153-426a-6586-9afb-41c69bb27bfd",
+        "datePublished": "2025-05-27T13:11:10-04:00",
+        "title": "contrato-17-462611-6835e41e4f9c2.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f02a6e3-1712-66ac-8d95-d326d5d2a54c/files/6aed473b-81d6-4168-86de-dca0e27ee9eb/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1f041fa5-a4c4-6216-ac38-e9ecf3508e7a",
+        "datePublished": "2025-06-05T07:46:36-04:00",
+        "title": "resulcion-adj-1006-corregida-6841758c0ac54.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f02a6e3-1712-66ac-8d95-d326d5d2a54c/files/e9c74cd8-b213-4458-83bc-b9b61fd42875/download",
+        "language": "es",
+        "documentTypeDetails": "Nota de Contestación"
+       },
+       {
+        "id": "1f03b154-5f7b-65a2-96ef-b9050b4f06f5",
+        "datePublished": "2025-05-27T13:11:40-04:00",
+        "title": "cdp-462611-67e6cc5042702-6835e43c34b67.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f02a6e3-1712-66ac-8d95-d326d5d2a54c/files/cbb5a8ac-1f11-4a46-969e-31d2057f8762/download",
+        "language": "es",
+        "documentTypeDetails": "CDP"
+       },
+       {
+        "id": "1f041fa4-f2a1-6ba6-9a0e-7fbc9d119673",
+        "datePublished": "2025-06-05T07:46:17-04:00",
+        "title": "aclaracion-observacion-6841757958702.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f02a6e3-1712-66ac-8d95-d326d5d2a54c/files/a9eced72-9d1c-45ff-b47f-7c218e71b960/download",
+        "language": "es",
+        "documentTypeDetails": "Nota de Contestación"
+       },
+       {
+        "id": "1f03c8c7-44f3-697a-9f46-73e3474c16f3",
+        "datePublished": "2025-05-29T09:57:19-04:00",
+        "title": "resulcion-adj-1006-corregida-683859af382be.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f02a6e3-1712-66ac-8d95-d326d5d2a54c/files/d4f6c054-17e8-4870-8588-98e7531804ca/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       }
+      ]
+     }
+    ],
+    "planning": {
+     "identifier": "462611",
+     "estimatedDate": "2025-12-31T00:00:00-04:00",
+     "budget": {
+      "description": "ADQUISICION Y MONTAJE DE PARQUES INFANTILES PARA 12 (DOCE) PLAZAS DE LA CIUDAD DE FERNANDO DE LA MORA",
+      "amount": {
+       "currency": "PYG",
+       "amount": 530000000
+      },
+      "budgetBreakdown": [
+       {
+        "id": "2025/30/173/2/2/0/0/11/11/534/30-YnpUZvnKCuA=",
+        "sourceParty": {
+         "id": "66",
+         "name": "Municipalidad de Fernando de la Mora"
+        },
+        "period": {
+         "startDate": "2025-01-01T00:00:00Z",
+         "endDate": "2025-12-31T00:00:00Z"
+        },
+        "measures": {
+         "monto_utilizado": 530000000,
+         "monto_a_utilizar": 530000000
+        },
+        "classifications": {
+         "anio": "2025",
+         "nivel": "30",
+         "entidad": "173",
+         "tipo_programa": "2",
+         "programa": "2",
+         "sub_programa": "0",
+         "proyecto": "0",
+         "financiador": "11",
+         "departamento": "11",
+         "objeto_gasto": "534",
+         "fuente_financiamiento": "30",
+         "cdp": "117535"
+        }
+       }
+      ]
+     },
+     "items": [
+      {
+       "id": "1f005a02-cf15-6784-99a3-29837a54fabf",
+       "description": "Equipo de parques infantiles",
+       "classification": {
+        "scheme": "UNSPSC",
+        "id": "49241500",
+        "description": "Equipo de parques infantiles",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/49241500"
+       }
+      }
+     ]
+    },
+    "parties": [
+     {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora",
+      "identifier": {
+       "scheme": "DNCP-SICP-CODE",
+       "id": "66",
+       "legalName": "Municipalidad de Fernando de la Mora"
+      },
+      "contactPoint": {
+       "email": "morauoc@gmail.com",
+       "name": "LIC. ELIGIO ACOSTA",
+       "telephone": "+595 21 513-306"
+      },
+      "roles": [
+       "buyer",
+       "procuringEntity"
+      ],
+      "details": {
+       "level": "Municipalidades",
+       "entityType": "Municipalidades",
+       "type": "Entidad"
+      },
+      "additionalIdentifiers": [
+       {
+        "id": "2025.30.173",
+        "legalName": "Municipalidad de Fernando de la Mora",
+        "scheme": "PY-PGN"
+       }
+      ]
+     },
+     {
+      "name": "PEPI de Juan Sebastian Cricco Appleyard",
+      "id": "PY-RUC-1542560-6",
+      "identifier": {
+       "id": "1542560-6",
+       "legalName": "PEPI de Juan Sebastian Cricco Appleyard",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "Juan Sebastián Cricco Appleyard",
+       "email": "sebacricco@gmail.com",
+       "telephone": "0981-963-491",
+       "url": "http://www.pepi.com.py"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "Luque",
+       "region": "Central",
+       "streetAddress": "Florida 9029 - Luque"
+      },
+      "details": {
+       "scale": "micro",
+       "legalEntityTypeDetail": "Persona Física - Servicios Personales",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Muebles y Enseres",
+         "id": 23
+        },
+        {
+         "name": "Utiles de oficina, Productos de papel y cartón e impresos",
+         "id": 11
+        }
+       ]
+      }
+     },
+     {
+      "name": "GERARDO ROLANDO AREVALOS DUARTE",
+      "id": "PY-RUC-2193811-3",
+      "identifier": {
+       "id": "2193811-3",
+       "legalName": "GERARDO ROLANDO AREVALOS DUARTE",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "Gerardo Rolando Arevalos Duarte",
+       "email": "rolyarevalos@gmail.com",
+       "telephone": "0995/627000"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "ENCARNACION",
+       "region": "Itapúa",
+       "streetAddress": "Trinidad Ramirez c/Ernesto Gimenez. Bº Buena Vista"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Servicios Técnicos",
+         "id": 7
+        },
+        {
+         "name": "Muebles y Enseres",
+         "id": 23
+        },
+        {
+         "name": "Materiales e insumos eléctricos, metálicos y no metálicos, Plásticos, cauchos. Repuestos, herramientas, cámaras y cubiertas.",
+         "id": 18
+        },
+        {
+         "name": "Productos Alimenticios",
+         "id": 14
+        },
+        {
+         "name": "Construcción, Restauración, Reconstrucción o Remodelación y Reparación de Inmuebles",
+         "id": 21
+        },
+        {
+         "name": "Servicios de Limpiezas, Mantenimientos y reparaciones menores y mayores de Instalaciones, Maquinarias y Vehículos",
+         "id": 2
+        }
+       ]
+      }
+     },
+     {
+      "name": "ROSANA MAYUMI KASUGA MIRANDA ",
+      "id": "PY-RUC-3739044-9",
+      "identifier": {
+       "id": "3739044-9",
+       "legalName": "ROSANA MAYUMI KASUGA MIRANDA ",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "ROSANA MAYUMI KASUGA MIRANDA ",
+       "email": "kasugayasociados@hotmail.com",
+       "telephone": "0986/301-234"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "ENCARNACION (MUNICIPIO)",
+       "region": "Itapúa",
+       "streetAddress": "Calle Carlos Madelaire esq. Los Ceibos - Barrio San Pedro Casco Antiguo - Encarnación-py."
+      },
+      "details": {
+       "scale": "sme",
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Utensilios de cocina y comedor, Productos de Porcelana, vidrio y loza",
+         "id": 13
+        },
+        {
+         "name": "Muebles y Enseres",
+         "id": 23
+        },
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        },
+        {
+         "name": "Capacitaciones y Adiestramientos",
+         "id": 4
+        },
+        {
+         "name": "Construcción, Restauración, Reconstrucción o Remodelación y Reparación de Inmuebles",
+         "id": 21
+        }
+       ]
+      }
+     },
+     {
+      "name": "Distribuidora Jasy S.A.",
+      "id": "PY-RUC-80087130-8",
+      "identifier": {
+       "id": "80087130-8",
+       "legalName": "Distribuidora Jasy S.A.",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer",
+       "supplier"
+      ],
+      "contactPoint": {
+       "name": "Victor Rafael Luraghi Barrientos- Norma Catalina Marin",
+       "email": "jasydistribuidora@gmail.com",
+       "telephone": "0971917704"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "Luque",
+       "region": "Central",
+       "streetAddress": "Calle Desvio Ita Angu´a"
+      },
+      "details": {
+       "legalEntityTypeDetail": "S.A.",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        },
+        {
+         "name": "Construcción, Restauración, Reconstrucción o Remodelación y Reparación de Inmuebles",
+         "id": 21
+        },
+        {
+         "name": "Publicidad y Propaganda",
+         "id": 8
+        },
+        {
+         "name": "Utiles de oficina, Productos de papel y cartón e impresos",
+         "id": 11
+        },
+        {
+         "name": "Materiales e insumos eléctricos, metálicos y no metálicos, Plásticos, cauchos. Repuestos, herramientas, cámaras y cubiertas.",
+         "id": 18
+        },
+        {
+         "name": "Maquinarias, Equipos y herramientas mayores - Equipos de transporte",
+         "id": 22
+        }
+       ]
+      }
+     }
+    ],
+    "tag": [
+     "compiled"
+    ]
+   }
+  }
+ ],
+ "pagination": {
+  "total_items": 1,
+  "total_pages": 1,
+  "current_page": 1,
+  "items_per_page": 10,
+  "total_in_page": 1
+ }
+}

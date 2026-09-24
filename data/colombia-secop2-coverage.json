@@ -57,7 +57,8 @@
   "currency": "COP only; no conversion, no cross-currency sums.",
   "duration": "duraci_n_del_contrato kept as original free text at import; never rewritten. The explorer parses it read-only for the duration check (docs/score-colombia.md).",
   "identityCaveat": "Bogotá alcaldías locales share the generic NIT 899999061; Usaquén is matched by exact entity name and the shared NIT is kept as-is. Entity names keep their original noise (//, *, etc.).",
-  "rowIdentity": "secop2-{buyerKey}-{id_contrato}; verified unique below."
+  "rowIdentity": "secop2-{buyerKey}-{id_contrato}; verified unique below.",
+  "supplierIdentifier": "Published placeholder documents (for example 'No Definido') are treated as unknown for identity-based indicators; original values remain in raw pages."
  },
  "counts": {
   "rawRows": 7560,
@@ -66,17 +67,17 @@
    "Departamental": {
     "rows": 3696,
     "withAmount": 3696,
-    "withSupplierId": 3696
+    "withSupplierId": 3693
    },
    "Municipal-local (Bogotá)": {
     "rows": 1246,
     "withAmount": 1246,
-    "withSupplierId": 1246
+    "withSupplierId": 1245
    },
    "Nacional": {
     "rows": 2618,
     "withAmount": 2618,
-    "withSupplierId": 2618
+    "withSupplierId": 2615
    }
   },
   "liquidation": {
@@ -89,7 +90,7 @@
   "rowsWithContractId": 7560,
   "rowsWithProcessId": 7560,
   "rowsWithSupplierName": 7560,
-  "rowsWithSupplierIdentifier": 7560,
+  "rowsWithSupplierIdentifier": 7553,
   "rowsWithProcessUrl": 7560,
   "rowsWithDeclaredAmount": 7560,
   "duplicateExtractIds": 0,
@@ -119,6 +120,7 @@
   "Not exhaustive: only the three announced buyers in the 24-month window.",
   "SECOP II contract rows are declarations; amounts and statuses are not audited payments.",
   "No offers/proposals table was downloaded; no offer-count indicator exists for Colombia.",
+  "7 published supplier documents are missing or placeholders; supplier names remain, but identity-based checks exclude those identifiers.",
   "No country ranking, no currency conversion, no comparison with French cohorts.",
   "Editorial thresholds of docs/score-colombia.md are not Colombian legal thresholds; a signal is not a finding of irregularity, and no flag proves regularity."
  ],

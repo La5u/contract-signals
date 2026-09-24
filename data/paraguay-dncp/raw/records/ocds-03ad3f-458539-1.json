@@ -1,0 +1,888 @@
+{
+ "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/ocds-03ad3f-458539-1",
+ "publishedDate": "2026-09-22T17:53:52Z",
+ "publisher": {
+  "name": "Dirección Nacional de Contrataciones Públicas, Paraguay"
+ },
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "publicationPolicy": "https://www.contrataciones.gov.py/datos/legal",
+ "version": "1.1",
+ "extensions": [
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_breakdown_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_and_spend_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_enquiry_extension/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/enquiriesAddress/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/legalEntityTypeDetail/master/extension.json",
+  "https://raw.githubusercontent.com/gitMHOCDS/transactions/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_investmentproject_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_clarification_meetings_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_attributes_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_items_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_contract_suppliers_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_location_extension/v1.1.4/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_activityType_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_notifiedsuppliers_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_lots_details_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_memberOf_extension/master/extension.json",
+  "https://raw.githubusercontent.com/portaledcahn/ocds_tenderDatePublished_extension/master/extension.json",
+  "https://raw.githubusercontent.com/INAImexico/ocds_guarantees_extension/master/extension.json",
+  "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_requirements_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bidOpening_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_coveredBy_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_qualification_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_publicEntitiesDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_items_subItems_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_statusdetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_mainProcurementCategoryDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_identifier_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_estimatedDate_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_participationFee_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_amendments_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_lot_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_transaction_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_financialprogress_financialcode_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_categories_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_complaints_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_minQuantity_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_purchaseOrder_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_document_type_details/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_cancellations_amendments_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_milestone_documents_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_techniques_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bid_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_bid_items_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_auctions_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_secondStage_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_beneficiaries_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/Crown-Commercial-Service/ocds_tender_suitability_extension/main/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_subcontracting_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_sustainability_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_reportedpayment_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_milestone_deliveries_extension/raw/master/extension.json"
+ ],
+ "records": [
+  {
+   "ocid": "ocds-03ad3f-458539-1",
+   "releases": [
+    {
+     "date": "2025-03-11T14:11:16-04:00",
+     "tag": [
+      "planning",
+      "tender",
+      "award",
+      "contract",
+      "implementation"
+     ],
+     "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/releases/id/1efc9e6c-4e7c-6e42-9268-439d1fe2d387-1741702276"
+    }
+   ],
+   "compiledRelease": {
+    "id": "1efc9e6c-4e7c-6e42-9268-439d1fe2d387-1741702276",
+    "awards": [
+     {
+      "id": "1eff43b2-94b3-6986-a535-51d369060703",
+      "status": "active",
+      "statusDetails": "publicado",
+      "date": "2025-02-17T00:00:00-04:00",
+      "value": {
+       "amount": 155000000,
+       "currency": "PYG"
+      },
+      "suppliers": [
+       {
+        "name": "RENFE SA",
+        "id": "PY-RUC-80050419-4"
+       }
+      ],
+      "documents": [
+       {
+        "id": "1efee0cc-ce9b-6b88-bc2f-e93647238707",
+        "datePublished": "2025-02-18T12:27:01-04:00",
+        "title": "inf-eva-458-539-67b4a6c588969.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efee0ca-3e51-6840-afcb-db825a378e08/files/37df7838-7a98-4f35-980f-3040be9ffbbd/download",
+        "language": "es",
+        "documentTypeDetails": "Informe de Evaluación"
+       },
+       {
+        "id": "1efee0cc-00c3-6d14-889d-1b4c94cc70f5",
+        "datePublished": "2025-02-18T12:26:40-04:00",
+        "title": "gmail-notificacion-de-adjudicacion-mcn-458-539-67b4a6b000fcc.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efee0ca-3e51-6840-afcb-db825a378e08/files/f4dc8fbf-3799-43e3-b4b8-7de7c761a0b5/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "1eff43ba-1120-67c4-b825-7b71ae6ce321",
+        "datePublished": "2025-02-26T09:17:21-04:00",
+        "title": "cdp-458-539-67bf06514e987.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efee0ca-3e51-6840-afcb-db825a378e08/files/b4eff745-25ef-4ce4-a59f-7dd97cc0d00d/download",
+        "language": "es",
+        "documentTypeDetails": "Nota de Contestación"
+       },
+       {
+        "id": "1efee0cc-6240-638a-9a7a-59ecece6b165",
+        "datePublished": "2025-02-18T12:26:50-04:00",
+        "title": "cuadro-comparativo-id-458-539-67b4a6ba357ac.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efee0ca-3e51-6840-afcb-db825a378e08/files/4848ff30-f8d3-43a9-b6be-711ffcb9fa52/download",
+        "language": "es",
+        "documentTypeDetails": "Cuadro Comparativo de Ofertas"
+       },
+       {
+        "id": "1efee0cb-63f2-613e-8633-75e439531989",
+        "datePublished": "2025-02-18T12:26:23-04:00",
+        "title": "res-adj-458-539-67b4a69f8144c.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efee0ca-3e51-6840-afcb-db825a378e08/files/bbe26555-f570-449c-b2c6-85b21579d607/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "dix2iRRDbik=",
+        "title": "URL de la Adjudicación",
+        "url": "https://www.contrataciones.gov.py/licitaciones/adjudicacion/1efee0ca-3e51-6840-afcb-db825a378e08/resumen-adjudicacion.html",
+        "language": "es",
+        "documentType": "awardNotice",
+        "format": "text/html"
+       },
+       {
+        "id": "1efee0cb-bc61-67ca-a821-c9dd8265f8da",
+        "datePublished": "2025-02-18T12:26:32-04:00",
+        "title": "nota-a-proveedores-67b4a6a8c9c14.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efee0ca-3e51-6840-afcb-db825a378e08/files/6b6ddd34-2d18-41a8-9503-8ad8485d59d5/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       }
+      ],
+      "items": [
+       {
+        "id": "1efc9e70-cbac-6260-86f2-271649d41f59",
+        "description": "Ascensor para EDIFICIO DE TRANSITO",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "24101601-026",
+         "description": "Ascensor para personas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/24101601-026"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "24101601",
+          "description": "Ascensores y accesorios",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/24101601"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 135000000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1efc9e6f-4898-699c-88be-0ff138ee9777",
+        "attributes": [
+         {
+          "value": "PARAGUAYA",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "RENFE",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "RENFE",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "1",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1efc9e72-a8d0-66d6-9cd2-e3a55d4f10c4",
+        "description": "Servicio de instalación DE ASCENSORES PARA EDIFICIO DE TRANSITO",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72154010-001",
+         "description": "Servicio de instalación, mantenimiento y reparación de ascensores",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72154010-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72154010",
+          "description": "Servicio de instalación, mantenimiento y reparación de ascensores",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72154010"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 20000000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1efc9e6f-4898-699c-88be-0ff138ee9777",
+        "attributes": [
+         {
+          "value": "Paraguay",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "2",
+          "id": "7"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "tender": {
+     "id": "1efc9e6c-4e7c-6e42-9268-439d1fe2d387",
+     "title": "ADQUISICION E INSTALACION DE ASCENSOR PARA EDIFICIO DE TRANSITO",
+     "status": "complete",
+     "awardCriteria": "priceOnly",
+     "awardCriteriaDetails": "Por Total",
+     "submissionMethod": [
+      "inPerson"
+     ],
+     "bidOpening": {
+      "date": "2025-01-31T11:30:00-04:00",
+      "address": {
+       "streetAddress": "Municipalidad de Fernando de la Mora, oficina UOC"
+      }
+     },
+     "submissionMethodDetails": "Lugar entrega ofertas: Municipalidad de Fernando de la Mora, oficina UOC",
+     "statusDetails": "Adjudicada",
+     "enquiriesAddress": {
+      "streetAddress": "SICP"
+     },
+     "clarificationMeetings": [
+      {
+       "date": "2025-01-27T10:00:00-04:00",
+       "address": {
+        "streetAddress": "EDIFICIO DE TRANSITO MUNICIPALIDAD FERNANDO DE LA MORA"
+       },
+       "id": "1"
+      }
+     ],
+     "mainProcurementCategoryDetails": "Bienes - Maquinaria Accesorios y Suministros para Manejo, Acondicionamiento y Almacenamiento de Materiales",
+     "hasEnquiries": false,
+     "value": {
+      "amount": 160000000,
+      "currency": "PYG"
+     },
+     "datePublished": "2025-01-20T14:22:15-04:00",
+     "tenderPeriod": {
+      "startDate": "2025-01-20T14:22:15-04:00",
+      "endDate": "2025-01-31T11:00:00-04:00",
+      "durationInDays": 10
+     },
+     "awardPeriod": {
+      "startDate": "2025-01-31T11:30:00-04:00"
+     },
+     "enquiryPeriod": {
+      "endDate": "2025-01-28T08:00:00-04:00",
+      "startDate": "2025-01-20T14:22:15-04:00",
+      "durationInDays": 7
+     },
+     "mainProcurementCategory": "services",
+     "additionalProcurementCategories": [
+      "services"
+     ],
+     "procurementMethod": "open",
+     "procurementMethodDetails": "Menor cuantía nacional",
+     "procuringEntity": {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora"
+     },
+     "criteria": [
+      {
+       "id": "1",
+       "title": "Garantía de Mantenimiento de Ofertas",
+       "description": "Los oferentes, proveedores o contratistas deberán garantizar la seriedad de sus ofertas, mediante la garantía de mantenimiento de la oferta",
+       "source": "tenderer",
+       "requirementGroups": [
+        {
+         "id": "1-1",
+         "description": "La garantía debe ser de un cierto porcentaje, periodo y tipo",
+         "requirements": [
+          {
+           "id": "1-1-1",
+           "title": "Porcentaje de la garantia",
+           "expectedValue": "5"
+          },
+          {
+           "id": "1-1-2",
+           "title": "Validez de la garantia en días",
+           "expectedValue": "120"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "enquiries": [
+      {
+       "id": "5ff4123f47d361e3a386eb456c708fd1-1",
+       "date": "2025-01-24T10:30:52-04:00",
+       "title": "Consulta.",
+       "description": "Con respecto a la planilla de precios generada en el sistema, la columna correspondiente  a \"Montos\" ¿A qué se refiere o con qué se debería de completar?"
+      },
+      {
+       "id": "56abd374ff6d6cb6158d36cf4a711501-1",
+       "date": "2025-01-27T11:02:56-04:00",
+       "title": "Capacidad Técnica",
+       "description": "Conforme lo descripto en el Art. 19 de la Ley 7021: \"....y, además, acrediten su solvencia económica, financiera y técnica o profesional, se requiere que a fin de asegurar a la entidad convocante, que contrate finalmente una empresa que reúna los presupuestos enunciados, se adende el PBC con el siguiente enunciado para la Capacidad Técnica: Con el objetivo de calificar la capacidad técnica del oferente, se considerarán los siguientes índices: El oferente deberá proporcionar evidencia documentada que demuestre su cumplimiento con los siguientes requisitos de capacidad técnica: La empresa a contratar deberá contar con infraestructura mínima en: - Staff de técnicos, transportes, herramientas, equipos de seguridad, comunicación y stock de repuestos para provisión inmediata. - Debe disponer de un local de servicio técnico. (La convocante se reserva el derecho de realizar inspección in situ).\nDocumentación para evaluar el criterio: - Declaración Jurada que deberá contener el listado de herramientas, equipos de seguridad, (arnés, aparejos, cascos, chalecos reflectivos, cintas de perímetro, malla para caída, carteles indicadores de seguridad). - Declaración Jurada de contar con staff de técnicos en relación de dependencia, técnicos certificados, en mantenimiento y/o reparación de ascensores. - Declaración Jurada donde manifieste como oferente que conoce y cuenta con capacidad técnica, para reparar y mantener equipos ascensores. - Declaración jurada de contar con stock de repuestos originales de la marca especificada en el PBC necesarios para poder proveer e instalar en forma inmediata para evitar la parada prolongada del equipo, estimando como tiempo límite de cinco días hábiles para la reactivación del equipo. - Declaración Jurada de contar con un vehículo de servicio técnico, afín de dar atención rápida a los reclamos urgentes de la institución. - Contar en el plantel con un Ingeniero Electromecánico, o Mecatrónico, o Industrial o en Electricidad, con Registro profesional al día y en relación de dependencia de mínimo 6 meses de antigüedad comprobable con la planilla de sueldos generados automáticamente. El mismo será el nexo con el administrador de contratos y validará los informes emitidos. (Informe pre y post Mantenimiento Preventivo y Correctivo). Se comprobará dicha exigencia con la presentación del Curriculum Vitae del personal propuesto. b-) Técnicos y ayudantes técnicos propuestos: deberán contar con certificación en mantenimiento y/o reparación de ascensores derivadas de entidades públicas o privadas, seguridad eléctrica laboral y deberán estar en relación de dependencia. Esta solicitud se debe a que los mismos estarán desarrollando trabajos eléctricos para los cuales es fundamental tomar las debidas precauciones y medidas de seguridad al momento de desarrollar dichos trabajos."
+      },
+      {
+       "id": "4e099785d82b3295ef6eac25ee2cd689-1",
+       "date": "2025-01-27T11:03:38-04:00",
+       "title": "Experiencia",
+       "description": "Conforme lo descripto en el Art. 19 de la Ley 7021: \"....y, además, acrediten su solvencia económica, financiera y técnica o profesional, se requiere que a fin de asegurar a la entidad convocante, que contrate finalmente una empresa que reúna los presupuestos enunciados, se adende el PBC con el siguiente enunciado para la Experiencia: Experiencia requerida: - El oferente deberá presentar facturación de venta y/o Mantenimiento y/o reparación de elevadores ejecutados relacionados al objeto de la presente contratación (MANTENIMIENTO Y REPARACIÓN DE ASCENSORES) ya sea en entidades públicas y/o privadas expedidas que acredite el cumplimiento satisfactorio en la prestación de los servicios, cuya sumatoria deberá ser de los últimos 3 (tres) años 2021, 2022 Y 2023 deberá ser como mínimo el 50% (cincuenta por ciento) del monto máximo de la oferta. Se aclara que no es necesario contar con un contrato por año. - Presentar DDJJ de conocer el sitio y que cuenta con la información necesaria para preparar la oferta"
+      },
+      {
+       "id": "bfe15c6e94434cffee3c1b3b48f5bd69-1",
+       "date": "2025-01-27T11:02:49-04:00",
+       "title": "Autorización del Fabricante",
+       "description": "Conforme lo descripto en el Art. 19 de la Ley 7021: \"....y, además, acrediten su solvencia económica, financiera y técnica o profesional, se requiere que a fin de asegurar a la entidad convocante, que contrate finalmente una empresa que reúna los presupuestos enunciados, se adende el PBC con el siguiente enunciado para la Autorización del Fabricante: La empresa oferente deberá contar con Autorización expedida por el fabricante para representantes, distribuidores y sub-distribuidores de los productos ofrecidos en idioma español o debidamente traducida por traductor publico matriculado. Para representantes debe reunir los siguientes requisitos: Documentación expedida por el Fabricante que lo acredite como representante y/o Centro Autorizado de Servicios de la marca ofertada y, dichos documentos deben estar debidamente legalizados por el Consulado Paraguayo del País de emisión del documento y del Ministerio de Relaciones Exteriores de la República del Paraguay. Los mismos deben ser originales o copias autenticadas por Escribano Público. Para Distribuidor Autorizado debe reunir los siguientes requisitos: Documentación expedida por el Fabricante que lo acredite como distribuidor y/o Centro Autorizado de Servicios de la marca ofertada, para tal efecto debe presentar el documento original o copia autenticada por Escribano Público, y el mismo debe estar debidamente legalizado por el Consulado Paraguayo del País de emisión del documento y del Ministerio de Relaciones Exteriores de la República de Paraguay. - Para Sub-Distribuidor debe reunir los siguientes requisitos : Documentación expedida por el Fabricante, Representante o distribuidor autorizado que lo acredite como sub-distribuidor y/o Centro Autorizado de Servicios de la marca ofertada acompañado del Documento original o copia autenticada por Escribano Público de la autorización del Fabricante extendida al Representante, Distribuidor y/o Resellers para el PARAGUAY Y/O LATINOAMÉRICA que lo nombra como representante, o distribuidor autorizado de la marca ofertada y en la cual lo autoriza a nombrar sub-distribuidores y/o Centro Autorizado de Servicios. Para tal efecto debe presentar el documento original o copia autenticada por Escribano Público, y el mismo debe estar debidamente legalizado por el Consulado Paraguayo del País de emisión del documento y del Ministerio de Relaciones Exteriores de la República del Paraguay. Serán considerados válidos los documentos apostillados como los documentos legalizados por el Consulado y el Ministerio de Relaciones Exteriores en conformidad a la Ley N° 4987/13 QUE APRUEBA EL CONVENIO SUPRIMIENDO LA EXIGENCIA DE LA LEGALIZACIÓN DE LOS DOCUMENTOS PÚBLICOS EXTRANJEROS"
+      }
+     ],
+     "lots": [
+      {
+       "id": "1efc9e6f-4898-699c-88be-0ff138ee9777",
+       "title": "1 - 1 - ADQUISICION E INSTALACION DE ASCENSOR",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 159771914,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "1"
+        }
+       ]
+      }
+     ],
+     "items": [
+      {
+       "id": "1efc9e72-a8d0-66d6-9cd2-e3a55d4f10c4",
+       "description": "Servicio de instalación DE ASCENSORES PARA EDIFICIO DE TRANSITO",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72154010-001",
+        "description": "Servicio de instalación, mantenimiento y reparación de ascensores",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72154010-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72154010",
+         "description": "Servicio de instalación, mantenimiento y reparación de ascensores",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72154010"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 22417500,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1efc9e6f-4898-699c-88be-0ff138ee9777",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "2",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1efc9e70-cbac-6260-86f2-271649d41f59",
+       "description": "Ascensor para EDIFICIO DE TRANSITO",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "24101601-026",
+        "description": "Ascensor para personas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/24101601-026"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "24101601",
+         "description": "Ascensores y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/24101601"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 137354414,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1efc9e6f-4898-699c-88be-0ff138ee9777",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "2"
+        }
+       ]
+      }
+     ],
+     "tenderers": [
+      {
+       "name": "GUSTAVO ADOLFO GALLARDO PEREZ",
+       "id": "PY-RUC-2088958-5"
+      },
+      {
+       "name": "Marcos Antonio Mareco Arzamendia ",
+       "id": "PY-RUC-5665699-8"
+      },
+      {
+       "name": "SIMON RECALDE ROMERO",
+       "id": "PY-RUC-2350907-4"
+      },
+      {
+       "name": "RENFE SA",
+       "id": "PY-RUC-80050419-4"
+      }
+     ],
+     "documents": [
+      {
+       "id": "dix2iRRDbik=",
+       "title": "URL de la Convocatoria",
+       "url": "https://www.contrataciones.gov.py/licitaciones/convocatoria/1efc9e6c-4e7c-6e42-9268-439d1fe2d387.html",
+       "language": "es",
+       "documentType": "tenderNotice",
+       "format": "text/html"
+      },
+      {
+       "id": "f80d2456-6773-4e8c-a777-74c8168c61cb",
+       "datePublished": "2025-02-03T13:30:43-04:00",
+       "title": "ap-458539001-565620987295075-67a0ef32cb6fc.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1efc9e6c-4e7c-6e42-9268-439d1fe2d387/files/f80d2456-6773-4e8c-a777-74c8168c61cb/download",
+       "language": "es",
+       "documentTypeDetails": "Acta de Apertura"
+      },
+      {
+       "id": "h+8j1DVuaGHRZq9P2Xcfsw==",
+       "datePublished": "2025-01-20T14:22:15-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 458539 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1efc9e6c-4e7c-6e42-9268-439d1fe2d387/1/json",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/json"
+      },
+      {
+       "id": "7801c2ad-98e1-44b8-aa69-02eceffe5748",
+       "datePublished": "2025-01-03T12:53:15-04:00",
+       "title": "dictamen-tecnico-id-459539-677807a3afa8c.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1efc9e6c-4e7c-6e42-9268-439d1fe2d387/files/7801c2ad-98e1-44b8-aa69-02eceffe5748/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen técnico"
+      },
+      {
+       "id": "a6f84499-a30b-413e-a1f2-15fb7e0a7cfa",
+       "datePublished": "2025-01-03T12:53:15-04:00",
+       "title": "resolucion-aprobacion-de-pbc-y-llamado-id-458539-6778079c34314.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1efc9e6c-4e7c-6e42-9268-439d1fe2d387/files/a6f84499-a30b-413e-a1f2-15fb7e0a7cfa/download",
+       "language": "es",
+       "documentTypeDetails": "Aprobación PBC"
+      },
+      {
+       "id": "e743a5f1-41c4-46bd-8a3b-c804798d0ae1",
+       "datePublished": "2025-01-03T12:53:15-04:00",
+       "title": "pr-458539-677807b183664.zip",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1efc9e6c-4e7c-6e42-9268-439d1fe2d387/files/e743a5f1-41c4-46bd-8a3b-c804798d0ae1/download",
+       "language": "es",
+       "documentTypeDetails": "Antecedentes de la Estimación de Costos"
+      },
+      {
+       "id": "6659504e-77c6-4b25-9b56-3849a75f9971",
+       "datePublished": "2025-01-03T12:53:15-04:00",
+       "title": "constancia-ad-referendum-mcn-id-458539-67780793aa04a.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1efc9e6c-4e7c-6e42-9268-439d1fe2d387/files/6659504e-77c6-4b25-9b56-3849a75f9971/download",
+       "language": "es",
+       "documentTypeDetails": "Constancia Ad referéndum"
+      },
+      {
+       "id": "rA4QhuT+F90=",
+       "datePublished": "2025-01-20T14:22:15-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 458539 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1efc9e6c-4e7c-6e42-9268-439d1fe2d387/1",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/pdf"
+      }
+     ],
+     "numberOfTenderers": 4
+    },
+    "language": "es",
+    "ocid": "ocds-03ad3f-458539-1",
+    "date": "2025-03-11T14:11:16-04:00",
+    "initiationType": "tender",
+    "buyer": {
+     "id": "DNCP-SICP-CODE-66",
+     "name": "Municipalidad de Fernando de la Mora"
+    },
+    "sources": [
+     {
+      "id": "dncp-sicp",
+      "name": "Sistema de Información de las Contrataciones Públicas - DNCP",
+      "url": "https://www.contrataciones.gov.py/"
+     }
+    ],
+    "contracts": [
+     {
+      "id": "MN-30173-25-250443",
+      "implementation": {
+       "financialProgress": {
+        "breakdown": [
+         {
+          "id": "2025/30/173/2/2/0/0/11/11/522/30/MN-30173-25-250443",
+          "period": {
+           "startDate": "2025-01-01T00:00:00Z",
+           "endDate": "2025-12-31T00:00:00Z"
+          },
+          "measures": {
+           "monto_a_utilizar": 160000000
+          },
+          "classifications": {
+           "anio": "2025",
+           "nivel": "30",
+           "entidad": "173",
+           "tipo_programa": "2",
+           "programa": "2",
+           "sub_programa": "0",
+           "proyecto": "0",
+           "financiador": "11",
+           "departamento": "11",
+           "objeto_gasto": "522",
+           "fuente_financiamiento": "30"
+          },
+          "financialCode": "MN-30173-25-250443"
+         }
+        ]
+       }
+      },
+      "awardID": "1eff43b2-94b3-6986-a535-51d369060703",
+      "status": "active",
+      "statusDetails": "publicado",
+      "period": {
+       "startDate": "2025-03-06T00:00:00-04:00"
+      },
+      "value": {
+       "amount": 155000000,
+       "currency": "PYG"
+      },
+      "documents": [
+       {
+        "id": "1effaa13-615e-6050-9df8-1f67d1d68944",
+        "datePublished": "2025-03-06T12:39:37-04:00",
+        "title": "res-adj-458-539-67c9c1b974462.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1eff43b2-94b3-6986-a535-51d369060703/files/a477b0c0-04ed-4abd-8f67-54535ba34af1/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1effaa13-138d-6ef2-a4ee-09cae9fde1f5",
+        "datePublished": "2025-03-06T12:39:29-04:00",
+        "title": "contrato-11-renfe-67c9c1b151538.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1eff43b2-94b3-6986-a535-51d369060703/files/3c259d36-a1b5-4019-bc64-8a6781fa81cd/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1effaa13-b9dc-6c86-bdfe-dfe58150515d",
+        "datePublished": "2025-03-06T12:39:46-04:00",
+        "title": "cdp-458-539-67c9c1c2bfde0.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1eff43b2-94b3-6986-a535-51d369060703/files/51596ae9-6cfd-4ab6-82be-9a202b7a132c/download",
+        "language": "es",
+        "documentTypeDetails": "CDP"
+       }
+      ]
+     }
+    ],
+    "planning": {
+     "identifier": "458539",
+     "estimatedDate": "2025-04-30T00:00:00-04:00",
+     "budget": {
+      "description": "ADQUISICION E INSTALACION DE ASCENSOR PARA EDIFICIO DE TRANSITO",
+      "amount": {
+       "currency": "PYG",
+       "amount": 160000000
+      }
+     },
+     "items": [
+      {
+       "id": "1efc9e5d-a1e0-62f0-97a6-7b1cc51db99c",
+       "description": "Equipo de elevacion y accesorios",
+       "classification": {
+        "scheme": "UNSPSC",
+        "id": "24101600",
+        "description": "Equipo de elevacion y accesorios",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/24101600"
+       }
+      }
+     ]
+    },
+    "parties": [
+     {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora",
+      "identifier": {
+       "scheme": "DNCP-SICP-CODE",
+       "id": "66",
+       "legalName": "Municipalidad de Fernando de la Mora"
+      },
+      "contactPoint": {
+       "email": "morauoc@gmail.com",
+       "name": "LIC. ELIGIO ACOSTA",
+       "telephone": "+595 21 513-306"
+      },
+      "roles": [
+       "buyer",
+       "procuringEntity"
+      ],
+      "details": {
+       "level": "Municipalidades",
+       "entityType": "Municipalidades",
+       "type": "Entidad"
+      },
+      "additionalIdentifiers": [
+       {
+        "id": "2025.30.173",
+        "legalName": "Municipalidad de Fernando de la Mora",
+        "scheme": "PY-PGN"
+       }
+      ]
+     },
+     {
+      "name": "GUSTAVO ADOLFO GALLARDO PEREZ",
+      "id": "PY-RUC-2088958-5",
+      "identifier": {
+       "id": "2088958-5",
+       "legalName": "GUSTAVO ADOLFO GALLARDO PEREZ",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "enquirer",
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "GUSTAVO ADOLFO GALLARDO PEREZ",
+       "email": "rgparaguay.licitaciones@gmail.com",
+       "telephone": "0981910553"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "SAN LORENZO",
+       "region": "Central",
+       "streetAddress": "ANTONIO RUIZ MONTOYA CASI BRÍTEZ BORGES"
+      },
+      "details": {
+       "scale": "sme",
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Servicios Técnicos",
+         "id": 7
+        },
+        {
+         "name": "Maquinarias, Equipos y herramientas mayores - Equipos de transporte",
+         "id": 22
+        },
+        {
+         "name": "Servicios de Limpiezas, Mantenimientos y reparaciones menores y mayores de Instalaciones, Maquinarias y Vehículos",
+         "id": 2
+        },
+        {
+         "name": "Materiales e insumos eléctricos, metálicos y no metálicos, Plásticos, cauchos. Repuestos, herramientas, cámaras y cubiertas.",
+         "id": 18
+        }
+       ]
+      }
+     },
+     {
+      "name": "SIMON RECALDE ROMERO",
+      "id": "PY-RUC-2350907-4",
+      "identifier": {
+       "id": "2350907-4",
+       "legalName": "SIMON RECALDE ROMERO",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "SIMON RECALDE ROMERO",
+       "email": "ATENCION@ASTELEV.COM.PY",
+       "telephone": "0985313066",
+       "url": "https://www.astelev.com.py/"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "LAMBARE",
+       "region": "Central",
+       "streetAddress": "AVDA. BRUNO GUGGIARI Nº998 C/ ARASA"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Servicios de Limpiezas, Mantenimientos y reparaciones menores y mayores de Instalaciones, Maquinarias y Vehículos",
+         "id": 2
+        },
+        {
+         "name": "Servicios Técnicos",
+         "id": 7
+        },
+        {
+         "name": "Materiales e insumos eléctricos, metálicos y no metálicos, Plásticos, cauchos. Repuestos, herramientas, cámaras y cubiertas.",
+         "id": 18
+        },
+        {
+         "name": "Maquinarias, Equipos y herramientas mayores - Equipos de transporte",
+         "id": 22
+        }
+       ]
+      }
+     },
+     {
+      "name": "Marcos Antonio Mareco Arzamendia ",
+      "id": "PY-RUC-5665699-8",
+      "identifier": {
+       "id": "5665699-8",
+       "legalName": "Marcos Antonio Mareco Arzamendia ",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "Marcos Antonio Mareco Arzamendia ",
+       "email": "travepar.licitaciones@gmail.com",
+       "telephone": "0981597561"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "SAN ANTONIO",
+       "region": "Central",
+       "streetAddress": "CALLE CERRITO 786 C/ PASO DE PATRIA"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Servicios de Limpiezas, Mantenimientos y reparaciones menores y mayores de Instalaciones, Maquinarias y Vehículos",
+         "id": 2
+        }
+       ]
+      }
+     },
+     {
+      "name": "RENFE SA",
+      "id": "PY-RUC-80050419-4",
+      "identifier": {
+       "id": "80050419-4",
+       "legalName": "RENFE SA",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "supplier",
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "ANDREA CAROLINA ARANDA DUARTE",
+       "email": "renfe_sa@hotmail.com",
+       "faxNumber": "213763",
+       "telephone": "0985508473"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "FERNANDO DE LA MORA",
+       "region": "Central",
+       "streetAddress": "CALLE INDIA 2291"
+      },
+      "details": {
+       "legalEntityTypeDetail": "S.A.",
+       "activityTypes": [
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Muebles y Enseres",
+         "id": 23
+        }
+       ]
+      }
+     }
+    ],
+    "tag": [
+     "compiled"
+    ]
+   }
+  }
+ ],
+ "pagination": {
+  "total_items": 1,
+  "total_pages": 1,
+  "current_page": 1,
+  "items_per_page": 10,
+  "total_in_page": 1
+ }
+}

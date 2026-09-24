@@ -1,0 +1,662 @@
+{
+ "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/ocds-03ad3f-457716-1",
+ "publishedDate": "2026-09-22T17:54:06Z",
+ "publisher": {
+  "name": "Dirección Nacional de Contrataciones Públicas, Paraguay"
+ },
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "publicationPolicy": "https://www.contrataciones.gov.py/datos/legal",
+ "version": "1.1",
+ "extensions": [
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_breakdown_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_and_spend_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_enquiry_extension/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/enquiriesAddress/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/legalEntityTypeDetail/master/extension.json",
+  "https://raw.githubusercontent.com/gitMHOCDS/transactions/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_investmentproject_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_clarification_meetings_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_attributes_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_items_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_contract_suppliers_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_location_extension/v1.1.4/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_activityType_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_notifiedsuppliers_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_lots_details_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_memberOf_extension/master/extension.json",
+  "https://raw.githubusercontent.com/portaledcahn/ocds_tenderDatePublished_extension/master/extension.json",
+  "https://raw.githubusercontent.com/INAImexico/ocds_guarantees_extension/master/extension.json",
+  "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_requirements_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bidOpening_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_coveredBy_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_qualification_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_publicEntitiesDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_items_subItems_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_statusdetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_mainProcurementCategoryDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_identifier_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_estimatedDate_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_participationFee_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_amendments_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_lot_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_transaction_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_financialprogress_financialcode_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_categories_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_complaints_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_minQuantity_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_purchaseOrder_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_document_type_details/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_cancellations_amendments_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_milestone_documents_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_techniques_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bid_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_bid_items_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_auctions_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_secondStage_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_beneficiaries_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/Crown-Commercial-Service/ocds_tender_suitability_extension/main/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_subcontracting_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_sustainability_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_reportedpayment_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_milestone_deliveries_extension/raw/master/extension.json"
+ ],
+ "records": [
+  {
+   "ocid": "ocds-03ad3f-457716-1",
+   "releases": [
+    {
+     "date": "2025-01-31T08:53:32-04:00",
+     "tag": [
+      "planning",
+      "tender",
+      "award",
+      "contract",
+      "implementation"
+     ],
+     "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/releases/id/1efa3623-e654-60ac-80d1-cb3a948b011b-1738313612"
+    }
+   ],
+   "compiledRelease": {
+    "id": "1efa3623-e654-60ac-80d1-cb3a948b011b-1738313612",
+    "awards": [
+     {
+      "id": "1efd99c9-b3a6-6f1c-a99e-3d6e241d438f",
+      "status": "active",
+      "statusDetails": "publicado",
+      "date": "2025-01-22T00:00:00-04:00",
+      "value": {
+       "amount": 529950000,
+       "currency": "PYG"
+      },
+      "suppliers": [
+       {
+        "name": "EL FAROL S. A.",
+        "id": "PY-RUC-80022067-6"
+       }
+      ],
+      "documents": [
+       {
+        "id": "1efd99ce-b2cd-66fe-93f1-970d7cdd3ba5",
+        "datePublished": "2025-01-23T12:15:45-04:00",
+        "title": "resolucion-de-adjudicacion-mcn-id-457716001-67925d213102e.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efd99c8-76fe-67aa-974a-4d00ee3bf20f/files/b973ee25-8e82-43c1-bea0-68edec7dff1f/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "1efd99cf-af14-6660-9077-95dd05e8f5f7",
+        "datePublished": "2025-01-23T12:16:12-04:00",
+        "title": "informe-de-evaluacion-mcn-id-457716001-67925d3bacbf9.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efd99c8-76fe-67aa-974a-4d00ee3bf20f/files/a19af666-2f5d-46b6-af84-7b55e662c3af/download",
+        "language": "es",
+        "documentTypeDetails": "Informe de Evaluación"
+       },
+       {
+        "id": "1efd99d0-11c2-6172-b865-ddecbf485b70",
+        "datePublished": "2025-01-23T12:16:22-04:00",
+        "title": "notificacion-adjudicacion-a-firmas-mcn-id-457716001-67925d46141b4.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efd99c8-76fe-67aa-974a-4d00ee3bf20f/files/d247779f-8c0a-4762-8747-0339b50b6a08/download",
+        "language": "es",
+        "documentTypeDetails": "Nota de Contestación"
+       },
+       {
+        "id": "dix2iRRDbik=",
+        "title": "URL de la Adjudicación",
+        "url": "https://www.contrataciones.gov.py/licitaciones/adjudicacion/1efd99c8-76fe-67aa-974a-4d00ee3bf20f/resumen-adjudicacion.html",
+        "language": "es",
+        "documentType": "awardNotice",
+        "format": "text/html"
+       },
+       {
+        "id": "1efd99cf-0353-6ad8-8acf-6b6a99bc8a29",
+        "datePublished": "2025-01-23T12:15:53-04:00",
+        "title": "cuadro-comparativo-mcn-id-457716001-67925d29b3b4b.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efd99c8-76fe-67aa-974a-4d00ee3bf20f/files/17ffa26b-51d8-4f44-ad59-ffbf54499b9a/download",
+        "language": "es",
+        "documentTypeDetails": "Cuadro Comparativo de Ofertas"
+       }
+      ],
+      "items": [
+       {
+        "id": "1efa3628-9d51-6bf2-ab28-31340df31f89",
+        "description": "DISPOSICIÓN FINAL DE RESIDUOS",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "76121501-9998",
+         "description": "Servicio de recoleccion, transporte, tratamiento y disposicion final de residuos patologicos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/76121501-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "76121501",
+          "description": "Recogida, destruccion, transformacion o eliminacion de basuras",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/76121501"
+         }
+        ],
+        "quantity": 3533,
+        "unit": {
+         "name": "Tonelada",
+         "id": "TN",
+         "value": {
+          "amount": 150000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1efa3626-87d9-67a4-a9ad-a9a0701be70e",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "1",
+          "id": "7"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "tender": {
+     "id": "1efa3623-e654-60ac-80d1-cb3a948b011b",
+     "title": "DISPOSICIÓN FINAL DE RESIDUOS",
+     "status": "complete",
+     "awardCriteria": "priceOnly",
+     "awardCriteriaDetails": "Por Total",
+     "submissionMethod": [
+      "inPerson"
+     ],
+     "bidOpening": {
+      "date": "2024-12-20T08:30:00-04:00",
+      "address": {
+       "streetAddress": "Municipalidad de Fernando de la Mora, oficina UOC"
+      }
+     },
+     "submissionMethodDetails": "Lugar entrega ofertas: Municipalidad de Fernando de la Mora, oficina UOC",
+     "statusDetails": "Adjudicada",
+     "enquiriesAddress": {
+      "streetAddress": "SICP"
+     },
+     "clarificationMeetings": [
+      {
+       "address": {
+        "streetAddress": "N/A"
+       },
+       "id": "1"
+      }
+     ],
+     "mainProcurementCategoryDetails": "Servicios - Servicios de Limpieza Industrial",
+     "hasEnquiries": false,
+     "value": {
+      "amount": 530000000,
+      "currency": "PYG"
+     },
+     "datePublished": "2024-12-02T11:10:13-04:00",
+     "tenderPeriod": {
+      "startDate": "2024-12-02T11:10:13-04:00",
+      "endDate": "2024-12-20T08:00:00-04:00",
+      "durationInDays": 17
+     },
+     "awardPeriod": {
+      "startDate": "2024-12-20T08:30:00-04:00"
+     },
+     "enquiryPeriod": {
+      "endDate": "2024-12-17T08:00:00-04:00",
+      "startDate": "2024-12-02T11:10:13-04:00",
+      "durationInDays": 14
+     },
+     "mainProcurementCategory": "goods",
+     "procurementMethod": "open",
+     "procurementMethodDetails": "Menor cuantía nacional",
+     "procuringEntity": {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora"
+     },
+     "criteria": [
+      {
+       "id": "1",
+       "title": "Garantía de Mantenimiento de Ofertas",
+       "description": "Los oferentes, proveedores o contratistas deberán garantizar la seriedad de sus ofertas, mediante la garantía de mantenimiento de la oferta",
+       "source": "tenderer",
+       "requirementGroups": [
+        {
+         "id": "1-1",
+         "description": "La garantía debe ser de un cierto porcentaje, periodo y tipo",
+         "requirements": [
+          {
+           "id": "1-1-1",
+           "title": "Porcentaje de la garantia",
+           "expectedValue": "5"
+          },
+          {
+           "id": "1-1-2",
+           "title": "Validez de la garantia en días",
+           "expectedValue": "120"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "lots": [
+      {
+       "id": "1efa3626-87d9-67a4-a9ad-a9a0701be70e",
+       "title": "1 - 1 - DISPOSICIÓN FINAL DE RESIDUOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 529950000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "1"
+        }
+       ]
+      }
+     ],
+     "items": [
+      {
+       "id": "1efa3628-9d51-6bf2-ab28-31340df31f89",
+       "description": "DISPOSICIÓN FINAL DE RESIDUOS",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "76121501-9998",
+        "description": "Servicio de recoleccion, transporte, tratamiento y disposicion final de residuos patologicos",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/76121501-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "76121501",
+         "description": "Recogida, destruccion, transformacion o eliminacion de basuras",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/76121501"
+        }
+       ],
+       "quantity": 3533,
+       "unit": {
+        "name": "Tonelada",
+        "id": "TN",
+        "value": {
+         "amount": 150000,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1efa3626-87d9-67a4-a9ad-a9a0701be70e",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "CAMIONADA",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "2"
+        }
+       ]
+      }
+     ],
+     "tenderers": [
+      {
+       "name": "EL FAROL S. A.",
+       "id": "PY-RUC-80022067-6"
+      },
+      {
+       "name": "BERNARDA GONZALEZ MORINIGO",
+       "id": "PY-RUC-859531-3"
+      }
+     ],
+     "documents": [
+      {
+       "id": "wqzo+Ni6vcg=",
+       "datePublished": "2024-12-10T07:51:00-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 457716 Version 2",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1efa3623-e654-60ac-80d1-cb3a948b011b/2",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/pdf"
+      },
+      {
+       "id": "0839d831-960b-4b55-baa0-7a65ba7de705",
+       "datePublished": "2024-12-06T09:31:45-04:00",
+       "title": "nota-aclaracion-a-observaciones-de-la-mcn-id-457716-6752ee8e46993.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1efa3623-e654-60ac-80d1-cb3a948b011b/files/0839d831-960b-4b55-baa0-7a65ba7de705/download",
+       "language": "es",
+       "documentTypeDetails": "Nota de Contestación"
+      },
+      {
+       "id": "8ece39ba-d8cc-4d47-aa7a-bdc47bc583a0",
+       "datePublished": "2024-12-20T11:02:54-04:00",
+       "title": "ap-457716-37366787769552598-6765790d9ef3d.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1efa3623-e654-60ac-80d1-cb3a948b011b/files/8ece39ba-d8cc-4d47-aa7a-bdc47bc583a0/download",
+       "language": "es",
+       "documentTypeDetails": "Acta de Apertura"
+      },
+      {
+       "id": "da1355b2-cff2-4088-a995-019612e76c24",
+       "datePublished": "2024-11-28T12:21:46-04:00",
+       "title": "constancia-ad-referendum-mcn-id-457716001-67488a82a7d7d.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1efa3623-e654-60ac-80d1-cb3a948b011b/files/da1355b2-cff2-4088-a995-019612e76c24/download",
+       "language": "es",
+       "documentTypeDetails": "Constancia Ad referéndum"
+      },
+      {
+       "id": "2e9976ec-69c9-4d4c-929f-4cffebeadf43",
+       "datePublished": "2024-11-20T12:55:06-04:00",
+       "title": "pr-457716-673e0627bb362.zip",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1efa3623-e654-60ac-80d1-cb3a948b011b/files/2e9976ec-69c9-4d4c-929f-4cffebeadf43/download",
+       "language": "es",
+       "documentTypeDetails": "Antecedentes de la Estimación de Costos"
+      },
+      {
+       "id": "441bb331-1c7e-4f92-9da1-758f86466ee6",
+       "datePublished": "2024-11-20T12:55:06-04:00",
+       "title": "resolucion-aprobacion-457716001-673cc15239cc1.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1efa3623-e654-60ac-80d1-cb3a948b011b/files/441bb331-1c7e-4f92-9da1-758f86466ee6/download",
+       "language": "es",
+       "documentTypeDetails": "Aprobación PBC"
+      },
+      {
+       "id": "t2JoOz2vCPMOLFSwz1kj7A==",
+       "datePublished": "2024-12-10T07:51:00-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 457716 Version 2",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1efa3623-e654-60ac-80d1-cb3a948b011b/2/json",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/json"
+      },
+      {
+       "id": "dix2iRRDbik=",
+       "title": "URL de la Convocatoria",
+       "url": "https://www.contrataciones.gov.py/licitaciones/convocatoria/1efa3623-e654-60ac-80d1-cb3a948b011b.html",
+       "language": "es",
+       "documentType": "tenderNotice",
+       "format": "text/html"
+      },
+      {
+       "id": "456dcb91-7823-4ed4-b5f7-80d592895596",
+       "datePublished": "2024-11-20T12:55:06-04:00",
+       "title": "dictamen-tecnico-457716001-673cc15c0b017.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1efa3623-e654-60ac-80d1-cb3a948b011b/files/456dcb91-7823-4ed4-b5f7-80d592895596/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen técnico"
+      }
+     ],
+     "numberOfTenderers": 2
+    },
+    "language": "es",
+    "ocid": "ocds-03ad3f-457716-1",
+    "date": "2025-01-31T08:53:32-04:00",
+    "initiationType": "tender",
+    "buyer": {
+     "id": "DNCP-SICP-CODE-66",
+     "name": "Municipalidad de Fernando de la Mora"
+    },
+    "sources": [
+     {
+      "id": "dncp-sicp",
+      "name": "Sistema de Información de las Contrataciones Públicas - DNCP",
+      "url": "https://www.contrataciones.gov.py/"
+     }
+    ],
+    "contracts": [
+     {
+      "id": "MN-30173-25-249845",
+      "implementation": {
+       "financialProgress": {
+        "breakdown": [
+         {
+          "id": "2025/30/173/2/2/0/0/11/11/245/30/MN-30173-25-249845",
+          "period": {
+           "startDate": "2024-01-01T00:00:00Z",
+           "endDate": "2024-12-31T00:00:00Z"
+          },
+          "measures": {
+           "monto_a_utilizar": 529950000
+          },
+          "classifications": {
+           "anio": "2025",
+           "nivel": "30",
+           "entidad": "173",
+           "tipo_programa": "2",
+           "programa": "2",
+           "sub_programa": "0",
+           "proyecto": "0",
+           "financiador": "11",
+           "departamento": "11",
+           "objeto_gasto": "245",
+           "fuente_financiamiento": "30"
+          },
+          "financialCode": "MN-30173-25-249845"
+         }
+        ]
+       }
+      },
+      "awardID": "1efd99c9-b3a6-6f1c-a99e-3d6e241d438f",
+      "status": "active",
+      "statusDetails": "publicado",
+      "period": {
+       "startDate": "2025-01-28T00:00:00-04:00"
+      },
+      "value": {
+       "amount": 529950000,
+       "currency": "PYG"
+      },
+      "documents": [
+       {
+        "id": "1efdd8ab-a208-6dde-b6ab-c7e576a62afe",
+        "datePublished": "2025-01-28T12:15:36-04:00",
+        "title": "resolucion-de-adjudicacion-mcn-id-457716001-6798f498d03ab.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1efd99c9-b3a6-6f1c-a99e-3d6e241d438f/files/13b64dc2-a2d1-4b94-8fe1-a2888b005bc4/download",
+        "language": "es",
+        "documentTypeDetails": "Nota de Contestación"
+       },
+       {
+        "id": "1efdd8c0-1349-6340-b0d8-b7c5e27333e7",
+        "datePublished": "2025-01-28T12:24:45-04:00",
+        "title": "ddjj-plazos-de-protesta-mcn-id-457716-6798f6bd9c7e1.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1efd99c9-b3a6-6f1c-a99e-3d6e241d438f/files/412a5588-c67b-45c6-804a-e6f935d2e5fe/download",
+        "language": "es",
+        "documentTypeDetails": "Nota de Contestación"
+       },
+       {
+        "id": "1efdd8fe-cd1f-6736-ab09-27068dad0f62",
+        "datePublished": "2025-01-28T12:52:49-04:00",
+        "title": "contrato-mcn-id-457716001-6798fd5167fa9.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1efd99c9-b3a6-6f1c-a99e-3d6e241d438f/files/9fc8dfaf-52f2-4de0-b1e3-e79011231b88/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1efdd8ab-3ef5-681e-802c-a3fabed59d7e",
+        "datePublished": "2025-01-28T12:15:26-04:00",
+        "title": "cdp-mcn-id-457716001-6798f48e7e095.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1efd99c9-b3a6-6f1c-a99e-3d6e241d438f/files/3b49cd35-a68c-46aa-89fc-f5da602c8b16/download",
+        "language": "es",
+        "documentTypeDetails": "CDP"
+       }
+      ]
+     }
+    ],
+    "planning": {
+     "identifier": "457716",
+     "estimatedDate": "2024-04-30T00:00:00-04:00",
+     "budget": {
+      "description": "DISPOSICIÓN FINAL DE RESIDUOS",
+      "amount": {
+       "currency": "PYG",
+       "amount": 530000000
+      }
+     },
+     "items": [
+      {
+       "id": "1efa1c1c-96f2-6a84-8c15-418619f11c56",
+       "description": "Recogida y eliminacion de desechos",
+       "classification": {
+        "scheme": "UNSPSC",
+        "id": "76121500",
+        "description": "Recogida y eliminacion de desechos",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/76121500"
+       }
+      }
+     ]
+    },
+    "parties": [
+     {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora",
+      "identifier": {
+       "scheme": "DNCP-SICP-CODE",
+       "id": "66",
+       "legalName": "Municipalidad de Fernando de la Mora"
+      },
+      "contactPoint": {
+       "email": "morauoc@gmail.com",
+       "name": "LIC. ELIGIO ACOSTA",
+       "telephone": "+595 21 513-306"
+      },
+      "roles": [
+       "buyer",
+       "procuringEntity"
+      ],
+      "details": {
+       "level": "Municipalidades",
+       "entityType": "Municipalidades",
+       "type": "Entidad"
+      },
+      "additionalIdentifiers": [
+       {
+        "id": "2024.30.173",
+        "legalName": "Municipalidad de Fernando de la Mora",
+        "scheme": "PY-PGN"
+       }
+      ]
+     },
+     {
+      "name": "EL FAROL S. A.",
+      "id": "PY-RUC-80022067-6",
+      "identifier": {
+       "id": "80022067-6",
+       "legalName": "EL FAROL S. A.",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer",
+       "supplier"
+      ],
+      "contactPoint": {
+       "name": "JOSÉ FERNANDO VEGA - ADELAIDA CAÑETE OJEDA - GONZALO EDUARDO ENJUNTO - ANGEL GOMEZ RIVAROLA - HANS HERMAN STASEEK",
+       "email": "info@elfarolsa.com.py"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "VILLA HAYES",
+       "region": "Presidente Hayes",
+       "streetAddress": "RUTA PY 09 KM 18,300"
+      },
+      "details": {
+       "legalEntityTypeDetail": "S.A.",
+       "activityTypes": [
+        "services"
+       ]
+      }
+     },
+     {
+      "name": "BERNARDA GONZALEZ MORINIGO",
+      "id": "PY-RUC-859531-3",
+      "identifier": {
+       "id": "859531-3",
+       "legalName": "BERNARDA GONZALEZ MORINIGO",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "BERNARDA GONZALEZ MORINIGO",
+       "email": "depsancristobal@hotmail.com",
+       "telephone": "0982 118 116"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "Asuncion",
+       "region": "Central",
+       "streetAddress": "Avda. Eusebio Ayala 4195 c/ La Victoria"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Bienes e insumos agropecuario y forestal",
+         "id": 19
+        },
+        {
+         "name": "Servicios Técnicos",
+         "id": 7
+        },
+        {
+         "name": "Materiales e insumos eléctricos, metálicos y no metálicos, Plásticos, cauchos. Repuestos, herramientas, cámaras y cubiertas.",
+         "id": 18
+        },
+        {
+         "name": "Consultorías, Asesorías e Investigaciones. Estudios y Proyectos de inversión",
+         "id": 5
+        }
+       ]
+      }
+     }
+    ],
+    "tag": [
+     "compiled"
+    ]
+   }
+  }
+ ],
+ "pagination": {
+  "total_items": 1,
+  "total_pages": 1,
+  "current_page": 1,
+  "items_per_page": 10,
+  "total_in_page": 1
+ }
+}

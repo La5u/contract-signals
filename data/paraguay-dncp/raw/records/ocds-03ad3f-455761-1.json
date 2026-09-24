@@ -1,0 +1,4845 @@
+{
+ "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/ocds-03ad3f-455761-1",
+ "publishedDate": "2026-09-22T17:54:24Z",
+ "publisher": {
+  "name": "Dirección Nacional de Contrataciones Públicas, Paraguay"
+ },
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "publicationPolicy": "https://www.contrataciones.gov.py/datos/legal",
+ "version": "1.1",
+ "extensions": [
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_breakdown_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_and_spend_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_enquiry_extension/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/enquiriesAddress/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/legalEntityTypeDetail/master/extension.json",
+  "https://raw.githubusercontent.com/gitMHOCDS/transactions/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_investmentproject_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_clarification_meetings_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_attributes_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_items_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_contract_suppliers_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_location_extension/v1.1.4/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_activityType_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_notifiedsuppliers_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_lots_details_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_memberOf_extension/master/extension.json",
+  "https://raw.githubusercontent.com/portaledcahn/ocds_tenderDatePublished_extension/master/extension.json",
+  "https://raw.githubusercontent.com/INAImexico/ocds_guarantees_extension/master/extension.json",
+  "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_requirements_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bidOpening_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_coveredBy_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_qualification_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_publicEntitiesDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_items_subItems_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_statusdetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_mainProcurementCategoryDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_identifier_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_estimatedDate_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_participationFee_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_amendments_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_lot_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_transaction_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_financialprogress_financialcode_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_categories_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_complaints_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_minQuantity_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_purchaseOrder_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_document_type_details/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_cancellations_amendments_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_milestone_documents_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_techniques_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bid_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_bid_items_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_auctions_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_secondStage_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_beneficiaries_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/Crown-Commercial-Service/ocds_tender_suitability_extension/main/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_subcontracting_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_sustainability_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_reportedpayment_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_milestone_deliveries_extension/raw/master/extension.json"
+ ],
+ "records": [
+  {
+   "ocid": "ocds-03ad3f-455761-1",
+   "releases": [
+    {
+     "date": "2024-11-06T08:07:12-04:00",
+     "tag": [
+      "tender",
+      "award",
+      "contract",
+      "implementation"
+     ],
+     "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/releases/id/1ef7d040-10dc-6c4e-8604-9dd048b443e1-1730880432"
+    }
+   ],
+   "compiledRelease": {
+    "id": "1ef7d040-10dc-6c4e-8604-9dd048b443e1-1730880432",
+    "awards": [
+     {
+      "id": "1ef92f49-8c4b-6204-a0fc-9fbd45d5afda",
+      "status": "active",
+      "statusDetails": "publicado",
+      "date": "2024-10-25T00:00:00-04:00",
+      "value": {
+       "amount": 119822000,
+       "currency": "PYG"
+      },
+      "suppliers": [
+       {
+        "name": "FELIX MARTIN ROMERO ALVARENGA",
+        "id": "PY-RUC-2132761-0"
+       }
+      ],
+      "documents": [
+       {
+        "id": "1ef92fdb-1b8d-61a6-a6f7-7bc9d3d29fce",
+        "datePublished": "2024-10-25T15:19:37-04:00",
+        "title": "gmail-notificacion-de-adjudicacion-mcn-455761-671be139ab47f.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef92f42-af78-66ca-90c7-c7a0204249cb/files/d3b8247a-bdaa-4546-9b3a-48a9cc83cc99/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "1ef92fdc-25ee-6c3e-8213-5768159f4655",
+        "datePublished": "2024-10-25T15:20:05-04:00",
+        "title": "inf-eva-455761-671be1558976f.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef92f42-af78-66ca-90c7-c7a0204249cb/files/ac9431f8-82da-44e1-9bb6-3c62a1e3ad07/download",
+        "language": "es",
+        "documentTypeDetails": "Informe de Evaluación"
+       },
+       {
+        "id": "1ef92fdb-5d71-61b2-b4a6-a71feb5994a1",
+        "datePublished": "2024-10-25T15:19:44-04:00",
+        "title": "nota-a-proveedores-671be140966f8.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef92f42-af78-66ca-90c7-c7a0204249cb/files/65a45fe6-c46d-439b-8574-c25492a4dcbe/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "dix2iRRDbik=",
+        "title": "URL de la Adjudicación",
+        "url": "https://www.contrataciones.gov.py/licitaciones/adjudicacion/1ef92f42-af78-66ca-90c7-c7a0204249cb/resumen-adjudicacion.html",
+        "language": "es",
+        "documentType": "awardNotice",
+        "format": "text/html"
+       },
+       {
+        "id": "1ef92fdb-bb78-686e-8d07-5d5f5b520ba7",
+        "datePublished": "2024-10-25T15:19:54-04:00",
+        "title": "cuadro-455761-671be14a6ebf2.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef92f42-af78-66ca-90c7-c7a0204249cb/files/63444ece-c623-4f86-9996-e38fe49bed17/download",
+        "language": "es",
+        "documentTypeDetails": "Cuadro Comparativo de Ofertas"
+       },
+       {
+        "id": "1ef92fda-d0f7-6722-96b6-03ac7f6ad3ae",
+        "datePublished": "2024-10-25T15:19:29-04:00",
+        "title": "res-adj-455761-671be131d2bd1.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef92f42-af78-66ca-90c7-c7a0204249cb/files/533da1fb-88a0-436e-b07c-3143ade999cf/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       }
+      ],
+      "items": [
+       {
+        "id": "1ef80fab-6987-6682-b89b-7b96c67dc965",
+        "description": "BOMBILLA BAJO CONSUMO G24 D1 2 PIN 13W",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39101615-001",
+         "description": "Lampara o foco luz mixta ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39101615-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39101615",
+          "description": "Lamparas de vapor y accesorios",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39101615"
+         }
+        ],
+        "quantity": 100,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 29300,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "ecoville",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ecoville",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "1",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-698e-64d2-933e-7b96c67dc965",
+        "description": "CABLE MULTIFILAR DE 75 MM POR METRO",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "26121635-9952",
+         "description": "Cable Multifilar de tamaño 70 mm",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/26121635-9952"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "26121635",
+          "description": "Cables electricos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/26121635"
+         }
+        ],
+        "quantity": 50,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 123700,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "impaco",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "impaco",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "2",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6995-6174-80aa-7b96c67dc965",
+        "description": "CABLE MULTIFILAR DE 95 MM POR METRO",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "26121635-9952",
+         "description": "Cable Multifilar de tamaño 70 mm",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/26121635-9952"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "26121635",
+          "description": "Cables electricos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/26121635"
+         }
+        ],
+        "quantity": 50,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 162000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "impaco",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "impaco",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "3",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-699b-6786-b2d2-7b96c67dc965",
+        "description": "CABLE DE RED RJ45 CAT 6 PARA EXTERIOR POR METRO",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "26121609-003",
+         "description": "Cable UTP CAT 6 para redes ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/26121609-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "26121609",
+          "description": "Cable de redes y accesorios",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/26121609"
+         }
+        ],
+        "quantity": 100,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 6000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "nexan",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "nexan",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "4",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-69a1-6334-ad0b-7b96c67dc965",
+        "description": "FICHA RJ 45",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121311-004",
+         "description": "Ficha RJ 45",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121311-004"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121311",
+          "description": "Accesorios electricos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121311"
+         }
+        ],
+        "quantity": 2500,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 1180,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "nexan",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "nexan",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "5",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-69a8-6210-93b9-7b96c67dc965",
+        "description": "CANALETA PLASTICA PARA CABLE ADHESIVA RIGIDA, CHICO",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121205-001",
+         "description": "Canaleta plastica ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121205-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121205",
+          "description": "Canaletas para cables",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121205"
+         }
+        ],
+        "quantity": 500,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 8500,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "kalop",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "kalop",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "6",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-69ad-6a76-bfe9-7b96c67dc965",
+        "description": "ANALETA PLASTICA PARA CABLE ADHESIVA RIGIDA, MEDIANO",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121205-001",
+         "description": "Canaleta plastica ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121205-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121205",
+          "description": "Canaletas para cables",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121205"
+         }
+        ],
+        "quantity": 250,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 20300,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "kalop",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "kalop",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "7",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-69b3-63b8-b94c-7b96c67dc965",
+        "description": "CANALETA PLASTICA PARA CABLE ADHESIVA  RIGIDA, GRANDE",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121205-001",
+         "description": "Canaleta plastica ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121205-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121205",
+          "description": "Canaletas para cables",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121205"
+         }
+        ],
+        "quantity": 100,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 51500,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "kalop",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "kalop",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "8",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-69b8-67e6-a81b-7b96c67dc965",
+        "description": "CANALETA PLANA PARA CABLE, PARA  PISO DE  MEDIANO",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121205-001",
+         "description": "Canaleta plastica ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121205-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121205",
+          "description": "Canaletas para cables",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121205"
+         }
+        ],
+        "quantity": 100,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 53700,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "kalop",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "kalop",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "9",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-69bd-600c-8d85-7b96c67dc965",
+        "description": "CAPACITOR PARA VENTILADOR DE 2.5 MF",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "32121502-002",
+         "description": "Capacitor de 2,5 MF",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/32121502-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "32121502",
+          "description": "Capacitores o varactores variables",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/32121502"
+         }
+        ],
+        "quantity": 500,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 5200,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "vcp",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "vcp",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "10",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-69c1-6a62-ba50-7b96c67dc965",
+        "description": "Contactor trifasico",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121529-003",
+         "description": "Contactor trifasico",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121529-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121529",
+          "description": "Contactores",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121529"
+         }
+        ],
+        "quantity": 20,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 210000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "ecoville",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ecoville",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "11",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-69c6-6440-b199-7b96c67dc965",
+        "description": "CONTACTOR DE 25 A, BOBINA DE 220 V AC",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121529-003",
+         "description": "Contactor trifasico",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121529-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121529",
+          "description": "Contactores",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121529"
+         }
+        ],
+        "quantity": 20,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 156000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "ecoville",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ecoville",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "12",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-69ca-6fc2-86ec-7b96c67dc965",
+        "description": "ENCHUFE HEMBRA PARA 220 V",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121463-001",
+         "description": "Conector para enchufe",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121463-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121463",
+          "description": "Conector para enchufe",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121463"
+         }
+        ],
+        "quantity": 400,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 6350,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "kalop",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "kalop",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "13",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-69cf-6a72-b775-7b96c67dc965",
+        "description": "ENCHUFE MACHO  PARA 220 V",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121463-001",
+         "description": "Conector para enchufe",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121463-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121463",
+          "description": "Conector para enchufe",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121463"
+         }
+        ],
+        "quantity": 400,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 6350,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "kalop",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "kalop",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "14",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-69d4-6144-80be-7b96c67dc965",
+        "description": "FOCO FLUORESCENTE COMPACTA, TUBO DOBLE DE 13 W",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39101601-015",
+         "description": "Foco luz mixta",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39101601-015"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39101601",
+          "description": "Focos varios",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39101601"
+         }
+        ],
+        "quantity": 70,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 69800,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "ecoville",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ecoville",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "15",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-69d8-68de-b9d4-7b96c67dc965",
+        "description": "FOCO LED DE 50 W ROSCA E27  LUZ CALIDA",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39101601-9998",
+         "description": "Foco LED",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39101601-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39101601",
+          "description": "Focos varios",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39101601"
+         }
+        ],
+        "quantity": 80,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 59100,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "ecoville",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ecoville",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "16",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-69dc-6f4c-9150-7b96c67dc965",
+        "description": "FOCO LED DE 50 W ROSCA E27 LUZ FRIA",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39101601-9998",
+         "description": "Foco LED",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39101601-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39101601",
+          "description": "Focos varios",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39101601"
+         }
+        ],
+        "quantity": 50,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 46100,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "ecoville",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ecoville",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "17",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-69e2-6172-97ea-7b96c67dc965",
+        "description": "FOCO LED DE 25 W ROSCA E27 LUZ FRIA",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39101601-9998",
+         "description": "Foco LED",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39101601-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39101601",
+          "description": "Focos varios",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39101601"
+         }
+        ],
+        "quantity": 50,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 24100,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "ecoville",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ecoville",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "18",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-69e6-6b82-ba52-7b96c67dc965",
+        "description": "INTERRUPTOR PICO PUNTO COLOR BLANCO  PARA PLACA VIMAR",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121633-001",
+         "description": "Interruptor de circuito",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121633-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121633",
+          "description": "Interruptor de circuito",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121633"
+         }
+        ],
+        "quantity": 100,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 17600,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "vimar",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "vimar",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "19",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-69eb-625e-9c5e-7b96c67dc965",
+        "description": "LLAVE  TERMOMAGNETICA DE 20 A",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121602-009",
+         "description": "Llave termomagnetica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121602-009"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121602",
+          "description": "Interruptores magneticos y termo magneticos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121602"
+         }
+        ],
+        "quantity": 30,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 11100,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "sneider",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "sneider",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "20",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-69ef-6ae8-8755-7b96c67dc965",
+        "description": "LLAVE TERMOMAGNETICA DE 25 A",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121602-009",
+         "description": "Llave termomagnetica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121602-009"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121602",
+          "description": "Interruptores magneticos y termo magneticos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121602"
+         }
+        ],
+        "quantity": 30,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 11700,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "sneider",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "sneider",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "21",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-69f3-6fc6-b608-7b96c67dc965",
+        "description": "LLAVE TERMOMAGNETICA DE 32 A",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121602-009",
+         "description": "Llave termomagnetica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121602-009"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121602",
+          "description": "Interruptores magneticos y termo magneticos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121602"
+         }
+        ],
+        "quantity": 30,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 12200,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "sneider",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "sneider",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "22",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-69f8-68dc-b145-7b96c67dc965",
+        "description": "LLAVE TERMOMAGNETICA DE 40 A",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121602-009",
+         "description": "Llave termomagnetica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121602-009"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121602",
+          "description": "Interruptores magneticos y termo magneticos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121602"
+         }
+        ],
+        "quantity": 50,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 13800,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "sneider",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "sneider",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "23",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-69fc-6e96-92be-7b96c67dc965",
+        "description": "LLAVE TERMOMAGNETICA DE 50 A",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121602-009",
+         "description": "Llave termomagnetica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121602-009"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121602",
+          "description": "Interruptores magneticos y termo magneticos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121602"
+         }
+        ],
+        "quantity": 50,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 13800,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "sneider",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "sneider",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "24",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6a01-68c4-bfa3-7b96c67dc965",
+        "description": "LLAVE TERMOMAGNETICA TRIPOLAR DE 125 A",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121602-009",
+         "description": "Llave termomagnetica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121602-009"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121602",
+          "description": "Interruptores magneticos y termo magneticos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121602"
+         }
+        ],
+        "quantity": 50,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 130000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "sneider",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "sneider",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "25",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6a05-6f3c-a85e-7b96c67dc965",
+        "description": "Llave termomagnetica",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121602-009",
+         "description": "Llave termomagnetica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121602-009"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121602",
+          "description": "Interruptores magneticos y termo magneticos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121602"
+         }
+        ],
+        "quantity": 60,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 38000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "sneider",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "sneider",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "26",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6a0a-6460-9d07-7b96c67dc965",
+        "description": "LLAVE TERMOMAGNETICA TRIPOLAR DE 50 A",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121602-009",
+         "description": "Llave termomagnetica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121602-009"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121602",
+          "description": "Interruptores magneticos y termo magneticos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121602"
+         }
+        ],
+        "quantity": 50,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 46000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "sneider",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "sneider",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "27",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6a0e-69c0-a63a-7b96c67dc965",
+        "description": "Artefactos porta fluorescentes",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39111501-001",
+         "description": "Artefactos porta fluorescentes",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39111501-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39111501",
+          "description": "Artefactos fluorescentes y accesorios",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39111501"
+         }
+        ],
+        "quantity": 62,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 24000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "vcp",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "vcp",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "28",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6a13-6326-9b0b-7b96c67dc965",
+        "description": "Reactancia electrónica de 1 x 36 watts",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39111501-9998",
+         "description": "Reactancia electrónica de 1 x 36 watts",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39111501-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39111501",
+          "description": "Artefactos fluorescentes y accesorios",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39111501"
+         }
+        ],
+        "quantity": 60,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 24000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "philips",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "philips",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "29",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6a17-67dc-853b-7b96c67dc965",
+        "description": "PANEL LED CUADRADO EMPOTRABLE DE 600x600mm",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39111501-001",
+         "description": "Artefactos porta fluorescentes",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39111501-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39111501",
+          "description": "Artefactos fluorescentes y accesorios",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39111501"
+         }
+        ],
+        "quantity": 30,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 172000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "vcp",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "vcp",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "30",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6a1c-607a-a83e-7b96c67dc965",
+        "description": "PLACA  SIMPLE  DE 1 AGUJERO PARA  FICHA ELECTRON",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39111812-999",
+         "description": "Llave de luz con punto",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39111812-999"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39111812",
+          "description": "Llave y toma eléctrica",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39111812"
+         }
+        ],
+        "quantity": 300,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 3000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "electron",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "electron",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "31",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6a20-66d4-9d1a-7b96c67dc965",
+        "description": "PLACA PARA DOBLE 2 AGUJERO PARA FICHA ELECTRON",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39111812-999",
+         "description": "Llave de luz con punto",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39111812-999"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39111812",
+          "description": "Llave y toma eléctrica",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39111812"
+         }
+        ],
+        "quantity": 300,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 3000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "electron",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "electron",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "32",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6a24-6cd4-a804-7b96c67dc965",
+        "description": "PLACA PARA TRIPLE 3  AGUJERO PARA FICHAS  ELECTRON",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39111812-999",
+         "description": "Llave de luz con punto",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39111812-999"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39111812",
+          "description": "Llave y toma eléctrica",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39111812"
+         }
+        ],
+        "quantity": 300,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 3000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "electron",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "electron",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "33",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6a29-62c0-920a-7b96c67dc965",
+        "description": "PORTAFOCO PLAFON E 27",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39111803-002",
+         "description": "Portafoco",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39111803-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39111803",
+          "description": "Portalamparas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39111803"
+         }
+        ],
+        "quantity": 300,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 4200,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "electron",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "electron",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "34",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6a2d-6a64-a6be-7b96c67dc965",
+        "description": "PROLONGADOR DE 10 METROS  DE 5 TOMAS",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121402-012",
+         "description": "Toma para computadora",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121402-012"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121402",
+          "description": "Enchufes, tomas y puntos electricos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121402"
+         }
+        ],
+        "quantity": 100,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 34300,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "ecoville",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ecoville",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "35",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6a3a-6188-81dd-7b96c67dc965",
+        "description": "PROYECTOR LED 200w LUZ FRIA",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121551-9999",
+         "description": "Reflector LED",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121551-9999"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121551",
+          "description": "Reflector",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121551"
+         }
+        ],
+        "quantity": 10,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 205000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "ecoville",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ecoville",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "36",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6a49-60d4-94b1-7b96c67dc965",
+        "description": "REFLECTOR LED DE 50 W LUZ FRIA ,CUADRO PARA EXTERIOR FIJO",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121551-9999",
+         "description": "Reflector LED",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121551-9999"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121551",
+          "description": "Reflector",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121551"
+         }
+        ],
+        "quantity": 20,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 100000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "ecoville",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ecoville",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "37",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6a54-60b0-9a5a-7b96c67dc965",
+        "description": "REFLECTOR LED DE 50 W LUZ FRIA",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121551-9999",
+         "description": "Reflector LED",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121551-9999"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121551",
+          "description": "Reflector",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121551"
+         }
+        ],
+        "quantity": 30,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 86000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "ecoville",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ecoville",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "38",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6a5d-6c6e-927e-7b96c67dc965",
+        "description": "REFLECTOR LED RGB  DE 50 W",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121551-9999",
+         "description": "Reflector LED",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121551-9999"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121551",
+          "description": "Reflector",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121551"
+         }
+        ],
+        "quantity": 10,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 150000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "ecoville",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ecoville",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "39",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6a67-63ea-a8d2-7b96c67dc965",
+        "description": "REFLECTOR LED RGB DE 100 W",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121551-9999",
+         "description": "Reflector LED",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121551-9999"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121551",
+          "description": "Reflector",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121551"
+         }
+        ],
+        "quantity": 10,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 251000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "ecoville",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ecoville",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "40",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6a6e-6a5a-9ca9-7b96c67dc965",
+        "description": "SOPORTE PARA FLUORESCENTE CORTO",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39111501-001",
+         "description": "Artefactos porta fluorescentes",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39111501-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39111501",
+          "description": "Artefactos fluorescentes y accesorios",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39111501"
+         }
+        ],
+        "quantity": 200,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 15000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "ecoville",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ecoville",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "41",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6a7c-64e8-89e3-7b96c67dc965",
+        "description": "SOPORTE PARA FLUORESCENTE LARGO",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39111501-001",
+         "description": "Artefactos porta fluorescentes",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39111501-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39111501",
+          "description": "Artefactos fluorescentes y accesorios",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39111501"
+         }
+        ],
+        "quantity": 200,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 17000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "vcp",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "vcp",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "42",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6a8b-62ea-907f-7b96c67dc965",
+        "description": "TAPA CIEGA PARA CAJA DE CONEXION CUADRANGULAR",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121302-001",
+         "description": "Tapa ciega cuadrada",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121302-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121302",
+          "description": "Placas o tapas de cerramientos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121302"
+         }
+        ],
+        "quantity": 50,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 1500,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "ecoville",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ecoville",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "43",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6a99-61e2-abbd-7b96c67dc965",
+        "description": "TAPA CIEGA PARA CAJA DE CONEXION CIRCULAR",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121302-003",
+         "description": "Tapa ciega redonda",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121302-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121302",
+          "description": "Placas o tapas de cerramientos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121302"
+         }
+        ],
+        "quantity": 50,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 1500,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "ecoville",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "ecoville",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "44",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6aa3-66ce-bd52-7b96c67dc965",
+        "description": "CINTA AISLADORA",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "31201502-003",
+         "description": "Cinta aisladora de vinilo para M/T",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/31201502-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "31201502",
+          "description": "Cinta autoadhesiva aislante electrica",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/31201502"
+         }
+        ],
+        "quantity": 100,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 10000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "3m",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "3m",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "45",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6aae-61dc-8ce0-7b96c67dc965",
+        "description": "CINTA VULCANIZANTE",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "31201502-001",
+         "description": "Cinta aisladora electrica autovulcanizante",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/31201502-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "31201502",
+          "description": "Cinta autoadhesiva aislante electrica",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/31201502"
+         }
+        ],
+        "quantity": 50,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 29500,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "argentina",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "taxa",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "taxa",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "46",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6ab7-67be-bd1f-7b96c67dc965",
+        "description": "PICO PUNTO PARA PLACA ELEKTRON",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121402-009",
+         "description": "Pico para llave",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121402-009"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121402",
+          "description": "Enchufes, tomas y puntos electricos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121402"
+         }
+        ],
+        "quantity": 100,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 3200,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "electron",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "electron",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "47",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80fab-6abf-6dce-a934-7b96c67dc965",
+        "description": "PICO TOMA PARA PLACA ELEKTRON",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "39121402-009",
+         "description": "Pico para llave",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121402-009"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "39121402",
+          "description": "Enchufes, tomas y puntos electricos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121402"
+         }
+        ],
+        "quantity": 100,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 3550,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "electron",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "electron",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "48",
+          "id": "7"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "tender": {
+     "id": "1ef7d040-10dc-6c4e-8604-9dd048b443e1",
+     "title": "ADQUISICION DE ARTICULOS ELECTRICOS",
+     "status": "complete",
+     "awardCriteria": "priceOnly",
+     "awardCriteriaDetails": "Por Total",
+     "submissionMethod": [
+      "inPerson"
+     ],
+     "bidOpening": {
+      "date": "2024-10-21T08:30:00-04:00",
+      "address": {
+       "streetAddress": "Municipalidad de Fernando de la Mora, oficina UOC"
+      }
+     },
+     "submissionMethodDetails": "Lugar entrega ofertas: Municipalidad de Fernando de la Mora, oficina UOC",
+     "statusDetails": "Adjudicada",
+     "enquiriesAddress": {
+      "streetAddress": "SICP"
+     },
+     "clarificationMeetings": [
+      {
+       "address": {
+        "streetAddress": "N/A"
+       },
+       "id": "1"
+      }
+     ],
+     "mainProcurementCategoryDetails": "Bienes - Suministros componentes y accesorios electricos y de iluminacion",
+     "hasEnquiries": false,
+     "value": {
+      "amount": 119980922,
+      "currency": "PYG"
+     },
+     "datePublished": "2024-10-07T17:48:25-04:00",
+     "tenderPeriod": {
+      "startDate": "2024-10-07T17:48:25-04:00",
+      "endDate": "2024-10-21T08:00:00-04:00",
+      "durationInDays": 13
+     },
+     "awardPeriod": {
+      "startDate": "2024-10-21T08:30:00-04:00"
+     },
+     "enquiryPeriod": {
+      "endDate": "2024-10-16T08:00:00-04:00",
+      "startDate": "2024-10-07T17:48:25-04:00",
+      "durationInDays": 8
+     },
+     "mainProcurementCategory": "services",
+     "additionalProcurementCategories": [
+      "services"
+     ],
+     "procurementMethod": "open",
+     "procurementMethodDetails": "Menor cuantía nacional",
+     "procuringEntity": {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora"
+     },
+     "criteria": [
+      {
+       "id": "1",
+       "title": "Garantía de Mantenimiento de Ofertas",
+       "description": "Los oferentes, proveedores o contratistas deberán garantizar la seriedad de sus ofertas, mediante la garantía de mantenimiento de la oferta",
+       "source": "tenderer",
+       "requirementGroups": [
+        {
+         "id": "1-1",
+         "description": "La garantía debe ser de un cierto porcentaje, periodo y tipo",
+         "requirements": [
+          {
+           "id": "1-1-1",
+           "title": "Porcentaje de la garantia",
+           "expectedValue": "5"
+          },
+          {
+           "id": "1-1-2",
+           "title": "Validez de la garantia en días",
+           "expectedValue": "90"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "lots": [
+      {
+       "id": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "title": "1 - 1 - ADQUISICION DE ARTICULOS ELECTRICOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 119980922,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "1"
+        }
+       ]
+      }
+     ],
+     "items": [
+      {
+       "id": "1ef80fab-6a1c-607a-a83e-7b96c67dc965",
+       "description": "PLACA  SIMPLE  DE 1 AGUJERO PARA  FICHA ELECTRON",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39111812-999",
+        "description": "Llave de luz con punto",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39111812-999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39111812",
+         "description": "Llave y toma eléctrica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39111812"
+        }
+       ],
+       "quantity": 300,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 3122,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "31",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-69d4-6144-80be-7b96c67dc965",
+       "description": "FOCO FLUORESCENTE COMPACTA, TUBO DOBLE DE 13 W",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39101601-015",
+        "description": "Foco luz mixta",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39101601-015"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39101601",
+         "description": "Focos varios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39101601"
+        }
+       ],
+       "quantity": 70,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 69876,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "15",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6aae-61dc-8ce0-7b96c67dc965",
+       "description": "CINTA VULCANIZANTE",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "31201502-001",
+        "description": "Cinta aisladora electrica autovulcanizante",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/31201502-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "31201502",
+         "description": "Cinta autoadhesiva aislante electrica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/31201502"
+        }
+       ],
+       "quantity": 50,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 28962,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "46",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-698e-64d2-933e-7b96c67dc965",
+       "description": "CABLE MULTIFILAR DE 75 MM POR METRO",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "26121635-9952",
+        "description": "Cable Multifilar de tamaño 70 mm",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/26121635-9952"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "26121635",
+         "description": "Cables electricos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/26121635"
+        }
+       ],
+       "quantity": 50,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 123709,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "2",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6a7c-64e8-89e3-7b96c67dc965",
+       "description": "SOPORTE PARA FLUORESCENTE LARGO",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39111501-001",
+        "description": "Artefactos porta fluorescentes",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39111501-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39111501",
+         "description": "Artefactos fluorescentes y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39111501"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 17657,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "42",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6a67-63ea-a8d2-7b96c67dc965",
+       "description": "REFLECTOR LED RGB DE 100 W",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121551-9999",
+        "description": "Reflector LED",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121551-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121551",
+         "description": "Reflector",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121551"
+        }
+       ],
+       "quantity": 10,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 252909,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "40",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6a20-66d4-9d1a-7b96c67dc965",
+       "description": "PLACA PARA DOBLE 2 AGUJERO PARA FICHA ELECTRON",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39111812-999",
+        "description": "Llave de luz con punto",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39111812-999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39111812",
+         "description": "Llave y toma eléctrica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39111812"
+        }
+       ],
+       "quantity": 300,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 3175,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "32",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-69fc-6e96-92be-7b96c67dc965",
+       "description": "LLAVE TERMOMAGNETICA DE 50 A",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121602-009",
+        "description": "Llave termomagnetica",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121602-009"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121602",
+         "description": "Interruptores magneticos y termo magneticos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121602"
+        }
+       ],
+       "quantity": 50,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 13889,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "24",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6a99-61e2-abbd-7b96c67dc965",
+       "description": "TAPA CIEGA PARA CAJA DE CONEXION CIRCULAR",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121302-003",
+        "description": "Tapa ciega redonda",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121302-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121302",
+         "description": "Placas o tapas de cerramientos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121302"
+        }
+       ],
+       "quantity": 50,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 1507,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "44",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6aa3-66ce-bd52-7b96c67dc965",
+       "description": "CINTA AISLADORA",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "31201502-003",
+        "description": "Cinta aisladora de vinilo para M/T",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/31201502-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "31201502",
+         "description": "Cinta autoadhesiva aislante electrica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/31201502"
+        }
+       ],
+       "quantity": 100,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 9582,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "45",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6a05-6f3c-a85e-7b96c67dc965",
+       "description": "Llave termomagnetica",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121602-009",
+        "description": "Llave termomagnetica",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121602-009"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121602",
+         "description": "Interruptores magneticos y termo magneticos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121602"
+        }
+       ],
+       "quantity": 60,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 38114,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "26",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6ab7-67be-bd1f-7b96c67dc965",
+       "description": "PICO PUNTO PARA PLACA ELEKTRON",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121402-009",
+        "description": "Pico para llave",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121402-009"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121402",
+         "description": "Enchufes, tomas y puntos electricos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121402"
+        }
+       ],
+       "quantity": 100,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 3229,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "47",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-69f8-68dc-b145-7b96c67dc965",
+       "description": "LLAVE TERMOMAGNETICA DE 40 A",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121602-009",
+        "description": "Llave termomagnetica",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121602-009"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121602",
+         "description": "Interruptores magneticos y termo magneticos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121602"
+        }
+       ],
+       "quantity": 50,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 13889,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "23",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6a8b-62ea-907f-7b96c67dc965",
+       "description": "TAPA CIEGA PARA CAJA DE CONEXION CUADRANGULAR",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121302-001",
+        "description": "Tapa ciega cuadrada",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121302-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121302",
+         "description": "Placas o tapas de cerramientos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121302"
+        }
+       ],
+       "quantity": 50,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 1507,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "43",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6a5d-6c6e-927e-7b96c67dc965",
+       "description": "REFLECTOR LED RGB  DE 50 W",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121551-9999",
+        "description": "Reflector LED",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121551-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121551",
+         "description": "Reflector",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121551"
+        }
+       ],
+       "quantity": 10,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 150626,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "39",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6a17-67dc-853b-7b96c67dc965",
+       "description": "PANEL LED CUADRADO EMPOTRABLE DE 600x600mm",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39111501-001",
+        "description": "Artefactos porta fluorescentes",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39111501-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39111501",
+         "description": "Artefactos fluorescentes y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39111501"
+        }
+       ],
+       "quantity": 30,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 172159,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "30",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-69ef-6ae8-8755-7b96c67dc965",
+       "description": "LLAVE TERMOMAGNETICA DE 25 A",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121602-009",
+        "description": "Llave termomagnetica",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121602-009"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121602",
+         "description": "Interruptores magneticos y termo magneticos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121602"
+        }
+       ],
+       "quantity": 30,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 11736,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "21",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-69c6-6440-b199-7b96c67dc965",
+       "description": "CONTACTOR DE 25 A, BOBINA DE 220 V AC",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121529-003",
+        "description": "Contactor trifasico",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121529-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121529",
+         "description": "Contactores",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121529"
+        }
+       ],
+       "quantity": 20,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 156009,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "12",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-69e2-6172-97ea-7b96c67dc965",
+       "description": "FOCO LED DE 25 W ROSCA E27 LUZ FRIA",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39101601-9998",
+        "description": "Foco LED",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39101601-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39101601",
+         "description": "Focos varios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39101601"
+        }
+       ],
+       "quantity": 50,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 24117,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "18",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-69e6-6b82-ba52-7b96c67dc965",
+       "description": "INTERRUPTOR PICO PUNTO COLOR BLANCO  PARA PLACA VIMAR",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121633-001",
+        "description": "Interruptor de circuito",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121633-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121633",
+         "description": "Interruptor de circuito",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121633"
+        }
+       ],
+       "quantity": 100,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 17657,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "19",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-69ad-6a76-bfe9-7b96c67dc965",
+       "description": "ANALETA PLASTICA PARA CABLE ADHESIVA RIGIDA, MEDIANO",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121205-001",
+        "description": "Canaleta plastica ",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121205-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121205",
+         "description": "Canaletas para cables",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121205"
+        }
+       ],
+       "quantity": 250,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 20349,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "7",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-69a8-6210-93b9-7b96c67dc965",
+       "description": "CANALETA PLASTICA PARA CABLE ADHESIVA RIGIDA, CHICO",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121205-001",
+        "description": "Canaleta plastica ",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121205-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121205",
+         "description": "Canaletas para cables",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121205"
+        }
+       ],
+       "quantity": 500,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 8506,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "6",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-69b3-63b8-b94c-7b96c67dc965",
+       "description": "CANALETA PLASTICA PARA CABLE ADHESIVA  RIGIDA, GRANDE",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121205-001",
+        "description": "Canaleta plastica ",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121205-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121205",
+         "description": "Canaletas para cables",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121205"
+        }
+       ],
+       "quantity": 100,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 51572,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "8",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6a0a-6460-9d07-7b96c67dc965",
+       "description": "LLAVE TERMOMAGNETICA TRIPOLAR DE 50 A",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121602-009",
+        "description": "Llave termomagnetica",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121602-009"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121602",
+         "description": "Interruptores magneticos y termo magneticos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121602"
+        }
+       ],
+       "quantity": 50,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 46189,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "27",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6a13-6326-9b0b-7b96c67dc965",
+       "description": "Reactancia electrónica de 1 x 36 watts",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39111501-9998",
+        "description": "Reactancia electrónica de 1 x 36 watts",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39111501-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39111501",
+         "description": "Artefactos fluorescentes y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39111501"
+        }
+       ],
+       "quantity": 60,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 24656,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "29",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6995-6174-80aa-7b96c67dc965",
+       "description": "CABLE MULTIFILAR DE 95 MM POR METRO",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "26121635-9952",
+        "description": "Cable Multifilar de tamaño 70 mm",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/26121635-9952"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "26121635",
+         "description": "Cables electricos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/26121635"
+        }
+       ],
+       "quantity": 50,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 161392,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "3",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6a29-62c0-920a-7b96c67dc965",
+       "description": "PORTAFOCO PLAFON E 27",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39111803-002",
+        "description": "Portafoco",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39111803-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39111803",
+         "description": "Portalamparas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39111803"
+        }
+       ],
+       "quantity": 300,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 4252,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "34",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6abf-6dce-a934-7b96c67dc965",
+       "description": "PICO TOMA PARA PLACA ELEKTRON",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121402-009",
+        "description": "Pico para llave",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121402-009"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121402",
+         "description": "Enchufes, tomas y puntos electricos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121402"
+        }
+       ],
+       "quantity": 100,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 3444,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "48",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-69a1-6334-ad0b-7b96c67dc965",
+       "description": "FICHA RJ 45",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121311-004",
+        "description": "Ficha RJ 45",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121311-004"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121311",
+         "description": "Accesorios electricos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121311"
+        }
+       ],
+       "quantity": 2500,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 1184,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "5",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-69dc-6f4c-9150-7b96c67dc965",
+       "description": "FOCO LED DE 50 W ROSCA E27 LUZ FRIA",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39101601-9998",
+        "description": "Foco LED",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39101601-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39101601",
+         "description": "Focos varios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39101601"
+        }
+       ],
+       "quantity": 50,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 46189,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "17",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-69c1-6a62-ba50-7b96c67dc965",
+       "description": "Contactor trifasico",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121529-003",
+        "description": "Contactor trifasico",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121529-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121529",
+         "description": "Contactores",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121529"
+        }
+       ],
+       "quantity": 20,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 209842,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "11",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-69b8-67e6-a81b-7b96c67dc965",
+       "description": "CANALETA PLANA PARA CABLE, PARA  PISO DE  MEDIANO",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121205-001",
+        "description": "Canaleta plastica ",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121205-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121205",
+         "description": "Canaletas para cables",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121205"
+        }
+       ],
+       "quantity": 100,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 53726,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "9",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6a01-68c4-bfa3-7b96c67dc965",
+       "description": "LLAVE TERMOMAGNETICA TRIPOLAR DE 125 A",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121602-009",
+        "description": "Llave termomagnetica",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121602-009"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121602",
+         "description": "Interruptores magneticos y termo magneticos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121602"
+        }
+       ],
+       "quantity": 50,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 129092,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "25",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-69f3-6fc6-b608-7b96c67dc965",
+       "description": "LLAVE TERMOMAGNETICA DE 32 A",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121602-009",
+        "description": "Llave termomagnetica",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121602-009"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121602",
+         "description": "Interruptores magneticos y termo magneticos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121602"
+        }
+       ],
+       "quantity": 30,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 12274,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "22",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-699b-6786-b2d2-7b96c67dc965",
+       "description": "CABLE DE RED RJ45 CAT 6 PARA EXTERIOR POR METRO",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "26121609-003",
+        "description": "Cable UTP CAT 6 para redes ",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/26121609-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "26121609",
+         "description": "Cable de redes y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/26121609"
+        }
+       ],
+       "quantity": 100,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 6082,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "4",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6987-6682-b89b-7b96c67dc965",
+       "description": "BOMBILLA BAJO CONSUMO G24 D1 2 PIN 13W",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39101615-001",
+        "description": "Lampara o foco luz mixta ",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39101615-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39101615",
+         "description": "Lamparas de vapor y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39101615"
+        }
+       ],
+       "quantity": 100,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 29327,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6a24-6cd4-a804-7b96c67dc965",
+       "description": "PLACA PARA TRIPLE 3  AGUJERO PARA FICHAS  ELECTRON",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39111812-999",
+        "description": "Llave de luz con punto",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39111812-999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39111812",
+         "description": "Llave y toma eléctrica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39111812"
+        }
+       ],
+       "quantity": 300,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 3283,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "33",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-69ca-6fc2-86ec-7b96c67dc965",
+       "description": "ENCHUFE HEMBRA PARA 220 V",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121463-001",
+        "description": "Conector para enchufe",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121463-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121463",
+         "description": "Conector para enchufe",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121463"
+        }
+       ],
+       "quantity": 400,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 6352,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "13",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-69d8-68de-b9d4-7b96c67dc965",
+       "description": "FOCO LED DE 50 W ROSCA E27  LUZ CALIDA",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39101601-9998",
+        "description": "Foco LED",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39101601-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39101601",
+         "description": "Focos varios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39101601"
+        }
+       ],
+       "quantity": 80,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 59109,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "16",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6a2d-6a64-a6be-7b96c67dc965",
+       "description": "PROLONGADOR DE 10 METROS  DE 5 TOMAS",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121402-012",
+        "description": "Toma para computadora",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121402-012"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121402",
+         "description": "Enchufes, tomas y puntos electricos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121402"
+        }
+       ],
+       "quantity": 100,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 34346,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "35",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-69bd-600c-8d85-7b96c67dc965",
+       "description": "CAPACITOR PARA VENTILADOR DE 2.5 MF",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "32121502-002",
+        "description": "Capacitor de 2,5 MF",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/32121502-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "32121502",
+         "description": "Capacitores o varactores variables",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/32121502"
+        }
+       ],
+       "quantity": 500,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 5276,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "10",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-69cf-6a72-b775-7b96c67dc965",
+       "description": "ENCHUFE MACHO  PARA 220 V",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121463-001",
+        "description": "Conector para enchufe",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121463-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121463",
+         "description": "Conector para enchufe",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121463"
+        }
+       ],
+       "quantity": 400,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 6352,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "14",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6a0e-69c0-a63a-7b96c67dc965",
+       "description": "Artefactos porta fluorescentes",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39111501-001",
+        "description": "Artefactos porta fluorescentes",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39111501-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39111501",
+         "description": "Artefactos fluorescentes y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39111501"
+        }
+       ],
+       "quantity": 62,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 24656,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "28",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-69eb-625e-9c5e-7b96c67dc965",
+       "description": "LLAVE  TERMOMAGNETICA DE 20 A",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121602-009",
+        "description": "Llave termomagnetica",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121602-009"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121602",
+         "description": "Interruptores magneticos y termo magneticos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121602"
+        }
+       ],
+       "quantity": 30,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 11197,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "20",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6a3a-6188-81dd-7b96c67dc965",
+       "description": "PROYECTOR LED 200w LUZ FRIA",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121551-9999",
+        "description": "Reflector LED",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121551-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121551",
+         "description": "Reflector",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121551"
+        }
+       ],
+       "quantity": 10,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 204459,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "36",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6a49-60d4-94b1-7b96c67dc965",
+       "description": "REFLECTOR LED DE 50 W LUZ FRIA ,CUADRO PARA EXTERIOR FIJO",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121551-9999",
+        "description": "Reflector LED",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121551-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121551",
+         "description": "Reflector",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121551"
+        }
+       ],
+       "quantity": 20,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 100022,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "37",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6a6e-6a5a-9ca9-7b96c67dc965",
+       "description": "SOPORTE PARA FLUORESCENTE CORTO",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39111501-001",
+        "description": "Artefactos porta fluorescentes",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39111501-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39111501",
+         "description": "Artefactos fluorescentes y accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39111501"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 13737,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "41",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80fab-6a54-60b0-9a5a-7b96c67dc965",
+       "description": "REFLECTOR LED DE 50 W LUZ FRIA",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "39121551-9999",
+        "description": "Reflector LED",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/39121551-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "39121551",
+         "description": "Reflector",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/39121551"
+        }
+       ],
+       "quantity": 30,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 86026,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80fa7-08bc-6fae-861e-c5dab82a071a",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "38",
+         "id": "2"
+        }
+       ]
+      }
+     ],
+     "tenderers": [
+      {
+       "name": "FELIX MARTIN ROMERO ALVARENGA",
+       "id": "PY-RUC-2132761-0"
+      }
+     ],
+     "documents": [
+      {
+       "id": "2c0fca41-4577-4915-be2e-7a8d3c5c5a50",
+       "datePublished": "2024-10-22T10:10:21-04:00",
+       "title": "acta-apertura-id-455-761-32265173557456350-6717a43c776df.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef7d040-10dc-6c4e-8604-9dd048b443e1/files/2c0fca41-4577-4915-be2e-7a8d3c5c5a50/download",
+       "language": "es",
+       "documentTypeDetails": "Acta de Apertura"
+      },
+      {
+       "id": "dix2iRRDbik=",
+       "title": "URL de la Convocatoria",
+       "url": "https://www.contrataciones.gov.py/licitaciones/convocatoria/1ef7d040-10dc-6c4e-8604-9dd048b443e1.html",
+       "language": "es",
+       "documentType": "tenderNotice",
+       "format": "text/html"
+      },
+      {
+       "id": "0a9f437a-e31c-4e55-ba10-179b88590411",
+       "datePublished": "2024-10-03T11:12:51-04:00",
+       "title": "resolucion-mcn-id-455761001-66feb462d09fd.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef7d040-10dc-6c4e-8604-9dd048b443e1/files/0a9f437a-e31c-4e55-ba10-179b88590411/download",
+       "language": "es",
+       "documentTypeDetails": "Aprobación PBC"
+      },
+      {
+       "id": "7eb0a01f-c482-40cd-9a93-119812e69fcb",
+       "datePublished": "2024-10-03T11:12:51-04:00",
+       "title": "cdp-mcn-id-455613001-66fea3417fc45.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef7d040-10dc-6c4e-8604-9dd048b443e1/files/7eb0a01f-c482-40cd-9a93-119812e69fcb/download",
+       "language": "es",
+       "documentTypeDetails": "CDP"
+      },
+      {
+       "id": "W0BV53HYias=",
+       "datePublished": "2024-10-07T17:48:22-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 455761 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1ef7d040-10dc-6c4e-8604-9dd048b443e1/1",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/pdf"
+      },
+      {
+       "id": "75cde426-b7a8-4beb-a6e0-d72f1187efd6",
+       "datePublished": "2024-10-03T11:12:51-04:00",
+       "title": "dictamen-tecnico-mcn-id-455761001-66feb46a06966.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef7d040-10dc-6c4e-8604-9dd048b443e1/files/75cde426-b7a8-4beb-a6e0-d72f1187efd6/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen técnico"
+      },
+      {
+       "id": "XFwfpzjIZuZUTWlROhj2dw==",
+       "datePublished": "2024-10-07T17:48:22-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 455761 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1ef7d040-10dc-6c4e-8604-9dd048b443e1/1/json",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/json"
+      },
+      {
+       "id": "e23d3f20-4c6d-4842-a3d8-a86e704507bf",
+       "datePublished": "2024-10-03T11:12:51-04:00",
+       "title": "pr-419974-66fea356a7aa7.zip",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef7d040-10dc-6c4e-8604-9dd048b443e1/files/e23d3f20-4c6d-4842-a3d8-a86e704507bf/download",
+       "language": "es",
+       "documentTypeDetails": "Antecedentes de la Estimación de Costos"
+      }
+     ],
+     "numberOfTenderers": 1
+    },
+    "language": "es",
+    "ocid": "ocds-03ad3f-455761-1",
+    "date": "2024-11-06T08:07:12-04:00",
+    "initiationType": "tender",
+    "buyer": {
+     "id": "DNCP-SICP-CODE-66",
+     "name": "Municipalidad de Fernando de la Mora"
+    },
+    "sources": [
+     {
+      "id": "dncp-sicp",
+      "name": "Sistema de Información de las Contrataciones Públicas - DNCP",
+      "url": "https://www.contrataciones.gov.py/"
+     }
+    ],
+    "contracts": [
+     {
+      "id": "MN-30173-24-244788",
+      "implementation": {
+       "financialProgress": {
+        "breakdown": [
+         {
+          "id": "2024/30/173/1/1/1/0/1/11/343/30/MN-30173-24-244788",
+          "period": {
+           "startDate": "2024-01-01T00:00:00Z",
+           "endDate": "2024-12-31T00:00:00Z"
+          },
+          "measures": {
+           "monto_a_utilizar": 120000000
+          },
+          "classifications": {
+           "anio": "2024",
+           "nivel": "30",
+           "entidad": "173",
+           "tipo_programa": "1",
+           "programa": "1",
+           "sub_programa": "1",
+           "proyecto": "0",
+           "financiador": "1",
+           "departamento": "11",
+           "objeto_gasto": "343",
+           "fuente_financiamiento": "30",
+           "cdp": "116730"
+          },
+          "financialCode": "MN-30173-24-244788"
+         }
+        ]
+       }
+      },
+      "awardID": "1ef92f49-8c4b-6204-a0fc-9fbd45d5afda",
+      "status": "active",
+      "statusDetails": "publicado",
+      "period": {
+       "startDate": "2024-11-01T00:00:00-04:00"
+      },
+      "value": {
+       "amount": 119822000,
+       "currency": "PYG"
+      },
+      "documents": [
+       {
+        "id": "1ef98447-1871-6a56-885a-d1a67e1acadf",
+        "datePublished": "2024-11-01T08:28:40-04:00",
+        "title": "cdp-455761-6724bb6819b95.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1ef92f49-8c4b-6204-a0fc-9fbd45d5afda/files/ba234764-7569-4153-a1b0-f228f2b3baad/download",
+        "language": "es",
+        "documentTypeDetails": "CDP"
+       },
+       {
+        "id": "1ef98444-7481-62a4-b0a1-43d06d9a093e",
+        "datePublished": "2024-11-01T08:27:29-04:00",
+        "title": "ddjj-plazo-de-protesta-6724bb2134341.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1ef92f49-8c4b-6204-a0fc-9fbd45d5afda/files/903b38be-c5ae-44ae-a05b-846e6e2c0978/download",
+        "language": "es",
+        "documentTypeDetails": "Nota de Contestación"
+       },
+       {
+        "id": "1ef98444-014f-6e66-b56e-3d5a1a6018a6",
+        "datePublished": "2024-11-01T08:27:17-04:00",
+        "title": "res-adj-455761-6724bb151d15a.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1ef92f49-8c4b-6204-a0fc-9fbd45d5afda/files/7736f5b5-75bc-44ae-9854-bac379780a6c/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1ef98443-af87-6c00-9fe4-cf383833dcb5",
+        "datePublished": "2024-11-01T08:27:08-04:00",
+        "title": "contrato-38-electricos-6724bb0c6fd3d.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1ef92f49-8c4b-6204-a0fc-9fbd45d5afda/files/a7f81851-61cb-4cac-8faa-0351b3f50617/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       }
+      ]
+     }
+    ],
+    "parties": [
+     {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora",
+      "identifier": {
+       "scheme": "DNCP-SICP-CODE",
+       "id": "66",
+       "legalName": "Municipalidad de Fernando de la Mora"
+      },
+      "contactPoint": {
+       "email": "morauoc@gmail.com",
+       "name": "LIC. ELIGIO ACOSTA",
+       "telephone": "+595 21 513-306"
+      },
+      "roles": [
+       "buyer",
+       "procuringEntity"
+      ],
+      "details": {
+       "level": "Municipalidades",
+       "entityType": "Municipalidades",
+       "type": "Entidad"
+      },
+      "additionalIdentifiers": [
+       {
+        "id": "2024.30.173",
+        "legalName": "Municipalidad de Fernando de la Mora",
+        "scheme": "PY-PGN"
+       }
+      ]
+     },
+     {
+      "name": "FELIX MARTIN ROMERO ALVARENGA",
+      "id": "PY-RUC-2132761-0",
+      "identifier": {
+       "id": "2132761-0",
+       "legalName": "FELIX MARTIN ROMERO ALVARENGA",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "supplier",
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "FELIX MARTIN ROMERO ALVARENGA",
+       "email": "edisacontabilidad@hotmail.com",
+       "telephone": "0982188476"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "FERNANDO DE LA MORA",
+       "region": "Central",
+       "streetAddress": "RUTA MCAL. ESTIGARRIBIA 723"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Muebles y Enseres",
+         "id": 23
+        },
+        {
+         "name": "Materiales e insumos eléctricos, metálicos y no metálicos, Plásticos, cauchos. Repuestos, herramientas, cámaras y cubiertas.",
+         "id": 18
+        }
+       ]
+      }
+     }
+    ],
+    "tag": [
+     "compiled"
+    ]
+   }
+  }
+ ],
+ "pagination": {
+  "total_items": 1,
+  "total_pages": 1,
+  "current_page": 1,
+  "items_per_page": 10,
+  "total_in_page": 1
+ }
+}

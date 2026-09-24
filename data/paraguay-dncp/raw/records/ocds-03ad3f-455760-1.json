@@ -1,0 +1,3680 @@
+{
+ "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/ocds-03ad3f-455760-1",
+ "publishedDate": "2026-09-22T17:54:08Z",
+ "publisher": {
+  "name": "Dirección Nacional de Contrataciones Públicas, Paraguay"
+ },
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "publicationPolicy": "https://www.contrataciones.gov.py/datos/legal",
+ "version": "1.1",
+ "extensions": [
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_breakdown_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_and_spend_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_enquiry_extension/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/enquiriesAddress/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/legalEntityTypeDetail/master/extension.json",
+  "https://raw.githubusercontent.com/gitMHOCDS/transactions/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_investmentproject_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_clarification_meetings_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_attributes_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_items_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_contract_suppliers_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_location_extension/v1.1.4/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_activityType_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_notifiedsuppliers_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_lots_details_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_memberOf_extension/master/extension.json",
+  "https://raw.githubusercontent.com/portaledcahn/ocds_tenderDatePublished_extension/master/extension.json",
+  "https://raw.githubusercontent.com/INAImexico/ocds_guarantees_extension/master/extension.json",
+  "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_requirements_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bidOpening_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_coveredBy_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_qualification_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_publicEntitiesDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_items_subItems_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_statusdetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_mainProcurementCategoryDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_identifier_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_estimatedDate_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_participationFee_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_amendments_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_lot_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_transaction_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_financialprogress_financialcode_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_categories_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_complaints_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_minQuantity_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_purchaseOrder_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_document_type_details/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_cancellations_amendments_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_milestone_documents_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_techniques_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bid_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_bid_items_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_auctions_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_secondStage_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_beneficiaries_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/Crown-Commercial-Service/ocds_tender_suitability_extension/main/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_subcontracting_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_sustainability_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_reportedpayment_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_milestone_deliveries_extension/raw/master/extension.json"
+ ],
+ "records": [
+  {
+   "ocid": "ocds-03ad3f-455760-1",
+   "releases": [
+    {
+     "date": "2024-12-05T11:22:51-04:00",
+     "tag": [
+      "tender",
+      "award",
+      "contract",
+      "implementation"
+     ],
+     "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/releases/id/1ef7d03d-b403-6d3a-8e84-09e14af03100-1733397771"
+    }
+   ],
+   "compiledRelease": {
+    "id": "1ef7d03d-b403-6d3a-8e84-09e14af03100-1733397771",
+    "awards": [
+     {
+      "id": "1efa29bf-9279-666e-bbd7-575f103f4a18",
+      "status": "active",
+      "statusDetails": "publicado",
+      "date": "2024-11-13T00:00:00-04:00",
+      "value": {
+       "amount": 66914885,
+       "currency": "PYG"
+      },
+      "suppliers": [
+       {
+        "name": "LUIS ADRIAN SOSA AQUINO",
+        "id": "PY-RUC-4178533-9"
+       }
+      ],
+      "documents": [
+       {
+        "id": "1efa6733-1908-6c74-8a0a-8b7fa95ebf65",
+        "datePublished": "2024-11-19T09:38:35-04:00",
+        "title": "cuadro-455-760-673c86cb5b304.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efa29bb-27c2-6fc2-8c27-a3bf4763de94/files/b1ce55ff-1d7f-4c5d-98f6-b0c5b0340007/download",
+        "language": "es",
+        "documentTypeDetails": "Cuadro Comparativo de Ofertas"
+       },
+       {
+        "id": "1efa6737-70d8-6c98-9048-634f6686b163",
+        "datePublished": "2024-11-19T09:40:32-04:00",
+        "title": "gmail-notificacion-de-adjudicacion-mcn-455760-673c873fea588.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efa29bb-27c2-6fc2-8c27-a3bf4763de94/files/207581f6-77ea-4505-a889-6c89d7f4aece/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "1efab4fb-e46e-6f38-a419-f9929d8e3629",
+        "datePublished": "2024-11-25T14:07:25-04:00",
+        "title": "cuadro-com-455760-6744aecd5cdfc.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efa29bb-27c2-6fc2-8c27-a3bf4763de94/files/20eb8715-50ad-4fb3-bd76-d82d37431ce4/download",
+        "language": "es",
+        "documentTypeDetails": "Cuadro Comparativo de Ofertas"
+       },
+       {
+        "id": "1efa6734-cea5-68ec-893e-b97dc8edd48c",
+        "datePublished": "2024-11-19T09:39:21-04:00",
+        "title": "cuadro-455-760-673c86f947475.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efa29bb-27c2-6fc2-8c27-a3bf4763de94/files/f387d162-4c47-4399-8586-03f4c6aa613d/download",
+        "language": "es",
+        "documentTypeDetails": "Cuadro Comparativo de Ofertas"
+       },
+       {
+        "id": "1efad902-6f0a-6ea6-a30c-63678f88ffb1",
+        "datePublished": "2024-11-28T10:53:31-04:00",
+        "title": "informe-evaluacion-anexo-solicitud-y-respuesta-mcn-id-455760001-674875daef11e.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efa29bb-27c2-6fc2-8c27-a3bf4763de94/files/a022353b-1e98-4aa4-adf4-4e0fa1a31df1/download",
+        "language": "es",
+        "documentTypeDetails": "Informe de Evaluación"
+       },
+       {
+        "id": "1efa6736-3131-6758-a285-f9e80f800475",
+        "datePublished": "2024-11-19T09:39:58-04:00",
+        "title": "inf-eva-455-760-673c871e61f3c.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efa29bb-27c2-6fc2-8c27-a3bf4763de94/files/8da85b15-7b87-4799-8f2f-69ab8dd9f7a0/download",
+        "language": "es",
+        "documentTypeDetails": "Informe de Evaluación"
+       },
+       {
+        "id": "1efab4fc-aa68-689c-a73b-3362797ecf3c",
+        "datePublished": "2024-11-25T14:07:46-04:00",
+        "title": "informe-455760-6744aee213d40.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efa29bb-27c2-6fc2-8c27-a3bf4763de94/files/c1a9280d-9519-4bb9-963c-40bd287240d6/download",
+        "language": "es",
+        "documentTypeDetails": "Informe de Evaluación"
+       },
+       {
+        "id": "1efa6732-aa11-64ec-99c5-990238bd2545",
+        "datePublished": "2024-11-19T09:38:23-04:00",
+        "title": "res-adj-455-760-673c86bfa716a.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efa29bb-27c2-6fc2-8c27-a3bf4763de94/files/62916982-f864-4c37-92f4-343b9e15dcf5/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "dix2iRRDbik=",
+        "title": "URL de la Adjudicación",
+        "url": "https://www.contrataciones.gov.py/licitaciones/adjudicacion/1efa29bb-27c2-6fc2-8c27-a3bf4763de94/resumen-adjudicacion.html",
+        "language": "es",
+        "documentType": "awardNotice",
+        "format": "text/html"
+       },
+       {
+        "id": "1efa6736-fbc9-6312-ab98-89b9165cf1b7",
+        "datePublished": "2024-11-19T09:40:19-04:00",
+        "title": "nota-a-proveedores-673c8733a852c.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1efa29bb-27c2-6fc2-8c27-a3bf4763de94/files/5d45c93d-3180-45cb-995e-4778f5fe4362/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       }
+      ],
+      "items": [
+       {
+        "id": "1ef81945-a4c6-6c4a-9416-dde603135d36",
+        "description": "Talonario, solicitud de combustibles 50x2, quimico, 15x7 (DPTO. DE TALLER)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111804-9999",
+         "description": "Talonario de factura",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111804-9999"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111804",
+          "description": "Facturas o libros de facturas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111804"
+         }
+        ],
+        "quantity": 500,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 6956,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "1",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a4cd-62ca-bc21-dde603135d36",
+        "description": "Talonario de facturaTalonario de planilla de rendicion 50x2, quimico 19x22 (DPTO DE TALLER)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111804-9999",
+         "description": "Talonario de factura",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111804-9999"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111804",
+          "description": "Facturas o libros de facturas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111804"
+         }
+        ],
+        "quantity": 160,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 8693,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "2",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a4d3-62ba-a887-dde603135d36",
+        "description": "Talonario de orden de trabajo 50x3,quimico 20x18 (DPTO. DE TALLER)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111804-9999",
+         "description": "Talonario de factura",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111804-9999"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111804",
+          "description": "Facturas o libros de facturas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111804"
+         }
+        ],
+        "quantity": 200,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 12197,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "3",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a4d8-6c56-ad1e-dde603135d36",
+        "description": "calcomania Adhesivo de plastico 3m - 10x12cm (dpto salubridad)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "31201623-001",
+         "description": "Adhesivo de contacto",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/31201623-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "31201623",
+          "description": "Adhesivo de contacto",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/31201623"
+         }
+        ],
+        "quantity": 1500,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 693,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "4",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a4dd-6c38-8d38-dde603135d36",
+        "description": "Talonario de desinfeccion 50x2 quimico 20x 8 (dpto. salubridad)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111804-9999",
+         "description": "Talonario de factura",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111804-9999"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111804",
+          "description": "Facturas o libros de facturas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111804"
+         }
+        ],
+        "quantity": 500,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 9323,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "5",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a4e2-67f6-9271-dde603135d36",
+        "description": "tripticos Papel ilustracion, 200 gr. 31, 5x20 4/4 (dpto cultura y eventos)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111509-002",
+         "description": "Papel ilustracion",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111509-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111509",
+          "description": "Articulos de papeleria",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111509"
+         }
+        ],
+        "quantity": 5000,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 886,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "6",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a4ee-640c-aa81-dde603135d36",
+        "description": "tripcticos Papel ilustracion 200gr. A4 4/4 (DPTO CODENI)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111509-002",
+         "description": "Papel ilustracion",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111509-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111509",
+          "description": "Articulos de papeleria",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111509"
+         }
+        ],
+        "quantity": 500,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 2975,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "7",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a4fd-63a8-8c9b-dde603135d36",
+        "description": "afiches 48 x31 Papel ilustracion 150 gr. 4/0 (dpto. cultura y eventos)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111509-002",
+         "description": "Papel ilustracion",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111509-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111509",
+          "description": "Articulos de papeleria",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111509"
+         }
+        ],
+        "quantity": 2500,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 896,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "8",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a50c-64de-a854-dde603135d36",
+        "description": "Tarjeta de invitacion de papel bristol 250gr. 14x20 4/0 (dpto cultura y eventos)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111611-001",
+         "description": "Tarjeta de invitacion de cartulina de hilo",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111611-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111611",
+          "description": "Tarjetas de invitacion o anuncio",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111611"
+         }
+        ],
+        "quantity": 538,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 3000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "9",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a517-6e56-96e3-dde603135d36",
+        "description": "Papel para registro de comprobante de ingresos un color y doble cerillado (dpto de tesoreria) medida OFICIO",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111509-001",
+         "description": "Papel para registro de medicion",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111509-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111509",
+          "description": "Articulos de papeleria",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111509"
+         }
+        ],
+        "quantity": 30000,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 122,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "10",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a522-6ad6-a0b6-dde603135d36",
+        "description": "Papeleria comercial membreteada. oficio full color 4/0 (hoja membretada)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111828-001",
+         "description": "Papelería comercial membreteada",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111828-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111828",
+          "description": "Papelería comercial membreteada",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111828"
+         }
+        ],
+        "quantity": 28000,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 173,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "11",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a52c-6360-a9a2-dde603135d36",
+        "description": "Papel para registro de solicitud de licencia y patente de rodados, oficio full color 4/1 (direccion de transito)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111509-001",
+         "description": "Papel para registro de medicion",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111509-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111509",
+          "description": "Articulos de papeleria",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111509"
+         }
+        ],
+        "quantity": 25000,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 90,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "12",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a535-601e-a34a-dde603135d36",
+        "description": "mesa de entrada Papel obra 1ra. 75 gr. 14x16",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111507-007",
+         "description": "Papel obra 1ra.",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-007"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111507",
+          "description": "Papel para fotocopia o impresora",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+         }
+        ],
+        "quantity": 4000,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 89,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "13",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a53c-6fee-9785-dde603135d36",
+        "description": "solicitud varias (oficio) Papel obra 1ra. 75 gr.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111507-007",
+         "description": "Papel obra 1ra.",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-007"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111507",
+          "description": "Papel para fotocopia o impresora",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+         }
+        ],
+        "quantity": 25000,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 107,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "14",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a544-64b0-b575-dde603135d36",
+        "description": "requisito Papel obra 1ra. 75 gr. 13x18, (direccion de transito)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111507-007",
+         "description": "Papel obra 1ra.",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-007"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111507",
+          "description": "Papel para fotocopia o impresora",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+         }
+        ],
+        "quantity": 20000,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 106,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "15",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a54b-6c7e-8a40-dde603135d36",
+        "description": "declaracion jurada del activo Papel obra 1ra. 75 gr. A4 (TRIBUTACION)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111507-007",
+         "description": "Papel obra 1ra.",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-007"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111507",
+          "description": "Papel para fotocopia o impresora",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+         }
+        ],
+        "quantity": 30000,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 99,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "16",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a553-6bfe-933c-dde603135d36",
+        "description": "planilla de fiscalizacion de playa de vehiculos, oficio Papel obra 1ra. 75 gr. (tributacion)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111507-007",
+         "description": "Papel obra 1ra.",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-007"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111507",
+          "description": "Papel para fotocopia o impresora",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+         }
+        ],
+        "quantity": 20000,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 157,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "17",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a55c-6d94-a073-dde603135d36",
+        "description": "comprobante interno de liquidacion Papel obra 1ra. 75 gr. 6x8 (tributacion)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111507-007",
+         "description": "Papel obra 1ra.",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-007"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111507",
+          "description": "Papel para fotocopia o impresora",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+         }
+        ],
+        "quantity": 15000,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 110,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "18",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a563-6162-9836-dde603135d36",
+        "description": "Talonario contravencion 50x2 quimico (16.5x11.5)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111507-005",
+         "description": "Formulario continuo en papel quimico ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-005"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111507",
+          "description": "Papel para fotocopia o impresora",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+         }
+        ],
+        "quantity": 200,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 6117,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "19",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a56b-6344-93d0-dde603135d36",
+        "description": "provision de bienes y/ servicios Papel oficio obra 1ra. 75 gr (finanzas)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111507-007",
+         "description": "Papel obra 1ra.",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-007"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111507",
+          "description": "Papel para fotocopia o impresora",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+         }
+        ],
+        "quantity": 10000,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 90,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "20",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a571-6438-84f0-dde603135d36",
+        "description": "hojas membretadas - Oficio 4/10 (direccion de transito)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111828-9999",
+         "description": "Block de hojas membretadas - Oficio",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111828-9999"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111828",
+          "description": "Papelería comercial membreteada",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111828"
+         }
+        ],
+        "quantity": 15000,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 110,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "21",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a577-62a2-b467-dde603135d36",
+        "description": "hojas membretadas - Oficio 4/10 (RR. HH.)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111828-9999",
+         "description": "Block de hojas membretadas - Oficio",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111828-9999"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111828",
+          "description": "Papelería comercial membreteada",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111828"
+         }
+        ],
+        "quantity": 15000,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 110,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "22",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a57c-6eaa-9fbc-dde603135d36",
+        "description": "Tarjeta de Cartulina lisa de planilla de registro de lote cementerio 4/0 (dpto. patrimonio) MEDIDA 21 X 17 CM",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111611-002",
+         "description": "Tarjeta de Cartulina",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111611-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111611",
+          "description": "Tarjetas de invitacion o anuncio",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111611"
+         }
+        ],
+        "quantity": 3000,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 329,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "23",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a582-6094-a5a3-dde603135d36",
+        "description": "hoja de declaracion jurada para juzgado de falta oficio Papel obra 1ra. 75 gr. 4/0",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111507-007",
+         "description": "Papel obra 1ra.",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-007"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111507",
+          "description": "Papel para fotocopia o impresora",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+         }
+        ],
+        "quantity": 3000,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 245,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "24",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a586-6c5c-9fe8-dde603135d36",
+        "description": "planilla escuela de danza oficio Papel obra 1ra. 75 gr.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111507-007",
+         "description": "Papel obra 1ra.",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-007"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111507",
+          "description": "Papel para fotocopia o impresora",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+         }
+        ],
+        "quantity": 3000,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 238,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "25",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a58b-6ff4-9cc6-dde603135d36",
+        "description": "Talonario de recibo de dinero 50x2 quimico escuela de danza 20x12",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111804-9999",
+         "description": "Talonario de factura",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111804-9999"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111804",
+          "description": "Facturas o libros de facturas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111804"
+         }
+        ],
+        "quantity": 200,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 8053,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "26",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a590-6860-8293-dde603135d36",
+        "description": "hojas de examen norma de transito oficio 4/0 Papel obra 1ra. 75 gr",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111507-007",
+         "description": "Papel obra 1ra.",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-007"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111507",
+          "description": "Papel para fotocopia o impresora",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+         }
+        ],
+        "quantity": 10000,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 90,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "27",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a594-6ece-9afd-dde603135d36",
+        "description": "declaracion jurada oficio 4/0 Papel obra 75 gr.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111507-007",
+         "description": "Papel obra 1ra.",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-007"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111507",
+          "description": "Papel para fotocopia o impresora",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+         }
+        ],
+        "quantity": 10000,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 70,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "28",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a59a-60f4-9d8d-dde603135d36",
+        "description": "tripticos Papel ilustracion 200 gr. full color 4/4 (45/22 abierto)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111509-002",
+         "description": "Papel ilustracion",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111509-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111509",
+          "description": "Articulos de papeleria",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111509"
+         }
+        ],
+        "quantity": 5000,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 351,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "29",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a59f-61da-a959-dde603135d36",
+        "description": "Carteles acrilico con soporte , con logo de la MFM, medida 35x60 cm, dise匾 proveido la dependencia solicitante",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "60111401-999",
+         "description": "Carteles de decoracion del aula",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/60111401-999"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "60111401",
+          "description": "Kits de decoracion del aula",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/60111401"
+         }
+        ],
+        "quantity": 5,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 387533,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "30",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a5a3-6e4c-b1f0-dde603135d36",
+        "description": "Papel fotografico (banner institucional tipo columnero 1,50 m de alto 1,10 m ancho, incluido por banner de hierro)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14121812-001",
+         "description": "Papel fotografico",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14121812-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14121812",
+          "description": "Papel fotografico",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14121812"
+         }
+        ],
+        "quantity": 5,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 243177,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "31",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a5a8-667c-8ede-dde603135d36",
+        "description": "Carteles en acm tama匾 110x140 cm 5 colores con logo de la MFM y texto a consignar, tama匾 de logos 9x6 cm las letras deben ser de 4x2 cm",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "60111401-999",
+         "description": "Carteles de decoracion del aula",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/60111401-999"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "60111401",
+          "description": "Kits de decoracion del aula",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/60111401"
+         }
+        ],
+        "quantity": 3,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 180000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "32",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a5ad-6186-8c4f-dde603135d36",
+        "description": "Papel p/ plotter (ploteado de logo institucional en los vehiculos de la flota, el mismo debe ser material de larga duracion, el dise匾 final sera ajustado durante la realizacion del servicio medida 70x 50 cm, material reflectivo.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111507-009",
+         "description": "Papel p/ plotter ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-009"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111507",
+          "description": "Papel para fotocopia o impresora",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+         }
+        ],
+        "quantity": 10,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 223800,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "33",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef81945-a5b1-6dc6-82f4-dde603135d36",
+        "description": "Papel fotografico, (Banner tipo roll up medidas hasta 2 m x90 cm aproximadamente, con logo institucional, dise匾 y texto proveido por la dependencia solicitante, incluido porta banner de hierro resistente sujetador y plegable y portatil",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14121812-001",
+         "description": "Papel fotografico",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14121812-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14121812",
+          "description": "Papel fotografico",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14121812"
+         }
+        ],
+        "quantity": 5,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 342511,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+        "attributes": [
+         {
+          "value": "PARAGUAY",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "BIGSOLUTION",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "34",
+          "id": "7"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "tender": {
+     "id": "1ef7d03d-b403-6d3a-8e84-09e14af03100",
+     "title": "ADQUISICION DE IMPRESIONES",
+     "status": "complete",
+     "awardCriteria": "priceOnly",
+     "awardCriteriaDetails": "Por Total",
+     "submissionMethod": [
+      "inPerson"
+     ],
+     "bidOpening": {
+      "date": "2024-11-01T08:30:00-04:00",
+      "address": {
+       "streetAddress": "Municipalidad de Fernando de la Mora, oficina UOC"
+      }
+     },
+     "submissionMethodDetails": "Lugar entrega ofertas: Municipalidad de Fernando de la Mora, oficina UOC",
+     "statusDetails": "Adjudicada",
+     "enquiriesAddress": {
+      "streetAddress": "SICP"
+     },
+     "clarificationMeetings": [
+      {
+       "address": {
+        "streetAddress": "N/A"
+       },
+       "id": "1"
+      }
+     ],
+     "mainProcurementCategoryDetails": "Bienes - Materiales y Productos de Papel",
+     "hasEnquiries": false,
+     "value": {
+      "amount": 79571484,
+      "currency": "PYG"
+     },
+     "datePublished": "2024-10-07T14:52:16-04:00",
+     "tenderPeriod": {
+      "startDate": "2024-10-07T14:52:16-04:00",
+      "endDate": "2024-11-01T08:00:00-04:00",
+      "durationInDays": 24
+     },
+     "awardPeriod": {
+      "startDate": "2024-11-01T08:30:00-04:00"
+     },
+     "enquiryPeriod": {
+      "endDate": "2024-10-29T08:00:00-04:00",
+      "startDate": "2024-10-07T14:52:16-04:00",
+      "durationInDays": 21
+     },
+     "mainProcurementCategory": "services",
+     "additionalProcurementCategories": [
+      "services"
+     ],
+     "procurementMethod": "open",
+     "procurementMethodDetails": "Menor cuantía nacional",
+     "procuringEntity": {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora"
+     },
+     "criteria": [
+      {
+       "id": "1",
+       "title": "Garantía de Mantenimiento de Ofertas",
+       "description": "Los oferentes, proveedores o contratistas deberán garantizar la seriedad de sus ofertas, mediante la garantía de mantenimiento de la oferta",
+       "source": "tenderer",
+       "requirementGroups": [
+        {
+         "id": "1-1",
+         "description": "La garantía debe ser de un cierto porcentaje, periodo y tipo",
+         "requirements": [
+          {
+           "id": "1-1-1",
+           "title": "Porcentaje de la garantia",
+           "expectedValue": "5"
+          },
+          {
+           "id": "1-1-2",
+           "title": "Validez de la garantia en días",
+           "expectedValue": "90"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "enquiries": [
+      {
+       "id": "52642200b6ba49d22eb3986e53b72ca6-1",
+       "date": "2024-10-16T18:13:29-04:00",
+       "title": "item 30 31 32 33 y 34",
+       "description": "El precio referencial está fuera de lo que serían los precios del mercado, favor aclarar si hubo un error en el tipeo del mismo."
+      },
+      {
+       "id": "9d9483f2975cbd5ece3a89158441cc20-1",
+       "date": "2024-10-16T18:13:17-04:00",
+       "title": "items 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 24, 25, 27 y 28",
+       "description": "En la presentación de estos items se refieren a blocks por ej (100x1 o 50x1) o la presentación serían en hojas sueltas favor aclarar"
+      },
+      {
+       "id": "9d24e07122f6c6b9c8121e354f689680-1",
+       "date": "2024-10-16T18:13:09-04:00",
+       "title": "item 1,2,3,5 y 26",
+       "description": "Respecto a los items 1,2,3,5 y 26. Si la cantidad solicitadas se refieren a hojas sueltas o a talonarios de 50x1 o 100x1"
+      }
+     ],
+     "lots": [
+      {
+       "id": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "title": "1 - 1 - ADQUISICION DE IMPRESIONES",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 79571484,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "1"
+        }
+       ]
+      }
+     ],
+     "items": [
+      {
+       "id": "1ef81945-a594-6ece-9afd-dde603135d36",
+       "description": "declaracion jurada oficio 4/0 Papel obra 75 gr.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111507-007",
+        "description": "Papel obra 1ra.",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-007"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111507",
+         "description": "Papel para fotocopia o impresora",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+        }
+       ],
+       "quantity": 10000,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 90,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "28",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a5ad-6186-8c4f-dde603135d36",
+       "description": "Papel p/ plotter (ploteado de logo institucional en los vehiculos de la flota, el mismo debe ser material de larga duracion, el dise匾 final sera ajustado durante la realizacion del servicio medida 70x 50 cm, material reflectivo.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111507-009",
+        "description": "Papel p/ plotter ",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-009"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111507",
+         "description": "Papel para fotocopia o impresora",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+        }
+       ],
+       "quantity": 10,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 323800,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "33",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a571-6438-84f0-dde603135d36",
+       "description": "hojas membretadas - Oficio 4/10 (direccion de transito)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111828-9999",
+        "description": "Block de hojas membretadas - Oficio",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111828-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111828",
+         "description": "Papelería comercial membreteada",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111828"
+        }
+       ],
+       "quantity": 15000,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 180,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "21",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a586-6c5c-9fe8-dde603135d36",
+       "description": "planilla escuela de danza oficio Papel obra 1ra. 75 gr.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111507-007",
+        "description": "Papel obra 1ra.",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-007"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111507",
+         "description": "Papel para fotocopia o impresora",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+        }
+       ],
+       "quantity": 3000,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 538,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "25",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a4cd-62ca-bc21-dde603135d36",
+       "description": "Talonario de facturaTalonario de planilla de rendicion 50x2, quimico 19x22 (DPTO DE TALLER)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111804-9999",
+        "description": "Talonario de factura",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111804-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111804",
+         "description": "Facturas o libros de facturas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111804"
+        }
+       ],
+       "quantity": 160,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 10693,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "TALONARIO",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "2",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a5a3-6e4c-b1f0-dde603135d36",
+       "description": "Papel fotografico (banner institucional tipo columnero 1,50 m de alto 1,10 m ancho, incluido por banner de hierro)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14121812-001",
+        "description": "Papel fotografico",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14121812-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14121812",
+         "description": "Papel fotografico",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14121812"
+        }
+       ],
+       "quantity": 5,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 343177,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "31",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a5a8-667c-8ede-dde603135d36",
+       "description": "Carteles en acm tama匾 110x140 cm 5 colores con logo de la MFM y texto a consignar, tama匾 de logos 9x6 cm las letras deben ser de 4x2 cm",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "60111401-999",
+        "description": "Carteles de decoracion del aula",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/60111401-999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "60111401",
+         "description": "Kits de decoracion del aula",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/60111401"
+        }
+       ],
+       "quantity": 3,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 215533,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "32",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a54b-6c7e-8a40-dde603135d36",
+       "description": "declaracion jurada del activo Papel obra 1ra. 75 gr. A4 (TRIBUTACION)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111507-007",
+        "description": "Papel obra 1ra.",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-007"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111507",
+         "description": "Papel para fotocopia o impresora",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+        }
+       ],
+       "quantity": 30000,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "16",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a53c-6fee-9785-dde603135d36",
+       "description": "solicitud varias (oficio) Papel obra 1ra. 75 gr.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111507-007",
+        "description": "Papel obra 1ra.",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-007"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111507",
+         "description": "Papel para fotocopia o impresora",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+        }
+       ],
+       "quantity": 25000,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 107,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "14",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a55c-6d94-a073-dde603135d36",
+       "description": "comprobante interno de liquidacion Papel obra 1ra. 75 gr. 6x8 (tributacion)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111507-007",
+        "description": "Papel obra 1ra.",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-007"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111507",
+         "description": "Papel para fotocopia o impresora",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+        }
+       ],
+       "quantity": 15000,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 141,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "18",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a5b1-6dc6-82f4-dde603135d36",
+       "description": "Papel fotografico, (Banner tipo roll up medidas hasta 2 m x90 cm aproximadamente, con logo institucional, dise匾 y texto proveido por la dependencia solicitante, incluido porta banner de hierro resistente sujetador y plegable y portatil",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14121812-001",
+        "description": "Papel fotografico",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14121812-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14121812",
+         "description": "Papel fotografico",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14121812"
+        }
+       ],
+       "quantity": 5,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 342511,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "34",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a56b-6344-93d0-dde603135d36",
+       "description": "provision de bienes y/ servicios Papel oficio obra 1ra. 75 gr (finanzas)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111507-007",
+        "description": "Papel obra 1ra.",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-007"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111507",
+         "description": "Papel para fotocopia o impresora",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+        }
+       ],
+       "quantity": 10000,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 123,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "20",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a52c-6360-a9a2-dde603135d36",
+       "description": "Papel para registro de solicitud de licencia y patente de rodados, oficio full color 4/1 (direccion de transito)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111509-001",
+        "description": "Papel para registro de medicion",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111509-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111509",
+         "description": "Articulos de papeleria",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111509"
+        }
+       ],
+       "quantity": 25000,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 123,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "12",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a57c-6eaa-9fbc-dde603135d36",
+       "description": "Tarjeta de Cartulina lisa de planilla de registro de lote cementerio 4/0 (dpto. patrimonio) MEDIDA 21 X 17 CM",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111611-002",
+        "description": "Tarjeta de Cartulina",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111611-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111611",
+         "description": "Tarjetas de invitacion o anuncio",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111611"
+        }
+       ],
+       "quantity": 3000,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 629,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "23",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a535-601e-a34a-dde603135d36",
+       "description": "mesa de entrada Papel obra 1ra. 75 gr. 14x16",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111507-007",
+        "description": "Papel obra 1ra.",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-007"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111507",
+         "description": "Papel para fotocopia o impresora",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+        }
+       ],
+       "quantity": 4000,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 89,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "13",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a582-6094-a5a3-dde603135d36",
+       "description": "hoja de declaracion jurada para juzgado de falta oficio Papel obra 1ra. 75 gr. 4/0",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111507-007",
+        "description": "Papel obra 1ra.",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-007"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111507",
+         "description": "Papel para fotocopia o impresora",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+        }
+       ],
+       "quantity": 3000,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 545,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "24",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a4ee-640c-aa81-dde603135d36",
+       "description": "tripcticos Papel ilustracion 200gr. A4 4/4 (DPTO CODENI)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111509-002",
+        "description": "Papel ilustracion",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111509-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111509",
+         "description": "Articulos de papeleria",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111509"
+        }
+       ],
+       "quantity": 500,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 2975,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "7",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a517-6e56-96e3-dde603135d36",
+       "description": "Papel para registro de comprobante de ingresos un color y doble cerillado (dpto de tesoreria) medida OFICIO",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111509-001",
+        "description": "Papel para registro de medicion",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111509-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111509",
+         "description": "Articulos de papeleria",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111509"
+        }
+       ],
+       "quantity": 30000,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 122,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "10",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a553-6bfe-933c-dde603135d36",
+       "description": "planilla de fiscalizacion de playa de vehiculos, oficio Papel obra 1ra. 75 gr. (tributacion)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111507-007",
+        "description": "Papel obra 1ra.",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-007"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111507",
+         "description": "Papel para fotocopia o impresora",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+        }
+       ],
+       "quantity": 20000,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 157,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "17",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a563-6162-9836-dde603135d36",
+       "description": "Talonario contravencion 50x2 quimico (16.5x11.5)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111507-005",
+        "description": "Formulario continuo en papel quimico ",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-005"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111507",
+         "description": "Papel para fotocopia o impresora",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 7117,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "19",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a590-6860-8293-dde603135d36",
+       "description": "hojas de examen norma de transito oficio 4/0 Papel obra 1ra. 75 gr",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111507-007",
+        "description": "Papel obra 1ra.",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-007"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111507",
+         "description": "Papel para fotocopia o impresora",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+        }
+       ],
+       "quantity": 10000,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 161,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "27",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a50c-64de-a854-dde603135d36",
+       "description": "Tarjeta de invitacion de papel bristol 250gr. 14x20 4/0 (dpto cultura y eventos)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111611-001",
+        "description": "Tarjeta de invitacion de cartulina de hilo",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111611-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111611",
+         "description": "Tarjetas de invitacion o anuncio",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111611"
+        }
+       ],
+       "quantity": 538,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 3000,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "9",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a522-6ad6-a0b6-dde603135d36",
+       "description": "Papeleria comercial membreteada. oficio full color 4/0 (hoja membretada)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111828-001",
+        "description": "Papelería comercial membreteada",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111828-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111828",
+         "description": "Papelería comercial membreteada",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111828"
+        }
+       ],
+       "quantity": 28000,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 173,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "11",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a59f-61da-a959-dde603135d36",
+       "description": "Carteles acrilico con soporte , con logo de la MFM, medida 35x60 cm, dise匾 proveido la dependencia solicitante",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "60111401-999",
+        "description": "Carteles de decoracion del aula",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/60111401-999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "60111401",
+         "description": "Kits de decoracion del aula",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/60111401"
+        }
+       ],
+       "quantity": 5,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 487533,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "30",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a4c6-6c4a-9416-dde603135d36",
+       "description": "Talonario, solicitud de combustibles 50x2, quimico, 15x7 (DPTO. DE TALLER)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111804-9999",
+        "description": "Talonario de factura",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111804-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111804",
+         "description": "Facturas o libros de facturas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111804"
+        }
+       ],
+       "quantity": 500,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 8956,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "TALONARIO",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a4fd-63a8-8c9b-dde603135d36",
+       "description": "afiches 48 x31 Papel ilustracion 150 gr. 4/0 (dpto. cultura y eventos)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111509-002",
+        "description": "Papel ilustracion",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111509-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111509",
+         "description": "Articulos de papeleria",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111509"
+        }
+       ],
+       "quantity": 2500,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 896,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "8",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a4d8-6c56-ad1e-dde603135d36",
+       "description": "calcomania Adhesivo de plastico 3m - 10x12cm (dpto salubridad)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "31201623-001",
+        "description": "Adhesivo de contacto",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/31201623-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "31201623",
+         "description": "Adhesivo de contacto",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/31201623"
+        }
+       ],
+       "quantity": 1500,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 693,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "4",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a544-64b0-b575-dde603135d36",
+       "description": "requisito Papel obra 1ra. 75 gr. 13x18, (direccion de transito)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111507-007",
+        "description": "Papel obra 1ra.",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111507-007"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111507",
+         "description": "Papel para fotocopia o impresora",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111507"
+        }
+       ],
+       "quantity": 20000,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 106,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "15",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a577-62a2-b467-dde603135d36",
+       "description": "hojas membretadas - Oficio 4/10 (RR. HH.)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111828-9999",
+        "description": "Block de hojas membretadas - Oficio",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111828-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111828",
+         "description": "Papelería comercial membreteada",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111828"
+        }
+       ],
+       "quantity": 15000,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 180,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "22",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a4e2-67f6-9271-dde603135d36",
+       "description": "tripticos Papel ilustracion, 200 gr. 31, 5x20 4/4 (dpto cultura y eventos)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111509-002",
+        "description": "Papel ilustracion",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111509-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111509",
+         "description": "Articulos de papeleria",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111509"
+        }
+       ],
+       "quantity": 5000,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 886,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "6",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a4dd-6c38-8d38-dde603135d36",
+       "description": "Talonario de desinfeccion 50x2 quimico 20x 8 (dpto. salubridad)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111804-9999",
+        "description": "Talonario de factura",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111804-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111804",
+         "description": "Facturas o libros de facturas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111804"
+        }
+       ],
+       "quantity": 500,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 9323,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "TALONARIO",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "5",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a58b-6ff4-9cc6-dde603135d36",
+       "description": "Talonario de recibo de dinero 50x2 quimico escuela de danza 20x12",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111804-9999",
+        "description": "Talonario de factura",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111804-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111804",
+         "description": "Facturas o libros de facturas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111804"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 8053,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "TALONARIO",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "26",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a4d3-62ba-a887-dde603135d36",
+       "description": "Talonario de orden de trabajo 50x3,quimico 20x18 (DPTO. DE TALLER)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111804-9999",
+        "description": "Talonario de factura",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111804-9999"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111804",
+         "description": "Facturas o libros de facturas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111804"
+        }
+       ],
+       "quantity": 200,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 12197,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "TALONARIO",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "3",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef81945-a59a-60f4-9d8d-dde603135d36",
+       "description": "tripticos Papel ilustracion 200 gr. full color 4/4 (45/22 abierto)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111509-002",
+        "description": "Papel ilustracion",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111509-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111509",
+         "description": "Articulos de papeleria",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111509"
+        }
+       ],
+       "quantity": 5000,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 451,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef81943-64ff-6b72-9814-53e6c1ddd676",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "29",
+         "id": "2"
+        }
+       ]
+      }
+     ],
+     "tenderers": [
+      {
+       "name": "FRIGON S.A.",
+       "id": "PY-RUC-80025668-9"
+      },
+      {
+       "name": "LUIS ADRIAN SOSA AQUINO",
+       "id": "PY-RUC-4178533-9"
+      }
+     ],
+     "documents": [
+      {
+       "id": "H6RTN/zKXWE=",
+       "datePublished": "2024-10-23T08:15:41-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 455760 Version 2",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1ef7d03d-b403-6d3a-8e84-09e14af03100/2",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/pdf"
+      },
+      {
+       "id": "e4b83dca-b26f-45bc-8bf2-dc2727d094ae",
+       "datePublished": "2024-10-03T11:08:39-04:00",
+       "title": "cdp-mcn-id-455760001-66feb3274dacf.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef7d03d-b403-6d3a-8e84-09e14af03100/files/e4b83dca-b26f-45bc-8bf2-dc2727d094ae/download",
+       "language": "es",
+       "documentTypeDetails": "CDP"
+      },
+      {
+       "id": "12KLjKnurqD26vL/WlMRUQ==",
+       "datePublished": "2024-10-23T08:15:41-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 455760 Version 2",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1ef7d03d-b403-6d3a-8e84-09e14af03100/2/json",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/json"
+      },
+      {
+       "id": "dix2iRRDbik=",
+       "title": "URL de la Convocatoria",
+       "url": "https://www.contrataciones.gov.py/licitaciones/convocatoria/1ef7d03d-b403-6d3a-8e84-09e14af03100.html",
+       "language": "es",
+       "documentType": "tenderNotice",
+       "format": "text/html"
+      },
+      {
+       "id": "1d7c1008-bd7d-4a45-8c10-e028012e8df1",
+       "datePublished": "2024-10-03T11:08:38-04:00",
+       "title": "pr-455760-66feb352dddc1.zip",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef7d03d-b403-6d3a-8e84-09e14af03100/files/1d7c1008-bd7d-4a45-8c10-e028012e8df1/download",
+       "language": "es",
+       "documentTypeDetails": "Antecedentes de la Estimación de Costos"
+      },
+      {
+       "id": "437f03db-3e0a-46c7-9ca3-4bf1ec19dd3d",
+       "datePublished": "2024-10-03T11:08:39-04:00",
+       "title": "resolucion-mcn-id-455760001-66feb32ee6f23.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef7d03d-b403-6d3a-8e84-09e14af03100/files/437f03db-3e0a-46c7-9ca3-4bf1ec19dd3d/download",
+       "language": "es",
+       "documentTypeDetails": "Aprobación PBC"
+      },
+      {
+       "id": "1a72c0ac-8db2-4102-a3e8-6d326bdc2896",
+       "datePublished": "2024-10-03T11:08:39-04:00",
+       "title": "dictamen-tecnico-mcn-id-455760001-66feb337f1590.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef7d03d-b403-6d3a-8e84-09e14af03100/files/1a72c0ac-8db2-4102-a3e8-6d326bdc2896/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen técnico"
+      },
+      {
+       "id": "b364713f-8a85-4065-9bfa-678b02d4a938",
+       "datePublished": "2024-11-01T10:16:30-04:00",
+       "title": "ap-455760001-33129543177772220-6724d4ae14808.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef7d03d-b403-6d3a-8e84-09e14af03100/files/b364713f-8a85-4065-9bfa-678b02d4a938/download",
+       "language": "es",
+       "documentTypeDetails": "Acta de Apertura"
+      }
+     ],
+     "numberOfTenderers": 2
+    },
+    "language": "es",
+    "ocid": "ocds-03ad3f-455760-1",
+    "date": "2024-12-05T11:22:51-04:00",
+    "initiationType": "tender",
+    "buyer": {
+     "id": "DNCP-SICP-CODE-66",
+     "name": "Municipalidad de Fernando de la Mora"
+    },
+    "sources": [
+     {
+      "id": "dncp-sicp",
+      "name": "Sistema de Información de las Contrataciones Públicas - DNCP",
+      "url": "https://www.contrataciones.gov.py/"
+     }
+    ],
+    "contracts": [
+     {
+      "id": "MN-30173-24-247477",
+      "implementation": {
+       "financialProgress": {
+        "breakdown": [
+         {
+          "id": "2024/30/173/1/1/1/0/1/11/333/30/MN-30173-24-247477",
+          "period": {
+           "startDate": "2024-01-01T00:00:00Z",
+           "endDate": "2024-12-31T00:00:00Z"
+          },
+          "measures": {
+           "monto_a_utilizar": 80000000
+          },
+          "classifications": {
+           "anio": "2024",
+           "nivel": "30",
+           "entidad": "173",
+           "tipo_programa": "1",
+           "programa": "1",
+           "sub_programa": "1",
+           "proyecto": "0",
+           "financiador": "1",
+           "departamento": "11",
+           "objeto_gasto": "333",
+           "fuente_financiamiento": "30",
+           "cdp": "116735"
+          },
+          "financialCode": "MN-30173-24-247477"
+         }
+        ]
+       }
+      },
+      "awardID": "1efa29bf-9279-666e-bbd7-575f103f4a18",
+      "status": "active",
+      "statusDetails": "publicado",
+      "period": {
+       "startDate": "2024-11-29T00:00:00-04:00"
+      },
+      "value": {
+       "amount": 66914885,
+       "currency": "PYG"
+      },
+      "documents": [
+       {
+        "id": "1efb0d15-70ed-6ce0-a2b8-9721f574cd0d",
+        "datePublished": "2024-12-02T14:17:42-04:00",
+        "title": "cdp-mcn-id-455760001-674debb6902b2.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1efa29bf-9279-666e-bbd7-575f103f4a18/files/aab7e482-18eb-45ef-93fa-bd80aae1e22e/download",
+        "language": "es",
+        "documentTypeDetails": "CDP"
+       },
+       {
+        "id": "1efb0d14-da9b-6fee-b775-cbab9a6988f6",
+        "datePublished": "2024-12-02T14:17:26-04:00",
+        "title": "res-adj-455-760-674deba6c9803.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1efa29bf-9279-666e-bbd7-575f103f4a18/files/37dca7ab-44df-4ee4-84eb-58ea45e88f89/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1efb0d14-34e2-61fc-9585-77bd836fad66",
+        "datePublished": "2024-12-02T14:17:09-04:00",
+        "title": "big-solution-674deb9549981.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1efa29bf-9279-666e-bbd7-575f103f4a18/files/b2431621-2dc4-4687-b6a7-d532e3b77138/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       }
+      ]
+     }
+    ],
+    "parties": [
+     {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora",
+      "identifier": {
+       "scheme": "DNCP-SICP-CODE",
+       "id": "66",
+       "legalName": "Municipalidad de Fernando de la Mora"
+      },
+      "contactPoint": {
+       "email": "morauoc@gmail.com",
+       "name": "LIC. ELIGIO ACOSTA",
+       "telephone": "+595 21 513-306"
+      },
+      "roles": [
+       "buyer",
+       "procuringEntity"
+      ],
+      "details": {
+       "level": "Municipalidades",
+       "entityType": "Municipalidades",
+       "type": "Entidad"
+      },
+      "additionalIdentifiers": [
+       {
+        "id": "2024.30.173",
+        "legalName": "Municipalidad de Fernando de la Mora",
+        "scheme": "PY-PGN"
+       }
+      ]
+     },
+     {
+      "name": "LUIS ADRIAN SOSA AQUINO",
+      "id": "PY-RUC-4178533-9",
+      "identifier": {
+       "id": "4178533-9",
+       "legalName": "LUIS ADRIAN SOSA AQUINO",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "supplier",
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "LUIS ADRIAN SOSA AQUINO",
+       "email": "presupuestoimpresion01@gmail.com",
+       "telephone": "0992298103 - 0981370640"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "FERNANDO DE LA MORA",
+       "region": "Central",
+       "streetAddress": "MCAL ESTIGARRIBIA CASI SOLDADO OVELAR Casa #106"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        }
+       ]
+      }
+     },
+     {
+      "name": "FRIGON S.A.",
+      "id": "PY-RUC-80025668-9",
+      "identifier": {
+       "id": "80025668-9",
+       "legalName": "FRIGON S.A.",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "enquirer",
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "Carlos Friedmann González - Carlos Friedmann Ortiz",
+       "email": "frigonsa@gmail.com",
+       "faxNumber": "904856",
+       "telephone": "0991 706300"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "Asunción.",
+       "region": "Central",
+       "streetAddress": "JACQUES BALANZA N° 1716 C/ SAN ANDRÉS."
+      },
+      "details": {
+       "scale": "sme",
+       "legalEntityTypeDetail": "S.A.",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        },
+        {
+         "name": "Publicidad y Propaganda",
+         "id": 8
+        },
+        {
+         "name": "Servicios Técnicos",
+         "id": 7
+        },
+        {
+         "name": "Utiles de oficina, Productos de papel y cartón e impresos",
+         "id": 11
+        }
+       ]
+      }
+     }
+    ],
+    "tag": [
+     "compiled"
+    ]
+   }
+  }
+ ],
+ "pagination": {
+  "total_items": 1,
+  "total_pages": 1,
+  "current_page": 1,
+  "items_per_page": 10,
+  "total_in_page": 1
+ }
+}

@@ -1,0 +1,4076 @@
+{
+ "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/ocds-03ad3f-470854-1",
+ "publishedDate": "2026-09-22T17:53:22Z",
+ "publisher": {
+  "name": "Dirección Nacional de Contrataciones Públicas, Paraguay"
+ },
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "publicationPolicy": "https://www.contrataciones.gov.py/datos/legal",
+ "version": "1.1",
+ "extensions": [
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_breakdown_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_and_spend_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_enquiry_extension/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/enquiriesAddress/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/legalEntityTypeDetail/master/extension.json",
+  "https://raw.githubusercontent.com/gitMHOCDS/transactions/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_investmentproject_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_clarification_meetings_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_attributes_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_items_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_contract_suppliers_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_location_extension/v1.1.4/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_activityType_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_notifiedsuppliers_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_lots_details_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_memberOf_extension/master/extension.json",
+  "https://raw.githubusercontent.com/portaledcahn/ocds_tenderDatePublished_extension/master/extension.json",
+  "https://raw.githubusercontent.com/INAImexico/ocds_guarantees_extension/master/extension.json",
+  "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_requirements_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bidOpening_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_coveredBy_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_qualification_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_publicEntitiesDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_items_subItems_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_statusdetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_mainProcurementCategoryDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_identifier_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_estimatedDate_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_participationFee_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_amendments_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_lot_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_transaction_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_financialprogress_financialcode_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_categories_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_complaints_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_minQuantity_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_purchaseOrder_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_document_type_details/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_cancellations_amendments_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_milestone_documents_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_techniques_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bid_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_bid_items_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_auctions_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_secondStage_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_beneficiaries_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/Crown-Commercial-Service/ocds_tender_suitability_extension/main/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_subcontracting_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_sustainability_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_reportedpayment_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_milestone_deliveries_extension/raw/master/extension.json"
+ ],
+ "records": [
+  {
+   "ocid": "ocds-03ad3f-470854-1",
+   "releases": [
+    {
+     "date": "2025-07-31T16:42:48-04:00",
+     "tag": [
+      "tender",
+      "award",
+      "contract",
+      "implementation"
+     ],
+     "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/releases/id/1f02ff2c-6a67-6ad6-876c-7f470d208b46-1753980168"
+    }
+   ],
+   "compiledRelease": {
+    "id": "1f02ff2c-6a67-6ad6-876c-7f470d208b46-1753980168",
+    "awards": [
+     {
+      "id": "1f061837-be03-6baa-8610-af18a7141101",
+      "status": "active",
+      "statusDetails": "publicado",
+      "date": "2025-07-14T00:00:00-04:00",
+      "value": {
+       "amount": 50000000,
+       "currency": "PYG"
+      },
+      "suppliers": [
+       {
+        "name": "LUIS ADRIAN SOSA AQUINO",
+        "id": "PY-RUC-4178533-9"
+       }
+      ],
+      "documents": [
+       {
+        "id": "1f0625aa-f367-6744-8c6d-5bbabb99864e",
+        "datePublished": "2025-07-16T12:36:47-04:00",
+        "title": "informe-470854-6877c70f60778.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f061833-ac5e-6566-ac4e-f3281e085ef3/files/9ccafbef-9b9e-4fac-ab9d-988695e03464/download",
+        "language": "es",
+        "documentTypeDetails": "Informe de Evaluación"
+       },
+       {
+        "id": "1f0625a9-76d7-6c0c-8113-db0b27ff9a35",
+        "datePublished": "2025-07-16T12:36:07-04:00",
+        "title": "res-adj-470854-6877c6e7773f5.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f061833-ac5e-6566-ac4e-f3281e085ef3/files/8bb24de0-f328-4451-95d5-235acf94eeab/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "1f0625aa-2125-6c7c-8e25-6dee9468df7a",
+        "datePublished": "2025-07-16T12:36:25-04:00",
+        "title": "cuadro-470854-6877c6f95b81a.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f061833-ac5e-6566-ac4e-f3281e085ef3/files/61fb8fa3-65d0-495c-93bf-71a322106ed6/download",
+        "language": "es",
+        "documentTypeDetails": "Cuadro Comparativo de Ofertas"
+       },
+       {
+        "id": "dix2iRRDbik=",
+        "title": "URL de la Adjudicación",
+        "url": "https://www.contrataciones.gov.py/licitaciones/adjudicacion/1f061833-ac5e-6566-ac4e-f3281e085ef3/resumen-adjudicacion.html",
+        "language": "es",
+        "documentType": "awardNotice",
+        "format": "text/html"
+       }
+      ],
+      "items": [
+       {
+        "id": "1f04165c-dddf-6322-b338-171695a72209",
+        "description": "Cuaderno Universitario Tapa dura de 200 hojas una raya",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "60121108-009",
+         "description": "Cuaderno chico tapa dura con espiral 200 hojas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/60121108-009"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "60121108",
+          "description": "Cuadernos de papel ",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/60121108"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 29000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "alamo s.a",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "alamo s.a",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "1",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-ddf4-629a-bf53-171695a72209",
+        "description": "Perforadora P/ 10/12 hojas",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44101716-9997",
+         "description": "Perforadora - 20 hojas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44101716-9997"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44101716",
+          "description": "Perforadoras",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44101716"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 22000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "eagle",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "eagle",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "2",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-de07-67dc-bc14-171695a72209",
+        "description": "Perforadora P/ 30/35 hojas",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44101716-9996",
+         "description": "Perforadora - 30 hojas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44101716-9996"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44101716",
+          "description": "Perforadoras",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44101716"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 80000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "eagle",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "eagle",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "3",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-de18-60fa-b8ae-171695a72209",
+        "description": "Tijera de oficina de 21cm",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44121618-9998",
+         "description": "Tijera de oficina de 19cm",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121618-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44121618",
+          "description": "Tijeras",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121618"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 10000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "eagle",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "eagle",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "4",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-de24-6bfc-a37b-171695a72209",
+        "description": "Presilladora P/ 24/6 hojas",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44121615-9996",
+         "description": "Presilladora grande - grapa 24/6 a 24/13",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121615-9996"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44121615",
+          "description": "Presilladora o grapadora",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121615"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 14500,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "eagle",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "eagle",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "5",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-de31-6c6c-a2ae-171695a72209",
+        "description": "Presilladora P/ 100/120 hojas",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44121615-9998",
+         "description": "Presilladora grande - Grapa 23/10",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121615-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44121615",
+          "description": "Presilladora o grapadora",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121615"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 118000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "eagle",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "eagle",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "6",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-de3b-6910-bb2b-171695a72209",
+        "description": "Grampa para presilladora 24/6 (Caja de 12  unidad)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44122107-9997",
+         "description": "Grapa para presilladora 24/6",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122107-9997"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44122107",
+          "description": "Grapas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122107"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 25000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "eagle",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "eagle",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "7",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-de45-6320-b09e-171695a72209",
+        "description": "Grampa para presilladora 23/13",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44122107-9998",
+         "description": "Grapa para presilladora 23/13",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122107-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44122107",
+          "description": "Grapas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122107"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 4000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "eagle",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "eagle",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "8",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-de4d-6836-92a7-171695a72209",
+        "description": "Desgrampadora mediano",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44121613-001",
+         "description": "Desgrapadora tamaño mediano",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121613-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44121613",
+          "description": "Quitagrapa o Desgrapadora",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121613"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 7000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "eagle",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "eagle",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "9",
+          "id": "7"
+         },
+         {
+          "name": "especificacionestecnicas",
+          "value": "Metálico de alta resistencia, tipo pinza con mango de plástico, indicado para grapas de 24/6.",
+          "id": "125"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-de54-6e2e-be59-171695a72209",
+        "description": "Bibliorato plastificado tama匾 recibo",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44122015-009",
+         "description": "Bibliorato lomo fino tamano carta",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122015-009"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44122015",
+          "description": "Bibliorato",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122015"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 10000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "fosKa",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "TOSKA",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "10",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-de5c-6688-843c-171695a72209",
+        "description": "Bibliorato lomo fino plastificado tama匾 oficio",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44122015-008",
+         "description": "Bibliorato lomo fino tamano oficio",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122015-008"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44122015",
+          "description": "Bibliorato",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122015"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 12000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "fosKa",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "TOSKA",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "11",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-de63-6992-951d-171695a72209",
+        "description": "Bibliorato lomo ancho plastificado tama匾 oficio",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44122015-007",
+         "description": "Bibliorato lomo ancho plastificado",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122015-007"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44122015",
+          "description": "Bibliorato",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122015"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 12000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "fosKa",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "TOSKA",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "12",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         },
+         {
+          "name": "especificacionestecnicas",
+          "value": "Con etiqueta en el lomo, tamaño oficio, tapa dura plastificada, anillos de metal plateado inoxidable, compresor de metal.",
+          "id": "125"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-de69-6a40-aef2-171695a72209",
+        "description": "Almohadilla para tinta - Color azul ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44121621-9998",
+         "description": "Almohadilla para tinta - Color azul - 11x7cm",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121621-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44121621",
+          "description": "Almohadillas para tinta o sus accesorios",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121621"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 5000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "Brasil",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "pilot",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "pilot",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "13",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-de6f-679c-aaa4-171695a72209",
+        "description": "Almohadilla para tinta - Color negro ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44121621-9997",
+         "description": "Almohadilla para tinta - Color negro - 11x7cm",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121621-9997"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44121621",
+          "description": "Almohadillas para tinta o sus accesorios",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121621"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 5000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "Brasil",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "pilot",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "pilot",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "14",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-de75-6a2a-8394-171695a72209",
+        "description": "Marcador fosforecente/ resaltador punta gruesa ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44121708-9995",
+         "description": "Marcador permanente - Punta gruesa biselada",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121708-9995"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44121708",
+          "description": "Marcadores",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121708"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 4800,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "corea",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "monami",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "monami",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "15",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-de83-636e-b569-171695a72209",
+        "description": "Boligrafo comun azul en caja de 50 unidad",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44121704-9998",
+         "description": "Bolígrafo común  - Azul",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121704-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44121704",
+          "description": "Boligrafos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121704"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 58000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "corea",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "monami",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "monami",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "16",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-de9b-65d6-88e5-171695a72209",
+        "description": "Boligrafo comun negro en caja de 50 unidad",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44121708-9991",
+         "description": "Marcador resaltador - Punta gruesa biselada",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121708-9991"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44121708",
+          "description": "Marcadores",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121708"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 58000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "corea",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "monami",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "monami",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "17",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-deac-643a-8162-171695a72209",
+        "description": "Lapiz de papel comun c/borrador en caja de 12 unidad",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44121706-003",
+         "description": "Lapiz de papel comun c/borrador",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121706-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44121706",
+          "description": "Lapiz",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121706"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 21000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "francia",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "maped",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "maped",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "18",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-deb8-6d16-b55d-171695a72209",
+        "description": "Carpeta archivadora plastificada",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44122011-001",
+         "description": "Carpeta archivadora plastificada",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122011-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44122011",
+          "description": "Carpetas para archivos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122011"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 2000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "eagle",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "eagle",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "19",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-dec3-6c98-ae3c-171695a72209",
+        "description": "Fastener o Corchete ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44122118-001",
+         "description": "Sujetador para carpetas (fastener)",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122118-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44122118",
+          "description": "Fasteners",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122118"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 15000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "eagle",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "eagle",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "20",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-ded7-6db0-8413-171695a72209",
+        "description": "Corrector liquido",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44121802-002",
+         "description": "Corrector liquido",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121802-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44121802",
+          "description": "Liquido corrector",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121802"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 3000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "fosKa",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "TOSKA",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "21",
+          "id": "7"
+         },
+         {
+          "name": "especificacionestecnicas",
+          "value": "Líquido base de agua, con pincel, con contenido de entre 18 a 20 ml Vencimiento > 1 año.",
+          "id": "125"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-deea-6884-a858-171695a72209",
+        "description": "Goma para billete de 250 gr",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44121714-9998",
+         "description": "Goma para billete - 250 gr",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121714-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44121714",
+          "description": "Gomita de sujecion p/ dinero y otros",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121714"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 9000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "redbor",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "redbor",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "22",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-def8-6cea-b5d3-171695a72209",
+        "description": "Banderita autoadhesiva señalador - Paquete de 5 colores",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "55121616-001",
+         "description": "Banderita autoadhesiva señalador",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/55121616-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "55121616",
+          "description": "Banderitas autoadhesivas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/55121616"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 7000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "eagle",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "eagle",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "23",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         },
+         {
+          "name": "especificacionestecnicas",
+          "value": "Señaladores banderita de papel, autoadhesiva reposicionables de 4 colores por 50 unidades por color como mínimo, medidas de entre 15 a 25 mm x 50 a 51 mm.",
+          "id": "125"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-df04-6cb6-94fa-171695a72209",
+        "description": "Clips mediano",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44122104-002",
+         "description": "Clips mediano",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122104-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44122104",
+          "description": "Clips para papel",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122104"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 8000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "square",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "square",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "24",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         },
+         {
+          "name": "especificacionestecnicas",
+          "value": "Clips niquelados de punta ovalada de 1,5 mm de grosor, largo 32 mm y ancho 8 mm, como mínimo, en cajas x 100 unidades como mínimo.",
+          "id": "125"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-df0f-6710-8ff4-171695a72209",
+        "description": "Pendrive (Memoria USB) de 16 GB",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "43202005-007",
+         "description": "Memoria USB 16 GB",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/43202005-007"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "43202005",
+          "description": "Dispositivos de almacenamiento de memoria flash",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/43202005"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 48000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "taiwan",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "adata",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "adata",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "25",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-df19-6918-bf76-171695a72209",
+        "description": "Cinta Adhesiva mediana",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "31201510-003",
+         "description": "Cinta Adhesiva mediana",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/31201510-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "31201510",
+          "description": "Cinta adhesiva impregnada de resina",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/31201510"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 5600,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "eagle",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "eagle",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "26",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-df21-6d48-a65e-171695a72209",
+        "description": "Tinta para sello ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44121902-9998",
+         "description": "Tinta para sello - 40 ml",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121902-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44121902",
+          "description": "Tinta ",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121902"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 9000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "Brasil",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "pilot",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "pilot",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "27",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-df2a-63a8-8ce9-171695a72209",
+        "description": "Plancheta acrilica",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44122003-001",
+         "description": "Plancheta acrilica",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122003-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44122003",
+          "description": "Tablas para sujetar",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122003"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 14000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "eagle",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "eagle",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "28",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-df32-6b98-b805-171695a72209",
+        "description": "Aprieta papel de metal tipo mariposa, tama匾 chico",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44122016-001",
+         "description": "Aprieta papel",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122016-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44122016",
+          "description": "Aprieta Papel",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122016"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 2500,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "china",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "juli",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "juli",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "29",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-df48-6786-8766-171695a72209",
+        "description": "Aprieta papel de metal tipo mariposa, tama匾 grande ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44122016-001",
+         "description": "Aprieta papel",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122016-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44122016",
+          "description": "Aprieta Papel",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122016"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 2000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "china",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "juli",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "juli",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "30",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-df5d-699c-b34f-171695a72209",
+        "description": "Protector de plastico(tipo funda para titulos, polipro)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44122002-002",
+         "description": "Protector de plastico",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122002-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44122002",
+          "description": "Protectores de plástico",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122002"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 500,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "eagle",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "eagle",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "31",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-df6c-65fa-88fb-171695a72209",
+        "description": "Regla de metal de 30cm",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44121624-003",
+         "description": "Regla de metal",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121624-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44121624",
+          "description": "Regla",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121624"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 6500,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "eagle",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "eagle",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "32",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-df7a-6056-8941-171695a72209",
+        "description": "Regla de plastico de 30 cm",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44121624-9998",
+         "description": "Regla plastica de 30 cm",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121624-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44121624",
+          "description": "Regla",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121624"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 1800,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "eagle",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "eagle",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "33",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-df8c-6cec-9fc1-171695a72209",
+        "description": "Borradores de Goma (caja)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "60121535-002",
+         "description": "Borrador de goma c/tapa",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/60121535-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "60121535",
+          "description": "Borradores de goma",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/60121535"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 1800,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "fosKa",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "TOSKA",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "34",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         },
+         {
+          "name": "especificacionestecnicas",
+          "value": "Borrador Blanco no tóxico, sin PVC, tamaño 50 x 20 mm como mínimo, con funda plástica para agarrar",
+          "id": "125"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-dfa0-69a4-baff-171695a72209",
+        "description": "Sacapuntas (caja  de 25 unidades)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44121619-9997",
+         "description": "Sacapuntas de plástico - Kit escolar",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121619-9997"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44121619",
+          "description": "Sacapuntas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121619"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 1600,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "fosKa",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "TOSKA",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "35",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f04165c-dfb0-6598-9a78-171695a72209",
+        "description": "Libro de Actas de 200 hojas",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "14111531-001",
+         "description": "Libro de Acta",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111531-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "14111531",
+          "description": "Libros de escritura o registros",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111531"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 21000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "alamo s.a",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "alamo s.a",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "36",
+          "id": "7"
+         },
+         {
+          "name": "especificacionestecnicas",
+          "value": "Libro acta tamaño oficio de 200 hojas numeradas en el adverso, gramaje mínimo de 60 grs., cocido a hilo o presilla.",
+          "id": "125"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "tender": {
+     "id": "1f02ff2c-6a67-6ad6-876c-7f470d208b46",
+     "title": "ADQUISICION DE UTILES DE OFICINA",
+     "status": "complete",
+     "awardCriteria": "priceOnly",
+     "awardCriteriaDetails": "Por Total",
+     "submissionMethod": [
+      "inPerson"
+     ],
+     "bidOpening": {
+      "date": "2025-07-02T09:30:00-04:00",
+      "address": {
+       "streetAddress": "Municipalidad de Fernando de la Mora, oficina UOC"
+      }
+     },
+     "submissionMethodDetails": "Lugar entrega ofertas: Municipalidad de Fernando de la Mora, oficina UOC",
+     "statusDetails": "Adjudicada",
+     "enquiriesAddress": {
+      "streetAddress": "SICP"
+     },
+     "clarificationMeetings": [
+      {
+       "address": {
+        "streetAddress": "N/A"
+       },
+       "id": "1"
+      }
+     ],
+     "mainProcurementCategoryDetails": "Bienes - Materiales didacticos profesionales, Instrumentos musicales juegos, juguetes, artesania y equipamiento, material, accesorios y suministr",
+     "hasEnquiries": false,
+     "value": {
+      "amount": 50000000,
+      "currency": "PYG"
+     },
+     "datePublished": "2025-06-16T09:30:39-04:00",
+     "tenderPeriod": {
+      "startDate": "2025-06-16T09:30:39-04:00",
+      "endDate": "2025-07-02T09:00:00-04:00",
+      "durationInDays": 15
+     },
+     "awardPeriod": {
+      "startDate": "2025-07-02T09:30:00-04:00"
+     },
+     "contractPeriod": {
+      "maxExtentDate": "2025-12-31T00:00:00-04:00"
+     },
+     "enquiryPeriod": {
+      "endDate": "2025-06-27T12:00:00-04:00",
+      "startDate": "2025-06-16T09:30:39-04:00",
+      "durationInDays": 11
+     },
+     "mainProcurementCategory": "services",
+     "additionalProcurementCategories": [
+      "services"
+     ],
+     "procurementMethod": "open",
+     "procurementMethodDetails": "Menor cuantía nacional",
+     "procuringEntity": {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora"
+     },
+     "criteria": [
+      {
+       "id": "1",
+       "title": "Garantía de Mantenimiento de Ofertas",
+       "description": "Los oferentes, proveedores o contratistas deberán garantizar la seriedad de sus ofertas, mediante la garantía de mantenimiento de la oferta",
+       "source": "tenderer",
+       "requirementGroups": [
+        {
+         "id": "1-1",
+         "description": "La garantía debe ser de un cierto porcentaje, periodo y tipo",
+         "requirements": [
+          {
+           "id": "1-1-1",
+           "title": "Porcentaje de la garantia",
+           "expectedValue": "5"
+          },
+          {
+           "id": "1-1-2",
+           "title": "Validez de la garantia en días",
+           "expectedValue": "120"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "enquiries": [
+      {
+       "id": "ffbeb9e31a6ae1aa09c9eb61fa3c1646-1",
+       "date": "2025-06-17T12:11:41-04:00",
+       "title": "Capacidad Financiera",
+       "description": "En capacidad financiera, donde dice: para contribuyentes de IRE, deberán cumplir el siguiente parámetro: Eficiencia: (ingreso/egreso) Deberá ser igual o mayor a 1, el promedio, de los últimos 3 ejercicios fiscales requeridos (2021, 2022 y 2023) La consulta es, saber si una empresa que fue creada en el 2022, se presenta a este llamado, presentando la documentación de IRE de los años 2022 y 2023, para el cálculo de promedio se tomará: para 2021= 0, y para 2022 y 2023, el valor que indique en el formulario correspondiente. O bien, conocer cuál será el criterio de evaluación en la mencionada situación.",
+       "answer": "Remitirse al P.B.C",
+       "dateAnswered": "2025-06-24T11:28:17-04:00"
+      }
+     ],
+     "lots": [
+      {
+       "id": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "title": "1 - 1 - ADQUISICION DE UTILES DE OFICINA",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 50000000,
+        "currency": "PYG"
+       },
+       "openContractType": "monto",
+       "minValue": {
+        "amount": 25000000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "1"
+        }
+       ]
+      }
+     ],
+     "items": [
+      {
+       "id": "1f04165c-def8-6cea-b5d3-171695a72209",
+       "description": "Banderita autoadhesiva señalador - Paquete de 5 colores",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "55121616-001",
+        "description": "Banderita autoadhesiva señalador",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/55121616-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "55121616",
+         "description": "Banderitas autoadhesivas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/55121616"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 7583,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "23",
+         "id": "2"
+        },
+        {
+         "name": "Especificaciones Técnicas",
+         "value": "Señaladores banderita de papel, autoadhesiva reposicionables de 4 colores por 50 unidades por color como mínimo, medidas de entre 15 a 25 mm x 50 a 51 mm.",
+         "id": "3"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-df8c-6cec-9fc1-171695a72209",
+       "description": "Borradores de Goma (caja)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "60121535-002",
+        "description": "Borrador de goma c/tapa",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/60121535-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "60121535",
+         "description": "Borradores de goma",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/60121535"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 2113,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "34",
+         "id": "2"
+        },
+        {
+         "name": "Especificaciones Técnicas",
+         "value": "Borrador Blanco no tóxico, sin PVC, tamaño 50 x 20 mm como mínimo, con funda plástica para agarrar",
+         "id": "3"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-de83-636e-b569-171695a72209",
+       "description": "Boligrafo comun azul en caja de 50 unidad",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44121704-9998",
+        "description": "Bolígrafo común  - Azul",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121704-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44121704",
+         "description": "Boligrafos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121704"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 59583,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "16",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-de45-6320-b09e-171695a72209",
+       "description": "Grampa para presilladora 23/13",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44122107-9998",
+        "description": "Grapa para presilladora 23/13",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122107-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44122107",
+         "description": "Grapas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122107"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 4875,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "8",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-de31-6c6c-a2ae-171695a72209",
+       "description": "Presilladora P/ 100/120 hojas",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44121615-9998",
+        "description": "Presilladora grande - Grapa 23/10",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121615-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44121615",
+         "description": "Presilladora o grapadora",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121615"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 119167,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "6",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-de5c-6688-843c-171695a72209",
+       "description": "Bibliorato lomo fino plastificado tama匾 oficio",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44122015-008",
+        "description": "Bibliorato lomo fino tamano oficio",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122015-008"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44122015",
+         "description": "Bibliorato",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122015"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 14625,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "11",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-de69-6a40-aef2-171695a72209",
+       "description": "Almohadilla para tinta - Color azul ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44121621-9998",
+        "description": "Almohadilla para tinta - Color azul - 11x7cm",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121621-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44121621",
+         "description": "Almohadillas para tinta o sus accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121621"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 7583,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "13",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-dddf-6322-b338-171695a72209",
+       "description": "Cuaderno Universitario Tapa dura de 200 hojas una raya",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "60121108-009",
+        "description": "Cuaderno chico tapa dura con espiral 200 hojas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/60121108-009"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "60121108",
+         "description": "Cuadernos de papel ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/60121108"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 37375,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-ddf4-629a-bf53-171695a72209",
+       "description": "Perforadora P/ 10/12 hojas",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44101716-9997",
+        "description": "Perforadora - 20 hojas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44101716-9997"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44101716",
+         "description": "Perforadoras",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44101716"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 29250,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "2",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-df19-6918-bf76-171695a72209",
+       "description": "Cinta Adhesiva mediana",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "31201510-003",
+        "description": "Cinta Adhesiva mediana",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/31201510-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "31201510",
+         "description": "Cinta adhesiva impregnada de resina",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/31201510"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 5958,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "26",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-de6f-679c-aaa4-171695a72209",
+       "description": "Almohadilla para tinta - Color negro ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44121621-9997",
+        "description": "Almohadilla para tinta - Color negro - 11x7cm",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121621-9997"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44121621",
+         "description": "Almohadillas para tinta o sus accesorios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121621"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 7583,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "14",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-df0f-6710-8ff4-171695a72209",
+       "description": "Pendrive (Memoria USB) de 16 GB",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "43202005-007",
+        "description": "Memoria USB 16 GB",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/43202005-007"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "43202005",
+         "description": "Dispositivos de almacenamiento de memoria flash",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/43202005"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 50917,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "25",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-de75-6a2a-8394-171695a72209",
+       "description": "Marcador fosforecente/ resaltador punta gruesa ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44121708-9995",
+        "description": "Marcador permanente - Punta gruesa biselada",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121708-9995"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44121708",
+         "description": "Marcadores",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121708"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 4875,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "15",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-deb8-6d16-b55d-171695a72209",
+       "description": "Carpeta archivadora plastificada",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44122011-001",
+        "description": "Carpeta archivadora plastificada",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122011-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44122011",
+         "description": "Carpetas para archivos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122011"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 2708,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "19",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-de4d-6836-92a7-171695a72209",
+       "description": "Desgrampadora mediano",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44121613-001",
+        "description": "Desgrapadora tamaño mediano",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121613-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44121613",
+         "description": "Quitagrapa o Desgrapadora",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121613"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 7583,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "9",
+         "id": "2"
+        },
+        {
+         "name": "Especificaciones Técnicas",
+         "value": "Metálico de alta resistencia, tipo pinza con mango de plástico, indicado para grapas de 24/6.",
+         "id": "3"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-de63-6992-951d-171695a72209",
+       "description": "Bibliorato lomo ancho plastificado tama匾 oficio",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44122015-007",
+        "description": "Bibliorato lomo ancho plastificado",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122015-007"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44122015",
+         "description": "Bibliorato",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122015"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 14625,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "12",
+         "id": "2"
+        },
+        {
+         "name": "Especificaciones Técnicas",
+         "value": "Con etiqueta en el lomo, tamaño oficio, tapa dura plastificada, anillos de metal plateado inoxidable, compresor de metal.",
+         "id": "3"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-df21-6d48-a65e-171695a72209",
+       "description": "Tinta para sello ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44121902-9998",
+        "description": "Tinta para sello - 40 ml",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121902-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44121902",
+         "description": "Tinta ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121902"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 9208,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "27",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-ded7-6db0-8413-171695a72209",
+       "description": "Corrector liquido",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44121802-002",
+        "description": "Corrector liquido",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121802-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44121802",
+         "description": "Liquido corrector",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121802"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 3250,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "21",
+         "id": "2"
+        },
+        {
+         "name": "Especificaciones Técnicas",
+         "value": "Líquido base de agua, con pincel, con contenido de entre 18 a 20 ml Vencimiento > 1 año.",
+         "id": "3"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-df2a-63a8-8ce9-171695a72209",
+       "description": "Plancheta acrilica",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44122003-001",
+        "description": "Plancheta acrilica",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122003-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44122003",
+         "description": "Tablas para sujetar",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122003"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 14625,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "28",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-df7a-6056-8941-171695a72209",
+       "description": "Regla de plastico de 30 cm",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44121624-9998",
+        "description": "Regla plastica de 30 cm",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121624-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44121624",
+         "description": "Regla",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121624"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 1842,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "33",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-de3b-6910-bb2b-171695a72209",
+       "description": "Grampa para presilladora 24/6 (Caja de 12  unidad)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44122107-9997",
+        "description": "Grapa para presilladora 24/6",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122107-9997"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44122107",
+         "description": "Grapas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122107"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 34667,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "7",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-dfb0-6598-9a78-171695a72209",
+       "description": "Libro de Actas de 200 hojas",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "14111531-001",
+        "description": "Libro de Acta",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/14111531-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "14111531",
+         "description": "Libros de escritura o registros",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/14111531"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 21125,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "36",
+         "id": "2"
+        },
+        {
+         "name": "Especificaciones Técnicas",
+         "value": "Libro acta tamaño oficio de 200 hojas numeradas en el adverso, gramaje mínimo de 60 grs., cocido a hilo o presilla.",
+         "id": "3"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-deea-6884-a858-171695a72209",
+       "description": "Goma para billete de 250 gr",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44121714-9998",
+        "description": "Goma para billete - 250 gr",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121714-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44121714",
+         "description": "Gomita de sujecion p/ dinero y otros",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121714"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 9750,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "22",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-dfa0-69a4-baff-171695a72209",
+       "description": "Sacapuntas (caja  de 25 unidades)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44121619-9997",
+        "description": "Sacapuntas de plástico - Kit escolar",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121619-9997"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44121619",
+         "description": "Sacapuntas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121619"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 1788,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "35",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-de18-60fa-b8ae-171695a72209",
+       "description": "Tijera de oficina de 21cm",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44121618-9998",
+        "description": "Tijera de oficina de 19cm",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121618-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44121618",
+         "description": "Tijeras",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121618"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 13542,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "4",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-deac-643a-8162-171695a72209",
+       "description": "Lapiz de papel comun c/borrador en caja de 12 unidad",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44121706-003",
+        "description": "Lapiz de papel comun c/borrador",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121706-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44121706",
+         "description": "Lapiz",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121706"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 23292,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "18",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-de07-67dc-bc14-171695a72209",
+       "description": "Perforadora P/ 30/35 hojas",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44101716-9996",
+        "description": "Perforadora - 30 hojas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44101716-9996"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44101716",
+         "description": "Perforadoras",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44101716"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 107250,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "3",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-df6c-65fa-88fb-171695a72209",
+       "description": "Regla de metal de 30cm",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44121624-003",
+        "description": "Regla de metal",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121624-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44121624",
+         "description": "Regla",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121624"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 6500,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "32",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-dec3-6c98-ae3c-171695a72209",
+       "description": "Fastener o Corchete ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44122118-001",
+        "description": "Sujetador para carpetas (fastener)",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122118-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44122118",
+         "description": "Fasteners",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122118"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 16467,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "20",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-de9b-65d6-88e5-171695a72209",
+       "description": "Boligrafo comun negro en caja de 50 unidad",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44121708-9991",
+        "description": "Marcador resaltador - Punta gruesa biselada",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121708-9991"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44121708",
+         "description": "Marcadores",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121708"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 59583,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "17",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-df04-6cb6-94fa-171695a72209",
+       "description": "Clips mediano",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44122104-002",
+        "description": "Clips mediano",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122104-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44122104",
+         "description": "Clips para papel",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122104"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 8125,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "24",
+         "id": "2"
+        },
+        {
+         "name": "Especificaciones Técnicas",
+         "value": "Clips niquelados de punta ovalada de 1,5 mm de grosor, largo 32 mm y ancho 8 mm, como mínimo, en cajas x 100 unidades como mínimo.",
+         "id": "3"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-df32-6b98-b805-171695a72209",
+       "description": "Aprieta papel de metal tipo mariposa, tama匾 chico",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44122016-001",
+        "description": "Aprieta papel",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122016-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44122016",
+         "description": "Aprieta Papel",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122016"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 2708,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "29",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-df48-6786-8766-171695a72209",
+       "description": "Aprieta papel de metal tipo mariposa, tama匾 grande ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44122016-001",
+        "description": "Aprieta papel",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122016-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44122016",
+         "description": "Aprieta Papel",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122016"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 2167,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "30",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-df5d-699c-b34f-171695a72209",
+       "description": "Protector de plastico(tipo funda para titulos, polipro)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44122002-002",
+        "description": "Protector de plastico",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122002-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44122002",
+         "description": "Protectores de plástico",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122002"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 542,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "31",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-de54-6e2e-be59-171695a72209",
+       "description": "Bibliorato plastificado tama匾 recibo",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44122015-009",
+        "description": "Bibliorato lomo fino tamano carta",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44122015-009"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44122015",
+         "description": "Bibliorato",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44122015"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 10833,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "10",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f04165c-de24-6bfc-a37b-171695a72209",
+       "description": "Presilladora P/ 24/6 hojas",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44121615-9996",
+        "description": "Presilladora grande - grapa 24/6 a 24/13",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44121615-9996"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44121615",
+         "description": "Presilladora o grapadora",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44121615"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 18958,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041659-e688-61fc-ab73-dbdf1d1afc8d",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "5",
+         "id": "2"
+        }
+       ]
+      }
+     ],
+     "tenderers": [
+      {
+       "name": "GEORGINA INES ISSEL ",
+       "id": "PY-RUC-5902465-8"
+      },
+      {
+       "name": "LUIS ADRIAN SOSA AQUINO",
+       "id": "PY-RUC-4178533-9"
+      }
+     ],
+     "documents": [
+      {
+       "id": "EFOL82I2T7FHEXb9gR4mQQ==",
+       "datePublished": "2025-06-16T08:30:38-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 470854 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1f02ff2c-6a67-6ad6-876c-7f470d208b46/1/json",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/json"
+      },
+      {
+       "id": "6216e357-10f2-4a16-8545-c63e964a19f4",
+       "datePublished": "2025-06-05T10:39:21-04:00",
+       "title": "dictamen-tecnico-mcn-id-470854-68419c89dbf25.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f02ff2c-6a67-6ad6-876c-7f470d208b46/files/6216e357-10f2-4a16-8545-c63e964a19f4/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen técnico"
+      },
+      {
+       "id": "dix2iRRDbik=",
+       "title": "URL de la Convocatoria",
+       "url": "https://www.contrataciones.gov.py/licitaciones/convocatoria/1f02ff2c-6a67-6ad6-876c-7f470d208b46.html",
+       "language": "es",
+       "documentType": "tenderNotice",
+       "format": "text/html"
+      },
+      {
+       "id": "518abc64-cd1f-423c-8578-cb2726e199de",
+       "datePublished": "2025-07-02T10:18:27-04:00",
+       "title": "acta-de-apertura-000023-895222364483377-686531a2716c8.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f02ff2c-6a67-6ad6-876c-7f470d208b46/files/518abc64-cd1f-423c-8578-cb2726e199de/download",
+       "language": "es",
+       "documentTypeDetails": "Acta de Apertura"
+      },
+      {
+       "id": "LYs3YD8s9Ho=",
+       "datePublished": "2025-06-16T08:30:38-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 470854 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1f02ff2c-6a67-6ad6-876c-7f470d208b46/1",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/pdf"
+      },
+      {
+       "id": "330b8281-77d3-44b7-a132-1d59540e7ad9",
+       "datePublished": "2025-06-05T10:39:22-04:00",
+       "title": "cdp-mcn-id-470854-68419c76bfbcc.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f02ff2c-6a67-6ad6-876c-7f470d208b46/files/330b8281-77d3-44b7-a132-1d59540e7ad9/download",
+       "language": "es",
+       "documentTypeDetails": "CDP"
+      },
+      {
+       "id": "2c9caefc-49ed-48ae-b43f-42cfd7ab4740",
+       "datePublished": "2025-06-05T10:39:21-04:00",
+       "title": "justificacion-no-autorizacion-del-mitic-para-mcn-470854-68419df616e8a.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f02ff2c-6a67-6ad6-876c-7f470d208b46/files/2c9caefc-49ed-48ae-b43f-42cfd7ab4740/download",
+       "language": "es",
+       "documentTypeDetails": "Autorización del MITIC"
+      },
+      {
+       "id": "6358d8c0-ff70-4779-9d86-5bfb24a00bf8",
+       "datePublished": "2025-06-12T12:38:41-04:00",
+       "title": "resolucion-aprobacion-cc-id-470854-684af4387a324.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f02ff2c-6a67-6ad6-876c-7f470d208b46/files/6358d8c0-ff70-4779-9d86-5bfb24a00bf8/download",
+       "language": "es",
+       "documentTypeDetails": "Aprobación PBC"
+      },
+      {
+       "id": "b1add04b-05a3-498c-b965-b0c9d3f4863a",
+       "datePublished": "2025-06-12T12:38:41-04:00",
+       "title": "precio-referencial-utiles-de-oficina-684af44478191.zip",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f02ff2c-6a67-6ad6-876c-7f470d208b46/files/b1add04b-05a3-498c-b965-b0c9d3f4863a/download",
+       "language": "es",
+       "documentTypeDetails": "Antecedentes de la Estimación de Costos"
+      }
+     ],
+     "numberOfTenderers": 2
+    },
+    "language": "es",
+    "ocid": "ocds-03ad3f-470854-1",
+    "date": "2025-07-31T16:42:48-04:00",
+    "initiationType": "tender",
+    "buyer": {
+     "id": "DNCP-SICP-CODE-66",
+     "name": "Municipalidad de Fernando de la Mora"
+    },
+    "sources": [
+     {
+      "id": "dncp-sicp",
+      "name": "Sistema de Información de las Contrataciones Públicas - DNCP",
+      "url": "https://www.contrataciones.gov.py/"
+     }
+    ],
+    "contracts": [
+     {
+      "id": "MN-30173-25-254820",
+      "implementation": {
+       "financialProgress": {
+        "breakdown": [
+         {
+          "id": "2025/30/173/1/1/1/0/1/11/342/10/MN-30173-25-254820",
+          "period": {
+           "startDate": "2025-01-01T00:00:00Z",
+           "endDate": "2025-12-31T00:00:00Z"
+          },
+          "measures": {
+           "monto_a_utilizar": 50000000
+          },
+          "classifications": {
+           "anio": "2025",
+           "nivel": "30",
+           "entidad": "173",
+           "tipo_programa": "1",
+           "programa": "1",
+           "sub_programa": "1",
+           "proyecto": "0",
+           "financiador": "1",
+           "departamento": "11",
+           "objeto_gasto": "342",
+           "fuente_financiamiento": "10",
+           "cdp": "117902"
+          },
+          "financialCode": "MN-30173-25-254820"
+         }
+        ]
+       }
+      },
+      "awardID": "1f061837-be03-6baa-8610-af18a7141101",
+      "status": "active",
+      "statusDetails": "publicado",
+      "period": {
+       "startDate": "2025-07-31T00:00:00-04:00"
+      },
+      "value": {
+       "amount": 50000000,
+       "currency": "PYG"
+      },
+      "documents": [
+       {
+        "id": "1f06e065-a686-6710-b097-4f97836229a1",
+        "datePublished": "2025-07-31T09:03:21-04:00",
+        "title": "res-adj-470854-688b5b895b7e8.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f061837-be03-6baa-8610-af18a7141101/files/e7f934da-c72a-4e1d-aaf7-a0b2eb0e9026/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1f06e064-5a3f-6f10-bceb-43cdd2ee8ba5",
+        "datePublished": "2025-07-31T09:02:46-04:00",
+        "title": "cdp-mcn-id-470853-688b5b667f772.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f061837-be03-6baa-8610-af18a7141101/files/cc4daff9-a3d2-41c4-9009-9e93a7081585/download",
+        "language": "es",
+        "documentTypeDetails": "CDP"
+       },
+       {
+        "id": "1f06e063-6558-6164-97bb-f18318265a65",
+        "datePublished": "2025-07-31T09:02:20-04:00",
+        "title": "contrato-n29-utiles-de-oficina-688b5b4cce34a.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f061837-be03-6baa-8610-af18a7141101/files/7dea40ed-bd2a-41c5-b523-caf328d1c7fa/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       }
+      ]
+     }
+    ],
+    "parties": [
+     {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora",
+      "identifier": {
+       "scheme": "DNCP-SICP-CODE",
+       "id": "66",
+       "legalName": "Municipalidad de Fernando de la Mora"
+      },
+      "contactPoint": {
+       "email": "morauoc@gmail.com",
+       "name": "LIC. ELIGIO ACOSTA",
+       "telephone": "+595 21 513-306"
+      },
+      "roles": [
+       "buyer",
+       "procuringEntity"
+      ],
+      "details": {
+       "level": "Municipalidades",
+       "entityType": "Municipalidades",
+       "type": "Entidad"
+      },
+      "additionalIdentifiers": [
+       {
+        "id": "2025.30.173",
+        "legalName": "Municipalidad de Fernando de la Mora",
+        "scheme": "PY-PGN"
+       }
+      ]
+     },
+     {
+      "name": "LUIS ADRIAN SOSA AQUINO",
+      "id": "PY-RUC-4178533-9",
+      "identifier": {
+       "id": "4178533-9",
+       "legalName": "LUIS ADRIAN SOSA AQUINO",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer",
+       "supplier"
+      ],
+      "contactPoint": {
+       "name": "LUIS ADRIAN SOSA AQUINO",
+       "email": "presupuestoimpresion01@gmail.com",
+       "telephone": "0992298103 - 0981370640"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "FERNANDO DE LA MORA",
+       "region": "Central",
+       "streetAddress": "MCAL ESTIGARRIBIA CASI SOLDADO OVELAR Casa #106"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        }
+       ]
+      }
+     },
+     {
+      "name": "Michel Denis Has Baez",
+      "id": "PY-RUC-5607772-6",
+      "identifier": {
+       "id": "5607772-6",
+       "legalName": "Michel Denis Has Baez",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "enquirer"
+      ],
+      "contactPoint": {
+       "name": "Michel Denis Has Baez",
+       "email": "licitacionesmrainformatica20@gmail.com",
+       "telephone": "0971639642"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "Ciudad del Este",
+       "region": "Alto Paraná",
+       "streetAddress": "Av Francisco Solano Lopez casi Amambay B° Santa Ana"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        },
+        {
+         "name": "Utiles de oficina, Productos de papel y cartón e impresos",
+         "id": 11
+        }
+       ]
+      }
+     },
+     {
+      "name": "GEORGINA INES ISSEL ",
+      "id": "PY-RUC-5902465-8",
+      "identifier": {
+       "id": "5902465-8",
+       "legalName": "GEORGINA INES ISSEL ",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "Gerogina Ines Issel",
+       "email": "licitaciones@brig.com.py",
+       "telephone": "0986460230",
+       "url": "http://www.brig.com.py"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "ASUNCION (DISTRITO)",
+       "region": "Central",
+       "streetAddress": "Ciudad de San Fernando de Maldonado N° 2935"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Elementos e insumos de limpieza",
+         "id": 12
+        },
+        {
+         "name": "Muebles y Enseres",
+         "id": 23
+        },
+        {
+         "name": "Textiles, vestuarios y calzados",
+         "id": 10
+        },
+        {
+         "name": "Utensilios de cocina y comedor, Productos de Porcelana, vidrio y loza",
+         "id": 13
+        },
+        {
+         "name": "Utiles de oficina, Productos de papel y cartón e impresos",
+         "id": 11
+        },
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        }
+       ]
+      }
+     }
+    ],
+    "tag": [
+     "compiled"
+    ]
+   }
+  }
+ ],
+ "pagination": {
+  "total_items": 1,
+  "total_pages": 1,
+  "current_page": 1,
+  "items_per_page": 10,
+  "total_in_page": 1
+ }
+}

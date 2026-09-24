@@ -1,0 +1,2963 @@
+{
+ "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/ocds-03ad3f-452495-1",
+ "publishedDate": "2026-09-22T17:54:16Z",
+ "publisher": {
+  "name": "Dirección Nacional de Contrataciones Públicas, Paraguay"
+ },
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "publicationPolicy": "https://www.contrataciones.gov.py/datos/legal",
+ "version": "1.1",
+ "extensions": [
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_breakdown_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_and_spend_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_enquiry_extension/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/enquiriesAddress/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/legalEntityTypeDetail/master/extension.json",
+  "https://raw.githubusercontent.com/gitMHOCDS/transactions/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_investmentproject_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_clarification_meetings_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_attributes_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_items_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_contract_suppliers_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_location_extension/v1.1.4/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_activityType_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_notifiedsuppliers_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_lots_details_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_memberOf_extension/master/extension.json",
+  "https://raw.githubusercontent.com/portaledcahn/ocds_tenderDatePublished_extension/master/extension.json",
+  "https://raw.githubusercontent.com/INAImexico/ocds_guarantees_extension/master/extension.json",
+  "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_requirements_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bidOpening_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_coveredBy_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_qualification_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_publicEntitiesDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_items_subItems_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_statusdetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_mainProcurementCategoryDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_identifier_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_estimatedDate_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_participationFee_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_amendments_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_lot_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_transaction_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_financialprogress_financialcode_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_categories_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_complaints_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_minQuantity_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_purchaseOrder_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_document_type_details/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_cancellations_amendments_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_milestone_documents_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_techniques_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bid_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_bid_items_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_auctions_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_secondStage_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_beneficiaries_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/Crown-Commercial-Service/ocds_tender_suitability_extension/main/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_subcontracting_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_sustainability_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_reportedpayment_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_milestone_deliveries_extension/raw/master/extension.json"
+ ],
+ "records": [
+  {
+   "ocid": "ocds-03ad3f-452495-1",
+   "releases": [
+    {
+     "date": "2024-11-12T11:12:14-04:00",
+     "tag": [
+      "tender",
+      "award",
+      "contract",
+      "implementation"
+     ],
+     "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/releases/id/1ef4e8d3-ff91-6d96-9315-55162bbfd6de-1731409934"
+    }
+   ],
+   "compiledRelease": {
+    "id": "1ef4e8d3-ff91-6d96-9315-55162bbfd6de-1731409934",
+    "awards": [
+     {
+      "id": "1ef8c989-a183-6110-89d2-79da03ac0012",
+      "status": "active",
+      "statusDetails": "publicado",
+      "date": "2024-10-16T00:00:00-04:00",
+      "value": {
+       "amount": 499388501,
+       "currency": "PYG"
+      },
+      "suppliers": [
+       {
+        "name": "GIOVANNI FABRIZIO ELIZAUR NICOLICCHIA",
+        "id": "PY-RUC-3182269-0"
+       }
+      ],
+      "documents": [
+       {
+        "id": "1ef8d422-6852-6258-94f8-f3434f6337f6",
+        "datePublished": "2024-10-18T08:14:32-04:00",
+        "title": "gmail-notificacion-de-adjudicacion-mcn-id-452-495-67124318742ca.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef8c969-9e41-65bc-92d2-e361b94f29e6/files/04096610-14e8-4b3c-9503-585ca9a6f1dc/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "1ef8d421-7f69-644c-b2cf-3917ad78f9a8",
+        "datePublished": "2024-10-18T08:14:08-04:00",
+        "title": "cuadro-452-495-671243000ffbf.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef8c969-9e41-65bc-92d2-e361b94f29e6/files/27bd5c52-52e5-4b16-8ba4-acf883657054/download",
+        "language": "es",
+        "documentTypeDetails": "Cuadro Comparativo de Ofertas"
+       },
+       {
+        "id": "1ef8d421-1537-6178-a6d9-5f8977fe3d5b",
+        "datePublished": "2024-10-18T08:13:56-04:00",
+        "title": "res-adj-452-495-671242f4d4d7b.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef8c969-9e41-65bc-92d2-e361b94f29e6/files/09c8dd7e-2f97-4616-836d-2f1a33b4674f/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "1ef8d422-b728-69ae-8f74-93deda9d5967",
+        "datePublished": "2024-10-18T08:14:40-04:00",
+        "title": "nota-a-proveedores-67124320b52ad.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef8c969-9e41-65bc-92d2-e361b94f29e6/files/f4570700-801a-4050-8720-ff35071b7a5e/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "dix2iRRDbik=",
+        "title": "URL de la Adjudicación",
+        "url": "https://www.contrataciones.gov.py/licitaciones/adjudicacion/1ef8c969-9e41-65bc-92d2-e361b94f29e6/resumen-adjudicacion.html",
+        "language": "es",
+        "documentType": "awardNotice",
+        "format": "text/html"
+       },
+       {
+        "id": "1ef8d421-fd14-6194-8b90-f1f7ef5364b3",
+        "datePublished": "2024-10-18T08:14:21-04:00",
+        "title": "inf-eva-452-495-6712430d237f3.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef8c969-9e41-65bc-92d2-e361b94f29e6/files/8da5a078-d506-4b59-8187-8e4d56f4c95d/download",
+        "language": "es",
+        "documentTypeDetails": "Informe de Evaluación"
+       }
+      ],
+      "items": [
+       {
+        "id": "1ef7a80d-6bcd-6b2c-bb23-bd482ff371e4",
+        "description": "Cartel de Identificaci撑 de Obra",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "82101502-004",
+         "description": "Cartel metalico con soporte",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/82101502-004"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "82101502",
+          "description": "Publicidad en carteles o carteles de indicación",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/82101502"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 1637617,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "1",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6bd5-68fe-95c5-bd482ff371e4",
+        "description": "Limpieza y preparaci撑 del terreno",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-002",
+         "description": "Preparacion de obra",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 1500,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 7317,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "2",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6bdc-69ba-bef9-bd482ff371e4",
+        "description": "Replanteo y marcaci撑",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-9974",
+         "description": "Replanteo y marcación",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-9974"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 1485,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 3034,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "3",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6be3-64f4-9177-bd482ff371e4",
+        "description": "Excavaci撑 estructural para desmonte de suelo con retiro",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72141511-001",
+         "description": "Servicio de Excavación Estructural",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72141511-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72141511",
+          "description": "Servicios de excavacion",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72141511"
+         }
+        ],
+        "quantity": 225,
+        "unit": {
+         "name": "Metros cúbicos",
+         "id": "M3",
+         "value": {
+          "amount": 38896,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "4",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6be8-6b52-9eef-bd482ff371e4",
+        "description": "Nivelaci撑 de suelo con tierra roja compactada mec疣icamente",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102905-001",
+         "description": "Relleno y compactacion de terreno",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102905-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102905",
+          "description": "Mantenimiento y hermoseamiento de terrenos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102905"
+         }
+        ],
+        "quantity": 160,
+        "unit": {
+         "name": "Metros cúbicos",
+         "id": "M3",
+         "value": {
+          "amount": 41896,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "5",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6bed-6e04-9e9a-bd482ff371e4",
+        "description": "Colch撑 de arena o triturada 6ｺ en polvo de 4 a 5cm para colocaci撑 de adoquines",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72151911-001",
+         "description": "Servicio de instalación de adoquines unitarios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72151911-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72151911",
+          "description": "Servicio de instalación de adoquines unitarios",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72151911"
+         }
+        ],
+        "quantity": 150,
+        "unit": {
+         "name": "Metros cúbicos",
+         "id": "M3",
+         "value": {
+          "amount": 69843,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "6",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6bf2-610c-89b5-bd482ff371e4",
+        "description": "Remoci撑 de Cord撑 y veredas",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72101703-004",
+         "description": "Construccion de cordon",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72101703-004"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72101703",
+          "description": "Construccion y reparacion de aceras, canteros, bordillos y murallas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72101703"
+         }
+        ],
+        "quantity": 540,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 17164,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "7",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6bf6-6568-a936-bd482ff371e4",
+        "description": "Colocaci撑 de adoquines",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72151911-001",
+         "description": "Servicio de instalación de adoquines unitarios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72151911-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72151911",
+          "description": "Servicio de instalación de adoquines unitarios",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72151911"
+         }
+        ],
+        "quantity": 1485,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 195637,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "8",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6bfa-67c6-b5a1-bd482ff371e4",
+        "description": "Compactan mec疣ica de adoquines",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102905-001",
+         "description": "Relleno y compactacion de terreno",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102905-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102905",
+          "description": "Mantenimiento y hermoseamiento de terrenos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102905"
+         }
+        ],
+        "quantity": 1485,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 3364,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "9",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6bfe-6dbc-82c9-bd482ff371e4",
+        "description": "Arena para cierre de juntas",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102905-001",
+         "description": "Relleno y compactacion de terreno",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102905-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102905",
+          "description": "Mantenimiento y hermoseamiento de terrenos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102905"
+         }
+        ],
+        "quantity": 1485,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 3343,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "10",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6c03-63c6-b946-bd482ff371e4",
+        "description": "Provisión y Colocación de piso inclusivo táctil,30x30x3 - direccional y alerta, incluye contrapiso de base,carpeta. pintura de alto tráfico para terminación.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72151911-001",
+         "description": "Servicio de instalación de adoquines unitarios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72151911-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72151911",
+          "description": "Servicio de instalación de adoquines unitarios",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72151911"
+         }
+        ],
+        "quantity": 65,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 148214,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "11",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6c08-65ba-bf3b-bd482ff371e4",
+        "description": "Construcci撑 de rampas peatonal",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72152705-001",
+         "description": "Servicio de instalación de aceras o rampas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72152705-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72152705",
+          "description": "Servicio de instalación de aceras o rampas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72152705"
+         }
+        ],
+        "quantity": 8,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 1720553,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "12",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6c0d-65c4-8ebf-bd482ff371e4",
+        "description": "Colocaci撑 de Cord撑 de Hormigon ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72101703-002",
+         "description": "Construcción de acera o vereda",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72101703-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72101703",
+          "description": "Construccion y reparacion de aceras, canteros, bordillos y murallas",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72101703"
+         }
+        ],
+        "quantity": 216,
+        "unit": {
+         "name": "Metro lineal",
+         "id": "ml",
+         "value": {
+          "amount": 46960,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "13",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6c11-68a4-b863-bd482ff371e4",
+        "description": "Construcci撑 e instalaci撑 de asiento de base de mamposteria y canteros ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-005",
+         "description": "Mamposteria",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-005"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 8,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 2473267,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "14",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6c15-6f94-885c-bd482ff371e4",
+        "description": "Revoque  de asientos y canteros. ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-008",
+         "description": "Revoques",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-008"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 33,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 29815,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "15",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6c19-6f5e-af06-bd482ff371e4",
+        "description": "Pintura al agua color gris,esmalte sintetico para asientos ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-012",
+         "description": "Servicio de pintura",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-012"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 33,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 53345,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "16",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6c1d-6c76-bc09-bd482ff371e4",
+        "description": "Provision y colocacion de Basurero ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "70111713-9997",
+         "description": "Servicio de provision / montaje de Basureros de parques/plazas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/70111713-9997"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "70111713",
+          "description": "Servicios de gestion o mantenimiento de parques",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/70111713"
+         }
+        ],
+        "quantity": 8,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 706368,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "17",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6c21-6880-9826-bd482ff371e4",
+        "description": "Letra corporea, por unidad de letra.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-002",
+         "description": "Preparacion de obra",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 14412933,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "18",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6c25-6598-aaac-bd482ff371e4",
+        "description": "Caja de paso 150x150x100 CP1515-10 (Aluminio)",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-001",
+         "description": "Construccion e instalaciones electricas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 22,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 122737,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "19",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6c28-6e96-924b-bd482ff371e4",
+        "description": "Caja de comando 30x20cm",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-001",
+         "description": "Construccion e instalaciones electricas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 2,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 167400,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "20",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6c2c-6b40-aaac-bd482ff371e4",
+        "description": "Cable tipo NYY Multifilar 1x10mm",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-001",
+         "description": "Construccion e instalaciones electricas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 110,
+        "unit": {
+         "name": "Metro lineal",
+         "id": "ml",
+         "value": {
+          "amount": 16792,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "21",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6c30-672c-a4de-bd482ff371e4",
+        "description": "Cable Multifilar 1x6mm NYY negro / amarillo / blanco / rojo NYY",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-001",
+         "description": "Construccion e instalaciones electricas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 540,
+        "unit": {
+         "name": "Metro lineal",
+         "id": "ml",
+         "value": {
+          "amount": 33027,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "22",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6c34-6fe8-8054-bd482ff371e4",
+        "description": "Cable tipo NYY  2x10mm",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-001",
+         "description": "Construccion e instalaciones electricas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 80,
+        "unit": {
+         "name": "Metro lineal",
+         "id": "ml",
+         "value": {
+          "amount": 28928,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "23",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6c39-676e-a085-bd482ff371e4",
+        "description": "Cable tipo taller 2x1.5",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-001",
+         "description": "Construccion e instalaciones electricas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 300,
+        "unit": {
+         "name": "Metro lineal",
+         "id": "ml",
+         "value": {
+          "amount": 10884,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "24",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6c3d-6580-95c9-bd482ff371e4",
+        "description": "Registro de ladrillo com蹬 revocado con tapa de hormig撑 para bajadas de ''BT''",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-001",
+         "description": "Construccion e instalaciones electricas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 4,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 572789,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "25",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6c56-6aa8-a5d9-bd482ff371e4",
+        "description": "Ca匾 galvanizado 2'' x 1.80mm bajada de luz Nac.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102201-011",
+         "description": "Servicio desmontaje y montaje de columnas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-011"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102201",
+          "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+         }
+        ],
+        "quantity": 4,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 477692,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "26",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6c5a-6ef0-b125-bd482ff371e4",
+        "description": "Provision y colocacion de Farola alta de exterior.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102201-9998",
+         "description": "Instalacion de artefactos electricos de iluminacion",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-9998"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102201",
+          "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+         }
+        ],
+        "quantity": 16,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 1998814,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "27",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6c60-626a-a809-bd482ff371e4",
+        "description": "Provision y colocacion de spot led circular de embutir ,luz calida.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-001",
+         "description": "Construccion e instalaciones electricas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 8,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 348695,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "28",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6c64-6b58-b7e5-bd482ff371e4",
+        "description": "Instalación de fotocélula, con base, etc",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-001",
+         "description": "Construccion e instalaciones electricas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 2,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 69242,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "29",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef7a80d-6c69-636a-aeee-bd482ff371e4",
+        "description": "Pintura de piso en 疵ea de acceso, area de estacionamiento, area de circulaci撑",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131601-012",
+         "description": "Servicio de pintura",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-012"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131601",
+          "description": "Construccion de edificios comerciales, empresariales o institucionales",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+         }
+        ],
+        "quantity": 45,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 66579,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "30",
+          "id": "7"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "tender": {
+     "id": "1ef4e8d3-ff91-6d96-9315-55162bbfd6de",
+     "title": "CONSTRUCCION DE PASEO PEATONAL CALLE TENIENTE RIVAROLA ZONA SUR DE FERNANDO DE LA MORA",
+     "status": "complete",
+     "awardCriteria": "priceOnly",
+     "awardCriteriaDetails": "Por Total",
+     "submissionMethod": [
+      "inPerson"
+     ],
+     "bidOpening": {
+      "date": "2024-10-11T08:30:00-04:00",
+      "address": {
+       "streetAddress": "Municipalidad de Fernando de la Mora, oficina UOC"
+      }
+     },
+     "submissionMethodDetails": "Lugar entrega ofertas: Municipalidad de Fernando de la Mora, oficina UOC",
+     "statusDetails": "Adjudicada",
+     "enquiriesAddress": {
+      "streetAddress": "SICP"
+     },
+     "clarificationMeetings": [
+      {
+       "date": "2024-10-07T08:00:00-04:00",
+       "address": {
+        "streetAddress": "SITIO INDICADO EN EL PBC"
+       },
+       "id": "1"
+      }
+     ],
+     "mainProcurementCategoryDetails": "Obras - Servicios de Construccion y Mantenimiento",
+     "hasEnquiries": false,
+     "value": {
+      "amount": 499391768,
+      "currency": "PYG"
+     },
+     "datePublished": "2024-10-02T16:46:49-04:00",
+     "tenderPeriod": {
+      "startDate": "2024-10-02T16:46:49-04:00",
+      "endDate": "2024-10-11T08:00:00-04:00",
+      "durationInDays": 8
+     },
+     "awardPeriod": {
+      "startDate": "2024-10-11T08:30:00-04:00"
+     },
+     "enquiryPeriod": {
+      "endDate": "2024-10-08T08:00:00-04:00",
+      "startDate": "2024-10-02T16:46:49-04:00",
+      "durationInDays": 5
+     },
+     "mainProcurementCategory": "works",
+     "additionalProcurementCategories": [
+      "works"
+     ],
+     "procurementMethod": "open",
+     "procurementMethodDetails": "Menor cuantía nacional",
+     "procuringEntity": {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora"
+     },
+     "criteria": [
+      {
+       "id": "1",
+       "title": "Garantía de Mantenimiento de Ofertas",
+       "description": "Los oferentes, proveedores o contratistas deberán garantizar la seriedad de sus ofertas, mediante la garantía de mantenimiento de la oferta",
+       "source": "tenderer",
+       "requirementGroups": [
+        {
+         "id": "1-1",
+         "description": "La garantía debe ser de un cierto porcentaje, periodo y tipo",
+         "requirements": [
+          {
+           "id": "1-1-1",
+           "title": "Porcentaje de la garantia",
+           "expectedValue": "5"
+          },
+          {
+           "id": "1-1-2",
+           "title": "Validez de la garantia en días",
+           "expectedValue": "120"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "lots": [
+      {
+       "id": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "title": "1 - 1 - CONSTRUCCION DE PASEO PEATONAL",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 499391768,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "1"
+        }
+       ]
+      }
+     ],
+     "items": [
+      {
+       "id": "1ef7a80d-6bd5-68fe-95c5-bd482ff371e4",
+       "description": "Limpieza y preparaci撑 del terreno",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-002",
+        "description": "Preparacion de obra",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 1500,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 7317,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "2",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6c03-63c6-b946-bd482ff371e4",
+       "description": "Provisión y Colocación de piso inclusivo táctil,30x30x3 - direccional y alerta, incluye contrapiso de base,carpeta. pintura de alto tráfico para terminación.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72151911-001",
+        "description": "Servicio de instalación de adoquines unitarios",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72151911-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72151911",
+         "description": "Servicio de instalación de adoquines unitarios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72151911"
+        }
+       ],
+       "quantity": 65,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 148214,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "11",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6c64-6b58-b7e5-bd482ff371e4",
+       "description": "Instalación de fotocélula, con base, etc",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-001",
+        "description": "Construccion e instalaciones electricas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 2,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 69242,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "29",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6bed-6e04-9e9a-bd482ff371e4",
+       "description": "Colch撑 de arena o triturada 6ｺ en polvo de 4 a 5cm para colocaci撑 de adoquines",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72151911-001",
+        "description": "Servicio de instalación de adoquines unitarios",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72151911-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72151911",
+         "description": "Servicio de instalación de adoquines unitarios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72151911"
+        }
+       ],
+       "quantity": 150,
+       "unit": {
+        "name": "Metros cúbicos",
+        "id": "M3",
+        "value": {
+         "amount": 69843,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "6",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6c25-6598-aaac-bd482ff371e4",
+       "description": "Caja de paso 150x150x100 CP1515-10 (Aluminio)",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-001",
+        "description": "Construccion e instalaciones electricas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 22,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 122737,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "19",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6c69-636a-aeee-bd482ff371e4",
+       "description": "Pintura de piso en 疵ea de acceso, area de estacionamiento, area de circulaci撑",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-012",
+        "description": "Servicio de pintura",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-012"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 45,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 66579,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "30",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6c60-626a-a809-bd482ff371e4",
+       "description": "Provision y colocacion de spot led circular de embutir ,luz calida.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-001",
+        "description": "Construccion e instalaciones electricas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 8,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 348695,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "28",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6c1d-6c76-bc09-bd482ff371e4",
+       "description": "Provision y colocacion de Basurero ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "70111713-9997",
+        "description": "Servicio de provision / montaje de Basureros de parques/plazas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/70111713-9997"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "70111713",
+         "description": "Servicios de gestion o mantenimiento de parques",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/70111713"
+        }
+       ],
+       "quantity": 8,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 706368,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "17",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6c39-676e-a085-bd482ff371e4",
+       "description": "Cable tipo taller 2x1.5",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-001",
+        "description": "Construccion e instalaciones electricas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 300,
+       "unit": {
+        "name": "Metro lineal",
+        "id": "ml",
+        "value": {
+         "amount": 10884,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "24",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6c30-672c-a4de-bd482ff371e4",
+       "description": "Cable Multifilar 1x6mm NYY negro / amarillo / blanco / rojo NYY",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-001",
+        "description": "Construccion e instalaciones electricas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 540,
+       "unit": {
+        "name": "Metro lineal",
+        "id": "ml",
+        "value": {
+         "amount": 33027,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "22",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6c5a-6ef0-b125-bd482ff371e4",
+       "description": "Provision y colocacion de Farola alta de exterior.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102201-9998",
+        "description": "Instalacion de artefactos electricos de iluminacion",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-9998"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102201",
+         "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+        }
+       ],
+       "quantity": 16,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 1998814,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "27",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6be3-64f4-9177-bd482ff371e4",
+       "description": "Excavaci撑 estructural para desmonte de suelo con retiro",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72141511-001",
+        "description": "Servicio de Excavación Estructural",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72141511-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72141511",
+         "description": "Servicios de excavacion",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72141511"
+        }
+       ],
+       "quantity": 225,
+       "unit": {
+        "name": "Metros cúbicos",
+        "id": "M3",
+        "value": {
+         "amount": 38896,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "4",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6c34-6fe8-8054-bd482ff371e4",
+       "description": "Cable tipo NYY  2x10mm",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-001",
+        "description": "Construccion e instalaciones electricas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 80,
+       "unit": {
+        "name": "Metro lineal",
+        "id": "ml",
+        "value": {
+         "amount": 28968,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "23",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6bdc-69ba-bef9-bd482ff371e4",
+       "description": "Replanteo y marcaci撑",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-9974",
+        "description": "Replanteo y marcación",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-9974"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 1485,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 3034,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "3",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6c15-6f94-885c-bd482ff371e4",
+       "description": "Revoque  de asientos y canteros. ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-008",
+        "description": "Revoques",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-008"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 33,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 29817,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "15",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6c56-6aa8-a5d9-bd482ff371e4",
+       "description": "Ca匾 galvanizado 2'' x 1.80mm bajada de luz Nac.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102201-011",
+        "description": "Servicio desmontaje y montaje de columnas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102201-011"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102201",
+         "description": "Instalacion, mantenimiento y reparacion de energia electrica y aparatos eléctricos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102201"
+        }
+       ],
+       "quantity": 4,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 477692,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "26",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6bfe-6dbc-82c9-bd482ff371e4",
+       "description": "Arena para cierre de juntas",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102905-001",
+        "description": "Relleno y compactacion de terreno",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102905-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102905",
+         "description": "Mantenimiento y hermoseamiento de terrenos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102905"
+        }
+       ],
+       "quantity": 1485,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 3343,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "10",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6bfa-67c6-b5a1-bd482ff371e4",
+       "description": "Compactan mec疣ica de adoquines",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102905-001",
+        "description": "Relleno y compactacion de terreno",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102905-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102905",
+         "description": "Mantenimiento y hermoseamiento de terrenos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102905"
+        }
+       ],
+       "quantity": 1485,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 3364,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "9",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6be8-6b52-9eef-bd482ff371e4",
+       "description": "Nivelaci撑 de suelo con tierra roja compactada mec疣icamente",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102905-001",
+        "description": "Relleno y compactacion de terreno",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102905-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102905",
+         "description": "Mantenimiento y hermoseamiento de terrenos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102905"
+        }
+       ],
+       "quantity": 160,
+       "unit": {
+        "name": "Metros cúbicos",
+        "id": "M3",
+        "value": {
+         "amount": 41896,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "5",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6c21-6880-9826-bd482ff371e4",
+       "description": "Letra corporea, por unidad de letra.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-002",
+        "description": "Preparacion de obra",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 14412933,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "18",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6bcd-6b2c-bb23-bd482ff371e4",
+       "description": "Cartel de Identificaci撑 de Obra",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "82101502-004",
+        "description": "Cartel metalico con soporte",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/82101502-004"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "82101502",
+         "description": "Publicidad en carteles o carteles de indicación",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/82101502"
+        }
+       ],
+       "quantity": 1,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 1637617,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6c08-65ba-bf3b-bd482ff371e4",
+       "description": "Construcci撑 de rampas peatonal",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72152705-001",
+        "description": "Servicio de instalación de aceras o rampas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72152705-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72152705",
+         "description": "Servicio de instalación de aceras o rampas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72152705"
+        }
+       ],
+       "quantity": 8,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 1720553,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "12",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6c28-6e96-924b-bd482ff371e4",
+       "description": "Caja de comando 30x20cm",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-001",
+        "description": "Construccion e instalaciones electricas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 2,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 167400,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "20",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6bf6-6568-a936-bd482ff371e4",
+       "description": "Colocaci撑 de adoquines",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72151911-001",
+        "description": "Servicio de instalación de adoquines unitarios",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72151911-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72151911",
+         "description": "Servicio de instalación de adoquines unitarios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72151911"
+        }
+       ],
+       "quantity": 1485,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 195637,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "8",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6bf2-610c-89b5-bd482ff371e4",
+       "description": "Remoci撑 de Cord撑 y veredas",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72101703-004",
+        "description": "Construccion de cordon",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72101703-004"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72101703",
+         "description": "Construccion y reparacion de aceras, canteros, bordillos y murallas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72101703"
+        }
+       ],
+       "quantity": 540,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 17164,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "7",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6c19-6f5e-af06-bd482ff371e4",
+       "description": "Pintura al agua color gris,esmalte sintetico para asientos ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-012",
+        "description": "Servicio de pintura",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-012"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 33,
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 53345,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "16",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6c2c-6b40-aaac-bd482ff371e4",
+       "description": "Cable tipo NYY Multifilar 1x10mm",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-001",
+        "description": "Construccion e instalaciones electricas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 110,
+       "unit": {
+        "name": "Metro lineal",
+        "id": "ml",
+        "value": {
+         "amount": 16792,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "21",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6c11-68a4-b863-bd482ff371e4",
+       "description": "Construcci撑 e instalaci撑 de asiento de base de mamposteria y canteros ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-005",
+        "description": "Mamposteria",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-005"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 8,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 2473267,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "14",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6c3d-6580-95c9-bd482ff371e4",
+       "description": "Registro de ladrillo com蹬 revocado con tapa de hormig撑 para bajadas de ''BT''",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131601-001",
+        "description": "Construccion e instalaciones electricas",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131601-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131601",
+         "description": "Construccion de edificios comerciales, empresariales o institucionales",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131601"
+        }
+       ],
+       "quantity": 4,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 572789,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "25",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef7a80d-6c0d-65c4-8ebf-bd482ff371e4",
+       "description": "Colocaci撑 de Cord撑 de Hormigon ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72101703-002",
+        "description": "Construcción de acera o vereda",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72101703-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72101703",
+         "description": "Construccion y reparacion de aceras, canteros, bordillos y murallas",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72101703"
+        }
+       ],
+       "quantity": 216,
+       "unit": {
+        "name": "Metro lineal",
+        "id": "ml",
+        "value": {
+         "amount": 46960,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef7a805-4c84-687c-84f3-ddff0ee608c0",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "13",
+         "id": "2"
+        }
+       ]
+      }
+     ],
+     "tenderers": [
+      {
+       "name": "GIOVANNI FABRIZIO ELIZAUR NICOLICCHIA",
+       "id": "PY-RUC-3182269-0"
+      }
+     ],
+     "documents": [
+      {
+       "id": "83zJ+0wvtgcC96k9WHELfA==",
+       "datePublished": "2024-10-02T16:46:47-04:00",
+       "title": "Pliego para la Contratación de Obras - CONVENCIONAL - Ley Nº 7021/22. 452495 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1ef4e8d3-ff91-6d96-9315-55162bbfd6de/1/json",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/json"
+      },
+      {
+       "id": "28f7e277-a6c0-4955-8d3f-8dfd5b4a3f4d",
+       "datePublished": "2024-09-24T11:56:28-04:00",
+       "title": "dictamen-tecnico-mcn-id-452495-66f2e11677666.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef4e8d3-ff91-6d96-9315-55162bbfd6de/files/28f7e277-a6c0-4955-8d3f-8dfd5b4a3f4d/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen técnico"
+      },
+      {
+       "id": "7af719be-e5e3-4f1d-96b3-3b99d92b6a3b",
+       "datePublished": "2024-10-11T09:21:45-04:00",
+       "title": "paseo-central-31312313432190183-6709185854ea8.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef4e8d3-ff91-6d96-9315-55162bbfd6de/files/7af719be-e5e3-4f1d-96b3-3b99d92b6a3b/download",
+       "language": "es",
+       "documentTypeDetails": "Acta de Apertura"
+      },
+      {
+       "id": "dix2iRRDbik=",
+       "title": "URL de la Convocatoria",
+       "url": "https://www.contrataciones.gov.py/licitaciones/convocatoria/1ef4e8d3-ff91-6d96-9315-55162bbfd6de.html",
+       "language": "es",
+       "documentType": "tenderNotice",
+       "format": "text/html"
+      },
+      {
+       "id": "5f01d22c-77cb-4f7f-8252-7e305330ff88",
+       "datePublished": "2024-09-24T11:56:28-04:00",
+       "title": "resolucion-para-mcn-id-452495-66f2d996e21d5.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef4e8d3-ff91-6d96-9315-55162bbfd6de/files/5f01d22c-77cb-4f7f-8252-7e305330ff88/download",
+       "language": "es",
+       "documentTypeDetails": "Permiso Municipal"
+      },
+      {
+       "id": "16a59427-7fd4-47b2-81b6-41c55f4034ec",
+       "datePublished": "2024-09-24T11:56:27-04:00",
+       "title": "plano-mcn-id-452495-66f2e123e40ba.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef4e8d3-ff91-6d96-9315-55162bbfd6de/files/16a59427-7fd4-47b2-81b6-41c55f4034ec/download",
+       "language": "es",
+       "documentTypeDetails": "Planos o cómputos métricos"
+      },
+      {
+       "id": "2SBFIFOXGkQ=",
+       "datePublished": "2024-10-02T16:46:47-04:00",
+       "title": "Pliego para la Contratación de Obras - CONVENCIONAL - Ley Nº 7021/22. 452495 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1ef4e8d3-ff91-6d96-9315-55162bbfd6de/1",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/pdf"
+      },
+      {
+       "id": "008b1a6d-8922-41d8-bfd3-cfab3c6b8b61",
+       "datePublished": "2024-09-24T11:56:28-04:00",
+       "title": "id-452495-66f2d932f1e04.zip",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef4e8d3-ff91-6d96-9315-55162bbfd6de/files/008b1a6d-8922-41d8-bfd3-cfab3c6b8b61/download",
+       "language": "es",
+       "documentTypeDetails": "Georeferenciamiento"
+      },
+      {
+       "id": "b5b608aa-c8cf-4586-9c7d-8743b2fea92e",
+       "datePublished": "2024-09-24T11:56:28-04:00",
+       "title": "resolucion-para-mcn-id-452495-66f2d95282695.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef4e8d3-ff91-6d96-9315-55162bbfd6de/files/b5b608aa-c8cf-4586-9c7d-8743b2fea92e/download",
+       "language": "es",
+       "documentTypeDetails": "Aprobación PBC"
+      },
+      {
+       "id": "a4320719-80a7-40fd-ba34-d08221dd0cf2",
+       "datePublished": "2024-09-27T14:43:24-04:00",
+       "title": "pr-452495-66f6fcbcadb90.zip",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef4e8d3-ff91-6d96-9315-55162bbfd6de/files/a4320719-80a7-40fd-ba34-d08221dd0cf2/download",
+       "language": "es",
+       "documentTypeDetails": "Antecedentes de la Estimación de Costos"
+      },
+      {
+       "id": "b09f5622-538e-489d-8f78-d264f7b9a7d7",
+       "datePublished": "2024-09-24T11:56:28-04:00",
+       "title": "cdp-452495-66f2d789a4388.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef4e8d3-ff91-6d96-9315-55162bbfd6de/files/b09f5622-538e-489d-8f78-d264f7b9a7d7/download",
+       "language": "es",
+       "documentTypeDetails": "CDP"
+      }
+     ],
+     "numberOfTenderers": 1
+    },
+    "language": "es",
+    "ocid": "ocds-03ad3f-452495-1",
+    "date": "2024-11-12T11:12:14-04:00",
+    "initiationType": "tender",
+    "buyer": {
+     "id": "DNCP-SICP-CODE-66",
+     "name": "Municipalidad de Fernando de la Mora"
+    },
+    "sources": [
+     {
+      "id": "dncp-sicp",
+      "name": "Sistema de Información de las Contrataciones Públicas - DNCP",
+      "url": "https://www.contrataciones.gov.py/"
+     }
+    ],
+    "contracts": [
+     {
+      "id": "MN-30173-24-245167",
+      "implementation": {
+       "financialProgress": {
+        "breakdown": [
+         {
+          "id": "2024/30/173/2/2/1/0/11/11/521/30/MN-30173-24-245167",
+          "period": {
+           "startDate": "2024-01-01T00:00:00Z",
+           "endDate": "2024-12-31T00:00:00Z"
+          },
+          "measures": {
+           "monto_a_utilizar": 500000000
+          },
+          "classifications": {
+           "anio": "2024",
+           "nivel": "30",
+           "entidad": "173",
+           "tipo_programa": "2",
+           "programa": "2",
+           "sub_programa": "1",
+           "proyecto": "0",
+           "financiador": "11",
+           "departamento": "11",
+           "objeto_gasto": "521",
+           "fuente_financiamiento": "30",
+           "cdp": "116363"
+          },
+          "financialCode": "MN-30173-24-245167"
+         }
+        ]
+       }
+      },
+      "awardID": "1ef8c989-a183-6110-89d2-79da03ac0012",
+      "status": "active",
+      "statusDetails": "publicado",
+      "period": {
+       "startDate": "2024-10-24T00:00:00-04:00"
+      },
+      "value": {
+       "amount": 499388501,
+       "currency": "PYG"
+      },
+      "documents": [
+       {
+        "id": "1ef977e9-63ee-60a2-ae75-554c47c0774b",
+        "datePublished": "2024-10-31T08:52:21-04:00",
+        "title": "ddjj-67236f7552f0e.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1ef8c989-a183-6110-89d2-79da03ac0012/files/84bf21c0-ad94-4ccd-87f6-04b27546e60f/download",
+        "language": "es",
+        "documentTypeDetails": "Nota de Contestación"
+       },
+       {
+        "id": "1ef92264-418a-6036-b071-dfc7091b9b6f",
+        "datePublished": "2024-10-24T13:37:32-04:00",
+        "title": "res-adj-452-495-671a77cbf3335.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1ef8c989-a183-6110-89d2-79da03ac0012/files/85fbcc7a-94c8-428b-8b41-627e88c8c050/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1ef9225f-f0f4-63c8-a4f1-37661476b144",
+        "datePublished": "2024-10-24T13:35:36-04:00",
+        "title": "contrato-35-452495-671a7758298bc.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1ef8c989-a183-6110-89d2-79da03ac0012/files/2cd51d12-72b3-4679-b874-9b85a42b57b2/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1ef92260-83ab-6c66-b453-c53b1764b2a2",
+        "datePublished": "2024-10-24T13:35:51-04:00",
+        "title": "cronograma-de-obras-452495-671a776789655.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1ef8c989-a183-6110-89d2-79da03ac0012/files/aa190707-708c-4ce3-8dc1-65bd7026a4cb/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1ef92261-e87e-682c-b6b8-f5b522062a08",
+        "datePublished": "2024-10-24T13:36:29-04:00",
+        "title": "cdp-452495-66f2d789a4388-671a778ced5cc.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1ef8c989-a183-6110-89d2-79da03ac0012/files/15ac01d0-926e-4485-a197-964ab03970f0/download",
+        "language": "es",
+        "documentTypeDetails": "CDP"
+       }
+      ]
+     }
+    ],
+    "parties": [
+     {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora",
+      "identifier": {
+       "scheme": "DNCP-SICP-CODE",
+       "id": "66",
+       "legalName": "Municipalidad de Fernando de la Mora"
+      },
+      "contactPoint": {
+       "email": "morauoc@gmail.com",
+       "name": "LIC. ELIGIO ACOSTA",
+       "telephone": "+595 21 513-306"
+      },
+      "roles": [
+       "buyer",
+       "procuringEntity"
+      ],
+      "details": {
+       "level": "Municipalidades",
+       "entityType": "Municipalidades",
+       "type": "Entidad"
+      },
+      "additionalIdentifiers": [
+       {
+        "id": "2024.30.173",
+        "legalName": "Municipalidad de Fernando de la Mora",
+        "scheme": "PY-PGN"
+       }
+      ]
+     },
+     {
+      "name": "GIOVANNI FABRIZIO ELIZAUR NICOLICCHIA",
+      "id": "PY-RUC-3182269-0",
+      "identifier": {
+       "id": "3182269-0",
+       "legalName": "GIOVANNI FABRIZIO ELIZAUR NICOLICCHIA",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "supplier",
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "GIOVANNI FABRIZIO ELIZAUR NICOLICCHIA",
+       "email": "giovannielizaur@gmail.com",
+       "telephone": "0992436594"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "VILLARRICA",
+       "region": "Guairá",
+       "streetAddress": "NATALICIO TALAVERA ENTRE MCAL. LOPEZ Y MCAL. ESTIGARRIBIA"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Construcción, Restauración, Reconstrucción o Remodelación y Reparación de Inmuebles",
+         "id": 21
+        },
+        {
+         "name": "Servicios de ceremonial, gastronomico y funerarios",
+         "id": 9
+        },
+        {
+         "name": "Maquinarias, Equipos y herramientas mayores - Equipos de transporte",
+         "id": 22
+        }
+       ]
+      }
+     }
+    ],
+    "tag": [
+     "compiled"
+    ]
+   }
+  }
+ ],
+ "pagination": {
+  "total_items": 1,
+  "total_pages": 1,
+  "current_page": 1,
+  "items_per_page": 10,
+  "total_in_page": 1
+ }
+}

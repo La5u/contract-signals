@@ -1,0 +1,2543 @@
+{
+ "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/ocds-03ad3f-470851-1",
+ "publishedDate": "2026-09-22T17:53:24Z",
+ "publisher": {
+  "name": "Dirección Nacional de Contrataciones Públicas, Paraguay"
+ },
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "publicationPolicy": "https://www.contrataciones.gov.py/datos/legal",
+ "version": "1.1",
+ "extensions": [
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_breakdown_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_and_spend_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_enquiry_extension/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/enquiriesAddress/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/legalEntityTypeDetail/master/extension.json",
+  "https://raw.githubusercontent.com/gitMHOCDS/transactions/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_investmentproject_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_clarification_meetings_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_attributes_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_items_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_contract_suppliers_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_location_extension/v1.1.4/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_activityType_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_notifiedsuppliers_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_lots_details_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_memberOf_extension/master/extension.json",
+  "https://raw.githubusercontent.com/portaledcahn/ocds_tenderDatePublished_extension/master/extension.json",
+  "https://raw.githubusercontent.com/INAImexico/ocds_guarantees_extension/master/extension.json",
+  "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_requirements_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bidOpening_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_coveredBy_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_qualification_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_publicEntitiesDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_items_subItems_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_statusdetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_mainProcurementCategoryDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_identifier_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_estimatedDate_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_participationFee_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_amendments_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_lot_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_transaction_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_financialprogress_financialcode_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_categories_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_complaints_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_minQuantity_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_purchaseOrder_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_document_type_details/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_cancellations_amendments_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_milestone_documents_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_techniques_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bid_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_bid_items_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_auctions_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_secondStage_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_beneficiaries_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/Crown-Commercial-Service/ocds_tender_suitability_extension/main/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_subcontracting_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_sustainability_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_reportedpayment_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_milestone_deliveries_extension/raw/master/extension.json"
+ ],
+ "records": [
+  {
+   "ocid": "ocds-03ad3f-470851-1",
+   "releases": [
+    {
+     "date": "2025-07-31T16:36:56-04:00",
+     "tag": [
+      "tender",
+      "award",
+      "contract",
+      "implementation"
+     ],
+     "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/releases/id/1f02ff28-84ed-6940-96a9-6feeaa861748-1753979816"
+    }
+   ],
+   "compiledRelease": {
+    "id": "1f02ff28-84ed-6940-96a9-6feeaa861748-1753979816",
+    "awards": [
+     {
+      "id": "1f0617c6-f958-6a6e-b541-b9787f0446bf",
+      "status": "active",
+      "statusDetails": "publicado",
+      "date": "2025-07-14T00:00:00-04:00",
+      "value": {
+       "amount": 120000000,
+       "currency": "PYG"
+      },
+      "suppliers": [
+       {
+        "name": "LUIS ADRIAN SOSA AQUINO",
+        "id": "PY-RUC-4178533-9"
+       }
+      ],
+      "documents": [
+       {
+        "id": "1f0624ea-5d98-6aa8-9d4a-9f84510d8784",
+        "datePublished": "2025-07-16T11:10:37-04:00",
+        "title": "cuadro-470851-6877b2ddb6d92.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f0617b2-7a13-6a92-99d0-0d0a63414bc7/files/8fc82c16-6ae3-47a4-97b2-718d267b39a1/download",
+        "language": "es",
+        "documentTypeDetails": "Cuadro Comparativo de Ofertas"
+       },
+       {
+        "id": "1f0624ea-dcfa-690e-8131-c550b391151a",
+        "datePublished": "2025-07-16T11:10:51-04:00",
+        "title": "inf-eva-470851-6877b2eb16dd7.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f0617b2-7a13-6a92-99d0-0d0a63414bc7/files/c42b6e26-326c-4c97-a19a-7a22ddadfd9b/download",
+        "language": "es",
+        "documentTypeDetails": "Informe de Evaluación"
+       },
+       {
+        "id": "dix2iRRDbik=",
+        "title": "URL de la Adjudicación",
+        "url": "https://www.contrataciones.gov.py/licitaciones/adjudicacion/1f0617b2-7a13-6a92-99d0-0d0a63414bc7/resumen-adjudicacion.html",
+        "language": "es",
+        "documentType": "awardNotice",
+        "format": "text/html"
+       },
+       {
+        "id": "1f0624e0-5cb6-6ce8-9bde-2181dcba4a29",
+        "datePublished": "2025-07-16T11:06:09-04:00",
+        "title": "res-adj-470851-6877b1d13177e.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f0617b2-7a13-6a92-99d0-0d0a63414bc7/files/8de14cd4-3691-4b94-96ec-4c1dbd808eb1/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       }
+      ],
+      "items": [
+       {
+        "id": "1f041595-41c2-6f38-a6b8-d75e04d70fa2",
+        "description": "Cartucho de tinta para impresora negro, para impresora HP 122",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44103105-001",
+         "description": "Cartucho de tinta para impresora negro ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103105-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44103105",
+          "description": "Cartuchos de tinta",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103105"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 80980,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "Printers",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "Printers",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "1",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041595-41cb-6e44-841d-d75e04d70fa2",
+        "description": "Cartucho de tinta para impresora color, para impresora HP 122 ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44103105-002",
+         "description": "Cartucho de tinta para impresora color ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103105-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44103105",
+          "description": "Cartuchos de tinta",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103105"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 89700,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "Printers",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "Printers",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "2",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041595-41d4-65a8-8ff2-d75e04d70fa2",
+        "description": "Cartucho de tinta para impresora negro, para impresora HP 664",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44103105-001",
+         "description": "Cartucho de tinta para impresora negro ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103105-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44103105",
+          "description": "Cartuchos de tinta",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103105"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 90323,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "Printers",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "Printers",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "3",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041595-41db-6614-bd46-d75e04d70fa2",
+        "description": "Cartucho de tinta para impresora color,para impresora HP 664 ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44103105-002",
+         "description": "Cartucho de tinta para impresora color ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103105-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44103105",
+          "description": "Cartuchos de tinta",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103105"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 93438,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "Printers",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "Printers",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "4",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041595-41e2-61b2-839c-d75e04d70fa2",
+        "description": "Cartucho de tinta para impresora negro,,para impresora HP 662 ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44103105-001",
+         "description": "Cartucho de tinta para impresora negro ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103105-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44103105",
+          "description": "Cartuchos de tinta",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103105"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 77242,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "Printers",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "Printers",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "5",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041595-41e9-61ce-ba9a-d75e04d70fa2",
+        "description": "Cartucho de tinta para impresora color, para impresora HP 662 ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44103105-002",
+         "description": "Cartucho de tinta para impresora color ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103105-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44103105",
+          "description": "Cartuchos de tinta",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103105"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 87208,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "Printers",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "Printers",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "6",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041595-41ef-683a-9d8f-d75e04d70fa2",
+        "description": "Cartucho de tinta para impresora negro, para impresora HP 21 ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44103105-001",
+         "description": "Cartucho de tinta para impresora negro ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103105-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44103105",
+          "description": "Cartuchos de tinta",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103105"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 74750,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "Printers",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "Printers",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "7",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041595-41f5-6730-aba5-d75e04d70fa2",
+        "description": "Toner para impresora negro (original/compatible) para impresora HP negro 05 A ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44103103-001",
+         "description": "Toner para impresora negro (original/compatible)",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44103103",
+          "description": "Toner",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 65000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "Printers",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "Printers",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "8",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041595-41fb-60f4-b1cb-d75e04d70fa2",
+        "description": "Toner para impresora negro (original/compatible) para impresora HP negro 85 A ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44103103-001",
+         "description": "Toner para impresora negro (original/compatible)",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44103103",
+          "description": "Toner",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 65000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "Printers",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "Printers",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "9",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041595-4200-6ee6-a866-d75e04d70fa2",
+        "description": "Toner para impresora negro (original/compatible) para impresora HP negro 78 A ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44103103-001",
+         "description": "Toner para impresora negro (original/compatible)",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44103103",
+          "description": "Toner",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 65000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "Printers",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "Printers",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "10",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041595-4206-68be-87cc-d75e04d70fa2",
+        "description": "Toner para impresora negro (original/compatible) para impresora HP negro 12 A ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44103103-001",
+         "description": "Toner para impresora negro (original/compatible)",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44103103",
+          "description": "Toner",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 65000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "Printers",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "Printers",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "11",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041595-420c-6278-a2eb-d75e04d70fa2",
+        "description": "Toner para impresora negro (original/compatible) para impresora HP negro 17 A ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44103103-001",
+         "description": "Toner para impresora negro (original/compatible)",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44103103",
+          "description": "Toner",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 65000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "Printers",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "Printers",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "12",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041595-4211-6e58-8247-d75e04d70fa2",
+        "description": "Toner para impresora negro (original/compatible) para impresora HP negro 130 BLACK ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44103103-001",
+         "description": "Toner para impresora negro (original/compatible)",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44103103",
+          "description": "Toner",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 80000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "Printers",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "Printers",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "13",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041595-4217-6876-8d97-d75e04d70fa2",
+        "description": "Toner para impresora color (original/compatible) para impresora HP color 130 cyam ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44103103-002",
+         "description": "Toner para impresora color (original/compatible)",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44103103",
+          "description": "Toner",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 80000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "Printers",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "Printers",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "14",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041595-421d-6050-9b2e-d75e04d70fa2",
+        "description": "Toner para impresora color (original/compatible) para impresora HP color 130 MAGENTA ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44103103-002",
+         "description": "Toner para impresora color (original/compatible)",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44103103",
+          "description": "Toner",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 80000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "Printers",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "Printers",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "15",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041595-4222-6b86-aeb3-d75e04d70fa2",
+        "description": "Toner para impresora color (original/compatible) para impresora HP color YELLOW ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44103103-002",
+         "description": "Toner para impresora color (original/compatible)",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44103103",
+          "description": "Toner",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 80000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "Printers",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "Printers",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "16",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041595-4228-65b8-9ddd-d75e04d70fa2",
+        "description": "Toner para impresora color (original/compatible) para impresora SANSUMG MLT-D111S",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44103103-002",
+         "description": "Toner para impresora color (original/compatible)",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44103103",
+          "description": "Toner",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 98000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "Printers",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "Printers",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "17",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041595-422d-6cc0-a111-d75e04d70fa2",
+        "description": "Toner para impresora negro (original/compatible) para impresora BROTHER negro TN -1060",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44103103-001",
+         "description": "Toner para impresora negro (original/compatible)",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44103103",
+          "description": "Toner",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 55000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "Printers",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "Printers",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "18",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041595-4233-644a-8df8-d75e04d70fa2",
+        "description": "Toner para impresora negro (original/compatible) para impresora BROTHER negro TN - 750 ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44103103-001",
+         "description": "Toner para impresora negro (original/compatible)",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44103103",
+          "description": "Toner",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 95000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "Printers",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "Printers",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "19",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       },
+       {
+        "id": "1f041595-4238-6efe-bb9c-d75e04d70fa2",
+        "description": "Toner para impresora negro (original/compatible) para impresora BROTHER negro TN- 880 ",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "44103103-001",
+         "description": "Toner para impresora negro (original/compatible)",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "44103103",
+          "description": "Toner",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 138000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+        "attributes": [
+         {
+          "value": "China",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "Printers",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "Printers",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "20",
+          "id": "7"
+         },
+         {
+          "name": "nro_certificado_origen_nacional",
+          "value": "NO",
+          "id": "317"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "tender": {
+     "id": "1f02ff28-84ed-6940-96a9-6feeaa861748",
+     "title": "ADQUISICION DE TINTA Y TONER",
+     "status": "complete",
+     "awardCriteria": "priceOnly",
+     "awardCriteriaDetails": "Por Total",
+     "submissionMethod": [
+      "inPerson"
+     ],
+     "bidOpening": {
+      "date": "2025-07-02T08:30:00-04:00",
+      "address": {
+       "streetAddress": "Municipalidad de Fernando de la Mora, oficina UOC"
+      }
+     },
+     "submissionMethodDetails": "Lugar entrega ofertas: Municipalidad de Fernando de la Mora, oficina UOC",
+     "statusDetails": "Adjudicada",
+     "enquiriesAddress": {
+      "streetAddress": "SICP"
+     },
+     "clarificationMeetings": [
+      {
+       "address": {
+        "streetAddress": "N/A"
+       },
+       "id": "1"
+      }
+     ],
+     "mainProcurementCategoryDetails": "Bienes - Equipos Accesorios y Suministros de Oficina",
+     "hasEnquiries": false,
+     "value": {
+      "amount": 120000000,
+      "currency": "PYG"
+     },
+     "datePublished": "2025-06-17T12:10:57-04:00",
+     "tenderPeriod": {
+      "startDate": "2025-06-17T12:10:57-04:00",
+      "endDate": "2025-07-02T08:00:00-04:00",
+      "durationInDays": 14
+     },
+     "awardPeriod": {
+      "startDate": "2025-07-02T08:30:00-04:00"
+     },
+     "contractPeriod": {
+      "maxExtentDate": "2025-12-31T00:00:00-04:00"
+     },
+     "enquiryPeriod": {
+      "endDate": "2025-06-27T12:00:00-04:00",
+      "startDate": "2025-06-17T12:10:57-04:00",
+      "durationInDays": 9
+     },
+     "mainProcurementCategory": "services",
+     "additionalProcurementCategories": [
+      "services"
+     ],
+     "procurementMethod": "open",
+     "procurementMethodDetails": "Menor cuantía nacional",
+     "procuringEntity": {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora"
+     },
+     "criteria": [
+      {
+       "id": "1",
+       "title": "Garantía de Mantenimiento de Ofertas",
+       "description": "Los oferentes, proveedores o contratistas deberán garantizar la seriedad de sus ofertas, mediante la garantía de mantenimiento de la oferta",
+       "source": "tenderer",
+       "requirementGroups": [
+        {
+         "id": "1-1",
+         "description": "La garantía debe ser de un cierto porcentaje, periodo y tipo",
+         "requirements": [
+          {
+           "id": "1-1-1",
+           "title": "Porcentaje de la garantia",
+           "expectedValue": "5"
+          },
+          {
+           "id": "1-1-2",
+           "title": "Validez de la garantia en días",
+           "expectedValue": "120"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "enquiries": [
+      {
+       "id": "9201dc34a78d006d32bdb64a51c980c7-1",
+       "date": "2025-06-25T16:24:38-04:00",
+       "title": "ACLARAR ESPESIFICACIONES TECNICAS",
+       "description": "SOLICITO ACLARAR SI LOS TONER Y TINTAS TIENEN QUE SER DE LA MISMA MARCA DE LAS IMPRESORAS O COMPATIBLES CON LAS IMPRESORAS? YA QUE LOS PRECIOS REFERENCIALES SON DE COMPATIBLES NO ASI DE INSUMOS ORIGINALES/GENUINOS DE LAS MISMAS MARCAS DE LAS FOTOCOPIADORA/IMPRESORA, POR FAVOR ACLARAR.",
+       "answer": "TODOS LOS PRODUCTOS OFERTADOS DEBERAN SER ORIGINALES.. ",
+       "dateAnswered": "2025-06-30T12:55:08-04:00"
+      },
+      {
+       "id": "0be579db97f5f7719764ff20dc9919a8-1",
+       "date": "2025-06-18T09:38:36-04:00",
+       "title": "Capacidad Financiera",
+       "description": "En capacidad financiera, donde dice: para contribuyentes de IRE, deberán cumplir el siguiente parámetro: Eficiencia: (ingreso/egreso) Deberá ser igual o mayor a 1, el promedio, de los últimos 3 ejercicios fiscales requeridos (2021, 2022 y 2023) La consulta es, saber si una empresa que fue creada en el 2022, se presenta a este llamado, presentando la documentación de IRE de los años 2022 y 2023, para el cálculo de promedio se tomará: para 2021= 0, y para 2022 y 2023, el valor que indique en el formulario correspondiente. O bien, conocer cuál será el criterio de evaluación en la mencionada situación.",
+       "answer": "Remitirse al PBC",
+       "dateAnswered": "2025-06-24T10:59:59-04:00"
+      },
+      {
+       "id": "4cc49348358354fc69c2cda8d59fadae-1",
+       "date": "2025-06-18T09:38:41-04:00",
+       "title": "Suministros requeridos",
+       "description": "Solicitamos respetuosamente a la Convocante aclarar si los bienes solicitados desde el item 1 al item 07 pueden ser presentados insumos compatibles o si solo deben ser originales de la misma marca.",
+       "answer": "Solo se Permitira Originales de la Misma Marca.",
+       "dateAnswered": "2025-06-24T11:27:29-04:00"
+      }
+     ],
+     "lots": [
+      {
+       "id": "1f041590-ffe0-670e-91cb-a73f5009031f",
+       "title": "1 - 1 - ADQUISICION DE TINTA Y TONER",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 120000000,
+        "currency": "PYG"
+       },
+       "openContractType": "monto",
+       "minValue": {
+        "amount": 60000000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "1"
+        }
+       ]
+      }
+     ],
+     "items": [
+      {
+       "id": "1f041595-41d4-65a8-8ff2-d75e04d70fa2",
+       "description": "Cartucho de tinta para impresora negro, para impresora HP 664",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44103105-001",
+        "description": "Cartucho de tinta para impresora negro ",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103105-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44103105",
+         "description": "Cartuchos de tinta",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103105"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 90323,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "3",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041595-422d-6cc0-a111-d75e04d70fa2",
+       "description": "Toner para impresora negro (original/compatible) para impresora BROTHER negro TN -1060",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44103103-001",
+        "description": "Toner para impresora negro (original/compatible)",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44103103",
+         "description": "Toner",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 67850,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "18",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041595-41e2-61b2-839c-d75e04d70fa2",
+       "description": "Cartucho de tinta para impresora negro,,para impresora HP 662 ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44103105-001",
+        "description": "Cartucho de tinta para impresora negro ",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103105-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44103105",
+         "description": "Cartuchos de tinta",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103105"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 77242,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "5",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041595-421d-6050-9b2e-d75e04d70fa2",
+       "description": "Toner para impresora color (original/compatible) para impresora HP color 130 MAGENTA ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44103103-002",
+        "description": "Toner para impresora color (original/compatible)",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44103103",
+         "description": "Toner",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 109250,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "15",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041595-41fb-60f4-b1cb-d75e04d70fa2",
+       "description": "Toner para impresora negro (original/compatible) para impresora HP negro 85 A ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44103103-001",
+        "description": "Toner para impresora negro (original/compatible)",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44103103",
+         "description": "Toner",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 75900,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "9",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041595-4222-6b86-aeb3-d75e04d70fa2",
+       "description": "Toner para impresora color (original/compatible) para impresora HP color YELLOW ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44103103-002",
+        "description": "Toner para impresora color (original/compatible)",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44103103",
+         "description": "Toner",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 109250,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "16",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041595-4238-6efe-bb9c-d75e04d70fa2",
+       "description": "Toner para impresora negro (original/compatible) para impresora BROTHER negro TN- 880 ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44103103-001",
+        "description": "Toner para impresora negro (original/compatible)",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44103103",
+         "description": "Toner",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 139150,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "20",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041595-4211-6e58-8247-d75e04d70fa2",
+       "description": "Toner para impresora negro (original/compatible) para impresora HP negro 130 BLACK ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44103103-001",
+        "description": "Toner para impresora negro (original/compatible)",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44103103",
+         "description": "Toner",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 111550,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "13",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041595-4217-6876-8d97-d75e04d70fa2",
+       "description": "Toner para impresora color (original/compatible) para impresora HP color 130 cyam ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44103103-002",
+        "description": "Toner para impresora color (original/compatible)",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44103103",
+         "description": "Toner",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 109250,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "14",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041595-4233-644a-8df8-d75e04d70fa2",
+       "description": "Toner para impresora negro (original/compatible) para impresora BROTHER negro TN - 750 ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44103103-001",
+        "description": "Toner para impresora negro (original/compatible)",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44103103",
+         "description": "Toner",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 83950,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "19",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041595-41db-6614-bd46-d75e04d70fa2",
+       "description": "Cartucho de tinta para impresora color,para impresora HP 664 ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44103105-002",
+        "description": "Cartucho de tinta para impresora color ",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103105-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44103105",
+         "description": "Cartuchos de tinta",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103105"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 93438,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "4",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041595-420c-6278-a2eb-d75e04d70fa2",
+       "description": "Toner para impresora negro (original/compatible) para impresora HP negro 17 A ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44103103-001",
+        "description": "Toner para impresora negro (original/compatible)",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44103103",
+         "description": "Toner",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 75900,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "12",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041595-4206-68be-87cc-d75e04d70fa2",
+       "description": "Toner para impresora negro (original/compatible) para impresora HP negro 12 A ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44103103-001",
+        "description": "Toner para impresora negro (original/compatible)",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44103103",
+         "description": "Toner",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 75900,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "11",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041595-41e9-61ce-ba9a-d75e04d70fa2",
+       "description": "Cartucho de tinta para impresora color, para impresora HP 662 ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44103105-002",
+        "description": "Cartucho de tinta para impresora color ",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103105-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44103105",
+         "description": "Cartuchos de tinta",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103105"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 87208,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "6",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041595-4200-6ee6-a866-d75e04d70fa2",
+       "description": "Toner para impresora negro (original/compatible) para impresora HP negro 78 A ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44103103-001",
+        "description": "Toner para impresora negro (original/compatible)",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44103103",
+         "description": "Toner",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 75900,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "10",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041595-41c2-6f38-a6b8-d75e04d70fa2",
+       "description": "Cartucho de tinta para impresora negro, para impresora HP 122",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44103105-001",
+        "description": "Cartucho de tinta para impresora negro ",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103105-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44103105",
+         "description": "Cartuchos de tinta",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103105"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 80980,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041595-4228-65b8-9ddd-d75e04d70fa2",
+       "description": "Toner para impresora color (original/compatible) para impresora SANSUMG MLT-D111S",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44103103-002",
+        "description": "Toner para impresora color (original/compatible)",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44103103",
+         "description": "Toner",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 103500,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "17",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041595-41ef-683a-9d8f-d75e04d70fa2",
+       "description": "Cartucho de tinta para impresora negro, para impresora HP 21 ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44103105-001",
+        "description": "Cartucho de tinta para impresora negro ",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103105-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44103105",
+         "description": "Cartuchos de tinta",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103105"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 74750,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "7",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041595-41f5-6730-aba5-d75e04d70fa2",
+       "description": "Toner para impresora negro (original/compatible) para impresora HP negro 05 A ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44103103-001",
+        "description": "Toner para impresora negro (original/compatible)",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103103-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44103103",
+         "description": "Toner",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103103"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 82800,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "8",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f041595-41cb-6e44-841d-d75e04d70fa2",
+       "description": "Cartucho de tinta para impresora color, para impresora HP 122 ",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "44103105-002",
+        "description": "Cartucho de tinta para impresora color ",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/44103105-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "44103105",
+         "description": "Cartuchos de tinta",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/44103105"
+        }
+       ],
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 89700,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f041590-ffe0-670e-91cb-a73f5009031f",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "2",
+         "id": "2"
+        }
+       ]
+      }
+     ],
+     "tenderers": [
+      {
+       "name": "REAL INVEST S.A",
+       "id": "PY-RUC-80053458-1"
+      },
+      {
+       "name": "Lourdes Elizabeth Gimenez Bareiro",
+       "id": "PY-RUC-3484327-2"
+      },
+      {
+       "name": "LUIS ADRIAN SOSA AQUINO",
+       "id": "PY-RUC-4178533-9"
+      }
+     ],
+     "documents": [
+      {
+       "id": "1a8e4709-4ef6-492d-bdbb-f9d2b73e0991",
+       "datePublished": "2025-06-05T10:19:55-04:00",
+       "title": "cdp-mcn-id-470851-68406dfc45bcf.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f02ff28-84ed-6940-96a9-6feeaa861748/files/1a8e4709-4ef6-492d-bdbb-f9d2b73e0991/download",
+       "language": "es",
+       "documentTypeDetails": "CDP"
+      },
+      {
+       "id": "dix2iRRDbik=",
+       "title": "URL de la Convocatoria",
+       "url": "https://www.contrataciones.gov.py/licitaciones/convocatoria/1f02ff28-84ed-6940-96a9-6feeaa861748.html",
+       "language": "es",
+       "documentType": "tenderNotice",
+       "format": "text/html"
+      },
+      {
+       "id": "43fc2c50-58f9-4e1d-9cce-f7f951d22806",
+       "datePublished": "2025-06-05T10:19:54-04:00",
+       "title": "dictamen-tecnico-mcn-id-470851-68406e0d00462.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f02ff28-84ed-6940-96a9-6feeaa861748/files/43fc2c50-58f9-4e1d-9cce-f7f951d22806/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen técnico"
+      },
+      {
+       "id": "44b69db4-2e0d-4d58-a990-c17462076406",
+       "datePublished": "2025-06-12T11:50:03-04:00",
+       "title": "resolucion-de-aprobacion-cc-684ae8f963a5a.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f02ff28-84ed-6940-96a9-6feeaa861748/files/44b69db4-2e0d-4d58-a990-c17462076406/download",
+       "language": "es",
+       "documentTypeDetails": "Aprobación PBC"
+      },
+      {
+       "id": "b4f5762f-9c20-41e2-97a8-39c35c80a95b",
+       "datePublished": "2025-07-02T09:17:36-04:00",
+       "title": "acta-de-apertura-000022-891571404313331-6865235f8204c.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f02ff28-84ed-6940-96a9-6feeaa861748/files/b4f5762f-9c20-41e2-97a8-39c35c80a95b/download",
+       "language": "es",
+       "documentTypeDetails": "Acta de Apertura"
+      },
+      {
+       "id": "5d59811d-6238-4bb0-a3da-60e231cb5e29",
+       "datePublished": "2025-06-05T10:19:54-04:00",
+       "title": "pr-470851-6841995143ab8.zip",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f02ff28-84ed-6940-96a9-6feeaa861748/files/5d59811d-6238-4bb0-a3da-60e231cb5e29/download",
+       "language": "es",
+       "documentTypeDetails": "Antecedentes de la Estimación de Costos"
+      },
+      {
+       "id": "iqSLpgLM1Uo=",
+       "datePublished": "2025-06-17T11:10:56-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 470851 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1f02ff28-84ed-6940-96a9-6feeaa861748/1",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/pdf"
+      },
+      {
+       "id": "tXbkt1CdOvOAmPTG13fdCg==",
+       "datePublished": "2025-06-17T11:10:56-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 470851 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1f02ff28-84ed-6940-96a9-6feeaa861748/1/json",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/json"
+      }
+     ],
+     "numberOfTenderers": 3
+    },
+    "language": "es",
+    "ocid": "ocds-03ad3f-470851-1",
+    "date": "2025-07-31T16:36:56-04:00",
+    "initiationType": "tender",
+    "buyer": {
+     "id": "DNCP-SICP-CODE-66",
+     "name": "Municipalidad de Fernando de la Mora"
+    },
+    "sources": [
+     {
+      "id": "dncp-sicp",
+      "name": "Sistema de Información de las Contrataciones Públicas - DNCP",
+      "url": "https://www.contrataciones.gov.py/"
+     }
+    ],
+    "contracts": [
+     {
+      "id": "MN-30173-25-254815",
+      "implementation": {
+       "financialProgress": {
+        "breakdown": [
+         {
+          "id": "2025/30/173/1/1/1/0/1/11/342/10/MN-30173-25-254815",
+          "period": {
+           "startDate": "2025-01-01T00:00:00Z",
+           "endDate": "2025-12-31T00:00:00Z"
+          },
+          "measures": {
+           "monto_a_utilizar": 120000000
+          },
+          "classifications": {
+           "anio": "2025",
+           "nivel": "30",
+           "entidad": "173",
+           "tipo_programa": "1",
+           "programa": "1",
+           "sub_programa": "1",
+           "proyecto": "0",
+           "financiador": "1",
+           "departamento": "11",
+           "objeto_gasto": "342",
+           "fuente_financiamiento": "10",
+           "cdp": "117925"
+          },
+          "financialCode": "MN-30173-25-254815"
+         }
+        ]
+       }
+      },
+      "awardID": "1f0617c6-f958-6a6e-b541-b9787f0446bf",
+      "status": "active",
+      "statusDetails": "publicado",
+      "period": {
+       "startDate": "2025-12-31T00:00:00-04:00"
+      },
+      "value": {
+       "amount": 120000000,
+       "currency": "PYG"
+      },
+      "documents": [
+       {
+        "id": "1f06e071-bd11-65e6-84bc-1b710693af4a",
+        "datePublished": "2025-07-31T09:08:45-04:00",
+        "title": "cdp-mcn-id-470851-688b5ccdc94d6.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f0617c6-f958-6a6e-b541-b9787f0446bf/files/4e7f3edd-e646-4005-8e34-353ba6d69156/download",
+        "language": "es",
+        "documentTypeDetails": "CDP"
+       },
+       {
+        "id": "1f06e070-5682-613c-8b3f-a78451e10056",
+        "datePublished": "2025-07-31T09:08:08-04:00",
+        "title": "contrato-n30-tinta-y-toner-688b5ca8406b0.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f0617c6-f958-6a6e-b541-b9787f0446bf/files/7cfdaea1-69f8-4d59-a952-c756388f30e1/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       }
+      ]
+     }
+    ],
+    "parties": [
+     {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora",
+      "identifier": {
+       "scheme": "DNCP-SICP-CODE",
+       "id": "66",
+       "legalName": "Municipalidad de Fernando de la Mora"
+      },
+      "contactPoint": {
+       "email": "morauoc@gmail.com",
+       "name": "LIC. ELIGIO ACOSTA",
+       "telephone": "+595 21 513-306"
+      },
+      "roles": [
+       "buyer",
+       "procuringEntity"
+      ],
+      "details": {
+       "level": "Municipalidades",
+       "entityType": "Municipalidades",
+       "type": "Entidad"
+      },
+      "additionalIdentifiers": [
+       {
+        "id": "2025.30.173",
+        "legalName": "Municipalidad de Fernando de la Mora",
+        "scheme": "PY-PGN"
+       }
+      ]
+     },
+     {
+      "name": "Lourdes Elizabeth Gimenez Bareiro",
+      "id": "PY-RUC-3484327-2",
+      "identifier": {
+       "id": "3484327-2",
+       "legalName": "Lourdes Elizabeth Gimenez Bareiro",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer",
+       "enquirer"
+      ],
+      "contactPoint": {
+       "name": "Lourdes Elizabeth Gimenez Bareiro",
+       "email": "lgtrading_79@hotmail.com",
+       "faxNumber": "021647179",
+       "telephone": "0981560182"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "luque",
+       "region": "Central",
+       "streetAddress": "alejandro guanes e/ calle 5 y 2"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Utiles de oficina, Productos de papel y cartón e impresos",
+         "id": 11
+        },
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        },
+        {
+         "name": "Materiales e insumos eléctricos, metálicos y no metálicos, Plásticos, cauchos. Repuestos, herramientas, cámaras y cubiertas.",
+         "id": 18
+        },
+        {
+         "name": "Muebles y Enseres",
+         "id": 23
+        }
+       ]
+      }
+     },
+     {
+      "name": "LUIS ADRIAN SOSA AQUINO",
+      "id": "PY-RUC-4178533-9",
+      "identifier": {
+       "id": "4178533-9",
+       "legalName": "LUIS ADRIAN SOSA AQUINO",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "supplier",
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "LUIS ADRIAN SOSA AQUINO",
+       "email": "presupuestoimpresion01@gmail.com",
+       "telephone": "0992298103 - 0981370640"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "FERNANDO DE LA MORA",
+       "region": "Central",
+       "streetAddress": "MCAL ESTIGARRIBIA CASI SOLDADO OVELAR Casa #106"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        }
+       ]
+      }
+     },
+     {
+      "name": "Michel Denis Has Baez",
+      "id": "PY-RUC-5607772-6",
+      "identifier": {
+       "id": "5607772-6",
+       "legalName": "Michel Denis Has Baez",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "enquirer"
+      ],
+      "contactPoint": {
+       "name": "Michel Denis Has Baez",
+       "email": "licitacionesmrainformatica20@gmail.com",
+       "telephone": "0971639642"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "Ciudad del Este",
+       "region": "Alto Paraná",
+       "streetAddress": "Av Francisco Solano Lopez casi Amambay B° Santa Ana"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Utiles de oficina, Productos de papel y cartón e impresos",
+         "id": 11
+        },
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        }
+       ]
+      }
+     },
+     {
+      "name": "REAL INVEST S.A",
+      "id": "PY-RUC-80053458-1",
+      "identifier": {
+       "id": "80053458-1",
+       "legalName": "REAL INVEST S.A",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "KURT FALCK DICK- SIGRIED DYCK DE FALK",
+       "email": "gerencia_ventas@realinvest.com.py",
+       "telephone": "0986659300",
+       "url": "http://www.realinvest.com.py"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "ASUNCION",
+       "region": "Central",
+       "streetAddress": "CERVANTES 950 CASI VENEZUELA"
+      },
+      "details": {
+       "legalEntityTypeDetail": "S.A.",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        },
+        {
+         "name": "Utiles de oficina, Productos de papel y cartón e impresos",
+         "id": 11
+        },
+        {
+         "name": "Elementos e insumos de limpieza",
+         "id": 12
+        }
+       ]
+      }
+     }
+    ],
+    "tag": [
+     "compiled"
+    ]
+   }
+  }
+ ],
+ "pagination": {
+  "total_items": 1,
+  "total_pages": 1,
+  "current_page": 1,
+  "items_per_page": 10,
+  "total_in_page": 1
+ }
+}

@@ -1,0 +1,986 @@
+{
+ "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/ocds-03ad3f-458544-1",
+ "publishedDate": "2026-09-22T17:53:51Z",
+ "publisher": {
+  "name": "Dirección Nacional de Contrataciones Públicas, Paraguay"
+ },
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "publicationPolicy": "https://www.contrataciones.gov.py/datos/legal",
+ "version": "1.1",
+ "extensions": [
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_breakdown_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_and_spend_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_enquiry_extension/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/enquiriesAddress/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/legalEntityTypeDetail/master/extension.json",
+  "https://raw.githubusercontent.com/gitMHOCDS/transactions/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_investmentproject_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_clarification_meetings_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_attributes_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_items_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_contract_suppliers_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_location_extension/v1.1.4/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_activityType_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_notifiedsuppliers_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_lots_details_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_memberOf_extension/master/extension.json",
+  "https://raw.githubusercontent.com/portaledcahn/ocds_tenderDatePublished_extension/master/extension.json",
+  "https://raw.githubusercontent.com/INAImexico/ocds_guarantees_extension/master/extension.json",
+  "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_requirements_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bidOpening_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_coveredBy_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_qualification_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_publicEntitiesDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_items_subItems_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_statusdetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_mainProcurementCategoryDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_identifier_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_estimatedDate_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_participationFee_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_amendments_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_lot_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_transaction_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_financialprogress_financialcode_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_categories_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_complaints_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_minQuantity_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_purchaseOrder_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_document_type_details/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_cancellations_amendments_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_milestone_documents_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_techniques_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bid_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_bid_items_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_auctions_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_secondStage_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_beneficiaries_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/Crown-Commercial-Service/ocds_tender_suitability_extension/main/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_subcontracting_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_sustainability_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_reportedpayment_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_milestone_deliveries_extension/raw/master/extension.json"
+ ],
+ "records": [
+  {
+   "ocid": "ocds-03ad3f-458544-1",
+   "releases": [
+    {
+     "date": "2025-03-15T12:06:51-04:00",
+     "tag": [
+      "planning",
+      "tender"
+     ],
+     "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/releases/id/1efc91ee-aa59-6682-a385-6dc0384a62e1-1742040411"
+    }
+   ],
+   "compiledRelease": {
+    "id": "1efc91ee-aa59-6682-a385-6dc0384a62e1-1742040411",
+    "tender": {
+     "id": "1efc91ee-aa59-6682-a385-6dc0384a62e1",
+     "coveredBy": [
+      "ad_referendum"
+     ],
+     "title": "ADQUISICION DE TARJETAS DE PVC PARA HABILITACION DE RODADOS",
+     "status": "complete",
+     "awardCriteria": "priceOnly",
+     "awardCriteriaDetails": "Por Total",
+     "submissionMethod": [
+      "inPerson"
+     ],
+     "bidOpening": {
+      "date": "2025-04-28T08:30:00-04:00",
+      "address": {
+       "streetAddress": "Municipalidad de Fernando de la Mora, oficina UOC"
+      }
+     },
+     "submissionMethodDetails": "Lugar entrega ofertas: Municipalidad de Fernando de la Mora, oficina UOC",
+     "statusDetails": "En Evaluacion (Cerrada)",
+     "enquiriesAddress": {
+      "streetAddress": "SICP"
+     },
+     "clarificationMeetings": [
+      {
+       "address": {
+        "streetAddress": "N/A"
+       },
+       "id": "1"
+      }
+     ],
+     "mainProcurementCategoryDetails": "Bienes - Productos Publicados",
+     "hasEnquiries": false,
+     "value": {
+      "amount": 530000000,
+      "currency": "PYG"
+     },
+     "datePublished": "2025-01-29T11:47:38-04:00",
+     "tenderPeriod": {
+      "startDate": "2025-01-29T11:47:38-04:00",
+      "endDate": "2025-04-28T08:00:00-04:00",
+      "durationInDays": 88
+     },
+     "awardPeriod": {
+      "startDate": "2025-04-28T08:30:00-04:00"
+     },
+     "enquiryPeriod": {
+      "endDate": "2025-04-23T12:00:00-04:00",
+      "startDate": "2025-01-29T11:47:38-04:00",
+      "durationInDays": 84
+     },
+     "mainProcurementCategory": "services",
+     "additionalProcurementCategories": [
+      "services"
+     ],
+     "procurementMethod": "open",
+     "procurementMethodDetails": "Menor cuantía nacional",
+     "procuringEntity": {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora"
+     },
+     "criteria": [
+      {
+       "id": "1",
+       "title": "Garantía de Mantenimiento de Ofertas",
+       "description": "Los oferentes, proveedores o contratistas deberán garantizar la seriedad de sus ofertas, mediante la garantía de mantenimiento de la oferta",
+       "source": "tenderer",
+       "requirementGroups": [
+        {
+         "id": "1-1",
+         "description": "La garantía debe ser de un cierto porcentaje, periodo y tipo",
+         "requirements": [
+          {
+           "id": "1-1-1",
+           "title": "Porcentaje de la garantia",
+           "expectedValue": "5"
+          },
+          {
+           "id": "1-1-2",
+           "title": "Validez de la garantia en días",
+           "expectedValue": "120"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "enquiries": [
+      {
+       "id": "ea4bd8de51b16c6b3d4151ac2e73be41-1",
+       "date": "2025-02-11T14:43:52-04:00",
+       "title": "Especificaciontes tecnicas",
+       "description": "En la EE.TT. de los dispositivos para impresión de habilitaciones en donde dice:” impresión dos caras y laminado en línea de una cara”, favor aclara si la impresión personalizada seria ambos lados o un solo lado, habida cuenta que el laminado en línea establece solo un lado de la cara y también aclarar, si la impresión “personalizada” seria a color o blanco y negro.",
+       "answer": "Se aclara que el pliego establece \"impresión dos caras y laminado en línea de una cara\"\nAdelante Impresión con uv y negro atras.\n",
+       "dateAnswered": "2025-02-21T11:34:50-04:00"
+      },
+      {
+       "id": "d00b655f075d36086d2cca6143a4e65e-1",
+       "date": "2025-02-26T10:26:04-04:00",
+       "title": "MODELOS DE LA TARJETA",
+       "description": "En cuanto a las especificaciones técnicas, podrían anexar un modelo  en formato PDF de la tarjeta impresa  PVC, para una mejor elaboración de las ofertas",
+       "answer": "Las especificaciones técnicas relacionadas al diseño son las mencionadas en el PBC aclarando que serán full color a ambas caras de la tarjeta pre-impresa.\nEl diseño para la elaboración de las habilitaciones será entregado por la Convocante recién una vez que el oferente resulte adjudicado y suscriba el contrato correspondiente. Antes de estos actos administrativos, ningún oferente contará con el diseño personalizado cuestiones relacionadas a seguridad jurídica de los documentos emitidos por el Municipio, los cuales constituyen instrumentos públicos, por tanto, requieren la aplicación de trámites administrativos que permitan dar seguridad en la emisión de los mismos.",
+       "dateAnswered": "2025-03-14T12:47:58-04:00"
+      },
+      {
+       "id": "e96bb196fc4f60bdd1e75009bd3f5377-1",
+       "date": "2025-02-12T07:57:10-04:00",
+       "title": "Plan de entrega de los bienes",
+       "description": "Solicitamos a la convocante pueda extender el plazo de entrega de los bienes, al menos 15 (quince) días, para una correcta ejecución de los trabajos de provisión y puesta en funcionamiento de lo solicitado. Esto permitirá contar con una mayor cantidad de potenciales oferentes. La solicitud se sustenta en los principios rectores del Artículo 4° de la Ley 7021, inciso d) Igualdad y Libre Competencia.",
+       "answer": "Debido al tiempo la institución necesita contar en la brevedad con lo licitado.\n\n",
+       "dateAnswered": "2025-02-21T11:39:33-04:00"
+      },
+      {
+       "id": "3e672db645b3a11b584f939c8430c505-1",
+       "date": "2025-02-12T07:52:17-04:00",
+       "title": "Especificaciones Tecnicas",
+       "description": "Solicitamos a la convocante información respecto a las especificaciones del equipo requerido para cumplir con los requerimientos establecidos en el PBC. En particular, nos gustaría confirmar si la convocante ya cuenta con este equipo (impresora de tarjetas PVC), ya que el documento solicita el uso de una cinta de impresión/consumible específica (Este modelo de impresora se encuentra discontinuado). De no ser así, agradeceremos puedan eliminar esa característica especifica de cintas de impresión y permita a los oferentes proponer nuevos equipos con sus cintas de impresión que permitan satisfacer las necesidades de la convocante. Esto permitirá contar con una mayor cantidad de potenciales oferentes. La solicitud se sustenta en los principios rectores del Artículo 4° de la Ley 7021, inciso d) Igualdad y Libre Competencia.",
+       "answer": "Las especificaciones de requerimientos mínimos solicitados son las que se encuentran especificadas en el PBC. \nNo serán aceptados equipos discontinuados. Se aclara que verificaremos la información en la página web del fabricante para el cumplimiento de las Especificaciones Técnicas. \n",
+       "dateAnswered": "2025-02-21T11:43:36-04:00"
+      },
+      {
+       "id": "16ef67665b627a493c6431f0a906be73-1",
+       "date": "2025-02-12T07:57:21-04:00",
+       "title": "Aclaracion",
+       "description": "Favor aclarar solicitud de laminado en linea",
+       "answer": "Laminado que debe ser realizado seguido a la impresión. La unidad de laminación para funcionar solamente con una conexión a la impresora.",
+       "dateAnswered": "2025-02-21T11:40:09-04:00"
+      },
+      {
+       "id": "976761bbcafc58fd2016adf363fd1a15-1",
+       "date": "2025-02-12T07:00:18-04:00",
+       "title": "CONSULTA",
+       "description": "Solicitamos a la convocante información si cuentan con impresora de tarjeta PVC ya que en el PBC menciona una cinta especifica o si será necesario proveer nuevos equipos para cumplir con los requerimientos establecidos",
+       "answer": "En las especificaciones técnicas se encuentran claras las especificaciones mínimas requeridas",
+       "dateAnswered": "2025-02-21T11:35:06-04:00"
+      }
+     ],
+     "lots": [
+      {
+       "id": "1efc91ef-b1f5-648a-aed8-d36363e92ca5",
+       "title": "1 - 1 - TARJETAS DE PVC PARA HABILITACION DE RODADOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 529987103,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "1"
+        }
+       ]
+      }
+     ],
+     "items": [
+      {
+       "id": "1efc91f2-24ba-6400-82cf-6946c0c46290",
+       "description": "INSUMOS PARA HABILITACION DE RODADOS",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "55121803-002",
+        "description": "Insumos para produccion de habilitacion del automotor",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/55121803-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "55121803",
+         "description": "Pasaportes, Cédulas de Identidad, registros, e insumos relacionados",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/55121803"
+        }
+       ],
+       "quantity": 35491,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 14933,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1efc91ef-b1f5-648a-aed8-d36363e92ca5",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "2"
+        }
+       ]
+      }
+     ],
+     "tenderers": [
+      {
+       "name": "TRANSTECNO S.A ",
+       "id": "PY-RUC-80058385-0"
+      },
+      {
+       "name": "SEGEL S.A.",
+       "id": "PY-RUC-80026570-0"
+      },
+      {
+       "name": "CENTRAL INALAMBRICA DE MONITOREO DE ALARMAS SOCIEDAD ANONIMA",
+       "id": "PY-RUC-80021498-6"
+      },
+      {
+       "name": "TIME S.R.L.",
+       "id": "PY-RUC-80004112-7"
+      }
+     ],
+     "documents": [
+      {
+       "id": "dix2iRRDbik=",
+       "title": "URL de la Convocatoria",
+       "url": "https://www.contrataciones.gov.py/licitaciones/convocatoria/1efc91ee-aa59-6682-a385-6dc0384a62e1.html",
+       "language": "es",
+       "documentType": "tenderNotice",
+       "format": "text/html"
+      },
+      {
+       "id": "5912e434-42ff-44da-848a-bf7f8a150a8b",
+       "datePublished": "2025-04-28T11:46:13-04:00",
+       "title": "ap-458544-2540988430479515-680f94b45b464.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1efc91ee-aa59-6682-a385-6dc0384a62e1/files/5912e434-42ff-44da-848a-bf7f8a150a8b/download",
+       "language": "es",
+       "documentTypeDetails": "Acta de Apertura"
+      },
+      {
+       "id": "fb1604ea-ab51-42dc-88c1-a55914286d00",
+       "datePublished": "2025-01-02T13:33:26-04:00",
+       "title": "constancia-adreferendum-id-45854402012025-6776bf9754076.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1efc91ee-aa59-6682-a385-6dc0384a62e1/files/fb1604ea-ab51-42dc-88c1-a55914286d00/download",
+       "language": "es",
+       "documentTypeDetails": "Constancia Ad referéndum"
+      },
+      {
+       "id": "JLwEj2dF5QnoEWdo0k5UNw==",
+       "datePublished": "2025-01-29T11:47:37-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 458544 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1efc91ee-aa59-6682-a385-6dc0384a62e1/1/json",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/json"
+      },
+      {
+       "id": "96d9ccd4-dc5b-475d-a6ff-fb1ba2dee26b",
+       "datePublished": "2025-01-02T13:33:26-04:00",
+       "title": "dictamen-tecnico-id-45854402012025-6776bfb3a567e.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1efc91ee-aa59-6682-a385-6dc0384a62e1/files/96d9ccd4-dc5b-475d-a6ff-fb1ba2dee26b/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen técnico"
+      },
+      {
+       "id": "DIgCwx2uRW4=",
+       "datePublished": "2025-01-29T11:47:37-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 458544 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1efc91ee-aa59-6682-a385-6dc0384a62e1/1",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/pdf"
+      },
+      {
+       "id": "d18b9429-72fc-4779-99eb-66f5fa17eb46",
+       "datePublished": "2025-01-02T13:33:26-04:00",
+       "title": "resolucion-aprobacion-de-pbc-y-llamado-id-458544-6776bf9f93a95.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1efc91ee-aa59-6682-a385-6dc0384a62e1/files/d18b9429-72fc-4779-99eb-66f5fa17eb46/download",
+       "language": "es",
+       "documentTypeDetails": "Aprobación PBC"
+      },
+      {
+       "id": "804d85ac-1bb9-43bf-a067-81f2b8fe99e6",
+       "datePublished": "2025-01-02T13:33:25-04:00",
+       "title": "pr-458544-6776bfc05c47c.zip",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1efc91ee-aa59-6682-a385-6dc0384a62e1/files/804d85ac-1bb9-43bf-a067-81f2b8fe99e6/download",
+       "language": "es",
+       "documentTypeDetails": "Antecedentes de la Estimación de Costos"
+      }
+     ],
+     "numberOfTenderers": 4
+    },
+    "language": "es",
+    "ocid": "ocds-03ad3f-458544-1",
+    "date": "2025-03-15T12:06:51-04:00",
+    "initiationType": "tender",
+    "buyer": {
+     "id": "DNCP-SICP-CODE-66",
+     "name": "Municipalidad de Fernando de la Mora"
+    },
+    "sources": [
+     {
+      "id": "dncp-sicp",
+      "name": "Sistema de Información de las Contrataciones Públicas - DNCP",
+      "url": "https://www.contrataciones.gov.py/"
+     }
+    ],
+    "planning": {
+     "identifier": "458544",
+     "estimatedDate": "2025-04-30T00:00:00-04:00",
+     "budget": {
+      "description": "ADQUISICION DE TARJETAS DE PVC PARA HABILITACION DE RODADOS",
+      "amount": {
+       "currency": "PYG",
+       "amount": 530000000
+      }
+     },
+     "items": [
+      {
+       "id": "1efc91e3-5ea7-6aa0-b9f1-337b13295046",
+       "description": "Documentos de identificacion",
+       "classification": {
+        "scheme": "UNSPSC",
+        "id": "55121800",
+        "description": "Documentos de identificacion",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/55121800"
+       }
+      }
+     ]
+    },
+    "parties": [
+     {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora",
+      "identifier": {
+       "scheme": "DNCP-SICP-CODE",
+       "id": "66",
+       "legalName": "Municipalidad de Fernando de la Mora"
+      },
+      "contactPoint": {
+       "email": "morauoc@gmail.com",
+       "name": "LIC. ELIGIO ACOSTA",
+       "telephone": "+595 21 513-306"
+      },
+      "roles": [
+       "buyer",
+       "procuringEntity"
+      ],
+      "details": {
+       "level": "Municipalidades",
+       "entityType": "Municipalidades",
+       "type": "Entidad"
+      },
+      "additionalIdentifiers": [
+       {
+        "id": "2025.30.173",
+        "legalName": "Municipalidad de Fernando de la Mora",
+        "scheme": "PY-PGN"
+       }
+      ]
+     },
+     {
+      "name": "CENTRAL INALAMBRICA DE MONITOREO DE ALARMAS SOCIEDAD ANONIMA",
+      "id": "PY-RUC-80021498-6",
+      "identifier": {
+       "id": "80021498-6",
+       "legalName": "CENTRAL INALAMBRICA DE MONITOREO DE ALARMAS SOCIEDAD ANONIMA",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "enquirer"
+      ],
+      "contactPoint": {
+       "name": "MARCOS FRANCISCO VILLALBA SALINAS",
+       "email": "cimasa2024@hotmail.com",
+       "faxNumber": "524344",
+       "telephone": "0981318570"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "FDO. DE LA MORA",
+       "region": "Central",
+       "streetAddress": "Rio Yhaguy casi Aca vera"
+      },
+      "details": {
+       "legalEntityTypeDetail": "S.A.",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Productos Alimenticios",
+         "id": 14
+        },
+        {
+         "name": "Equipos Militares y de Seguridad. Servicio de Seguridad y Vigilancia",
+         "id": 25
+        },
+        {
+         "name": "Utiles de oficina, Productos de papel y cartón e impresos",
+         "id": 11
+        }
+       ]
+      }
+     },
+     {
+      "name": "SEGEL S.A.",
+      "id": "PY-RUC-80026570-0",
+      "identifier": {
+       "id": "80026570-0",
+       "legalName": "SEGEL S.A.",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "enquirer"
+      ],
+      "contactPoint": {
+       "name": "MICHAEL HERSCHKOWICZ- RUTH SINGER- Ignacia Marlene Pereira",
+       "email": "licitaciones@segel.com.py",
+       "faxNumber": "INTERNO 101",
+       "telephone": "0992267833",
+       "url": "http://www.segel.com.py"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "ASUNCION",
+       "region": "Asunción",
+       "streetAddress": "RCA. DOMINICANA Nº 438 C/AVDA ESPAÑA"
+      },
+      "details": {
+       "legalEntityTypeDetail": "S.A.",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Servicios Técnicos",
+         "id": 7
+        },
+        {
+         "name": "Consultorías, Asesorías e Investigaciones. Estudios y Proyectos de inversión",
+         "id": 5
+        },
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        },
+        {
+         "name": "Adquisición y Locación de inmuebles. Alquiler de muebles",
+         "id": 3
+        }
+       ]
+      }
+     },
+     {
+      "name": "Emprendimientos del Sur S.A.",
+      "id": "PY-RUC-80098601-6",
+      "identifier": {
+       "id": "80098601-6",
+       "legalName": "Emprendimientos del Sur S.A.",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "enquirer"
+      ],
+      "contactPoint": {
+       "name": "Laura Raquel Benitez de Becker, Carlos Gustavo Becker Pessolani",
+       "email": "infosend@grupoedelsur.com",
+       "telephone": "0994281354"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "Asuncion",
+       "region": "Central",
+       "streetAddress": "Azara 964"
+      },
+      "details": {
+       "legalEntityTypeDetail": "S.A.",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Combustibles y Lubricantes",
+         "id": 15
+        },
+        {
+         "name": "Servicios de ceremonial, gastronomico y funerarios",
+         "id": 9
+        },
+        {
+         "name": "Productos quimicos",
+         "id": 16
+        },
+        {
+         "name": "Equipos Militares y de Seguridad. Servicio de Seguridad y Vigilancia",
+         "id": 25
+        },
+        {
+         "name": "Pasajes y Transportes",
+         "id": 1
+        },
+        {
+         "name": "Elementos e insumos de limpieza",
+         "id": 12
+        },
+        {
+         "name": "Seguros",
+         "id": 6
+        },
+        {
+         "name": "Capacitaciones y Adiestramientos",
+         "id": 4
+        },
+        {
+         "name": "Utiles de oficina, Productos de papel y cartón e impresos",
+         "id": 11
+        },
+        {
+         "name": "Maquinarias, Equipos y herramientas mayores - Equipos de transporte",
+         "id": 22
+        },
+        {
+         "name": "Servicios Técnicos",
+         "id": 7
+        },
+        {
+         "name": "Servicios de Limpiezas, Mantenimientos y reparaciones menores y mayores de Instalaciones, Maquinarias y Vehículos",
+         "id": 2
+        },
+        {
+         "name": "Equipos, Productos e instrumentales Médicos y de Laboratorio. Servicios asistenciales de salud",
+         "id": 17
+        },
+        {
+         "name": "Minerales",
+         "id": 20
+        },
+        {
+         "name": "Consultorías, Asesorías e Investigaciones. Estudios y Proyectos de inversión",
+         "id": 5
+        },
+        {
+         "name": "Materiales e insumos eléctricos, metálicos y no metálicos, Plásticos, cauchos. Repuestos, herramientas, cámaras y cubiertas.",
+         "id": 18
+        },
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        },
+        {
+         "name": "Construcción, Restauración, Reconstrucción o Remodelación y Reparación de Inmuebles",
+         "id": 21
+        },
+        {
+         "name": "Productos Alimenticios",
+         "id": 14
+        },
+        {
+         "name": "Publicidad y Propaganda",
+         "id": 8
+        },
+        {
+         "name": "Adquisición y Locación de inmuebles. Alquiler de muebles",
+         "id": 3
+        },
+        {
+         "name": "Bienes e insumos agropecuario y forestal",
+         "id": 19
+        },
+        {
+         "name": "Textiles, vestuarios y calzados",
+         "id": 10
+        },
+        {
+         "name": "Utensilios de cocina y comedor, Productos de Porcelana, vidrio y loza",
+         "id": 13
+        },
+        {
+         "name": "Muebles y Enseres",
+         "id": 23
+        }
+       ]
+      }
+     },
+     {
+      "name": "Consorcio Tecnologia y Control",
+      "id": "PY-RUC-DNCP-001630",
+      "identifier": {
+       "id": "DNCP-001630",
+       "legalName": "Consorcio Tecnologia y Control",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "enquirer"
+      ],
+      "contactPoint": {
+       "name": "Celsa Irene Vera de Candia",
+       "email": "infosend@grupoedelsur.com",
+       "telephone": "+595984984188"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "Asunción",
+       "region": "Central",
+       "streetAddress": "Felix Bogado casi Ana Diaz, Edificio Zenith "
+      },
+      "details": {
+       "legalEntityTypeDetail": "Consorcio",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        },
+        {
+         "name": "Servicios Técnicos",
+         "id": 7
+        },
+        {
+         "name": "Maquinarias, Equipos y herramientas mayores - Equipos de transporte",
+         "id": 22
+        },
+        {
+         "name": "Consultorías, Asesorías e Investigaciones. Estudios y Proyectos de inversión",
+         "id": 5
+        },
+        {
+         "name": "Combustibles y Lubricantes",
+         "id": 15
+        }
+       ]
+      }
+     },
+     {
+      "name": "Consorcio de Seguridad de la Informacion",
+      "id": "PY-RUC-DNCP-001672",
+      "identifier": {
+       "id": "DNCP-001672",
+       "legalName": "Consorcio de Seguridad de la Informacion",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "enquirer"
+      ],
+      "contactPoint": {
+       "name": "Hector Aguirre",
+       "email": "infosend@grupoedelsur.com",
+       "telephone": "0981905520"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "Asunción",
+       "region": "Asunción",
+       "streetAddress": "Azara casi Republica Francesa"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Consorcio",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Maquinarias, Equipos y herramientas mayores - Equipos de transporte",
+         "id": 22
+        },
+        {
+         "name": "Servicios Técnicos",
+         "id": 7
+        },
+        {
+         "name": "Equipos Militares y de Seguridad. Servicio de Seguridad y Vigilancia",
+         "id": 25
+        },
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        },
+        {
+         "name": "Consultorías, Asesorías e Investigaciones. Estudios y Proyectos de inversión",
+         "id": 5
+        },
+        {
+         "name": "Materiales e insumos eléctricos, metálicos y no metálicos, Plásticos, cauchos. Repuestos, herramientas, cámaras y cubiertas.",
+         "id": 18
+        },
+        {
+         "name": "Capacitaciones y Adiestramientos",
+         "id": 4
+        }
+       ]
+      }
+     },
+     {
+      "name": "Consorcio DRTECH OMNICHANNEL ",
+      "id": "PY-RUC-DNCP-001689",
+      "identifier": {
+       "id": "DNCP-001689",
+       "legalName": "Consorcio DRTECH OMNICHANNEL ",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "enquirer"
+      ],
+      "contactPoint": {
+       "name": "Laura Raquel Benitez de Becker",
+       "email": "infosend@grupoedelsur.com",
+       "telephone": "+595984984188"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "Asuncion",
+       "region": "Central",
+       "streetAddress": "Azara casi Republica Francesa"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Consorcio",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        },
+        {
+         "name": "Consultorías, Asesorías e Investigaciones. Estudios y Proyectos de inversión",
+         "id": 5
+        },
+        {
+         "name": "Servicios Técnicos",
+         "id": 7
+        }
+       ]
+      }
+     },
+     {
+      "name": "Consorcio Xentro",
+      "id": "PY-RUC-DNCP-001735",
+      "identifier": {
+       "id": "DNCP-001735",
+       "legalName": "Consorcio Xentro",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "enquirer"
+      ],
+      "contactPoint": {
+       "name": "Hector Antonio Aguirre",
+       "email": "infosend@grupoedelsur.com"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "Asuncion",
+       "region": "Asunción",
+       "streetAddress": "Padre Buenaventura "
+      },
+      "details": {
+       "legalEntityTypeDetail": "Consorcio",
+       "activityTypes": [
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Consultorías, Asesorías e Investigaciones. Estudios y Proyectos de inversión",
+         "id": 5
+        },
+        {
+         "name": "Seguros",
+         "id": 6
+        }
+       ]
+      }
+     },
+     {
+      "name": "Consorcio Tecnologia en Iluminacion",
+      "id": "PY-RUC-DNCP-001744",
+      "identifier": {
+       "id": "DNCP-001744",
+       "legalName": "Consorcio Tecnologia en Iluminacion",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "enquirer"
+      ],
+      "contactPoint": {
+       "name": "Jean Ribeiro Bianeck",
+       "email": "infosend@grupoedelsur.com",
+       "telephone": "+595984984188"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "San Lorenzo ",
+       "region": "Central",
+       "streetAddress": "Avda Eugenio A. Garay Casi Emilio Romero"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Consorcio",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        },
+        {
+         "name": "Materiales e insumos eléctricos, metálicos y no metálicos, Plásticos, cauchos. Repuestos, herramientas, cámaras y cubiertas.",
+         "id": 18
+        },
+        {
+         "name": "Maquinarias, Equipos y herramientas mayores - Equipos de transporte",
+         "id": 22
+        },
+        {
+         "name": "Consultorías, Asesorías e Investigaciones. Estudios y Proyectos de inversión",
+         "id": 5
+        },
+        {
+         "name": "Servicios de Limpiezas, Mantenimientos y reparaciones menores y mayores de Instalaciones, Maquinarias y Vehículos",
+         "id": 2
+        },
+        {
+         "name": "Servicios Técnicos",
+         "id": 7
+        }
+       ]
+      }
+     },
+     {
+      "name": "Consorcio Xplora",
+      "id": "PY-RUC-DNCP-002304",
+      "identifier": {
+       "id": "DNCP-002304",
+       "legalName": "Consorcio Xplora",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "enquirer"
+      ],
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "1000",
+       "streetAddress": "Republica Francesa esquina Azara"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Consorcio",
+       "activityTypes": [
+        "goods",
+        "services"
+       ]
+      },
+      "contactPoint": {
+       "email": "infosend@grupoedelsur.com"
+      }
+     },
+     {
+      "name": "Consorcio Xperience",
+      "id": "PY-RUC-DNCP-002426",
+      "identifier": {
+       "id": "DNCP-002426",
+       "legalName": "Consorcio Xperience",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "enquirer"
+      ],
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "1000",
+       "streetAddress": "Rca. Francesa Esq. Azara 1811"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Consorcio",
+       "activityTypes": [
+        "goods",
+        "services"
+       ]
+      },
+      "contactPoint": {
+       "email": "infosend@grupoedelsur.com"
+      }
+     }
+    ],
+    "tag": [
+     "compiled"
+    ]
+   }
+  }
+ ],
+ "pagination": {
+  "total_items": 1,
+  "total_pages": 1,
+  "current_page": 1,
+  "items_per_page": 10,
+  "total_in_page": 1
+ }
+}

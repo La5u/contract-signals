@@ -1,0 +1,1001 @@
+{
+ "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/ocds-03ad3f-463964-1",
+ "publishedDate": "2026-09-22T17:53:39Z",
+ "publisher": {
+  "name": "Dirección Nacional de Contrataciones Públicas, Paraguay"
+ },
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "publicationPolicy": "https://www.contrataciones.gov.py/datos/legal",
+ "version": "1.1",
+ "extensions": [
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_breakdown_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_and_spend_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_enquiry_extension/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/enquiriesAddress/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/legalEntityTypeDetail/master/extension.json",
+  "https://raw.githubusercontent.com/gitMHOCDS/transactions/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_investmentproject_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_clarification_meetings_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_attributes_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_items_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_contract_suppliers_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_location_extension/v1.1.4/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_activityType_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_notifiedsuppliers_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_lots_details_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_memberOf_extension/master/extension.json",
+  "https://raw.githubusercontent.com/portaledcahn/ocds_tenderDatePublished_extension/master/extension.json",
+  "https://raw.githubusercontent.com/INAImexico/ocds_guarantees_extension/master/extension.json",
+  "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_requirements_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bidOpening_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_coveredBy_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_qualification_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_publicEntitiesDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_items_subItems_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_statusdetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_mainProcurementCategoryDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_identifier_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_estimatedDate_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_participationFee_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_amendments_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_lot_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_transaction_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_financialprogress_financialcode_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_categories_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_complaints_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_minQuantity_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_purchaseOrder_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_document_type_details/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_cancellations_amendments_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_milestone_documents_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_techniques_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bid_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_bid_items_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_auctions_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_secondStage_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_beneficiaries_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/Crown-Commercial-Service/ocds_tender_suitability_extension/main/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_subcontracting_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_sustainability_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_reportedpayment_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_milestone_deliveries_extension/raw/master/extension.json"
+ ],
+ "records": [
+  {
+   "ocid": "ocds-03ad3f-463964-1",
+   "releases": [
+    {
+     "date": "2025-06-05T08:02:45-04:00",
+     "tag": [
+      "planning",
+      "tender",
+      "award",
+      "contract",
+      "implementation"
+     ],
+     "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/releases/id/1f00a582-26e2-6e10-bc53-89e9bc985367-1749110565"
+    }
+   ],
+   "compiledRelease": {
+    "id": "1f00a582-26e2-6e10-bc53-89e9bc985367-1749110565",
+    "awards": [
+     {
+      "id": "1f0300bf-f9ab-6064-b82b-d54996adef56",
+      "status": "active",
+      "statusDetails": "publicado",
+      "date": "2025-05-12T00:00:00-04:00",
+      "value": {
+       "amount": 240000000,
+       "currency": "PYG"
+      },
+      "suppliers": [
+       {
+        "name": "LUIS MORENO AQUINO",
+        "id": "PY-RUC-483432-1"
+       }
+      ],
+      "documents": [
+       {
+        "id": "1f0300bb-4755-6288-92ac-1b53c03842b0",
+        "datePublished": "2025-05-13T12:05:27-04:00",
+        "title": "inf-eva-463964-68235fb7cbdd7.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f0300b8-dcca-66cc-b9b0-a94e1de4bc05/files/c226eba1-cb20-4f5d-b5ca-0828138f0496/download",
+        "language": "es",
+        "documentTypeDetails": "Informe de Evaluación"
+       },
+       {
+        "id": "1f0300ba-be67-666a-b4eb-4770ea10e4c2",
+        "datePublished": "2025-05-13T12:05:13-04:00",
+        "title": "cuadro-463964-68235fa970066.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f0300b8-dcca-66cc-b9b0-a94e1de4bc05/files/6bc386db-6f5e-4f81-aa15-5387ffd94c73/download",
+        "language": "es",
+        "documentTypeDetails": "Cuadro Comparativo de Ofertas"
+       },
+       {
+        "id": "1f0300b9-fd8e-6bb4-8b5a-efb19aacacc5",
+        "datePublished": "2025-05-13T12:04:53-04:00",
+        "title": "nota-a-proveedores-68235f953dc5f.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f0300b8-dcca-66cc-b9b0-a94e1de4bc05/files/9afb5d43-a978-43b9-8291-2f33d6ae632e/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "1f0300ba-447c-61c0-89ea-d568ba2151cd",
+        "datePublished": "2025-05-13T12:05:00-04:00",
+        "title": "gmail-notificacion-de-adjudicacion-llamado-mcn-id-463-964-68235f9ca3529.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f0300b8-dcca-66cc-b9b0-a94e1de4bc05/files/e54ae594-ed5a-4cef-b30b-a3bcea763541/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "dix2iRRDbik=",
+        "title": "URL de la Adjudicación",
+        "url": "https://www.contrataciones.gov.py/licitaciones/adjudicacion/1f0300b8-dcca-66cc-b9b0-a94e1de4bc05/resumen-adjudicacion.html",
+        "language": "es",
+        "documentType": "awardNotice",
+        "format": "text/html"
+       },
+       {
+        "id": "1f0300b9-b7f1-63f4-8f01-9912e9d120f0",
+        "datePublished": "2025-05-13T12:04:46-04:00",
+        "title": "res-adj-463964-68235f8de8c11.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1f0300b8-dcca-66cc-b9b0-a94e1de4bc05/files/9f97a3e4-af24-4f97-9878-dcfb3eb3b83a/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       }
+      ],
+      "items": [
+       {
+        "id": "1f00a58a-2546-6068-9b05-ad6d6efe2aab",
+        "description": "Desmonte de terreno",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72103001-001",
+         "description": "Desmonte de terreno",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72103001-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72103001",
+          "description": "Servicios de desmonte de terrenos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72103001"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 19050,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f00a588-ab5b-611e-bb74-954a74728c68",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "1",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f00a58b-437c-6554-8554-a5c70230d2f6",
+        "description": "Compactación con plancha compactadora",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72102905-001",
+         "description": "Relleno y compactacion de terreno",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102905-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72102905",
+          "description": "Mantenimiento y hermoseamiento de terrenos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102905"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 2950,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f00a588-ab5b-611e-bb74-954a74728c68",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "2",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1f00a58c-554d-6688-9419-675ce07a70af",
+        "description": "Terminación con triturada 6ta.",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "72131701-014",
+         "description": "Construccion de enripiado",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131701-014"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "72131701",
+          "description": "Pavimentación,construccion, arreglo o hermoseamiento de carreteras o caminos",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131701"
+         }
+        ],
+        "quantity": 1,
+        "unit": {
+         "name": "Metros cuadrados",
+         "id": "M2",
+         "value": {
+          "amount": 3000,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1f00a588-ab5b-611e-bb74-954a74728c68",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "3",
+          "id": "7"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "tender": {
+     "id": "1f00a582-26e2-6e10-bc53-89e9bc985367",
+     "title": "REPARACION DE EMPEDRADOS EN VARIOS PUNTOS DE LA CIUDAD",
+     "status": "complete",
+     "awardCriteria": "priceOnly",
+     "awardCriteriaDetails": "Por Total",
+     "submissionMethod": [
+      "inPerson"
+     ],
+     "bidOpening": {
+      "date": "2025-04-25T08:30:00-04:00",
+      "address": {
+       "streetAddress": "Municipalidad de Fernando de la Mora, oficina UOC"
+      }
+     },
+     "submissionMethodDetails": "Lugar entrega ofertas: Municipalidad de Fernando de la Mora, oficina UOC",
+     "statusDetails": "Adjudicada",
+     "enquiriesAddress": {
+      "streetAddress": "SICP"
+     },
+     "clarificationMeetings": [
+      {
+       "address": {
+        "streetAddress": "N/A"
+       },
+       "id": "1"
+      }
+     ],
+     "mainProcurementCategoryDetails": "Obras - Servicios de Construccion y Mantenimiento",
+     "hasEnquiries": false,
+     "value": {
+      "amount": 240000000,
+      "currency": "PYG"
+     },
+     "datePublished": "2025-03-31T08:33:07-04:00",
+     "tenderPeriod": {
+      "startDate": "2025-03-31T08:33:07-04:00",
+      "endDate": "2025-04-25T08:00:00-04:00",
+      "durationInDays": 24
+     },
+     "awardPeriod": {
+      "startDate": "2025-04-25T08:30:00-04:00"
+     },
+     "contractPeriod": {
+      "maxExtentDate": "2025-12-31T00:00:00-04:00"
+     },
+     "enquiryPeriod": {
+      "endDate": "2025-04-22T12:00:00-04:00",
+      "startDate": "2025-03-31T08:33:07-04:00",
+      "durationInDays": 22
+     },
+     "mainProcurementCategory": "works",
+     "additionalProcurementCategories": [
+      "works"
+     ],
+     "procurementMethod": "open",
+     "procurementMethodDetails": "Menor cuantía nacional",
+     "procuringEntity": {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora"
+     },
+     "criteria": [
+      {
+       "id": "1",
+       "title": "Garantía de Mantenimiento de Ofertas",
+       "description": "Los oferentes, proveedores o contratistas deberán garantizar la seriedad de sus ofertas, mediante la garantía de mantenimiento de la oferta",
+       "source": "tenderer",
+       "requirementGroups": [
+        {
+         "id": "1-1",
+         "description": "La garantía debe ser de un cierto porcentaje, periodo y tipo",
+         "requirements": [
+          {
+           "id": "1-1-1",
+           "title": "Porcentaje de la garantia",
+           "expectedValue": "5"
+          },
+          {
+           "id": "1-1-2",
+           "title": "Validez de la garantia en días",
+           "expectedValue": "120"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "lots": [
+      {
+       "id": "1f00a588-ab5b-611e-bb74-954a74728c68",
+       "title": "1 - 1 - REPARACION DE EMPEDRADOS",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 240000000,
+        "currency": "PYG"
+       },
+       "openContractType": "monto",
+       "minValue": {
+        "amount": 120000000,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "1"
+        }
+       ]
+      }
+     ],
+     "items": [
+      {
+       "id": "1f00a58a-2546-6068-9b05-ad6d6efe2aab",
+       "description": "Desmonte de terreno",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72103001-001",
+        "description": "Desmonte de terreno",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72103001-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72103001",
+         "description": "Servicios de desmonte de terrenos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72103001"
+        }
+       ],
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 25679,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f00a588-ab5b-611e-bb74-954a74728c68",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f00a58c-554d-6688-9419-675ce07a70af",
+       "description": "Terminación con triturada 6ta.",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72131701-014",
+        "description": "Construccion de enripiado",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72131701-014"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72131701",
+         "description": "Pavimentación,construccion, arreglo o hermoseamiento de carreteras o caminos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131701"
+        }
+       ],
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 3408,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f00a588-ab5b-611e-bb74-954a74728c68",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "3",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1f00a58b-437c-6554-8554-a5c70230d2f6",
+       "description": "Compactación con plancha compactadora",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "72102905-001",
+        "description": "Relleno y compactacion de terreno",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/72102905-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "72102905",
+         "description": "Mantenimiento y hermoseamiento de terrenos",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102905"
+        }
+       ],
+       "unit": {
+        "name": "Metros cuadrados",
+        "id": "M2",
+        "value": {
+         "amount": 2947,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1f00a588-ab5b-611e-bb74-954a74728c68",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "2",
+         "id": "2"
+        }
+       ]
+      }
+     ],
+     "tenderers": [
+      {
+       "name": "LUIS MORENO AQUINO",
+       "id": "PY-RUC-483432-1"
+      },
+      {
+       "name": "CORPORACION LEMURIA S.A.",
+       "id": "PY-RUC-80048624-2"
+      }
+     ],
+     "documents": [
+      {
+       "id": "589f06fe-9618-439b-afaa-b5e47f7ae8a2",
+       "datePublished": "2025-03-26T13:08:16-04:00",
+       "title": "resolucion-aprobacion-mcn-id-463964-67e426132ccc6.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f00a582-26e2-6e10-bc53-89e9bc985367/files/589f06fe-9618-439b-afaa-b5e47f7ae8a2/download",
+       "language": "es",
+       "documentTypeDetails": "Aprobación PBC"
+      },
+      {
+       "id": "dc60720f-b464-472c-8707-349815698c6a",
+       "datePublished": "2025-03-26T13:08:16-04:00",
+       "title": "reparacion-de-empedrados-en-varios-puntos-de-la-ciudad-67e42639bf92b.zip",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f00a582-26e2-6e10-bc53-89e9bc985367/files/dc60720f-b464-472c-8707-349815698c6a/download",
+       "language": "es",
+       "documentTypeDetails": "Georeferenciamiento"
+      },
+      {
+       "id": "449c48aa-b1ed-4009-9dc2-6360d08d8ad5",
+       "datePublished": "2025-03-26T13:08:16-04:00",
+       "title": "justificacion-contrato-abierto-mcn-id-463964-67e426593fd61.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f00a582-26e2-6e10-bc53-89e9bc985367/files/449c48aa-b1ed-4009-9dc2-6360d08d8ad5/download",
+       "language": "es",
+       "documentTypeDetails": "Nota de Contestación"
+      },
+      {
+       "id": "V0KM+TItPBeJxq3j5+fxwA==",
+       "datePublished": "2025-03-31T07:33:06-04:00",
+       "title": "Pliego para la Contratación de Obras - CONVENCIONAL - Ley Nº 7021/22. 463964 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1f00a582-26e2-6e10-bc53-89e9bc985367/1/json",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/json"
+      },
+      {
+       "id": "Hso0Pr6HCG8=",
+       "datePublished": "2025-03-31T07:33:06-04:00",
+       "title": "Pliego para la Contratación de Obras - CONVENCIONAL - Ley Nº 7021/22. 463964 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1f00a582-26e2-6e10-bc53-89e9bc985367/1",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/pdf"
+      },
+      {
+       "id": "26eaa704-7db6-4ef4-830b-a2fd58a1ea98",
+       "datePublished": "2025-03-26T13:08:16-04:00",
+       "title": "precio-referencial-mcn-id-463964-67e42627e488d.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f00a582-26e2-6e10-bc53-89e9bc985367/files/26eaa704-7db6-4ef4-830b-a2fd58a1ea98/download",
+       "language": "es",
+       "documentTypeDetails": "Antecedentes de la Estimación de Costos"
+      },
+      {
+       "id": "db444c22-0577-4ea7-a212-6d08b08ecf32",
+       "datePublished": "2025-03-26T13:08:16-04:00",
+       "title": "resolucion-aprobacion-mcn-id-463964-67e426620da26.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f00a582-26e2-6e10-bc53-89e9bc985367/files/db444c22-0577-4ea7-a212-6d08b08ecf32/download",
+       "language": "es",
+       "documentTypeDetails": "Permiso Municipal"
+      },
+      {
+       "id": "18c54b57-8209-4a2d-9dca-d0db7dc4ca6a",
+       "datePublished": "2025-03-26T13:08:16-04:00",
+       "title": "dictamen-tecnico-mcn-id-463964-67e4261a570c0.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f00a582-26e2-6e10-bc53-89e9bc985367/files/18c54b57-8209-4a2d-9dca-d0db7dc4ca6a/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen técnico"
+      },
+      {
+       "id": "dix2iRRDbik=",
+       "title": "URL de la Convocatoria",
+       "url": "https://www.contrataciones.gov.py/licitaciones/convocatoria/1f00a582-26e2-6e10-bc53-89e9bc985367.html",
+       "language": "es",
+       "documentType": "tenderNotice",
+       "format": "text/html"
+      },
+      {
+       "id": "e7ca6452-dcc6-4df5-9691-887e34c3f94a",
+       "datePublished": "2025-03-26T13:08:16-04:00",
+       "title": "plano-reparacion-de-empedrado-mcn-id-463964-67e4264788205.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f00a582-26e2-6e10-bc53-89e9bc985367/files/e7ca6452-dcc6-4df5-9691-887e34c3f94a/download",
+       "language": "es",
+       "documentTypeDetails": "Planos o cómputos métricos"
+      },
+      {
+       "id": "a8fadd46-c908-4907-8ebd-b387070267ca",
+       "datePublished": "2025-04-25T09:15:03-04:00",
+       "title": "ap-463-964-2272719093386258-680b7cc70197a.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f00a582-26e2-6e10-bc53-89e9bc985367/files/a8fadd46-c908-4907-8ebd-b387070267ca/download",
+       "language": "es",
+       "documentTypeDetails": "Acta de Apertura"
+      },
+      {
+       "id": "5724a896-f1bd-44ed-b206-d24febef808f",
+       "datePublished": "2025-03-26T13:08:16-04:00",
+       "title": "cdp-mcn-id-463964-67e4260a49ecd.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1f00a582-26e2-6e10-bc53-89e9bc985367/files/5724a896-f1bd-44ed-b206-d24febef808f/download",
+       "language": "es",
+       "documentTypeDetails": "CDP"
+      }
+     ],
+     "numberOfTenderers": 2
+    },
+    "language": "es",
+    "ocid": "ocds-03ad3f-463964-1",
+    "date": "2025-06-05T08:02:45-04:00",
+    "initiationType": "tender",
+    "buyer": {
+     "id": "DNCP-SICP-CODE-66",
+     "name": "Municipalidad de Fernando de la Mora"
+    },
+    "sources": [
+     {
+      "id": "dncp-sicp",
+      "name": "Sistema de Información de las Contrataciones Públicas - DNCP",
+      "url": "https://www.contrataciones.gov.py/"
+     }
+    ],
+    "contracts": [
+     {
+      "id": "MN-30173-25-252769",
+      "implementation": {
+       "financialProgress": {
+        "breakdown": [
+         {
+          "id": "2025/30/173/2/2/0/0/11/11/521/30/MN-30173-25-252769",
+          "period": {
+           "startDate": "2025-01-01T00:00:00Z",
+           "endDate": "2025-12-31T00:00:00Z"
+          },
+          "measures": {
+           "monto_a_utilizar": 240000000
+          },
+          "classifications": {
+           "anio": "2025",
+           "nivel": "30",
+           "entidad": "173",
+           "tipo_programa": "2",
+           "programa": "2",
+           "sub_programa": "0",
+           "proyecto": "0",
+           "financiador": "11",
+           "departamento": "11",
+           "objeto_gasto": "521",
+           "fuente_financiamiento": "30",
+           "cdp": "117595"
+          },
+          "financialCode": "MN-30173-25-252769"
+         }
+        ]
+       }
+      },
+      "awardID": "1f0300bf-f9ab-6064-b82b-d54996adef56",
+      "status": "active",
+      "statusDetails": "publicado",
+      "period": {
+       "startDate": "2025-05-22T00:00:00-04:00"
+      },
+      "value": {
+       "amount": 240000000,
+       "currency": "PYG"
+      },
+      "documents": [
+       {
+        "id": "1f03728d-f277-61a4-9be2-a9183609bc42",
+        "datePublished": "2025-05-22T13:21:53-04:00",
+        "title": "contrato-19-463964-682f4f20f3447.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f0300bf-f9ab-6064-b82b-d54996adef56/files/b5b5c528-54f8-480b-aa16-c39941cff7de/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1f03728f-5034-6a5c-bac7-ad31e4ad572c",
+        "datePublished": "2025-05-22T13:22:29-04:00",
+        "title": "ddjj-plazo-de-protesta-682f4f45a00f3.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f0300bf-f9ab-6064-b82b-d54996adef56/files/0106f5d4-6223-4c74-acda-5815c4768564/download",
+        "language": "es",
+        "documentTypeDetails": "Nota de Contestación"
+       },
+       {
+        "id": "1f03c8bb-a65f-6bca-882c-2b8491aee1b1",
+        "datePublished": "2025-05-29T09:52:07-04:00",
+        "title": "contrato-19-463964-683858774a997.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f0300bf-f9ab-6064-b82b-d54996adef56/files/082fa039-5e55-401d-927e-0359125bbe8a/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1f03728e-cac7-69be-a7b8-630315f8534b",
+        "datePublished": "2025-05-22T13:22:15-04:00",
+        "title": "res-adj-463964-682f4f37a8e28.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f0300bf-f9ab-6064-b82b-d54996adef56/files/38867f13-e246-4ead-b13f-0c26b20c60f0/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1f03c8bd-3baf-68d2-b8b6-1bec16a874b5",
+        "datePublished": "2025-05-29T09:52:49-04:00",
+        "title": "cdp-mcn-id-463964-67e4260a49ecd-683858a1c9065.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f0300bf-f9ab-6064-b82b-d54996adef56/files/9c72ac8a-4d9b-484f-b8f8-8655167b9a5b/download",
+        "language": "es",
+        "documentTypeDetails": "CDP"
+       },
+       {
+        "id": "1f040871-ae34-6b20-84db-a19f132fd641",
+        "datePublished": "2025-06-03T11:29:06-04:00",
+        "title": "aclaracion-empedrado-683f06b25b549.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f0300bf-f9ab-6064-b82b-d54996adef56/files/57422e99-1ef2-4d1a-b2d5-c526153f7d62/download",
+        "language": "es",
+        "documentTypeDetails": "Nota de Contestación"
+       },
+       {
+        "id": "1f03c8bd-a1a3-6710-9d6b-eb4396808e3d",
+        "datePublished": "2025-05-29T09:53:00-04:00",
+        "title": "ddjj-plazo-de-protesta-683858ac80d60.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f0300bf-f9ab-6064-b82b-d54996adef56/files/0a91bf79-174b-487e-b7d5-10ee005089cb/download",
+        "language": "es",
+        "documentTypeDetails": "Nota de Comunicación"
+       },
+       {
+        "id": "1f03728f-ff65-6bac-9f40-2db48436930b",
+        "datePublished": "2025-05-22T13:22:48-04:00",
+        "title": "cdp-mcn-id-463964-67e4260a49ecd-682f4f580a2fe.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f0300bf-f9ab-6064-b82b-d54996adef56/files/ffac88cd-9a7b-48a9-a1db-931f76f83e28/download",
+        "language": "es",
+        "documentTypeDetails": "CDP"
+       },
+       {
+        "id": "1f03c8bb-fcbf-6c68-8587-7fb7bd590ae7",
+        "datePublished": "2025-05-29T09:52:16-04:00",
+        "title": "res-adj-463964-683858805fe0b.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f0300bf-f9ab-6064-b82b-d54996adef56/files/fbffa71a-fbe6-4825-84d9-f28f10190cc6/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1f03c8bc-b515-657e-a857-2d1640e671d9",
+        "datePublished": "2025-05-29T09:52:35-04:00",
+        "title": "ddjj-plazo-de-protesta-68385893ac0f0.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f0300bf-f9ab-6064-b82b-d54996adef56/files/61977cc2-44ef-418c-b504-c44e85af0f94/download",
+        "language": "es",
+        "documentTypeDetails": "Nota de Contestación"
+       },
+       {
+        "id": "1f03a3e4-7a03-6c3a-b917-e919958d88c2",
+        "datePublished": "2025-05-26T11:32:41-04:00",
+        "title": "aclaracion-observacion-68347b892b205.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1f0300bf-f9ab-6064-b82b-d54996adef56/files/f6eabc71-ac76-4f23-9b38-a9453f19a8b7/download",
+        "language": "es",
+        "documentTypeDetails": "Nota de Contestación"
+       }
+      ]
+     }
+    ],
+    "planning": {
+     "identifier": "463964",
+     "estimatedDate": "2025-12-31T00:00:00-04:00",
+     "budget": {
+      "description": "REPARACION DE EMPEDRADOS EN VARIOS PUNTOS DE LA CIUDAD",
+      "amount": {
+       "currency": "PYG",
+       "amount": 240000000
+      },
+      "budgetBreakdown": [
+       {
+        "id": "2025/30/173/2/2/0/0/11/11/521/30-k3VFCCIkGX0=",
+        "sourceParty": {
+         "id": "66",
+         "name": "Municipalidad de Fernando de la Mora"
+        },
+        "period": {
+         "startDate": "2025-01-01T00:00:00Z",
+         "endDate": "2025-12-31T00:00:00Z"
+        },
+        "measures": {
+         "monto_utilizado": 240000000,
+         "monto_a_utilizar": 240000000
+        },
+        "classifications": {
+         "anio": "2025",
+         "nivel": "30",
+         "entidad": "173",
+         "tipo_programa": "2",
+         "programa": "2",
+         "sub_programa": "0",
+         "proyecto": "0",
+         "financiador": "11",
+         "departamento": "11",
+         "objeto_gasto": "521",
+         "fuente_financiamiento": "30",
+         "cdp": "117595"
+        }
+       }
+      ]
+     },
+     "items": [
+      {
+       "id": "1f00a566-8376-62c4-ae0b-1d94cdf9508f",
+       "description": "Servicios de preparacion de solares",
+       "classification": {
+        "scheme": "UNSPSC",
+        "id": "72103000",
+        "description": "Servicios de preparacion de solares",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72103000"
+       }
+      },
+      {
+       "id": "1f00a567-19ed-66d0-a98d-5745572f8254",
+       "description": "Servicios de Mantenimiento de terrenos",
+       "classification": {
+        "scheme": "UNSPSC",
+        "id": "72102900",
+        "description": "Servicios de Mantenimiento de terrenos",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72102900"
+       }
+      },
+      {
+       "id": "1f00a567-9e66-63bc-9131-0ba2e782e46f",
+       "description": "Construccion de infraestructura",
+       "classification": {
+        "scheme": "UNSPSC",
+        "id": "72131700",
+        "description": "Construccion de infraestructura",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/72131700"
+       }
+      }
+     ]
+    },
+    "parties": [
+     {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora",
+      "identifier": {
+       "scheme": "DNCP-SICP-CODE",
+       "id": "66",
+       "legalName": "Municipalidad de Fernando de la Mora"
+      },
+      "contactPoint": {
+       "email": "morauoc@gmail.com",
+       "name": "LIC. ELIGIO ACOSTA",
+       "telephone": "+595 21 513-306"
+      },
+      "roles": [
+       "buyer",
+       "procuringEntity"
+      ],
+      "details": {
+       "level": "Municipalidades",
+       "entityType": "Municipalidades",
+       "type": "Entidad"
+      },
+      "additionalIdentifiers": [
+       {
+        "id": "2025.30.173",
+        "legalName": "Municipalidad de Fernando de la Mora",
+        "scheme": "PY-PGN"
+       }
+      ]
+     },
+     {
+      "name": "LUIS MORENO AQUINO",
+      "id": "PY-RUC-483432-1",
+      "identifier": {
+       "id": "483432-1",
+       "legalName": "LUIS MORENO AQUINO",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "supplier",
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "LUIS MORENO AQUINO",
+       "email": "morenoaquinoluis@gmail.com",
+       "telephone": "0986 721633"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "FERNANDO DE LA MORA",
+       "region": "Central",
+       "streetAddress": "PRESIDENTE FRANCO 1287"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Construcción, Restauración, Reconstrucción o Remodelación y Reparación de Inmuebles",
+         "id": 21
+        },
+        {
+         "name": "Materiales e insumos eléctricos, metálicos y no metálicos, Plásticos, cauchos. Repuestos, herramientas, cámaras y cubiertas.",
+         "id": 18
+        }
+       ]
+      }
+     },
+     {
+      "name": "CORPORACION LEMURIA S.A.",
+      "id": "PY-RUC-80048624-2",
+      "identifier": {
+       "id": "80048624-2",
+       "legalName": "CORPORACION LEMURIA S.A.",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "PABLO ADRIANO RODRIGUEZ RODAS- SANTIAGO RODRIGUEZ",
+       "email": "info@clemsa.com.py - clemsa.py@gmail.com",
+       "faxNumber": "293242",
+       "telephone": "981270747",
+       "url": "https://clemsa.com.py/"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "Asuncion",
+       "region": "Central",
+       "streetAddress": "Capitan Lombardo 1811 esq. Tte. Gregorio Narvaez"
+      },
+      "details": {
+       "legalEntityTypeDetail": "S.A.",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Publicidad y Propaganda",
+         "id": 8
+        },
+        {
+         "name": "Consultorías, Asesorías e Investigaciones. Estudios y Proyectos de inversión",
+         "id": 5
+        },
+        {
+         "name": "Construcción, Restauración, Reconstrucción o Remodelación y Reparación de Inmuebles",
+         "id": 21
+        },
+        {
+         "name": "Servicios Técnicos",
+         "id": 7
+        },
+        {
+         "name": "Adquisición y Locación de inmuebles. Alquiler de muebles",
+         "id": 3
+        },
+        {
+         "name": "Utiles de oficina, Productos de papel y cartón e impresos",
+         "id": 11
+        },
+        {
+         "name": "Servicios de Limpiezas, Mantenimientos y reparaciones menores y mayores de Instalaciones, Maquinarias y Vehículos",
+         "id": 2
+        }
+       ]
+      }
+     }
+    ],
+    "tag": [
+     "compiled"
+    ]
+   }
+  }
+ ],
+ "pagination": {
+  "total_items": 1,
+  "total_pages": 1,
+  "current_page": 1,
+  "items_per_page": 10,
+  "total_in_page": 1
+ }
+}

@@ -10,9 +10,9 @@ From this folder:
 python -m http.server 8000
 ```
 
-Then open **http://localhost:8000**. The browser loads the selected dataset with `fetch`: `data/decp-history.json` by default, `data/contracts.json` for the BOAMP sample and official findings, `data/consultations.json` for the initial notices and their documented links, **`data/decp-cities.json`** for the six additional municipalities, **`data/tours-notices.json`** for the full Tours notices with criteria, explanations and TED versions, or **`data/colombia-secop2.json`** for the SECOP II Colombia pilot.
+Then open **http://localhost:8000**. Choose a dataset by country, place, record type and publisher (France: DECP/BOAMP/TED/CRC; Colombia: SECOP II; Paraguay: DNCP OCDS). Search and sort are always visible; other filters are under **Advanced filters**. Use **Rows/page** (25, 50, 100 or 250) and **Copy page summary** to copy only the displayed, filtered page as sourced research notes. Copying does not send data anywhere; review personal data before pasting it into an external service. Each source has different coverage and date semantics; a signal is not proof of wrongdoing.
 
-You can also open `index.html` directly. Browsers generally block `fetch` under `file://`: in that case select **data/decp-history.json** or **data/contracts.json**, **data/consultations.json**, **data/decp-cities.json**, **data/tours-notices.json** or **data/colombia-secop2.json**, depending on the chosen dataset, with the displayed file picker. This mode requires no server and transmits no file. There is no second embedded copy of the dataset.
+You can also open `index.html` directly. Browsers generally block `fetch` under `file://`: in that case select the corresponding JSON file under `data/` (including `data/paraguay-dncp.json`) with the displayed file picker. This mode requires no server and transmits no file. There is no second embedded copy of the dataset.
 
 ## Active version: index 3.0 (21 September 2026)
 
@@ -61,20 +61,33 @@ The 26 Python tests and the Chromium HTTP / `file://` checks pass, including ass
 
 See [the detailed recommendation](docs/international-pilots.md) and [the timestamped HTTP checks](data/international-access-checks.json). The CPI figures and volumes of the proposed text were not taken over without verification. No score comparison between countries, no mixing of currencies, spending or grants.
 
+## Contract-linked adjudicated outcomes · separate from signals
+
+The explorer can show/filter a **final corruption judgment linked to a particular contract** only if an official decision, proof of finality, exact contract linkage and passage are documented. **There are currently zero such labels in all provided French, Colombian and Paraguayan datasets.** A separate, dated press-lead label applies only to the Station Nuage dossier: a September 2024 report of a search linked to the project, **not a finding of guilt or evidence that an investigation is still open**. The eight French CRC findings are audit observations, **not corruption convictions**. Unlabelled does *not* mean cleared or not corrupt; neither audit findings nor adjudicated outcomes affect the heuristic score. Criteria and schema: [`docs/adjudicated-outcomes.md`](docs/adjudicated-outcomes.md); regression: `node tests/outcomes.cjs`. Cross-country comparison of model accuracy requires independently reviewed, comparable positives and negatives, not unlabeled rows treated as negatives.
+
+## DNCP OCDS pilot · Paraguay — documentary, not scored
+
+One pre-selected buyer, Municipalidad de Fernando de la Mora (`DNCP-SICP-CODE-66`), calls published 2024-09-01 → 2025-09-01. Official anonymous OCDS 1.1 API search: **88 processes**; full records retained in `data/paraguay-dncp/raw/`; **84 linked contract entries** in `data/paraguay-dncp.json`. Source award/contract join by `awardID`, PYG only, CC BY 4.0 with DNCP attribution. The displayed contract date is the published period start, **not a signature date** (none supplied). 80 rows have links *typed* as signed-contract documents, but their contents have not been independently reviewed. This is not an exhaustive national dataset or an audit of payments. **All 84 rows are Not assessed**, never zero: Paraguayan rules require local validation before scoring; French/Colombian checks do not transfer. Scope, exclusions and reproducibility: [`docs/paraguay-pilot.md`](docs/paraguay-pilot.md), `data/paraguay-dncp-coverage.json`.
+
+```sh
+python tools/import-paraguay-dncp.py --offline
+node tests/paraguay.cjs
+```
+
 ## SECOP II pilot · Colombia — first international cohort (22 September 2026)
 
 Implemented per the verified plan: a bounded, pre-announced cohort, original-language evidence, and **jurisdiction-specific scoring** ([docs/score-colombia.md](docs/score-colombia.md)). Selector entry: **“SECOP II · Colombia pilot · three buyers · 2024–2026”**, file `data/colombia-secop2.json`.
 
 - **Cohort announced before download** (2026-09-22), after volume-only count queries: Ministerio de Educación Nacional (national, NIT `899999001`, 2,618 contracts), Gobernación de Caldas (departmental, NIT `890801052`, 3,696), Alcaldía Local de Usaquén (municipal-local, matched by exact name because Bogotá’s alcaldías share the generic district NIT `899999061`, 1,246). **7,560 rows**, signature window 2024-09-01 → 2026-09-01 on `fecha_de_firma`.
-- **Process–contract–supplier join verified on every row**: each SECOP II contract row carries its own `proceso_de_compra`, `id_contrato`, supplier name and typed supplier document (Cédula/NIT), plus the official process URL. Completeness is documented in `data/colombia-secop2-coverage.json` (`joinVerification`), not assumed.
-- **Colombian indicators, not French ones**: four checks — declared absence of supplier plurality / manifest urgency (176 signals), repetition of such awards to the same buyer and supplier document (15), concentration within buyer and contract type (0; max observed share 31.3 % < 60 %), declared duration ≥ 36 months (39). The four French offer/timetable/history checks are out of scope with an explicit reason (no offers table, no chronology, no amendment history). Totals: **215 flagged, 7,345 zero after evaluation, 0 not assessed, 56 partial**. The declared modality “Contratación directa” covers ≈82 % of the cohort — ordinary legal context; the bare modality and ordinary justifications earn no points. Amounts in COP stay visible and sort only.
-- **Language and currency**: every source field stays verbatim in Spanish (objects, modalities, justifications, statuses); amounts stay in COP, never converted or summed against EUR data.
+- **Intra-row process–contract–supplier fields checked**: all 7,560 SECOP II rows carry `proceso_de_compra`, `id_contrato`, a supplier name and process URL; **7,553** have a usable typed supplier document (seven published placeholders are unknown for identity-based checks). This is not an independent verification of each contract document. See `data/colombia-secop2-coverage.json` (`joinVerification`).
+- **Colombian indicators, not French ones**: four checks — declared absence of supplier plurality / manifest urgency (176 signals), repetition of such awards to the same buyer and supplier document (15), concentration within buyer and contract type (0; max observed share 31.3 % < 60 %), declared duration ≥ 36 months (39). The four French offer/timetable/history checks are out of scope with an explicit reason (no offers table, no chronology, no amendment history). Totals: **215 flagged, 7,345 zero after evaluation, 0 not assessed, 71 partial**. The declared modality “Contratación directa” covers ≈82 % of the cohort — ordinary legal context; the bare modality and ordinary justifications earn no points. Amounts in COP stay visible and sort only.
+- **Language and currency**: source descriptions, modalities, justifications and statuses stay verbatim in Spanish; placeholder supplier identifiers are excluded from the normalized identity field but preserved in the raw snapshot. Amounts stay in COP, never converted or summed against EUR data.
 - Licence **CC BY-SA 4.0** (Colombia Compra Eficiente) verified in the dataset metadata; attribution kept in the coverage file. Raw paginated responses are preserved under `data/colombia-secop2/raw/` (about 28 MB) with a URL manifest; the normalized extract is about 15 MB.
 
 ```sh
 python tools/import-colombia-secop2.py --download  # new network snapshot of the announced cohort
 python tools/import-colombia-secop2.py --offline   # deterministic re-normalization from the raw pages
-node tests/colombia.cjs                            # 181,492 assertions: cohort, join, Colombian indicators
+node tests/colombia.cjs                            # cohort, join, identity, Colombian indicators
 ```
 
 ## Files

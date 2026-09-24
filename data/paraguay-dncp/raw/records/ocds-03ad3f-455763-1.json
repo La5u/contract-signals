@@ -1,0 +1,765 @@
+{
+ "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/ocds-03ad3f-455763-1",
+ "publishedDate": "2026-09-22T17:54:10Z",
+ "publisher": {
+  "name": "Dirección Nacional de Contrataciones Públicas, Paraguay"
+ },
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "publicationPolicy": "https://www.contrataciones.gov.py/datos/legal",
+ "version": "1.1",
+ "extensions": [
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_breakdown_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_and_spend_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_enquiry_extension/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/enquiriesAddress/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/legalEntityTypeDetail/master/extension.json",
+  "https://raw.githubusercontent.com/gitMHOCDS/transactions/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_investmentproject_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_clarification_meetings_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_attributes_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_items_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_contract_suppliers_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_location_extension/v1.1.4/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_activityType_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_notifiedsuppliers_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_lots_details_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_memberOf_extension/master/extension.json",
+  "https://raw.githubusercontent.com/portaledcahn/ocds_tenderDatePublished_extension/master/extension.json",
+  "https://raw.githubusercontent.com/INAImexico/ocds_guarantees_extension/master/extension.json",
+  "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_requirements_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bidOpening_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_coveredBy_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_qualification_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_publicEntitiesDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_items_subItems_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_statusdetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_mainProcurementCategoryDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_identifier_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_estimatedDate_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_participationFee_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_amendments_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_lot_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_transaction_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_financialprogress_financialcode_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_categories_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_complaints_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_minQuantity_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_purchaseOrder_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_document_type_details/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_cancellations_amendments_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_milestone_documents_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_techniques_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bid_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_bid_items_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_auctions_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_secondStage_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_beneficiaries_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/Crown-Commercial-Service/ocds_tender_suitability_extension/main/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_subcontracting_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_sustainability_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_reportedpayment_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_milestone_deliveries_extension/raw/master/extension.json"
+ ],
+ "records": [
+  {
+   "ocid": "ocds-03ad3f-455763-1",
+   "releases": [
+    {
+     "date": "2024-12-03T14:30:19-04:00",
+     "tag": [
+      "tender",
+      "award",
+      "contract",
+      "implementation"
+     ],
+     "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/releases/id/1ef7d044-4c3e-6540-841b-d1b02858c8ed-1733236219"
+    }
+   ],
+   "compiledRelease": {
+    "id": "1ef7d044-4c3e-6540-841b-d1b02858c8ed-1733236219",
+    "awards": [
+     {
+      "id": "1ef9dc8d-c40c-65e8-ab39-23ababfd2783",
+      "status": "active",
+      "statusDetails": "publicado",
+      "date": "2024-11-07T00:00:00-04:00",
+      "value": {
+       "amount": 37425200,
+       "currency": "PYG"
+      },
+      "suppliers": [
+       {
+        "name": "Maria Isabel Arias de Casaccia",
+        "id": "PY-RUC-528123-7"
+       }
+      ],
+      "documents": [
+       {
+        "id": "1ef9dca1-a678-6252-9c7b-67550a4777b2",
+        "datePublished": "2024-11-08T09:08:02-04:00",
+        "title": "inf-eva-455-763-672dff224171c.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef9dc8c-3dab-6c70-9ba2-d7067b98b4ba/files/f8e2ff72-2cae-40d7-a847-c01a4366f9d4/download",
+        "language": "es",
+        "documentTypeDetails": "Informe de Evaluación"
+       },
+       {
+        "id": "dix2iRRDbik=",
+        "title": "URL de la Adjudicación",
+        "url": "https://www.contrataciones.gov.py/licitaciones/adjudicacion/1ef9dc8c-3dab-6c70-9ba2-d7067b98b4ba/resumen-adjudicacion.html",
+        "language": "es",
+        "documentType": "awardNotice",
+        "format": "text/html"
+       },
+       {
+        "id": "1ef9dcaa-7534-6a20-bc76-e704e3a706ed",
+        "datePublished": "2024-11-08T09:11:58-04:00",
+        "title": "nota-a-proveedores-672e000eb33e1.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef9dc8c-3dab-6c70-9ba2-d7067b98b4ba/files/fd0bb07b-7c74-47ea-9bc1-11e2b947f61d/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "1efa35d3-5934-6596-b0d6-0d114e938f6d",
+        "datePublished": "2024-11-15T11:23:39-04:00",
+        "title": "informe-evaluacion-id-455763-y-anexo-de-documentaciones001-6737596b97411.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef9dc8c-3dab-6c70-9ba2-d7067b98b4ba/files/44ea27c1-4af4-42a4-958e-642a0d6990c3/download",
+        "language": "es",
+        "documentTypeDetails": "Informe de Evaluación"
+       },
+       {
+        "id": "1ef9dca9-6433-69de-8c00-150d527ee5e1",
+        "datePublished": "2024-11-08T09:11:30-04:00",
+        "title": "gmail-notificacion-de-adjuciacion-mcn-455763-672dfff21b89f.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef9dc8c-3dab-6c70-9ba2-d7067b98b4ba/files/77947fbc-b1c1-450a-b99e-71de5de18a31/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "1ef9dca1-4609-6f7e-bddd-e1d412abb584",
+        "datePublished": "2024-11-08T09:07:52-04:00",
+        "title": "cuadro-455-763-672dff182e1e3.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef9dc8c-3dab-6c70-9ba2-d7067b98b4ba/files/bd26d635-ddf2-49f5-821f-0b097aefae5c/download",
+        "language": "es",
+        "documentTypeDetails": "Cuadro Comparativo de Ofertas"
+       },
+       {
+        "id": "1ef9dca0-f1a4-6060-b692-adf0854c8c0f",
+        "datePublished": "2024-11-08T09:07:43-04:00",
+        "title": "res-adj-455-763-672dff0f4ce90.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef9dc8c-3dab-6c70-9ba2-d7067b98b4ba/files/de35344e-327d-4c8c-896b-ecfd6d91917a/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       }
+      ],
+      "items": [
+       {
+        "id": "1ef8fa8d-02a3-66e6-80dc-1790d714f343",
+        "description": "Insumos para produccion de habilitacion del automotor PARA AUTO",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "55121803-002",
+         "description": "Insumos para produccion de habilitacion del automotor",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/55121803-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "55121803",
+          "description": "Pasaportes, Cédulas de Identidad, registros, e insumos relacionados",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/55121803"
+         }
+        ],
+        "quantity": 15576,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 1200,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80e1d-7e06-6dd6-ab7e-b3c574207e86",
+        "attributes": [
+         {
+          "value": "Casa Arias",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "NACIONAL",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "Casa Arias",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "1",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef8fa90-9c8c-6160-b381-954641f531c2",
+        "description": "Insumos para produccion de habilitacion del automotor PARA MOTO",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "55121803-002",
+         "description": "Insumos para produccion de habilitacion del automotor",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/55121803-002"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "55121803",
+          "description": "Pasaportes, Cédulas de Identidad, registros, e insumos relacionados",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/55121803"
+         }
+        ],
+        "quantity": 16150,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 1160,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80e1d-7e06-6dd6-ab7e-b3c574207e86",
+        "attributes": [
+         {
+          "value": "Casa Arias",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "NACIONAL",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "Casa Arias",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "2",
+          "id": "7"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "tender": {
+     "id": "1ef7d044-4c3e-6540-841b-d1b02858c8ed",
+     "title": "ADQUISICION DE AUTOADHESIVO PARA AUTO Y MOTO",
+     "status": "complete",
+     "awardCriteria": "priceOnly",
+     "awardCriteriaDetails": "Por Total",
+     "submissionMethod": [
+      "inPerson"
+     ],
+     "bidOpening": {
+      "date": "2024-10-30T08:30:00-04:00",
+      "address": {
+       "streetAddress": "MUNICIPALIDAD DE FERNANDO DE LA MORA - DIRECCION DE UOC"
+      }
+     },
+     "submissionMethodDetails": "Lugar entrega ofertas: MUNICIPALIDAD DE FERNANDO DE LA MORA",
+     "statusDetails": "Adjudicada",
+     "enquiriesAddress": {
+      "streetAddress": "SICP"
+     },
+     "clarificationMeetings": [
+      {
+       "address": {
+        "streetAddress": "NO APLICA"
+       },
+       "id": "1"
+      }
+     ],
+     "mainProcurementCategoryDetails": "Bienes - Productos Publicados",
+     "hasEnquiries": false,
+     "value": {
+      "amount": 50000000,
+      "currency": "PYG"
+     },
+     "datePublished": "2024-10-10T16:27:43-04:00",
+     "tenderPeriod": {
+      "startDate": "2024-10-10T16:27:43-04:00",
+      "endDate": "2024-10-30T08:00:00-04:00",
+      "durationInDays": 19
+     },
+     "awardPeriod": {
+      "startDate": "2024-10-30T08:30:00-04:00"
+     },
+     "enquiryPeriod": {
+      "endDate": "2024-10-25T08:00:00-04:00",
+      "startDate": "2024-10-10T16:27:43-04:00",
+      "durationInDays": 14
+     },
+     "mainProcurementCategory": "services",
+     "additionalProcurementCategories": [
+      "services"
+     ],
+     "procurementMethod": "open",
+     "procurementMethodDetails": "Menor cuantía nacional",
+     "procuringEntity": {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora"
+     },
+     "criteria": [
+      {
+       "id": "1",
+       "title": "Garantía de Mantenimiento de Ofertas",
+       "description": "Los oferentes, proveedores o contratistas deberán garantizar la seriedad de sus ofertas, mediante la garantía de mantenimiento de la oferta",
+       "source": "tenderer",
+       "requirementGroups": [
+        {
+         "id": "1-1",
+         "description": "La garantía debe ser de un cierto porcentaje, periodo y tipo",
+         "requirements": [
+          {
+           "id": "1-1-1",
+           "title": "Porcentaje de la garantia",
+           "expectedValue": "5"
+          },
+          {
+           "id": "1-1-2",
+           "title": "Validez de la garantia en días",
+           "expectedValue": "60"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "lots": [
+      {
+       "id": "1ef80e1d-7e06-6dd6-ab7e-b3c574207e86",
+       "title": "1 - 1 - ADQUISICION DE AUTOADHESIVO PARA AUTO Y MOTO",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 49999680,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "1"
+        }
+       ]
+      }
+     ],
+     "items": [
+      {
+       "id": "1ef8fa90-9c8c-6160-b381-954641f531c2",
+       "description": "Insumos para produccion de habilitacion del automotor PARA MOTO",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "55121803-002",
+        "description": "Insumos para produccion de habilitacion del automotor",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/55121803-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "55121803",
+         "description": "Pasaportes, Cédulas de Identidad, registros, e insumos relacionados",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/55121803"
+        }
+       ],
+       "quantity": 16150,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 1548,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80e1d-7e06-6dd6-ab7e-b3c574207e86",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "2",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef8fa8d-02a3-66e6-80dc-1790d714f343",
+       "description": "Insumos para produccion de habilitacion del automotor PARA AUTO",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "55121803-002",
+        "description": "Insumos para produccion de habilitacion del automotor",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/55121803-002"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "55121803",
+         "description": "Pasaportes, Cédulas de Identidad, registros, e insumos relacionados",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/55121803"
+        }
+       ],
+       "quantity": 15576,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 1605,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80e1d-7e06-6dd6-ab7e-b3c574207e86",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "2"
+        }
+       ]
+      }
+     ],
+     "tenderers": [
+      {
+       "name": "Maria Isabel Arias de Casaccia",
+       "id": "PY-RUC-528123-7"
+      },
+      {
+       "name": "LUIS ADRIAN SOSA AQUINO",
+       "id": "PY-RUC-4178533-9"
+      }
+     ],
+     "documents": [
+      {
+       "id": "79eaefcb-c384-4f16-a4f6-30382aee8495",
+       "datePublished": "2024-10-02T14:01:15-04:00",
+       "title": "informe-tecnico-66fd8a290e0ac.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef7d044-4c3e-6540-841b-d1b02858c8ed/files/79eaefcb-c384-4f16-a4f6-30382aee8495/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen técnico"
+      },
+      {
+       "id": "mUfW3OqVPIc=",
+       "datePublished": "2024-10-23T12:02:28-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 455763 Version 2",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1ef7d044-4c3e-6540-841b-d1b02858c8ed/2",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/pdf"
+      },
+      {
+       "id": "dix2iRRDbik=",
+       "title": "URL de la Convocatoria",
+       "url": "https://www.contrataciones.gov.py/licitaciones/convocatoria/1ef7d044-4c3e-6540-841b-d1b02858c8ed.html",
+       "language": "es",
+       "documentType": "tenderNotice",
+       "format": "text/html"
+      },
+      {
+       "id": "a999c38f-8392-46dc-9c2e-8b0a4c2dfec8",
+       "datePublished": "2024-10-21T09:58:21-04:00",
+       "title": "acta-postergacion-id-455-763-67164fd39825b.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef7d044-4c3e-6540-841b-d1b02858c8ed/files/a999c38f-8392-46dc-9c2e-8b0a4c2dfec8/download",
+       "language": "es",
+       "documentTypeDetails": "Acta de Postergación"
+      },
+      {
+       "id": "746e8a40-3578-4bc8-a2ea-f42c82359213",
+       "datePublished": "2024-10-02T14:01:15-04:00",
+       "title": "cdp-66fd8a1c60eda.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef7d044-4c3e-6540-841b-d1b02858c8ed/files/746e8a40-3578-4bc8-a2ea-f42c82359213/download",
+       "language": "es",
+       "documentTypeDetails": "CDP"
+      },
+      {
+       "id": "08eeabdc-14b0-479a-9c69-bf7b9578315c",
+       "datePublished": "2024-10-30T09:50:26-04:00",
+       "title": "acta-de-apertura-autoadhesivo-32955179170814118-67222b9225323.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef7d044-4c3e-6540-841b-d1b02858c8ed/files/08eeabdc-14b0-479a-9c69-bf7b9578315c/download",
+       "language": "es",
+       "documentTypeDetails": "Acta de Apertura"
+      },
+      {
+       "id": "bf1f17d8-a09d-4163-8416-673418899a1e",
+       "datePublished": "2024-10-02T14:01:15-04:00",
+       "title": "resol-66fd8a5e4ec9d.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef7d044-4c3e-6540-841b-d1b02858c8ed/files/bf1f17d8-a09d-4163-8416-673418899a1e/download",
+       "language": "es",
+       "documentTypeDetails": "Aprobación PBC"
+      },
+      {
+       "id": "40a35040-a8f1-4163-9218-eb6df3d0af8e",
+       "datePublished": "2024-10-08T09:20:35-04:00",
+       "title": "dictamen-de-precio-6705234fa9ec8.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef7d044-4c3e-6540-841b-d1b02858c8ed/files/40a35040-a8f1-4163-9218-eb6df3d0af8e/download",
+       "language": "es",
+       "documentTypeDetails": "Antecedentes de la Estimación de Costos"
+      },
+      {
+       "id": "sp5gnMc/TgAX5yIpFeR1tw==",
+       "datePublished": "2024-10-23T12:02:28-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 455763 Version 2",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1ef7d044-4c3e-6540-841b-d1b02858c8ed/2/json",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/json"
+      },
+      {
+       "id": "fbc109d6-ba3d-4930-b3a9-4dc1c4b580b1",
+       "datePublished": "2024-10-21T09:58:21-04:00",
+       "title": "precio-referencial-67164af19038e.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef7d044-4c3e-6540-841b-d1b02858c8ed/files/fbc109d6-ba3d-4930-b3a9-4dc1c4b580b1/download",
+       "language": "es",
+       "documentTypeDetails": "Antecedentes de la Estimación de Costos"
+      }
+     ],
+     "numberOfTenderers": 2
+    },
+    "language": "es",
+    "ocid": "ocds-03ad3f-455763-1",
+    "date": "2024-12-03T14:30:19-04:00",
+    "initiationType": "tender",
+    "buyer": {
+     "id": "DNCP-SICP-CODE-66",
+     "name": "Municipalidad de Fernando de la Mora"
+    },
+    "sources": [
+     {
+      "id": "dncp-sicp",
+      "name": "Sistema de Información de las Contrataciones Públicas - DNCP",
+      "url": "https://www.contrataciones.gov.py/"
+     }
+    ],
+    "contracts": [
+     {
+      "id": "MN-30173-24-247188",
+      "implementation": {
+       "financialProgress": {
+        "breakdown": [
+         {
+          "id": "2024/30/173/1/1/1/0/1/11/396/30/MN-30173-24-247188",
+          "period": {
+           "startDate": "2024-01-01T00:00:00Z",
+           "endDate": "2024-12-31T00:00:00Z"
+          },
+          "measures": {
+           "monto_a_utilizar": 50000000
+          },
+          "classifications": {
+           "anio": "2024",
+           "nivel": "30",
+           "entidad": "173",
+           "tipo_programa": "1",
+           "programa": "1",
+           "sub_programa": "1",
+           "proyecto": "0",
+           "financiador": "1",
+           "departamento": "11",
+           "objeto_gasto": "396",
+           "fuente_financiamiento": "30",
+           "cdp": "116737"
+          },
+          "financialCode": "MN-30173-24-247188"
+         }
+        ]
+       }
+      },
+      "awardID": "1ef9dc8d-c40c-65e8-ab39-23ababfd2783",
+      "status": "active",
+      "statusDetails": "publicado",
+      "period": {
+       "startDate": "2024-11-21T00:00:00-04:00"
+      },
+      "value": {
+       "amount": 37425200,
+       "currency": "PYG"
+      },
+      "documents": [
+       {
+        "id": "1efa81ac-ca5a-6610-861b-7b93026aba02",
+        "datePublished": "2024-11-21T12:10:52-04:00",
+        "title": "cdp-66fd8a1c60eda-673f4d7ca4618.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1ef9dc8d-c40c-65e8-ab39-23ababfd2783/files/1a507669-f4a8-4ae5-8fb2-4b6217b8c056/download",
+        "language": "es",
+        "documentTypeDetails": "CDP"
+       },
+       {
+        "id": "1efa81aa-500c-6dd8-8946-598c04691417",
+        "datePublished": "2024-11-21T12:09:46-04:00",
+        "title": "res-adj-455-763-673f4d3a23b07.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1ef9dc8d-c40c-65e8-ab39-23ababfd2783/files/145bce2b-401b-4c4e-a450-ac0c423e67ed/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1efa81ab-fd0c-6fe6-a72c-bffbe5409460",
+        "datePublished": "2024-11-21T12:10:31-04:00",
+        "title": "contrato-41-mcn-455-763-673f4d6725603.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1ef9dc8d-c40c-65e8-ab39-23ababfd2783/files/76488311-3e3b-48af-ba9b-68547d92debe/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       }
+      ]
+     }
+    ],
+    "parties": [
+     {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora",
+      "identifier": {
+       "scheme": "DNCP-SICP-CODE",
+       "id": "66",
+       "legalName": "Municipalidad de Fernando de la Mora"
+      },
+      "contactPoint": {
+       "email": "morauoc@gmail.com",
+       "name": "LIC. ELIGIO ACOSTA",
+       "telephone": "021 522 143"
+      },
+      "roles": [
+       "buyer",
+       "procuringEntity"
+      ],
+      "details": {
+       "level": "Municipalidades",
+       "entityType": "Municipalidades",
+       "type": "Entidad"
+      },
+      "additionalIdentifiers": [
+       {
+        "id": "2024.30.173",
+        "legalName": "Municipalidad de Fernando de la Mora",
+        "scheme": "PY-PGN"
+       }
+      ]
+     },
+     {
+      "name": "LUIS ADRIAN SOSA AQUINO",
+      "id": "PY-RUC-4178533-9",
+      "identifier": {
+       "id": "4178533-9",
+       "legalName": "LUIS ADRIAN SOSA AQUINO",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "LUIS ADRIAN SOSA AQUINO",
+       "email": "presupuestoimpresion01@gmail.com",
+       "telephone": "0992298103 - 0981370640"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "FERNANDO DE LA MORA",
+       "region": "Central",
+       "streetAddress": "MCAL ESTIGARRIBIA CASI SOLDADO OVELAR Casa #106"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Equipos, accesorios y programas computacionales, de oficina, educativos, de imprenta, de comunicación y señalamiento",
+         "id": 24
+        }
+       ]
+      }
+     },
+     {
+      "name": "Maria Isabel Arias de Casaccia",
+      "id": "PY-RUC-528123-7",
+      "identifier": {
+       "id": "528123-7",
+       "legalName": "Maria Isabel Arias de Casaccia",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "tenderer",
+       "supplier"
+      ],
+      "contactPoint": {
+       "name": "Maria Isabel Arias de C asaccia",
+       "email": "casa.arias@hotmail.com",
+       "faxNumber": "500548"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "asuncion",
+       "region": "Asunción",
+       "streetAddress": "guaranies Nº 4731 casi Tte ramirez franco"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Materiales e insumos eléctricos, metálicos y no metálicos, Plásticos, cauchos. Repuestos, herramientas, cámaras y cubiertas.",
+         "id": 18
+        },
+        {
+         "name": "Utiles de oficina, Productos de papel y cartón e impresos",
+         "id": 11
+        },
+        {
+         "name": "Adquisición y Locación de inmuebles. Alquiler de muebles",
+         "id": 3
+        }
+       ]
+      }
+     }
+    ],
+    "tag": [
+     "compiled"
+    ]
+   }
+  }
+ ],
+ "pagination": {
+  "total_items": 1,
+  "total_pages": 1,
+  "current_page": 1,
+  "items_per_page": 10,
+  "total_in_page": 1
+ }
+}

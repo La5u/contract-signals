@@ -1,0 +1,59 @@
+{
+ "source": "https://www.contrataciones.gov.py/datos/api/v3/doc",
+ "license": "CC BY 4.0",
+ "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+ "attribution": "Dirección Nacional de Contrataciones Públicas (DNCP), Paraguay",
+ "cohort": {
+  "buyer": "Municipalidad de Fernando de la Mora",
+  "buyerId": "DNCP-SICP-CODE-66",
+  "selection": "One municipality, selected before downloading contract records; date filter on call publication, not on award/signature or score.",
+  "window": {
+   "startInclusive": "2024-09-01",
+   "endExclusive": "2025-09-01",
+   "basis": "tipo_fecha=publicacion_llamado (call publication, NOT contract signature)"
+  }
+ },
+ "retrieval": {
+  "startedAt": "2026-09-22T20:52:27.113548+00:00",
+  "finishedAt": "2026-09-22T21:00:17.073907+00:00",
+  "queryUrl": "https://www.contrataciones.gov.py/datos/api/v3/doc/search/processes?page=1&items_per_page=50&parties.identifier.id=66&fecha_desde=2024-09-01&fecha_hasta=2025-08-31&tipo_fecha=publicacion_llamado",
+  "pages": [
+   {
+    "file": "search-001.json",
+    "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/search/processes?page=1&items_per_page=50&parties.identifier.id=66&fecha_desde=2024-09-01&fecha_hasta=2025-08-31&tipo_fecha=publicacion_llamado"
+   },
+   {
+    "file": "search-002.json",
+    "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/search/processes?page=2&items_per_page=50&parties.identifier.id=66&fecha_desde=2024-09-01&fecha_hasta=2025-08-31&tipo_fecha=publicacion_llamado"
+   }
+  ],
+  "totalItemsAtDownload": 88,
+  "recordUrlTemplate": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/{ocid}",
+  "rawDirectory": "data/paraguay-dncp/raw"
+ },
+ "counts": {
+  "searchProcesses": 88,
+  "recordsWithEligibleContracts": 84,
+  "publishedContractsInFullRecords": 86,
+  "retainedContracts": 84,
+  "excludedContractEntries": 2,
+  "releasesInFullRecords": 93,
+  "publishedContractAmendmentEntries": 2,
+  "retainedWithSignedDocumentUrl": 80,
+  "retainedWithoutSignatureDate": 84
+ },
+ "limitations": [
+  "Calls published during the fixed window, not contracts signed during that window; later awards/contracts may appear in full records.",
+  "Search pagination is checked against one observed total but the API does not promise an immutable snapshot; national completeness is unverified.",
+  "Only contracts with explicit awardID, one identified award supplier, and PYG contract value are retained; excluded counts are reported.",
+  "The source's contractSigned document links are not a manual review of document contents; signatures, legal status and payments are not independently audited.",
+  "Amendment and release counts are context, not a reconstructed value history; source versions can be incomplete.",
+  "No Paraguayan vigilance rules approved: every retained row is Not assessed, never scored with French or Colombian rules.",
+  "A single municipality is not a country sample; no cross-country score or currency comparison."
+ ],
+ "reproduce": [
+  "python tools/import-paraguay-dncp.py --download",
+  "python tools/import-paraguay-dncp.py --offline",
+  "node tests/paraguay.cjs"
+ ]
+}

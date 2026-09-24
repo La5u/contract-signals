@@ -86,6 +86,18 @@ class NormalizeRowRegression(unittest.TestCase):
         row = mod.normalize_row(raw(documento_proveedor=""), self.buyer())
         self.assertEqual(row["supplierIds"], [])
 
+    def test_placeholder_supplier_document_is_unknown(self):
+        for value in (None, "", "  ", "No Definido", " no definido ", "N/A"):
+            with self.subTest(value=value):
+                self.assertEqual(mod.normalize_row(raw(documento_proveedor=value), self.buyer())["supplierIds"], [])
+
+    def test_duplicate_extract_ids_are_rejected(self):
+        first = mod.normalize_row(raw(), self.buyer())
+        second = mod.normalize_row(raw(), self.buyer())
+        with self.assertRaisesRegex(ValueError, "duplicate ID"):
+            mod.require_unique_ids([first, second])
+        mod.require_unique_ids([first, mod.normalize_row(raw(id_contrato="CTR-2"), self.buyer())])
+
     def test_url_object_is_unwrapped(self):
         row = mod.normalize_row(raw(urlproceso={"description": "https://example.org/p"}), self.buyer())
         self.assertEqual(row["processUrl"], "https://example.org/p")

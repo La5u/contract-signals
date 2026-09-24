@@ -10,34 +10,34 @@
 <body>
 <main>
   <header>
-    <p class="eyebrow">Public-contract data explorer · France (DECP, BOAMP) and Colombia (SECOP II)</p>
     <h1>Contract signals</h1>
-    <p>A few simple indicators applied to French and Colombian public procurement.</p>
+    <p>Explore published procurement records from France, Colombia and Paraguay.</p>
   </header>
-  <aside class="disclaimer" aria-label="Disclaimer">
-    <strong>The indicators below flag anomalies or characteristics that may deserve review. They are not proof of irregularity, favoritism or corruption.</strong>
-    <p>Public data can contain errors. The indicators are heuristics: a flag does not imply illegal behavior. The absence of a flag does not guarantee that a contract is regular.</p>
-  </aside>
+  <section class="primary-controls" aria-label="Explore contracts">
   <label class="dataset-selector">Dataset
     <select id="dataset">
-      <option value="decp">DECP history · Paris and Ardèche · 2024–2025</option>
-      <option value="tours">Tours · full BOAMP/TED notices · 2025 and linked references</option>
-      <option value="cities">DECP history · six additional municipalities · 2024–2025</option>
-      <option value="consultations">BOAMP consultations · 3 February 2025 · 10 notices</option>
-      <option value="boamp">BOAMP sample and eight official findings</option>
-      <option value="colombia">SECOP II · Colombia pilot · three buyers · 2024–2026</option>
+      <optgroup label="France">
+        <option value="decp">France · Paris &amp; Ardèche — contracts · DECP</option>
+        <option value="cities">France · six cities — contracts · DECP</option>
+        <option value="tours">France · Tours — procurement notices · BOAMP/TED</option>
+        <option value="consultations">France · 3 Feb 2025 — consultation notices · BOAMP</option>
+        <option value="boamp">France · nationwide sample — award lots + audit dossiers · BOAMP/CRC</option>
+      </optgroup>
+      <optgroup label="Colombia">
+        <option value="colombia">Colombia · MEN / Caldas / Usaquén — contracts · SECOP II</option>
+      </optgroup>
+      <optgroup label="Paraguay">
+        <option value="paraguay">Paraguay · Fernando de la Mora — contract records · DNCP OCDS</option>
+      </optgroup>
     </select>
   </label>
-  <details class="dataset-details">
-    <summary>Data scope and limits</summary>
-  <p id="dataset-note" class="dataset-note">Exploratory 24-month history: 2,594 DECP contracts from Paris and Ardèche, notified in 2024–2025. Modifications published may be later than 2025. This is not a guarantee of exhaustiveness of actual purchases.</p>
-  <p class="dataset-note">The datasets are not merged: they may describe the same purchases. Do not sum their amounts. No fictional examples. “—” means unknown, not absence of risk. <a id="coverage-link" href="data/decp-coverage.json">Coverage and provenance of the provided dataset (JSON)</a>.</p>
-  <p id="completeness" class="dataset-note" aria-live="polite"></p>
-  </details>
-  <section class="controls" aria-label="Search and filter">
-    <label class="search">Search<input id="search" type="search" placeholder="Buyer, SIRET, CPV, subject…"></label>
+  <label class="search">Search<input id="search" type="search" placeholder="Buyer, supplier, subject, ID…"></label>
+  <label class="sort-control">Sort<select id="sort"><option value="score">Index · descending</option><option value="score-asc">Index · ascending</option><option value="official">Official findings first · outside the index</option><option value="amount">Amount · descending</option><option value="amount-asc">Amount · ascending</option><option value="date">Date · newest first</option><option value="date-asc">Date · oldest first</option><option value="publication">Notice publication · newest first</option><option value="publication-asc">Notice publication · oldest first</option><option value="sector">CPV sector · A–Z</option><option value="sector-desc">CPV sector · Z–A</option><option value="buyer">Buyer · A–Z</option><option value="supplier">Supplier · A–Z</option><option value="offers">Offers · ascending</option><option value="increase">Amount increase (%) · descending</option></select></label>
+  </section>
+  <details class="advanced-filters" id="advanced-filters">
+    <summary>Advanced filters <span id="advanced-count"></span></summary>
+    <section class="controls" aria-label="Advanced search and filters">
     <label>Minimum amount<input id="minimum" type="number" min="0" step="any" placeholder="0"></label>
-    <label>Sort by<select id="sort"><option value="score">Index · descending</option><option value="score-asc">Index · ascending</option><option value="official">Official findings first · outside the index</option><option value="amount">Amount · descending</option><option value="amount-asc">Amount · ascending</option><option value="date">Date · newest first</option><option value="date-asc">Date · oldest first</option><option value="publication">Notice publication · newest first</option><option value="publication-asc">Notice publication · oldest first</option><option value="sector">CPV sector · A–Z</option><option value="sector-desc">CPV sector · Z–A</option><option value="buyer">Buyer · A–Z</option><option value="supplier">Supplier · A–Z</option><option value="offers">Offers · ascending</option><option value="increase">Amount increase (%) · descending</option></select></label>
     <label>CPV purchase sector<select id="sector"><option value="">All sectors</option></select></label>
     <label>Group by<select id="group-by"><option value="">No grouping</option><option value="project">Documented project</option><option value="sector">CPV sector</option><option value="buyer">Buyer</option><option value="supplier">Supplier (SIREN)</option></select></label>
     <label>Project<select id="project"><option value="">All records</option></select></label>
@@ -47,23 +47,31 @@
     <label>Notice content · no points<select id="notice-context"><option value="">All records</option><option value="explanation">Procedure text / published reason</option><option value="criteria">Award criteria present</option><option value="correction">Correction identified</option><option value="ted">Matched TED XML</option></select></label>
     <label>Legal context · no points<select id="legal"><option value="">All contexts</option><option value="direct">Declared without competition · all amounts</option><option value="cited">Article R2122 cited</option><option value="R2122-1">R2122-1 cited · imperative urgency</option><option value="R2122-3">R2122-3 cited · artistic, technical or exclusive-rights reasons</option></select></label>
     <label class="checkbox"><input id="flagged" type="checkbox">Show only heuristic signals</label>
-    <label class="checkbox"><input id="official" type="checkbox">Show only official findings</label>
-  </section>
+    <label class="checkbox"><input id="official" type="checkbox">Show only official audit findings</label>
+    <label class="checkbox"><input id="adjudicated" type="checkbox">Show contract-linked final corruption judgments (if documented)</label>
+    <label class="checkbox"><input id="investigation" type="checkbox">Show investigations reported at the time (current status unknown)</label>
+    <button id="clear-filters" type="button">Clear advanced filters</button>
+    </section>
+  </details>
   <section id="file-help" hidden>
     <p>Your browser may block automatic loading of a local file. Select <code id="file-path">data/decp-history.json</code> below, or serve this folder with <code>python -m http.server 8000</code>.</p>
     <label>Open the local JSON dataset <input id="file" type="file" accept=".json,application/json"></label>
   </section>
-  <div class="score-legend" aria-label="Vigilance scale, not a regularity measure">
-    <span class="score-chip level-none">0 · no threshold crossed in the evaluated checks</span><span class="score-chip level-low">1–19 · low</span><span class="score-chip level-moderate">20–39 · moderate</span><span class="score-chip level-high">40–69 · high</span><span class="score-chip level-extreme">70–100 · very high</span><span class="score-chip level-unknown">Not assessed ≠ zero</span><span class="badge official">Official finding · outside the index</span>
-  </div>
-  <p class="dataset-note">Index v3: zero requires at least one evaluated check and certifies nothing. Unknown applicable checks and undetermined applicabilities are displayed separately. Neither an amount nor an official finding increases the points. The index remains editorial, never a probability.</p>
+  <p class="quick-caveat">Signals prompt review, not accusations. A zero or missing label does not mean a contract is clean. <a href="#about-results">How to read these results ↓</a></p>
   <section id="project-panel" class="project-panel" aria-label="Documented project dossier" hidden></section>
-  <p id="status" role="status" aria-live="polite">Loading data…</p>
-  <nav id="pagination" class="pagination" aria-label="Table pagination" hidden>
-    <button id="previous" type="button">← Previous</button>
-    <span id="page-status" aria-live="polite"></span>
-    <button id="next" type="button">Next →</button>
-  </nav>
+  <div class="results-bar">
+    <p id="status" role="status" aria-live="polite">Loading data…</p>
+    <nav id="pagination" class="pagination" aria-label="Table pagination" hidden>
+      <button id="previous" type="button">← Previous</button>
+      <span id="page-status" aria-live="polite"></span>
+      <button id="next" type="button">Next →</button>
+      <label class="page-size">Rows/page
+        <select id="page-size"><option value="25">25</option><option value="50" selected>50</option><option value="100">100</option><option value="250">250</option></select>
+      </label>
+      <button id="copy-page" type="button" title="Copy a short summary of this page with source URLs. Check for personal data before pasting into an external service.">Copy page summary</button>
+    </nav>
+    <span id="copy-status" class="visually-hidden" role="status" aria-live="polite"></span>
+  </div>
   <div class="table-wrap" tabindex="0" role="region" aria-label="Contracts table, horizontal scrolling possible">
     <table class="main-table">
       <caption>Contracts and documented records — click a subject to open the details and history.</caption>
@@ -71,6 +79,22 @@
       <tbody id="contracts"></tbody>
     </table>
   </div>
+  <section class="reading-notes" id="about-results" aria-label="How to read the results">
+    <p><strong>The indicators flag characteristics for review—not proof of irregularity, favoritism or corruption.</strong> Public data can contain errors. A flag does not imply illegal behavior; no flag does not guarantee regularity. The copy button copies only summaries of the current page; large pages may exceed chat limits. Review personal data before pasting into any external service.</p>
+    <details class="dataset-details">
+      <summary>Data scope and limits</summary>
+      <p id="dataset-note" class="dataset-note">Exploratory 24-month history: 2,594 DECP contracts from Paris and Ardèche, notified in 2024–2025. Modifications published may be later than 2025. This is not a guarantee of exhaustiveness of actual purchases.</p>
+      <p class="dataset-note">Datasets are not merged; they may describe the same purchases. Do not add their amounts. “—” means unknown, not safe. <a id="coverage-link" href="data/decp-coverage.json">Coverage and provenance (JSON)</a>.</p>
+      <p id="completeness" class="dataset-note" aria-live="polite"></p>
+    </details>
+    <details class="score-help"><summary>Index and evidence labels</summary>
+      <div class="score-legend" aria-label="Vigilance scale, not a regularity measure">
+        <span class="score-chip level-none">0 · no threshold crossed in evaluated checks</span><span class="score-chip level-low">1–19 · low</span><span class="score-chip level-moderate">20–39 · moderate</span><span class="score-chip level-high">40–69 · high</span><span class="score-chip level-extreme">70–100 · very high</span><span class="score-chip level-unknown">Not assessed ≠ zero</span><span class="badge official">Official finding · outside the index</span>
+      </div>
+      <p>Index v3 is an editorial sorting aid, not a probability; zero requires an evaluated check and certifies nothing. Unknowns are shown separately. Amounts and official findings never add points.</p>
+      <p>One French dossier has a dated news report of an investigative step; its current status is unknown. No comparable report is linked in the Colombian or Paraguayan pilots. No contract-specific final corruption judgment is documented in these datasets. French CRC audit observations are not convictions. No match means <strong>not established here, not cleared</strong>.</p>
+    </details>
+  </section>
   <details class="method">
     <summary>Method: vigilance index</summary>
     <p><strong>Version 3.0.</strong> Score = competition maximum (up to 60) + execution/duration maximum (up to 40), with no renormalization by coverage, dataset or filter. Official findings are separate documentary elements, never points. No amount-based uplift. No target proportion of flagged contracts.</p>

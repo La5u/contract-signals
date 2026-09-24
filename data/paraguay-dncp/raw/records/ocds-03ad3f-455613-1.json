@@ -1,0 +1,993 @@
+{
+ "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/ocds-03ad3f-455613-1",
+ "publishedDate": "2026-09-22T17:54:23Z",
+ "publisher": {
+  "name": "Dirección Nacional de Contrataciones Públicas, Paraguay"
+ },
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "publicationPolicy": "https://www.contrataciones.gov.py/datos/legal",
+ "version": "1.1",
+ "extensions": [
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_breakdown_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_budget_and_spend_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_enquiry_extension/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/enquiriesAddress/master/extension.json",
+  "https://raw.githubusercontent.com/sdd1982/legalEntityTypeDetail/master/extension.json",
+  "https://raw.githubusercontent.com/gitMHOCDS/transactions/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_investmentproject_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_clarification_meetings_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_attributes_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_items_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_contract_suppliers_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_location_extension/v1.1.4/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_activityType_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_notifiedsuppliers_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_tender_lots_details_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_memberOf_extension/master/extension.json",
+  "https://raw.githubusercontent.com/portaledcahn/ocds_tenderDatePublished_extension/master/extension.json",
+  "https://raw.githubusercontent.com/INAImexico/ocds_guarantees_extension/master/extension.json",
+  "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_requirements_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bidOpening_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_coveredBy_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_qualification_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_publicEntitiesDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_items_subItems_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_statusdetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_mainProcurementCategoryDetails_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_identifier_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_planning_estimatedDate_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_participationFee_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_amendments_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_lot_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_transaction_details_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_financialprogress_financialcode_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_partyDetails_categories_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_complaints_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_item_minQuantity_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_purchaseOrder_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_document_type_details/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_cancellations_amendments_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_milestone_documents_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_techniques_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bid_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_bid_items_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_auctions_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_secondStage_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_beneficiaries_extension/raw/master/extension.json",
+  "https://raw.githubusercontent.com/Crown-Commercial-Service/ocds_tender_suitability_extension/main/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_subcontracting_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/master/extension.json",
+  "https://raw.githubusercontent.com/open-contracting-extensions/ocds_sustainability_extension/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_contract_implementation_reportedpayment_extension/raw/master/extension.json",
+  "https://gitlab.com/dncp-opendata/ocds_milestone_deliveries_extension/raw/master/extension.json"
+ ],
+ "records": [
+  {
+   "ocid": "ocds-03ad3f-455613-1",
+   "releases": [
+    {
+     "date": "2024-11-06T10:40:43-04:00",
+     "tag": [
+      "tender",
+      "award",
+      "contract",
+      "implementation"
+     ],
+     "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/releases/id/1ef7c1db-834c-6874-96df-b5058abb2ee1-1730889643"
+    }
+   ],
+   "compiledRelease": {
+    "id": "1ef7c1db-834c-6874-96df-b5058abb2ee1-1730889643",
+    "awards": [
+     {
+      "id": "1ef92f90-cd3a-6b2e-b387-0bc1509576b7",
+      "status": "active",
+      "statusDetails": "publicado",
+      "date": "2024-10-25T00:00:00-04:00",
+      "value": {
+       "amount": 349928500,
+       "currency": "PYG"
+      },
+      "suppliers": [
+       {
+        "name": "FELICIA PORTILLO CABRERA",
+        "id": "PY-RUC-2971768-0"
+       }
+      ],
+      "documents": [
+       {
+        "id": "1ef92f9a-5ee4-699a-854b-a94066bf32df",
+        "datePublished": "2024-10-25T14:50:40-04:00",
+        "title": "resolucion-455613-671bda6fe0749.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef92f8c-9226-6726-bfd0-4ff3d9689ed8/files/51fac043-0407-44b6-8f17-9bb7eef3a53b/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "1ef92f8e-f8b9-6f68-85a0-2fe6cd03e217",
+        "datePublished": "2024-10-25T14:45:34-04:00",
+        "title": "cuadro-455613-671bd93de4eca.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef92f8c-9226-6726-bfd0-4ff3d9689ed8/files/4f6e7426-a7a6-4375-a03b-1192ac818ee3/download",
+        "language": "es",
+        "documentTypeDetails": "Cuadro Comparativo de Ofertas"
+       },
+       {
+        "id": "1ef92f8f-5f6c-65a8-8b25-1750b2230f3c",
+        "datePublished": "2024-10-25T14:45:44-04:00",
+        "title": "inf-eva-455613-671bd9489d67b.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef92f8c-9226-6726-bfd0-4ff3d9689ed8/files/e0030e4d-f4ae-41b2-96a6-5e6820610ee1/download",
+        "language": "es",
+        "documentTypeDetails": "Informe de Evaluación"
+       },
+       {
+        "id": "1ef92f8e-6218-608c-965b-afe303a19f2b",
+        "datePublished": "2024-10-25T14:45:18-04:00",
+        "title": "gmail-notificacion-llamado-cd-id-455613-671bd92e24bb5.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef92f8c-9226-6726-bfd0-4ff3d9689ed8/files/c4ad40fe-f42b-46fb-9581-0740fb4e2e10/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "1ef9a9e6-300d-6bf0-aa83-ff85738cb2ee",
+        "datePublished": "2024-11-04T08:17:32-04:00",
+        "title": "ap-455613-6728ad4cb5fc8.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef92f8c-9226-6726-bfd0-4ff3d9689ed8/files/c9a4b52f-6cac-413d-b815-ebfdc20acd96/download",
+        "language": "es",
+        "documentTypeDetails": "Nota de Contestación"
+       },
+       {
+        "id": "1ef92f8e-9a94-61d6-aa24-2dc60d6f416d",
+        "datePublished": "2024-10-25T14:45:24-04:00",
+        "title": "nota-a-proveedores-671bd93415287.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef92f8c-9226-6726-bfd0-4ff3d9689ed8/files/9bead22d-afc9-4d0d-806b-94dc02aa0f00/download",
+        "language": "es",
+        "documentType": "awardNotice",
+        "documentTypeDetails": "Resolución de Adjudicación"
+       },
+       {
+        "id": "dix2iRRDbik=",
+        "title": "URL de la Adjudicación",
+        "url": "https://www.contrataciones.gov.py/licitaciones/adjudicacion/1ef92f8c-9226-6726-bfd0-4ff3d9689ed8/resumen-adjudicacion.html",
+        "language": "es",
+        "documentType": "awardNotice",
+        "format": "text/html"
+       },
+       {
+        "id": "1ef9785c-5716-69e2-8654-512c8c2fe83e",
+        "datePublished": "2024-10-31T09:43:47-04:00",
+        "title": "aclaracion-1-67237b82f1467.pdf",
+        "url": "https://www.contrataciones.gov.py/api/resultado/1ef92f8c-9226-6726-bfd0-4ff3d9689ed8/files/1800c6c5-10f1-4a67-a2f8-4c6e4cd5617e/download",
+        "language": "es",
+        "documentTypeDetails": "Nota de Contestación"
+       }
+      ],
+      "items": [
+       {
+        "id": "1ef80f7f-0dcf-6c4e-8fe5-c1d0729e7fc4",
+        "description": "Cal hidratada de 25 kilo",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "30111604-001",
+         "description": "Cal hidratada",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/30111604-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "30111604",
+          "description": "Cal apagada",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/30111604"
+         }
+        ],
+        "quantity": 1250,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 38425,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80f79-44df-6118-ac2e-719f5af37f83",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "NACIONAL",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "yvyraty",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "1",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80f7f-0dd8-6ede-96b5-c1d0729e7fc4",
+        "description": "Piedra bruta, carga en camion tumba eje sencillo",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "11111501-003",
+         "description": "Piedra bruta ",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/11111501-003"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "11111501",
+          "description": "Tierra y piedra",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/11111501"
+         }
+        ],
+        "quantity": 317,
+        "unit": {
+         "name": "Tonelada",
+         "id": "TN",
+         "value": {
+          "amount": 761250,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80f79-44df-6118-ac2e-719f5af37f83",
+        "attributes": [
+         {
+          "value": "NACIONAL",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "2",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80f7f-0de1-6462-8a69-c1d0729e7fc4",
+        "description": "Piedra triturada, de 4ta",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "11111501-004",
+         "description": "Piedra triturada",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/11111501-004"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "11111501",
+          "description": "Tierra y piedra",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/11111501"
+         }
+        ],
+        "quantity": 240,
+        "unit": {
+         "name": "Tonelada",
+         "id": "TN",
+         "value": {
+          "amount": 153700,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80f79-44df-6118-ac2e-719f5af37f83",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "3",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80f7f-0de8-6712-a692-c1d0729e7fc4",
+        "description": "Arena lavada de rio",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "11111501-001",
+         "description": "Arena lavada",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/11111501-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "11111501",
+          "description": "Tierra y piedra",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/11111501"
+         }
+        ],
+        "quantity": 245,
+        "unit": {
+         "name": "Metros cúbicos",
+         "id": "M3",
+         "value": {
+          "amount": 75400,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80f79-44df-6118-ac2e-719f5af37f83",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "name": "Orden",
+          "value": "4",
+          "id": "7"
+         }
+        ]
+       },
+       {
+        "id": "1ef80f7f-0def-6d8c-b1d5-c1d0729e7fc4",
+        "description": "Ladrillo refractario, hueco de 6 agujero",
+        "classification": {
+         "scheme": "catalogoNivel5DNCP",
+         "id": "30131604-001",
+         "description": "Ladrillo refractario silicio aluminoso",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/30131604-001"
+        },
+        "additionalClassifications": [
+         {
+          "scheme": "UNSPSC",
+          "id": "30131604",
+          "description": "Ladrillos refractarios",
+          "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/30131604"
+         }
+        ],
+        "quantity": 3000,
+        "unit": {
+         "name": "Unidad",
+         "id": "UNI",
+         "value": {
+          "amount": 1740,
+          "currency": "PYG"
+         }
+        },
+        "relatedLot": "1ef80f79-44df-6118-ac2e-719f5af37f83",
+        "attributes": [
+         {
+          "value": "Nacional",
+          "name": "Procedencia",
+          "id": "1"
+         },
+         {
+          "value": "NACIONAL",
+          "name": "Fabricante",
+          "id": "3"
+         },
+         {
+          "value": "IRENE",
+          "name": "Marca",
+          "id": "4"
+         },
+         {
+          "name": "Orden",
+          "value": "5",
+          "id": "7"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "tender": {
+     "id": "1ef7c1db-834c-6874-96df-b5058abb2ee1",
+     "title": "ADQUISICION DE PIEDRA, ARENA, LADRILLO Y CAL",
+     "status": "complete",
+     "awardCriteria": "priceOnly",
+     "awardCriteriaDetails": "Por Total",
+     "submissionMethod": [
+      "inPerson"
+     ],
+     "bidOpening": {
+      "date": "2024-10-18T10:00:00-04:00",
+      "address": {
+       "streetAddress": "Municipalidad de Fernando de la Mora, oficina UOC"
+      }
+     },
+     "submissionMethodDetails": "Lugar entrega ofertas: Municipalidad de Fernando de la Mora, oficina UOC",
+     "statusDetails": "Adjudicada",
+     "enquiriesAddress": {
+      "streetAddress": "SICP"
+     },
+     "clarificationMeetings": [
+      {
+       "address": {
+        "streetAddress": "N/A"
+       },
+       "id": "1"
+      }
+     ],
+     "mainProcurementCategoryDetails": "Bienes - Componentes y Suministros de Fabricacion Estructuras, Obras y Construcciones",
+     "hasEnquiries": false,
+     "value": {
+      "amount": 349928500,
+      "currency": "PYG"
+     },
+     "datePublished": "2024-10-08T17:56:51-04:00",
+     "tenderPeriod": {
+      "startDate": "2024-10-08T17:56:51-04:00",
+      "endDate": "2024-10-18T09:30:00-04:00",
+      "durationInDays": 9
+     },
+     "awardPeriod": {
+      "startDate": "2024-10-18T10:00:00-04:00"
+     },
+     "enquiryPeriod": {
+      "endDate": "2024-10-15T08:00:00-04:00",
+      "startDate": "2024-10-08T17:56:51-04:00",
+      "durationInDays": 6
+     },
+     "mainProcurementCategory": "services",
+     "additionalProcurementCategories": [
+      "services"
+     ],
+     "procurementMethod": "open",
+     "procurementMethodDetails": "Menor cuantía nacional",
+     "procuringEntity": {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora"
+     },
+     "criteria": [
+      {
+       "id": "1",
+       "title": "Garantía de Mantenimiento de Ofertas",
+       "description": "Los oferentes, proveedores o contratistas deberán garantizar la seriedad de sus ofertas, mediante la garantía de mantenimiento de la oferta",
+       "source": "tenderer",
+       "requirementGroups": [
+        {
+         "id": "1-1",
+         "description": "La garantía debe ser de un cierto porcentaje, periodo y tipo",
+         "requirements": [
+          {
+           "id": "1-1-1",
+           "title": "Porcentaje de la garantia",
+           "expectedValue": "5"
+          },
+          {
+           "id": "1-1-2",
+           "title": "Validez de la garantia en días",
+           "expectedValue": "90"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "lots": [
+      {
+       "id": "1ef80f79-44df-6118-ac2e-719f5af37f83",
+       "title": "1 - 1 - ADQUISICION DE PIEDRA, ARENA, LADRILLO Y CAL",
+       "status": "active",
+       "statusDetails": "activo",
+       "value": {
+        "amount": 349928500,
+        "currency": "PYG"
+       },
+       "simultaneousSupply": false,
+       "attributes": [
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "1"
+        }
+       ]
+      }
+     ],
+     "items": [
+      {
+       "id": "1ef80f7f-0de1-6462-8a69-c1d0729e7fc4",
+       "description": "Piedra triturada, de 4ta",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "11111501-004",
+        "description": "Piedra triturada",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/11111501-004"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "11111501",
+         "description": "Tierra y piedra",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/11111501"
+        }
+       ],
+       "quantity": 240,
+       "unit": {
+        "name": "Tonelada",
+        "id": "TN",
+        "value": {
+         "amount": 153700,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80f79-44df-6118-ac2e-719f5af37f83",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "CAMIONADA",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "3",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80f7f-0def-6d8c-b1d5-c1d0729e7fc4",
+       "description": "Ladrillo refractario, hueco de 6 agujero",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "30131604-001",
+        "description": "Ladrillo refractario silicio aluminoso",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/30131604-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "30131604",
+         "description": "Ladrillos refractarios",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/30131604"
+        }
+       ],
+       "quantity": 3000,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 1740,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80f79-44df-6118-ac2e-719f5af37f83",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "UNIDAD",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "5",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80f7f-0dd8-6ede-96b5-c1d0729e7fc4",
+       "description": "Piedra bruta, carga en camion tumba eje sencillo",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "11111501-003",
+        "description": "Piedra bruta ",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/11111501-003"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "11111501",
+         "description": "Tierra y piedra",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/11111501"
+        }
+       ],
+       "quantity": 317,
+       "unit": {
+        "name": "Tonelada",
+        "id": "TN",
+        "value": {
+         "amount": 761250,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80f79-44df-6118-ac2e-719f5af37f83",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "CAMIONADA",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "2",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80f7f-0dcf-6c4e-8fe5-c1d0729e7fc4",
+       "description": "Cal hidratada de 25 kilo",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "30111604-001",
+        "description": "Cal hidratada",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/30111604-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "30111604",
+         "description": "Cal apagada",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/30111604"
+        }
+       ],
+       "quantity": 1250,
+       "unit": {
+        "name": "Unidad",
+        "id": "UNI",
+        "value": {
+         "amount": 38425,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80f79-44df-6118-ac2e-719f5af37f83",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "PAQUETE",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "1",
+         "id": "2"
+        }
+       ]
+      },
+      {
+       "id": "1ef80f7f-0de8-6712-a692-c1d0729e7fc4",
+       "description": "Arena lavada de rio",
+       "classification": {
+        "scheme": "catalogoNivel5DNCP",
+        "id": "11111501-001",
+        "description": "Arena lavada",
+        "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n5/11111501-001"
+       },
+       "additionalClassifications": [
+        {
+         "scheme": "UNSPSC",
+         "id": "11111501",
+         "description": "Tierra y piedra",
+         "uri": "https://www.contrataciones.gov.py/datos/api/v3/doc/itemClassification/n4/11111501"
+        }
+       ],
+       "quantity": 245,
+       "unit": {
+        "name": "Metros cúbicos",
+        "id": "M3",
+        "value": {
+         "amount": 75400,
+         "currency": "PYG"
+        }
+       },
+       "relatedLot": "1ef80f79-44df-6118-ac2e-719f5af37f83",
+       "attributes": [
+        {
+         "name": "Presentacion",
+         "value": "CAMIONADA",
+         "id": "1"
+        },
+        {
+         "name": "Orden",
+         "value": "4",
+         "id": "2"
+        }
+       ]
+      }
+     ],
+     "tenderers": [
+      {
+       "name": "FELICIA PORTILLO CABRERA",
+       "id": "PY-RUC-2971768-0"
+      }
+     ],
+     "documents": [
+      {
+       "id": "DgchV7M9bAIWeek01vI34w==",
+       "datePublished": "2024-10-08T17:56:48-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 455613 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1ef7c1db-834c-6874-96df-b5058abb2ee1/1/json",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/json"
+      },
+      {
+       "id": "d65f080f-67fe-4dd1-b863-4cd79915de23",
+       "datePublished": "2024-10-03T11:14:45-04:00",
+       "title": "pr-455613-66fda7a18e67f.zip",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef7c1db-834c-6874-96df-b5058abb2ee1/files/d65f080f-67fe-4dd1-b863-4cd79915de23/download",
+       "language": "es",
+       "documentTypeDetails": "Antecedentes de la Estimación de Costos"
+      },
+      {
+       "id": "1c975ac4-7e60-4164-ae40-d118b6bf6630",
+       "datePublished": "2024-10-03T11:14:45-04:00",
+       "title": "cdp-mcn-id-455613001-66fda795d0997.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef7c1db-834c-6874-96df-b5058abb2ee1/files/1c975ac4-7e60-4164-ae40-d118b6bf6630/download",
+       "language": "es",
+       "documentTypeDetails": "CDP"
+      },
+      {
+       "id": "f224c5be-741f-4a9e-bb0d-a9dace07766d",
+       "datePublished": "2024-10-03T11:14:45-04:00",
+       "title": "dictamen-tecnico-mcn-id-455613001-66feb4db5e7a2.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef7c1db-834c-6874-96df-b5058abb2ee1/files/f224c5be-741f-4a9e-bb0d-a9dace07766d/download",
+       "language": "es",
+       "documentTypeDetails": "Dictamen técnico"
+      },
+      {
+       "id": "59d03270-1701-4ddc-a6a1-b1fa3c7c33c5",
+       "datePublished": "2024-10-03T11:14:45-04:00",
+       "title": "resolucion-mcn-id-455613001-66feb4d166748.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef7c1db-834c-6874-96df-b5058abb2ee1/files/59d03270-1701-4ddc-a6a1-b1fa3c7c33c5/download",
+       "language": "es",
+       "documentTypeDetails": "Aprobación PBC"
+      },
+      {
+       "id": "kKYEeEQkcP4=",
+       "datePublished": "2024-10-08T17:56:48-04:00",
+       "title": "Pliego para la Adquisición de Bienes y/o Servicios - CONVENCIONAL - Ley Nº 7021/22. 455613 Version 1",
+       "url": "https://www.contrataciones.gov.py/documentos/download/pliego/1ef7c1db-834c-6874-96df-b5058abb2ee1/1",
+       "language": "es",
+       "documentType": "biddingDocuments",
+       "documentTypeDetails": "Pliego Electrónico de bases y Condiciones",
+       "format": "application/pdf"
+      },
+      {
+       "id": "5dc9428b-c239-453d-9986-5fbd3e111ad1",
+       "datePublished": "2024-10-18T11:54:29-04:00",
+       "title": "ddjj-id-455-613-31925822082879241-671276a4efc53.pdf",
+       "url": "https://www.contrataciones.gov.py/api/convocatorias/1ef7c1db-834c-6874-96df-b5058abb2ee1/files/5dc9428b-c239-453d-9986-5fbd3e111ad1/download",
+       "language": "es",
+       "documentTypeDetails": "Acta de Apertura"
+      },
+      {
+       "id": "dix2iRRDbik=",
+       "title": "URL de la Convocatoria",
+       "url": "https://www.contrataciones.gov.py/licitaciones/convocatoria/1ef7c1db-834c-6874-96df-b5058abb2ee1.html",
+       "language": "es",
+       "documentType": "tenderNotice",
+       "format": "text/html"
+      }
+     ],
+     "numberOfTenderers": 1
+    },
+    "language": "es",
+    "ocid": "ocds-03ad3f-455613-1",
+    "date": "2024-11-06T10:40:43-04:00",
+    "initiationType": "tender",
+    "buyer": {
+     "id": "DNCP-SICP-CODE-66",
+     "name": "Municipalidad de Fernando de la Mora"
+    },
+    "sources": [
+     {
+      "id": "dncp-sicp",
+      "name": "Sistema de Información de las Contrataciones Públicas - DNCP",
+      "url": "https://www.contrataciones.gov.py/"
+     }
+    ],
+    "contracts": [
+     {
+      "id": "MN-30173-24-244807",
+      "implementation": {
+       "financialProgress": {
+        "breakdown": [
+         {
+          "id": "2024/30/173/2/2/1/0/11/11/420/30/MN-30173-24-244807",
+          "period": {
+           "startDate": "2024-01-01T00:00:00Z",
+           "endDate": "2024-12-31T00:00:00Z"
+          },
+          "measures": {
+           "monto_a_utilizar": 350000000
+          },
+          "classifications": {
+           "anio": "2024",
+           "nivel": "30",
+           "entidad": "173",
+           "tipo_programa": "2",
+           "programa": "2",
+           "sub_programa": "1",
+           "proyecto": "0",
+           "financiador": "11",
+           "departamento": "11",
+           "objeto_gasto": "420",
+           "fuente_financiamiento": "30",
+           "cdp": "116683"
+          },
+          "financialCode": "MN-30173-24-244807"
+         }
+        ]
+       }
+      },
+      "awardID": "1ef92f90-cd3a-6b2e-b387-0bc1509576b7",
+      "status": "active",
+      "statusDetails": "publicado",
+      "period": {
+       "startDate": "2024-11-04T00:00:00-04:00"
+      },
+      "value": {
+       "amount": 349928500,
+       "currency": "PYG"
+      },
+      "documents": [
+       {
+        "id": "1ef9ac9a-9465-660a-b442-b391b25d2047",
+        "datePublished": "2024-11-04T13:27:19-04:00",
+        "title": "res-adj-455613-6728f5e701a8a.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1ef92f90-cd3a-6b2e-b387-0bc1509576b7/files/34025247-cbd4-49a3-8b21-18ec064d7235/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1ef9ac99-77d3-6254-940b-196dfb60b773",
+        "datePublished": "2024-11-04T13:26:49-04:00",
+        "title": "contrato-39-milleniun-6728f5c9057f9.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1ef92f90-cd3a-6b2e-b387-0bc1509576b7/files/e0f17105-f241-41dd-86a4-ba8283381807/download",
+        "language": "es",
+        "documentType": "contractSigned",
+        "documentTypeDetails": "Contrato"
+       },
+       {
+        "id": "1ef9ac9b-5c24-6650-ba64-016e8515b1a2",
+        "datePublished": "2024-11-04T13:27:40-04:00",
+        "title": "cdp-mcn-id-455613001-66fda795d0997-6728f5fbe7365.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1ef92f90-cd3a-6b2e-b387-0bc1509576b7/files/68161cb3-cca9-450d-a5b7-9f4b65aabb0c/download",
+        "language": "es",
+        "documentTypeDetails": "CDP"
+       },
+       {
+        "id": "1ef9ac9a-0638-6bb6-860e-91760fe433a5",
+        "datePublished": "2024-11-04T13:27:04-04:00",
+        "title": "ddjj-plazo-de-protesta-6728f5d815907.pdf",
+        "url": "https://www.contrataciones.gov.py/api/proveedor-adjudicado/1ef92f90-cd3a-6b2e-b387-0bc1509576b7/files/e28b51a4-dde7-4ede-b6ee-20d4a7bce7b0/download",
+        "language": "es",
+        "documentTypeDetails": "Nota de Contestación"
+       }
+      ]
+     }
+    ],
+    "parties": [
+     {
+      "id": "DNCP-SICP-CODE-66",
+      "name": "Municipalidad de Fernando de la Mora",
+      "identifier": {
+       "scheme": "DNCP-SICP-CODE",
+       "id": "66",
+       "legalName": "Municipalidad de Fernando de la Mora"
+      },
+      "contactPoint": {
+       "email": "morauoc@gmail.com",
+       "name": "LIC. ELIGIO ACOSTA",
+       "telephone": "+595 21 513-306"
+      },
+      "roles": [
+       "buyer",
+       "procuringEntity"
+      ],
+      "details": {
+       "level": "Municipalidades",
+       "entityType": "Municipalidades",
+       "type": "Entidad"
+      },
+      "additionalIdentifiers": [
+       {
+        "id": "2024.30.173",
+        "legalName": "Municipalidad de Fernando de la Mora",
+        "scheme": "PY-PGN"
+       }
+      ]
+     },
+     {
+      "name": "FELICIA PORTILLO CABRERA",
+      "id": "PY-RUC-2971768-0",
+      "identifier": {
+       "id": "2971768-0",
+       "legalName": "FELICIA PORTILLO CABRERA",
+       "scheme": "PY-RUC"
+      },
+      "roles": [
+       "supplier",
+       "tenderer"
+      ],
+      "contactPoint": {
+       "name": "FELICIA PORTILLO CABRERA",
+       "email": "mileniumemprende@hotmail.com",
+       "telephone": "0986671075"
+      },
+      "address": {
+       "countryName": "Paraguay",
+       "locality": "FERNANDO DE LA MORA",
+       "region": "Central",
+       "streetAddress": "MATEO ESTIGARRIBIA N°2831 C/ PAI MARCOS"
+      },
+      "details": {
+       "legalEntityTypeDetail": "Persona Física - Bienes y Servicios",
+       "activityTypes": [
+        "goods",
+        "services"
+       ],
+       "categories": [
+        {
+         "name": "Construcción, Restauración, Reconstrucción o Remodelación y Reparación de Inmuebles",
+         "id": 21
+        },
+        {
+         "name": "Elementos e insumos de limpieza",
+         "id": 12
+        },
+        {
+         "name": "Minerales",
+         "id": 20
+        },
+        {
+         "name": "Productos quimicos",
+         "id": 16
+        },
+        {
+         "name": "Maquinarias, Equipos y herramientas mayores - Equipos de transporte",
+         "id": 22
+        },
+        {
+         "name": "Bienes e insumos agropecuario y forestal",
+         "id": 19
+        },
+        {
+         "name": "Servicios de Limpiezas, Mantenimientos y reparaciones menores y mayores de Instalaciones, Maquinarias y Vehículos",
+         "id": 2
+        },
+        {
+         "name": "Productos Alimenticios",
+         "id": 14
+        },
+        {
+         "name": "Materiales e insumos eléctricos, metálicos y no metálicos, Plásticos, cauchos. Repuestos, herramientas, cámaras y cubiertas.",
+         "id": 18
+        },
+        {
+         "name": "Servicios Técnicos",
+         "id": 7
+        }
+       ]
+      }
+     }
+    ],
+    "tag": [
+     "compiled"
+    ]
+   }
+  }
+ ],
+ "pagination": {
+  "total_items": 1,
+  "total_pages": 1,
+  "current_page": 1,
+  "items_per_page": 10,
+  "total_in_page": 1
+ }
+}

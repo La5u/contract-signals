@@ -1,0 +1,17 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const ctx=vm.createContext({URL});vm.runInContext(fs.readFileSync('script.js','utf8'),ctx);
+const run=(fn,...args)=>{ctx.args=args;return vm.runInContext(`${fn}(...args)`,ctx);};
+const french=run('prepareContracts',JSON.parse(fs.readFileSync('data/contracts.json')));
+const lead=french.find(c=>c.id==='crc-station-nuage');
+const colombia=run('prepareContracts',JSON.parse(fs.readFileSync('data/colombia-secop2.json')));
+const co=colombia.find(c=>c.contractId==='CO1.PCCNTR.6685724');
+const report=run('pageSummaryForCopy',[lead,co],{dataset:'Test selection',page:2,totalPages:3,totalResults:9});
+assert.match(report,/Page 2 \/ 3 · 2 of 9 filtered records/);
+assert.match(report,/Audit finding: documented, separate from index · Reported investigation: reported at the time; current status unknown/);
+assert.match(report,/Dated news report: 2024-09-11 · https:\/\/labaule\.maville\.com/);
+assert.match(report,/Record source: https:\/\/community\.secop\.gov\.co\/Public\/Tendering\/OpportunityDetail/);
+assert.match(report,/3582841915 COP \(not an audited payment\)/);
+assert.match(report,/A flag is not proof of wrongdoing/);
+assert.equal((report.match(/^\[\d+\] /gm)||[]).length,2);
+assert.ok(!report.includes('confirmed corruption'));
+console.log('Page summaries retain source URLs, distinct evidence labels, currency and scope warnings.');
