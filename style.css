@@ -57,6 +57,10 @@ input[type="checkbox"] { min-height: auto; margin: 0; accent-color: #444; }
 .results-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 42px; }
 #status { color: #555; font-size: 12px; margin: 8px 0; }
 #file-help { border: 1px solid #aaa; padding: 12px; margin-top: 16px; }
+.privacy-note code { font-size: 11px; }
+.local-file { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin: 10px 0 0; font-size: 12px; color: #555; }
+.local-file label { flex-direction: row; align-items: center; gap: 8px; color: #222; }
+.local-file input[type="file"] { min-height: auto; padding: 4px; border-color: #ccc; font-size: 12px; max-width: 260px; }
 
 /* The table is the only intentionally scrollable page region. */
 .table-wrap {
@@ -192,6 +196,9 @@ a { color: #174a7c; text-underline-offset: 3px; overflow-wrap: anywhere; }
 }
 .pagination button { width: 104px; white-space: nowrap; }
 .pagination #copy-page { width: auto; }
+.export-actions { margin: 0 0 8px; font-size: 12px; color: #555; }
+.export-actions button { padding: 3px 10px; margin-left: 4px; }
+.export-actions button:disabled { color: #888; border-color: #ddd; cursor: default; }
 .page-size { flex-direction: row; align-items: center; gap: 5px; white-space: nowrap; }
 .page-size select { min-height: 32px; padding: 4px; width: 66px; }
 .pagination button:disabled { color: #888; border-color: #ddd; cursor: default; }
@@ -213,6 +220,7 @@ footer { border-top: 1px solid #ddd; padding-top: 18px; color: #666; font-size: 
   .pagination { width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; gap: 6px; }
   .pagination button { width: auto; }
   .pagination #copy-page { grid-column: 2 / 4; justify-self: end; }
+  .local-file input[type="file"] { max-width: 100%; }
   #page-status { min-width: 0; }
   .page-size { grid-column: 1 / 2; }
   .main-table, .table-wrap > table { min-width: 0; table-layout: fixed; }

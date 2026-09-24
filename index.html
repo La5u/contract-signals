@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
   <title>Contract signals</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
@@ -12,6 +13,7 @@
   <header>
     <h1>Contract signals</h1>
     <p>Explore published procurement records from France, Colombia and Paraguay.</p>
+    <p class="privacy-note">Runs entirely in your browser: no account, cookies, analytics or uploads. Filters live in the link after <code>#</code>, which browsers never send to a server.</p>
   </header>
   <section class="primary-controls" aria-label="Explore contracts">
   <label class="dataset-selector">Dataset
@@ -54,13 +56,19 @@
     </section>
   </details>
   <section id="file-help" hidden>
-    <p>Your browser may block automatic loading of a local file. Select <code id="file-path">data/decp-history.json</code> below, or serve this folder with <code>python -m http.server 8000</code>.</p>
-    <label>Open the local JSON dataset <input id="file" type="file" accept=".json,application/json"></label>
+    <p>Your browser may block automatic loading of a local file. Open <code id="file-path">data/decp-history.json</code> with the file picker below, or serve this folder with <code>python -m http.server 8000</code>.</p>
   </section>
+  <p class="local-file"><label>Open your own JSON file <input id="file" type="file" accept=".json,application/json"></label> <span>Read in this browser only, never uploaded. <a href="docs/data-format.md">File format</a>.</span></p>
   <p class="quick-caveat">Signals prompt review, not accusations. A zero or missing label does not mean a contract is clean. <a href="#about-results">How to read these results ↓</a></p>
   <section id="project-panel" class="project-panel" aria-label="Documented project dossier" hidden></section>
   <div class="results-bar">
-    <p id="status" role="status" aria-live="polite">Loading data…</p>
+    <div class="results-summary">
+      <p id="status" role="status" aria-live="polite">Loading data…</p>
+      <p class="export-actions">Export all filtered records:
+        <button id="export-csv" type="button" disabled title="Download every filtered record (all pages) as CSV. Built in your browser; nothing is uploaded.">CSV</button>
+        <button id="export-json" type="button" disabled title="Download every filtered record (all pages) as JSON, with the current view and caveats. Built in your browser; nothing is uploaded.">JSON</button>
+      </p>
+    </div>
     <nav id="pagination" class="pagination" aria-label="Table pagination" hidden>
       <button id="previous" type="button">← Previous</button>
       <span id="page-status" aria-live="polite"></span>
@@ -80,7 +88,7 @@
     </table>
   </div>
   <section class="reading-notes" id="about-results" aria-label="How to read the results">
-    <p><strong>The indicators flag characteristics for review—not proof of irregularity, favoritism or corruption.</strong> Public data can contain errors. A flag does not imply illegal behavior; no flag does not guarantee regularity. The copy button copies only summaries of the current page; large pages may exceed chat limits. Review personal data before pasting into any external service.</p>
+    <p><strong>The indicators flag characteristics for review—not proof of irregularity, favoritism or corruption.</strong> Public data can contain errors. A flag does not imply illegal behavior; no flag does not guarantee regularity. The copy button copies only summaries of the current page; large pages may exceed chat limits. Export CSV/JSON downloads every filtered record; an empty index cell means not assessed, not zero. Review personal data before pasting into any external service.</p>
     <details class="dataset-details">
       <summary>Data scope and limits</summary>
       <p id="dataset-note" class="dataset-note">Exploratory 24-month history: 2,594 DECP contracts from Paris and Ardèche, notified in 2024–2025. Modifications published may be later than 2025. This is not a guarantee of exhaustiveness of actual purchases.</p>
@@ -103,7 +111,7 @@
     <p>Editorial choices, not calibrated to predict irregularity. <a href="data/score-v3-review.json">Comparison v2.1/v3 and ranking sensitivity (JSON)</a>. Software verification is not legal or statistical validation. Flagged and unflagged cases must be reviewed. <a href="docs/score-v3.md">Full method and excerpt review</a> · <a href="docs/score-colombia.md">Colombia pilot method</a> · <a href="docs/international-pilots.md">Countries proposed for upcoming pilots</a>.</p>
     <p><strong>SECOP II · Colombia pilot:</strong> same v3.0 framework (families, family maxima, “Not assessed” semantics; <a href="docs/score-colombia.md">full method</a>), jurisdiction-specific check set. Four checks: award declared without supplier plurality or under manifest urgency (18); repeated such awards to the same buyer and supplier document (18 at 3 contracts up to 60 at 10); concentration within buyer and contract type (12 at 60 % up to 40 at 100 %, minimum 10 identified contracts and 80 % coverage); declared duration ≥ 36 months (8 at 36 up to 40 at 120, parsed read-only from the published free text). The four offer/timetable/history checks of the French method are out of scope here: no offers table, no publication–deadline chronology, no amendment history. The bare direct-family modality (≈82 % of this cohort) and ordinary justifications — professional services, interadministrative agreements, minimum-amount rules, regime statutes — add no points. Amounts in COP stay visible and sort only. Thresholds are editorial, not Colombian legal ones; no CPI, no country coefficient, no cross-country ranking.</p>
     <p><strong>Tours full notices:</strong> the declared explanations have procedure-wide scope, possibly on other lots. The criteria displayed come only from the indicated lot; candidate-selection criteria and award criteria are distinct. Weighting codes and values are kept without converting an unknown unit into a percentage. No points for a legal reason or a price weight. Documents without an assessable period display “Not assessed”, not a zero score. Publications and dispatches are distinguished; no merging with DECP.</p>
-    <p><strong>Six additional municipalities:</strong> Rennes, Nantes, Bordeaux, Grenoble, Dijon and Tours, chosen before the scores. Groups with ambiguous versions or identifiers are excluded from all calculations and remain visible. The enriched names are a current snapshot of the legal unit via the Annuaire des entreprises, not a historical verification: SIREN/SIRET and source are kept, with no effect on the score. Deterministic sample of 100 SIRENs out of 703 identified; no name is inferred for the others.</p>
+    <p><strong>Six additional municipalities:</strong> Rennes, Nantes, Bordeaux, Grenoble, Dijon and Tours, chosen before the scores. Groups with ambiguous versions or identifiers are excluded from all calculations and remain visible. The enriched names are a current snapshot of the legal unit via the Annuaire des entreprises, not a historical verification: SIREN/SIRET and source are kept, with no effect on the score. Every typed SIREN of the six cities and of Paris &amp; Ardèche is looked up; a name is kept only for an exact, fully public register entry, and none is inferred for the others.</p>
     <p><strong>Short bidding period:</strong> fewer than 15 calendar days, upper bound from midnight UTC on the day of the initial publication to the last explicit deadline, after extensions. Only explicitly open non-accelerated procedure, identified lot and procedure, verified chain without conflict. Reduction, reopening or unknown information: no calculation. Graduated weight from 8 to 40, competition family (maximum, not a sum). Editorial threshold, not legal nor statistically calibrated. Among the 10 imported notices, no period is assessable: corrections may be missing. Result dates are never used as the start.</p>
     <p><strong>Concentrated awards:</strong> same buyer/CPV to three digits, DECP cohorts 2024–2025 computed separately, at least 10 contracts to the single identified holder, coverage ≥ 80 %, same SIREN receiving ≥ 60 % of the known contracts. <strong>Repeated direct awards:</strong> at least three distinct contracts explicitly without competition, all amounts, same buyer/CPV/SIREN, same period. Groups in conflict, ambiguous identifiers and unmatched co-holders are excluded. A repetition may have a legal justification; the results describe only the published data of this cohort.</p>
     <p><strong>Groupings:</strong> CPV = purchase sector, not the company’s activity. Projects are linked only by an explicit documentary match; neither the scores nor the amounts of contracts are summed. The other groupings are navigation tools, not proof of a common project. Groups are ordered by their first contract in the chosen sort, then their contracts follow that sort. The block without a documented project comes after the documented projects. Unknown values come last in the sorts.</p>

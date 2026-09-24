@@ -2,12 +2,23 @@
 const { chromium } = require(process.env.PLAYWRIGHT_PATH || '/tmp/procurement-browser/node_modules/playwright');
 const assert = require('node:assert/strict');
 const path = require('node:path');
+const http = require('node:http');
+const fs = require('node:fs');
+// Own static server on a free port (or PORT): no collision with other local servers.
+const types={'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.json':'application/json','.md':'text/markdown; charset=utf-8','.xml':'application/xml','.pdf':'application/pdf'};
+const server=http.createServer((req,res)=>{
+ const file=path.join(process.cwd(),decodeURIComponent(new URL(req.url,'http://x').pathname).replace(/\/$/,'/index.html'));
+ if(!file.startsWith(process.cwd())||!fs.existsSync(file)||fs.statSync(file).isDirectory()){res.writeHead(404);return res.end();}
+ res.writeHead(200,{'content-type':types[path.extname(file)]||'application/octet-stream'});fs.createReadStream(file).pipe(res);
+});
 (async()=>{
+ await new Promise(resolve=>server.listen(Number(process.env.PORT)||0,'127.0.0.1',resolve));
+ const base=`http://127.0.0.1:${server.address().port}`;
  const browser=await chromium.launch({executablePath:'/usr/bin/chromium',headless:true,args:['--no-sandbox']});
  const page=await browser.newPage({viewport:{width:1280,height:900}});
  await page.context().grantPermissions(['clipboard-read','clipboard-write']);
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto('http://127.0.0.1:8765');
+ await page.goto(base);
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2594'));
  assert.match(await page.locator('#dataset option:checked').textContent(),/France.*Paris.*contracts.*DECP/);
  await page.selectOption('#page-size','100');
@@ -151,6 +162,39 @@ const path = require('node:path');
  assert.equal(await page.locator('.detail-row:not([hidden]) .assessment-checks li').count(),1);
  await page.selectOption('#dataset','decp');
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2594'));
+ // Shareable links: a fresh load restores dataset, filters, sort, page and page size.
+ const linked=await browser.newPage({viewport:{width:1280,height:900}});
+ linked.on('pageerror',e=>errors.push(e.message));
+ await linked.goto(base+'/#dataset=cities&sort=amount&flagged=1&page=2&size=25');
+ await linked.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 1270'));
+ assert.equal(await linked.locator('#dataset').inputValue(),'cities');
+ assert.equal(await linked.locator('#sort').inputValue(),'amount');
+ assert.equal(await linked.locator('#flagged').isChecked(),true);
+ assert.match(await linked.locator('#page-status').textContent(),/Page 2 \/ \d+ · 25 rows per page/);
+ assert.equal(await linked.locator('.contract-row').count(),25);
+ assert.equal(await linked.evaluate(()=>location.hash),'#dataset=cities&sort=amount&flagged=1&page=2&size=25');
+ await linked.selectOption('#sort','date');
+ assert.equal(await linked.evaluate(()=>location.hash),'#dataset=cities&sort=date&flagged=1&size=25');
+ // Export covers every filtered record, not only the visible page.
+ const flaggedTotal=Number((await linked.locator('#status').textContent()).split(' / ')[0]);
+ const [csvDownload]=await Promise.all([linked.waitForEvent('download'),linked.click('#export-csv')]);
+ assert.match(csvDownload.suggestedFilename(),/^contract-signals-cities-\d{4}-\d{2}-\d{2}\.csv$/);
+ const csv=fs.readFileSync(await csvDownload.path(),'utf8');
+ assert.ok(csv.startsWith('\ufeffid,date,buyer,'));
+ assert.equal(csv.split('\r\n').filter(line=>line.startsWith('decp-')).length,flaggedTotal);
+ const [jsonDownload]=await Promise.all([linked.waitForEvent('download'),linked.click('#export-json')]);
+ const exported=JSON.parse(fs.readFileSync(await jsonDownload.path(),'utf8'));
+ assert.equal(exported.count,flaggedTotal);assert.equal(exported.view,'#dataset=cities&sort=date&flagged=1&size=25');
+ // A pasted link on an open page switches dataset through hashchange; names are shown before identifiers.
+ await linked.evaluate(siren=>{location.hash='#dataset=decp&q='+siren;},profile.siren);
+ await linked.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2594'));
+ await linked.evaluate(siren=>{location.hash='#dataset=cities&q='+siren;},profile.siren);
+ await linked.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 1270'));
+ assert.equal(await linked.locator('#search').inputValue(),profile.siren);
+ const supplierCell=await linked.locator('.contract-row td:nth-child(3)').first().textContent();
+ assert.ok(supplierCell.startsWith(profile.name),supplierCell);
+ assert.match(supplierCell,/SIRET \d{14} · current name \(\d{4}-\d{2}-\d{2}\), not historical/);
+ await linked.close();
  await page.goto('file://'+path.resolve('index.html'));
  await page.waitForSelector('#file-help',{state:'visible'});
  await page.locator('#advanced-filters summary').click();
@@ -184,7 +228,7 @@ const path = require('node:path');
  assert.deepEqual(errors,[]);
  const mobile=await browser.newPage({viewport:{width:390,height:844}});
  mobile.on('pageerror',e=>errors.push(e.message));
- await mobile.goto('http://127.0.0.1:8765');
+ await mobile.goto(base);
  await mobile.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2594'));
  assert.equal(await mobile.locator('#advanced-filters').getAttribute('open'),null);
  assert.equal(await mobile.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
@@ -198,5 +242,5 @@ const path = require('node:path');
  assert.equal(await mobile.locator('#advanced-count').textContent(),'');
  assert.deepEqual(errors,[]);
  await mobile.close();
- await browser.close();console.log('HTTP, file:// picker, compact/advanced filters, mobile rows and evidence panels: passed.');
-})().catch(e=>{console.error(e);process.exit(1)});
+ await browser.close();server.close();console.log('HTTP, file:// picker, compact/advanced filters, mobile rows and evidence panels: passed.');
+})().catch(e=>{console.error(e);server.close();process.exit(1)});
