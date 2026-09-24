@@ -192,6 +192,9 @@ def normalize_row(raw: dict, buyer: dict) -> dict:
     objeto = raw.get("objeto_del_contrato") or raw.get("descripcion_del_proceso") \
         or raw.get("tipo_de_contrato") or raw.get("id_contrato") or buyer["name"]
     contrato = raw.get("id_contrato") or ""
+    supplier_document = str(raw.get("documento_proveedor") or "").strip()
+    if supplier_document.casefold() in {"no definido", "no definida", "sin definir", "n/a", "null", "none"}:
+        supplier_document = ""
     return {
         "id": f"secop2-{buyer['key']}-{contrato or raw.get('proceso_de_compra') or 'sans-id'}",
         "cohortId": "secop2-three-buyers-2024-2026",
@@ -209,8 +212,7 @@ def normalize_row(raw: dict, buyer: dict) -> dict:
         "processUrl": unwrap_url(raw.get("urlproceso")),
         "supplier": raw.get("proveedor_adjudicado") or None,
         "supplierIds": ([{"identifierType": raw.get("tipodocproveedor") or "Documento",
-                          "id": str(raw.get("documento_proveedor"))}]
-                        if raw.get("documento_proveedor") not in (None, "") else []),
+                          "id": supplier_document}] if supplier_document else []),
         "supplierGroup": raw.get("es_grupo"),
         "supplierSme": raw.get("es_pyme"),
         "description": objeto,
@@ -272,6 +274,12 @@ def join_verification(rows: list) -> dict:
     }
 
 
+def require_unique_ids(rows: list) -> None:
+    duplicates = join_verification(rows)["duplicateExtractIds"]
+    if duplicates:
+        raise ValueError(f"SECOP II extract contains {duplicates} duplicate ID(s); refusing to write output")
+
+
 def per_buyer_counts(rows: list) -> dict:
     counts = {}
     for row in rows:
@@ -310,6 +318,7 @@ def offline() -> None:
                          and raw.get("nombre_entidad") == b["match"]["value"]))
         rows.append(normalize_row(raw, buyer))
     rows.sort(key=lambda r: (r["buyerLevel"], r["date"] or "", r["id"]))
+    require_unique_ids(rows)
     dataset_path = os.path.join(ROOT, "data", "colombia-secop2.json")
     with open(dataset_path, "w", encoding="utf-8") as handle:
         json.dump(rows, handle, ensure_ascii=False, separators=(",", ":"))
@@ -339,6 +348,8 @@ def offline() -> None:
                                "Usaquén is matched by exact entity name and the shared NIT is "
                                "kept as-is. Entity names keep their original noise (//, *, etc.)."),
             "rowIdentity": "secop2-{buyerKey}-{id_contrato}; verified unique below.",
+            "supplierIdentifier": ("Published placeholder documents (for example 'No Definido') are "
+                                   "treated as unknown for identity-based indicators; original values remain in raw pages."),
         },
         "counts": {
             "rawRows": len(raw_rows),
@@ -366,6 +377,7 @@ def offline() -> None:
             "Not exhaustive: only the three announced buyers in the 24-month window.",
             "SECOP II contract rows are declarations; amounts and statuses are not audited payments.",
             "No offers/proposals table was downloaded; no offer-count indicator exists for Colombia.",
+            f"{len(rows) - sum(bool(row['supplierIds']) for row in rows)} published supplier documents are missing or placeholders; supplier names remain, but identity-based checks exclude those identifiers.",
             "No country ranking, no currency conversion, no comparison with French cohorts.",
             "Editorial thresholds of docs/score-colombia.md are not Colombian legal thresholds; "
             "a signal is not a finding of irregularity, and no flag proves regularity.",

@@ -1,0 +1,34 @@
+const fs = require('node:fs'), vm = require('node:vm'), assert = require('node:assert/strict');
+const ctx = vm.createContext({URL});
+vm.runInContext(fs.readFileSync('script.js','utf8'),ctx);
+const run = (fn,...args) => {ctx.args=args;return vm.runInContext(`${fn}(...args)`,ctx);};
+const raw = JSON.parse(fs.readFileSync('data/paraguay-dncp.json'));
+const cov = JSON.parse(fs.readFileSync('data/paraguay-dncp-coverage.json'));
+const rows = run('prepareContracts',raw);
+assert.equal(cov.cohort.buyerId,'DNCP-SICP-CODE-66');
+assert.equal(cov.cohort.window.startInclusive,'2024-09-01');
+assert.equal(cov.cohort.window.endExclusive,'2025-09-01');
+assert.equal(cov.counts.searchProcesses,88);
+assert.equal(cov.counts.publishedContractsInFullRecords,86);
+assert.equal(cov.counts.retainedContracts,84);
+assert.equal(cov.counts.retainedWithoutSignatureDate,84);
+assert.equal(cov.counts.retainedWithSignedDocumentUrl,80);
+assert.equal(rows.length,84);
+assert.equal(new Set(rows.map(r=>r.id)).size,rows.length);
+for(const row of rows){
+  assert.equal(row.dataFamily,'dncp'); assert.equal(row.currency,'PYG');
+  assert.equal(row.buyerId,cov.cohort.buyerId);
+  assert.ok(row.callPublishedDate>='2024-09-01'&&row.callPublishedDate<'2025-09-01');
+  assert.ok(row.ocid&&row.contractId&&row.awardId&&row.supplierIds.length===1);
+  assert.equal(row.signatureDate,null);
+  assert.equal(row.source,`https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/${row.ocid}`);
+  const a=run('getAssessment',row);
+  assert.equal(a.evaluated,0);assert.equal(a.unknownApplicability,1);
+  assert.equal(a.checks[0].status,'unknown');
+  assert.equal(run('getVigilanceScore',row),null);
+  assert.equal(run('getIndicators',row).length,0);
+}
+assert.equal(run('selectContracts',rows,{assessment:'unevaluated'}).length,84);
+assert.equal(run('selectContracts',rows,{assessment:'zero'}).length,0);
+assert.equal(run('selectContracts',rows,{flagged:true}).length,0);
+console.log('Paraguay pilot: 84 linked contract rows, no cross-jurisdiction scoring, all not assessed.');

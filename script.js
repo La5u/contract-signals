@@ -121,6 +121,13 @@ function secop2AvoidanceJustified(contract) {
   return CO_AVOIDANCE_JUSTIFICATIONS.has(contract.procedureJustification);
 }
 
+function secop2SupplierIdentity(contract) {
+  if (contract.supplierIds?.length !== 1) return null;
+  const { id, identifierType } = contract.supplierIds[0];
+  if (typeof id !== 'string' || !id.trim() || /^(no definid[oa]|sin definir|n\/a|null|none)$/i.test(id.trim())) return null;
+  return `${identifierType || 'Documento'}:${id.trim()}`;
+}
+
 // Read-only parse of the published free text duraci_n_del_contrato
 // ("6 Mes(es)", "345 Dia(s)", "12 Semana(s)", "5 Año(s)"); the extract
 // text itself is never rewritten. Hours and anything else stay null.
@@ -182,6 +189,11 @@ function graduated(value, start, end, low, high) {
 // Official findings and financial amounts are separate evidence/context, not points.
 function getAssessment(c) {
   if (c.dataFamily === 'secop2') return getAssessmentSecop2(c);
+  if (c.dataFamily === 'dncp') {
+    const reason = 'Paraguay pilot: source contract and award links are available, but local indicator eligibility and historical completeness have not been validated. French and Colombian rules do not apply; not assessed.';
+    return { checks: [{ id: 'dncp-method-pending', label: 'Paraguayan review method pending', family: 'competition', applicability: 'unknown', status: 'unknown', weight: null, reason, explanation: reason }],
+      applicable: 0, evaluated: 0, unknown: 0, unknownApplicability: 1, notApplicable: 0, signals: 0, excludedReason: null };
+  }
   const excludedReason = c.initialConflicts?.length || c.modificationConflicts?.length ? 'Conflicting versions: calculations excluded.' :
     c.identityAmbiguous ? 'Duplicate contract identifier: calculations excluded.' :
     c.dataStatus === 'unverified' ? 'Unverified record: calculations excluded.' : null;
@@ -261,6 +273,7 @@ function getAssessmentSecop2(c) {
     justified ? `Non-competitive modality (${c.procedure}) with the published justification “${c.procedureJustification}”: the file itself declares an absent plurality of suppliers or manifest urgency. 18 points, all amounts. Ordinary grounds (professional services, interadministrative agreements, minimum-amount rules, regime statutes) add nothing; legality is not assessed here.` :
     `Non-competitive modality (${c.procedure}) with the published justification “${c.procedureJustification}”: an ordinary declared ground in this cohort, not a plurality/urgency claim. Threshold not crossed — not a conclusion of regularity.`);
   const repetition = c.secop2Repetition;
+  const supplierIdentity = secop2SupplierIdentity(c);
   add('secop2-repeated-plurality', 'Repeated awards declared without supplier plurality', 'competition',
     justified ? 'yes' : 'no', Boolean(repetition),
     Boolean(repetition && repetition.count >= CO_REPETITION_ENTRY),
@@ -269,11 +282,11 @@ function getAssessmentSecop2(c) {
     repetition ? `Same buyer and supplier document: ${repetition.count} award(s) of this cohort declared without supplier plurality. From 18 points at ${CO_REPETITION_ENTRY} contracts, linear to 60 at ${CO_REPETITION_MAX}. Published declarations only; a lawful ground may still apply.` : 'No identified holder for a repetition computation.');
   const concentration = c.secop2Concentration;
   add('secop2-concentration', 'Concentrated awards within a contract type', 'competition',
-    (c.supplierIds || []).length > 1 ? 'no' : (c.supplierIds || []).length === 1 ? 'yes' : 'unknown',
+    (c.supplierIds || []).length > 1 ? 'no' : supplierIdentity ? 'yes' : 'unknown',
     Boolean(concentration?.sufficient), Boolean(concentration && concentration.share >= CO_CONCENTRATION_ENTRY_SHARE),
     graduated(concentration?.share || 0, CO_CONCENTRATION_ENTRY_SHARE, 1, 12, 40),
     concentration ? `Same buyer and contract type (${concentration.contractType || 'unspecified'}): ${concentration.wins}/${concentration.known} contracts to this holder, out of ${concentration.total} in the group (${Math.round(concentration.coverage * 100)} % coverage). Minimum ${CO_CONCENTRATION_GROUP_MIN} identified contracts and ${Math.round(CO_CONCENTRATION_COVERAGE * 100)} % coverage; from 12 points at ${Math.round(CO_CONCENTRATION_ENTRY_SHARE * 100)} % to 40 at 100 %. ${concentration.sufficient ? '' : 'Insufficient sample or coverage: not assessed.'} Specialisation may explain a share; computed over the whole cohort, before filters.` :
-    (c.supplierIds || []).length === 1 ? 'No eligible buyer/contract-type group for this holder: not assessed.' :
+    supplierIdentity ? 'No eligible buyer/contract-type group for this holder: not assessed.' :
     (c.supplierIds || []).length > 1 ? 'Several declared holders: concentration of a single holder out of scope.' : 'Holder identity unknown: applicability not established.');
   const durationText = c.durationOriginal;
   const durationMonths = secop2DurationMonths(durationText);
@@ -298,6 +311,12 @@ function getAssessmentSecop2(c) {
     unknownApplicability: checks.filter(r => r.applicability === 'unknown').length,
     notApplicable: checks.filter(r => r.status === 'not-applicable').length,
     signals: checks.filter(r => r.status === 'signal').length, excludedReason };
+}
+function hasAdjudicatedCorruption(contract) {
+  return contract.corruptionOutcome?.status === 'final-adjudication';
+}
+function hasReportedInvestigation(contract) {
+  return Array.isArray(contract.investigationReports) && contract.investigationReports.length > 0;
 }
 function getIndicators(contract) { return getAssessment(contract).checks.filter(r => r.status === 'signal'); }
 function getScoreBreakdown(contract) {
@@ -404,7 +423,7 @@ function prepareContracts(data) {
     const typeKey = `${buyerKey}|${c.contractType || ''}`;
     if (!coConcentrationGroups.has(typeKey)) coConcentrationGroups.set(typeKey, []);
     coConcentrationGroups.get(typeKey).push(c);
-    const supplierId = c.supplierIds?.length === 1 ? c.supplierIds[0].id : null;
+    const supplierId = secop2SupplierIdentity(c);
     if (secop2AvoidanceJustified(c) && supplierId != null) {
       const pairKey = `${buyerKey}|${supplierId}`;
       if (!coRepetitionGroups.has(pairKey)) coRepetitionGroups.set(pairKey, []);
@@ -412,15 +431,15 @@ function prepareContracts(data) {
     }
   }
   for (const group of coConcentrationGroups.values()) {
-    const known = group.filter(c => c.supplierIds?.length === 1);
+    const known = group.filter(c => secop2SupplierIdentity(c) != null);
     const winsBySupplier = new Map();
     for (const c of known) {
-      const id = c.supplierIds[0].id;
+      const id = secop2SupplierIdentity(c);
       winsBySupplier.set(id, (winsBySupplier.get(id) || 0) + 1);
     }
     for (const c of group) {
-      if (c.supplierIds?.length !== 1) continue;
-      const id = c.supplierIds[0].id;
+      const id = secop2SupplierIdentity(c);
+      if (id == null) continue;
       const coverage = known.length / group.length;
       c.secop2Concentration = { contractType: group[0].contractType || '', total: group.length, known: known.length,
         wins: winsBySupplier.get(id) || 0, share: known.length ? (winsBySupplier.get(id) || 0) / known.length : null,
@@ -552,7 +571,7 @@ function validateContracts(data) {
     }
     if (c.findingScope != null && !['contract', 'aggregate'].includes(c.findingScope)) throw new Error(`${c.id} : invalid finding scope.`);
     if (c.amountQualifier != null && !['at-least', 'more-than', 'approximate'].includes(c.amountQualifier)) throw new Error(`${c.id} : invalid amount qualifier.`);
-    if (c.dataFamily != null && !['decp', 'boamp', 'audit', 'secop2'].includes(c.dataFamily)) throw new Error(`${c.id} : invalid data family.`);
+    if (c.dataFamily != null && !['decp', 'boamp', 'audit', 'secop2', 'dncp'].includes(c.dataFamily)) throw new Error(`${c.id} : invalid data family.`);
     if (c.buyerSiret != null && !/^\d{14}$/.test(c.buyerSiret)) throw new Error(`${c.id} : invalid buyer SIRET.`);
     if (c.supplierIds != null && (!Array.isArray(c.supplierIds) || c.supplierIds.some(s => !s || typeof s.id !== 'string' || (s.identifierType != null && typeof s.identifierType !== 'string')))) throw new Error(`${c.id} : invalid supplier identifiers.`);
     if (c.supplierProfiles != null) {
@@ -582,11 +601,33 @@ function validateContracts(data) {
     if (c.officialFinding === true && (c.dataStatus !== 'verified' || !safeSource(c.source) || !c.sourceReference)) {
       throw new Error(`${c.id} : an official finding requires a verified source and a reference passage.`);
     }
+    if (c.investigationReports != null) {
+      if (!Array.isArray(c.investigationReports) || c.findingScope === 'aggregate' || c.dataStatus !== 'verified' ||
+          c.investigationReports.some(report => {
+            const fields = ['publisher', 'reportedFact', 'linkageBasis', 'currentStatus'];
+            return !report || typeof report !== 'object' || Array.isArray(report) ||
+              report.status !== 'reported-at-date-current-unknown' || report.scope !== 'contract' ||
+              fields.some(key => typeof report[key] !== 'string' || !report[key].trim()) ||
+              !safeSource(report.sourceUrl) ||
+              [report.reportedAt, report.eventDate].some(date => typeof date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(date) || !Number.isFinite(Date.parse(date)) || new Date(date).toISOString().slice(0, 10) !== date) ||
+              report.reportedAt < report.eventDate;
+          })) throw new Error(`${c.id} : reported investigation requires dated contract-specific news and unknown current status.`);
+    }
+    if (c.corruptionOutcome != null) {
+      const o = c.corruptionOutcome;
+      const required = ['authority', 'decisionId', 'decisionDate', 'judgmentUrl', 'finalityUrl', 'verifiedAsOf', 'sourcePassage', 'offence', 'contractId', 'linkageBasis'];
+      if (!o || typeof o !== 'object' || Array.isArray(o) || o.status !== 'final-adjudication' || o.scope !== 'contract' ||
+          c.dataStatus !== 'verified' || c.findingScope === 'aggregate' || !c.contractId || o.contractId !== c.contractId ||
+          required.some(key => typeof o[key] !== 'string' || !o[key].trim()) ||
+          !safeSource(o.judgmentUrl) || !safeSource(o.finalityUrl) ||
+          [o.decisionDate, o.verifiedAsOf].some(date => !/^\d{4}-\d{2}-\d{2}$/.test(date) || !Number.isFinite(Date.parse(date)) || new Date(date).toISOString().slice(0, 10) !== date) ||
+          o.verifiedAsOf < o.decisionDate) throw new Error(`${c.id} : final corruption outcome requires a contract-specific judgment, source passage and verified finality.`);
+    }
   }
   return data;
 }
 
-function selectContracts(contracts, { search = '', minimum = 0, minScore = 0, flagged = false, official = false, indicator = '', legal = '', noticeContext = '', assessment = '', sector = '', project = '', sort = 'score' } = {}) {
+function selectContracts(contracts, { search = '', minimum = 0, minScore = 0, flagged = false, official = false, adjudicated = false, investigation = false, indicator = '', legal = '', noticeContext = '', assessment = '', sector = '', project = '', sort = 'score' } = {}) {
   const terms = normalize(search).trim().split(/\s+/).filter(Boolean);
   // Per-render caches only: no stale scores when data or cohort context changes.
   const scores = new Map();
@@ -611,7 +652,7 @@ function selectContracts(contracts, { search = '', minimum = 0, minScore = 0, fl
     const projectMatch = !project || (project === '@documented' ? Boolean(c.project) : c.project?.id === project);
     return terms.every(term => text.includes(term)) && assessmentMatch && noticeMatch && legalMatch && sectorMatch && projectMatch &&
       (minimum <= 0 || (c.amount != null && c.amount >= minimum)) && (minScore <= 0 || (scoreFor(c) != null && scoreFor(c) >= minScore)) &&
-      (!flagged || getIndicators(c).length > 0) && (!official || c.officialFinding === true) &&
+      (!flagged || getIndicators(c).length > 0) && (!official || c.officialFinding === true) && (!adjudicated || hasAdjudicatedCorruption(c)) && (!investigation || hasReportedInvestigation(c)) &&
       (!indicator || (indicator === 'official-finding' ? c.officialFinding === true : getIndicators(c).some(i => i.id === indicator)));
   }).sort((a, b) => {
     const direction = ['score-asc', 'amount-asc', 'date-asc', 'publication-asc'].includes(sort) ? 1 : ['sector', 'buyer', 'supplier', 'offers'].includes(sort) ? 1 : -1;
@@ -629,6 +670,28 @@ function selectContracts(contracts, { search = '', minimum = 0, minScore = 0, fl
   });
 }
 
+// Export only the visible page, never silently imply that the cohort is complete.
+// This is a research lead with source links, not a corruption verdict or payment audit.
+function pageSummaryForCopy(rows, { dataset, page, totalPages, totalResults }) {
+  const lines = [`Contract signals · ${dataset}`, `Page ${page} / ${totalPages} · ${rows.length} of ${totalResults} filtered records`,
+    'Published declarations and heuristic signals only. A flag is not proof of wrongdoing; zero or no label is not clearance. Dates, amounts and source coverage vary by dataset.', ''];
+  for (const [index, c] of rows.entries()) {
+    const score = getVigilanceScore(c);
+    const signals = getIndicators(c);
+    const source = safeSource(c.processUrl) || safeSource(c.source);
+    lines.push(`[${index + 1}] ${c.id}`, `Buyer: ${c.buyer}`, `Supplier: ${c.supplier || 'not specified'}`,
+      `Subject: ${c.description}`, `Date (source field; see record for meaning): ${c.date || 'unknown'}`,
+      `Declared amount: ${c.amount == null ? 'unknown' : `${c.amount} ${c.currency || 'EUR'}`} (not an audited payment)`,
+      `Index: ${score == null ? 'Not assessed' : `${score}/100`} · Heuristic signals: ${signals.length ? signals.map(i => i.label).join('; ') : score == null ? 'not assessed' : 'none among assessed checks'}`,
+      `Audit finding: ${c.officialFinding === true ? 'documented, separate from index' : 'not linked in this extract'} · Reported investigation: ${hasReportedInvestigation(c) ? 'reported at the time; current status unknown' : 'not linked in this extract'}`,
+      `Record source: ${source || 'not available'}`);
+    if (c.officialFinding && safeSource(c.reportUrl)) lines.push(`Audit report: ${safeSource(c.reportUrl)}`);
+    for (const report of c.investigationReports || []) lines.push(`Dated news report: ${report.reportedAt} · ${report.sourceUrl}`);
+    lines.push('');
+  }
+  return lines.join('\n').trimEnd();
+}
+
 // Everything from JSON is inserted as text, never as HTML.
 function element(tag, text, className) {
   const node = document.createElement(tag);
@@ -637,11 +700,12 @@ function element(tag, text, className) {
   return node;
 }
 
+function sourceLink(url, label) {
+  const link = element('a', label); link.href = safeSource(url); link.target = '_blank'; link.rel = 'noopener noreferrer'; return link;
+}
+
 function renderNoticeEvidence(cell, c) {
   const e = c.noticeEvidence;
-  function sourceLink(url, label) {
-    const link = element('a', label); link.href = safeSource(url); link.target = '_blank'; link.rel = 'noopener noreferrer'; return link;
-  }
   cell.append(element('h3', 'Full notice · declared explanations and criteria'),
     element('p', `Version ${e.version || '—'} · notice UUID ${e.noticeUuid || '—'} · lot ${e.lotId || '—'} · local lot reference ${e.lotReference || '—'} · ${e.kind}. A version/lot is a document, not a single attributed contract.`),
     element('p', `Resolved buyers: ${e.buyers.map(b => `${b.name || '—'} (${b.siret || '—'})`).join(' / ')}. ${e.buyers.length > 1 ? 'Joint purchase: do not attribute all services or expenses to Tours.' : ''}`),
@@ -693,7 +757,7 @@ function startExplorer() {
   const body = document.querySelector('#contracts');
   const status = document.querySelector('#status');
   const fileHelp = document.querySelector('#file-help');
-  const controls = Object.fromEntries(['search', 'minimum', 'flagged', 'official', 'indicator', 'legal', 'notice-context', 'assessment', 'sort', 'sector', 'project', 'group-by', 'min-score'].map(id => [id, document.getElementById(id)]));
+  const controls = Object.fromEntries(['search', 'minimum', 'flagged', 'official', 'adjudicated', 'investigation', 'indicator', 'legal', 'notice-context', 'assessment', 'sort', 'sector', 'project', 'group-by', 'min-score'].map(id => [id, document.getElementById(id)]));
   const datasetSelect = document.querySelector('#dataset');
   const datasets = {
     tours: { path: 'data/tours-notices.json', coverage: 'data/tours-notices-coverage.json', note: 'Tours · full 2025 notices and out-of-period linked references: 25 buyer-verified notices, 66 version/lot rows, including labelled joint purchases. 25 rows with award criteria; procedure texts and 2 corrections kept. TED XML matched by UUID and version, not by name. These are documents, not 66 contracts or expenses: no bidding-period score without a reliable chain.' },
@@ -701,18 +765,26 @@ function startExplorer() {
     consultations: { path: 'data/consultations.json', coverage: 'data/consultations-coverage.json', note: '10 initial BOAMP notices from 3 February 2025, first identifiers among 200, selected before any calculation. One correction and three award notices linked explicitly. Notice-level rows, not attributed contracts or expenses. Chains not certified complete: no bidding-period score in this extract. No independent TED download.' },
     decp: { path: 'data/decp-history.json', coverage: 'data/decp-coverage.json', note: 'Exploratory 24-month history: 2,594 DECP contracts from Paris and Ardèche, notified in 2024–2025. Every row returned by the source for these two SIRETs was examined; this does not guarantee that all actual purchases were published. Paris was chosen for volume, Ardèche for the availability of modifications: this choice is not representative. Modifications may be later than 2025. Suppliers identified by SIRET; three names in the Paris dossier are confirmed by the Annuaire des entreprises. The eight official findings are in the other dataset.' },
     boamp: { path: 'data/contracts.json', coverage: 'data/coverage.json', note: '3,010 records: 3,000 BOAMP lots sampled from February–April 2025 publications, two Mauges lots and eight documented CRC dossiers. Some findings concern sets of orders, not an individual award. A finding does not extend to a municipality’s other purchases. This sample does not allow an exhaustive competition history to be computed.' },
-    colombia: { path: 'data/colombia-secop2.json', coverage: 'data/colombia-secop2-coverage.json', note: 'SECOP II pilot · Colombia · three buyers announced before download · signatures 2024-09 → 2026-09: 7,560 contracts (Ministerio de Educación Nacional 2,618, national; Gobernación de Caldas 3,696, departmental; Alcaldía Local de Usaquén 1,246, municipal-local). Fields kept verbatim in Spanish; amounts in COP, never converted. Jurisdiction-specific indicators (docs/score-colombia.md): declared absence of supplier plurality or manifest urgency, repetition of such awards, concentration within buyer and contract type, declared duration ≥ 36 months. The bare direct-family modality (≈82 % of the cohort) and ordinary justifications add no points; amounts sort only. Licence CC BY-SA 4.0 (Colombia Compra Eficiente); not exhaustive of each buyer’s procurement; no offers table was imported, so no offer-count indicator exists.' }
+    colombia: { path: 'data/colombia-secop2.json', coverage: 'data/colombia-secop2-coverage.json', note: 'SECOP II pilot · Colombia · three buyers announced before download · signatures 2024-09 → 2026-09: 7,560 contracts (Ministerio de Educación Nacional 2,618, national; Gobernación de Caldas 3,696, departmental; Alcaldía Local de Usaquén 1,246, municipal-local). Fields kept verbatim in Spanish; amounts in COP, never converted. Jurisdiction-specific indicators (docs/score-colombia.md): declared absence of supplier plurality or manifest urgency, repetition of such awards, concentration within buyer and contract type, declared duration ≥ 36 months. The bare direct-family modality (≈82 % of the cohort) and ordinary justifications add no points; amounts sort only. Licence CC BY-SA 4.0 (Colombia Compra Eficiente); not exhaustive of each buyer’s procurement; no offers table was imported, so no offer-count indicator exists.' },
+    paraguay: { path: 'data/paraguay-dncp.json', coverage: 'data/paraguay-dncp-coverage.json', note: 'Paraguay · DNCP OCDS pilot · Municipalidad de Fernando de la Mora only. Calls published 2024-09-01 → 2025-09-01: 88 process records, 84 linked contract entries retained; 2 contract entries excluded, 4 other processes without eligible contracts. PYG, no conversion. Source contract.period.startDate is not a signature date; no published dateSigned on retained rows. Raw OCDS records retained, 80 entries link a document typed contractSigned, contents not independently reviewed. No Paraguayan scoring method approved: all rows Not assessed, never zero; no French/Colombian rules applied. Not a national sample or payment audit.' }
   };
   const provenance = { verified: 'Documented · public source', unverified: 'To verify · research lead', synthetic: 'Fictional · pedagogical comparison' };
   const money = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2 });
   const moneyCop = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
-  const moneyFor = c => c.dataFamily === 'secop2' ? moneyCop : money;
+  const moneyPyg = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'PYG', maximumFractionDigits: 0 });
+  const moneyFor = c => c.dataFamily === 'secop2' ? moneyCop : c.dataFamily === 'dncp' ? moneyPyg : money;
   const dateFormat = new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'short', year: 'numeric' });
   let contracts = [];
   let loaded = false;
   let loadVersion = 0;
   let page = 0;
-  const pageSize = 50;
+  let pageSize = 50;
+  let pageRowsForCopy = [];
+  let totalResultsForCopy = 0;
+  let currentDatasetLabel = datasetSelect.selectedOptions[0].textContent.trim();
+  const pageSizeSelect = document.querySelector('#page-size');
+  const copyPage = document.querySelector('#copy-page');
+  const copyStatus = document.querySelector('#copy-status');
   const pagination = document.querySelector('#pagination');
   const previous = document.querySelector('#previous');
   const next = document.querySelector('#next');
@@ -737,6 +809,8 @@ function startExplorer() {
     controls.sector.value = '';
     controls.flagged.checked = false;
     controls.official.checked = false;
+    controls.adjudicated.checked = false;
+    controls.investigation.checked = false;
     controls.project.value = id;
     controls['group-by'].value = id ? 'project' : '';
     page = 0;
@@ -774,13 +848,15 @@ function startExplorer() {
   function render() {
     if (!loaded) return;
     const minimum = Math.max(0, Number(controls.minimum.value) || 0);
-    const filtered = selectContracts(contracts, { search: controls.search.value, minimum, minScore: Number(controls['min-score'].value) || 0, flagged: controls.flagged.checked, official: controls.official.checked, indicator: controls.indicator.value, legal: controls.legal.value, noticeContext: controls['notice-context'].value, assessment: controls.assessment.value, sector: controls.sector.value, project: controls.project.value, sort: controls.sort.value });
+    const filtered = selectContracts(contracts, { search: controls.search.value, minimum, minScore: Number(controls['min-score'].value) || 0, flagged: controls.flagged.checked, official: controls.official.checked, adjudicated: controls.adjudicated.checked, investigation: controls.investigation.checked, indicator: controls.indicator.value, legal: controls.legal.value, noticeContext: controls['notice-context'].value, assessment: controls.assessment.value, sector: controls.sector.value, project: controls.project.value, sort: controls.sort.value });
     const arrangement = arrangeGroups(filtered, controls['group-by'].value);
     const visible = arrangement.rows;
     renderProjectPanel();
     const pageCount = Math.max(1, Math.ceil(visible.length / pageSize));
     page = Math.min(page, pageCount - 1);
     const pageRows = visible.slice(page * pageSize, (page + 1) * pageSize);
+    pageRowsForCopy = pageRows;
+    totalResultsForCopy = visible.length;
     const fragment = document.createDocumentFragment();
     pageRows.forEach((c, index) => {
       const indicators = getIndicators(c);
@@ -807,13 +883,16 @@ function startExplorer() {
       for (const p of c.supplierProfiles || []) supplierCell.append(element('small', `${p.name} · current name (${p.retrievedAt.slice(0, 10)}), not historical`, 'provenance'));
       const dateCell = element('td', c.date ? dateFormat.format(new Date(c.date)) : c.noticeEvidence ? c.publicationDate || '—' : '—');
       if (c.noticeEvidence) dateCell.append(element('small', 'BOAMP publication', 'provenance'));
+      if (c.dataFamily === 'dncp') dateCell.append(element('small', 'Contract-period start · not signature', 'provenance'));
       row.append(dateCell, element('td', c.buyer), supplierCell);
       const objectCell = element('td');
       const button = element('button', c.description, 'row-toggle');
       button.type = 'button';
       button.setAttribute('aria-expanded', String(expanded.has(c.id)));
       button.setAttribute('aria-controls', `detail-${index}`);
-      objectCell.append(button, element('small', provenance[c.dataStatus], 'provenance'));
+      button.title = c.description;
+      objectCell.append(button, element('small', c.buyer, 'mobile-buyer'));
+      if (c.dataStatus !== 'verified') objectCell.append(element('small', provenance[c.dataStatus], 'provenance'));
       if (c.project) {
         const projectLink = element('button', `Project: ${c.project.title}`, 'group-link');
         projectLink.type = 'button';
@@ -825,33 +904,37 @@ function startExplorer() {
       if (legalContext.length) objectCell.append(element('small', `Context · ${[...new Set(legalContext.map(item => item.article))].join(', ')} cited · no points added`, 'provenance'));
       if (c.initialConflicts?.length || c.identityAmbiguous) objectCell.append(element('small', 'Ambiguous identifier / versions · calculations excluded', 'provenance'));
       if (c.modificationConflicts?.length) objectCell.append(element('small', 'Conflicting modification versions', 'provenance'));
-      if ([c.amount, c.offers, c.durationMonths, c.directAward].some(value => value == null)) {
-        objectCell.append(element('small', 'Partial data · see details', 'provenance'));
-      }
-      if (c.findingScope) objectCell.append(element('small', c.findingScope === 'aggregate' ? 'Finding on a set of orders' : 'Finding attached to the described contract', 'provenance'));
+      if (c.officialFinding === true) objectCell.append(element('small', 'Official audit finding · not a conviction', 'provenance'));
+      if (hasReportedInvestigation(c)) objectCell.append(element('small', 'Investigation reported at the time · current status unknown', 'provenance'));
+      if (hasAdjudicatedCorruption(c)) objectCell.append(element('small', 'Final judgment linked to this contract', 'provenance'));
       const amountPrefix = { 'at-least': '≥ ', 'more-than': '> ', approximate: '≈ ' }[c.amountQualifier] || '';
       const sector = getSector(c);
       const sectorCell = element('td', sector.label);
       sectorCell.append(element('small', c.cpv || 'unknown CPV', 'provenance'));
       row.append(objectCell, sectorCell, element('td', c.amount == null ? '—' : amountPrefix + moneyFor(c).format(c.amount), 'numeric'), element('td', c.offers ?? '—', 'numeric'));
       const badges = element('td');
-      if (indicators.length) indicators.forEach(i => {
-        const badge = element('span', `${i.label} · ${i.weight} pts · ${i.severityLabel.toLocaleLowerCase('en')}`, `badge severity-${i.severity}${i.id === 'official-finding' ? ' official' : ''}`);
-        badge.title = `Vigilance level ${i.severityLabel.toLocaleLowerCase('en')}; raw weight, not summed with the other signals of the same family. ${i.explanation}`;
+      if (indicators.length) {
+        const primary = indicators[0];
+        const badge = element('span', primary.label, `badge severity-${primary.severity}`);
+        badge.title = `Raw weight ${primary.weight}; not summed with other signals in the same family. ${primary.explanation}`;
         badges.append(badge);
-      });
+        if (indicators.length > 1) {
+          const extra = element('span', `+${indicators.length - 1} more`, 'badge-extra');
+          extra.title = indicators.slice(1).map(i => `${i.label} · ${i.weight} pts`).join(' / ');
+          badges.append(extra);
+        }
+      }
       const breakdown = getScoreBreakdown(c);
       const assessment = breakdown.assessment;
       const scoreValue = breakdown.score;
-      if (!indicators.length) badges.append(element('span', scoreValue == null ? 'Checks not assessed' : 'No signal among the evaluated checks', 'muted'));
-      if (c.officialFinding === true) badges.append(element('span', 'Official finding · outside the index', 'badge official'));
+      if (!indicators.length) badges.append(element('span', '—', 'muted'));
       const level = scoreLevel(scoreValue, hasIncompleteData(c));
       const score = element('td', null, 'numeric');
       const chip = element('span', scoreValue == null ? 'Not assessed' : `${scoreValue} / 100`, `score-chip level-${level.id}`);
       chip.title = `${level.label} — editorial index, not a probability nor legal gravity.`;
       const coverageLabel = assessment.excludedReason ? 'Calculations excluded' : assessment.applicable ? `${assessment.signals} signal(s) · ${assessment.evaluated}/${assessment.applicable} known-applicable checks evaluated` : 'No check with established applicability';
-      score.append(chip, element('small', coverageLabel, 'provenance'));
-      if (assessment.unknownApplicability) score.append(element('small', `${assessment.unknownApplicability} additional unknown applicability(ies)`, 'provenance'));
+      score.append(chip);
+      score.title = `${coverageLabel}. ${assessment.unknownApplicability} unknown applicability(ies). Open the row for details.`;
       score.setAttribute('aria-label', `${scoreValue == null ? 'Index not assessed.' : `Heuristic index: ${scoreValue} out of 100.`} ${coverageLabel}. ${assessment.unknownApplicability} unknown applicabilities.`);
       row.append(badges, score);
       const detail = element('tr', null, 'detail-row');
@@ -859,7 +942,7 @@ function startExplorer() {
       detail.hidden = !expanded.has(c.id);
       const cell = element('td');
       cell.colSpan = 9;
-      cell.append(element('p', `${provenance[c.dataStatus]} · Reference: ${c.id}`), element('p', `Procedure: ${c.procedure || 'not specified'} · Duration: ${c.durationMonths != null ? `${c.durationMonths} months` : c.durationOriginal || 'not specified'}`));
+      cell.append(element('p', `${provenance[c.dataStatus]} · Reference: ${c.id}`), element('p', `Buyer: ${c.buyer} · Supplier: ${c.supplier || 'not specified'}`), element('p', `Procedure: ${c.procedure || 'not specified'} · Duration: ${c.durationMonths != null ? `${c.durationMonths} months` : c.durationOriginal || 'not specified'}`));
       if (c.findingScope) cell.append(element('p', c.findingScope === 'aggregate' ? 'Scope: a set of orders or services examined by the CRC, not an individual award. This finding is not extended to the buyer’s or supplier’s other contracts.' : 'Scope: the contract described in this record. This finding is not extended to the buyer’s or supplier’s other contracts.'));
       if (c.dateNote) cell.append(element('p', `Date: ${c.dateNote}`));
       if (c.amountBasis) cell.append(element('p', `Amount scope: ${c.amountBasis}`));
@@ -902,6 +985,18 @@ function startExplorer() {
       for (const r of assessment.checks) checks.append(element('li', `${r.label} — ${states[r.status]}${r.applicability === 'unknown' ? ' (unknown applicability)' : ''}${r.weight != null ? ` · ${r.weight} raw points` : ''}. ${r.reason}`));
       cell.append(checks);
       if (c.officialFinding === true) cell.append(element('h3', 'Documented official finding — separate from the index'), element('p', `This finding keeps its scope, source and response; it earns no heuristic points and is not a presumed conviction. Passage: ${c.sourceReference || '—'}.`));
+      for (const report of c.investigationReports || []) {
+        cell.append(element('h3', 'Reported investigation — separate from findings and index'),
+          element('p', `${report.publisher}, ${report.reportedAt}: ${report.reportedFact} Event: ${report.eventDate}. Link to this dossier: ${report.linkageBasis}. ${report.currentStatus} News of an investigative step does not prove an offence, identify a guilty party or establish that the investigation remains open.`),
+          sourceLink(report.sourceUrl, 'Read the contemporary report'));
+      }
+      if (hasAdjudicatedCorruption(c)) {
+        const o = c.corruptionOutcome;
+        cell.append(element('h3', 'Contract-specific adjudicated outcome — outside the index'),
+          element('p', `${o.authority} · ${o.decisionId} · ${o.decisionDate} · offence: ${o.offence}. This judgment is linked to contract ${o.contractId}; it does not establish guilt of every named party. Linkage: ${o.linkageBasis}.`),
+          element('p', `Judgment passage: ${o.sourcePassage}. Finality checked as of ${o.verifiedAsOf}; later appeals or reversals must be checked.`),
+          sourceLink(o.judgmentUrl, 'Official judgment'), sourceLink(o.finalityUrl, 'Finality evidence'));
+      }
       if (c.noticeEvidence) renderNoticeEvidence(cell, c);
       if (c.consultation) {
         const timeline = c.consultation;
@@ -921,7 +1016,17 @@ function startExplorer() {
         (timeline.exclusions || []).forEach(reason => cell.append(element('p', reason)));
         cell.append(element('p', 'An award notice linked to this notice does not prove a match for every lot; no amount, holder or finding is transferred.'));
       }
-      if (c.dataFamily === 'secop2') {
+      if (c.dataFamily === 'dncp') {
+        cell.append(element('h3', 'DNCP OCDS — published contract context'),
+          element('p', `OCID: ${c.ocid} · Award: ${c.awardId} · Contract: ${c.contractId} · Status: ${c.contractStatus || '—'}.`),
+          element('p', `Call published: ${c.callPublishedDate || '—'} · Contract period starts: ${c.date || '—'} · Signature date: ${c.signatureDate || 'not published'}. A contract period start is not proof of a signed document.`),
+          element('p', `Procedure: ${c.procedure || '—'} · Published amendment entries: ${c.amendmentCount} · Releases in downloaded record: ${c.releaseCount}. Neither count proves history completeness. Declared amount: ${c.amount == null ? '—' : moneyPyg.format(c.amount)}; no payment check or scoring.`));
+        for (const url of c.signedDocumentUrls || []) {
+          const p = element('p', 'Document typed contractSigned in source (contents not reviewed): ');
+          const link = element('a', 'DNCP document'); link.href = safeSource(url); link.target = '_blank'; link.rel = 'noopener noreferrer';
+          p.append(link); cell.append(p);
+        }
+      } else if (c.dataFamily === 'secop2') {
         cell.append(element('h3', 'SECOP II — declared procedure and justification'),
           element('p', `Declared modality: ${c.procedure || '—'} · Contract status: ${c.contractStatus || '—'} · Contract type: ${c.contractType || '—'}.`),
           element('p', `Published justification of the modality: ${c.procedureJustification || '—'}. This is the buyer’s declared ground, kept verbatim in Spanish; its legal validity is not assessed here. Ordinary grounds (professional services, interadministrative agreements, minimum-amount rules, regime statutes) add no points; only a declared absence of supplier plurality or manifest urgency enters the Colombian check (docs/score-colombia.md).`));
@@ -1013,8 +1118,16 @@ function startExplorer() {
       row.append(cell);
       fragment.append(row);
     }
-    body.replaceChildren(fragment);    status.textContent = `${visible.length} / ${contracts.length} results · ${visible.filter(c => getIndicators(c).length).length} with a heuristic signal · ${visible.filter(c => getVigilanceScore(c) == null).length} not assessed · ${visible.filter(c => c.officialFinding === true).length} separate findings · Rows ${visible.length ? page * pageSize + 1 : 0}–${page * pageSize + pageRows.length} · Vigilance index: a sorting tool only.`;
-    pagination.hidden = visible.length <= pageSize;
+    body.replaceChildren(fragment);
+    const active = ['minimum', 'sector', 'group-by', 'project', 'assessment', 'min-score', 'indicator', 'notice-context', 'legal'].filter(id => controls[id].value && controls[id].value !== '0').length +
+      ['flagged', 'official', 'adjudicated', 'investigation'].filter(id => controls[id].checked).length;
+    document.querySelector('#advanced-count').textContent = active ? `· ${active} active` : '';
+    document.querySelector('#clear-filters').disabled = !active;
+    const signals = visible.filter(c => getIndicators(c).length).length;
+    const unknown = visible.filter(c => getVigilanceScore(c) == null).length;
+    status.textContent = `${visible.length} / ${contracts.length} results · ${signals} with a heuristic signal · ${unknown} not assessed${active ? ` · ${active} advanced filter(s) active` : ''}`;
+    pagination.hidden = false;
+    copyPage.disabled = !pageRows.length;
     previous.disabled = page === 0;
     next.disabled = page >= pageCount - 1;
     document.querySelector('#page-status').textContent = `Page ${page + 1} / ${pageCount} · ${pageSize} rows per page`;
@@ -1048,6 +1161,42 @@ function startExplorer() {
     fileHelp.hidden = false;
   }
   Object.values(controls).forEach(control => control.addEventListener('input', () => { page = 0; render(); viewport.scrollTop = 0; }));
+  document.querySelector('#clear-filters').addEventListener('click', () => {
+    for (const id of ['minimum', 'sector', 'group-by', 'project', 'assessment', 'indicator', 'notice-context', 'legal']) controls[id].value = '';
+    controls['min-score'].value = '0';
+    for (const id of ['flagged', 'official', 'adjudicated', 'investigation']) controls[id].checked = false;
+    page = 0; render(); viewport.scrollTop = 0;
+  });
+  pageSizeSelect.addEventListener('change', () => {
+    const nextSize = Number(pageSizeSelect.value);
+    if (![25, 50, 100, 250].includes(nextSize)) return;
+    page = Math.floor(page * pageSize / nextSize);
+    pageSize = nextSize;
+    render(); viewport.scrollTop = 0;
+  });
+  copyPage.addEventListener('click', async () => {
+    if (!loaded || !pageRowsForCopy.length) return;
+    const copiedCount = pageRowsForCopy.length;
+    const text = pageSummaryForCopy(pageRowsForCopy, { dataset: currentDatasetLabel,
+      page: page + 1, totalPages: Math.max(1, Math.ceil(totalResultsForCopy / pageSize)), totalResults: totalResultsForCopy });
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error('Clipboard API unavailable');
+      await navigator.clipboard.writeText(text);
+      copyStatus.textContent = `${copiedCount} page summaries copied. Review personal data before sharing.`;
+    } catch (error) {
+      // file:// and older browsers may not expose the async Clipboard API.
+      const field = document.createElement('textarea');
+      field.value = text; field.style.position = 'fixed'; field.style.opacity = '0';
+      document.body.append(field); field.select();
+      let copied = false;
+      try { copied = document.execCommand('copy'); } catch (_) { /* Browser blocked clipboard access. */ }
+      field.remove();
+      copyStatus.textContent = copied ? `${copiedCount} page summaries copied. Review personal data before sharing.` : 'Unable to copy. Serve over localhost or select the rows manually.';
+    }
+    const original = 'Copy page summary';
+    copyPage.textContent = copyStatus.textContent.startsWith('Unable') ? 'Copy failed' : 'Copied!';
+    setTimeout(() => { copyPage.textContent = original; }, 2500);
+  });
   previous.addEventListener('click', () => { if (page > 0) { page--; render(); viewport.scrollTop = 0; } });
   next.addEventListener('click', () => { page++; render(); viewport.scrollTop = 0; });
   document.querySelector('#file').addEventListener('change', async event => {
@@ -1057,6 +1206,7 @@ function startExplorer() {
     try {
       const data = JSON.parse(await file.text());
       if (version === loadVersion) {
+        currentDatasetLabel = `Local file: ${file.name} (scope not verified)`;
         accept(data);
         document.querySelector('#dataset-note').textContent = `Local file loaded: ${file.name}. The statistics describe this file; they do not prove its completeness. Use the dataset selector to reload a provided dataset.`;
         document.querySelector('#coverage-link').hidden = true;
@@ -1066,6 +1216,9 @@ function startExplorer() {
   });
   async function loadDataset() {
     const selected = datasets[datasetSelect.value];
+    currentDatasetLabel = datasetSelect.selectedOptions[0].textContent.trim();
+    copyStatus.textContent = '';
+    copyPage.textContent = 'Copy page summary';
     const version = ++loadVersion;
     loaded = false;
     contracts = [];
@@ -1093,6 +1246,8 @@ function startExplorer() {
     viewport.scrollTop = 0;
     controls.flagged.checked = false;
     controls.official.checked = false;
+    controls.adjudicated.checked = false;
+    controls.investigation.checked = false;
     status.textContent = 'Loading data…';
     try {
       const response = await fetch(selected.path);

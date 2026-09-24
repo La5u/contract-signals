@@ -13,7 +13,8 @@ for(const c of rows){
   check(c.dataFamily==='secop2'&&c.currency==='COP');
   check(c.date>='2024-09-01'&&c.date<'2026-09-01');
   check(typeof c.description==='string'&&c.description.trim().length>0);
-  check(Array.isArray(c.supplierIds)&&c.supplierIds.length===1&&c.supplierIds[0].id);
+  check(Array.isArray(c.supplierIds)&&c.supplierIds.length<=1);
+  check(c.supplierIds.length===0||Boolean(c.supplierIds[0].id));
   check(c.contractId&&c.processId&&c.processUrl);
   check(typeof c.procedure==='string'&&c.procedure.length>0);
   check(typeof c.procedureJustification==='string'&&c.procedureJustification.length>0);
@@ -28,7 +29,19 @@ check(run('selectContracts',rows,{search:'ALCALDIA LOCAL DE USAQUEN'}).length===
 check(run('selectContracts',rows,{search:'MINISTERIO DE EDUCACION NACION'}).length===2618);
 // Join verification: intra-row process–contract–supplier completeness
 const jv=cov.joinVerification;
-check(jv.rows===7560&&jv.rowsWithContractId===7560&&jv.rowsWithProcessId===7560&&jv.rowsWithSupplierIdentifier===7560&&jv.duplicateExtractIds===0);
+check(jv.rows===7560&&jv.rowsWithContractId===7560&&jv.rowsWithProcessId===7560&&jv.rowsWithSupplierIdentifier===7553&&jv.duplicateExtractIds===0);
+check(rows.filter(c=>!c.supplierIds.length).length===7);
+check(rows.every(c=>!c.supplierIds.length||c.supplierIds[0].id!=='No Definido'));
+// Typed identifiers must not collide; placeholder documents cannot enter either context.
+const typedSample=run('prepareContracts',Array.from({length:10},(_,i)=>({
+  ...rows[0], id:`typed-${i}`, contractId:`typed-${i}`, supplierIds:[{identifierType:i<6?'NIT':'Cédula de Ciudadanía',id:'12345'}],
+  procedureJustification:'No existe pluralidad de oferentes en el mercado', contractType:'Ejemplo', buyerNit:'1234567'
+})).concat([{...rows[0],id:'typed-unknown',contractId:'typed-unknown',supplierIds:[{identifierType:'NIT',id:'No Definido'}],
+  procedureJustification:'No existe pluralidad de oferentes en el mercado',contractType:'Ejemplo',buyerNit:'1234567'}]));
+check(typedSample[0].secop2Repetition.count===6&&typedSample[6].secop2Repetition.count===4);
+check(typedSample[0].secop2Concentration.wins===6&&typedSample[6].secop2Concentration.wins===4);
+check(typedSample[10].secop2Concentration===null&&typedSample[10].secop2Repetition===null);
+check(run('getAssessment',typedSample[10]).checks.find(c=>c.id==='secop2-concentration').status==='unknown');
 // Duration parser: read-only on the published free text
 check(run('secop2DurationMonths','6 Mes(es)')===6);
 check(run('secop2DurationMonths','345 Dia(s)')===11.3);
@@ -67,11 +80,11 @@ check(fires['secop2-plurality-award']===176);
 check(fires['secop2-repeated-plurality']===15);
 check(!('secop2-concentration' in fires));
 check(fires['secop2-long-duration']===39);
-check(positives===215&&zeros===7345&&nulls===0&&flagged===215&&partials===56);
+check(positives===215&&zeros===7345&&nulls===0&&flagged===215&&partials===71);
 check(scores.get(18)===170&&scores.get(36)===6&&scores.get(40)===4&&scores.get(17.1)===18);
 check(run('selectContracts',rows,{assessment:'unevaluated'}).length===0);
 check(run('selectContracts',rows,{assessment:'zero'}).length===7345);
-check(run('selectContracts',rows,{assessment:'partial'}).length===56);
+check(run('selectContracts',rows,{assessment:'partial'}).length===71);
 check(run('selectContracts',rows,{flagged:true}).length===215);
 check(run('selectContracts',rows,{indicator:'secop2-plurality-award'}).length===176);
 check(run('selectContracts',rows,{indicator:'secop2-repeated-plurality'}).length===15);
