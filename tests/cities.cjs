@@ -17,8 +17,8 @@ check(new Set(rows.map(r=>r.buyerSiret)).size===6);
 check(rows.filter(r=>run('isAmbiguousCityContract',r)).length===172);
 check(rows.filter(r=>r.modificationConflicts.length).length===7);
 check(rows.reduce((n,r)=>n+r.history.filter(e=>e.kind==='modification').length,0)===365);
-check(rows.filter(r=>r.supplierProfiles.length).length===148);
-check(identities.identities.length===100);
+check(rows.filter(r=>r.supplierProfiles.length).length===1116);
+check(identities.identities.length===1960);
 for(const r of rows){
  const variants=raw.records.filter(s=>s.acheteur_id===r.buyerSiret&&s.id===r.contractId);
  check(variants.length>0);

@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Enrich the deterministic first 100 supplier SIRENs in the city DECP cohort.
+"""Attach current public company names to every typed French supplier SIREN.
 
-Normal mode reads data/decp-cities.json and queries Recherche entreprises.  The
-result is deliberately a small, public-only snapshot; --offline validates that
-snapshot without making network requests.
+Normal mode reads the DECP cohorts (six cities, Paris & Ardèche) and queries
+Recherche entreprises once per distinct SIREN, then writes supplierProfiles into
+both datasets.  --offline validates the existing snapshot and re-applies it to
+the datasets without making network requests.
 """
 import argparse
 import hashlib
@@ -17,7 +18,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 API = "https://recherche-entreprises.api.gouv.fr/search"
-LIMIT = 100
+DATASETS = (("decp-cities.json", "decp-cities-coverage.json"), ("decp-history.json", "decp-coverage.json"))
 SIREN_RE = re.compile(r"^\d{9}$")
 SIRET_RE = re.compile(r"^\d{14}$")
 
@@ -47,7 +48,7 @@ def suppliers(rows):
 def selection(rows):
     all_sirens = suppliers(rows)
     ordered = sorted(all_sirens, key=lambda s: hashlib.sha256(s.encode("ascii")).hexdigest())
-    return all_sirens, ordered[:LIMIT]
+    return all_sirens, ordered
 
 
 def query_url(siren):
@@ -56,15 +57,16 @@ def query_url(siren):
     return API + "?" + urllib.parse.urlencode({"q": siren, "per_page": 25})
 
 
-def fetch(url, attempts=4):
+def fetch(url, attempts=7):
     last = None
     for attempt in range(attempts):
         if attempt:
-            time.sleep(0.3 * (2 ** (attempt - 1)))
+            time.sleep(min(30, 0.5 * (2 ** attempt)))  # ~1 min total: rides out DNS or network blips
         try:
             with urllib.request.urlopen(url, timeout=45) as response:
                 return json.load(response)
-        except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, json.JSONDecodeError) as exc:
+        # OSError covers dropped connections (RemoteDisconnected, ConnectionResetError).
+        except (urllib.error.URLError, OSError, json.JSONDecodeError) as exc:
             last = exc
     raise RuntimeError(f"lookup failed after {attempts} attempts: {last}")
 
@@ -100,7 +102,7 @@ def clean_result(siren, url, payload, retrieved):
 def validate(identities, coverage, all_sirens=None):
     assert isinstance(identities.get("identities"), list)
     ids = identities["identities"]
-    assert len(ids) == min(LIMIT, coverage['counts']['universe']) and len({x.get("siren") for x in ids}) == len(ids)
+    assert len(ids) == coverage['counts']['universe'] and len({x.get("siren") for x in ids}) == len(ids)
     assert all(SIREN_RE.fullmatch(x["siren"]) for x in ids)
     allowed = {"siren", "name", "administrativeState", "diffusionStatus", "source", "retrievedAt", "status", "reason", "associatedSirets"}
     for item in ids:
@@ -115,7 +117,35 @@ def validate(identities, coverage, all_sirens=None):
     assert coverage['selection']['selectedSirens'] == [x['siren'] for x in ids]
     if all_sirens is not None:
         assert len(all_sirens) == coverage['counts']['universe']
-        assert sorted(all_sirens, key=lambda s: hashlib.sha256(s.encode('ascii')).hexdigest())[:LIMIT] == [x['siren'] for x in ids]
+        assert sorted(all_sirens, key=lambda s: hashlib.sha256(s.encode('ascii')).hexdigest()) == [x['siren'] for x in ids]
+
+
+def profiles_from(identities):
+    return {p["siren"]: {k: p.get(k) for k in ["siren", "name", "administrativeState", "diffusionStatus", "source", "retrievedAt", "status"]}
+            for p in identities["identities"]
+            if p.get("status") == "available" and p.get("diffusionStatus") == "O" and p.get("source") == query_url(p["siren"])}
+
+
+def apply_profiles(data, identities):
+    """Write supplierProfiles into each DECP dataset; names never replace published identifiers."""
+    profiles = profiles_from(identities)
+    for name, coverage_name in DATASETS:
+        rows = json.loads((data / name).read_text())
+        for row in rows:
+            sirens = {s.get("siren") for s in row.get("supplierIds") or []}
+            row["supplierProfiles"] = [profiles[s] for s in sorted(sirens - {None}) if s in profiles]
+        coverage = json.loads((data / coverage_name).read_text())
+        coverage["identityEnrichment"] = {"snapshot": "supplier-identities.json", "coverage": "supplier-identities-coverage.json",
+            "contractsWithCurrentNames": sum(bool(r["supplierProfiles"]) for r in rows), "availableSirens": len(profiles),
+            "historicalNamesVerified": False,
+            "matching": "SIREN derived only from typed French SIRET/SIREN; names do not replace published contract identifiers."}
+        (data / name).write_text(json.dumps(rows, ensure_ascii=False, indent=2) + "\n")
+        (data / coverage_name).write_text(json.dumps(coverage, ensure_ascii=False, indent=2) + "\n")
+        print(f"{name}: {coverage['identityEnrichment']['contractsWithCurrentNames']}/{len(rows)} rows with a current public name")
+
+
+def cohort_rows(data):
+    return [row for name, _ in DATASETS for row in json.loads((data / name).read_text())]
 
 
 def main():
@@ -128,31 +158,36 @@ def main():
     cov = data / "supplier-identities-coverage.json"
     if args.offline:
         identities, coverage = json.loads(out.read_text()), json.loads(cov.read_text())
-        validate(identities, coverage, suppliers(json.loads((data / 'decp-cities.json').read_text())))
+        validate(identities, coverage, suppliers(cohort_rows(data)))
         print(f"offline valid: {len(identities['identities'])} identities; {coverage['counts']['unavailable']} unavailable")
+        apply_profiles(data, identities)
         return
 
-    rows = json.loads((data / "decp-cities.json").read_text())
+    rows = cohort_rows(data)
     all_sirens, selected = selection(rows)
-    retrieved = now()
+    # Checkpoint: an interrupted run resumes from the lookups already made.
+    checkpoint = data / ".supplier-identities.partial.json"
+    done = json.loads(checkpoint.read_text()) if checkpoint.exists() else {"retrievedAt": now(), "lookups": {}}
+    retrieved = done["retrievedAt"]
     records = []
     query_log = []
     for index, siren in enumerate(selected):
-        if index:
-            time.sleep(0.3)
         url = query_url(siren)
-        queried_at = now()
-        payload = fetch(url)
-        record = clean_result(siren, url, payload, now())
-        query_log.append({"siren": siren, "url": url, "queriedAt": queried_at, "status": record["status"]})
+        if siren not in done["lookups"]:
+            time.sleep(0.3)
+            queried_at = now()
+            done["lookups"][siren] = {"queriedAt": queried_at, "record": clean_result(siren, url, fetch(url), now())}
+            checkpoint.write_text(json.dumps(done, ensure_ascii=False))
+        record = dict(done["lookups"][siren]["record"])
+        query_log.append({"siren": siren, "url": url, "queriedAt": done["lookups"][siren]["queriedAt"], "status": record["status"]})
         if all_sirens[siren]:
             record["associatedSirets"] = sorted(all_sirens[siren])
         records.append(record)
-        print(f"{index + 1}/{LIMIT} {siren}: {record['status']}")
+        print(f"{index + 1}/{len(selected)} {siren}: {record['status']}")
 
     identities = {
         "retrievedAt": retrieved,
-        "selection": {"method": "first 100 distinct typed French supplier SIRENs sorted by SHA256", "hash": "SHA-256 lowercase hexadecimal of SIREN", "universe": len(all_sirens), "selected": len(selected)},
+        "selection": {"method": "every distinct typed French supplier SIREN in the six-city and Paris & Ardèche DECP cohorts, sorted by SHA256", "hash": "SHA-256 lowercase hexadecimal of SIREN", "universe": len(all_sirens), "selected": len(selected)},
         "identities": records,
     }
     unavailable = [x for x in records if x["status"] == "unavailable"]
@@ -164,15 +199,17 @@ def main():
         "selection": {"method": identities["selection"]["method"], "selectedSirens": selected},
         "counts": {"universe": len(all_sirens), "selected": len(selected), "queried": len(records), "available": len(records) - len(unavailable), "unavailable": len(unavailable), "excludedFromSelection": len(all_sirens) - len(selected)},
         "unavailableReasons": {reason: sum(x["reason"] == reason for x in unavailable) for reason in sorted({x["reason"] for x in unavailable})},
-        "queries": {"count": len(records), "minimumIntervalSeconds": 0.3, "retries": 4, "dates": {"retrievalStartedAt": retrieved, "completedAt": now()}, "log": query_log},
+        "queries": {"count": len(records), "minimumIntervalSeconds": 0.3, "retries": 7, "dates": {"retrievalStartedAt": retrieved, "completedAt": now()}, "log": query_log},
         "temporalScope": "retrievedAt on the snapshot denotes retrieval start; per-query log timestamps record requests. Current unit-level administrative state, not historical or establishment state.",
-        "selectionDenominator": "Distinct typed supplier SIRENs in normalized non-conflicting supplierIds; ambiguous initial supplier variants are not assigned a name. All 100 selected identities use exact SIREN matching; names do not establish relationships.",
+        "selectionDenominator": "Distinct typed supplier SIRENs in normalized non-conflicting supplierIds; ambiguous initial supplier variants are not assigned a name. Every identity uses exact SIREN matching; names do not establish relationships.",
         "conservativeDiffusionChoice": "Only statut_diffusion == O permits retaining nom_complet. Missing statut_diffusion is unavailable; no field is fabricated.",
     }
     validate(identities, coverage, all_sirens)
     out.write_text(json.dumps(identities, ensure_ascii=False, indent=2) + "\n")
     cov.write_text(json.dumps(coverage, ensure_ascii=False, indent=2) + "\n")
-    print(f"wrote {out} and {cov}: {LIMIT} queried, {len(unavailable)} unavailable")
+    checkpoint.unlink()
+    print(f"wrote {out} and {cov}: {len(records)} queried, {len(unavailable)} unavailable")
+    apply_profiles(data, identities)
 
 
 if __name__ == "__main__":
