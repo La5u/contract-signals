@@ -1,4 +1,6 @@
-# Paraguay DNCP · bounded documentary pilot (not scored)
+# Paraguay DNCP · bounded documentary pilot
+
+> **Update, 25 September 2026:** these rows are now scored with Paraguayan checks ([score-paraguay.md](score-paraguay.md)), and a second, separately stored three-buyer cohort (MOPC, Gobierno Departamental de Central, Municipalidad de Asunción) was added. The two excluded entries turned out to be the separate `AC-…` entries the DNCP publishes for amount amendments (“Ampliación de Monto”, +20.0 % and +19.99 %). The amendments stay attached to their parent contracts. The “not assessed” statements below describe the pilot as first published.
 
 The first Paraguayan pilot is **one municipality, not a national analysis**: Municipalidad de Fernando de la Mora (`DNCP-SICP-CODE-66`). Selected before downloading full contract records, by manageable process count and existing official sample availability, not by CPI or indicator results. The search fixes `parties.identifier.id=66` and `tipo_fecha=publicacion_llamado` from **2024-09-01 inclusive to 2025-09-01 exclusive**. This selects *call publications*, not signatures or spending during those dates. Contracts published subsequently in those processes can appear in the full records.
 

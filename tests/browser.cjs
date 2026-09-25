@@ -14,7 +14,7 @@ const server=http.createServer((req,res)=>{
 (async()=>{
  await new Promise(resolve=>server.listen(Number(process.env.PORT)||0,'127.0.0.1',resolve));
  const base=`http://127.0.0.1:${server.address().port}`;
- const browser=await chromium.launch({executablePath:'/usr/bin/chromium',headless:true,args:['--no-sandbox']});
+ const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||(fs.existsSync('/usr/bin/chromium')?'/usr/bin/chromium':undefined),headless:true,args:['--no-sandbox']});
  const page=await browser.newPage({viewport:{width:1280,height:900}});
  await page.context().grantPermissions(['clipboard-read','clipboard-write']);
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
@@ -132,12 +132,18 @@ const server=http.createServer((req,res)=>{
  assert.match(copDetail,/SECOP II — detalle del proceso/);
  assert.equal(await page.locator('.detail-row:not([hidden]) .assessment-checks li').count(),8);
  assert.match(copDetail,/docs\/score-colombia\.md|Colombian check/);
- // Paraguay: records are linked contracts, but no local scoring method is approved.
+ // Paraguay: linked contract records scored with Paraguayan checks only (docs/score-paraguay.md).
  await page.selectOption('#dataset','paraguay');
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 84'));
  assert.match(await page.locator('#dataset-note').textContent(),/Fernando de la Mora/);
  assert.match(await page.locator('#dataset option:checked').textContent(),/Paraguay.*Fernando de la Mora.*contract records.*DNCP OCDS/);
- assert.match(await page.locator('#status').textContent(),/84 not assessed/);
+ assert.match(await page.locator('#status').textContent(),/35 with a heuristic signal · 0 not assessed/);
+ assert.equal(await page.locator('#dataset-sources').isHidden(),false);
+ const pySources=await page.locator('#sources-body').textContent();
+ assert.match(pySources,/Dirección Nacional de Contrataciones Públicas/);
+ assert.match(pySources,/CC BY 4\.0/);
+ assert.match(pySources,/data\/paraguay-dncp\/raw\//);
+ assert.match(pySources,/import-paraguay-dncp\.py --cohort fernando --offline/);
  await page.selectOption('#page-size','250');
  assert.equal(await page.locator('.contract-row').count(),84);
  assert.equal(await page.locator('#pagination').isVisible(),true);
@@ -153,13 +159,22 @@ const server=http.createServer((req,res)=>{
  assert.equal(await page.locator('#copy-page').isDisabled(),true);
  assert.match(await page.locator('#status').textContent(),/0 \/ 84/);
  await page.uncheck('#adjudicated');
- assert.match(await page.locator('.contract-row').first().textContent(),/Not assessed/);
+ assert.doesNotMatch(await page.locator('.contract-row').first().textContent(),/Not assessed/);
  await page.locator('.row-toggle').first().click();
  const pyDetail=await page.locator('.detail-row:not([hidden])').first().textContent();
  assert.match(pyDetail,/Contract period starts/);
  assert.match(pyDetail,/Signature date: not published/);
  assert.match(pyDetail,/PYG/);
- assert.equal(await page.locator('.detail-row:not([hidden]) .assessment-checks li').count(),1);
+ assert.equal(await page.locator('.detail-row:not([hidden]) .assessment-checks li').count(),8);
+ assert.match(pyDetail,/Verify it yourself/);
+ assert.match(pyDetail,/Award page on contrataciones\.gov\.py/);
+ assert.match(pyDetail,/search the official portal for: OCID ocds-/);
+ assert.match(await page.locator('.detail-row:not([hidden]) .verify a').first().getAttribute('href'),/^https:\/\/www\.contrataciones\.gov\.py\/licitaciones\/adjudicacion\//);
+ assert.match(copied,/Verify: Award page on contrataciones\.gov\.py/);
+ await page.selectOption('#dataset','paraguay3');
+ await page.waitForFunction(()=>/\/ \d+ results/.test(document.querySelector('#status').textContent)&&document.querySelector('#dataset-note').textContent.includes('Asunción'));
+ assert.match(await page.locator('#dataset option:checked').textContent(),/Paraguay.*MOPC.*Central.*Asunción/);
+ assert.match(await page.locator('#sources-body').textContent(),/--cohort 3buyers --offline/);
  await page.selectOption('#dataset','decp');
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2594'));
  // Shareable links: a fresh load restores dataset, filters, sort, page and page size.
