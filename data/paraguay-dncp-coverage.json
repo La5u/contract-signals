@@ -1,11 +1,13 @@
 {
  "source": "https://www.contrataciones.gov.py/datos/api/v3/doc",
+ "portal": "https://www.contrataciones.gov.py/licitaciones/",
  "license": "CC BY 4.0",
  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
  "attribution": "Dirección Nacional de Contrataciones Públicas (DNCP), Paraguay",
  "cohort": {
   "buyer": "Municipalidad de Fernando de la Mora",
   "buyerId": "DNCP-SICP-CODE-66",
+  "cohortId": "dncp-fernando-2024-2025",
   "selection": "One municipality, selected before downloading contract records; date filter on call publication, not on award/signature or score.",
   "window": {
    "startInclusive": "2024-09-01",
@@ -37,23 +39,28 @@
   "publishedContractsInFullRecords": 86,
   "retainedContracts": 84,
   "excludedContractEntries": 2,
+  "excludedBudgetOnlyEntries": 0,
+  "excludedEntriesThatAreAmendmentRecords": 2,
   "releasesInFullRecords": 93,
   "publishedContractAmendmentEntries": 2,
   "retainedWithSignedDocumentUrl": 80,
-  "retainedWithoutSignatureDate": 84
+  "retainedWithoutSignatureDate": 84,
+  "retainedWithPortalAwardPage": 84,
+  "retainedWithTendererCount": 83,
+  "retainedWithComplaintRecorded": 2
  },
  "limitations": [
   "Calls published during the fixed window, not contracts signed during that window; later awards/contracts may appear in full records.",
-  "Search pagination is checked against one observed total but the API does not promise an immutable snapshot; national completeness is unverified.",
-  "Only contracts with explicit awardID, one identified award supplier, and PYG contract value are retained; excluded counts are reported.",
+  "Search pagination is checked against one observed total but the API does not promise an immutable snapshot; national completeness is unverified. The search API caps totals at 10,000, so only bounded per-buyer queries are used.",
+  "Only contracts with explicit awardID, one identified award supplier, and PYG contract value are retained; excluded counts are reported. Budget-only entries (no contract ID, only implementation.financialProgress) are not contracts. Excluded entries also include the separate contract entries the source publishes for amount amendments; the amendment itself stays attached to its parent contract.",
   "The source's contractSigned document links are not a manual review of document contents; signatures, legal status and payments are not independently audited.",
   "Amendment and release counts are context, not a reconstructed value history; source versions can be incomplete.",
-  "No Paraguayan vigilance rules approved: every retained row is Not assessed, never scored with French or Colombian rules.",
-  "A single municipality is not a country sample; no cross-country score or currency comparison."
+  "Paraguayan checks are editorial (docs/score-paraguay.md); French and Colombian rules are never applied.",
+  "A few buyers are not a country sample; no cross-country score or currency comparison."
  ],
  "reproduce": [
-  "python tools/import-paraguay-dncp.py --download",
-  "python tools/import-paraguay-dncp.py --offline",
+  "python tools/import-paraguay-dncp.py --cohort fernando --download",
+  "python tools/import-paraguay-dncp.py --cohort fernando --offline",
   "node tests/paraguay.cjs"
  ]
 }
