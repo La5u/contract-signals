@@ -29,33 +29,51 @@ You can also open `index.html` directly. If the browser blocks loading the data 
 | France · 3 Feb 2025 — BOAMP consultation notices | 10 | documents, not assessed |
 | France · nationwide BOAMP award sample + 8 CRC audit dossiers | 3,010 | French v3 checks; audit findings outside the index |
 | Colombia · MEN / Caldas / Usaquén — SECOP II contracts 2024–2026 | 7,560 | Colombian checks |
-| Paraguay · Fernando de la Mora — DNCP OCDS | 84 | not assessed (no approved local method) |
+| Paraguay · Fernando de la Mora — DNCP OCDS 2024–2025 | 84 | Paraguayan checks |
+| Paraguay · MOPC / Central / Asunción — DNCP OCDS 2024–2026 | 293 | Paraguayan checks |
 
 Each dataset is a bounded cohort chosen before scoring. None of them is exhaustive or representative. Datasets are never merged, and amounts are never converted between currencies or summed across sources. For suppliers with a French SIREN, the explorer shows the **current** public name from the company register, not the name at the contract date. Companies with restricted register listings are not named. Provenance and gaps are in each `data/*-coverage.json`, and licences in [docs/data-sources.md](docs/data-sources.md).
 
+**Check it yourself.** *Sources and how to verify*, above the table, gives each dataset's publisher, portal, API, licence, raw snapshot and rebuild command. Every row has a *Verify it yourself* section with the official pages and documents published for that contract (for Paraguay: the award page with tenderers and evaluation report, the call page, and the signed-contract PDFs), plus the identifiers to search on the portal if a link moves. Copied summaries and CSV/JSON exports carry the same links (`verifyUrls`).
+
 ## The vigilance index
 
-`index = min(100, max(competition checks) + max(execution/duration checks))`: eight checks, each shown as *signal*, *evaluated*, *not assessable* or *out of scope*. Amounts, legal citations, company names and official findings never add points. Correlated signals in the same family are not summed. Thresholds are editorial choices, not calibrated probabilities. Colombia uses its own thresholds, and nothing is compared across countries.
+`index = min(100, max(competition checks) + max(execution/duration checks))`: eight checks, each shown as *signal*, *evaluated*, *not assessable* or *out of scope*. Amounts, legal citations, company names and official findings never add points. Correlated signals in the same family are not summed. Thresholds are editorial choices, not calibrated probabilities. Colombia and Paraguay use their own checks and thresholds, and nothing is compared across countries.
 
 - French method: [docs/score-v3.md](docs/score-v3.md)
 - Colombian method: [docs/score-colombia.md](docs/score-colombia.md)
+- Paraguayan method: [docs/score-paraguay.md](docs/score-paraguay.md)
 - Court outcomes and reported investigations (kept outside the index): [docs/adjudicated-outcomes.md](docs/adjudicated-outcomes.md)
-- Paraguay pilot and other candidate countries: [docs/paraguay-pilot.md](docs/paraguay-pilot.md), [docs/international-pilots.md](docs/international-pilots.md)
+- Paraguay pilot notes and other candidate countries: [docs/paraguay-pilot.md](docs/paraguay-pilot.md), [docs/international-pilots.md](docs/international-pilots.md)
 - Dated history of every delivery, count and design decision: [docs/project-journal.md](docs/project-journal.md)
 
 ## Development
 
-Plain HTML, CSS and JavaScript: no framework, build step, dependency or runtime API call. Importers under `tools/` use the Python standard library and keep raw source snapshots under `data/*/raw/`.
+Plain HTML, CSS and JavaScript: no framework, build step, dependency or runtime API call. Importers under `tools/` use the Python standard library and keep raw source snapshots in `data/` (large ones gzipped, byte-exact).
 
 ```sh
-node tests/scoring-v3.cjs && node tests/score-review.cjs && node tests/rules.cjs
-node tests/cities.cjs && node tests/tours.cjs && node tests/colombia.cjs && node tests/paraguay.cjs
-node tests/outcomes.cjs && node tests/page-copy.cjs && node tests/view-export.cjs
-python -m unittest discover -s tests -p 'test_*.py'
-node tests/browser.cjs   # starts its own server on a free port (or PORT); needs Playwright, see below
+sh tests/run-all.sh            # every suite; NO_BROWSER=1 skips the Chromium test
 ```
 
-Playwright is used only for tests and is installed outside the project: `npm install --prefix /tmp/procurement-browser playwright`. Set `PLAYWRIGHT_PATH` to use another location. After any change to `script.js`, run `node tools/review-score-v3.cjs` so the review report matches the new script hash. `python tools/enrich-suppliers.py` refreshes the supplier names (`--offline` re-applies the saved snapshot without network access).
+The browser test needs Playwright, installed outside the project: `npm install --prefix /tmp/procurement-browser playwright` (set `PLAYWRIGHT_PATH` for another location, `CHROMIUM_PATH` for another browser). GitHub Actions runs the same script on every push (`.github/workflows/tests.yml`). After any change to `script.js`, run `node tools/review-score-v3.cjs` so the review report matches the new script hash.
+
+Every dataset can be rebuilt offline from its raw snapshot:
+
+| Dataset | Rebuild |
+| --- | --- |
+| Paris & Ardèche DECP | `python tools/import-decp-paris-ardeche.py --offline` |
+| Six cities DECP | `python tools/import-decp-cities.py --offline` |
+| Tours notices | `python tools/import-tours-notices.py --offline` |
+| 3 Feb 2025 consultations | `python tools/import-consultations.py --offline` |
+| Nationwide BOAMP sample | `python tools/import-boamp-sample.py --offline` |
+| Colombia SECOP II | `python tools/import-colombia-secop2.py --offline` |
+| Paraguay DNCP | `python tools/import-paraguay-dncp.py --cohort fernando\|3buyers --offline` |
+
+`--download` fetches a new snapshot instead; it is not a fixed archive (the DECP index, for instance, keeps only the latest modification of each contract). `python tools/enrich-suppliers.py` refreshes French supplier names and `python tools/fetch-dncp-sanctions.py` the Paraguayan sanction snapshot (`--offline` re-applies either).
+
+## Hosting
+
+Any static host works; all paths are relative. For Cloudflare Pages: no build command, output directory `/`. `_headers` sets a Content Security Policy that only allows the site's own files, plus `Referrer-Policy: no-referrer`. Keep Rocket Loader, Email Address Obfuscation and Web Analytics off: they rewrite pages or add scripts. The largest file, `data/colombia-secop2.json` (15.6 MB), is under Cloudflare Pages' 25 MiB per-file limit.
 
 ## Licence
 

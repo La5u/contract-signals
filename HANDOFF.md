@@ -1,6 +1,6 @@
 # Project handoff
 
-Updated: 2026-09-24. The current state only; the dated history of each delivery is in `docs/project-journal.md` and in git.
+Updated: 2026-09-25. The current state only; the dated history of each delivery is in `docs/project-journal.md` and in git.
 
 ## Where things are
 
@@ -21,24 +21,24 @@ Updated: 2026-09-24. The current state only; the dated history of each delivery 
 
 - **Index v3.0** (`SCORE_VERSION`), method `docs/score-v3.md`: eight checks, `min(100, max(competition) + max(execution/duration))`. French review counts (from `data/score-v3-review.json`): BOAMP/CRC 277 positive / 2,665 zero / 68 not assessed; Paris & Ardèche 404 / 1,835 / 355; six cities 124 / 974 / 172; consultations and Tours all not assessed.
 - **Colombia** (SECOP II, 7,560 rows, 3 buyers): Colombian checks (`docs/score-colombia.md`): 215 flagged / 7,345 zero / 0 not assessed. CC BY-SA 4.0.
-- **Paraguay** (DNCP OCDS, 84 rows, one municipality): documentary pilot, all not assessed; no Paraguayan method approved (`docs/paraguay-pilot.md`). CC BY 4.0.
+- **Paraguay** (DNCP OCDS, CC BY 4.0), Paraguayan checks (`docs/score-paraguay.md`): six checks plus two out of scope (single tenderer, CVE exception award, their per-supplier repetition in distinct OCIDs, buyer/category concentration, amount increase >20 %). Two separate cohorts, never merged: Fernando de la Mora pilot (84 rows; 35 flagged / 49 zero; checks written after reading this pilot) and MOPC / Central / Asunción (`paraguay3`, 293 rows, calls 2024-09 → 2026-09; checks fixed before download; 53 flagged / 240 zero / 0 not assessed, 118 partial). Importer: `tools/import-paraguay-dncp.py --cohort fernando|3buyers --offline|--download`; the 3-buyer raw records are gzipped (`mtime=0`, exact response bytes). Multi-lot processes stay unknown for single tenderer (no per-lot count). Amount amendments cluster at +20 %, likely a legal ceiling, not encoded.
 - **Outcome labels**: zero contract-linked final judgments in any dataset; one dated press lead (`crc-station-nuage`), status unknown (`docs/adjudicated-outcomes.md`).
 - **Supplier names**: `tools/enrich-suppliers.py` looks up every typed French SIREN in both DECP cohorts (Paris & Ardèche + six cities) in the Recherche d’entreprises API. It keeps a name only when `statut_diffusion = O` and the SIREN matches exactly, then writes `supplierProfiles` into both datasets. Snapshot 2026-09-24: 1,960 SIRENs queried, 1,949 named, 10 withheld (restricted diffusion), 1 no exact match; names on 2,586/2,594 Paris & Ardèche rows and 1,116/1,270 six-city rows. The tool checkpoints to `data/.supplier-identities.partial.json` (gitignored), so an interrupted run resumes; after it, run `tools/update-cities-coverage.cjs` and `tools/review-score-v3.cjs`. Names are current, not historical, and never scored. `--offline` re-applies the snapshot without network access.
+- **Paraguay context outside the index** (`docs/score-paraguay.md`): 20 % amendment ceiling label (Ley 7021/22 Art. 67, 10 rows), DNCP complaints (19 rows; participant names never imported), debarment in force at award date from `data/dncp-sanctions.json` (minimised snapshot via `tools/fetch-dncp-sanctions.py`; 0 rows on 2026-09-25), and per-lot evidence links (bid comparison tables / evaluation reports) on every award.
+- **Verification**: “Sources and how to verify” panel per dataset (`sources` in the dataset registry: publisher, links, licence, raw path, rebuild command); “Verify it yourself” section per row from `verificationLinks(c)` (only URLs published in the data, human-readable pages first) and `verificationIdentifiers(c)`; `Verify:` lines in copied summaries; `verifyUrls` export column. All panel links were checked HTTP 200 on 2026-09-25 (DNCP `publicationPolicy` `/datos/legal` is 404; `/datos/aviso-legal` is used).
 - **Explorer features**: view state in the URL fragment (`#dataset=…&q=…&sort=…&page=…&size=…`, defaults omitted; `hashchange` reloads when the dataset differs); CSV/JSON export of every filtered record (formula-guarded CSV, empty = not assessed); “Open your own JSON file” always visible (`docs/data-format.md`); `<meta name="referrer" content="no-referrer">`.
 
 ## Tests
 
 ```sh
-node tests/scoring-v3.cjs && node tests/score-review.cjs && node tests/rules.cjs
-node tests/cities.cjs && node tests/tours.cjs && node tests/colombia.cjs && node tests/paraguay.cjs
-node tests/outcomes.cjs && node tests/page-copy.cjs && node tests/view-export.cjs
-python -m unittest discover -s tests -p 'test_*.py'
-node tests/browser.cjs   # starts its own static server on a free port (PORT to override)
+sh tests/run-all.sh      # every suite; NO_BROWSER=1 skips Chromium. CI runs the same (.github/workflows/tests.yml)
 ```
 
-Playwright is test-only, installed in `/tmp/procurement-browser` (reinstall with `npm install --prefix /tmp/procurement-browser playwright` if `/tmp` was cleared; Chromium at `/usr/bin/chromium`). Never add it to the site.
+Playwright is test-only, installed in `/tmp/procurement-browser` (reinstall with `npm install --prefix /tmp/procurement-browser playwright` if `/tmp` was cleared; Chromium at `/usr/bin/chromium`, or `CHROMIUM_PATH`). Never add it to the site. CI has not run yet: it starts on the first push.
 
 **After changing `script.js`:** `node tools/review-score-v3.cjs`, then `node tests/score-review.cjs` (the report binds the script's SHA-256). After city scoring changes, also run `node tools/update-cities-coverage.cjs`.
+
+**Rebuilding data:** every dataset now has an `--offline` importer (table in README). All were re-run on 2026-09-25 with no drift. The Paris & Ardèche and BOAMP importers were rebuilt from the journal and checked field by field against the originals (`rebuild` in `decp-coverage.json` and `coverage.json`); tests assert the published files equal the importer output.
 
 ## Cautions
 
@@ -49,8 +49,9 @@ Playwright is test-only, installed in `/tmp/procurement-browser` (reinstall with
 
 ## Next steps
 
-1. **Hosting.** Pick `lasu.dev` or `la5u.github.io`, then add the deploy (GitHub Pages workflow or Cloudflare Pages project). The site uses only relative paths, so it works under any sub-path. The largest file, `data/colombia-secop2.json` (15.6 MB), is under Cloudflare Pages’ 25 MiB per-file limit.
+1. **Hosting on `contracts.lasu.dev` (decided).** Needs the account owner: create the Cloudflare Pages project (no build command, output `/`), add the custom domain, keep Rocket Loader / Email Obfuscation / Web Analytics off. `_headers` (CSP, no-referrer) is ready and was tested in Chromium with no violations. Keep `lasu.dev` on auto-renew: shared view links depend on it.
 2. **Licences to confirm:** BOAMP (API metadata states none), TED, and the Recherche d’entreprises API; update `docs/data-sources.md`.
 3. **Reduce routine noise at the top of the ranking**: label or exclude public-to-public Colombian contracts; add a context label (not a score change) for French single-vendor software maintenance.
-4. Colombia: offers/proposals and payment reconciliation before any attrition/payment indicator. Paraguay: quotas and exhaustiveness, then local indicators. Brazil stays blocked (PNCP access not established; a first HTTP 200 invalidates the pin in `tests/score-review.cjs`).
-5. Possible: generic DECP/OCDS import for people’s own buyers; CI workflow running the suites; Git LFS or release assets for raw snapshots.
+4. **Six-city DECP maps “Dialogue compétitif” to unknown**, while the Paris & Ardèche cohort treats it as competitive (the correct reading). Aligning it changes six-city counts; decide deliberately and update `tests/cities.cjs`.
+5. Colombia: offers/proposals and payment reconciliation before any attrition/payment indicator. Paraguay: per-lot tenderers exist only in PDFs (bid comparison tables, now linked on every row); read DNCP Resolución 230/25 art. 181 before relying on the separate 20 % for unilateral changes; more buyers only with a pre-announced cohort. Brazil stays blocked (PNCP access not established; a first HTTP 200 invalidates the pin in `tests/score-review.cjs`).
+6. Possible: generic DECP/OCDS import for people’s own buyers; Git LFS or release assets if raw snapshots grow (raw snapshots total about 70 MB, gzipped where large; the largest single file is 17 MB).
