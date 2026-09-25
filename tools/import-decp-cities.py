@@ -197,5 +197,9 @@ def main():
     coverage['fieldAvailability'] = {key:sum(r[key] is not None for r in rows) for key in ['amount','offers','date','durationMonths','cpv','directAward']}
     (data/"decp-cities.json").write_text(json.dumps(rows,ensure_ascii=False,indent=2)+"\n")
     coverage["counts"].update({"rawRows":len(raw["records"]),"normalizedRows":len(rows),"rawRowsByBuyer":{s:sum(r.get("acheteur_id")==s for r in raw["records"]) for s,_,_ in BUYERS},"contractsByBuyer":{s:sum(r["buyerSiret"]==s for r in rows) for s,_,_ in BUYERS}})
+    # Keep sections written by later tools or by hand (historical rules, verification, index pointers).
+    previous=data/"decp-cities-coverage.json"
+    if previous.exists():
+        for key,value in json.loads(previous.read_text()).items(): coverage.setdefault(key,value)
     (data/"decp-cities-coverage.json").write_text(json.dumps(coverage,ensure_ascii=False,indent=2)+"\n")
 if __name__=="__main__": main()

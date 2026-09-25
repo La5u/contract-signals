@@ -86,5 +86,35 @@
     "version": "3.0",
     "report": "score-v3-review.json",
     "note": "Earlier rule/count sections describe their preparation version, not the active v3 index. Source cohorts unchanged; unknown scores are null, findings separate."
+  },
+  "rebuild": {
+    "date": "2026-09-25",
+    "importer": "tools/import-boamp-sample.py",
+    "rawSnapshot": "data/boamp-raw.json.gz",
+    "reason": "The original importer predates the repository and was lost. The mapping recorded in this file was re-implemented and checked against the file published on 2026-09-13.",
+    "sourceTotalAtRebuild": 8386,
+    "processingAtRebuild": {
+      "unsupportedSchemaRecords": 2153,
+      "eligible_awarded_supplier": 16002,
+      "distinct_notice_lot_ids": 15432,
+      "conflicting_notice_lot_ids_excluded": 236,
+      "unique_eligible_lots": 15196
+    },
+    "comparisonWithPublishedFile": {
+      "sampledLots": 3000,
+      "sameIdsAndOrder": true,
+      "identicalLots": 2999,
+      "corrected": "boamp-25-48061-lot-0001: the published row gave COSTE ET FILS (ORG-0004) the SIRET of another tenderer, GRESSET RAULT SOLUTIONS (ORG-0006, 808 517 536 00062), and no contract id. The notice links the winning tender to ORG-0004, SIRET 453 414 070 00012, and contract CON-0001; the rebuild uses those.",
+      "rulesRecovered": [
+        "A 9- or 14-digit CompanyID is typed SIREN/SIRET only when the organisation's address country is FRA; foreign registration numbers of the same length stay 'identifiant publié'.",
+        "Durations are kept as months, as floats."
+      ],
+      "scoreEffect": "None: v3 counts unchanged."
+    },
+    "sourceQuirk": "Some buyers publish other text in CompanyID (e.g. a street address for CISION in 25-15690); it is transcribed as published and typed 'identifiant publié'.",
+    "reproduce": [
+      "python tools/import-boamp-sample.py --offline",
+      "python tools/import-boamp-sample.py --download  # new snapshot; not a fixed archive"
+    ]
   }
 }

@@ -46,8 +46,8 @@
       "22070001700019": 554
     },
     "groupsWithInitialConflicts": 355,
-    "contractsWithPublishedModifications": 276,
-    "publishedModificationEvents": 276
+    "contractsWithPublishedModifications": 277,
+    "publishedModificationEvents": 277
   },
   "fields": {
     "cpv": "codecpv",
@@ -159,5 +159,27 @@
     "availableSirens": 1949,
     "historicalNamesVerified": false,
     "matching": "SIREN derived only from typed French SIRET/SIREN; names do not replace published contract identifiers."
+  },
+  "rebuild": {
+    "date": "2026-09-25",
+    "importer": "tools/import-decp-paris-ardeche.py",
+    "rawSnapshot": "data/decp-history-raw.json.gz",
+    "curatedOverlay": "data/decp-history-curated.json",
+    "reason": "The original importer predates the repository and was lost; this cohort could not be regenerated. The rules were re-implemented from docs/project-journal.md and checked field by field against the file published on 2026-09-13.",
+    "sourceTotalsAtRebuild": {
+      "21750001600019": 2395,
+      "22070001700019": 554
+    },
+    "comparisonWithPublishedFile": {
+      "contracts": 2594,
+      "identicalContracts": 2581,
+      "orderOnlyDifferences": "8 contracts list the same initial variants in another order: the API returns tied rows (same date and identifier) in no stable order.",
+      "sourceChanges": "5 Ardèche contracts (2025B009, 2025B020, 2025B042, 2025B048, 2025B053) show a newer published modification. The DECP index exposes only the latest modification per contract, so the versions seen on 2026-09-13 can no longer be downloaded; raw snapshots are the only record of them.",
+      "scoreEffect": "None: v3 counts for this cohort are unchanged (404 flagged / 1,835 zero / 355 not assessed)."
+    },
+    "reproduce": [
+      "python tools/import-decp-paris-ardeche.py --offline",
+      "python tools/import-decp-paris-ardeche.py --download  # new snapshot; not a fixed archive"
+    ]
   }
 }
