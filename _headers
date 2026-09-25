@@ -1,0 +1,8 @@
+# Cloudflare Pages response headers (ignored by other static hosts).
+# The page loads only its own files and makes no third-party requests;
+# this policy makes the browser enforce that.
+/*
+  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  Referrer-Policy: no-referrer
+  X-Content-Type-Options: nosniff
+  Permissions-Policy: interest-cohort=(), browsing-topics=()
