@@ -248,6 +248,15 @@ const server=http.createServer((req,res)=>{
  assert.equal(await mobile.locator('#advanced-filters').getAttribute('open'),null);
  assert.equal(await mobile.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
  assert.equal(await mobile.locator('.contract-row').first().locator('td:visible').count(),3);
+ // Paraguayan rows carry a note under the date; it must wrap, not squeeze the subject.
+ const pyMobile=await browser.newPage({viewport:{width:390,height:844}});
+ pyMobile.on('pageerror',e=>errors.push(e.message));
+ await pyMobile.goto(base+'/#dataset=paraguay3');
+ await pyMobile.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 293'));
+ const pyCells=await pyMobile.locator('.contract-row').first().evaluate(r=>[...r.children].filter(td=>getComputedStyle(td).display!=='none').map(td=>({w:td.getBoundingClientRect().width,over:td.scrollWidth-td.clientWidth})));
+ assert.ok(pyCells[1].w>=150,`subject column too narrow on mobile: ${pyCells[1].w}px`);
+ assert.ok(pyCells.every(c=>c.over<=0),'a mobile cell overflows');
+ await pyMobile.close();
  await mobile.locator('.row-toggle').first().click();
  assert.equal(await mobile.locator('.detail-row:not([hidden])').count(),1);
  await mobile.locator('#advanced-filters summary').click();
