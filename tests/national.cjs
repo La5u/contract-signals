@@ -36,9 +36,17 @@ const pick = (t, prefix) => Object.fromEntries(Object.entries(t.checks).filter((
   const t = tally(rows);
   assert.deepEqual(pick(t, 'ua-'), {
     'ua-single-offer': [38,26,0,424], 'ua-direct-award': [0,64,0,424], 'ua-repeated-single-offer': [10,28,0,450],
-    'ua-repeated-direct': [0,0,0,488], 'ua-concentration': [0,483,5,0] });
-  assert.deepEqual(t.counts, [38,450,0]);
-  console.log('Ukraine Prozorro: 488 contracts, 38 flagged, reporting out of scope, offers counted per lot.');
+    'ua-repeated-direct': [0,0,0,488], 'ua-concentration': [0,483,5,0], 'ua-better-bid-disqualified': [9,55,0,424] });
+  assert.deepEqual(t.counts, [47,441,0]);
+  // Disqualification before the award: counted per lot, only on competitive procedures, never on reporting.
+  for (const r of rows) {
+    if (r.procedureDirect !== false) assert.equal(r.disqualifiedBefore, null);
+    const ids = run('getAssessment', r).checks.map(c => c.id);
+    assert.equal(ids.length, 8); assert.ok(!ids.includes('short-bidding-period'));
+  }
+  const dq = (n) => run('getAssessment', { ...rows.find(r => r.procedureDirect === false), disqualifiedBefore: n }).checks.find(c => c.id === 'ua-better-bid-disqualified');
+  assert.equal(dq(0).status, 'clear'); assert.equal(dq(2).weight, 12); assert.equal(dq(null).status, 'unknown');
+  console.log('Ukraine Prozorro: 488 contracts, 47 flagged (9 by a better-ranked bidder disqualified), reporting out of scope, offers counted per lot.');
 }
 
 // ---- Portugal and Romania (TED) ----

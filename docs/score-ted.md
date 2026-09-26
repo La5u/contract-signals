@@ -61,6 +61,10 @@ Ministerul Finanțelor (national, CUI 4221306), Județul Cluj (regional, 4288110
 
 The first computation counted concentration in **lots**, so one notice with 24 lots won by one supplier counted as 24 wins; it produced 69 Romanian concentration signals, all from multi-lot notices. Concentration now counts **distinct procedures**, like the repetition checks (Romania: 0 signals). No threshold was changed.
 
+## Framework agreements longer than four years: examined, not added (2026-09-26)
+
+The EU directive caps framework agreements at four years except in justified cases, so a longer declared framework duration would be a legal-threshold check rather than an editorial one. The raw notices were read for it: no framework lot declares more than 48 months (Romania 458 lots, all at most 48 months; Portugal 4 lots at most 48 months and 120 with no duration). A check that cannot fire here, and would leave 120 Portuguese lots unknown, was not added; the `long-contract` slot stays out of scope. Most framework results are also excluded from the rows because they name several winners.
+
 ## Reproduction
 
 ```sh
