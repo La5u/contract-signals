@@ -87,6 +87,22 @@ Reproducible selection: the first two identifiers sorted by SHA-256 in each v3 s
 
 This review highlights limits and counterexamples; it justifies no tuning to favor a Parisian dossier or a country.
 
+## Context outside the index: single-vendor software maintenance
+
+`softwareMaintenanceContext` (filter *Legal context → France · single-vendor software maintenance*, row note “Context · single-vendor software maintenance · no points”) marks the maintenance, support or licences of an existing software product placed with one vendor. **No points are added or removed and no row is excluded**; the label explains why such rows sit at the top of the ranking (a direct award, often repeated every year to the same publisher).
+
+A BOAMP or DECP row is labelled when all three conditions hold:
+
+1. **Software**: CPV starting with `48` (software packages), `7221`, `7225` or `7226` (software services), or the object names software explicitly (`progiciel`, `licences logicielles`, or a maintenance word followed within four words by `du/des/de la logiciel(s)`).
+2. **Maintenance**: CPV `72267…` (software maintenance) or the object contains `maintenance`/`maint`, `support`, `assistance`, `mise(s) à jour`, `TMA`, `MCO`, `licence(s)`, `abonnement`, `souscription` or `droit de suivi`.
+3. **One vendor**: award declared without competition (`directAward = true`), article R2122-3 cited, or procedure not classified with exactly one offer. A competitive procedure with a single offer is **not** labelled: competition was opened, and the single-offer check remains informative there.
+
+Proprietary status and exclusive rights are not verified; the text in the row says so. Source text is matched as published, in French.
+
+**Result**: 30 rows labelled — BOAMP 4 (all positive), Paris & Ardèche 25 (16 positive, including five of the top six rows: Ardèche maintenance of IXBUS, AIDEN, ETEMPTATION, Covadis and its deliberations software), six municipalities 1 (positive). Review of all 30 (assistant's reading, not an independent review): 28 are maintenance, licences or support of a named software product with its vendor (Planisware, Axelnet, Vivaticket, One2Team, eSirius, E-SEDIT…); 2 are doubtful because the software may be bespoke rather than a vendor's product (maintenance of the *Parcours Révolution* application and of the Fonds d'art contemporain website).
+
+**Near-misses, not labelled** (reviewed): Ardèche ZENworks supply and maintenance (52 points; competitive, one offer), Paris TIGRE 7 and application-integration maintenance (competitive, one offer), competitive BOAMP lots for Alfresco/i-Parapheur/Pastell (open-source tools) and SAP BusinessObjects; two Paris Trimble surveying stations with bundled software (equipment, not software maintenance: CPV 50324200 and 38295000); Bordeaux *Logiciel LOGUS* and Tours *Logiciel modernisation de la gestion de surveillance interne* (software purchases with no maintenance wording). A Tours works contract for automatic gates carries the software CPV 48921000: it is not labelled only because its object has no maintenance wording, which shows the limit of a CPV-based rule.
+
 ## Reproduction
 
 ```sh
