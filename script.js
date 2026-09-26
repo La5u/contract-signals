@@ -241,6 +241,15 @@ function softwareMaintenanceContext(c) {
   return vendor ? { software, vendor } : null;
 }
 
+// Routine-context labels shown next to the signals; never read by scoring.
+function contextLabels(c) {
+  const labels = [];
+  if (softwareMaintenanceContext(c)) labels.push({ id: 'fr-software', short: 'single-vendor software maintenance', long: 'Maintenance, support or licences of an existing software product placed with one vendor (docs/score-v3.md).' });
+  if (c.secop2PublicCounterparty?.labelled) labels.push({ id: 'co-public', short: 'public-to-public agreement', long: 'Agreement declared between public bodies (docs/score-colombia.md).' });
+  if (c.dataFamily === 'dncp' && dncpAtCeiling(c)) labels.push({ id: 'py-ceiling', short: 'amendments at the 20 % ceiling', long: 'Published amendments total 20 % of the original amount, the ceiling in Ley 7021/22 Art. 67 (docs/score-paraguay.md).' });
+  return labels;
+}
+
 function indicatorSeverity(weight) {
   if (weight >= 40) return { id: 'extreme', label: 'Very high' };
   if (weight >= 25) return { id: 'high', label: 'High' };
@@ -1392,8 +1401,6 @@ function startExplorer() {
       if (c.noticeEvidence) objectCell.append(element('small', `Notice ${c.noticeId} · ${c.lotId || 'unknown lot'} · local ref. ${c.noticeEvidence.lotReference || '—'}`, 'provenance'));
       const legalContext = getLegalContext(c);
       if (legalContext.length) objectCell.append(element('small', `Context · ${[...new Set(legalContext.map(item => item.article))].join(', ')} cited · no points added`, 'provenance'));
-      if (c.secop2PublicCounterparty?.labelled) objectCell.append(element('small', 'Context · public-to-public agreement · no points', 'provenance'));
-      if (softwareMaintenanceContext(c)) objectCell.append(element('small', 'Context · single-vendor software maintenance · no points', 'provenance'));
       if (c.initialConflicts?.length || c.identityAmbiguous) objectCell.append(element('small', 'Ambiguous identifier / versions · calculations excluded', 'provenance'));
       if (c.modificationConflicts?.length) objectCell.append(element('small', 'Conflicting modification versions', 'provenance'));
       if (c.officialFinding === true) objectCell.append(element('small', 'Official audit finding · not a conviction', 'provenance'));
@@ -1405,17 +1412,26 @@ function startExplorer() {
       sectorCell.append(element('small', c.cpv || 'unknown CPV', 'provenance'));
       row.append(objectCell, sectorCell, element('td', c.amount == null ? '—' : amountPrefix + moneyFor(c).format(c.amount), 'numeric'), element('td', c.offers ?? '—', 'numeric'));
       const badges = element('td');
-      if (indicators.length) {
-        const primary = indicators[0];
-        const badge = element('span', primary.label, `badge severity-${primary.severity}`);
-        badge.title = `Raw weight ${primary.weight}; not summed with other signals in the same family. ${primary.explanation}`;
+      // Every signal is shown, heaviest first. Within a family only the
+      // heaviest counts; the others are marked as not added to the index.
+      const counted = new Set();
+      const ordered = [...indicators].sort((a, b) => b.weight - a.weight);
+      for (const indicator of ordered) {
+        const counts = !counted.has(indicator.family);
+        counted.add(indicator.family);
+        const familyName = indicator.family === 'competition' ? 'competition' : 'execution/duration';
+        const badge = element('span', indicator.label, `badge severity-${indicator.severity}${counts ? '' : ' not-counted'}`);
+        badge.append(element('small', ` · ${familyName}${counts ? '' : ' · not added'}`, 'badge-family'));
+        badge.title = `Raw weight ${indicator.weight}. ${counts ? `Counts for the ${familyName} family.` : `Not added: a heavier ${familyName} signal already counts.`} ${indicator.explanation}`;
         badges.append(badge);
-        if (indicators.length > 1) {
-          const extra = element('span', `+${indicators.length - 1} more`, 'badge-extra');
-          extra.title = indicators.slice(1).map(i => `${i.label} · ${i.weight} pts`).join(' / ');
-          badges.append(extra);
-        }
       }
+      for (const label of contextLabels(c)) {
+        const badge = element('span', `Context: ${label.short}`, 'badge context');
+        badge.title = `${label.long} Context outside the index: no points added or removed.`;
+        badges.append(badge);
+      }
+      if (ordered.length) objectCell.append(element('small', `Signals: ${ordered.map(i => i.label).join(' · ')}`, 'mobile-signals'));
+      for (const label of contextLabels(c)) objectCell.append(element('small', `Context: ${label.short} · no points`, 'mobile-signals context'));
       const breakdown = getScoreBreakdown(c);
       const assessment = breakdown.assessment;
       const scoreValue = breakdown.score;
