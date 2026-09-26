@@ -1,6 +1,6 @@
 # Contract signals
 
-A static explorer for published public-procurement records from France, Chile, Colombia, Paraguay, Portugal, Romania, Ukraine and the United Kingdom. It flags contract characteristics that may deserve a closer look, such as awards without competition, single offers, repeated awards to the same supplier, or long durations. Every row links to its source and shows which checks could or could not be evaluated.
+A static explorer for published public-procurement records from France, Chile, Colombia, Czechia, Paraguay, Portugal, Romania, Ukraine and the United Kingdom. It flags contract characteristics that may deserve a closer look, such as awards without competition, single offers, repeated awards to the same supplier, or long durations. Every row links to its source and shows which checks could or could not be evaluated.
 
 **A signal prompts a review. It is not an accusation.** A zero or missing label does not mean a contract is clean, and “Not assessed” is never zero.
 
@@ -34,6 +34,7 @@ You can also open `index.html` directly. If the browser blocks loading the data 
 | Paraguay · MOPC / Central / Asunción — DNCP OCDS 2024–2026 | 293 | Paraguayan checks |
 | Portugal · Infraestruturas de Portugal / CIM Cávado / Lisboa — TED award notices 2024–2026 | 493 | EU eForms checks |
 | Romania · Ministry of Finance / Cluj county / Cluj-Napoca — TED award notices 2024–2026 | 356 | EU eForms checks |
+| Czechia · Ministry of Finance / Moravian-Silesian region / Ostrava — TED award notices 2024–2026 | 674 | EU eForms checks |
 | Ukraine · Ministry of Health / Vinnytsia region / Dnipro — Prozorro contracts 2024–2026 | 488 | Ukrainian checks |
 | United Kingdom · FCDO / Lincolnshire / Milton Keynes — Find a Tender award notices 2024–2026 | 1,081 | UK checks |
 
@@ -76,7 +77,7 @@ Every dataset can be rebuilt offline from its raw snapshot:
 | Chile (Mercado Público) | `python tools/import-chilecompra.py --offline` |
 | Colombia SECOP II | `python tools/import-colombia-secop2.py --offline` |
 | Paraguay DNCP | `python tools/import-paraguay-dncp.py --cohort fernando\|3buyers --offline` |
-| Portugal, Romania (TED) | `python tools/import-ted-cohorts.py --cohort portugal\|romania --offline` |
+| Portugal, Romania, Czechia (TED) | `python tools/import-ted-cohorts.py --cohort portugal\|romania\|czechia --offline` |
 | Ukraine (Prozorro) | `python tools/import-prozorro.py --offline` |
 | United Kingdom (Find a Tender) | `python tools/import-find-a-tender.py --offline` |
 

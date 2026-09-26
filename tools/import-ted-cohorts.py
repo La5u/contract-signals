@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Portugal and Romania from TED: award notices (eForms) of three announced buyers each.
+"""Portugal, Romania and Czechia from TED: award notices (eForms) of three announced buyers each.
 
-  --cohort portugal|romania --download   search TED (API v3, anonymous) for the buyers'
+  --cohort portugal|romania|czechia --download   search TED (API v3, anonymous) for the buyers'
                                          can-standard notices, save each official XML gzipped
-  --cohort portugal|romania --offline    rebuild data/ted-<cohort>.json and its coverage file
+  --cohort portugal|romania|czechia --offline    rebuild data/ted-<cohort>.json and its coverage file
 
 TED covers procedures above the EU thresholds only: these cohorts are not a picture of
 the countries' procurement. Buyers are matched by their published identifier and its
@@ -45,6 +45,17 @@ COHORTS = {
         {"id": "4221306", "name": "Ministerul Finanțelor", "level": "national"},                     # 119; CNAIR (1,450) set aside for volume
         {"id": "4288110", "name": "Județul Cluj (Consiliul Județean)", "level": "regional"},          # 91
         {"id": "4305857", "name": "Municipiul Cluj-Napoca", "level": "municipal"},                   # 89
+    ]},
+    # Announced on 2026-09-26 before any notice XML was downloaded, from TED search totals of a
+    # candidate list (5 ministries, 5 regions, 5 cities): per level the largest at most 500.
+    # Set aside for volume: Ministry of the Interior (2,048), Ministry of Defence (1,843);
+    # Prague (493) is both a region and a municipality and was left out.
+    "czechia": {"country": "CZE", "prefix": "CZ", "idType": "ICO", "cohortId": "ted-czechia-2024-2026",
+                "selection": "One buyer per level, announced on 2026-09-26 before any notice XML was downloaded: from TED search totals of a candidate list (Ministries of the Interior, Defence, Health, Justice and Finance; the South Moravian, Moravian-Silesian, Vysočina, Olomouc and Plzeň regions; Brno, Ostrava, Plzeň, Olomouc and Prague), the largest at most 500 notices per level; Prague left out as both region and city. Never by indicator results.",
+                "buyers": [
+        {"id": "00006947", "name": "Ministerstvo financí", "level": "national"},                     # 257
+        {"id": "70890692", "name": "Moravskoslezský kraj", "level": "regional"},                     # 195
+        {"id": "00845451", "name": "Statutární město Ostrava", "level": "municipal"},                # 214
     ]},
 }
 # eForms procedure codes (EU directives). neg-wo-call = negotiated without prior publication.
@@ -88,7 +99,10 @@ def fetch(url):
     for attempt in range(7):
         try:
             with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "contract-signals/0.1"}), timeout=90) as r:
-                return r.read()
+                data = r.read()
+            if data:
+                return data
+            raise ValueError("empty body (HTTP 202 while TED prepares the XML)")
         except Exception:
             if attempt == 6:
                 raise
@@ -132,7 +146,7 @@ def download(key):
                     raise RuntimeError("not an eForms award notice: " + pub)
                 out.parent.mkdir(parents=True, exist_ok=True)
                 out.write_bytes(gzip.compress(data, mtime=0))
-                time.sleep(0.6)
+                time.sleep(2)  # TED answers empty 202s (bot protection) to faster clients
     manifest["retrievalFinishedAt"] = datetime.now(timezone.utc).isoformat()
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 
@@ -289,7 +303,7 @@ def offline(key):
                 "attribution": "Publications Office of the European Union, TED (Tenders Electronic Daily)",
                 "cohort": {"cohortId": cohort["cohortId"], "country": cohort["country"],
                            "buyers": cohort["buyers"], "window": manifest["window"],
-                           "selection": "One buyer per level, announced on 2026-09-25 before any notice XML was downloaded; chosen by level and a reviewable TED notice count, never by indicator results.",
+                           "selection": cohort.get("selection", "One buyer per level, announced on 2026-09-25 before any notice XML was downloaded; chosen by level and a reviewable TED notice count, never by indicator results."),
                            "identity": "Buyers matched by published identifier and its spelling variants (bare, country-prefixed, spaced), never by name."},
                 "retrieval": {"startedAt": manifest["retrievalStartedAt"], "finishedAt": manifest.get("retrievalFinishedAt"),
                               "queries": [{"buyerId": b["id"], "query": b["query"], "searchTotal": b["searchTotal"]} for b in manifest["buyers"]],
