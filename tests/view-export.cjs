@@ -25,6 +25,11 @@ const rows=[notAssessed,named,co,formula];
 const csv=run('rowsToCsv',rows);
 const lines=csv.trimEnd().split('\r\n');
 assert.equal(lines[0],vm.runInContext('EXPORT_COLUMNS',ctx).join(','));
+// Context labels travel with the export, empty when none applies.
+const decp=vm.runInContext('prepareContracts',ctx)(JSON.parse(fs.readFileSync('data/decp-history.json')));
+const labelled=decp.filter(c=>vm.runInContext('exportRecord',ctx)(c).context==='single-vendor software maintenance');
+assert.equal(labelled.length,25);
+assert.equal(vm.runInContext('exportRecord',ctx)(decp.find(c=>!vm.runInContext('contextLabels',ctx)(c).length)).context,null);
 assert.equal(lines.length,rows.length+1);
 const exported=rows.map(c=>run('exportRecord',c));
 assert.equal(exported[0].index,null);assert.equal(exported[0].indexStatus,'not assessed');
