@@ -52,6 +52,25 @@ Score = competition maximum + execution/duration maximum, capped at 100, rounded
 - Max observed concentration share in an eligible buyer/contract-type group: 31.3 % — below the 60 % entry threshold; the check is evaluated, not absent.
 - These counts are cohort descriptions, not target proportions. No tuning was done to reach them; changing the cohort would change them.
 
+## Context outside the index (no points)
+
+**Public-to-public agreement** (`secop2PublicCounterparty`, filter *Legal context → Colombia · public-to-public agreement*, row note “Context · public-to-public agreement · no points”). The label changes no index value and excludes no row; it tells a reader that a row near the top of the ranking is an agreement between public bodies, where a long duration or a direct modality is ordinary.
+
+SECOP II publishes no field for the counterparty's legal nature (checked on all 85 raw fields: no public/private flag; `tipodocproveedor` is NIT for companies and public bodies alike). The positive evidence is therefore always a **published declaration**; a name never grants the label.
+
+1. **Declared interadministrative agreement** — the published `justificacion_modalidad_de` is exactly “Contratos o convenios Interadministrativos (con valor)” or “Contratos o convenios Interadministrativos (valor cero)”: the buyer declares a contract with another public entity. 569 rows declare it; **436 are labelled**.
+2. **Comodato or empréstito with a public counterparty** — contract type or justification “Comodato”, “Prestamo de uso” or “Operaciones de Crédito Público”, **and** the counterparty's typed document (exact match, as in the other Colombian contexts) is the counterparty of a labelled interadministrative agreement elsewhere in the cohort, so a buyer has declared it public. **6 rows**: five municipalities receiving a comodato from the Gobernación de Caldas and one empréstito from INFICALDAS.
+
+The label is **withheld** on a declared interadministrative agreement when published fields contradict the declaration: the counterparty holds a personal identity document (Cédula de Ciudadanía/Extranjería, 3 rows) or its published name designates a community body, a *junta de acción comunal* or similar (pattern `acción comunal`, `desarrollo comunal`, or a name starting with `JAC` or `Junta`; 130 rows). Juntas de acción comunal are community organisations (Ley 2166 de 2021), not public entities; the Gobernación de Caldas files many of its road-maintenance agreements with them under this justification. The row detail says why the label is withheld.
+
+**Result: 442 rows labelled** (436 + 6), of which **9 have a positive index** (out of 215). The label reaches the top of the ranking only in part: of the four rows at 40, only the INFICALDAS empréstito is labelled.
+
+**Precision review** (assistant's reading of the published counterparty names, not an independent or legal review). All 442 labelled rows, by counterparty: about **382 public bodies** (municipalities, universities, ministries and agencies, ICETEX, state companies); **27 uncertain** (indigenous authorities such as *cabildos* and *resguardos*, which have a special public status, and mixed-economy funds or corporations such as PROPAIS or Fondo Mixto Cartago); **33 private or foreign** (for example People Contact S.A.S. and Promueve Más S.A.S., private universities, the Cámara de Comercio and the Federación Nacional de Cafeteros, associations and foundations, the French embassy and a UN office). That is roughly 86 % public, 93 % counting the uncertain group. These false positives come from the buyer's declaration and are kept, because no published field refutes them; the label says the public status is the buyer's declaration.
+
+**Near-misses, not labelled** (reviewed): the INFIMANIZALES empréstito (40 points), the two comodatos to the Asamblea Departamental de Caldas, and a comodato to “Dirección Regional Viejo Caldas N° 6” are public-looking counterparties that never appear in a declared interadministrative agreement (false negatives of the rule). A comodato to the Cuerpo de Bomberos Voluntarios de Anserma (40 points) and the 16 Usaquén comodatos to juntas de acción comunal are correctly unlabelled. One Universidad Pedagógica Nacional contract describes itself as “CONTRATO INTERADMINISTRATIVO” but is declared under “No existe pluralidad de oferentes en el mercado” (18 points); the declared justification wins.
+
+**Not covered**: 74 road-maintenance agreements (*Conservación Rutinaria Manual*), 70 of them with juntas de acción comunal, declared under “No existe pluralidad de oferentes en el mercado” score 18 each and fill much of the Colombian ranking below the top rows. They are community agreements, not public-to-public, and are left for a separate decision.
+
 ## Limits
 
 - Three buyers, 24 months: not a country. No exhaustiveness claim for either buyer’s procurement.

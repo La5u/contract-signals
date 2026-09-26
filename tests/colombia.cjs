@@ -108,4 +108,18 @@ check(evo.status==='unavailable');
 check(!/DECP/i.test(evo.reason));
 // No euro conversion anywhere in the extract
 check(!fs.readFileSync('data/colombia-secop2.json','utf8').includes('"currency":"EUR"'));
-console.log(`${checks} Colombia SECOP II assertions passed: cohort integrity, join verification, per-buyer counts, liquidation, jurisdiction-specific indicators (176/15/0/39 fires, 215 flagged, 7,345 zero, 0 not assessed), parser units, filters, sorting and grouping.`);
+// Public-to-public context label: outside the index, withheld on contrary published evidence
+const publicRows=run('selectContracts',rows,{legal:'co-public'});
+check(publicRows.length===442);
+check(publicRows.filter(c=>c.secop2PublicCounterparty.basis==='declared-interadministrative').length===436);
+const loanRows=publicRows.filter(c=>c.secop2PublicCounterparty.basis==='counterparty-of-agreement');
+check(loanRows.length===6&&loanRows.every(c=>['Comodato','Operaciones de Crédito Público'].includes(c.contractType)));
+check(loanRows.every(c=>rows.some(o=>o.contractId===c.secop2PublicCounterparty.agreementContractId&&o.secop2PublicCounterparty?.basis==='declared-interadministrative')));
+check(rows.filter(c=>c.secop2PublicCounterparty?.withheld==='community-body').length===130);
+check(rows.filter(c=>c.secop2PublicCounterparty?.withheld==='person-document').length===3);
+check(rows.filter(c=>c.secop2PublicCounterparty&&!c.secop2PublicCounterparty.labelled).every(c=>!run('selectContracts',[c],{legal:'co-public'}).length));
+check(publicRows.filter(c=>run('getVigilanceScore',c)>0).length===9);
+for(const c of rows)check(run('getVigilanceScore',{...c,secop2PublicCounterparty:null})===run('getVigilanceScore',c));
+// A comodato with a community counterparty is never labelled, whatever its duration
+check(rows.filter(c=>c.contractType==='Comodato'&&/acci[oó]n comunal|^jac/i.test(c.supplier)).every(c=>!c.secop2PublicCounterparty));
+console.log(`${checks} Colombia SECOP II assertions passed: cohort integrity, join verification, per-buyer counts, liquidation, jurisdiction-specific indicators (176/15/0/39 fires, 215 flagged, 7,345 zero, 0 not assessed), parser units, filters, sorting, grouping and the public-to-public context label (442 rows, no score change).`);
