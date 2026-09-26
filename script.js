@@ -116,6 +116,8 @@ const CO_COMMUNITY_NAME = /acci[oó]n\s+comunal|desarrollo\s+comunal|^\s*jac|^\s
 const CO_LOAN_OF_USE_OR_CREDIT = new Set(['Comodato', 'Prestamo de uso', 'Operaciones de Crédito Público']);
 const CO_DURATION_ENTRY_MONTHS = 36;
 const CO_DURATION_MAX_MONTHS = 120;
+const CO_EXTENSION_ENTRY = 1;
+const CO_EXTENSION_MAX = 3;
 const CO_REPETITION_ENTRY = 3;
 const CO_REPETITION_MAX = 10;
 const CO_CONCENTRATION_GROUP_MIN = 10;
@@ -348,9 +350,9 @@ function getAssessment(c) {
     notApplicable: checks.filter(r => r.status === 'not-applicable').length,
     signals: checks.filter(r => r.status === 'signal').length, excludedReason };
 }
-// SECOP II assessment: four jurisdiction-specific checks plus the four
+// SECOP II assessment: five jurisdiction-specific checks plus the three
 // French checks that stay out of scope here (no offers table, no
-// publication–deadline chronology, no published amendment history).
+// publication–deadline chronology, no published amount additions).
 // Always eight checks, same status vocabulary as the French method.
 function getAssessmentSecop2(c) {
   const excludedReason = c.initialConflicts?.length || c.modificationConflicts?.length ? 'Conflicting versions: calculations excluded.' :
@@ -404,8 +406,18 @@ function getAssessmentSecop2(c) {
     'No offers/proposals table in this SECOP II extract: the number of offers was never imported; out of scope.');
   add('short-bidding-period', 'Short bidding period', 'competition', 'no', false, false, null,
     'No publication–deadline chronology in this extract: bidding period out of scope.');
-  add('amount-increase', 'Relative increase in declared amount', 'execution', 'no', false, false, null,
-    'No published amendment history with comparable amounts in this extract: increase out of scope. Declared COP amounts add no weight.');
+  // Term extension: published dias_adicionados against the original declared
+  // term. The published end date is not always updated after an extension, so
+  // it is not used. Amount additions are not published: out of scope.
+  const extensionRatio = c.daysAdded != null && durationMonths > 0 ? c.daysAdded / (durationMonths * 30.4375) : null;
+  add('secop2-term-extension', `Declared term more than doubled by extensions (> ${CO_EXTENSION_ENTRY * 100} %)`, 'execution',
+    c.daysAdded != null && typeof durationText === 'string' && durationText.trim() ? 'yes' : 'unknown',
+    extensionRatio != null, extensionRatio != null && extensionRatio > CO_EXTENSION_ENTRY,
+    graduated(extensionRatio || 0, CO_EXTENSION_ENTRY, CO_EXTENSION_MAX, 8, 40),
+    c.daysAdded == null ? 'Days added (dias_adicionados) not published for this row: applicability not established.' :
+    extensionRatio == null ? `${c.daysAdded} day(s) added, but the declared duration “${durationText || '—'}” is not comparable to days: not assessed.` :
+    extensionRatio > CO_EXTENSION_ENTRY ? `${c.daysAdded} day(s) added to a declared term of ${durationMonths} months (+${Math.round(extensionRatio * 100)} %). Strictly above +${CO_EXTENSION_ENTRY * 100} %: 8 points, linear to 40 at +${CO_EXTENSION_MAX * 100} %. Editorial threshold; an extension can be lawful and necessary (weather, design changes, budget calendars). Amount additions are not published in this extract.` :
+    `${c.daysAdded} day(s) added to a declared term of ${durationMonths} months (+${Math.round(extensionRatio * 100)} %): not above +${CO_EXTENSION_ENTRY * 100} %. Not a conclusion of regularity.`);
   add('repeated-single-bid', 'Repeated low competition', 'competition', 'no', false, false, null,
     'Depends on offer counts, absent from this extract: repetition of low competition out of scope.');
   const applicable = checks.filter(r => r.applicability === 'yes').length;
@@ -1564,7 +1576,7 @@ function startExplorer() {
         cell.append(
           element('p', `Amounts: declared ${c.amount == null ? '—' : moneyCop.format(c.amount)} · paid ${c.amountPaid == null ? '—' : moneyCop.format(c.amountPaid)} · invoiced ${c.amountInvoiced == null ? '—' : moneyCop.format(c.amountInvoiced)}. Paid and invoiced values are platform declarations, not audited payments, and are never summed. Declared amounts stay visible and sortable but add no weight to the index.`));
         if (c.supplierIds?.length) cell.append(element('p', `Supplier document: ${c.supplierIds[0].identifierType} ${c.supplierIds[0].id}. A personal or tax identifier identifies the declared holder; it implies no suspicion and no link to other contracts by itself.`));
-        cell.append(element('p', `Pilot cohort: ${c.buyerLevel} buyer, signature window 2024-09 → 2026-09. Not exhaustive of the buyer’s procurement; no offers table was imported, so the offer-count checks are out of scope. The four Colombian checks and their editorial thresholds are documented in docs/score-colombia.md; a signal is not a finding of irregularity.`));
+        cell.append(element('p', `Pilot cohort: ${c.buyerLevel} buyer, signature window 2024-09 → 2026-09. Not exhaustive of the buyer’s procurement; no offers table was imported, so the offer-count checks are out of scope. The five Colombian checks and their editorial thresholds are documented in docs/score-colombia.md; a signal is not a finding of irregularity.`));
       } else if (c.dataFamily === 'decp') {
         cell.append(element('h3', 'Published contract history'));
         cell.append(element('p', `Price form: ${c.priceForm || '—'} · Type: ${c.priceType || '—'}. Declared amounts, not observed payments.`));
