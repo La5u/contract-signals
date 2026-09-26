@@ -125,14 +125,14 @@ const server=http.createServer((req,res)=>{
  await page.uncheck('#adjudicated');
  assert.match(await page.locator('#dataset-note').textContent(),/SECOP II pilot · Colombia/);
  assert.equal(await page.locator('.contract-row').count(),50);
- assert.match(await page.locator('#status').textContent(),/215 with a heuristic signal/);
+ assert.match(await page.locator('#status').textContent(),/272 with a heuristic signal/);
  assert.match(await page.locator('#status').textContent(),/0 not assessed/);
  await page.check('#flagged');
- assert.match(await page.locator('#status').textContent(),/215 \/ 7560/);
- assert.match(await page.locator('.contract-row').first().textContent(),/Award declared without supplier plurality|Repeated awards declared without supplier plurality|Long declared duration/);
+ assert.match(await page.locator('#status').textContent(),/272 \/ 7560/);
+ assert.match(await page.locator('.contract-row').first().textContent(),/Award declared without supplier plurality|Repeated awards declared without supplier plurality|Long declared duration|Declared term more than doubled/);
  await page.uncheck('#flagged');
  await page.selectOption('#assessment','zero');
- assert.match(await page.locator('#status').textContent(),/7345 \/ 7560/);
+ assert.match(await page.locator('#status').textContent(),/7288 \/ 7560/);
  await page.selectOption('#assessment','');
  await page.selectOption('#indicator','secop2-plurality-award');
  assert.match(await page.locator('#status').textContent(),/176 \/ 7560/);
