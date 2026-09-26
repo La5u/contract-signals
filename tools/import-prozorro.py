@@ -136,6 +136,19 @@ def offers_for(tender, lot_id):
     return len(bids)
 
 
+def disqualified_before(tender, award):
+    """Bidders on this lot whose award was declared unsuccessful before the winning
+    award: Prozorro creates awards in ranking order, so each one is a better-ranked
+    bid set aside. None when the award history lacks dates."""
+    if not award.get("date"):
+        return None
+    same_lot = [a for a in tender.get("awards") or [] if a.get("lotID") == award.get("lotID")]
+    if any(not a.get("date") for a in same_lot):
+        return None
+    return len({a.get("bid_id") for a in same_lot if a.get("status") == "unsuccessful"
+                and a.get("bid_id") != award.get("bid_id") and a["date"] <= award["date"]})
+
+
 def contract_rows(tender):
     kind = tender["procurementMethodType"]
     buyer = tender["procuringEntity"]["identifier"]
@@ -167,7 +180,7 @@ def contract_rows(tender):
             "description": " — ".join(dict.fromkeys(x for x in [tender.get("title"), (lots.get(lot_id) or {}).get("title")] if x)),
             "amount": value.get("amount"), "currency": value.get("currency"),
             "procedure": kind, "procedureDirect": direct, "category": tender.get("mainProcurementCategory"), "cpv": cpv,
-            "offers": offers, "offersNote": None if offers is not None else "No bids are published in this record: offers unknown, never zero.",
+            "offers": offers, "disqualifiedBefore": disqualified_before(tender, award) if direct is False else None, "offersNote": None if offers is not None else "No bids are published in this record: offers unknown, never zero.",
             "lotId": lot_id, "lotCount": len(lots), "contractId": contract.get("contractID"), "awardId": award["id"],
             "procedureId": tender["id"], "tenderID": tender["tenderID"], "tenderCreated": (tender.get("dateCreated") or "")[:10] or None,
             "complaintCount": len(tender.get("complaints") or []) + sum(len(a.get("complaints") or []) for a in awards.values()),

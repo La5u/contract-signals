@@ -26,7 +26,7 @@ Written on 25 September 2026, before any record of this cohort was read. Procedu
 | Repeated awards without competition | `ua-repeated-direct` | Competition | This award is negotiated; same buyer and supplier in ≥3 distinct tenders | **18 at 3 → 60 at 10** |
 | Concentrated awards | `ua-concentration` | Competition | Same buyer and main category (goods, works, services); ≥10 contracts, ≥80 % identified, share ≥60 % | **12 at 60 % → 40 at 100 %** |
 | Amount increase | `amount-increase` | Execution | **Out of scope**: contract changes are in the separate contracting API, not imported | — |
-| Short bidding period | `short-bidding-period` | Competition | **Out of scope** | — |
+| Better-ranked bidder disqualified | `ua-better-bid-disqualified` | Competition | Competitive type; on the awarded lot, at least one award to another bidder was declared unsuccessful before this award (added 2026-09-26) | **12**, flat |
 | Long declared duration | `long-contract` | Execution | **Out of scope** | — |
 
 Offers are counted per lot, which Prozorro publishes (unlike the Paraguayan data). When a record publishes no bids, offers are unknown, never zero. Complaints are shown as context outside the index.
@@ -42,10 +42,19 @@ Reproduced by `tests/national.cjs`. Ministry of Health (national, EDRPOU 0001292
 | `ua-repeated-single-offer` | 10 | 28 | 0 | 450 |
 | `ua-repeated-direct` | 0 | 0 | 0 | 488 |
 | `ua-concentration` | 0 | 483 | 5 | 0 |
+| `ua-better-bid-disqualified` | 9 | 55 | 0 | 424 |
 
-38 contracts with a signal, 450 zero, 0 not assessed. 424 of 488 contracts are direct-contract reports (reporting), out of scope; they score zero only through the concentration check. 38 of the 64 competitive contracts had a single offer. Example lead: one company won the Ministry of Health's commemorative award items repeatedly, each time as the only bidder. No negotiated procedure appears in this cohort.
+47 contracts with a signal, 441 zero, 0 not assessed (38 before the disqualification check). 424 of 488 contracts are direct-contract reports (reporting), out of scope; they score zero only through the concentration check. 38 of the 64 competitive contracts had a single offer. Example lead: one company won the Ministry of Health's commemorative award items repeatedly, each time as the only bidder. No negotiated procedure appears in this cohort.
 
 The first run counted concentration in lots rather than procedures; this was corrected for both engines (see [score-ted.md](score-ted.md)). Ukrainian counts did not change.
+
+## Better-ranked bidder disqualified (added 2026-09-26)
+
+Prozorro opens awards one at a time in ranking order (after the e-auction, or by the evaluated price): when the top-ranked bid is rejected, its award is marked `unsuccessful` and the next bidder is considered. The importer counts, on the awarded lot, the other bidders whose award was declared unsuccessful on or before the winning award's date (`disqualifiedBefore`). One or more gives 12 points in the competition family, so it is not added to a single-offer signal on the same row. The short-bidding-period slot, out of scope here, is used for it.
+
+- **Bid values are not compared.** Initial bid values in the record predate the e-auction, so “the lowest bid did not win” cannot be read from them reliably; the award sequence can.
+- **Result:** 9 of 64 competitive contracts (8 with one bidder set aside, 1 with two), all newly flagged: Ministry of Health equipment, lift and document-system purchases under the HEAL project, polyclinic and primary-care refurbishment works, rehabilitation vehicles, road maintenance services and linoleum.
+- Disqualification is often lawful (missing documents, a non-compliant or abnormally low offer). The reasons are in the award decisions on the Prozorro page, linked from each row.
 
 ## Licence
 
