@@ -71,6 +71,30 @@ for (const [file, country, expected, counts] of [
   console.log(`TED ${country}: ${rows.length} lots, ${counts[0]} flagged.`);
 }
 
+// ---- United Kingdom (Find a Tender) ----
+{
+  const rows = load('data/uk-fts.json'), cov = JSON.parse(fs.readFileSync('data/uk-fts-coverage.json'));
+  assert.deepEqual(cov.cohort.buyers.map(b => [b.id, b.level]), [['GB-FTS-131','national'],['GB-FTS-39','regional'],['GB-FTS-289','municipal']]);
+  assert.match(cov.license, /Open Government Licence v3\.0/);
+  assert.equal(cov.retrieval.indexedAwardReleases, 33457); assert.equal(cov.retrieval.noticesDownloaded, 516);
+  assert.equal(rows.length, 1081);
+  for (const r of rows) {
+    assert.equal(r.dataFamily, 'fts'); assert.ok(cov.cohort.buyers.some(b => b.id === r.buyerId));
+    assert.match(r.source, /^https:\/\/www\.find-tender\.service\.gov\.uk\/api\/1\.0\/ocdsReleasePackages\/\d{6}-\d{4}$/);
+    assert.ok(!/@|contactPoint|email/i.test(JSON.stringify(r)), 'no contact data imported');
+    if (r.procedureDirect !== false) assert.equal(r.offers, null);
+  }
+  const t = tally(rows);
+  assert.deepEqual(pick(t, 'uk-'), { 'uk-single-offer': [20,1031,7,23], 'uk-direct-award': [23,1053,5,0], 'uk-repeated-single-offer': [4,16,7,1054],
+    'uk-repeated-direct': [0,23,5,1053], 'uk-concentration': [0,359,722,0] });
+  assert.deepEqual(t.counts, [43,1036,2]);
+  // Identity: platform party id only; a Companies House number would not change the key.
+  const r0 = rows.find(r => r.supplierIds.length);
+  assert.equal(run('nationalSupplierIdentity', r0), `GB-FTS:${r0.supplierIds[0].id}`);
+  assert.equal(run('nationalSupplierIdentity', {...r0, supplierIds: [...r0.supplierIds, {id:'01234567', identifierType:'GB-COH'}]}), `GB-FTS:${r0.supplierIds[0].id}`);
+  console.log('United Kingdom Find a Tender: 1,081 awards, 43 flagged, no contact data, identity by platform id.');
+}
+
 // Concentration counts distinct procedures: a supplier winning many lots of one notice wins once.
 {
   const rows = load('data/ted-romania.json');
