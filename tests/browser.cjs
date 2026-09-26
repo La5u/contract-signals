@@ -137,6 +137,14 @@ const server=http.createServer((req,res)=>{
  assert.match(copDetail,/SECOP II — detalle del proceso/);
  assert.equal(await page.locator('.detail-row:not([hidden]) .assessment-checks li').count(),8);
  assert.match(copDetail,/docs\/score-colombia\.md|Colombian check/);
+ await page.locator('.row-toggle').first().click();
+ await page.selectOption('#legal','co-public');
+ assert.match(await page.locator('#status').textContent(),/442 \/ 7560/);
+ assert.match(await page.locator('.contract-row').first().textContent(),/public-to-public agreement · no points/);
+ await page.locator('.row-toggle').first().click();
+ assert.match(await page.locator('.detail-row:not([hidden])').first().textContent(),/Public-to-public agreement · context outside the index, no points.*The index is unchanged/);
+ await page.locator('.row-toggle').first().click();
+ await page.selectOption('#legal','');
  // Paraguay: linked contract records scored with Paraguayan checks only (docs/score-paraguay.md).
  await page.selectOption('#dataset','paraguay');
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 84'));
