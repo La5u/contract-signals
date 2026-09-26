@@ -1,0 +1,81 @@
+{
+ "source": "https://api.ted.europa.eu/v3/notices/search",
+ "notices": "https://ted.europa.eu/en/notice/{publication-number}/xml",
+ "license": "TED notices may be freely reused, for commercial or non-commercial purposes (Commission Decision 2011/833/EU; https://ted.europa.eu/en/legal-notice).",
+ "attribution": "Publications Office of the European Union, TED (Tenders Electronic Daily)",
+ "cohort": {
+  "cohortId": "ted-romania-2024-2026",
+  "country": "ROU",
+  "buyers": [
+   {
+    "id": "4221306",
+    "name": "Ministerul Finanțelor",
+    "level": "national"
+   },
+   {
+    "id": "4288110",
+    "name": "Județul Cluj (Consiliul Județean)",
+    "level": "regional"
+   },
+   {
+    "id": "4305857",
+    "name": "Municipiul Cluj-Napoca",
+    "level": "municipal"
+   }
+  ],
+  "window": {
+   "startInclusive": "20240901",
+   "endExclusive": "20260901",
+   "basis": "TED publication date"
+  },
+  "selection": "One buyer per level, announced on 2026-09-25 before any notice XML was downloaded; chosen by level and a reviewable TED notice count, never by indicator results.",
+  "identity": "Buyers matched by published identifier and its spelling variants (bare, country-prefixed, spaced), never by name."
+ },
+ "retrieval": {
+  "startedAt": "2026-09-25T21:30:28.946501+00:00",
+  "finishedAt": "2026-09-25T21:34:42.311827+00:00",
+  "queries": [
+   {
+    "buyerId": "4221306",
+    "query": "buyer-country=ROU AND notice-type=can-standard AND publication-date>=20240901 AND publication-date<20260901 AND organisation-identifier-buyer IN ('4221306' 'RO 4221306' 'RO-4221306' 'RO4221306')",
+    "searchTotal": 119
+   },
+   {
+    "buyerId": "4288110",
+    "query": "buyer-country=ROU AND notice-type=can-standard AND publication-date>=20240901 AND publication-date<20260901 AND organisation-identifier-buyer IN ('4288110' 'RO 4288110' 'RO-4288110' 'RO4288110')",
+    "searchTotal": 91
+   },
+   {
+    "buyerId": "4305857",
+    "query": "buyer-country=ROU AND notice-type=can-standard AND publication-date>=20240901 AND publication-date<20260901 AND organisation-identifier-buyer IN ('4305857' 'RO 4305857' 'RO-4305857' 'RO4305857')",
+    "searchTotal": 89
+   }
+  ],
+  "rawDirectory": "data/ted-romania/raw"
+ },
+ "counts": {
+  "notices": 299,
+  "retainedLots": 356,
+  "excludedResults": {
+   "several or no winning tender/contract references": 289
+  },
+  "lotsWithAnotherLeadBuyer": 0,
+  "conflictingLotIdsExcluded": 0,
+  "withOffers": 344,
+  "withAmount": 356,
+  "currencies": [
+   "EUR",
+   "RON"
+  ]
+ },
+ "limitations": [
+  "TED publishes procedures above the EU thresholds only; most national procurement is not here.",
+  "Contract modification notices are separate TED notices and were not imported: no amount-increase check.",
+  "Offers are the 'tenders' statistic published per lot; admissibility is not assessed.",
+  "Amounts are in the published currency, never converted or summed across currencies."
+ ],
+ "reproduce": [
+  "python tools/import-ted-cohorts.py --cohort romania --offline",
+  "python tools/import-ted-cohorts.py --cohort romania --download"
+ ]
+}

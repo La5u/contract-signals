@@ -1,0 +1,80 @@
+{
+ "source": "https://api.ted.europa.eu/v3/notices/search",
+ "notices": "https://ted.europa.eu/en/notice/{publication-number}/xml",
+ "license": "TED notices may be freely reused, for commercial or non-commercial purposes (Commission Decision 2011/833/EU; https://ted.europa.eu/en/legal-notice).",
+ "attribution": "Publications Office of the European Union, TED (Tenders Electronic Daily)",
+ "cohort": {
+  "cohortId": "ted-portugal-2024-2026",
+  "country": "PRT",
+  "buyers": [
+   {
+    "id": "503933813",
+    "name": "Infraestruturas de Portugal, S. A.",
+    "level": "national"
+   },
+   {
+    "id": "508779472",
+    "name": "Comunidade Intermunicipal do Cávado",
+    "level": "regional"
+   },
+   {
+    "id": "500051070",
+    "name": "Município de Lisboa",
+    "level": "municipal"
+   }
+  ],
+  "window": {
+   "startInclusive": "20240901",
+   "endExclusive": "20260901",
+   "basis": "TED publication date"
+  },
+  "selection": "One buyer per level, announced on 2026-09-25 before any notice XML was downloaded; chosen by level and a reviewable TED notice count, never by indicator results.",
+  "identity": "Buyers matched by published identifier and its spelling variants (bare, country-prefixed, spaced), never by name."
+ },
+ "retrieval": {
+  "startedAt": "2026-09-25T21:24:27.096795+00:00",
+  "finishedAt": "2026-09-25T21:30:28.945573+00:00",
+  "queries": [
+   {
+    "buyerId": "503933813",
+    "query": "buyer-country=PRT AND notice-type=can-standard AND publication-date>=20240901 AND publication-date<20260901 AND organisation-identifier-buyer IN ('503 933 813' '503933813' 'PT 503 933 813' 'PT 503933813' 'PT-503933813' 'PT503933813')",
+    "searchTotal": 371
+   },
+   {
+    "buyerId": "508779472",
+    "query": "buyer-country=PRT AND notice-type=can-standard AND publication-date>=20240901 AND publication-date<20260901 AND organisation-identifier-buyer IN ('508 779 472' '508779472' 'PT 508 779 472' 'PT 508779472' 'PT-508779472' 'PT508779472')",
+    "searchTotal": 36
+   },
+   {
+    "buyerId": "500051070",
+    "query": "buyer-country=PRT AND notice-type=can-standard AND publication-date>=20240901 AND publication-date<20260901 AND organisation-identifier-buyer IN ('500 051 070' '500051070' 'PT 500 051 070' 'PT 500051070' 'PT-500051070' 'PT500051070')",
+    "searchTotal": 35
+   }
+  ],
+  "rawDirectory": "data/ted-portugal/raw"
+ },
+ "counts": {
+  "notices": 442,
+  "retainedLots": 493,
+  "excludedResults": {
+   "several or no winning tender/contract references": 137
+  },
+  "lotsWithAnotherLeadBuyer": 0,
+  "conflictingLotIdsExcluded": 0,
+  "withOffers": 462,
+  "withAmount": 492,
+  "currencies": [
+   "EUR"
+  ]
+ },
+ "limitations": [
+  "TED publishes procedures above the EU thresholds only; most national procurement is not here.",
+  "Contract modification notices are separate TED notices and were not imported: no amount-increase check.",
+  "Offers are the 'tenders' statistic published per lot; admissibility is not assessed.",
+  "Amounts are in the published currency, never converted or summed across currencies."
+ ],
+ "reproduce": [
+  "python tools/import-ted-cohorts.py --cohort portugal --offline",
+  "python tools/import-ted-cohorts.py --cohort portugal --download"
+ ]
+}
