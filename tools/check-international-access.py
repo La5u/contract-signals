@@ -18,6 +18,14 @@ CHECKS = [
  ('Colombia SECOP II one-row API','https://www.datos.gov.co/resource/jbjy-vk9h.json?$limit=1'),
  ('Paraguay DNCP OCDS Swagger','https://www.contrataciones.gov.py/datos/api/v3/doc/swagger.json'),
  ('Brazil PNCP bounded page, 10 maximum requested','https://pncp.gov.br/api/consulta/v1/contratos?dataInicial=20250101&dataFinal=20250101&pagina=1&tamanhoPagina=10'),
+ # 2026-09-25 diagnosis of the September errors: page size must be 10..500 (400 "Tamanho de página inválido" otherwise).
+ ('Brazil PNCP diagnosis page size 1 (expect 400)','https://pncp.gov.br/api/consulta/v1/contratos?dataInicial=20240101&dataFinal=20240102&pagina=1&tamanhoPagina=1'),
+ ('Brazil PNCP diagnosis page size 9 (expect 400)','https://pncp.gov.br/api/consulta/v1/contratos?dataInicial=20250101&dataFinal=20250101&pagina=1&tamanhoPagina=9'),
+ ('Brazil PNCP diagnosis page size 500','https://pncp.gov.br/api/consulta/v1/contratos?dataInicial=20250101&dataFinal=20250101&pagina=1&tamanhoPagina=500'),
+ ('Brazil PNCP diagnosis page size 501 (expect 400)','https://pncp.gov.br/api/consulta/v1/contratos?dataInicial=20250101&dataFinal=20250101&pagina=1&tamanhoPagina=501'),
+ ('Brazil PNCP diagnosis default page size, previously timed out','https://pncp.gov.br/api/consulta/v1/contratos?dataInicial=20240101&dataFinal=20240102&pagina=1'),
+ ('Brazil PNCP diagnosis buyer filter cnpjOrgao','https://pncp.gov.br/api/consulta/v1/contratos?dataInicial=20250101&dataFinal=20250131&cnpjOrgao=00394460005887&pagina=1&tamanhoPagina=10'),
+ ('Brazil PNCP consulta OpenAPI document','https://pncp.gov.br/api/consulta/v3/api-docs'),
  ('Moldova official open-data page','https://mtender.gov.md/public/open-data'),
  ('Ukraine Prozorro public tender index, one item','https://public.api.openprocurement.org/api/2.5/tenders?limit=1'),
  ('TED official XML for an already UUID-verified notice','https://ted.europa.eu/en/notice/8206-2025/xml'),
@@ -45,6 +53,8 @@ def check(item):
                     if 'licenseId' in payload: result['license_id']=payload['licenseId']
                     if 'security' in payload: result['global_security']=payload['security']
                     if 'paths' in payload: result['documented_path_count']=len(payload['paths'])
+                    if isinstance(payload.get('info'),dict): result['api_license']=payload['info'].get('license')
+                    if 'message' in payload: result['message']=payload['message']
                     if 'name' in payload: result['dataset_name']=payload['name']
                     if 'license' in payload: result['license']=payload['license']
                     if 'publicationPolicy' in payload: result['publication_policy']=payload['publicationPolicy']
