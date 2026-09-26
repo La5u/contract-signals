@@ -156,3 +156,15 @@ function commonRowChecks(rows, cov, start, end) {
   assert.ok(!JSON.stringify(rows.map(r=>r.complaints)).includes('"name"'));
   console.log('DNCP complaints: 19 contracts with a recorded complaint, context only, no names.');
 }
+
+// Indicators sort: most signals first, unassessed rows always last in both directions.
+{
+  const rows = run('prepareContracts',JSON.parse(fs.readFileSync('data/paraguay-dncp-3buyers.json')));
+  const desc = run('selectContracts',rows,{sort:'indicators'}), asc = run('selectContracts',rows,{sort:'indicators-asc'});
+  const n = r => run('getIndicators',r).length;
+  for (let i = 1; i < desc.length; i++) assert.ok(n(desc[i-1]) >= n(desc[i]));
+  for (let i = 1; i < asc.length; i++) assert.ok(n(asc[i-1]) <= n(asc[i]));
+  const mixed = [...rows.slice(0,3), {...rows[0], id:'unassessed', dataStatus:'unverified'}];
+  assert.equal(run('selectContracts',run('prepareContracts',mixed),{sort:'indicators-asc'}).at(-1).id,'unassessed');
+  console.log('Indicators sort: ordered by signal count, not-assessed rows last.');
+}
