@@ -524,7 +524,7 @@ function nationalSupplierIdentity(c) {
   const ids = c.dataFamily === 'fts' ? (c.supplierIds || []).filter(x => x.identifierType === 'GB-FTS') : c.supplierIds || [];
   if (ids.length !== 1) return null;
   const { id, identifierType } = ids[0];
-  return ['EDRPOU', 'RNOKPP', 'NIF', 'CUI', 'GB-FTS', 'CL-RUT'].includes(identifierType) && typeof id === 'string' && id.trim() ? `${identifierType}:${id.trim()}` : null;
+  return ['EDRPOU', 'RNOKPP', 'NIF', 'CUI', 'ICO', 'GB-FTS', 'CL-RUT'].includes(identifierType) && typeof id === 'string' && id.trim() ? `${identifierType}:${id.trim()}` : null;
 }
 function nationalOffersKnown(c) { return Number.isInteger(c.offers) && c.offers > 0; }
 function nationalSingle(c) { return c.procedureDirect === false && c.offers === 1; }
@@ -1087,7 +1087,7 @@ function supplierNames(contract) {
 // Export the whole filtered view as flat records. Unknown stays empty, never zero.
 const EXPORT_CAVEAT = 'Published declarations and heuristic signals only. A flag is not proof of wrongdoing; zero or no label is not clearance. Declared amounts are not audited payments; never sum amounts across datasets or currencies. Current supplier names are a register snapshot, not historical names.';
 const EXPORT_COLUMNS = ['id', 'date', 'buyer', 'buyerId', 'supplier', 'supplierCurrentName', 'supplierIds', 'description', 'cpv', 'sector', 'procedure',
-  'amount', 'currency', 'offers', 'durationMonths', 'index', 'indexStatus', 'signals', 'officialFinding', 'investigationReported', 'dataStatus', 'source', 'verifyUrls'];
+  'amount', 'currency', 'offers', 'durationMonths', 'index', 'indexStatus', 'signals', 'context', 'officialFinding', 'investigationReported', 'dataStatus', 'source', 'verifyUrls'];
 
 function exportRecord(c) {
   const score = getVigilanceScore(c);
@@ -1098,6 +1098,7 @@ function exportRecord(c) {
     description: c.description, cpv: c.cpv ?? null, sector: getSector(c).label, procedure: c.procedure ?? null,
     amount: c.amount ?? null, currency: c.amount == null ? null : c.currency || 'EUR', offers: c.offers ?? null, durationMonths: c.durationMonths ?? null,
     index: score, indexStatus: score == null ? 'not assessed' : 'assessed', signals: getIndicators(c).map(i => i.label).join('; ') || null,
+    context: contextLabels(c).map(l => l.short).join('; ') || null,
     officialFinding: c.officialFinding === true, investigationReported: hasReportedInvestigation(c), dataStatus: c.dataStatus,
     source: safeSource(c.processUrl) || safeSource(c.source) || null,
     verifyUrls: verificationLinks(c).map(l => l.url).join(' ') || null
