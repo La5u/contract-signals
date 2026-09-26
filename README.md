@@ -1,6 +1,6 @@
 # Contract signals
 
-A static explorer for published public-procurement records from France, Colombia, Paraguay, Portugal, Romania, Ukraine and the United Kingdom. It flags contract characteristics that may deserve a closer look, such as awards without competition, single offers, repeated awards to the same supplier, or long durations. Every row links to its source and shows which checks could or could not be evaluated.
+A static explorer for published public-procurement records from France, Chile, Colombia, Paraguay, Portugal, Romania, Ukraine and the United Kingdom. It flags contract characteristics that may deserve a closer look, such as awards without competition, single offers, repeated awards to the same supplier, or long durations. Every row links to its source and shows which checks could or could not be evaluated.
 
 **A signal prompts a review. It is not an accusation.** A zero or missing label does not mean a contract is clean, and “Not assessed” is never zero.
 
@@ -28,6 +28,7 @@ You can also open `index.html` directly. If the browser blocks loading the data 
 | France · Tours — BOAMP/TED notices | 66 | documents, not assessed |
 | France · 3 Feb 2025 — BOAMP consultation notices | 10 | documents, not assessed |
 | France · nationwide BOAMP award sample + 8 CRC audit dossiers | 3,010 | French v3 checks; audit findings outside the index |
+| Chile · MOP / Maule region / Puente Alto — Mercado Público licitaciones 2024–2026 | 522 | Chilean checks |
 | Colombia · MEN / Caldas / Usaquén — SECOP II contracts 2024–2026 | 7,560 | Colombian checks |
 | Paraguay · Fernando de la Mora — DNCP OCDS 2024–2025 | 84 | Paraguayan checks |
 | Paraguay · MOPC / Central / Asunción — DNCP OCDS 2024–2026 | 293 | Paraguayan checks |
@@ -72,6 +73,7 @@ Every dataset can be rebuilt offline from its raw snapshot:
 | Tours notices | `python tools/import-tours-notices.py --offline` |
 | 3 Feb 2025 consultations | `python tools/import-consultations.py --offline` |
 | Nationwide BOAMP sample | `python tools/import-boamp-sample.py --offline` |
+| Chile (Mercado Público) | `python tools/import-chilecompra.py --offline` |
 | Colombia SECOP II | `python tools/import-colombia-secop2.py --offline` |
 | Paraguay DNCP | `python tools/import-paraguay-dncp.py --cohort fernando\|3buyers --offline` |
 | Portugal, Romania (TED) | `python tools/import-ted-cohorts.py --cohort portugal\|romania --offline` |
