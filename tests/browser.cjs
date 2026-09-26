@@ -24,6 +24,15 @@ const server=http.createServer((req,res)=>{
  await page.selectOption('#page-size','100');
  assert.equal(await page.locator('.contract-row').count(),100);
  assert.match(await page.locator('#page-status').textContent(),/100 rows per page/);
+ // Every signal is visible: no "+N more"; a second signal in the same family is marked as not added.
+ assert.equal(await page.locator('.badge-extra').count(),0);
+ const firstRow=page.locator('.contract-row').first();
+ const firstSignals=await firstRow.locator('td:nth-child(8) .badge:not(.context)').count();
+ assert.ok(firstSignals>=2,`top row shows ${firstSignals} signal chip(s)`);
+ assert.match(await firstRow.locator('td:nth-child(8)').textContent(),/competition/);
+ assert.ok(await page.locator('.badge.not-counted').count()>0);
+ assert.match(await page.locator('.badge.not-counted').first().textContent(),/not added/);
+ assert.match(await firstRow.locator('td:nth-child(8)').textContent(),/Context: single-vendor software maintenance/);
  await page.selectOption('#page-size','50');
  assert.equal(await page.locator('.contract-row').count(),50);
  assert.equal(await page.locator('#advanced-filters').getAttribute('open'),null);
@@ -53,7 +62,7 @@ const server=http.createServer((req,res)=>{
  assert.match(await page.locator('.detail-row').textContent(),/No points added/);
  await page.selectOption('#legal','R2122-3');assert.equal(await page.locator('.contract-row').count(),4);
  await page.selectOption('#legal','fr-software');assert.equal(await page.locator('.contract-row').count(),25);
- assert.match(await page.locator('.contract-row').first().textContent(),/single-vendor software maintenance · no points/);
+ assert.match(await page.locator('.contract-row').first().textContent(),/Context: single-vendor software maintenance/);
  await page.locator('.row-toggle').first().click();
  assert.match(await page.locator('.detail-row:not([hidden])').first().textContent(),/Proprietary status and exclusive rights are not verified/);
  await page.locator('.row-toggle').first().click();
@@ -140,7 +149,7 @@ const server=http.createServer((req,res)=>{
  await page.locator('.row-toggle').first().click();
  await page.selectOption('#legal','co-public');
  assert.match(await page.locator('#status').textContent(),/442 \/ 7560/);
- assert.match(await page.locator('.contract-row').first().textContent(),/public-to-public agreement · no points/);
+ assert.match(await page.locator('.contract-row').first().textContent(),/Context: public-to-public agreement/);
  await page.locator('.row-toggle').first().click();
  assert.match(await page.locator('.detail-row:not([hidden])').first().textContent(),/Public-to-public agreement · context outside the index, no points.*The index is unchanged/);
  await page.locator('.row-toggle').first().click();
@@ -273,6 +282,8 @@ const server=http.createServer((req,res)=>{
  assert.equal(await mobile.locator('#advanced-filters').getAttribute('open'),null);
  assert.equal(await mobile.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
  assert.equal(await mobile.locator('.contract-row').first().locator('td:visible').count(),3);
+ assert.equal(await mobile.locator('.contract-row').first().locator('.mobile-signals').first().isVisible(),true);
+ assert.match(await mobile.locator('.contract-row').first().locator('.mobile-signals').first().textContent(),/^Signals: /);
  // Paraguayan rows carry a note under the date; it must wrap, not squeeze the subject.
  const pyMobile=await browser.newPage({viewport:{width:390,height:844}});
  pyMobile.on('pageerror',e=>errors.push(e.message));
