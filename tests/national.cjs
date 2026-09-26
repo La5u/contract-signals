@@ -55,6 +55,8 @@ for (const [file, country, expected, counts] of [
     'ted-repeated-direct': [36,25,16,416], 'ted-concentration': [0,237,256,0] }, [128,359,6]],
   ['data/ted-romania.json', 'ROU', { 'ted-single-offer': [132,209,11,4], 'ted-direct-award': [4,352,0,0], 'ted-repeated-single-offer': [42,77,24,213],
     'ted-repeated-direct': [0,0,4,352], 'ted-concentration': [0,70,286,0] }, [136,220,0]],
+  ['data/ted-czechia.json', 'CZE', { 'ted-single-offer': [92,280,280,22], 'ted-direct-award': [22,373,279,0], 'ted-repeated-single-offer': [16,73,283,302],
+    'ted-repeated-direct': [9,13,279,373], 'ted-concentration': [70,388,216,0] }, [183,438,53]],
 ]) {
   const rows = load(file), cov = JSON.parse(fs.readFileSync(file.replace('.json', '-coverage.json')));
   assert.equal(cov.cohort.country, country);
@@ -63,7 +65,7 @@ for (const [file, country, expected, counts] of [
     assert.equal(r.country, country); assert.ok(cov.cohort.buyers.some(b => b.id === r.buyerId));
     assert.match(r.source, /^https:\/\/ted\.europa\.eu\/en\/notice\/-\/detail\/\d+-\d{4}$/);
     assert.ok(r.publicationDate >= '2024-09-01' && r.publicationDate < '2026-09-01');
-    for (const s of r.supplierIds) if (['NIF','CUI'].includes(s.identifierType)) assert.match(s.id, /^\d+$/);
+    for (const s of r.supplierIds) if (['NIF','CUI','ICO'].includes(s.identifierType)) assert.match(s.id, /^\d+$/);
   }
   const t = tally(rows);
   assert.deepEqual(pick(t, 'ted-'), expected);
