@@ -78,4 +78,17 @@ for(const file of datasets){
   check(run('selectContracts',rows,{sort:'official'}).slice(0,8).every(r=>r.officialFinding===true));
  }
 }
+// Single-vendor software maintenance: context label only, never read by scoring.
+const softwareCounts={contracts:4,'decp-history':25,'decp-cities':1,consultations:0,'tours-notices':0};
+for(const file of datasets){
+ const rows=run('prepareContracts',JSON.parse(fs.readFileSync(`data/${file}.json`)));
+ const labelled=run('selectContracts',rows,{legal:'fr-software'});
+ check(labelled.length===softwareCounts[file]);
+ for(const r of labelled){const l=run('softwareMaintenanceContext',r);check(r.directAward!==false&&['direct','R2122-3','one-offer'].includes(l.vendor)&&['cpv','text'].includes(l.software));}
+}
+const scoringSource=fs.readFileSync('script.js','utf8').split('function getAssessment(c)')[1].split('function prepareContracts')[0];
+check(!/softwareMaintenanceContext|secop2PublicCounterparty/.test(scoringSource),'context labels are never read by scoring');
+check(run('softwareMaintenanceContext',{dataFamily:'boamp',cpv:'72267000',description:'Maintenance du progiciel X',directAward:false,offers:1})===null,'competitive single offer is not a single-vendor context');
+check(run('softwareMaintenanceContext',{dataFamily:'decp',cpv:'50324200-4',description:'Maintenance et garantie de la station totale avec mises à jour des logiciels',directAward:true,offers:1})===null,'equipment with bundled software is not labelled');
+check(run('softwareMaintenanceContext',{dataFamily:'secop2',cpv:'72267000',description:'Maintenance du progiciel X',directAward:true})===null,'French label only on French families');
 console.log(`${checks} active v3 assertions passed: coverage, null/zero, independence, thresholds, exclusions and full datasets.`);

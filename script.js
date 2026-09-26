@@ -211,6 +211,24 @@ function dncpAtCeiling(c) {
   return increase.status === 'known' && increase.count > 0 && Math.abs(increase.percentage - PY_LEGAL_CEILING) <= 0.05;
 }
 
+// France: maintenance, support or licences of an existing software product
+// placed with one vendor. Context only, never points (docs/score-v3.md).
+// Proprietary status and exclusive rights are not verified.
+const FR_SOFTWARE_CPV = /^(48|7221|7225|7226)/;
+const FR_SOFTWARE_TEXT = /progiciel|licences? logicielles?|maint\w*\s+(?:\S+\s+){0,3}(?:du|des|de la|de l’|de l')\s*logiciels?/i;
+const FR_MAINTENANCE_TEXT = /\bmaint(?:enances?)?\b|\bsupport\b|\bassistance\b|mises? à jour|\bTMA\b|\bMCO\b|\blicences?\b|\babonnement|\bsouscription|droit de suivi/i;
+function softwareMaintenanceContext(c) {
+  if (c.dataFamily !== 'boamp' && c.dataFamily !== 'decp') return null;
+  const cpv = String(c.cpv || '').replace(/\D/g, '');
+  const text = typeof c.description === 'string' ? c.description : '';
+  const software = FR_SOFTWARE_CPV.test(cpv) ? 'cpv' : FR_SOFTWARE_TEXT.test(text) ? 'text' : null;
+  if (!software || !(/^72267/.test(cpv) || FR_MAINTENANCE_TEXT.test(text))) return null;
+  const vendor = c.directAward === true ? 'direct'
+    : getLegalContext(c).some(item => item.article === 'R2122-3') ? 'R2122-3'
+    : c.directAward == null && c.offers === 1 ? 'one-offer' : null;
+  return vendor ? { software, vendor } : null;
+}
+
 function indicatorSeverity(weight) {
   if (weight >= 40) return { id: 'extreme', label: 'Very high' };
   if (weight >= 25) return { id: 'high', label: 'High' };
@@ -910,7 +928,7 @@ function selectContracts(contracts, { search = '', minimum = 0, minScore = 0, fl
     const noticeMatch = !noticeContext || Boolean(evidence && (noticeContext === 'criteria' ? evidence.awardCriteria.length : noticeContext === 'explanation' ? evidence.procedureDescription || evidence.justifications.some(j => j.text) : noticeContext === 'correction' ? evidence.kind === 'correction' : noticeContext === 'ted' ? evidence.ted.length : false));
     const text = normalize([c.id, c.buyer, c.buyerSiret, c.supplier, c.description, c.procedure, c.cpv, c.contractId, c.awardId, c.buyerId, c.lotId, c.noticeId, ...(c.supplierProfiles || []).map(p => p.name), c.consultation?.procedureReference, ...(c.consultation?.notices || []).map(n => n.id), ...(c.consultation?.lots || []).map(l => `${l.id || ''} ${l.description || ''}`), ...projectText, ...noticeText, ...(c.supplierIds || []).map(s => `${s.id} ${s.siren || ''}`)].join(' '));
     const citations = getLegalContext(c);
-    const legalMatch = !legal || (legal === 'py-ceiling' ? dncpAtCeiling(c) : legal === 'py-complaint' ? Boolean(c.complaints?.length) : legal === 'direct' ? c.directAward === true : legal === 'cited' ? citations.length > 0 : citations.some(item => item.article === legal));
+    const legalMatch = !legal || (legal === 'py-ceiling' ? dncpAtCeiling(c) : legal === 'py-complaint' ? Boolean(c.complaints?.length) : legal === 'fr-software' ? Boolean(softwareMaintenanceContext(c)) : legal === 'direct' ? c.directAward === true : legal === 'cited' ? citations.length > 0 : citations.some(item => item.article === legal));
     const evaluated = getAssessment(c);
     const assessmentMatch = !assessment || (assessment === 'unevaluated' ? scoreFor(c) == null : assessment === 'zero' ? scoreFor(c) === 0 : assessment === 'partial' ? evaluated.unknown > 0 || evaluated.unknownApplicability > 0 : false);
     const sectorMatch = !sector || getSector(c).code === sector;
@@ -1344,6 +1362,7 @@ function startExplorer() {
       if (c.noticeEvidence) objectCell.append(element('small', `Notice ${c.noticeId} · ${c.lotId || 'unknown lot'} · local ref. ${c.noticeEvidence.lotReference || '—'}`, 'provenance'));
       const legalContext = getLegalContext(c);
       if (legalContext.length) objectCell.append(element('small', `Context · ${[...new Set(legalContext.map(item => item.article))].join(', ')} cited · no points added`, 'provenance'));
+      if (softwareMaintenanceContext(c)) objectCell.append(element('small', 'Context · single-vendor software maintenance · no points', 'provenance'));
       if (c.initialConflicts?.length || c.identityAmbiguous) objectCell.append(element('small', 'Ambiguous identifier / versions · calculations excluded', 'provenance'));
       if (c.modificationConflicts?.length) objectCell.append(element('small', 'Conflicting modification versions', 'provenance'));
       if (c.officialFinding === true) objectCell.append(element('small', 'Official audit finding · not a conviction', 'provenance'));
@@ -1392,6 +1411,8 @@ function startExplorer() {
       cell.append(element('p', `Identifiers — Buyer SIRET: ${c.buyerSiret || '—'} · Contract: ${c.contractId || '—'} · Lot: ${c.lotId || '—'} · CPV: ${c.cpv || '—'}`));
       if (c.noticeId || c.publicationDate) cell.append(element('p', `Notice: ${c.noticeId || '—'} · Publication: ${c.publicationDate || '—'}`));
       if (c.supplierIds?.length) cell.append(element('p', `Holders: ${c.supplierIds.map(s => `${s.identifierType || 'Identifier'} ${s.id}${s.siren ? ` · SIREN ${s.siren}` : ''}`).join(' / ')}`));
+      const software = softwareMaintenanceContext(c);
+      if (software) cell.append(element('h3', 'Single-vendor software maintenance — context, not an indicator'), element('p', `Maintenance, support or licences of an existing software product (${software.software === 'cpv' ? 'software CPV code' : 'software named in the object'}), placed with one vendor (${software.vendor === 'direct' ? 'award declared without competition' : software.vendor === 'R2122-3' ? 'article R2122-3 cited' : 'procedure not classified, one offer received'}). This is often routine: only the publisher or its appointed distributor can maintain its product. Proprietary status and exclusive rights are not verified here. No points added or removed; the index is unchanged.`));
       if (c.directAward === true || legalContext.length) {
         cell.append(element('h3', 'Declared legal basis — context, not an indicator'), element('p', 'A citation proves neither that the legal conditions are met nor an irregularity. A single offer received does not demonstrate exclusivity. No points added; no inference about other contracts.'));
         if (!legalContext.length) cell.append(element('p', 'Article R2122 not found in the imported object or procedure. Justification unknown in this extract, not absence of justification.'));

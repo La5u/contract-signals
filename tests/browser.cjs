@@ -52,6 +52,11 @@ const server=http.createServer((req,res)=>{
  assert.match(await page.locator('.detail-row').textContent(),/R-2122-1/);
  assert.match(await page.locator('.detail-row').textContent(),/No points added/);
  await page.selectOption('#legal','R2122-3');assert.equal(await page.locator('.contract-row').count(),4);
+ await page.selectOption('#legal','fr-software');assert.equal(await page.locator('.contract-row').count(),25);
+ assert.match(await page.locator('.contract-row').first().textContent(),/single-vendor software maintenance · no points/);
+ await page.locator('.row-toggle').first().click();
+ assert.match(await page.locator('.detail-row:not([hidden])').first().textContent(),/Proprietary status and exclusive rights are not verified/);
+ await page.locator('.row-toggle').first().click();
  await page.selectOption('#legal','');
  await page.locator('#pagination').scrollIntoViewIfNeeded();
  const before=await page.evaluate(()=>({y:scrollY,height:document.querySelector('.table-wrap').clientHeight}));
