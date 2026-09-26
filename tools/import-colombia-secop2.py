@@ -230,6 +230,7 @@ def normalize_row(raw: dict, buyer: dict) -> dict:
         "amountPendingExecution": num("valor_pendiente_de_ejecucion"),
         "currency": "COP",
         "durationOriginal": raw.get("duraci_n_del_contrato") or None,
+        "daysAdded": int(raw["dias_adicionados"]) if str(raw.get("dias_adicionados", "")).isdigit() else None,
         "startDate": to_date(raw.get("fecha_de_inicio_del_contrato")),
         "endDate": to_date(raw.get("fecha_de_fin_del_contrato")),
         "lastUpdated": raw.get("ultima_actualizacion") or None,
