@@ -257,6 +257,7 @@ function graduated(value, start, end, low, high) {
 function getAssessment(c) {
   if (c.dataFamily === 'secop2') return getAssessmentSecop2(c);
   if (c.dataFamily === 'dncp') return getAssessmentDncp(c);
+  if (NATIONAL_FAMILIES[c.dataFamily]) return getAssessmentNational(c);
   const excludedReason = c.initialConflicts?.length || c.modificationConflicts?.length ? 'Conflicting versions: calculations excluded.' :
     c.identityAmbiguous ? 'Duplicate contract identifier: calculations excluded.' :
     c.dataStatus === 'unverified' ? 'Unverified record: calculations excluded.' : null;
@@ -445,6 +446,62 @@ function getAssessmentDncp(c) {
     notApplicable: checks.filter(r => r.status === 'not-applicable').length,
     signals: checks.filter(r => r.status === 'signal').length, excludedReason };
 }
+// Ukraine (Prozorro) and Portugal/Romania (TED eForms): one engine, per-family
+// labels and scope. Methods: docs/score-ukraine.md, docs/score-ted.md. Checks were
+// fixed before these cohorts were downloaded; French thresholds are not applied.
+const NATIONAL_FAMILIES = {
+  prozorro: { prefix: 'ua', doc: 'docs/score-ukraine.md', category: c => c.category, notScored: new Set(['reporting']),
+    directLabel: 'Negotiated procedure without competition', directReason: 'negotiation or negotiation.quick',
+    outOfScope: { directKind: 'Direct-contract report (reporting): ordinary, mostly low-value purchases recorded without a procedure; not scored, like the bare Colombian direct modality.',
+      increase: 'Contract changes are published in the separate contracting API, not imported: increase out of scope.' } },
+  ted: { prefix: 'ted', doc: 'docs/score-ted.md', notScored: new Set(), category: c => /^\d{8}/.test(c.cpv || '') ? c.cpv.slice(0, 2) : null,
+    directLabel: 'Negotiated without prior publication', directReason: 'eForms procedure code neg-wo-call',
+    outOfScope: { directKind: 'Procedure code outside the known competitive/direct list: not assessed.',
+      increase: 'Contract modification notices are separate TED notices, not imported: increase out of scope.' } },
+};
+function nationalSupplierIdentity(c) {
+  if (c.supplierIds?.length !== 1) return null;
+  const { id, identifierType } = c.supplierIds[0];
+  return ['EDRPOU', 'RNOKPP', 'NIF', 'CUI'].includes(identifierType) && typeof id === 'string' && id.trim() ? `${identifierType}:${id.trim()}` : null;
+}
+function nationalOffersKnown(c) { return Number.isInteger(c.offers) && c.offers > 0; }
+function nationalSingle(c) { return c.procedureDirect === false && c.offers === 1; }
+function getAssessmentNational(c) {
+  const spec = NATIONAL_FAMILIES[c.dataFamily];
+  const excludedReason = c.dataStatus === 'unverified' ? 'Unverified record: calculations excluded.' : null;
+  const checks = [];
+  function add(id, label, family, applicability, evaluable, triggered, weight, reason) {
+    if (excludedReason) { applicability = 'unknown'; evaluable = false; reason = excludedReason; }
+    const status = applicability === 'no' ? 'not-applicable' : applicability !== 'yes' || !evaluable ? 'unknown' : triggered ? 'signal' : 'clear';
+    const severity = indicatorSeverity(weight || 0);
+    checks.push({ id, label, family, applicability, status, weight: status === 'signal' ? weight : null, reason, explanation: reason, severity: severity.id, severityLabel: severity.label });
+  }
+  const p = spec.prefix, competitive = c.procedureDirect === false, direct = c.procedureDirect === true, supplier = nationalSupplierIdentity(c);
+  // A known type the method deliberately does not score is out of scope, not unknown.
+  const unknownKind = spec.notScored.has(c.procedure) ? 'no' : 'unknown';
+  add(`${p}-single-offer`, 'Single offer in a competitive procedure', 'competition', competitive ? 'yes' : direct ? 'no' : unknownKind, nationalOffersKnown(c), c.offers === 1, 12,
+    direct ? 'Procedure without competition: one offer is expected, not a signal.' : !competitive ? spec.outOfScope.directKind :
+    !nationalOffersKnown(c) ? (c.offersNote || 'Number of offers for this lot not published.') : `${c.offers} offer(s) published for this lot (${c.procedure}). One offer: 12 points, all amounts. Admissibility is not assessed.`);
+  add(`${p}-direct-award`, `Award without competition (${spec.directLabel})`, 'competition', c.procedureDirect == null ? unknownKind : 'yes', c.procedureDirect != null, direct, 18,
+    c.procedureDirect == null ? spec.outOfScope.directKind : direct ? `${c.procedure} (${spec.directReason}): award without a competitive call. 18 points, all amounts. A lawful ground may apply (urgency, exclusivity, failed call); not assessed here.` : `Competitive procedure (${c.procedure}): no direct-award signal.`);
+  const rs = c.nationalRepeatedSingle;
+  add(`${p}-repeated-single-offer`, 'Repeated single-offer awards to the same supplier', 'competition', nationalSingle(c) ? 'yes' : competitive && nationalOffersKnown(c) || direct ? 'no' : unknownKind, Boolean(rs), rs?.count >= 3,
+    graduated(rs?.count || 0, 3, 10, 12, 40), !nationalSingle(c) ? 'Not a single-offer competitive award: outside the repetition scope.' : rs ? `Same buyer and supplier ${supplier}: ${rs.count} distinct procedure(s) in this cohort won with a single offer. From 12 points at 3, linear to 40 at 10.` : 'Supplier identifier not usable (not a national registration number): repetition not assessable.');
+  const rd = c.nationalRepeatedDirect;
+  add(`${p}-repeated-direct`, 'Repeated awards without competition to the same supplier', 'competition', direct ? 'yes' : c.procedureDirect == null ? unknownKind : 'no', Boolean(rd), rd?.count >= 3,
+    graduated(rd?.count || 0, 3, 10, 18, 60), !direct ? 'Not an award without competition: outside the repetition scope.' : rd ? `Same buyer and supplier ${supplier}: ${rd.count} distinct procedure(s) without competition in this cohort. From 18 points at 3, linear to 60 at 10. Lawful grounds may apply to each.` : 'Supplier identifier not usable: repetition not assessable.');
+  const k = c.nationalConcentration;
+  add(`${p}-concentration`, 'Concentrated awards within a category', 'competition', supplier ? 'yes' : 'unknown', Boolean(k?.sufficient), k?.share >= 0.6,
+    graduated(k?.share || 0, 0.6, 1, 12, 40), k ? `Same buyer and category ${k.category}: ${k.wins}/${k.known} procedures won by this supplier, out of ${k.total} (${Math.round(k.coverage * 100)} % with an identified winner; lots of one procedure count once). Minimum 10 and 80 %; from 12 points at 60 % to 40 at 100 %. ${k.sufficient ? '' : 'Insufficient sample or coverage: not assessed.'}` : 'Supplier identity or category unknown: applicability not established.');
+  add('amount-increase', 'Relative increase in declared amount', 'execution', 'no', false, false, null, spec.outOfScope.increase);
+  add('short-bidding-period', 'Short bidding period', 'competition', 'no', false, false, null, 'No validated minimum period for this jurisdiction in this method: out of scope.');
+  add('long-contract', 'Long declared duration', 'execution', 'no', false, false, null, 'No duration threshold validated for this jurisdiction: out of scope.');
+  const applicable = checks.filter(r => r.applicability === 'yes').length;
+  const evaluated = checks.filter(r => r.status === 'signal' || r.status === 'clear').length;
+  return { checks, applicable, evaluated, unknown: checks.filter(r => r.applicability === 'yes' && r.status === 'unknown').length,
+    unknownApplicability: checks.filter(r => r.applicability === 'unknown').length, notApplicable: checks.filter(r => r.status === 'not-applicable').length,
+    signals: checks.filter(r => r.status === 'signal').length, excludedReason };
+}
 function hasAdjudicatedCorruption(contract) {
   return contract.corruptionOutcome?.status === 'final-adjudication';
 }
@@ -490,7 +547,7 @@ function getAmountEvolution(contract) {
 
 // Retrospective context on the COMPLETE loaded cohort, never on filtered/page rows.
 function prepareContracts(data) {
-  const contracts = validateContracts(data).map(c => ({ ...c, competitionContext: null, supplierContext: null, identityAmbiguous: false, secop2Concentration: null, secop2Repetition: null, dncpConcentration: null, dncpRepeatedSingle: null, dncpRepeatedException: null }));
+  const contracts = validateContracts(data).map(c => ({ ...c, competitionContext: null, supplierContext: null, identityAmbiguous: false, secop2Concentration: null, secop2Repetition: null, dncpConcentration: null, dncpRepeatedSingle: null, dncpRepeatedException: null, nationalConcentration: null, nationalRepeatedSingle: null, nationalRepeatedDirect: null }));
   const groups = new Map();
   const supplierGroups = new Map();
   const identityCounts = new Map();
@@ -610,6 +667,46 @@ function prepareContracts(data) {
         wins: wins.get(dncpSupplierIdentity(c)), share: wins.get(dncpSupplierIdentity(c)) / known.length, coverage,
         sufficient: known.length >= PY_CONCENTRATION_GROUP_MIN && coverage >= PY_CONCENTRATION_COVERAGE };
     }
+  }
+  // Ukraine and TED: repetition in distinct procedures and buyer/category concentration.
+  const natGroups = new Map(), natRep = { single: new Map(), direct: new Map() };
+  for (const c of contracts) {
+    const spec = NATIONAL_FAMILIES[c.dataFamily];
+    if (!spec) continue;
+    const buyer = `${c.dataFamily}|${c.buyerId || c.buyer}`, category = spec.category(c), supplier = nationalSupplierIdentity(c);
+    if (category) { const key = `${buyer}|${category}`; if (!natGroups.has(key)) natGroups.set(key, []); natGroups.get(key).push(c); }
+    if (!supplier) continue;
+    for (const [kind, member] of [['single', nationalSingle(c)], ['direct', c.procedureDirect === true]]) {
+      if (!member) continue;
+      const pair = `${buyer}|${supplier}`;
+      if (!natRep[kind].has(pair)) natRep[kind].set(pair, new Set());
+      natRep[kind].get(pair).add(c.procedureId || c.noticeId || c.id);
+    }
+  }
+  // Counted in distinct procedures: one multi-lot notice won by one supplier is one win, not one per lot.
+  const procedureOf = c => c.procedureId || c.noticeId || c.id;
+  for (const group of natGroups.values()) {
+    const all = new Set(group.map(procedureOf)), known = new Set(), wins = new Map();
+    for (const c of group) {
+      const id = nationalSupplierIdentity(c);
+      if (id == null) continue;
+      known.add(procedureOf(c));
+      if (!wins.has(id)) wins.set(id, new Set());
+      wins.get(id).add(procedureOf(c));
+    }
+    const coverage = known.size / all.size;
+    for (const c of group) {
+      const id = nationalSupplierIdentity(c);
+      if (id == null) continue;
+      c.nationalConcentration = { category: NATIONAL_FAMILIES[c.dataFamily].category(c), total: all.size, known: known.size,
+        wins: wins.get(id).size, share: wins.get(id).size / known.size, coverage, sufficient: known.size >= 10 && coverage >= 0.8 };
+    }
+  }
+  for (const c of contracts) {
+    if (!NATIONAL_FAMILIES[c.dataFamily] || !nationalSupplierIdentity(c)) continue;
+    const pair = `${c.dataFamily}|${c.buyerId || c.buyer}|${nationalSupplierIdentity(c)}`;
+    if (nationalSingle(c)) c.nationalRepeatedSingle = { count: natRep.single.get(pair).size };
+    if (c.procedureDirect === true) c.nationalRepeatedDirect = { count: natRep.direct.get(pair).size };
   }
   for (const c of contracts) {
     if (c.dataFamily !== 'dncp' || dncpSupplierIdentity(c) == null) continue;
@@ -739,7 +836,7 @@ function validateContracts(data) {
     }
     if (c.findingScope != null && !['contract', 'aggregate'].includes(c.findingScope)) throw new Error(`${c.id} : invalid finding scope.`);
     if (c.amountQualifier != null && !['at-least', 'more-than', 'approximate'].includes(c.amountQualifier)) throw new Error(`${c.id} : invalid amount qualifier.`);
-    if (c.dataFamily != null && !['decp', 'boamp', 'audit', 'secop2', 'dncp'].includes(c.dataFamily)) throw new Error(`${c.id} : invalid data family.`);
+    if (c.dataFamily != null && !['decp', 'boamp', 'audit', 'secop2', 'dncp', 'prozorro', 'ted'].includes(c.dataFamily)) throw new Error(`${c.id} : invalid data family.`);
     if (c.buyerSiret != null && !/^\d{14}$/.test(c.buyerSiret)) throw new Error(`${c.id} : invalid buyer SIRET.`);
     if (c.supplierIds != null && (!Array.isArray(c.supplierIds) || c.supplierIds.some(s => !s || typeof s.id !== 'string' || (s.identifierType != null && typeof s.identifierType !== 'string')))) throw new Error(`${c.id} : invalid supplier identifiers.`);
     if (c.supplierProfiles != null) {
@@ -823,10 +920,11 @@ function selectContracts(contracts, { search = '', minimum = 0, minScore = 0, fl
       (!flagged || getIndicators(c).length > 0) && (!official || c.officialFinding === true) && (!adjudicated || hasAdjudicatedCorruption(c)) && (!investigation || hasReportedInvestigation(c)) &&
       (!indicator || (indicator === 'official-finding' ? c.officialFinding === true : getIndicators(c).some(i => i.id === indicator)));
   }).sort((a, b) => {
-    const direction = ['score-asc', 'amount-asc', 'date-asc', 'publication-asc'].includes(sort) ? 1 : ['sector', 'buyer', 'supplier', 'offers'].includes(sort) ? 1 : -1;
-    const field = sort.startsWith('score') ? 'score' : sort.startsWith('amount') ? 'amount' : sort.startsWith('date') ? 'date' : sort.startsWith('publication') ? 'publication' : sort === 'sector-desc' ? 'sector' : sort;
+    const direction = ['score-asc', 'amount-asc', 'date-asc', 'publication-asc', 'indicators-asc'].includes(sort) ? 1 : ['sector', 'buyer', 'supplier', 'offers'].includes(sort) ? 1 : -1;
+    const field = sort.startsWith('score') ? 'score' : sort.startsWith('amount') ? 'amount' : sort.startsWith('date') ? 'date' : sort.startsWith('indicators') ? 'indicators' : sort.startsWith('publication') ? 'publication' : sort === 'sector-desc' ? 'sector' : sort;
     const raw = c => field === 'score' ? scoreFor(c) : field === 'amount' ? c.amount : field === 'date' ? (c.date ? Date.parse(c.date) : null) :
       field === 'publication' ? (c.publicationDate ? Date.parse(c.publicationDate) : null) : field === 'sector' ? getSector(c).label : field === 'buyer' ? c.buyer : field === 'supplier' ? c.supplier :
+      field === 'indicators' ? (scoreFor(c) == null ? null : getIndicators(c).length) :
       field === 'official' ? (c.officialFinding === true ? 1 : null) : field === 'offers' ? c.offers : field === 'increase' ? increaseFor(c) : null;
     const av = raw(a), bv = raw(b);
     const nullOrder = av == null ? (bv == null ? 0 : 1) : bv == null ? -1 : 0;
@@ -965,7 +1063,9 @@ function verificationLinks(c) {
     for (const complaint of c.complaints || []) for (const d of complaint.documents) add(d.url, `DNCP resolution on complaint ${complaint.id} · ${d.title || 'PDF'}${d.date ? ` · ${d.date}` : ''}`);
   }
   if (c.dataFamily === 'secop2') add(c.processUrl, 'Process page on SECOP II');
+  if (c.dataFamily === 'prozorro') add(c.portalUrl, 'Tender page on prozorro.gov.ua (bids, awards, contract documents; address built from the tender ID)');
   add(c.source, c.sourceLabel || 'Original source record');
+  if (c.dataFamily === 'ted') add(c.xmlUrl, 'Official eForms XML of the notice (machine-readable)');
   add(c.reportUrl, 'Original official report');
   add(c.responseLink, 'Official response of the audited organization');
   add(c.supplierNameSource, 'Supplier name — Annuaire des entreprises');
@@ -1042,7 +1142,10 @@ function startExplorer() {
     boamp: { path: 'data/contracts.json', coverage: 'data/coverage.json', sources: { publisher: 'DILA — BOAMP; Chambres régionales des comptes (audit dossiers)', links: [['BOAMP search', 'https://www.boamp.fr/'], ['BOAMP API used', 'https://www.boamp.fr/api/explore/v2.1/catalog/datasets/boamp/records'], ['CRC reports · ccomptes.fr', 'https://www.ccomptes.fr/fr/publications']], licence: 'To confirm: the BOAMP API metadata states none; CRC reports quoted with links', raw: 'data/boamp-raw.json.gz', reproduce: 'python tools/import-boamp-sample.py --offline', collected: 'All 8,386 BOAMP award notices published February–April 2025; 3,000 unambiguous lots kept by SHA-256 order of their identifier. The two Mauges lots and eight CRC audit dossiers are documented by hand.' }, note: '3,010 records: 3,000 BOAMP lots sampled from February–April 2025 publications, two Mauges lots and eight documented CRC dossiers. Some findings concern sets of orders, not an individual award. A finding does not extend to a municipality’s other purchases. This sample does not allow an exhaustive competition history to be computed.' },
     colombia: { path: 'data/colombia-secop2.json', coverage: 'data/colombia-secop2-coverage.json', sources: { publisher: 'Colombia Compra Eficiente — SECOP II, via datos.gov.co', links: [['Dataset page · datos.gov.co (jbjy-vk9h)', 'https://www.datos.gov.co/Gastos-Gubernamentales/SECOP-II-Contratos-Electr-nicos/jbjy-vk9h'], ['API used', 'https://www.datos.gov.co/resource/jbjy-vk9h.json'], ['SECOP II public search', 'https://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index']], licence: 'CC BY-SA 4.0', raw: 'data/colombia-secop2/raw/', reproduce: 'python tools/import-colombia-secop2.py --offline', collected: 'Every SECOP II contract of three buyers announced before download, signed 2024-09-01 → 2026-09-01.' }, note: 'SECOP II pilot · Colombia · three buyers announced before download · signatures 2024-09 → 2026-09: 7,560 contracts (Ministerio de Educación Nacional 2,618, national; Gobernación de Caldas 3,696, departmental; Alcaldía Local de Usaquén 1,246, municipal-local). Fields kept verbatim in Spanish; amounts in COP, never converted. Jurisdiction-specific indicators (docs/score-colombia.md): declared absence of supplier plurality or manifest urgency, repetition of such awards, concentration within buyer and contract type, declared duration ≥ 36 months. The bare direct-family modality (≈82 % of the cohort) and ordinary justifications add no points; amounts sort only. Licence CC BY-SA 4.0 (Colombia Compra Eficiente); not exhaustive of each buyer’s procurement; no offers table was imported, so no offer-count indicator exists.' },
     paraguay: { path: 'data/paraguay-dncp.json', coverage: 'data/paraguay-dncp-coverage.json', sources: { publisher: 'Dirección Nacional de Contrataciones Públicas (DNCP), Paraguay', links: [['Public procurement portal · contrataciones.gov.py', 'https://www.contrataciones.gov.py/'], ['Open data and API documentation', 'https://www.contrataciones.gov.py/datos/api/v3/doc/'], ['Legal notice and licence (the OCDS packages cite /datos/legal, which now returns 404)', 'https://www.contrataciones.gov.py/datos/aviso-legal']], licence: 'CC BY 4.0', raw: 'data/paraguay-dncp/raw/', reproduce: 'python tools/import-paraguay-dncp.py --cohort fernando --offline', collected: 'Every process of the buyer whose call was published 2024-09-01 → 2025-09-01, then each full OCDS record by OCID.' }, note: 'Paraguay · DNCP OCDS pilot · Municipalidad de Fernando de la Mora only. Calls published 2024-09-01 → 2025-09-01: 88 process records, 84 linked contract entries retained; 2 contract entries excluded, 4 other processes without eligible contracts. PYG, no conversion. Source contract.period.startDate is not a signature date; no published dateSigned on retained rows. Raw OCDS records retained, 80 entries link a document typed contractSigned, contents not independently reviewed. Paraguayan checks only (docs/score-paraguay.md), fixed after reading this pilot’s field distributions: single tenderer in a competitive procedure, award by exception (CVE), their repetition per supplier, concentration by category, amount increase > 20 %. The 2 excluded entries are the separate records of 2 amount amendments (+20.0 %, +19.99 %), kept on their parent contracts. No French/Colombian rules applied. Not a national sample or payment audit.' },
-    paraguay3: { path: 'data/paraguay-dncp-3buyers.json', coverage: 'data/paraguay-dncp-3buyers-coverage.json', sources: { publisher: 'Dirección Nacional de Contrataciones Públicas (DNCP), Paraguay', links: [['Public procurement portal · contrataciones.gov.py', 'https://www.contrataciones.gov.py/'], ['Open data and API documentation', 'https://www.contrataciones.gov.py/datos/api/v3/doc/'], ['Legal notice and licence (the OCDS packages cite /datos/legal, which now returns 404)', 'https://www.contrataciones.gov.py/datos/aviso-legal']], licence: 'CC BY 4.0', raw: 'data/paraguay-dncp-3buyers/raw/ (records gzipped, exact response bytes)', reproduce: 'python tools/import-paraguay-dncp.py --cohort 3buyers --offline', collected: 'Every process of three buyers announced before download (one per government level) whose call was published 2024-09-01 → 2026-09-01, then each full OCDS record by OCID.' }, note: 'Paraguay · DNCP OCDS · three buyers announced before download, one per level: Ministerio de Obras Públicas y Comunicaciones (national, 168 contracts), Gobierno Departamental de Central (departmental, 88), Municipalidad de Asunción (municipal, 37). Calls published 2024-09-01 → 2026-09-01: 339 processes, 293 linked contract entries retained; excluded: 12 amendment entries (kept on their parent contract), 21 budget-only entries, 1 multi-buyer process. PYG, no conversion. Paraguayan checks only (docs/score-paraguay.md), fixed before this cohort was downloaded: single tenderer in a competitive procedure, award by exception (CVE), their repetition per supplier, concentration by category, amount increase > 20 %. 92 multi-lot awards cannot be checked for a single tenderer (no per-lot count published). Not a national sample or payment audit.' }
+    paraguay3: { path: 'data/paraguay-dncp-3buyers.json', coverage: 'data/paraguay-dncp-3buyers-coverage.json', sources: { publisher: 'Dirección Nacional de Contrataciones Públicas (DNCP), Paraguay', links: [['Public procurement portal · contrataciones.gov.py', 'https://www.contrataciones.gov.py/'], ['Open data and API documentation', 'https://www.contrataciones.gov.py/datos/api/v3/doc/'], ['Legal notice and licence (the OCDS packages cite /datos/legal, which now returns 404)', 'https://www.contrataciones.gov.py/datos/aviso-legal']], licence: 'CC BY 4.0', raw: 'data/paraguay-dncp-3buyers/raw/ (records gzipped, exact response bytes)', reproduce: 'python tools/import-paraguay-dncp.py --cohort 3buyers --offline', collected: 'Every process of three buyers announced before download (one per government level) whose call was published 2024-09-01 → 2026-09-01, then each full OCDS record by OCID.' }, note: 'Paraguay · DNCP OCDS · three buyers announced before download, one per level: Ministerio de Obras Públicas y Comunicaciones (national, 168 contracts), Gobierno Departamental de Central (departmental, 88), Municipalidad de Asunción (municipal, 37). Calls published 2024-09-01 → 2026-09-01: 339 processes, 293 linked contract entries retained; excluded: 12 amendment entries (kept on their parent contract), 21 budget-only entries, 1 multi-buyer process. PYG, no conversion. Paraguayan checks only (docs/score-paraguay.md), fixed before this cohort was downloaded: single tenderer in a competitive procedure, award by exception (CVE), their repetition per supplier, concentration by category, amount increase > 20 %. 92 multi-lot awards cannot be checked for a single tenderer (no per-lot count published). Not a national sample or payment audit.' },
+    ukraine: { path: 'data/prozorro.json', coverage: 'data/prozorro-coverage.json', sources: { publisher: 'Prozorro (State enterprise Prozorro, Ministry of Economy of Ukraine)', links: [['Prozorro public portal', 'https://prozorro.gov.ua/'], ['Public API documentation', 'https://prozorro-api-docs.readthedocs.io/'], ['Public API used (official records)', 'https://public-api.prozorro.gov.ua/api/2.5/tenders']], licence: 'Not declared by the publisher; open data under Ukrainian procurement law (to confirm before redistribution)', raw: 'data/prozorro/raw/ (official records gzipped, exact response bytes)', reproduce: 'python tools/import-prozorro.py --offline', collected: 'Every tender of three buyers announced before download (one per level), created 2024-09-01 → 2026-09-01, listed with the prozorro.gov.ua search and fetched from the official public API.' }, note: 'Ukraine · Prozorro · three buyers announced before download: Ministry of Health (national), Vinnytsia Oblast State Administration (regional), Dnipro City Council (municipal). Tenders created 2024-09-01 → 2026-09-01: 526 tenders, 488 signed contracts. Amounts in the published currency (UAH, EUR, USD), never converted. Ukrainian checks only (docs/score-ukraine.md): single offer per lot, negotiated awards, their repetition per supplier, concentration by category. 424 direct-contract reports (reporting) are out of scope, not scored. Wartime rules allow exceptions and withheld publications. Licence not declared by the publisher.' },
+    portugal: { path: 'data/ted-portugal.json', coverage: 'data/ted-portugal-coverage.json', sources: { publisher: 'Publications Office of the European Union — TED', links: [['TED search · ted.europa.eu', 'https://ted.europa.eu/'], ['TED Search API documentation', 'https://docs.ted.europa.eu/api/latest/search.html'], ['TED legal notice (reuse authorised)', 'https://ted.europa.eu/en/legal-notice']], licence: 'Free reuse, commercial or not (Commission Decision 2011/833/EU)', raw: 'data/ted-portugal/raw/ (official eForms XML gzipped)', reproduce: 'python tools/import-ted-cohorts.py --cohort portugal --offline', collected: 'Every TED award notice (can-standard) of three buyers announced before download, published 2024-09-01 → 2026-09-01, matched by identifier and its spelling variants.' }, note: 'Portugal · TED award notices (above EU thresholds only) · Infraestruturas de Portugal (national), Comunidade Intermunicipal do Cávado (regional), Município de Lisboa (municipal). Published 2024-09-01 → 2026-09-01: 442 notices, 493 awarded lots; 137 multi-winner framework results excluded (no single holder). The Cávado notices link no winning tender, so the regional level contributes almost nothing. EUR. EU eForms checks (docs/score-ted.md). Not a picture of Portuguese procurement: national below-threshold purchases are not in TED.' },
+    romania: { path: 'data/ted-romania.json', coverage: 'data/ted-romania-coverage.json', sources: { publisher: 'Publications Office of the European Union — TED', links: [['TED search · ted.europa.eu', 'https://ted.europa.eu/'], ['TED Search API documentation', 'https://docs.ted.europa.eu/api/latest/search.html'], ['TED legal notice (reuse authorised)', 'https://ted.europa.eu/en/legal-notice']], licence: 'Free reuse, commercial or not (Commission Decision 2011/833/EU)', raw: 'data/ted-romania/raw/ (official eForms XML gzipped)', reproduce: 'python tools/import-ted-cohorts.py --cohort romania --offline', collected: 'Every TED award notice (can-standard) of three buyers announced before download, published 2024-09-01 → 2026-09-01, matched by identifier and its spelling variants.' }, note: 'Romania · TED award notices (above EU thresholds only) · Ministerul Finanțelor (national), Județul Cluj (regional), Municipiul Cluj-Napoca (municipal). Published 2024-09-01 → 2026-09-01: 299 notices, 356 awarded lots; 289 multi-winner framework results excluded. RON and EUR as published, never converted. EU eForms checks (docs/score-ted.md). Not a picture of Romanian procurement: SEAP/SICAP below-threshold purchases are not in TED.' }
   };
   // Dataset-level provenance, so anyone can repeat the collection or check a row at its source.
   function renderSources(selected) {
@@ -1175,7 +1278,14 @@ function startExplorer() {
     projectPanel.append(clear);
   }
 
+  // Full-width rows must span only the visible columns: on phones six columns are hidden,
+  // and a colspan of 9 would create phantom columns that squeeze the subject.
+  function visibleColumnCount() {
+    return [...document.querySelectorAll('.main-table > thead th')].filter(th => getComputedStyle(th).display !== 'none').length || 9;
+  }
+  matchMedia('(max-width: 760px)').addEventListener('change', () => { if (loaded) render(); });
   function render() {
+    syncSortHeaders();
     if (!loaded) return;
     const minimum = Math.max(0, Number(controls.minimum.value) || 0);
     const filtered = selectContracts(contracts, { search: controls.search.value, minimum, minScore: Number(controls['min-score'].value) || 0, flagged: controls.flagged.checked, official: controls.official.checked, adjudicated: controls.adjudicated.checked, investigation: controls.investigation.checked, indicator: controls.indicator.value, legal: controls.legal.value, noticeContext: controls['notice-context'].value, assessment: controls.assessment.value, sector: controls.sector.value, project: controls.project.value, sort: controls.sort.value });
@@ -1198,7 +1308,7 @@ function startExplorer() {
           const group = arrangement.groups.get(info.key);
           const header = element('tr', null, 'group-row');
           const headerCell = element('td', `${group.label} · ${group.contracts.length} filtered result(s)${index === 0 && preceding && groupInfo(preceding, controls['group-by'].value).key === info.key ? ' · continued' : ''}`);
-          headerCell.colSpan = 9;
+          headerCell.colSpan = visibleColumnCount();
           if (controls['group-by'].value === 'project' && c.project) {
             const link = element('button', 'Open the dossier and its sources', 'group-link');
             link.type = 'button';
@@ -1273,7 +1383,7 @@ function startExplorer() {
       detail.id = `detail-${index}`;
       detail.hidden = !expanded.has(c.id);
       const cell = element('td');
-      cell.colSpan = 9;
+      cell.colSpan = visibleColumnCount();
       cell.append(element('p', `${provenance[c.dataStatus]} · Reference: ${c.id}`), element('p', `Buyer: ${c.buyer} · Supplier: ${c.supplier || 'not specified'}${names.length ? ` · current name: ${names.join(' / ')}` : ''}`), element('p', `Procedure: ${c.procedure || 'not specified'} · Duration: ${c.durationMonths != null ? `${c.durationMonths} months` : c.durationOriginal || 'not specified'}`));
       if (c.findingScope) cell.append(element('p', c.findingScope === 'aggregate' ? 'Scope: a set of orders or services examined by the CRC, not an individual award. This finding is not extended to the buyer’s or supplier’s other contracts.' : 'Scope: the contract described in this record. This finding is not extended to the buyer’s or supplier’s other contracts.'));
       if (c.dateNote) cell.append(element('p', `Date: ${c.dateNote}`));
@@ -1360,6 +1470,13 @@ function startExplorer() {
         for (const k of c.complaints || []) cell.append(element('p', `Complaint before the DNCP · outside the index, no points: case ${k.id}, ${complaintKinds[k.kind]}, ${k.eventCount} recorded step(s) from ${k.firstEventDate || '—'} to ${k.lastEventDate || '—'}${k.closureRecorded ? ', closing resolution recorded' : ', no closing resolution recorded'}. A complaint is a filing, not a finding; the outcome is in the DNCP resolutions linked below. Names of participants are not reproduced.`));
         if (dncpAtCeiling(c)) cell.append(element('p', `Legal context · no points: the published amendments raise the amount by ${dncpAmountIncrease(c).percentage.toFixed(2)} %, at the 20 % ceiling on contract modifications in Ley 7021/22 Art. 67. Reaching the ceiling is lawful; it means no further agreed increase is possible under that article. The law applicable to this process is not verified here.`));
         cell.append(element('p', 'Paraguayan checks and their editorial thresholds: docs/score-paraguay.md. A signal is not a finding of irregularity.'));
+      } else if (NATIONAL_FAMILIES[c.dataFamily]) {
+        const where = c.dataFamily === 'ted' ? 'TED eForms award notice' : 'Prozorro official record';
+        cell.append(element('h3', `${where} — published procedure and competition`),
+          element('p', `Procedure: ${c.procedure || '—'}${c.procedureCode ? ` (${c.procedureCode})` : ''} · ${c.procedureDirect === true ? 'without competition' : c.procedureDirect === false ? 'competitive' : 'not classified'} · Offers on this lot: ${c.offers ?? 'not published'} · Lot: ${c.lotId || '—'} · CPV: ${c.cpv || '—'}.`),
+          element('p', `Declared amount: ${c.amount == null ? '—' : `${c.amount.toLocaleString('en-IE')} ${c.currency || ''}`}, in the published currency, never converted. ${c.amountBasis || ''}`),
+          element('p', `Supplier identifier: ${(c.supplierIds || []).map(x => `${x.identifierType} ${x.id}`).join(' / ') || '—'}. Checks and editorial thresholds: ${NATIONAL_FAMILIES[c.dataFamily].doc}. A signal is not a finding of irregularity.`));
+        if (c.complaintCount) cell.append(element('p', `Complaints recorded on this tender: ${c.complaintCount} · outside the index, no points. A complaint is a filing, not a finding.`));
       } else if (c.dataFamily === 'secop2') {
         cell.append(element('h3', 'SECOP II — declared procedure and justification'),
           element('p', `Declared modality: ${c.procedure || '—'} · Contract status: ${c.contractStatus || '—'} · Contract type: ${c.contractType || '—'}.`),
@@ -1443,7 +1560,7 @@ function startExplorer() {
     if (!visible.length) {
       const row = element('tr');
       const cell = element('td', 'No result. Try lowering the minimum amount or changing the filters.');
-      cell.colSpan = 9;
+      cell.colSpan = visibleColumnCount();
       row.append(cell);
       fragment.append(row);
     }
@@ -1494,6 +1611,27 @@ function startExplorer() {
     fileHelp.hidden = false;
   }
   Object.values(controls).forEach(control => control.addEventListener('input', () => { page = 0; render(); viewport.scrollTop = 0; }));
+  // Column headers sort too: first click descending (newest, largest, most), second ascending.
+  // They drive the Sort control, so the link, page reset and export stay in step.
+  const SORT_PAIRS = { date: ['date', 'date-asc'], amount: ['amount', 'amount-asc'], indicators: ['indicators', 'indicators-asc'], score: ['score', 'score-asc'] };
+  const sortHeaders = [...document.querySelectorAll('th[data-sort-key]')];
+  function syncSortHeaders() {
+    for (const th of sortHeaders) {
+      const [desc, asc] = SORT_PAIRS[th.dataset.sortKey];
+      const state = controls.sort.value === desc ? 'descending' : controls.sort.value === asc ? 'ascending' : 'none';
+      th.setAttribute('aria-sort', state);
+      th.querySelector('button').dataset.direction = state;
+      th.querySelector('button').title = state === 'descending' ? 'Sorted descending · click for ascending' : state === 'ascending' ? 'Sorted ascending · click for descending' : 'Sort by this column';
+    }
+  }
+  for (const th of sortHeaders) th.querySelector('button').addEventListener('click', event => {
+    event.stopPropagation();
+    const [desc, asc] = SORT_PAIRS[th.dataset.sortKey];
+    controls.sort.value = controls.sort.value === desc ? asc : desc;
+    controls.sort.dispatchEvent(new Event('input'));
+  });
+  controls.sort.addEventListener('input', syncSortHeaders);
+  syncSortHeaders();
   document.querySelector('#clear-filters').addEventListener('click', () => {
     for (const id of ['minimum', 'sector', 'group-by', 'project', 'assessment', 'indicator', 'notice-context', 'legal']) controls[id].value = '';
     controls['min-score'].value = '0';

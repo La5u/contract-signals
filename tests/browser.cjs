@@ -188,6 +188,18 @@ const server=http.createServer((req,res)=>{
  assert.match(await linked.locator('#page-status').textContent(),/Page 2 \/ \d+ · 25 rows per page/);
  assert.equal(await linked.locator('.contract-row').count(),25);
  assert.equal(await linked.evaluate(()=>location.hash),'#dataset=cities&sort=amount&flagged=1&page=2&size=25');
+ // A restored sort shows on its column header; clicking headers drives the same Sort control and link.
+ assert.equal(await linked.locator('th[data-sort-key="amount"]').getAttribute('aria-sort'),'descending');
+ await linked.locator('th[data-sort-key="amount"] button').click();
+ assert.equal(await linked.locator('#sort').inputValue(),'amount-asc');
+ assert.equal(await linked.locator('th[data-sort-key="amount"]').getAttribute('aria-sort'),'ascending');
+ assert.match(await linked.evaluate(()=>location.hash),/sort=amount-asc/);
+ await linked.locator('th[data-sort-key="indicators"] button').click();
+ assert.equal(await linked.locator('#sort').inputValue(),'indicators');
+ assert.equal(await linked.locator('th[data-sort-key="amount"]').getAttribute('aria-sort'),'none');
+ await linked.locator('th[data-sort-key="score"] button').click();
+ assert.equal(await linked.locator('#sort').inputValue(),'score');
+ await linked.selectOption('#sort','amount');
  await linked.selectOption('#sort','date');
  assert.equal(await linked.evaluate(()=>location.hash),'#dataset=cities&sort=date&flagged=1&size=25');
  // Export covers every filtered record, not only the visible page.
@@ -256,6 +268,11 @@ const server=http.createServer((req,res)=>{
  const pyCells=await pyMobile.locator('.contract-row').first().evaluate(r=>[...r.children].filter(td=>getComputedStyle(td).display!=='none').map(td=>({w:td.getBoundingClientRect().width,over:td.scrollWidth-td.clientWidth})));
  assert.ok(pyCells[1].w>=150,`subject column too narrow on mobile: ${pyCells[1].w}px`);
  assert.ok(pyCells.every(c=>c.over<=0),'a mobile cell overflows');
+ // Opening a row must not squeeze the subject: full-width rows span only the visible columns.
+ await pyMobile.locator('.row-toggle').first().click();
+ const openWidth=await pyMobile.locator('.contract-row').first().evaluate(r=>[...r.children].filter(td=>getComputedStyle(td).display!=='none')[1].getBoundingClientRect().width);
+ assert.ok(openWidth>=150,`subject column squeezed after opening a row: ${openWidth}px`);
+ assert.equal(await pyMobile.locator('.detail-row:not([hidden]) td').getAttribute('colspan'),'3');
  await pyMobile.close();
  await mobile.locator('.row-toggle').first().click();
  assert.equal(await mobile.locator('.detail-row:not([hidden])').count(),1);

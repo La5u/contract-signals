@@ -238,3 +238,10 @@ footer { border-top: 1px solid #ddd; padding-top: 18px; color: #666; font-size: 
   th, td { padding: 7px 5px; }
   .detail-row td { padding: 12px; }
 }
+
+/* Sortable column headers: a real button, arrow shows the active direction. */
+.sort-header { font: inherit; font-weight: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: inherit; }
+.sort-header:hover, .sort-header:focus-visible { text-decoration: underline; }
+.sort-header::after { content: " ↕"; color: #999; font-weight: normal; }
+.sort-header[data-direction="descending"]::after { content: " ↓"; color: inherit; }
+.sort-header[data-direction="ascending"]::after { content: " ↑"; color: inherit; }
