@@ -17,7 +17,13 @@ for(const f of ['coverage','decp-coverage','decp-cities-coverage','consultations
 const checks=JSON.parse(fs.readFileSync('data/international-access-checks.json')).checks;
 assert(checks.some(c=>c.url.includes('jbjy-vk9h.json')&&c.http_status===200));
 assert(checks.some(c=>c.url.includes('swagger.json')&&c.global_security));
-assert(checks.filter(c=>c.url.includes('pncp.gov.br/api')).every(c=>c.http_status!==200),'No successful PNCP response was recorded in these checks.');
+// Brazil PNCP: the September 400 was an invalid page size (valid 10..500), the timeouts transient.
+// Access is established without a token (2026-09-25); no licence is declared in the API document.
+const pncp=checks.filter(c=>c.url.includes('pncp.gov.br/api')&&c.label.includes('diagnosis'));
+assert(pncp.some(c=>/tamanhoPagina=1(&|$)/.test(c.url)&&c.http_status===400&&/Tamanho de página inválido/.test(c.error_body||'')),'PNCP page size 1 must be recorded as an invalid-size 400.');
+assert(pncp.some(c=>/tamanhoPagina=501/.test(c.url)&&c.http_status===400),'PNCP page size 501 must be recorded as 400.');
+assert(pncp.some(c=>/tamanhoPagina=500/.test(c.url)&&c.http_status===200),'PNCP page size 500 must be recorded as 200.');
+assert(pncp.some(c=>c.url.includes('cnpjOrgao=')&&c.http_status===200),'PNCP buyer filter must be recorded as 200.');
 assert(checks.some(c=>c.url.includes('/ocds/record/ocds-03ad3f')&&c.http_status===200&&c.license&&c.license.includes('creativecommons.org/licenses/by/4.0')),'Paraguay record must be 200 with CC BY 4.0.');
 assert(checks.some(c=>c.url.includes('/search/processes')&&c.http_status===200),'Paraguay date-filtered search must be 200.');
 assert(checks.some(c=>c.url.includes('/parameters/parameters')&&c.http_status===200),'Paraguay parameters catalogue must be 200.');

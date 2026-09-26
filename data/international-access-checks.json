@@ -265,6 +265,143 @@
       ],
       "list_count": 100,
       "sample_preserved": false
+    },
+    {
+      "label": "Brazil PNCP bounded page, 10 maximum requested",
+      "url": "https://pncp.gov.br/api/consulta/v1/contratos?dataInicial=20250101&dataFinal=20250101&pagina=1&tamanhoPagina=10",
+      "retrieved_utc": "2026-09-25T21:12:30.896658+00:00",
+      "authentication": "no token or credentials sent",
+      "http_status": 200,
+      "response_type": "application/json",
+      "bytes_read": 16551,
+      "truncated": false,
+      "top_level_keys": [
+        "data",
+        "totalRegistros",
+        "totalPaginas",
+        "numeroPagina",
+        "paginasRestantes",
+        "empty"
+      ],
+      "data_array_count": 10,
+      "totalRegistros": 42,
+      "totalPaginas": 5,
+      "numeroPagina": 1,
+      "paginasRestantes": 4,
+      "empty": false,
+      "sample_preserved": false
+    },
+    {
+      "label": "Brazil PNCP diagnosis page size 1 (expect 400)",
+      "url": "https://pncp.gov.br/api/consulta/v1/contratos?dataInicial=20240101&dataFinal=20240102&pagina=1&tamanhoPagina=1",
+      "retrieved_utc": "2026-09-25T21:12:30.898241+00:00",
+      "authentication": "no token or credentials sent",
+      "http_status": 400,
+      "response_type": "application/json",
+      "error": "HTTP error; access not established",
+      "error_body": "{\"message\":\"Tamanho de página inválido\",\"path\":\"/pncp-consulta/v1/contratos\",\"timestamp\":\"2026-09-25T18:12:31.414-03:00\",\"status\":\"400\",\"error\":\"Bad Request\"}"
+    },
+    {
+      "label": "Brazil PNCP diagnosis page size 9 (expect 400)",
+      "url": "https://pncp.gov.br/api/consulta/v1/contratos?dataInicial=20250101&dataFinal=20250101&pagina=1&tamanhoPagina=9",
+      "retrieved_utc": "2026-09-25T21:12:30.899097+00:00",
+      "authentication": "no token or credentials sent",
+      "http_status": 400,
+      "response_type": "application/json",
+      "error": "HTTP error; access not established",
+      "error_body": "{\"message\":\"Tamanho de página inválido\",\"path\":\"/pncp-consulta/v1/contratos\",\"timestamp\":\"2026-09-25T18:12:31.442-03:00\",\"status\":\"400\",\"error\":\"Bad Request\"}"
+    },
+    {
+      "label": "Brazil PNCP diagnosis page size 500",
+      "url": "https://pncp.gov.br/api/consulta/v1/contratos?dataInicial=20250101&dataFinal=20250101&pagina=1&tamanhoPagina=500",
+      "retrieved_utc": "2026-09-25T21:12:30.899852+00:00",
+      "authentication": "no token or credentials sent",
+      "http_status": 200,
+      "response_type": "application/json",
+      "bytes_read": 69661,
+      "truncated": false,
+      "top_level_keys": [
+        "data",
+        "totalRegistros",
+        "totalPaginas",
+        "numeroPagina",
+        "paginasRestantes",
+        "empty"
+      ],
+      "data_array_count": 42,
+      "totalRegistros": 42,
+      "totalPaginas": 1,
+      "numeroPagina": 1,
+      "paginasRestantes": 0,
+      "empty": false,
+      "sample_preserved": false
+    },
+    {
+      "label": "Brazil PNCP diagnosis page size 501 (expect 400)",
+      "url": "https://pncp.gov.br/api/consulta/v1/contratos?dataInicial=20250101&dataFinal=20250101&pagina=1&tamanhoPagina=501",
+      "retrieved_utc": "2026-09-25T21:12:30.901190+00:00",
+      "authentication": "no token or credentials sent",
+      "http_status": 400,
+      "response_type": "application/json",
+      "error": "HTTP error; access not established",
+      "error_body": "{\"message\":\"Tamanho de página inválido\",\"path\":\"/pncp-consulta/v1/contratos\",\"timestamp\":\"2026-09-25T18:12:31.412-03:00\",\"status\":\"400\",\"error\":\"Bad Request\"}"
+    },
+    {
+      "label": "Brazil PNCP diagnosis default page size, previously timed out",
+      "url": "https://pncp.gov.br/api/consulta/v1/contratos?dataInicial=20240101&dataFinal=20240102&pagina=1",
+      "retrieved_utc": "2026-09-25T21:12:31.512965+00:00",
+      "authentication": "no token or credentials sent",
+      "http_status": 200,
+      "response_type": "application/json",
+      "bytes_read": 250001,
+      "truncated": true,
+      "sample_preserved": false
+    },
+    {
+      "label": "Brazil PNCP diagnosis buyer filter cnpjOrgao",
+      "url": "https://pncp.gov.br/api/consulta/v1/contratos?dataInicial=20250101&dataFinal=20250131&cnpjOrgao=00394460005887&pagina=1&tamanhoPagina=10",
+      "retrieved_utc": "2026-09-25T21:12:31.513226+00:00",
+      "authentication": "no token or credentials sent",
+      "http_status": 200,
+      "response_type": "application/json",
+      "bytes_read": 16355,
+      "truncated": false,
+      "top_level_keys": [
+        "data",
+        "totalRegistros",
+        "totalPaginas",
+        "numeroPagina",
+        "paginasRestantes",
+        "empty"
+      ],
+      "data_array_count": 10,
+      "totalRegistros": 160,
+      "totalPaginas": 16,
+      "numeroPagina": 1,
+      "paginasRestantes": 15,
+      "empty": false,
+      "sample_preserved": false
+    },
+    {
+      "label": "Brazil PNCP consulta OpenAPI document",
+      "url": "https://pncp.gov.br/api/consulta/v3/api-docs",
+      "retrieved_utc": "2026-09-25T21:12:31.541215+00:00",
+      "authentication": "no token or credentials sent",
+      "http_status": 200,
+      "response_type": "application/json",
+      "bytes_read": 36683,
+      "truncated": false,
+      "top_level_keys": [
+        "openapi",
+        "info",
+        "servers",
+        "tags",
+        "paths",
+        "components"
+      ],
+      "documented_path_count": 12,
+      "api_license": null,
+      "sample_preserved": false
     }
   ]
 }
