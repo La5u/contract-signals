@@ -102,6 +102,18 @@ const CO_AVOIDANCE_JUSTIFICATIONS = new Set([
   'No existe pluralidad de oferentes en el mercado',
   'Urgencia manifiesta',
 ]);
+// Public-to-public context, outside the index (docs/score-colombia.md).
+// SECOP II publishes no field for the counterparty's legal nature, so the
+// positive evidence is always the buyer's declared justification; names are
+// only used to withhold the label, never to grant it.
+const CO_INTERADMIN_JUSTIFICATIONS = new Set([
+  'Contratos o convenios Interadministrativos (con valor)',
+  'Contratos o convenios Interadministrativos (valor cero)',
+]);
+const CO_PERSON_DOCUMENTS = new Set(['Cédula de Ciudadanía', 'Cédula de Extranjería']);
+// Juntas de acción comunal are community bodies (Ley 2166 de 2021), not public entities.
+const CO_COMMUNITY_NAME = /acci[oó]n\s+comunal|desarrollo\s+comunal|^\s*jac|^\s*junta\b/i;
+const CO_LOAN_OF_USE_OR_CREDIT = new Set(['Comodato', 'Prestamo de uso', 'Operaciones de Crédito Público']);
 const CO_DURATION_ENTRY_MONTHS = 36;
 const CO_DURATION_MAX_MONTHS = 120;
 const CO_REPETITION_ENTRY = 3;
@@ -565,7 +577,7 @@ function getAmountEvolution(contract) {
 
 // Retrospective context on the COMPLETE loaded cohort, never on filtered/page rows.
 function prepareContracts(data) {
-  const contracts = validateContracts(data).map(c => ({ ...c, competitionContext: null, supplierContext: null, identityAmbiguous: false, secop2Concentration: null, secop2Repetition: null, dncpConcentration: null, dncpRepeatedSingle: null, dncpRepeatedException: null, nationalConcentration: null, nationalRepeatedSingle: null, nationalRepeatedDirect: null }));
+  const contracts = validateContracts(data).map(c => ({ ...c, competitionContext: null, supplierContext: null, identityAmbiguous: false, secop2Concentration: null, secop2Repetition: null, secop2PublicCounterparty: null, dncpConcentration: null, dncpRepeatedSingle: null, dncpRepeatedException: null, nationalConcentration: null, nationalRepeatedSingle: null, nationalRepeatedDirect: null }));
   const groups = new Map();
   const supplierGroups = new Map();
   const identityCounts = new Map();
@@ -656,6 +668,24 @@ function prepareContracts(data) {
   }
   for (const group of coRepetitionGroups.values()) {
     for (const c of group) c.secop2Repetition = { count: group.length };
+  }
+  // SECOP II public-to-public context (no points): a declared interadministrative
+  // agreement, or a comodato / public-credit contract whose counterparty document
+  // is the counterparty of such an agreement elsewhere in the cohort.
+  const coPublicAgreements = new Map();
+  for (const c of contracts) {
+    if (c.dataFamily !== 'secop2' || !CO_INTERADMIN_JUSTIFICATIONS.has(c.procedureJustification)) continue;
+    const supplierId = secop2SupplierIdentity(c);
+    const withheld = supplierId == null ? 'no-document' : CO_PERSON_DOCUMENTS.has(c.supplierIds[0].identifierType) ? 'person-document'
+      : CO_COMMUNITY_NAME.test(c.supplier || '') ? 'community-body' : null;
+    c.secop2PublicCounterparty = withheld ? { labelled: false, withheld } : { labelled: true, basis: 'declared-interadministrative' };
+    if (!withheld && !coPublicAgreements.has(supplierId)) coPublicAgreements.set(supplierId, c.contractId);
+  }
+  for (const c of contracts) {
+    if (c.dataFamily !== 'secop2' || c.secop2PublicCounterparty) continue;
+    if (!CO_LOAN_OF_USE_OR_CREDIT.has(c.contractType) && !CO_LOAN_OF_USE_OR_CREDIT.has(c.procedureJustification)) continue;
+    const agreement = coPublicAgreements.get(secop2SupplierIdentity(c));
+    if (agreement) c.secop2PublicCounterparty = { labelled: true, basis: 'counterparty-of-agreement', agreementContractId: agreement };
   }
   // DNCP: buyer/category concentration and repetition per buyer+supplier,
   // counted in distinct processes (OCIDs) so multi-contract processes do not inflate.
@@ -928,7 +958,7 @@ function selectContracts(contracts, { search = '', minimum = 0, minScore = 0, fl
     const noticeMatch = !noticeContext || Boolean(evidence && (noticeContext === 'criteria' ? evidence.awardCriteria.length : noticeContext === 'explanation' ? evidence.procedureDescription || evidence.justifications.some(j => j.text) : noticeContext === 'correction' ? evidence.kind === 'correction' : noticeContext === 'ted' ? evidence.ted.length : false));
     const text = normalize([c.id, c.buyer, c.buyerSiret, c.supplier, c.description, c.procedure, c.cpv, c.contractId, c.awardId, c.buyerId, c.lotId, c.noticeId, ...(c.supplierProfiles || []).map(p => p.name), c.consultation?.procedureReference, ...(c.consultation?.notices || []).map(n => n.id), ...(c.consultation?.lots || []).map(l => `${l.id || ''} ${l.description || ''}`), ...projectText, ...noticeText, ...(c.supplierIds || []).map(s => `${s.id} ${s.siren || ''}`)].join(' '));
     const citations = getLegalContext(c);
-    const legalMatch = !legal || (legal === 'py-ceiling' ? dncpAtCeiling(c) : legal === 'py-complaint' ? Boolean(c.complaints?.length) : legal === 'fr-software' ? Boolean(softwareMaintenanceContext(c)) : legal === 'direct' ? c.directAward === true : legal === 'cited' ? citations.length > 0 : citations.some(item => item.article === legal));
+    const legalMatch = !legal || (legal === 'py-ceiling' ? dncpAtCeiling(c) : legal === 'py-complaint' ? Boolean(c.complaints?.length) : legal === 'co-public' ? Boolean(c.secop2PublicCounterparty?.labelled) : legal === 'fr-software' ? Boolean(softwareMaintenanceContext(c)) : legal === 'direct' ? c.directAward === true : legal === 'cited' ? citations.length > 0 : citations.some(item => item.article === legal));
     const evaluated = getAssessment(c);
     const assessmentMatch = !assessment || (assessment === 'unevaluated' ? scoreFor(c) == null : assessment === 'zero' ? scoreFor(c) === 0 : assessment === 'partial' ? evaluated.unknown > 0 || evaluated.unknownApplicability > 0 : false);
     const sectorMatch = !sector || getSector(c).code === sector;
@@ -1362,6 +1392,7 @@ function startExplorer() {
       if (c.noticeEvidence) objectCell.append(element('small', `Notice ${c.noticeId} · ${c.lotId || 'unknown lot'} · local ref. ${c.noticeEvidence.lotReference || '—'}`, 'provenance'));
       const legalContext = getLegalContext(c);
       if (legalContext.length) objectCell.append(element('small', `Context · ${[...new Set(legalContext.map(item => item.article))].join(', ')} cited · no points added`, 'provenance'));
+      if (c.secop2PublicCounterparty?.labelled) objectCell.append(element('small', 'Context · public-to-public agreement · no points', 'provenance'));
       if (softwareMaintenanceContext(c)) objectCell.append(element('small', 'Context · single-vendor software maintenance · no points', 'provenance'));
       if (c.initialConflicts?.length || c.identityAmbiguous) objectCell.append(element('small', 'Ambiguous identifier / versions · calculations excluded', 'provenance'));
       if (c.modificationConflicts?.length) objectCell.append(element('small', 'Conflicting modification versions', 'provenance'));
@@ -1502,6 +1533,11 @@ function startExplorer() {
         cell.append(element('h3', 'SECOP II — declared procedure and justification'),
           element('p', `Declared modality: ${c.procedure || '—'} · Contract status: ${c.contractStatus || '—'} · Contract type: ${c.contractType || '—'}.`),
           element('p', `Published justification of the modality: ${c.procedureJustification || '—'}. This is the buyer’s declared ground, kept verbatim in Spanish; its legal validity is not assessed here. Ordinary grounds (professional services, interadministrative agreements, minimum-amount rules, regime statutes) add no points; only a declared absence of supplier plurality or manifest urgency enters the Colombian check (docs/score-colombia.md).`));
+        const publicContext = c.secop2PublicCounterparty;
+        if (publicContext?.labelled) cell.append(element('p', publicContext.basis === 'declared-interadministrative'
+          ? 'Public-to-public agreement · context outside the index, no points: the buyer declared an interadministrative agreement, a contract between public bodies. SECOP II publishes no field for the counterparty’s legal nature, so its public status is the buyer’s declaration, not verified here. The index is unchanged.'
+          : `Public-to-public agreement · context outside the index, no points: a ${c.contractType === 'Operaciones de Crédito Público' || c.procedureJustification === 'Operaciones de Crédito Público' ? 'public-credit operation (empréstito)' : 'loan of use (comodato)'} whose counterparty document is also the counterparty of a declared interadministrative agreement in this cohort (contract ${publicContext.agreementContractId}). The index is unchanged; a long declared duration is ordinary for this kind of contract.`));
+        else if (publicContext) cell.append(element('p', `Declared as an interadministrative agreement, but the public-to-public context label is withheld: ${publicContext.withheld === 'person-document' ? 'the counterparty holds a personal identity document' : publicContext.withheld === 'community-body' ? 'the published counterparty name designates a community body (junta de acción comunal or similar), not a public entity' : 'no usable counterparty document is published'}. No points either way.`));
         if (c.processUrl) {
           const processParagraph = element('p', 'Process page on the official portal: ');
           const processLink = element('a', 'SECOP II — detalle del proceso');
