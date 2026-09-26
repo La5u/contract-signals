@@ -103,6 +103,10 @@ Proprietary status and exclusive rights are not verified; the text in the row sa
 
 **Near-misses, not labelled** (reviewed): Ardèche ZENworks supply and maintenance (52 points; competitive, one offer), Paris TIGRE 7 and application-integration maintenance (competitive, one offer), competitive BOAMP lots for Alfresco/i-Parapheur/Pastell (open-source tools) and SAP BusinessObjects; two Paris Trimble surveying stations with bundled software (equipment, not software maintenance: CPV 50324200 and 38295000); Bordeaux *Logiciel LOGUS* and Tours *Logiciel modernisation de la gestion de surveillance interne* (software purchases with no maintenance wording). A Tours works contract for automatic gates carries the software CPV 48921000: it is not labelled only because its object has no maintenance wording, which shows the limit of a CPV-based rule.
 
+## Threshold splitting: examined, not added (2026-09-26)
+
+A check for direct awards split below the €40,000 no-publicity threshold was prototyped on both DECP cohorts: same buyer, same CPV group (3 digits) and calendar year, at least three direct awards each under €40,000, together above it. Paris & Ardèche gives 14 groups (78 rows), the six cities 2 groups (7 rows). Read row by row, the groups are not one need split in pieces: under CPV 454 in 2024 Paris combines a church repair, summer cleaning of squares and crèche blinds, with 4 to 9 different suppliers per group. For a buyer of that size a CPV group is far coarser than the legal notion of a homogeneous need, and the published data do not say which department or operation placed each order. The same-supplier version of the pattern is already covered by *Repeated direct awards*. Not added; it would need the buyer's operation or budget line, which the DECP does not publish.
+
 ## Reproduction
 
 ```sh
