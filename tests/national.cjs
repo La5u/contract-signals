@@ -95,6 +95,27 @@ for (const [file, country, expected, counts] of [
   console.log('United Kingdom Find a Tender: 1,081 awards, 43 flagged, no contact data, identity by platform id.');
 }
 
+// ---- Chile (Mercado Público) ----
+{
+  const rows = load('data/chile-mp.json'), cov = JSON.parse(fs.readFileSync('data/chile-mp-coverage.json'));
+  assert.deepEqual(cov.cohort.buyers.map(b => [b.id, b.level]), [['CL-MP-2015','national'],['CL-MP-2592','regional'],['CL-MP-3414','municipal']]);
+  assert.match(cov.license, /CC0 1\.0/); assert.deepEqual(cov.retrieval.emptyMonths, ['2026-08']);
+  assert.equal(cov.counts.tendersListed, 844); assert.equal(cov.counts.excluded['award record unavailable (API error)'], 47);
+  assert.equal(rows.length, 522);
+  for (const r of rows) {
+    assert.equal(r.dataFamily, 'chile'); assert.equal(r.currency, 'CLP'); assert.ok(cov.cohort.buyers.some(b => b.id === r.buyerId));
+    assert.equal(r.supplierIds.length, 1); assert.equal(r.supplierIds[0].identifierType, 'CL-RUT'); assert.match(r.supplierIds[0].id, /^\d+[\dkK]?$/);
+    assert.ok(!/@|contactPoint|email/i.test(JSON.stringify(r)), 'no contact data imported');
+    const direct = run('getAssessment', r).checks.find(c => c.id === 'cl-direct-award');
+    assert.equal(direct.status, 'not-applicable'); assert.match(direct.reason, /trato directo/);
+  }
+  const t = tally(rows);
+  assert.deepEqual(pick(t, 'cl-'), { 'cl-single-offer': [71,448,3,0], 'cl-direct-award': [0,0,0,522], 'cl-repeated-single-offer': [14,57,3,448],
+    'cl-repeated-direct': [0,0,0,522], 'cl-concentration': [0,296,226,0] });
+  assert.deepEqual(t.counts, [71,449,2]);
+  console.log('Chile Mercado Público: 522 awards, 71 flagged, direct deals out of scope, identity by RUT.');
+}
+
 // Concentration counts distinct procedures: a supplier winning many lots of one notice wins once.
 {
   const rows = load('data/ted-romania.json');
