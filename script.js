@@ -269,6 +269,15 @@ const INDICATOR_KINDS = {
   'term-extension': 'Term extended after award',
   'late-publication': 'Published long after the contract',
 };
+// Where a kind matches a red flag in a framework auditors already use (docs/indicators.md).
+const KIND_REFERENCES = {
+  'single-offer': 'OCP Cardinal R018 “Single bid received”; single bidding in the Fazekas Corruption Risk Index',
+  'direct-award': 'non-open procedure / no call for tender published in the Fazekas Corruption Risk Index',
+  'short-bidding-period': 'OCP Cardinal R003 “Short submission period”; advertisement period in the Fazekas Corruption Risk Index',
+  'disqualified-better-bid': 'related to OCP Cardinal R036 “Lowest bid disqualified” and R035, and to Ukraine’s State Audit Service risk indicators sas-3-2 and sas-3-5',
+  'repeated-direct': 'related to Ukraine’s State Audit Service risk indicator sas-3-3 (one supplier across many purchase codes)',
+  'concentration': 'related to Ukraine’s State Audit Service risk indicator sas-3-3 and OCP Cardinal R048 “Heterogeneous supplier”',
+};
 const KIND_OF_CHECK = {
   'single-bid': 'single-offer', 'dncp-single-tenderer': 'single-offer',
   'direct-award': 'direct-award', 'secop2-plurality-award': 'direct-award', 'dncp-exception-award': 'direct-award',
@@ -1730,7 +1739,7 @@ function startExplorer() {
       }
       if (indicators.length) {
         const list = element('ul');
-        indicators.forEach(i => list.append(element('li', `${i.kindLabel}${i.kindLabel !== i.label ? ` (${i.label})` : ''} — ${i.severityLabel}, raw weight ${i.weight}, family ${i.family}. ${i.explanation}`)));
+        indicators.forEach(i => list.append(element('li', `${i.kindLabel}${i.kindLabel !== i.label ? ` (${i.label})` : ''}${KIND_REFERENCES[i.kind] ? ` · also known as ${KIND_REFERENCES[i.kind]}` : ''} — ${i.severityLabel}, raw weight ${i.weight}, family ${i.family}. ${i.explanation}`)));
         cell.append(list);
       } else cell.append(element('p', scoreValue == null ? 'No heuristic conclusion: not assessed. The documents and findings remain consultable.' : 'No threshold crossed among the evaluated checks only. Unknowns do not prove an absence of risk.'));
       if (c.sourceReference) cell.append(element('p', `Source passage: ${c.sourceReference}`));
