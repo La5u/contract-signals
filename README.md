@@ -46,7 +46,7 @@ Each dataset is a bounded cohort chosen before scoring. None of them is exhausti
 
 ## The vigilance index
 
-`index = min(100, max(competition checks) + max(execution/duration checks))`: eight checks, each shown as *signal*, *evaluated*, *not assessable* or *out of scope*. Amounts, legal citations, company names and official findings never add points. Correlated signals in the same family are not summed. Thresholds are editorial choices, not calibrated probabilities. Colombia, Paraguay, Ukraine and the TED cohorts (Portugal, Romania) use their own checks, and nothing is compared across countries. TED holds only procedures above the EU thresholds, so the Portuguese and Romanian cohorts are not a picture of those countries' procurement.
+`index = min(100, max(competition checks) + max(execution/duration checks) + max(transparency checks))`: nine checks per row (eight local ones and the universal late-publication check), each shown as *signal*, *evaluated*, *not assessable* or *out of scope*. Amounts, legal citations, company names and official findings never add points. Correlated signals in the same family are not summed. Thresholds are editorial choices, not calibrated probabilities. Colombia, Paraguay, Ukraine and the TED cohorts (Portugal, Romania) use their own checks, and nothing is compared across countries. TED holds only procedures above the EU thresholds, so the Portuguese and Romanian cohorts are not a picture of those countries' procurement.
 
 - French method: [docs/score-v3.md](docs/score-v3.md)
 - Colombian method: [docs/score-colombia.md](docs/score-colombia.md)

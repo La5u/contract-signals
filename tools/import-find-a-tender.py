@@ -149,7 +149,7 @@ def notice_rows(release):
             "procedure": tender.get("procurementMethodDetails") or method, "procedureCode": method, "procedureDirect": direct,
             "offers": offers, "offersNote": None if offers is not None else "No bid count published for this lot: offers unknown, never zero.",
             "cpv": ((tender.get("classification") or {}).get("id") or "")[:8] or None, "lotId": lot_id, "lotCount": len(lots),
-            "noticeId": release["id"], "procedureId": release.get("ocid"), "awardId": award.get("id"),
+            "noticeId": release["id"], "publicationDate": (release.get("date") or "")[:10] or None, "procedureId": release.get("ocid"), "awardId": award.get("id"),
             "source": f"{API}/{release['id']}", "sourceLabel": "Find a Tender — official OCDS release package (JSON)",
             "portalUrl": PORTAL.format(notice_id=release["id"]),
             "amountBasis": "Contract value as published in the notice (GBP unless stated); not a payment, never converted.",

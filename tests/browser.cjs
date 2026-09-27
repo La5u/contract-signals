@@ -49,10 +49,10 @@ const server=http.createServer((req,res)=>{
  assert.match(await page.locator('#status').textContent(),/355 \/ 2594/);
  assert.match(await page.locator('.contract-row').first().textContent(),/Not assessed/);
  await page.selectOption('#assessment','zero');
- assert.match(await page.locator('#status').textContent(),/1835 \/ 2594/);
+ assert.match(await page.locator('#status').textContent(),/1747 \/ 2594/);
  assert.match(await page.locator('.contract-row').first().textContent(),/0 \/ 100/);
  await page.locator('.row-toggle').first().click();
- assert.equal(await page.locator('.detail-row:not([hidden]) .assessment-checks li').count(),8);
+ assert.equal(await page.locator('.detail-row:not([hidden]) .assessment-checks li').count(),9);
  assert.match(await page.locator('.detail-row:not([hidden])').first().textContent(),/unknown applicabilities/);
  await page.selectOption('#assessment','');
  await page.selectOption('#legal','R2122-1');
@@ -144,7 +144,7 @@ const server=http.createServer((req,res)=>{
  const copDetail=await page.locator('.detail-row:not([hidden])').first().textContent();
  assert.match(copDetail,/Declared modality/);
  assert.match(copDetail,/SECOP II — detalle del proceso/);
- assert.equal(await page.locator('.detail-row:not([hidden]) .assessment-checks li').count(),8);
+ assert.equal(await page.locator('.detail-row:not([hidden]) .assessment-checks li').count(),9);
  assert.match(copDetail,/docs\/score-colombia\.md|Colombian check/);
  await page.locator('.row-toggle').first().click();
  await page.selectOption('#legal','co-public');
@@ -187,7 +187,7 @@ const server=http.createServer((req,res)=>{
  assert.match(pyDetail,/Contract period starts/);
  assert.match(pyDetail,/Signature date: not published/);
  assert.match(pyDetail,/PYG/);
- assert.equal(await page.locator('.detail-row:not([hidden]) .assessment-checks li').count(),8);
+ assert.equal(await page.locator('.detail-row:not([hidden]) .assessment-checks li').count(),9);
  assert.match(pyDetail,/Verify it yourself/);
  assert.match(pyDetail,/Award page on contrataciones\.gov\.py/);
  assert.match(pyDetail,/search the official portal for: OCID ocds-/);

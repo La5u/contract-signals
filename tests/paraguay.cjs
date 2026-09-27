@@ -7,7 +7,7 @@ function tally(rows) {
   const checks = {}; let flagged = 0, zero = 0, notAssessed = 0;
   for (const row of rows) {
     const a = run('getAssessment', row);
-    assert.equal(a.checks.length, 8);
+    assert.equal(a.checks.length, 9);
     for (const c of a.checks) { checks[c.id] ??= {signal:0,clear:0,unknown:0,'not-applicable':0}; checks[c.id][c.status]++; }
     const s = run('getVigilanceScore', row);
     if (s == null) notAssessed++; else if (s > 0) flagged++; else zero++;
@@ -63,6 +63,7 @@ function commonRowChecks(rows, cov, start, end) {
     'dncp-amount-increase':          {signal:0,clear:84,unknown:0,'not-applicable':0},
     'short-bidding-period':          {signal:0,clear:0,unknown:0,'not-applicable':84},
     'long-contract':                 {signal:0,clear:0,unknown:0,'not-applicable':84},
+    'late-publication':              {signal:0,clear:0,unknown:0,'not-applicable':84},
   });
   assert.deepEqual([t.flagged,t.zero,t.notAssessed],[35,49,0]);
   // The two published amount amendments are +20.0 % and +19.99 %: evaluated, not above the threshold.
@@ -111,6 +112,7 @@ function commonRowChecks(rows, cov, start, end) {
     'dncp-amount-increase':          {signal:0,clear:293,unknown:0,'not-applicable':0},
     'short-bidding-period':          {signal:0,clear:0,unknown:0,'not-applicable':293},
     'long-contract':                 {signal:0,clear:0,unknown:0,'not-applicable':293},
+    'late-publication':              {signal:0,clear:0,unknown:0,'not-applicable':293},
   });
   assert.deepEqual([t.flagged,t.zero,t.notAssessed],[53,240,0]);
   // 12 published amount amendments, none strictly above +20 %.
