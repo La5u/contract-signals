@@ -301,6 +301,35 @@ const server=http.createServer((req,res)=>{
  assert.match(await firstAll.locator('td').first().locator('.country').textContent(),/\S/);
  assert.doesNotMatch(await firstAll.locator('td').last().textContent(),/Not assessed|^\s*0 \/ 100/);
  await allPage.close();
+ // Spanish and French: interface text and number/date formats change; source evidence does not.
+ const sourceObject='MAINTENANCE ET HEBERGEMENT DE LA SOLUTION AIDEN';
+ for(const [lang,sort,sector,amount,signals] of [['es','Ordenar','Servicios informáticos','108.800,00\u00a0€',/^Señales: /],['fr','Trier','Services informatiques','108\u202f800,00\u00a0€',/^Signaux : /]]){
+  const lp=await browser.newPage({viewport:{width:1280,height:900}});
+  lp.on('pageerror',e=>errors.push(e.message));
+  await lp.goto(base+'/?lang='+lang);
+  await lp.waitForFunction(()=>/2594 \/ 2594/.test(document.querySelector('#status').textContent));
+  assert.equal(await lp.evaluate(()=>document.documentElement.lang),lang);
+  assert.equal(await lp.locator('#lang').inputValue(),lang);
+  assert.match(await lp.locator('.sort-control').textContent(),new RegExp('^'+sort));
+  const row=lp.locator('.contract-row').first();
+  assert.equal(await row.locator('.row-toggle').textContent(),sourceObject);
+  assert.match(await row.locator('td').nth(4).textContent(),new RegExp('^'+sector));
+  assert.equal(await row.locator('td').nth(5).textContent(),amount);
+  assert.match(await row.locator('.mobile-signals').first().textContent(),signals);
+  await row.locator('.row-toggle').click();
+  assert.doesNotMatch(await lp.locator('.detail-row:not([hidden])').textContent(),/Buyer: |Declared increase of /);
+  await lp.close();
+ }
+ // The selector remembers the choice in this browser only, and English drops the parameter.
+ const switcher=await browser.newPage({viewport:{width:1280,height:900}});
+ switcher.on('pageerror',e=>errors.push(e.message));
+ await switcher.goto(base+'/?lang=fr');
+ await switcher.waitForFunction(()=>/2594/.test(document.querySelector('#status').textContent));
+ await Promise.all([switcher.waitForNavigation(),switcher.selectOption('#lang','en')]);
+ assert.equal(new URL(switcher.url()).searchParams.get('lang'),null);
+ await switcher.waitForFunction(()=>/2594 \/ 2594 results/.test(document.querySelector('#status').textContent));
+ assert.equal(await switcher.evaluate(()=>localStorage.getItem('contract-signals-lang')),'en');
+ await switcher.close();
  const mobile=await browser.newPage({viewport:{width:390,height:844}});
  mobile.on('pageerror',e=>errors.push(e.message));
  await mobile.goto(base);

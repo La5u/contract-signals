@@ -1405,19 +1405,20 @@ function startExplorer() {
     body.append(element('p', 'To check one contract: open its row and follow “Verify it yourself”. Official pages come first; if a link has moved, search the portal for the identifiers listed there.'));
   }
   const provenance = { verified: 'Documented · public source', unverified: 'To verify · research lead', synthetic: 'Fictional · pedagogical comparison' };
-  const money = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2 });
-  const moneyCop = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
-  const moneyPyg = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'PYG', maximumFractionDigits: 0 });
+  const uiLocale = typeof i18nLocale === 'function' ? i18nLocale() : 'en-IE';
+  const money = new Intl.NumberFormat(uiLocale, { style: 'currency', currency: 'EUR', maximumFractionDigits: 2 });
+  const moneyCop = new Intl.NumberFormat(uiLocale, { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
+  const moneyPyg = new Intl.NumberFormat(uiLocale, { style: 'currency', currency: 'PYG', maximumFractionDigits: 0 });
   const otherMoney = new Map();
   // Local files may declare any ISO currency; amounts are never converted.
   const moneyFor = c => {
     if (c.dataFamily === 'secop2') return moneyCop;
     if (c.dataFamily === 'dncp') return moneyPyg;
     if (!/^[A-Z]{3}$/.test(c.currency || '') || c.currency === 'EUR') return money;
-    if (!otherMoney.has(c.currency)) otherMoney.set(c.currency, new Intl.NumberFormat('en-IE', { style: 'currency', currency: c.currency, maximumFractionDigits: 2 }));
+    if (!otherMoney.has(c.currency)) otherMoney.set(c.currency, new Intl.NumberFormat(uiLocale, { style: 'currency', currency: c.currency, maximumFractionDigits: 2 }));
     return otherMoney.get(c.currency);
   };
-  const dateFormat = new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'short', year: 'numeric' });
+  const dateFormat = new Intl.DateTimeFormat(uiLocale === 'en-IE' ? 'en-GB' : uiLocale, { timeZone: 'UTC', day: 'numeric', month: 'short', year: 'numeric' });
   let contracts = [];
   let loaded = false;
   let loadVersion = 0;
@@ -1517,7 +1518,7 @@ function startExplorer() {
       if (!mine && !all) continue;
       const tr = element('tr');
       tr.append(element('td', INDICATOR_KINDS[kind]), element('td', mine ? `${mine.signals} / ${mine.evaluated} evaluated (${pct(mine.signals, mine.evaluated)})` : 'not evaluated'),
-        element('td', all ? `${pct(all.signals, all.evaluated)} of ${all.evaluated}` : '—'));
+        element('td', all ? `${pct(all.signals, all.evaluated)} of ${all.evaluated} evaluated` : '—'));
       table.append(tr);
     }
     profilePanel.append(table);
@@ -1721,7 +1722,15 @@ function startExplorer() {
         element('p', 'Separate financial stake: the declared amount increases no weight. An increase uses only the comparable percentage, not a payments total. No points for an official finding, a project or an R2122 citation.'));
       const checks = element('ul', null, 'assessment-checks');
       const states = { signal: 'Signal', clear: 'Evaluated · threshold not crossed', unknown: 'Not assessable', 'not-applicable': 'Out of scope' };
-      for (const r of assessment.checks) checks.append(element('li', `${r.label} — ${states[r.status]}${r.applicability === 'unknown' ? ' (unknown applicability)' : ''}${r.weight != null ? ` · ${r.weight} raw points` : ''}. ${r.reason}`));
+      // Label, status and reason in separate nodes so each can be translated on its own.
+      for (const r of assessment.checks) {
+        const item = element('li');
+        item.append(element('strong', r.label), ' — ', element('span', states[r.status]));
+        if (r.applicability === 'unknown') item.append(' ', element('span', '(unknown applicability)'));
+        if (r.weight != null) item.append(' · ', element('span', `${r.weight} raw points`));
+        item.append('. ', element('span', r.reason));
+        checks.append(item);
+      }
       cell.append(checks);
       if (c.officialFinding === true) cell.append(element('h3', 'Documented official finding — separate from the index'), element('p', `This finding keeps its scope, source and response; it earns no heuristic points and is not a presumed conviction. Passage: ${c.sourceReference || '—'}.`));
       for (const report of c.investigationReports || []) {
@@ -1825,7 +1834,7 @@ function startExplorer() {
           cell.append(historyTable);
         }
         const evolution = getAmountEvolution(c);
-        cell.append(element('p', evolution.status === 'available' ? `Analysable declared evolution: +${money.format(evolution.delta)} (+${evolution.percentage.toLocaleString('en-IE', { maximumFractionDigits: 1 })} %), from ${money.format(evolution.initialAmount)} to ${money.format(evolution.revisedAmount)}, on ${evolution.date}. Quantities or scope may have changed; consult the source.` : `Increase calculation unavailable: ${evolution.reason}`));
+        cell.append(element('p', evolution.status === 'available' ? `Analysable declared evolution: +${money.format(evolution.delta)} (+${evolution.percentage.toLocaleString(uiLocale, { maximumFractionDigits: 1 })} %), from ${money.format(evolution.initialAmount)} to ${money.format(evolution.revisedAmount)}, on ${evolution.date}. Quantities or scope may have changed; consult the source.` : `Increase calculation unavailable: ${evolution.reason}`));
         const supplierContext = c.supplierContext;
         if (supplierContext) cell.append(element('p', `Single identified holder: SIREN ${getSupplierIdentity(c)}. Same buyer/CPV ${supplierContext.cpvGroup}, 2024–2025: ${supplierContext.wins}/${supplierContext.known} contracts to the known holder, out of ${supplierContext.total} eligible contracts (${Math.round(supplierContext.coverage * 100)} % coverage); ${supplierContext.directCount} awards without competition identified to this holder, all amounts; ${supplierContext.directKnownCount}/${supplierContext.supplierContracts} known competitive statuses. ${supplierContext.sufficient ? 'Sufficient sample to examine concentration.' : 'Concentration not computable: insufficient sample or coverage.'} The statistics do not change with your filters.`));
         const context = c.competitionContext;
@@ -1833,7 +1842,14 @@ function startExplorer() {
       }
       if (indicators.length) {
         const list = element('ul');
-        indicators.forEach(i => list.append(element('li', `${i.kindLabel}${i.kindLabel !== i.label ? ` (${i.label})` : ''}${KIND_REFERENCES[i.kind] ? ` · also known as ${KIND_REFERENCES[i.kind]}` : ''} — ${i.severityLabel}, raw weight ${i.weight}, family ${i.family}. ${i.explanation}`)));
+        for (const i of indicators) {
+          const item = element('li');
+          item.append(element('strong', i.kindLabel));
+          if (i.kindLabel !== i.label) item.append(' (', element('span', i.label), ')');
+          if (KIND_REFERENCES[i.kind]) item.append(' · ', element('span', `also known as ${KIND_REFERENCES[i.kind]}`));
+          item.append(' — ', element('span', i.severityLabel), ', ', element('span', `raw weight ${i.weight}, family ${i.family}`), '. ', element('span', i.explanation));
+          list.append(item);
+        }
         cell.append(list);
       } else cell.append(element('p', scoreValue == null ? 'No heuristic conclusion: not assessed. The documents and findings remain consultable.' : 'No threshold crossed among the evaluated checks only. Unknowns do not prove an absence of risk.'));
       if (c.sourceReference) cell.append(element('p', `Source passage: ${c.sourceReference}`));

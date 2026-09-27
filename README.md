@@ -14,6 +14,7 @@ python -m http.server 8000   # then open http://localhost:8000
 
 You can also open `index.html` directly. If the browser blocks loading the data under `file://`, open the matching file from `data/` with the file picker.
 
+- **English, Spanish or French:** pick a language in the header (or add `?lang=es` / `?lang=fr` to the link). Only the interface is translated; contract descriptions, justifications and names stay exactly as published.
 - **Private by design:** no backend, account, cookies, analytics or uploads. All data is loaded from this site and processed in your browser.
 - **Share a view:** search, filters, sort, page and page size are kept in the link after `#`. Click the Date, Declared amount, Indicators or Index heading to sort by it (click again to reverse). Browsers never send that part to a server. To point someone to one contract, search its ID and share the link.
 - **Export:** *Export CSV* / *Export JSON* downloads every filtered record, not just the current page. An empty index means not assessed. *Copy page summary* copies the visible page as sourced notes.
@@ -69,7 +70,7 @@ Plain HTML, CSS and JavaScript: no framework, build step, dependency or runtime 
 sh tests/run-all.sh            # every suite; NO_BROWSER=1 skips the Chromium test
 ```
 
-The browser test needs Playwright, installed outside the project: `npm install --prefix /tmp/procurement-browser playwright` (set `PLAYWRIGHT_PATH` for another location, `CHROMIUM_PATH` for another browser). GitHub Actions runs the same script on every push (`.github/workflows/tests.yml`). After any change to `script.js`, run `node tools/review-score-v3.cjs` so the review report matches the new script hash.
+The browser test needs Playwright, installed outside the project: `npm install --prefix /tmp/procurement-browser playwright` (set `PLAYWRIGHT_PATH` for another location, `CHROMIUM_PATH` for another browser). GitHub Actions runs the same script on every push (`.github/workflows/tests.yml`). After any change to `script.js`, run `node tools/review-score-v3.cjs` so the review report matches the new script hash. Interface translations live in `tools/i18n_table.py`; run `python tools/i18n-strings.py` after editing it.
 
 Every dataset can be rebuilt offline from its raw snapshot:
 

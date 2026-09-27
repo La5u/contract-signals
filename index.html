@@ -7,14 +7,18 @@
   <title>Contract signals</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <script src="i18n-es.js" defer></script>
+  <script src="i18n-fr.js" defer></script>
+  <script src="i18n.js" defer></script>
   <script src="script.js" defer></script>
 </head>
 <body>
 <main>
   <header>
+    <label class="lang-selector">Language <select id="lang" aria-label="Interface language"></select></label>
     <h1>Contract signals</h1>
     <p>Explore published procurement records from France, Chile, Colombia, Czechia, Paraguay, Portugal, Romania, Ukraine and the United Kingdom.</p>
-    <p class="privacy-note">Runs entirely in your browser: no account, cookies, analytics or uploads. Filters live in the link after <code>#</code>, which browsers never send to a server.</p>
+    <p class="privacy-note">Runs entirely in your browser: no account, cookies, analytics or uploads. Filters live in the link after <code>#</code>, which browsers never send to a server; a chosen language is remembered in this browser only.</p>
   </header>
   <section class="primary-controls" aria-label="Explore contracts">
   <label class="dataset-selector">Dataset
