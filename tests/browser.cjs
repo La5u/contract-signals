@@ -129,12 +129,12 @@ const server=http.createServer((req,res)=>{
  assert.match(await page.locator('#status').textContent(),/0 not assessed/);
  await page.check('#flagged');
  assert.match(await page.locator('#status').textContent(),/272 \/ 7560/);
- assert.match(await page.locator('.contract-row').first().textContent(),/Award declared without supplier plurality|Repeated awards declared without supplier plurality|Long declared duration|Declared term more than doubled/);
+ assert.match(await page.locator('.contract-row').first().textContent(),/Award without competition|Repeated awards without competition|Long declared duration|Term extended after award/);
  await page.uncheck('#flagged');
  await page.selectOption('#assessment','zero');
  assert.match(await page.locator('#status').textContent(),/7288 \/ 7560/);
  await page.selectOption('#assessment','');
- await page.selectOption('#indicator','secop2-plurality-award');
+ await page.selectOption('#indicator','direct-award');
  assert.match(await page.locator('#status').textContent(),/176 \/ 7560/);
  await page.selectOption('#indicator','');
  await page.fill('#search','GOBERNACION DE CALDAS');
@@ -275,6 +275,17 @@ const server=http.createServer((req,res)=>{
  for(let i=0;i<8;i++)assert.match(await page.locator('.contract-row').nth(i).textContent(),/Official audit finding/);
  assert(!((await page.locator('body').textContent()).includes('null / 100')));
  assert.deepEqual(errors,[]);
+ // All countries side by side (over HTTP): each dataset prepared on its own, country shown per row, newest signals first.
+ const allPage=await browser.newPage({viewport:{width:1280,height:900}});
+ allPage.on('pageerror',e=>errors.push(e.message));
+ await allPage.goto(base+'/#dataset=all');
+ await allPage.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 18501'),null,{timeout:60000});
+ assert.equal(await allPage.locator('#coverage-link').isHidden(),true);
+ await allPage.selectOption('#sort','recent-signal');
+ const firstAll=allPage.locator('.contract-row').first();
+ assert.match(await firstAll.locator('td').first().locator('.country').textContent(),/\S/);
+ assert.doesNotMatch(await firstAll.locator('td').last().textContent(),/Not assessed|^\s*0 \/ 100/);
+ await allPage.close();
  const mobile=await browser.newPage({viewport:{width:390,height:844}});
  mobile.on('pageerror',e=>errors.push(e.message));
  await mobile.goto(base);
