@@ -1,10 +1,10 @@
-# Vigilance index 3.0 — active method
+# Vigilance index 3.1 — active method
 
 **An editorial sorting tool, not a probability, a measure of legal gravity or a certificate of regularity.** The existing data and PDFs are unchanged; the meaning of the score and some eligibility criteria deliberately change. A v2.1 30 must not be compared to a v3 30 as a real evolution of a contract.
 
 ## Three distinct pieces of information
 
-1. **Heuristic index**: competition maximum + execution/duration maximum, capped at 100. No summing of correlated signals within one family, no renormalization to the observed maximum or to coverage.
+1. **Heuristic index**: competition maximum + execution/duration maximum + transparency maximum (since v3.1), capped at 100. No summing of correlated signals within one family, no renormalization to the observed maximum or to coverage.
 2. **Declared financial stake**: amount and scope remain visible, searchable and sortable. No weight depends on a monetary tier. A declared amount is not necessarily paid; ceilings, variants and amendments are not summed.
 3. **Official finding**: badge, filter, dedicated sorting, source, scope and response remain accessible; **zero heuristic points for the finding itself**. A distinct fact explicitly recorded on the contract, such as a direct award, can still produce a signal. An aggregate audit dossier is not scored as an individual contract.
 
@@ -12,7 +12,7 @@ The citation of an R2122 article, the buyer’s explanations, the current names/
 
 ## Unknown, zero and coverage
 
-`getAssessment` describes **eight checks** with:
+`getAssessment` describes **eight local checks plus the universal late-publication check** (nine since v3.1) with:
 
 - `signal`: evaluable check and threshold crossed;
 - `clear`: evaluable check, threshold not crossed — not a conclusion of regularity;
@@ -48,15 +48,26 @@ Examples: a concentration of 61 % is worth 12.7 points, 80 % is worth 26 and 95 
 
 **Limits:** a small-amount direct award can be perfectly ordinary and lawful. The rule describes an award modality, not an offence. A small relative increase can have a minimal financial stake; consult the amount column. Durations, shares and evolutions are not yet compared to a sufficiently large and validated sectoral sample. Neither a legitimate specialisation nor a legal exception is automatically recognized by the code.
 
+## Transparency family (v3.1, 27 September 2026)
+
+A third family, the same for every country ([indicators.md](indicators.md)): **published more than 120 days after the contract**. The delay runs from the contract date (French notification date in the DECP, declared conclusion date in BOAMP and TED notices) to the publication of the award (DECP essential data on the buyer profile, BOAMP or TED award notice). 120 days exceeds every legal deadline of the regimes covered: EU award notices within 30 days of conclusion, or grouped per quarter and published within 30 days of its end for framework and dynamic-purchasing call-offs (Directive 2014/24/EU, Art. 50); French essential data within two months of notification. **8 points just above 120 days, linear to 16 at two years**, in its own family, so the index becomes `min(100, max(competition) + max(execution/duration) + max(transparency))`. A negative delay (publication before the contract date) is inconsistent and stays unknown.
+
+- **Out of scope** where the source publishes no comparable dates: SECOP II, DNCP, Prozorro (no contract publication date in the record) and Mercado Público. **Find a Tender is out of scope too**: its award notices can carry the signature date of a contract concluded years earlier (modification notices under PCR 2015 Regulation 72, for example FCDO extensions of 2017–2021 contracts) or a dynamic purchasing system admission date, so the delay would not measure late publication.
+- **Results**: BOAMP 287 late of 2,980 dated awards, Paris & Ardèche 133, six municipalities 144; TED Portugal 12, Romania 26, Czechia 45.
+- **What it measures, and what it does not.** In the DECP, late publication is mostly a buyer's batch practice: 131 of Paris & Ardèche's late rows are the Ville de Paris, published in weekly batches (for example 32 on 13 October 2024) months after notification, and 108 of the six-city rows are Nantes. It compares buyers well and single contracts poorly, which is why its weight stays low. A very long delay in a TED notice (a 2015 contract published in 2026) may also concern an old contract being modified or re-announced: read the notice.
+- Withheld fields (eForms `FieldsPrivacy`, the explicit mark of information kept unpublished) were looked for and appear in none of the three TED cohorts; no check was built on them.
+
 ## Results on the same data, with no inflation target
 
-| Dataset | v2.1 flagged | v3 flagged | v3 zero (at least one check) | v3 not assessed |
-| --- | ---: | ---: | ---: | ---: |
-| BOAMP / CRC, 3,010 records | 284 | 277 | 2,665 | 68 |
-| Paris / Ardèche, 2,594 groups | 734 | 404 | 1,835 | 355 |
-| Six municipalities, 1,270 groups | 233 | 124 | 974 | 172 |
-| 10 FNSimple consultations | 0 | 0 | 0 | 10 |
-| 66 Tours version/lot rows | 0 | 0 | 0 | 66 |
+| Dataset | v2.1 flagged | v3.0 flagged | v3.1 flagged | v3.1 zero (at least one check) | v3.1 not assessed |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| BOAMP / CRC, 3,010 records | 284 | 277 | 535 | 2,466 | 9 |
+| Paris / Ardèche, 2,594 groups | 734 | 404 | 492 | 1,747 | 355 |
+| Six municipalities, 1,270 groups | 233 | 124 | 263 | 835 | 172 |
+| 10 FNSimple consultations | 0 | 0 | 0 | 0 | 10 |
+| 66 Tours version/lot rows | 0 | 0 | 0 | 0 | 66 |
+
+v3.0 zero / not assessed were 2,665 / 68 (BOAMP), 1,835 / 355 (Paris / Ardèche) and 974 / 172 (six municipalities). The v3.1 increase comes from the transparency family (below): 258, 88 and 139 rows are flagged by late publication alone, and 59 BOAMP rows with no other evaluable check are now assessed.
 
 The number of flags **decreases**, notably because undetermined adapted procedures are no longer presumed competitive for scoring a single offer. This is neither a presumed improvement of regularity, nor a result to be corrected to obtain more red. Official findings remain **eight**, outside this flag column.
 

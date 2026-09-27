@@ -41,7 +41,7 @@ Infraestruturas de Portugal (national, NIF 503933813), Comunidade Intermunicipal
 | `ted-repeated-direct` | 36 | 25 | 16 | 416 |
 | `ted-concentration` | 0 | 237 | 256 | 0 |
 
-128 lots with a signal, 359 zero, 6 not assessed. The top of the ranking is Infraestruturas de Portugal's repeated negotiated awards without publication, for example railway signalling services from Siemens Mobility and vehicle leasing from LeasePlan: signalling maintenance on proprietary systems is a likely lawful exclusivity case, comparable to the proprietary-software maintenance at the top of the French ranking. Read the notice before drawing conclusions.
+128 lots with a signal, 359 zero, 6 not assessed before v3.1; with the late-publication check (12 lots), 139 / 354 / 0. The top of the ranking is Infraestruturas de Portugal's repeated negotiated awards without publication, for example railway signalling services from Siemens Mobility and vehicle leasing from LeasePlan: signalling maintenance on proprietary systems is a likely lawful exclusivity case, comparable to the proprietary-software maintenance at the top of the French ranking. Read the notice before drawing conclusions.
 
 ### Romania (reproduced by `tests/national.cjs`)
 
@@ -55,7 +55,7 @@ Ministerul Finanțelor (national, CUI 4221306), Județul Cluj (regional, 4288110
 | `ted-repeated-direct` | 0 | 0 | 4 | 352 |
 | `ted-concentration` | 0 | 70 | 286 | 0 |
 
-136 lots with a signal, 220 zero, 0 not assessed. 132 of 341 lots with a published offer count had a single offer. Example lead: one supplier won outdoor fitness equipment in several separate Cluj-Napoca notices, each with one offer.
+136 lots with a signal, 220 zero, 0 not assessed before v3.1; with the late-publication check (26 lots), 158 / 198 / 0. 132 of 341 lots with a published offer count had a single offer. Example lead: one supplier won outdoor fitness equipment in several separate Cluj-Napoca notices, each with one offer.
 
 ### Czechia (added 2026-09-26; reproduced by `tests/national.cjs`)
 
@@ -69,7 +69,7 @@ Announced on 26 September 2026 before any notice XML was downloaded, from TED se
 | `ted-repeated-direct` | 9 | 13 | 279 | 373 |
 | `ted-concentration` | 70 | 388 | 216 | 0 |
 
-183 lots with a signal, 438 zero, 53 not assessed. By buyer: Ministry of Finance 60 of 292, Moravian-Silesian Region 50 of 129, Ostrava 73 of 253.
+183 lots with a signal, 438 zero, 53 not assessed before v3.1; with the late-publication check (45 lots, 2 unknown), 201 / 473 / 0. By buyer: Ministry of Finance 60 of 292, Moravian-Silesian Region 50 of 129, Ostrava 73 of 253.
 
 - **279 lots use the eForms code `oth-single`** (other single-stage procedure, common in Czech notices for simplified below-threshold and framework procedures): their competitive character is not classified, so the single-offer and direct-award checks stay unknown; 53 of them have no other evaluable check and are not assessed.
 - **Concentration fires here, unlike Portugal and Romania**: CSF s.r.o. won most of the region's IT-equipment procedures (26 lots), VYKRUT zahradní služby most of Ostrava's landscaping procedures (20), a transport operator in Ostrava (10), and INTERIER TECH s.r.o. six separate Ministry of Finance office-furniture framework procedures, each with one offer (14 lots). Counted in distinct procedures, so the lots of one notice count once.
