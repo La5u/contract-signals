@@ -1179,6 +1179,56 @@ function supplierNames(contract) {
   return (contract.supplierProfiles || []).map(p => p.name);
 }
 
+// Buyer and supplier profiles (never cross datasets; amounts never summed).
+function profileScope(c) { return c.datasetKey || c.cohortId || c.dataFamily || 'data'; }
+function profileKey(c, role) {
+  if (role === 'buyer') {
+    const id = c.buyerSiret || c.buyerNit || c.buyerId || c.buyer;
+    return id ? `${profileScope(c)}|${id}` : null;
+  }
+  const id = c.dataFamily === 'secop2' ? secop2SupplierIdentity(c) : c.dataFamily === 'dncp' ? dncpSupplierIdentity(c)
+    : NATIONAL_FAMILIES[c.dataFamily] ? nationalSupplierIdentity(c) : getSupplierIdentity(c);
+  return id ? `${profileScope(c)}|${id}` : null;
+}
+function buildProfile(contracts, role, key) {
+  const rows = contracts.filter(c => profileKey(c, role) === key);
+  if (!rows.length) return null;
+  const scope = contracts.filter(c => profileScope(c) === profileScope(rows[0]));
+  const rate = set => {
+    const out = {};
+    for (const c of set) for (const check of getAssessment(c).checks) {
+      const kind = indicatorKind(check.id);
+      if (!kind || (check.status !== 'signal' && check.status !== 'clear')) continue;
+      out[kind] ??= { signals: 0, evaluated: 0 };
+      out[kind].evaluated++;
+      if (check.status === 'signal') out[kind].signals++;
+    }
+    return out;
+  };
+  const other = role === 'buyer' ? 'supplier' : 'buyer';
+  const counterparts = new Map();
+  for (const c of rows) {
+    const name = (other === 'supplier' ? (supplierNames(c)[0] || c.supplier) : c.buyer) || 'not published';
+    const entry = counterparts.get(name) || { name, contracts: 0, flagged: 0 };
+    entry.contracts++;
+    if (getVigilanceScore(c) > 0) entry.flagged++;
+    counterparts.set(name, entry);
+  }
+  const currencies = {};
+  for (const c of rows) if (c.amount != null) {
+    const cur = c.currency || 'EUR';
+    currencies[cur] ??= { contracts: 0, largest: 0 };
+    currencies[cur].contracts++;
+    currencies[cur].largest = Math.max(currencies[cur].largest, c.amount);
+  }
+  const dates = rows.map(c => c.date).filter(Boolean).sort();
+  const scores = rows.map(getVigilanceScore);
+  return { role, key, name: role === 'buyer' ? rows[0].buyer : (supplierNames(rows[0])[0] || rows[0].supplier), country: rows[0].datasetCountry || null,
+    ids: new Set(rows.map(c => c.id)), contracts: rows.length, assessed: scores.filter(x => x != null).length, flagged: scores.filter(x => x > 0).length,
+    firstDate: dates[0] || null, lastDate: dates[dates.length - 1] || null, kinds: rate(rows), baseline: rate(scope), scopeSize: scope.length,
+    counterparts: [...counterparts.values()].sort((a, b) => b.contracts - a.contracts || b.flagged - a.flagged || a.name.localeCompare(b.name)).slice(0, 10), currencies };
+}
+
 // Export the whole filtered view as flat records. Unknown stays empty, never zero.
 const EXPORT_CAVEAT = 'Published declarations and heuristic signals only. A flag is not proof of wrongdoing; zero or no label is not clearance. Declared amounts are not audited payments; never sum amounts across datasets or currencies. Current supplier names are a register snapshot, not historical names.';
 const EXPORT_COLUMNS = ['id', 'date', 'buyer', 'buyerId', 'supplier', 'supplierCurrentName', 'supplierIds', 'description', 'cpv', 'sector', 'procedure',
@@ -1441,6 +1491,48 @@ function startExplorer() {
     render();
     viewport.scrollTop = 0;
   }
+  let activeProfile = null;
+  const profilePanel = document.querySelector('#profile-panel');
+  function openProfile(c, role) {
+    const key = profileKey(c, role);
+    activeProfile = key ? buildProfile(contracts, role, key) : null;
+    page = 0;
+    render();
+    profilePanel.scrollIntoView({ block: 'start' });
+  }
+  function renderProfilePanel() {
+    profilePanel.replaceChildren();
+    profilePanel.hidden = !activeProfile;
+    if (!activeProfile) return;
+    const p = activeProfile;
+    const pct = (a, b) => b ? `${Math.round(a / b * 100)} %` : '—';
+    profilePanel.append(element('h2', `${p.role === 'buyer' ? 'Buyer' : 'Supplier'} profile · ${p.name || '—'}`),
+      element('p', `${p.contracts} contract(s)${p.country ? ` · ${p.country}` : ''}${p.firstDate ? ` · ${p.firstDate} → ${p.lastDate}` : ''} · ${p.assessed} assessed · ${p.flagged} with a signal (${pct(p.flagged, p.assessed)}). The table below now shows only these contracts. Compared with the ${p.scopeSize} records of the same dataset; amounts are never summed.`));
+    const table = element('table', null, 'profile-table');
+    const head = element('tr');
+    head.append(element('th', 'Indicator'), element('th', `This ${p.role}`), element('th', 'Whole dataset'));
+    table.append(head);
+    for (const kind of Object.keys(INDICATOR_KINDS)) {
+      const mine = p.kinds[kind], all = p.baseline[kind];
+      if (!mine && !all) continue;
+      const tr = element('tr');
+      tr.append(element('td', INDICATOR_KINDS[kind]), element('td', mine ? `${mine.signals} / ${mine.evaluated} evaluated (${pct(mine.signals, mine.evaluated)})` : 'not evaluated'),
+        element('td', all ? `${pct(all.signals, all.evaluated)} of ${all.evaluated}` : '—'));
+      table.append(tr);
+    }
+    profilePanel.append(table);
+    profilePanel.append(element('h3', p.role === 'buyer' ? 'Main suppliers' : 'Main buyers'));
+    const list = element('ol');
+    for (const cp of p.counterparts) list.append(element('li', `${cp.name} · ${cp.contracts} contract(s), ${cp.flagged} with a signal`));
+    profilePanel.append(list);
+    const money = Object.entries(p.currencies).map(([cur, v]) => `${v.contracts} with an amount in ${cur} (largest ${v.largest.toLocaleString('en-IE')} ${cur})`).join('; ');
+    if (money) profilePanel.append(element('p', `Declared amounts: ${money}. Not summed: declared amounts are not payments, and ceilings and amendments would double count.`));
+    profilePanel.append(element('p', 'A profile describes published declarations and heuristic signals only; a high rate is a reason to read the sources, not a finding.'));
+    const close = element('button', 'Close profile and show all contracts');
+    close.type = 'button';
+    close.addEventListener('click', () => { activeProfile = null; page = 0; render(); });
+    profilePanel.append(close);
+  }
   function renderProjectPanel() {
     projectPanel.replaceChildren();
     const project = projectCatalog.get(controls.project.value);
@@ -1479,10 +1571,12 @@ function startExplorer() {
     syncSortHeaders();
     if (!loaded) return;
     const minimum = Math.max(0, Number(controls.minimum.value) || 0);
-    const filtered = selectContracts(contracts, { search: controls.search.value, minimum, minScore: Number(controls['min-score'].value) || 0, flagged: controls.flagged.checked, official: controls.official.checked, adjudicated: controls.adjudicated.checked, investigation: controls.investigation.checked, indicator: controls.indicator.value, legal: controls.legal.value, noticeContext: controls['notice-context'].value, assessment: controls.assessment.value, sector: controls.sector.value, project: controls.project.value, sort: controls.sort.value });
+    const pool = activeProfile ? contracts.filter(c => activeProfile.ids.has(c.id)) : contracts;
+    const filtered = selectContracts(pool, { search: controls.search.value, minimum, minScore: Number(controls['min-score'].value) || 0, flagged: controls.flagged.checked, official: controls.official.checked, adjudicated: controls.adjudicated.checked, investigation: controls.investigation.checked, indicator: controls.indicator.value, legal: controls.legal.value, noticeContext: controls['notice-context'].value, assessment: controls.assessment.value, sector: controls.sector.value, project: controls.project.value, sort: controls.sort.value });
     const arrangement = arrangeGroups(filtered, controls['group-by'].value);
     const visible = arrangement.rows;
     renderProjectPanel();
+    renderProfilePanel();
     const pageCount = Math.max(1, Math.ceil(visible.length / pageSize));
     page = Math.min(page, pageCount - 1);
     const pageRows = visible.slice(page * pageSize, (page + 1) * pageSize);
@@ -1743,6 +1837,15 @@ function startExplorer() {
         cell.append(list);
       } else cell.append(element('p', scoreValue == null ? 'No heuristic conclusion: not assessed. The documents and findings remain consultable.' : 'No threshold crossed among the evaluated checks only. Unknowns do not prove an absence of risk.'));
       if (c.sourceReference) cell.append(element('p', `Source passage: ${c.sourceReference}`));
+      const profiles = element('p', null, 'profile-links');
+      for (const [role, label] of [['buyer', 'Buyer profile'], ['supplier', 'Supplier profile']]) {
+        if (!profileKey(c, role)) continue;
+        const button = element('button', label, 'group-link');
+        button.type = 'button';
+        button.addEventListener('click', event => { event.stopPropagation(); openProfile(c, role); });
+        profiles.append(button, ' ');
+      }
+      if (profiles.childNodes.length) cell.append(profiles);
       const verify = element('section', null, 'verify');
       verify.append(element('h3', 'Verify it yourself'));
       const links = verificationLinks(c);
@@ -1841,6 +1944,7 @@ function startExplorer() {
   controls.sort.addEventListener('input', syncSortHeaders);
   syncSortHeaders();
   document.querySelector('#clear-filters').addEventListener('click', () => {
+    activeProfile = null;
     for (const id of ['minimum', 'sector', 'group-by', 'project', 'assessment', 'indicator', 'notice-context', 'legal']) controls[id].value = '';
     controls['min-score'].value = '0';
     for (const id of ['flagged', 'official', 'adjudicated', 'investigation']) controls[id].checked = false;
@@ -1920,6 +2024,7 @@ function startExplorer() {
     copyStatus.textContent = '';
     copyPage.textContent = 'Copy page summary';
     const version = ++loadVersion;
+    activeProfile = null;
     loaded = false;
     contracts = [];
     body.replaceChildren();

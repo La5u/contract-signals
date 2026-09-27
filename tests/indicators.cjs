@@ -28,4 +28,15 @@ assert.equal(run('selectContracts', uk, {indicator:'direct-award'}).length, 23);
 const mixed = [{id:'a',amount:5,currency:'GBP'},{id:'b',amount:900,currency:'CLP'},{id:'c',amount:7,currency:'GBP'},{id:'d',amount:3,currency:'CLP'}].map(x => ({...x, dataFamily:'fts', dataStatus:'verified', buyer:'x', description:'x'}));
 const sorted = run('selectContracts', mixed, {sort:'amount'}).map(x => x.id);
 assert.deepEqual(sorted, ['b','d','c','a']);
+// Profiles: one buyer or supplier within its own dataset; amounts are never summed.
+const decp = run('prepareContracts', JSON.parse(fs.readFileSync('data/decp-history.json')));
+const ardeche = decp.find(c => /Ardèche/.test(c.buyer));
+const bp = run('buildProfile', decp, 'buyer', run('profileKey', ardeche, 'buyer'));
+assert.equal(bp.contracts, decp.filter(c => c.buyerSiret === ardeche.buyerSiret).length);
+assert.ok(bp.flagged <= bp.assessed && bp.assessed <= bp.contracts);
+assert.ok(!('total' in bp) && Object.values(bp.currencies).every(v => 'largest' in v && !('sum' in v)));
+const person = co.find(c => c.supplierIds[0]?.id.startsWith('masked-'));
+const sp = run('buildProfile', co, 'supplier', run('profileKey', person, 'supplier'));
+assert.ok(sp.contracts >= 1 && sp.ids.has(person.id));
+assert.equal(run('profileKey', {...person, datasetKey:'colombia'}, 'supplier').split('|')[0], 'colombia');
 console.log(`Indicator catalogue: ${seen.size} universal kinds cover every check of ${files.length} datasets; the kind filter crosses jurisdictions; amounts sort within their currency.`);
