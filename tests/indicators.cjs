@@ -17,6 +17,7 @@ for (const f of files) {
   for (const i of rows.flatMap(r => run('getIndicators', r))) assert.equal(i.kindLabel, kinds[i.kind]);
 }
 for (const kind of Object.keys(kinds)) assert.ok(seen.has(kind), `kind ${kind} never used`);
+for (const kind of Object.keys(vm.runInContext('KIND_REFERENCES', ctx))) assert.ok(kinds[kind], `reference for unknown kind ${kind}`);
 // The kind filter spans jurisdictions; an old check id in a saved link still works.
 const co = run('prepareContracts', JSON.parse(fs.readFileSync('data/colombia-secop2.json')));
 assert.equal(run('selectContracts', co, {indicator:'direct-award'}).length, 176);

@@ -21,6 +21,23 @@ What stays local, and why: **eligibility and thresholds follow each jurisdiction
 
 “—” means the check does not exist for that dataset; “out of scope” means it is listed on every row with the reason. Details and thresholds: [score-v3.md](score-v3.md) (France), [score-colombia.md](score-colombia.md), [score-paraguay.md](score-paraguay.md), [score-ukraine.md](score-ukraine.md), [score-ted.md](score-ted.md), [score-uk.md](score-uk.md), [score-chile.md](score-chile.md).
 
+## Equivalents in frameworks auditors already use
+
+So that a flag can be cited by the name an auditor knows. “Equivalent” means the same test; “related” means an overlapping but different test, never a claim that the two agree. Checked on 27 September 2026 against the sources linked.
+
+| Universal kind | Framework flag | Relation |
+| --- | --- | --- |
+| Single offer in a competitive procedure | OCP Cardinal **R018** Single bid received | equivalent |
+| Single offer in a competitive procedure | Fazekas Corruption Risk Index: single bidding | equivalent |
+| Short bidding period | OCP Cardinal **R003** Short submission period | equivalent (our threshold is local, see score-v3.md) |
+| Award without competition | Fazekas Corruption Risk Index: non-open procedure / no call for tender published | related (our eligibility follows each country's law) |
+| Better-ranked bidder disqualified | OCP Cardinal **R036** Lowest bid disqualified | related: R036 requires price-only award criteria; ours reads Prozorro's award sequence |
+| Better-ranked bidder disqualified | OCP Cardinal **R035** All except winning bid disqualified; Ukraine State Audit Service **sas-3-2** (same), **sas-3-5** (at least two bidders rejected) | related: ours fires from one better-ranked bidder set aside |
+| Repeated awards without competition / Concentrated awards | Ukraine State Audit Service **sas-3-3** (one supplier across four or more purchase codes of a buyer) | related |
+| Concentrated awards | OCP Cardinal **R048** Heterogeneous supplier | related |
+
+Sources: [OCP Cardinal indicator list](https://github.com/open-contracting/cardinal-rs/blob/main/docs/cli/indicators/index.md); [Prozorro risk rules of the State Audit Service](https://github.com/ProzorroUKR/prozorro-risks/tree/master/src/prozorro/risks/rules); Fazekas, M. and Kocsis, G. (2020), *Uncovering high-level corruption: cross-national objective corruption risk indicators using public procurement data*, British Journal of Political Science 50(1). Cardinal flags we do not compute yet, because they need every bid's price: R024 price close to winning bid, R028 identical bid prices, R058 heavily discounted bid. Prozorro, TED (partly) and Mercado Público publish bids; these are candidates.
+
 ## The All countries view
 
 *All countries* loads every dataset, prepares each one on its own (repetition and concentration never cross cohorts) and lists the rows side by side with their country. It exists to find the strongest leads quickly across countries; the sort *Signals · newest first* puts the most recent flagged rows on top. Limits that do not go away:
