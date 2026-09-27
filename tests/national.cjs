@@ -106,7 +106,7 @@ for (const [file, country, expected, counts] of [
   assert.equal(rows.length, 522);
   for (const r of rows) {
     assert.equal(r.dataFamily, 'chile'); assert.equal(r.currency, 'CLP'); assert.ok(cov.cohort.buyers.some(b => b.id === r.buyerId));
-    assert.equal(r.supplierIds.length, 1); assert.equal(r.supplierIds[0].identifierType, 'CL-RUT'); assert.match(r.supplierIds[0].id, /^\d+[\dkK]?$/);
+    assert.equal(r.supplierIds.length, 1); assert.equal(r.supplierIds[0].identifierType, 'CL-RUT'); assert.match(r.supplierIds[0].id, /^(\d+[\dkK]?|masked-[0-9a-f]{16})$/);
     assert.ok(!/@|contactPoint|email/i.test(JSON.stringify(r)), 'no contact data imported');
     const direct = run('getAssessment', r).checks.find(c => c.id === 'cl-direct-award');
     assert.equal(direct.status, 'not-applicable'); assert.match(direct.reason, /trato directo/);

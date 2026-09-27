@@ -18,6 +18,10 @@ import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
+import os
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from personal_ids import mask, mask_ids  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data/prozorro/raw"
@@ -176,7 +180,7 @@ def contract_rows(tender):
             "dateNote": "Contract signature date (dateSigned), or the contract record date when dateSigned is absent.",
             "buyer": buyer.get("legalName") or tender["procuringEntity"].get("name"), "buyerId": buyer.get("id"),
             "supplier": (supplier.get("identifier") or {}).get("legalName") or supplier.get("name"),
-            "supplierIds": [x for x in [supplier_identifier(supplier.get("identifier"))] if x],
+            "supplierIds": mask_ids([x for x in [supplier_identifier(supplier.get("identifier"))] if x]),
             "description": " — ".join(dict.fromkeys(x for x in [tender.get("title"), (lots.get(lot_id) or {}).get("title")] if x)),
             "amount": value.get("amount"), "currency": value.get("currency"),
             "procedure": kind, "procedureDirect": direct, "category": tender.get("mainProcurementCategory"), "cpv": cpv,

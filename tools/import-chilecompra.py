@@ -20,6 +20,10 @@ import urllib.error
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
+import os
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from personal_ids import mask, mask_ids  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data/chile-mp/raw"
@@ -197,7 +201,7 @@ def award_rows(code, tender_release, award_package):
             "dataStatus": "verified", "date": (award.get("date") or "")[:10] or None,
             "dateNote": "Award date (awards.date); the contract signature date is not in this source.",
             "buyer": (buyer.get("name") or "").split(" | ")[0] or None, "buyerId": buyer.get("id"),
-            "supplier": (suppliers[0].get("name") or "").split(" | ")[0] or None, "supplierIds": ids,
+            "supplier": (suppliers[0].get("name") or "").split(" | ")[0] or None, "supplierIds": mask_ids(ids),
             "description": tender.get("title") or award.get("title"),
             "amount": value.get("amount"), "currency": value.get("currency"),
             "procedure": tender.get("procurementMethodDetails") or None, "procedureCode": code.rsplit("-", 1)[-1][:2], "procedureDirect": direct,
