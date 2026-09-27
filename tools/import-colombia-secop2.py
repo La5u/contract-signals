@@ -34,6 +34,9 @@ import urllib.parse
 import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from personal_ids import mask, mask_ids  # noqa: E402
+
 RAW_DIR = os.path.join(ROOT, "data", "colombia-secop2", "raw")
 DATASET_URL = "https://www.datos.gov.co/resource/jbjy-vk9h.json"
 METADATA_URL = "https://www.datos.gov.co/api/views/jbjy-vk9h"
@@ -211,8 +214,8 @@ def normalize_row(raw: dict, buyer: dict) -> dict:
         "processId": raw.get("proceso_de_compra") or None,
         "processUrl": unwrap_url(raw.get("urlproceso")),
         "supplier": raw.get("proveedor_adjudicado") or None,
-        "supplierIds": ([{"identifierType": raw.get("tipodocproveedor") or "Documento",
-                          "id": supplier_document}] if supplier_document else []),
+        "supplierIds": mask_ids([{"identifierType": raw.get("tipodocproveedor") or "Documento",
+                                  "id": supplier_document}] if supplier_document else []),
         "supplierGroup": raw.get("es_grupo"),
         "supplierSme": raw.get("es_pyme"),
         "description": objeto,

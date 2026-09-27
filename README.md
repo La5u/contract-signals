@@ -42,6 +42,8 @@ You can also open `index.html` directly. If the browser blocks loading the data 
 
 Each dataset is a bounded cohort chosen before scoring. None of them is exhaustive or representative. Datasets are never merged, and amounts are never converted between currencies or summed across sources. For suppliers with a French SIREN, the explorer shows the **current** public name from the company register, not the name at the contract date. Companies with restricted register listings are not named. Provenance and gaps are in each `data/*-coverage.json`, and licences in [docs/data-sources.md](docs/data-sources.md).
 
+**Personal data.** Suppliers who are private individuals are shown by name, as the publishers release them, but their national ID numbers (Colombian cédulas, Ukrainian individual tax numbers, Chilean RUNs, Paraguayan cédula-based RUCs) are replaced by a stable pseudonym (`tools/personal_ids.py`). Publishers release these numbers lawfully; this site does not need to repeat them. Contact details are never imported.
+
 **Check it yourself.** *Sources and how to verify*, above the table, gives each dataset's publisher, portal, API, licence, raw snapshot and rebuild command. Every row has a *Verify it yourself* section with the official pages and documents published for that contract (for Paraguay: the award page with tenderers and evaluation report, the call page, and the signed-contract PDFs), plus the identifiers to search on the portal if a link moves. Copied summaries and CSV/JSON exports carry the same links (`verifyUrls`).
 
 ## The vigilance index

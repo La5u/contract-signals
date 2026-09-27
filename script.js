@@ -287,6 +287,13 @@ function indicatorKind(id) {
   return national ? national[1] : null;
 }
 
+// Natural persons' national ID numbers are pseudonymised at import (tools/personal_ids.py).
+function isMaskedId(id) { return typeof id === 'string' && id.startsWith('masked-'); }
+function displayIdentifier(s) {
+  const type = s.identifierType || 'Identifier';
+  return isMaskedId(s.id) ? `${type} (a person's ID number, not republished here; pseudonym ${s.id.slice(7, 15)})` : `${type} ${s.id}`;
+}
+
 function indicatorSeverity(weight) {
   if (weight >= 40) return { id: 'extreme', label: 'Very high' };
   if (weight >= 25) return { id: 'high', label: 'High' };
@@ -1247,7 +1254,7 @@ function verificationLinks(c) {
 // Identifiers to paste into the official portal's own search, if a link breaks.
 function verificationIdentifiers(c) {
   return [['OCID', c.ocid], ['Contract', c.contractId], ['Award', c.awardId], ['Process', c.processId], ['Buyer', c.buyerId || c.buyerSiret || c.buyerNit],
-    ...(c.supplierIds || []).map(s => [s.identifierType || 'Supplier', s.id])].filter(([, v]) => typeof v === 'string' && v.trim());
+    ...(c.supplierIds || []).filter(s => !isMaskedId(s.id)).map(s => [s.identifierType || 'Supplier', s.id])].filter(([, v]) => typeof v === 'string' && v.trim());
 }
 
 function renderNoticeEvidence(cell, c) {
@@ -1576,7 +1583,7 @@ function startExplorer() {
       if (c.notes) cell.append(element('p', c.notes));
       cell.append(element('p', `Identifiers — Buyer SIRET: ${c.buyerSiret || '—'} · Contract: ${c.contractId || '—'} · Lot: ${c.lotId || '—'} · CPV: ${c.cpv || '—'}`));
       if (c.noticeId || c.publicationDate) cell.append(element('p', `Notice: ${c.noticeId || '—'} · Publication: ${c.publicationDate || '—'}`));
-      if (c.supplierIds?.length) cell.append(element('p', `Holders: ${c.supplierIds.map(s => `${s.identifierType || 'Identifier'} ${s.id}${s.siren ? ` · SIREN ${s.siren}` : ''}`).join(' / ')}`));
+      if (c.supplierIds?.length) cell.append(element('p', `Holders: ${c.supplierIds.map(s => `${displayIdentifier(s)}${s.siren ? ` · SIREN ${s.siren}` : ''}`).join(' / ')}`));
       const software = softwareMaintenanceContext(c);
       if (software) cell.append(element('h3', 'Single-vendor software maintenance — context, not an indicator'), element('p', `Maintenance, support or licences of an existing software product (${software.software === 'cpv' ? 'software CPV code' : 'software named in the object'}), placed with one vendor (${software.vendor === 'direct' ? 'award declared without competition' : software.vendor === 'R2122-3' ? 'article R2122-3 cited' : 'procedure not classified, one offer received'}). This is often routine: only the publisher or its appointed distributor can maintain its product. Proprietary status and exclusive rights are not verified here. No points added or removed; the index is unchanged.`));
       if (c.directAward === true || legalContext.length) {
@@ -1662,7 +1669,7 @@ function startExplorer() {
         cell.append(element('h3', `${where} — published procedure and competition`),
           element('p', `Procedure: ${c.procedure || '—'}${c.procedureCode ? ` (${c.procedureCode})` : ''} · ${c.procedureDirect === true ? 'without competition' : c.procedureDirect === false ? 'competitive' : 'not classified'} · ${c.dataFamily === 'chile' ? `Tenderers on this tender (not per line item): ${c.offers ?? 'not published'} · UNSPSC segment: ${c.category || '—'} · Tender code: ${c.tenderCode}` : `Offers on this lot: ${c.offers ?? 'not published'} · Lot: ${c.lotId || '—'} · CPV: ${c.cpv || '—'}`}.`),
           element('p', `Declared amount: ${c.amount == null ? '—' : `${c.amount.toLocaleString('en-IE')} ${c.currency || ''}`}, in the published currency, never converted. ${c.amountBasis || ''}`),
-          element('p', `Supplier identifier: ${(c.supplierIds || []).map(x => `${x.identifierType} ${x.id}`).join(' / ') || '—'}. Checks and editorial thresholds: ${NATIONAL_FAMILIES[c.dataFamily].doc}. A signal is not a finding of irregularity.`));
+          element('p', `Supplier identifier: ${(c.supplierIds || []).map(displayIdentifier).join(' / ') || '—'}. Checks and editorial thresholds: ${NATIONAL_FAMILIES[c.dataFamily].doc}. A signal is not a finding of irregularity.`));
         if (c.complaintCount) cell.append(element('p', `Complaints recorded on this tender: ${c.complaintCount} · outside the index, no points. A complaint is a filing, not a finding.`));
       } else if (c.dataFamily === 'secop2') {
         cell.append(element('h3', 'SECOP II — declared procedure and justification'),
@@ -1682,7 +1689,7 @@ function startExplorer() {
         }
         cell.append(
           element('p', `Amounts: declared ${c.amount == null ? '—' : moneyCop.format(c.amount)} · paid ${c.amountPaid == null ? '—' : moneyCop.format(c.amountPaid)} · invoiced ${c.amountInvoiced == null ? '—' : moneyCop.format(c.amountInvoiced)}. Paid and invoiced values are platform declarations, not audited payments, and are never summed. Declared amounts stay visible and sortable but add no weight to the index.`));
-        if (c.supplierIds?.length) cell.append(element('p', `Supplier document: ${c.supplierIds[0].identifierType} ${c.supplierIds[0].id}. A personal or tax identifier identifies the declared holder; it implies no suspicion and no link to other contracts by itself.`));
+        if (c.supplierIds?.length) cell.append(element('p', `Supplier document: ${displayIdentifier(c.supplierIds[0])}. A personal or tax identifier identifies the declared holder; it implies no suspicion and no link to other contracts by itself.`));
         cell.append(element('p', `Pilot cohort: ${c.buyerLevel} buyer, signature window 2024-09 → 2026-09. Not exhaustive of the buyer’s procurement; no offers table was imported, so the offer-count checks are out of scope. The five Colombian checks and their editorial thresholds are documented in docs/score-colombia.md; a signal is not a finding of irregularity.`));
       } else if (c.dataFamily === 'decp') {
         cell.append(element('h3', 'Published contract history'));
