@@ -275,6 +275,21 @@ const server=http.createServer((req,res)=>{
  for(let i=0;i<8;i++)assert.match(await page.locator('.contract-row').nth(i).textContent(),/Official audit finding/);
  assert(!((await page.locator('body').textContent()).includes('null / 100')));
  assert.deepEqual(errors,[]);
+ // Buyer profile: filters the table to the buyer, compares rates with the dataset, closes back.
+ {
+  const prof=await browser.newPage({viewport:{width:1280,height:900}});
+  prof.on('pageerror',e=>errors.push(e.message));
+  await prof.goto(base);
+  await prof.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2594'));
+  await prof.locator('.row-toggle').first().click();
+  await prof.locator('.detail-row:not([hidden]) button',{hasText:'Buyer profile'}).click();
+  assert.match(await prof.locator('#profile-panel h2').textContent(),/^Buyer profile · /);
+  assert.match(await prof.locator('#profile-panel').textContent(),/Whole dataset/);
+  assert.doesNotMatch(await prof.locator('#status').textContent(),/2594 \/ 2594/);
+  await prof.locator('#profile-panel button',{hasText:'Close profile'}).click();
+  assert.match(await prof.locator('#status').textContent(),/2594 \/ 2594/);
+  await prof.close();
+ }
  // All countries side by side (over HTTP): each dataset prepared on its own, country shown per row, newest signals first.
  const allPage=await browser.newPage({viewport:{width:1280,height:900}});
  allPage.on('pageerror',e=>errors.push(e.message));
