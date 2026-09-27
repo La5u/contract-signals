@@ -52,14 +52,15 @@ c=bidding();c.consultation.notices[0].deadline='2025-02-04T00:00:00Z';check(scor
 for(const mutate of [c=>c.consultation.searchComplete=false,c=>c.consultation.notices[0].accelerated=null,c=>c.consultation.notices[0].deadline=null,c=>c.consultation.notices.push({...notice})]){c=bidding();mutate(c);check(score(c)===null);}
 c=bidding();c.consultation.notices.push({...notice,id:'corr',version:'02',kind:'correction',publicationDate:'2025-02-10',deadline:'2025-03-01T00:00:00Z',previousNoticeIds:['n']});check(score(c)===0);
 const datasets=['contracts','decp-history','decp-cities','consultations','tours-notices'];
-const expected={contracts:[68,2665,277],'decp-history':[355,1835,404],'decp-cities':[172,974,124],consultations:[10,0,0],'tours-notices':[66,0,0]};
+// v3.1 adds the transparency family (late publication): counts differ from v3.0 (68/2665/277, 355/1835/404, 172/974/124).
+const expected={contracts:[9,2466,535],'decp-history':[355,1747,492],'decp-cities':[172,835,263],consultations:[10,0,0],'tours-notices':[66,0,0]};
 for(const file of datasets){
  const rows=run('prepareContracts',JSON.parse(fs.readFileSync(`data/${file}.json`)));
  const values=rows.map(score), exp=expected[file];
  check(values.filter(s=>s===null).length===exp[0]);check(values.filter(s=>s===0).length===exp[1]);check(values.filter(s=>s>0).length===exp[2]);
  for(const r of rows){
   const a=assessment(r),s=score(r);
-  check(a.checks.length===8&&a.applicable+a.unknownApplicability+a.notApplicable===8);
+  check(a.checks.length===9&&a.applicable+a.unknownApplicability+a.notApplicable===9);
   check(a.evaluated<=a.applicable);
   check(s===null ? a.evaluated===0 : a.evaluated>0&&s>=0&&s<=100);
   check(score({...r,officialFinding:!r.officialFinding})===s,'finding never changes score');

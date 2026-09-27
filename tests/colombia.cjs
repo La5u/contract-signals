@@ -52,14 +52,14 @@ check(run('secop2DurationMonths','0 Mes(es)')===0);
 check(run('secop2DurationMonths','7 Hora(s)')===null);
 check(run('secop2DurationMonths',null)===null);
 // Exactly the eight-check Colombian set; French-only checks always out of scope
-const EXPECTED_IDS=['repeated-single-bid','secop2-concentration','secop2-long-duration','secop2-plurality-award','secop2-repeated-plurality','secop2-term-extension','short-bidding-period','single-bid'].sort();
-const NA_FRENCH=['single-bid','short-bidding-period','repeated-single-bid'];
+const EXPECTED_IDS=['late-publication','repeated-single-bid','secop2-concentration','secop2-long-duration','secop2-plurality-award','secop2-repeated-plurality','secop2-term-extension','short-bidding-period','single-bid'].sort();
+const NA_FRENCH=['single-bid','short-bidding-period','repeated-single-bid','late-publication'];
 let flagged=0,nulls=0,zeros=0,positives=0,partials=0;
 const fires=Object.create(null);
 const scores=new Map();
 for(const c of rows){
   const a=run('getAssessment',c);
-  check(a.checks.length===8);
+  check(a.checks.length===9);
   check(JSON.stringify(a.checks.map(r=>r.id).sort())===JSON.stringify(EXPECTED_IDS));
   for(const r of a.checks){
     if(NA_FRENCH.includes(r.id)) check(r.status==='not-applicable');

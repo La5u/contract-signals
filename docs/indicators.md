@@ -2,7 +2,7 @@
 
 Every check in every dataset maps to one **universal kind**. The table, the *Indicator* filter, copied summaries and exports show the universal label; the row detail also shows the jurisdiction's own check and its reason. This lets the *All countries* view rank and filter every dataset together (owner's decision, 27 September 2026).
 
-What stays local, and why: **eligibility and thresholds follow each jurisdiction's law and data.** A single offer means the same thing everywhere, but “without competition” is a different legal route in each country, and a long duration is 10 years in France and 3 years in the Colombian cohort because ordinary durations differ. Where a dataset cannot support a kind (no offer counts, no amendments), the check is out of scope with a reason, never zero. Weights are the same everywhere for the same kind, and the index is `min(100, max(competition) + max(execution/duration))` in every country.
+What stays local, and why: **eligibility and thresholds follow each jurisdiction's law and data.** A single offer means the same thing everywhere, but “without competition” is a different legal route in each country, and a long duration is 10 years in France and 3 years in the Colombian cohort because ordinary durations differ. Where a dataset cannot support a kind (no offer counts, no amendments), the check is out of scope with a reason, never zero. Weights are the same everywhere for the same kind, and the index is `min(100, max(competition) + max(execution/duration) + max(transparency))` in every country (v3.1). The transparency check is the same code everywhere: `late-publication`, described in [score-v3.md](score-v3.md#transparency-family-v31-27-september-2026).
 
 | Universal kind | Family | France (DECP, BOAMP) | Colombia (SECOP II) | Paraguay (DNCP) | Ukraine (Prozorro) | TED: Portugal, Romania, Czechia | United Kingdom (Find a Tender) | Chile (Mercado Público) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -17,6 +17,7 @@ What stays local, and why: **eligibility and thresholds follow each jurisdiction
 | Long declared duration | execution | `long-contract` (≥ 120 months) | `secop2-long-duration` (≥ 36 months) | out of scope | out of scope | out of scope | out of scope | out of scope |
 | Amount increase after award | execution | `amount-increase` (> 20 %, firm price) | out of scope | `dncp-amount-increase` (> 20 %) | out of scope | out of scope | out of scope | out of scope |
 | Term extended after award | execution | — | `secop2-term-extension` (> +100 % of the declared term) | — | — | — | — | — |
+| Published long after the contract | transparency | `late-publication` (> 120 days) | out of scope | out of scope | out of scope | `late-publication` (> 120 days) | out of scope (contract dates not comparable) | out of scope |
 
 “—” means the check does not exist for that dataset; “out of scope” means it is listed on every row with the reason. Details and thresholds: [score-v3.md](score-v3.md) (France), [score-colombia.md](score-colombia.md), [score-paraguay.md](score-paraguay.md), [score-ukraine.md](score-ukraine.md), [score-ted.md](score-ted.md), [score-uk.md](score-uk.md), [score-chile.md](score-chile.md).
 

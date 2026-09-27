@@ -8,7 +8,7 @@ function tally(rows) {
   const checks = {}; let flagged = 0, zero = 0, notAssessed = 0;
   for (const row of rows) {
     const a = run('getAssessment', row);
-    assert.equal(a.checks.length, 8);
+    assert.equal(a.checks.length, 9);
     for (const c of a.checks) { checks[c.id] ??= {signal:0,clear:0,unknown:0,'not-applicable':0}; checks[c.id][c.status]++; }
     const s = run('getVigilanceScore', row);
     if (s == null) notAssessed++; else if (s > 0) flagged++; else zero++;
@@ -42,7 +42,7 @@ const pick = (t, prefix) => Object.fromEntries(Object.entries(t.checks).filter((
   for (const r of rows) {
     if (r.procedureDirect !== false) assert.equal(r.disqualifiedBefore, null);
     const ids = run('getAssessment', r).checks.map(c => c.id);
-    assert.equal(ids.length, 8); assert.ok(!ids.includes('short-bidding-period'));
+    assert.equal(ids.length, 9); assert.ok(!ids.includes('short-bidding-period'));
   }
   const dq = (n) => run('getAssessment', { ...rows.find(r => r.procedureDirect === false), disqualifiedBefore: n }).checks.find(c => c.id === 'ua-better-bid-disqualified');
   assert.equal(dq(0).status, 'clear'); assert.equal(dq(2).weight, 12); assert.equal(dq(null).status, 'unknown');
@@ -52,11 +52,11 @@ const pick = (t, prefix) => Object.fromEntries(Object.entries(t.checks).filter((
 // ---- Portugal and Romania (TED) ----
 for (const [file, country, expected, counts] of [
   ['data/ted-portugal.json', 'PRT', { 'ted-single-offer': [64,322,43,64], 'ted-direct-award': [64,416,13,0], 'ted-repeated-single-offer': [20,43,44,386],
-    'ted-repeated-direct': [36,25,16,416], 'ted-concentration': [0,237,256,0] }, [128,359,6]],
+    'ted-repeated-direct': [36,25,16,416], 'ted-concentration': [0,237,256,0], 'late-publication': [12,481,0,0] }, [139,354,0]],
   ['data/ted-romania.json', 'ROU', { 'ted-single-offer': [132,209,11,4], 'ted-direct-award': [4,352,0,0], 'ted-repeated-single-offer': [42,77,24,213],
-    'ted-repeated-direct': [0,0,4,352], 'ted-concentration': [0,70,286,0] }, [136,220,0]],
+    'ted-repeated-direct': [0,0,4,352], 'ted-concentration': [0,70,286,0], 'late-publication': [26,330,0,0] }, [158,198,0]],
   ['data/ted-czechia.json', 'CZE', { 'ted-single-offer': [92,280,280,22], 'ted-direct-award': [22,373,279,0], 'ted-repeated-single-offer': [16,73,283,302],
-    'ted-repeated-direct': [9,13,279,373], 'ted-concentration': [70,388,216,0] }, [183,438,53]],
+    'ted-repeated-direct': [9,13,279,373], 'ted-concentration': [70,388,216,0], 'late-publication': [45,627,2,0] }, [201,473,0]],
 ]) {
   const rows = load(file), cov = JSON.parse(fs.readFileSync(file.replace('.json', '-coverage.json')));
   assert.equal(cov.cohort.country, country);
@@ -68,7 +68,7 @@ for (const [file, country, expected, counts] of [
     for (const s of r.supplierIds) if (['NIF','CUI','ICO'].includes(s.identifierType)) assert.match(s.id, /^\d+$/);
   }
   const t = tally(rows);
-  assert.deepEqual(pick(t, 'ted-'), expected);
+  assert.deepEqual({...pick(t, 'ted-'), ...pick(t, 'late-')}, expected);
   assert.deepEqual(t.counts, counts);
   console.log(`TED ${country}: ${rows.length} lots, ${counts[0]} flagged.`);
 }

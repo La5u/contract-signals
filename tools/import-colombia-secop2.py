@@ -388,9 +388,10 @@ def offline() -> None:
             "python tools/import-colombia-secop2.py --offline",
             "node tests/colombia.cjs",
         ],
-        "currentIndex": {"version": "3.0", "note": ("v3.0 framework with the jurisdiction-specific "
-                          "SECOP II check set: docs/score-v3.md (French cohorts) and "
-                          "docs/score-colombia.md (Colombia pilot).")},
+        "currentIndex": {"version": "3.1", "note": ("v3.1 framework (transparency family added; out of scope "
+                          "for SECOP II, which publishes no publication date) with the jurisdiction-specific "
+                          "SECOP II check set: docs/score-v3.md, docs/indicators.md and "
+                          "docs/score-colombia.md.")},
     }
     with open(os.path.join(ROOT, "data", "colombia-secop2-coverage.json"), "w", encoding="utf-8") as handle:
         json.dump(coverage, handle, ensure_ascii=False, indent=1)

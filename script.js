@@ -9,7 +9,7 @@ function isAmbiguousCityContract(c) {
 const HISTORY_START = '2024-01-01';
 const HISTORY_END = '2025-12-31';
 
-const SCORE_VERSION = '3.0';
+const SCORE_VERSION = '3.1';
 
 // Conservative calendar-day upper bound: publication time is not supplied by BOAMP.
 function getBiddingPeriod(contract) {
@@ -267,6 +267,7 @@ const INDICATOR_KINDS = {
   'long-duration': 'Long declared duration',
   'amount-increase': 'Amount increase after award',
   'term-extension': 'Term extended after award',
+  'late-publication': 'Published long after the contract',
 };
 const KIND_OF_CHECK = {
   'single-bid': 'single-offer', 'dncp-single-tenderer': 'single-offer',
@@ -277,7 +278,7 @@ const KIND_OF_CHECK = {
   'long-contract': 'long-duration', 'secop2-long-duration': 'long-duration',
   'amount-increase': 'amount-increase', 'dncp-amount-increase': 'amount-increase',
   'secop2-term-extension': 'term-extension', 'ua-better-bid-disqualified': 'disqualified-better-bid',
-  'short-bidding-period': 'short-bidding-period',
+  'short-bidding-period': 'short-bidding-period', 'late-publication': 'late-publication',
 };
 function indicatorKind(id) {
   if (INDICATOR_KINDS[id] && !KIND_OF_CHECK[id]) return id;
@@ -329,7 +330,47 @@ function graduated(value, start, end, low, high) {
 
 // Eight heuristic checks, with explicit applicability and evaluation states.
 // Official findings and financial amounts are separate evidence/context, not points.
+// Transparency family, the same for every country (docs/indicators.md): the award or
+// contract data published more than 120 days after the contract date. 120 days exceeds
+// every deadline of the regimes covered (EU award notices 30 days, or quarterly grouping
+// plus 30 days for framework and DPS call-offs; UK 30 days; French essential data 2 months).
+const LATE_PUBLICATION_DAYS = 120;
+const LATE_PUBLICATION_MAX_DAYS = 730;
+const PUBLICATION_DATE_MEANING = { decp: 'essential data published on the buyer profile', boamp: 'BOAMP award notice', ted: 'TED award notice' };
+const NO_RELIABLE_CONTRACT_DATE = { fts: 'Find a Tender award notices can carry the date of an original contract signed years earlier (modification notices under PCR 2015 Regulation 72) or of admission to a dynamic purchasing system: the delay would not measure late publication. Out of scope.' };
+function latePublicationCheck(c, excludedReason) {
+  const meaning = PUBLICATION_DATE_MEANING[c.dataFamily];
+  const base = { id: 'late-publication', label: `Published more than ${LATE_PUBLICATION_DAYS} days after the contract`, family: 'transparency' };
+  const make = (applicability, status, weight, reason) => {
+    const severity = indicatorSeverity(weight || 0);
+    return { ...base, applicability, status, weight: status === 'signal' ? weight : null, reason, explanation: reason, severity: severity.id, severityLabel: severity.label };
+  };
+  if (excludedReason) return make('unknown', 'unknown', null, excludedReason);
+  if (!meaning) return make('no', 'not-applicable', null, NO_RELIABLE_CONTRACT_DATE[c.dataFamily] || 'This source publishes no publication date to compare with the contract date: out of scope.');
+  if (c.findingScope === 'aggregate' || (c.consultation && !c.contractId) || c.noticeEvidence && !c.date) return make('no', 'not-applicable', null, 'Not an individual awarded contract with a contract date.');
+  if (!c.date || !c.publicationDate) return make('yes', 'unknown', null, 'Contract date or publication date missing: delay not assessable.');
+  const days = Math.round((Date.parse(c.publicationDate) - Date.parse(c.date)) / 864e5);
+  if (!Number.isFinite(days)) return make('yes', 'unknown', null, 'Unreadable date: delay not assessable.');
+  if (days < 0) return make('yes', 'unknown', null, `Publication date (${c.publicationDate}) before the contract date (${c.date}): inconsistent dates, not assessed.`);
+  if (days <= LATE_PUBLICATION_DAYS) return make('yes', 'clear', null, `${days} day(s) between the contract date (${c.date}) and the ${meaning} (${c.publicationDate}): within ${LATE_PUBLICATION_DAYS} days. Not a conclusion of regularity.`);
+  const weight = graduated(days, LATE_PUBLICATION_DAYS, LATE_PUBLICATION_MAX_DAYS, 8, 16);
+  return make('yes', 'signal', weight, `${days} days between the contract date (${c.date}) and the ${meaning} (${c.publicationDate}). Above ${LATE_PUBLICATION_DAYS} days, beyond every legal deadline of the regimes covered: 8 points, linear to 16 at ${LATE_PUBLICATION_MAX_DAYS} days, in the transparency family. Late publication hides a contract from scrutiny while it runs; it can also be a clerical delay.`);
+}
+
 function getAssessment(c) {
+  const base = getAssessmentLocal(c);
+  const late = latePublicationCheck(c, base.excludedReason);
+  const checks = [...base.checks, late];
+  return { ...base, checks,
+    applicable: base.applicable + (late.applicability === 'yes' ? 1 : 0),
+    evaluated: base.evaluated + (late.status === 'signal' || late.status === 'clear' ? 1 : 0),
+    unknown: base.unknown + (late.applicability === 'yes' && late.status === 'unknown' ? 1 : 0),
+    unknownApplicability: base.unknownApplicability + (late.applicability === 'unknown' ? 1 : 0),
+    notApplicable: base.notApplicable + (late.status === 'not-applicable' ? 1 : 0),
+    signals: base.signals + (late.status === 'signal' ? 1 : 0) };
+}
+
+function getAssessmentLocal(c) {
   if (c.dataFamily === 'secop2') return getAssessmentSecop2(c);
   if (c.dataFamily === 'dncp') return getAssessmentDncp(c);
   if (NATIONAL_FAMILIES[c.dataFamily]) return getAssessmentNational(c);
@@ -387,7 +428,7 @@ function getAssessment(c) {
 // SECOP II assessment: five jurisdiction-specific checks plus the three
 // French checks that stay out of scope here (no offers table, no
 // publication–deadline chronology, no published amount additions).
-// Always eight checks, same status vocabulary as the French method.
+// Eight local checks (a ninth, universal transparency check is added by getAssessment).
 function getAssessmentSecop2(c) {
   const excludedReason = c.initialConflicts?.length || c.modificationConflicts?.length ? 'Conflicting versions: calculations excluded.' :
     c.identityAmbiguous ? 'Duplicate contract identifier: calculations excluded.' :
@@ -462,7 +503,7 @@ function getAssessmentSecop2(c) {
     signals: checks.filter(r => r.status === 'signal').length, excludedReason };
 }
 // DNCP assessment: six Paraguayan checks plus two kept out of scope.
-// Always eight checks, same status vocabulary as the French method.
+// Eight local checks (a ninth, universal transparency check is added by getAssessment).
 function getAssessmentDncp(c) {
   const excludedReason = c.dataStatus === 'unverified' ? 'Unverified record: calculations excluded.' : null;
   const checks = [];
@@ -618,9 +659,9 @@ function getIndicators(contract) {
 }
 function getScoreBreakdown(contract) {
   const assessment = getAssessment(contract);
-  const families = { competition: 0, execution: 0 };
+  const families = { competition: 0, execution: 0, transparency: 0 };
   for (const r of assessment.checks) if (r.status === 'signal') families[r.family] = Math.max(families[r.family], r.weight);
-  const score = assessment.evaluated ? Math.round(Math.min(100, families.competition + families.execution) * 10) / 10 : null;
+  const score = assessment.evaluated ? Math.round(Math.min(100, families.competition + families.execution + families.transparency) * 10) / 10 : null;
   return { ...families, score, assessment };
 }
 function getVigilanceScore(contract) { return getScoreBreakdown(contract).score; }
@@ -1497,7 +1538,7 @@ function startExplorer() {
       for (const indicator of ordered) {
         const counts = !counted.has(indicator.family);
         counted.add(indicator.family);
-        const familyName = indicator.family === 'competition' ? 'competition' : 'execution/duration';
+        const familyName = indicator.family === 'competition' ? 'competition' : indicator.family === 'transparency' ? 'transparency' : 'execution/duration';
         const badge = element('span', indicator.kindLabel, `badge severity-${indicator.severity}${counts ? '' : ' not-counted'}`);
         badge.append(element('small', ` · ${familyName}${counts ? '' : ' · not added'}`, 'badge-family'));
         badge.title = `${indicator.label} (this jurisdiction's check). Raw weight ${indicator.weight}. ${counts ? `Counts for the ${familyName} family.` : `Not added: a heavier ${familyName} signal already counts.`} ${indicator.explanation}`;
@@ -1565,8 +1606,8 @@ function startExplorer() {
       if (c.project) cell.append(element('p', `Documented project: ${c.project.title}. ${c.project.basis}`));
       cell.append(element('h3', `Heuristic index v${SCORE_VERSION} and coverage`));
       if (assessment.excludedReason) cell.append(element('p', assessment.excludedReason));
-      cell.append(element('p', scoreValue == null ? 'Not assessed: no applicable check could be evaluated. This is not a zero score.' : `Competition: ${breakdown.competition} (maximum); execution/duration: ${breakdown.execution} (maximum). Total: ${scoreValue}/100. No compensation for unknown information.`),
-        element('p', `${assessment.evaluated}/${assessment.applicable} checks with established applicability evaluated; ${assessment.unknownApplicability} unknown applicabilities reported separately; ${assessment.notApplicable} checks out of scope. The 8 checks are detailed below.`),
+      cell.append(element('p', scoreValue == null ? 'Not assessed: no applicable check could be evaluated. This is not a zero score.' : `Competition: ${breakdown.competition} (maximum); execution/duration: ${breakdown.execution} (maximum); transparency: ${breakdown.transparency} (maximum). Total: ${scoreValue}/100. No compensation for unknown information.`),
+        element('p', `${assessment.evaluated}/${assessment.applicable} checks with established applicability evaluated; ${assessment.unknownApplicability} unknown applicabilities reported separately; ${assessment.notApplicable} checks out of scope. The ${assessment.checks.length} checks are detailed below.`),
         element('p', 'Separate financial stake: the declared amount increases no weight. An increase uses only the comparable percentage, not a payments total. No points for an official finding, a project or an R2122 citation.'));
       const checks = element('ul', null, 'assessment-checks');
       const states = { signal: 'Signal', clear: 'Evaluated · threshold not crossed', unknown: 'Not assessable', 'not-applicable': 'Out of scope' };
