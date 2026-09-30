@@ -1,0 +1,661 @@
+{
+  "auditVersion": 1,
+  "mode": "live-sampled",
+  "criteria": {
+    "date": "record dateCreated ISO date in [2024-09-01, 2026-09-01)",
+    "buyer": "record procuringEntity.identifier.id equals manifest buyer code",
+    "retained": "signed active/terminated contract -> active award -> exactly one supplier",
+    "offerCount": "non-deleted/non-draft bids attributed by bid.lotValues[].relatedLot to the linked award lot; absent bids unknown; reporting not offer-scored"
+  },
+  "discovery": {
+    "manifestIDs": 542,
+    "uniqueManifestIDs": 542,
+    "crossBuyerDuplicateTenderIDs": [],
+    "duplicateManifestIDCount": 0,
+    "rawFiles": 542,
+    "uniqueRawTenderIDs": 542,
+    "missingRawRecords": [],
+    "unlistedRawRecords": [],
+    "buyers": [
+      {
+        "buyerId": "00012925",
+        "searchTotal": 689,
+        "listedTenderIDs": 689,
+        "manifestWindowIDs": 247,
+        "duplicateManifestIDs": 0,
+        "searchListingCountConsistent": true
+      },
+      {
+        "buyerId": "20089290",
+        "searchTotal": 500,
+        "listedTenderIDs": 500,
+        "manifestWindowIDs": 134,
+        "duplicateManifestIDs": 0,
+        "searchListingCountConsistent": true
+      },
+      {
+        "buyerId": "26510514",
+        "searchTotal": 869,
+        "listedTenderIDs": 869,
+        "manifestWindowIDs": 161,
+        "duplicateManifestIDs": 0,
+        "searchListingCountConsistent": true
+      }
+    ],
+    "corruptRecords": [],
+    "filenameTenderIdMismatches": []
+  },
+  "matching": {
+    "outsideWindowByRecordDate": [],
+    "listedBuyerMismatch": [
+      {
+        "tenderID": "UA-2024-09-12-007445-a",
+        "listedBuyer": "00012925",
+        "recordBuyer": "40996564"
+      },
+      {
+        "tenderID": "UA-2024-11-12-008383-a",
+        "listedBuyer": "00012925",
+        "recordBuyer": "40996564"
+      },
+      {
+        "tenderID": "UA-2024-12-04-006346-a",
+        "listedBuyer": "00012925",
+        "recordBuyer": "40996564"
+      },
+      {
+        "tenderID": "UA-2024-12-13-010844-a",
+        "listedBuyer": "00012925",
+        "recordBuyer": "40996564"
+      },
+      {
+        "tenderID": "UA-2025-03-06-005646-a",
+        "listedBuyer": "26510514",
+        "recordBuyer": "32835966"
+      },
+      {
+        "tenderID": "UA-2025-08-28-010320-a",
+        "listedBuyer": "00012925",
+        "recordBuyer": "32348248"
+      },
+      {
+        "tenderID": "UA-2025-09-15-006336-a",
+        "listedBuyer": "26510514",
+        "recordBuyer": "32835966"
+      },
+      {
+        "tenderID": "UA-2025-11-06-015081-a",
+        "listedBuyer": "26510514",
+        "recordBuyer": "32835966"
+      },
+      {
+        "tenderID": "UA-2025-11-06-016375-a",
+        "listedBuyer": "26510514",
+        "recordBuyer": "32835966"
+      },
+      {
+        "tenderID": "UA-2025-11-14-011660-a",
+        "listedBuyer": "26510514",
+        "recordBuyer": "32835966"
+      },
+      {
+        "tenderID": "UA-2025-11-21-011848-a",
+        "listedBuyer": "26510514",
+        "recordBuyer": "32835966"
+      },
+      {
+        "tenderID": "UA-2025-11-26-005436-a",
+        "listedBuyer": "26510514",
+        "recordBuyer": "32835966"
+      },
+      {
+        "tenderID": "UA-2026-01-13-012240-a",
+        "listedBuyer": "00012925",
+        "recordBuyer": "40996564"
+      },
+      {
+        "tenderID": "UA-2026-05-12-012351-a",
+        "listedBuyer": "26510514",
+        "recordBuyer": "32835966"
+      },
+      {
+        "tenderID": "UA-2026-07-09-009203-a",
+        "listedBuyer": "00012925",
+        "recordBuyer": "40996564"
+      },
+      {
+        "tenderID": "UA-2026-07-31-004221-a",
+        "listedBuyer": "26510514",
+        "recordBuyer": "32835966"
+      }
+    ],
+    "tenderIdDateVsRecordDateMismatches": [],
+    "inWindowBuyerMatchedTenders": 526,
+    "procedureTypes": {
+      "aboveThreshold": 44,
+      "aboveThresholdEU": 1,
+      "belowThreshold": 17,
+      "priceQuotation": 9,
+      "reporting": 424,
+      "requestForProposal": 31
+    },
+    "coverageTendersInWindow": 526,
+    "coverageTendersWithAnotherBuyer": 16
+  },
+  "joinsAndExclusions": {
+    "counts": {
+      "contract_award_linked": 496,
+      "retained_contract_award_supplier": 488
+    },
+    "excludedContracts": {
+      "contract status not signed: cancelled": 3,
+      "contract status not signed: pending": 5
+    },
+    "coverageExcludedContracts": {
+      "contract not signed (cancelled)": 3,
+      "contract not signed (pending)": 5
+    },
+    "retainedRawJoins": 488,
+    "snapshotRows": 488,
+    "missingSnapshotRows": [],
+    "extraSnapshotRows": [],
+    "duplicateOutputIds": 0,
+    "rowBuyerLinkIssues": [],
+    "duplicateRawJoinKeys": 0,
+    "duplicateSnapshotJoinKeys": 0,
+    "unmatchedContractAwards": [],
+    "coverageMismatches": {}
+  },
+  "offers": {
+    "competitiveRowsWithCount": 64,
+    "competitiveRowsUnknown": 0,
+    "snapshotOfferMismatches": []
+  },
+  "samples": [
+    {
+      "tenderID": "UA-2025-01-27-016831-a",
+      "buyerId": "00012925",
+      "internalId": "e842890ab0d7464ab9180dd0a8f74a38",
+      "contractId": "UA-2025-01-27-016831-a-a1",
+      "awardId": "8fd4e8da005040f88bc3db2fe8d6f34b",
+      "procedure": "aboveThreshold",
+      "lotId": "1a6c4923027e4c42a2296021045fed94",
+      "snapshotOfferCount": 1,
+      "sampleClass": "single-offer signal",
+      "snapshotJoin": true,
+      "liveApi": {
+        "result": "match",
+        "httpStatus": 200,
+        "checkedAt": "2026-09-28T08:34:07.888051+00:00",
+        "apiUrl": "https://public-api.prozorro.gov.ua/api/2.5/tenders/e842890ab0d7464ab9180dd0a8f74a38",
+        "portalUrl": "https://prozorro.gov.ua/tender/UA-2025-01-27-016831-a",
+        "fields": {
+          "tenderID": {
+            "snapshot": "UA-2025-01-27-016831-a",
+            "live": "UA-2025-01-27-016831-a",
+            "status": "match"
+          },
+          "internalId": {
+            "snapshot": "e842890ab0d7464ab9180dd0a8f74a38",
+            "live": "e842890ab0d7464ab9180dd0a8f74a38",
+            "status": "match"
+          },
+          "dateCreated": {
+            "snapshot": "2025-01-27T16:49:28.305075+02:00",
+            "live": "2025-01-27T16:49:28.305075+02:00",
+            "status": "match"
+          },
+          "buyerId": {
+            "snapshot": "00012925",
+            "live": "00012925",
+            "status": "match"
+          },
+          "contractId": {
+            "snapshot": "UA-2025-01-27-016831-a-a1",
+            "live": "UA-2025-01-27-016831-a-a1",
+            "status": "match"
+          },
+          "awardId": {
+            "snapshot": "8fd4e8da005040f88bc3db2fe8d6f34b",
+            "live": "8fd4e8da005040f88bc3db2fe8d6f34b",
+            "status": "match"
+          },
+          "supplierIds": {
+            "snapshot": [
+              "38809664"
+            ],
+            "live": [
+              "38809664"
+            ],
+            "status": "match"
+          },
+          "offerCount": {
+            "snapshot": 1,
+            "live": 1,
+            "status": "match"
+          }
+        },
+        "mismatches": [],
+        "unavailableFields": [],
+        "liveStatus": "complete"
+      }
+    },
+    {
+      "tenderID": "UA-2025-02-18-006417-a",
+      "buyerId": "26510514",
+      "internalId": "f6b29815f35b459d8ed51ca55aa1820b",
+      "contractId": "UA-2025-02-18-006417-a-b1",
+      "awardId": "3a07c088a53844988f4f1df00328597b",
+      "procedure": "aboveThreshold",
+      "lotId": "e82289d9dc624ee7a8dac602abdb1a6b",
+      "snapshotOfferCount": 1,
+      "sampleClass": "single-offer signal",
+      "snapshotJoin": true,
+      "liveApi": {
+        "result": "match",
+        "httpStatus": 200,
+        "checkedAt": "2026-09-28T08:34:08.269411+00:00",
+        "apiUrl": "https://public-api.prozorro.gov.ua/api/2.5/tenders/f6b29815f35b459d8ed51ca55aa1820b",
+        "portalUrl": "https://prozorro.gov.ua/tender/UA-2025-02-18-006417-a",
+        "fields": {
+          "tenderID": {
+            "snapshot": "UA-2025-02-18-006417-a",
+            "live": "UA-2025-02-18-006417-a",
+            "status": "match"
+          },
+          "internalId": {
+            "snapshot": "f6b29815f35b459d8ed51ca55aa1820b",
+            "live": "f6b29815f35b459d8ed51ca55aa1820b",
+            "status": "match"
+          },
+          "dateCreated": {
+            "snapshot": "2025-02-18T12:43:21.780198+02:00",
+            "live": "2025-02-18T12:43:21.780198+02:00",
+            "status": "match"
+          },
+          "buyerId": {
+            "snapshot": "26510514",
+            "live": "26510514",
+            "status": "match"
+          },
+          "contractId": {
+            "snapshot": "UA-2025-02-18-006417-a-b1",
+            "live": "UA-2025-02-18-006417-a-b1",
+            "status": "match"
+          },
+          "awardId": {
+            "snapshot": "3a07c088a53844988f4f1df00328597b",
+            "live": "3a07c088a53844988f4f1df00328597b",
+            "status": "match"
+          },
+          "supplierIds": {
+            "snapshot": [
+              "3072900585"
+            ],
+            "live": [
+              "3072900585"
+            ],
+            "status": "match"
+          },
+          "offerCount": {
+            "snapshot": 1,
+            "live": 1,
+            "status": "match"
+          }
+        },
+        "mismatches": [],
+        "unavailableFields": [],
+        "liveStatus": "complete"
+      }
+    },
+    {
+      "tenderID": "UA-2025-01-31-010907-a",
+      "buyerId": "00012925",
+      "internalId": "245655064ad94eed80e24cae0810cf7d",
+      "contractId": "UA-2025-01-31-010907-a-a1",
+      "awardId": "3bd0ece4a52b4c0983994c7b2c222499",
+      "procedure": "aboveThreshold",
+      "lotId": "df9f459c7f324a2b8dc76813889fa235",
+      "snapshotOfferCount": 1,
+      "sampleClass": "single-offer signal",
+      "snapshotJoin": true,
+      "liveApi": {
+        "result": "match",
+        "httpStatus": 200,
+        "checkedAt": "2026-09-28T08:34:08.690200+00:00",
+        "apiUrl": "https://public-api.prozorro.gov.ua/api/2.5/tenders/245655064ad94eed80e24cae0810cf7d",
+        "portalUrl": "https://prozorro.gov.ua/tender/UA-2025-01-31-010907-a",
+        "fields": {
+          "tenderID": {
+            "snapshot": "UA-2025-01-31-010907-a",
+            "live": "UA-2025-01-31-010907-a",
+            "status": "match"
+          },
+          "internalId": {
+            "snapshot": "245655064ad94eed80e24cae0810cf7d",
+            "live": "245655064ad94eed80e24cae0810cf7d",
+            "status": "match"
+          },
+          "dateCreated": {
+            "snapshot": "2025-01-31T15:07:46.528483+02:00",
+            "live": "2025-01-31T15:07:46.528483+02:00",
+            "status": "match"
+          },
+          "buyerId": {
+            "snapshot": "00012925",
+            "live": "00012925",
+            "status": "match"
+          },
+          "contractId": {
+            "snapshot": "UA-2025-01-31-010907-a-a1",
+            "live": "UA-2025-01-31-010907-a-a1",
+            "status": "match"
+          },
+          "awardId": {
+            "snapshot": "3bd0ece4a52b4c0983994c7b2c222499",
+            "live": "3bd0ece4a52b4c0983994c7b2c222499",
+            "status": "match"
+          },
+          "supplierIds": {
+            "snapshot": [
+              "20015794"
+            ],
+            "live": [
+              "20015794"
+            ],
+            "status": "match"
+          },
+          "offerCount": {
+            "snapshot": 1,
+            "live": 1,
+            "status": "match"
+          }
+        },
+        "mismatches": [],
+        "unavailableFields": [],
+        "liveStatus": "complete"
+      }
+    },
+    {
+      "tenderID": "UA-2025-10-17-014252-a",
+      "buyerId": "00012925",
+      "internalId": "bc0ba5989b41462da78712e702bfd857",
+      "contractId": "UA-2025-10-17-014252-a-a1",
+      "awardId": "25e8a6352fb846129a83f3f839e6a5fc",
+      "procedure": "requestForProposal",
+      "lotId": "05a8fe1f88b44dfaa6912a84ad52aeb3",
+      "snapshotOfferCount": 1,
+      "sampleClass": "single-offer signal",
+      "snapshotJoin": true,
+      "liveApi": {
+        "result": "match",
+        "httpStatus": 200,
+        "checkedAt": "2026-09-28T08:34:09.147716+00:00",
+        "apiUrl": "https://public-api.prozorro.gov.ua/api/2.5/tenders/bc0ba5989b41462da78712e702bfd857",
+        "portalUrl": "https://prozorro.gov.ua/tender/UA-2025-10-17-014252-a",
+        "fields": {
+          "tenderID": {
+            "snapshot": "UA-2025-10-17-014252-a",
+            "live": "UA-2025-10-17-014252-a",
+            "status": "match"
+          },
+          "internalId": {
+            "snapshot": "bc0ba5989b41462da78712e702bfd857",
+            "live": "bc0ba5989b41462da78712e702bfd857",
+            "status": "match"
+          },
+          "dateCreated": {
+            "snapshot": "2025-10-17T17:21:30.062032+03:00",
+            "live": "2025-10-17T17:21:30.062032+03:00",
+            "status": "match"
+          },
+          "buyerId": {
+            "snapshot": "00012925",
+            "live": "00012925",
+            "status": "match"
+          },
+          "contractId": {
+            "snapshot": "UA-2025-10-17-014252-a-a1",
+            "live": "UA-2025-10-17-014252-a-a1",
+            "status": "match"
+          },
+          "awardId": {
+            "snapshot": "25e8a6352fb846129a83f3f839e6a5fc",
+            "live": "25e8a6352fb846129a83f3f839e6a5fc",
+            "status": "match"
+          },
+          "supplierIds": {
+            "snapshot": [
+              "36376441"
+            ],
+            "live": [
+              "36376441"
+            ],
+            "status": "match"
+          },
+          "offerCount": {
+            "snapshot": 1,
+            "live": 1,
+            "status": "match"
+          }
+        },
+        "mismatches": [],
+        "unavailableFields": [],
+        "liveStatus": "complete"
+      }
+    },
+    {
+      "tenderID": "UA-2025-07-08-004799-a",
+      "buyerId": "26510514",
+      "internalId": "54e8a659a2ed4244bf1069b8888d3cb1",
+      "contractId": "UA-2025-07-08-004799-a-c1",
+      "awardId": "5a141b21e51a4c3b892ebc45c706ab84",
+      "procedure": "reporting",
+      "lotId": null,
+      "snapshotOfferCount": null,
+      "sampleClass": "no single-offer signal",
+      "snapshotJoin": true,
+      "liveApi": {
+        "result": "unavailable",
+        "httpStatus": 200,
+        "checkedAt": "2026-09-28T08:34:09.691831+00:00",
+        "apiUrl": "https://public-api.prozorro.gov.ua/api/2.5/tenders/54e8a659a2ed4244bf1069b8888d3cb1",
+        "portalUrl": "https://prozorro.gov.ua/tender/UA-2025-07-08-004799-a",
+        "fields": {
+          "tenderID": {
+            "snapshot": "UA-2025-07-08-004799-a",
+            "live": "UA-2025-07-08-004799-a",
+            "status": "match"
+          },
+          "internalId": {
+            "snapshot": "54e8a659a2ed4244bf1069b8888d3cb1",
+            "live": "54e8a659a2ed4244bf1069b8888d3cb1",
+            "status": "match"
+          },
+          "dateCreated": {
+            "snapshot": "2025-07-08T12:42:42.433538+03:00",
+            "live": "2025-07-08T12:42:42.433538+03:00",
+            "status": "match"
+          },
+          "buyerId": {
+            "snapshot": "26510514",
+            "live": "26510514",
+            "status": "match"
+          },
+          "contractId": {
+            "snapshot": "UA-2025-07-08-004799-a-c1",
+            "live": "UA-2025-07-08-004799-a-c1",
+            "status": "match"
+          },
+          "awardId": {
+            "snapshot": "5a141b21e51a4c3b892ebc45c706ab84",
+            "live": "5a141b21e51a4c3b892ebc45c706ab84",
+            "status": "match"
+          },
+          "supplierIds": {
+            "snapshot": [
+              "32237056"
+            ],
+            "live": [
+              "32237056"
+            ],
+            "status": "match"
+          },
+          "offerCount": {
+            "snapshot": null,
+            "live": null,
+            "status": "unavailable"
+          }
+        },
+        "mismatches": [],
+        "unavailableFields": [
+          "offerCount"
+        ],
+        "liveStatus": "complete"
+      }
+    },
+    {
+      "tenderID": "UA-2024-10-02-008327-a",
+      "buyerId": "26510514",
+      "internalId": "a8898fa6e0b7424f8c205f68b8a986e2",
+      "contractId": "UA-2024-10-02-008327-a-c1",
+      "awardId": "f74cdec941064d85ada855dfaa0a52f8",
+      "procedure": "reporting",
+      "lotId": null,
+      "snapshotOfferCount": null,
+      "sampleClass": "no single-offer signal",
+      "snapshotJoin": true,
+      "liveApi": {
+        "result": "unavailable",
+        "httpStatus": 200,
+        "checkedAt": "2026-09-28T08:34:09.939664+00:00",
+        "apiUrl": "https://public-api.prozorro.gov.ua/api/2.5/tenders/a8898fa6e0b7424f8c205f68b8a986e2",
+        "portalUrl": "https://prozorro.gov.ua/tender/UA-2024-10-02-008327-a",
+        "fields": {
+          "tenderID": {
+            "snapshot": "UA-2024-10-02-008327-a",
+            "live": "UA-2024-10-02-008327-a",
+            "status": "match"
+          },
+          "internalId": {
+            "snapshot": "a8898fa6e0b7424f8c205f68b8a986e2",
+            "live": "a8898fa6e0b7424f8c205f68b8a986e2",
+            "status": "match"
+          },
+          "dateCreated": {
+            "snapshot": "2024-10-02T14:40:55.245905+03:00",
+            "live": "2024-10-02T14:40:55.245905+03:00",
+            "status": "match"
+          },
+          "buyerId": {
+            "snapshot": "26510514",
+            "live": "26510514",
+            "status": "match"
+          },
+          "contractId": {
+            "snapshot": "UA-2024-10-02-008327-a-c1",
+            "live": "UA-2024-10-02-008327-a-c1",
+            "status": "match"
+          },
+          "awardId": {
+            "snapshot": "f74cdec941064d85ada855dfaa0a52f8",
+            "live": "f74cdec941064d85ada855dfaa0a52f8",
+            "status": "match"
+          },
+          "supplierIds": {
+            "snapshot": [
+              "3137706951"
+            ],
+            "live": [
+              "3137706951"
+            ],
+            "status": "match"
+          },
+          "offerCount": {
+            "snapshot": null,
+            "live": null,
+            "status": "unavailable"
+          }
+        },
+        "mismatches": [],
+        "unavailableFields": [
+          "offerCount"
+        ],
+        "liveStatus": "complete"
+      }
+    },
+    {
+      "tenderID": "UA-2026-07-27-001301-a",
+      "buyerId": "00012925",
+      "internalId": "c52ea204a16b47cf818dde774231003f",
+      "contractId": "UA-2026-07-27-001301-a-a1",
+      "awardId": "661516ed743a4d1d83a5ae257355dcc5",
+      "procedure": "priceQuotation",
+      "lotId": null,
+      "snapshotOfferCount": 2,
+      "sampleClass": "no single-offer signal",
+      "snapshotJoin": true,
+      "liveApi": {
+        "result": "match",
+        "httpStatus": 200,
+        "checkedAt": "2026-09-28T08:34:10.147092+00:00",
+        "apiUrl": "https://public-api.prozorro.gov.ua/api/2.5/tenders/c52ea204a16b47cf818dde774231003f",
+        "portalUrl": "https://prozorro.gov.ua/tender/UA-2026-07-27-001301-a",
+        "fields": {
+          "tenderID": {
+            "snapshot": "UA-2026-07-27-001301-a",
+            "live": "UA-2026-07-27-001301-a",
+            "status": "match"
+          },
+          "internalId": {
+            "snapshot": "c52ea204a16b47cf818dde774231003f",
+            "live": "c52ea204a16b47cf818dde774231003f",
+            "status": "match"
+          },
+          "dateCreated": {
+            "snapshot": "2026-07-27T09:59:23.539046+03:00",
+            "live": "2026-07-27T09:59:23.539046+03:00",
+            "status": "match"
+          },
+          "buyerId": {
+            "snapshot": "00012925",
+            "live": "00012925",
+            "status": "match"
+          },
+          "contractId": {
+            "snapshot": "UA-2026-07-27-001301-a-a1",
+            "live": "UA-2026-07-27-001301-a-a1",
+            "status": "match"
+          },
+          "awardId": {
+            "snapshot": "661516ed743a4d1d83a5ae257355dcc5",
+            "live": "661516ed743a4d1d83a5ae257355dcc5",
+            "status": "match"
+          },
+          "supplierIds": {
+            "snapshot": [
+              "32490244"
+            ],
+            "live": [
+              "32490244"
+            ],
+            "status": "match"
+          },
+          "offerCount": {
+            "snapshot": 2,
+            "live": 2,
+            "status": "match"
+          }
+        },
+        "mismatches": [],
+        "unavailableFields": [],
+        "liveStatus": "complete"
+      }
+    }
+  ],
+  "summary": {
+    "status": "consistent-with-importer-exclusions",
+    "failures": [],
+    "note": "The 16 site-search buyer mismatches are excluded; independently checked coverage, join, and live-field mismatches fail the audit."
+  }
+}
