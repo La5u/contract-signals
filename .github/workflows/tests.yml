@@ -16,5 +16,5 @@ jobs:
         with:
           python-version: '3.12'
       # Playwright is test-only and stays outside the project, as locally.
-      - run: npm install --prefix /tmp/procurement-browser playwright && npx --prefix /tmp/procurement-browser playwright install --with-deps chromium
+      - run: npm install --prefix /tmp/procurement-browser playwright@1.58.2 && npx --prefix /tmp/procurement-browser playwright install --with-deps chromium
       - run: sh tests/run-all.sh
