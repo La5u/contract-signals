@@ -68,11 +68,11 @@ def initial_tuple(r):
 
 def is_mod(r): return clean(r.get("idmodification")) is not None
 
-# Exact labels observed in this extraction (plus the official negotiated label).
+# Exact labels observed in the DECP cohorts (plus the official negotiated label).
 PROCEDURE_DIRECT = {"Marché passé sans publicité ni mise en concurrence préalable": True,
                     "Marché négocié sans publicité ni mise en concurrence préalable": True}
 PROCEDURE_COMPETITIVE = {"Appel d'offres ouvert": False, "Appel d'offres restreint": False,
-                         "Procédure avec négociation": False}
+                         "Procédure avec négociation": False, "Dialogue compétitif": False}
 def direct(procedure):
     if procedure in PROCEDURE_DIRECT: return True
     if procedure in PROCEDURE_COMPETITIVE: return False
