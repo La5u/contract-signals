@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "checkedOn": "2026-09-30",
+  "scope": "Official dataset/category evidence and BASE publication/privacy statements. Not field-specific legal clearance or current legislation verification.",
+  "evidence": [
+    {
+      "url": "https://dados.gov.pt/api/1/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/",
+      "status": 200,
+      "bytes": 45985,
+      "responseSha256": "83848e35462d9de46df61d8bc13f6e254eb7512af452d9c27d13be6f63522dd9",
+      "selectedFields": {"license": "other-pd", "title": "Contratos Públicos - Portal Base - IMPIC - Contratos de 2012 a 2026"},
+      "excerpt": "Contratos de 2012 a 2026 integração registada no Portal Base em www.base.gov.pt pelas entidades adjudicantes (diretamente e/ou através das plataformas Eletrónicas)."
+    },
+    {
+      "url": "https://dados.gov.pt/api/1/datasets/licenses/",
+      "status": 200,
+      "bytes": 2567,
+      "responseSha256": "d362536f6d41889af244c0ef77902c1efe384bc7ce57e16c158d307b025b0777",
+      "selectedEntry": {"id": "other-pd", "title": "Outra (Domínio Público)", "url": null},
+      "conclusion": "The publisher-selected category means Other (Public Domain), not CC0 or a named standard licence with a terms URL."
+    },
+    {
+      "url": "https://www.base.gov.pt/Base4/pt/utilidades/politica-de-privacidade/",
+      "status": 200,
+      "bytes": 90091,
+      "responseSha256": "84a45f7a80dbce24fc0042b11098423bcc2b0c438f1d16d183d936886c85abf2",
+      "excerpts": [
+        "A obtenção de dados em bruto deve, preferencialmente, ser feita junto do portal dados.gov.pt.",
+        "O IMPIC reserva-se igualmente o direito de limitar os acessos de pesquisas por sistemas automáticos no horário das 9h às 18h, bem como, o número de pedidos a um limite máximo de 2000 registos, por sessão",
+        "Os dados pessoais recolhidos serão tratados informaticamente e de acordo com o Regulamento Geral sobre a Proteção de Dados - RGPD e legislação nacional aplicável sobre a matéria."
+      ],
+      "publicContacts": {"support": "suporte.portal@base.gov.pt", "dataProtectionOfficer": "DPO@impic.pt"},
+      "caveat": "Privacy wording includes website users; do not treat it as a field-specific authorisation to republish every participant's data. Website footer copyright is distinct from the official dataset category."
+    },
+    {
+      "url": "https://www.base.gov.pt/Base4/pt/o-portal/o-que-publicitamos/",
+      "status": 200,
+      "bytes": 84675,
+      "responseSha256": "ea5feb454a93781e09ceea42efd9358a329f305b6504c7f850569f3dc3c23d80",
+      "displayedLastUpdate": "2022-12-16",
+      "excerpts": [
+        "Contrato - De acordo com a informação reportada pelas Fichas e pelo Relatório de formação do contrato",
+        "Modificação Contratual - Após qualquer comunicação do Relatório de modificação contratual",
+        "Execução do Contrato - Comunicada no Contrato após a comunicação dos dados do Relatório de execução ou Relatório final de obra"
+      ],
+      "conclusion": "Official explanation of why contract, modification and execution information is published; not proof that all exported fields are currently mandatory."
+    },
+    {
+      "url": "https://www.base.gov.pt/Base4/pt/o-portal/o-que-nos-comunicam/",
+      "status": 200,
+      "bytes": 94046,
+      "responseSha256": "237791808cb43b5fcce44149efe6bc2463de5daabf65ccab60aab43868e31390",
+      "excerpt": "O Portal BASE recolhe informação sobre a formação e a execução de um contrato público.",
+      "caveat": "This page cites reporting models in Portaria 57/2018 amended by 284/2019. These references were not independently verified as current legislation for the 2024–2026 exports."
+    }
+  ],
+  "remainingQuestions": [
+    "Does the publisher's Other (Public Domain) declaration cover all text fields and incorporated material, and what conditions or attribution are expected?",
+    "Why are natural-person NIFs and bidder names included in the public export, and what are the field-specific publication, correction and retention rules?",
+    "Which reporting specification is current for the downloaded files? What units/currency and missing-value semantics apply to prazoExecucao and price fields?"
+  ]
+}
