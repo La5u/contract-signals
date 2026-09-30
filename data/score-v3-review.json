@@ -1,9 +1,9 @@
 {
   "version": "3.0",
-  "generatedAt": "2026-09-30T23:46:21.886Z",
+  "generatedAt": "2026-09-29T22:47:01.764Z",
   "sourceCodeHashes": {
     "v21": "7055ce9a7cf02702232bb7dcb91a3858579c440e31e967a8adbb6f2ab13b6c87",
-    "v3": "ab27e667a957a84b55f4d240c5a0031700bf500ae6844818d547f88757090341"
+    "v3": "eef8371ca3f3a022384878a9629a9e191f17a09053c42c10c3e81466892e8d05"
   },
   "interpretation": "Editorial triage, not probability. Threshold eligibility is not statistical calibration. Null is unevaluated, not a negative. Official findings are separate evidence. No target fraction of flagged contracts.",
   "coverageDefinition": "evaluated/applicable-known checks plus separately displayed unknown-applicability checks; no normalization by missingness",
@@ -518,7 +518,7 @@
     },
     "tours-notices": {
       "rows": 66,
-      "inputSha256": "d7f6e50a7348c046847f9705c42fa78109f3be3048931929a8efad0e29d9a147",
+      "inputSha256": "a029071945d3a7928afc7a02fc479f039f0deb84c584464a6f884e448e48c294",
       "officialFindings": 0,
       "v21": {
         "positive": 0,
@@ -526,11 +526,11 @@
       },
       "v3": {
         "positive": 0,
-        "zero": 0,
-        "unevaluated": 66,
+        "zero": 6,
+        "unevaluated": 60,
         "excluded": 0,
         "indicators": {},
-        "meanEvaluatedChecks": 0
+        "meanEvaluatedChecks": 0.09
       },
       "transitions": {
         "positiveToZero": 0,
@@ -567,14 +567,27 @@
       },
       "reviewQueue": [
         {
-          "stratum": "unevaluated",
+          "stratum": "zero",
           "id": "tours-notice-25-127197-LOT-0003",
           "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-127197",
           "oldScore": 0,
-          "v3Score": null,
+          "v3Score": 0,
           "signals": [],
-          "evaluated": 0,
-          "applicableKnown": 0,
+          "evaluated": 1,
+          "applicableKnown": 1,
+          "unknownApplicability": 1,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "zero",
+          "id": "tours-notice-25-127197-LOT-0001",
+          "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-127197",
+          "oldScore": 0,
+          "v3Score": 0,
+          "signals": [],
+          "evaluated": 1,
+          "applicableKnown": 1,
           "unknownApplicability": 1,
           "excludedReason": null,
           "reviewStatus": "queued-not-ground-truth"
@@ -583,6 +596,19 @@
           "stratum": "unevaluated",
           "id": "tours-notice-25-53171-LOT-0001",
           "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-53171",
+          "oldScore": 0,
+          "v3Score": null,
+          "signals": [],
+          "evaluated": 0,
+          "applicableKnown": 1,
+          "unknownApplicability": 0,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "unevaluated",
+          "id": "tours-notice-25-72872-LOT-0001",
+          "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-72872",
           "oldScore": 0,
           "v3Score": null,
           "signals": [],

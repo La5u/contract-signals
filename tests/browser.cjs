@@ -166,7 +166,7 @@ const server=http.createServer((req,res)=>{
  await page.selectOption('#dataset','tours');
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 66'));
  assert.equal(await page.locator('.contract-row').count(),50);
- assert.match(await page.locator('.contract-row').first().textContent(),/Not assessed/);
+ assert.match(await page.locator('.contract-row').first().textContent(),/0 \/ 100/);
  await page.locator('#pagination').scrollIntoViewIfNeeded();
  const toursPosition=await page.evaluate(()=>scrollY);
  await page.click('#next');assert.equal(await page.evaluate(()=>scrollY),toursPosition);
@@ -177,7 +177,8 @@ const server=http.createServer((req,res)=>{
  assert.match(await page.locator(panel).textContent(),/40/);
  assert.match(await page.locator(panel).textContent(),/per-exa/);
  assert.match(await page.locator(panel).textContent(),/25-119055/);
- assert.equal(await page.locator('#detail-panel .assessment-checks li').count(),8);
+ assert.match(await page.locator(panel).textContent(),/extends the submission deadline/);
+ assert.equal(await page.locator('#detail-panel .assessment-checks li').count(),9);
  assert(await page.locator('#detail-panel a[download]').count()>0);
  await page.evaluate(()=>{const el=document.querySelector('#notice-context');el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});await page.fill('#search','R2122-8');
  assert.equal(await page.locator('.contract-row').count(),3);
@@ -262,6 +263,20 @@ const server=http.createServer((req,res)=>{
  await page.waitForFunction(()=>/\/ \d+ results/.test(document.querySelector('#status').textContent)&&document.querySelector('#dataset-note').textContent.includes('Asunción'));
  assert.match(await page.locator('#dataset option:checked').textContent(),/^MOPC.*Central.*Asunción/);
  assert.match(await page.locator('#sources-body').textContent(),/--cohort 3buyers --offline/);
+ await page.selectOption('#dataset','decp');
+ await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2594'));
+ await page.selectOption('#dataset','ukraine');
+ await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 488'));
+ const ukraineNote=await page.locator('#dataset-note').textContent();
+ assert.match(ukraineNote,/526 tenders and 488 signed contracts/);
+ assert.doesNotMatch(ukraineNote,/424 direct-contract reports|out of scope, not scored/);
+ await page.fill('#search','prozorro-UA-2024-09-09-001521-a-9c1f5788');
+ assert.equal(await page.locator('.contract-row').count(),1);
+ await openRow(page,page.locator('.row-toggle'));
+ const reportingDetail=await page.locator(panel).textContent();
+ assert.match(reportingDetail,/Offer and direct-award checks are excluded for direct-contract reports \(reporting\)/);
+ assert.match(reportingDetail,/Concentrated awards within a category/);
+ assert.doesNotMatch(reportingDetail,/reporting.*not scored/i);
  await page.selectOption('#dataset','decp');
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2594'));
  // Shareable links: a fresh load restores dataset, filters, sort, page and page size.

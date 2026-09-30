@@ -12,16 +12,16 @@ The citation of an R2122 article, the buyer’s explanations, the current names/
 
 ## Unknown, zero and coverage
 
-`getAssessment` describes **eight checks** with:
+`getAssessment` describes **eight core checks**, plus a ninth linked-notice check for Tours (and a jurisdiction-specific ninth bid-attrition check for Ukraine), with:
 
 - `signal`: evaluable check and threshold crossed;
 - `clear`: evaluable check, threshold not crossed — not a conclusion of regularity;
 - `unknown`: insufficient data, with applicability either established or itself unknown;
 - `not-applicable`: outside the known scope of the rule, with an explicit reason.
 
-Display example: **“2 signals · 4/5 known-applicable checks evaluated; 2 additional unknown applicabilities”**. The denominator 5 does not make the two other unknowns disappear: they are always displayed separately. Out-of-scope checks complete the total of eight. This ratio describes our checks, **not the share of spending covered, nor a probability of detection**.
+Display example: **“2 signals · 4/5 known-applicable checks evaluated; 2 additional unknown applicabilities”**. The denominator 5 does not make the two other unknowns disappear: they are always displayed separately. Out-of-scope checks complete the dataset's check count. This ratio describes our checks, **not the share of spending covered, nor a probability of detection**.
 
-`getVigilanceScore` returns **`null`** when no check can be evaluated, and the interface displays **“Not assessed”**. `0` requires at least one evaluated check and no threshold crossed. Even a zero can be very partial; the eight states and their reasons are detailed in each record. Unknowns come last in both sort directions. Filters: not assessed/excluded, partial coverage, zero after evaluation.
+`getVigilanceScore` returns **`null`** when no check can be evaluated, and the interface displays **“Not assessed”**. `0` requires at least one evaluated check and no threshold crossed. Even a zero can be very partial; the check states and their reasons are detailed in each record. Unknowns come last in both sort directions. Filters: not assessed/excluded, partial coverage, zero after evaluation.
 
 **Groups in initial or modification conflict**, DECP identifiers duplicated in the file and `unverified` records are excluded from all calculations. This now applies **to both DECP cohorts**, not only the six municipalities. Repetition contexts are recomputed before filters. No conflict is resolved by arbitrarily selecting one version.
 
@@ -56,11 +56,15 @@ Examples: a concentration of 61 % is worth 12.7 points, 80 % is worth 26 and 95 
 | Paris / Ardèche, 2,594 groups | 734 | 404 | 1,835 | 355 |
 | Six municipalities, 1,270 groups | 233 | 124 | 974 | 172 |
 | 10 FNSimple consultations | 0 | 0 | 0 | 10 |
-| 66 Tours version/lot rows | 0 | 0 | 0 | 66 |
+| 66 Tours version/lot rows | 0 | 0 | 6 | 60 |
 
 The number of flags **decreases**, notably because undetermined adapted procedures are no longer presumed competitive for scoring a single offer. This is neither a presumed improvement of regularity, nor a result to be corrected to obtain more red. Official findings remain **eight**, outside this flag column.
 
 Full results: [`score-v3-review.json`](../data/score-v3-review.json). This file contains the category changes, per-indicator counts, data/code fingerprints and review queues. The old counters in the historical coverages are kept with their version; `currentIndex` points to the active method.
+
+### Linked-notice extension (2026-09-28)
+
+Tours now checks exact correction/predecessor lot pairs for a late title/criteria change without deadline extension (5 competition points). Six linked corrections extend the deadline and evaluate clear; the other 60 rows remain not assessed. This does not establish a complete original bidding chronology. No new positives. See [linked evidence](linked-evidence.md) for the rule and source requirements; the original eight French checks are unchanged.
 
 ## Sensitivity and review: what has been verified, and what has not
 
