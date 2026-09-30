@@ -2,6 +2,57 @@
 
 The former README, kept verbatim as the dated record of each delivery: selection choices, counts, reproduction commands and superseded v2.x rules. For current usage see the [README](../README.md); for the active method see [score-v3.md](score-v3.md) and [score-colombia.md](score-colombia.md). Commands below may predate later changes — the browser test now starts its own server (`node tests/browser.cjs`), and supplier names come from `tools/enrich-suppliers.py`.
 
+## Audit fix and first commits of the pending work — 1 October 2026
+
+- `bid_attrition` kept partially collected per-bid decisions on inconclusive (`unknown`) results; four Ukraine rows displayed an incomplete “Published bid decisions” list. Decisions are now attached only to a conclusive result; regression test added; `data/prozorro.json` rebuilt offline (exactly those four rows changed, counts unchanged).
+- Full suite passed on AC power (119 Python tests, JS suites, Chromium HTTP/file:///mobile/CSP). The pending work was committed in single-purpose commits; the explorer-only commit was tested on its own before the linked-check commit.
+
+## BASE name-retaining candidate importer — 30 September 2026
+
+- Implemented `tools/import-portugal-base.py` without running a national scan. Default prints the frozen plan, no archive/network IO. Later `--extract` verifies archived provenance and streams bounded JSON records, filters exact three buyer NIFs/publication dates, writes only a private minimized candidate with reconciled coverage and hashes. Parsing failures abort; normalization/date omissions and conflicts are explicit, not silent.
+- Supplier names are retained as published contract participants, including individual names where appropriate, without entity-type inference or allegation. Numeric NIF prefixes and competitor identities are omitted. Unknown currency/duration/offer/direct-award fields remain unknown; `assessmentMode=browse` and factual `dataStatus=unverified` cannot be changed by publication review.
+- `--publish-reviewed` requires a reviewer and exact candidate SHA-256, validates a strict field whitelist/provenance/count reconciliation and refuses empty/differing outputs. Reviewed JSON can use the existing local import UI; no bundled selector is added before a real reviewed cohort exists. No extraction, published BASE dataset, UI/core-score change, source inquiries or deployment by this delivery.
+- Verification: 36 tiny synthetic importer/publication tests passed in 0.173s, including actual explorer validation, null scoring and name-preserving/ID-omitting exports. Small documentation checks passed. No national archives or broad/browser test suite read/run.
+
+## BASE format and rights inspection — 30 September 2026
+
+- User authorized steps 1–2 only under the battery/no-heavy-processing constraint. Used ZIP central directories and small prefix-only passes; reproducible report generation reads at most 64 KiB/member, retaining aggregates from three initial records/year (nine total). Each ZIP contains one deflated JSON array: 384,159,940 / 437,904,158 / 320,855,087 uncompressed bytes. No whole extraction, full-file scan, cohort filtering, conversion or browser/full tests.
+- Nine samples share 39 fields; `dataPublicacao` is separate from decision/signing/closure dates and shaped DD/MM/YYYY. Price fields are separate JSON numbers; no explicit currency observed, duration unit unverified. `PrecoTotalEfetivo` is zero in 7/9, not evidence of no payments. Holder and competitor lists contain NIF/name-shaped strings; no sampled personal values retained publicly, no verified offer counts inferred.
+- Official licence catalogue resolves `other-pd` to “Outra (Domínio Público)” with no terms URL, not CC0 or privacy clearance. BASE responsible-use guidance explicitly recommends dados.gov.pt raw downloads; reporting/publication pages explain the transparency pipeline but do not establish field-specific current obligations for natural-person IDs. Older regulatory references are not treated as verified current law.
+- Added bounded `tools/inspect-base-archives.py`, aggregate report `data/portugal-base-inspection.json`, source evidence `data/portugal-base-rights.json` and `docs/portugal-base.md` with conservative field mapping/minimization and narrowly scoped publisher questions. No inquiries sent and no new explorer dataset published. Five tiny synthetic-prefix tests passed (0.001s), plus small evidence/link/whitespace checks; no full-suite run.
+
+## Authorized Portuguese archive download — 30 September 2026
+
+- User authorized downloads while retaining the no-heavy-processing constraint. Streamed only IMPIC's frozen `contratos2024.zip`, `contratos2025.zip` and `contratos2026.zip` URLs: 44,570,348 / 55,274,614 / 42,232,603 bytes, 142,077,565 total. All responded HTTP 200 with ZIP signatures and exact catalogue byte counts. SHA-256 hashes recorded during streaming, without an extra archive scan.
+- `tools/download-base-archives.py` defaults to a network-free plan; explicit `--download` permits these three exact URLs only, serial/2s, no retries/redirects, 60 MiB/file and 160 MiB total. Attempts are journalled; failed/interrupted downloads require manual review. Private external cache uses directory/file modes 0700/0600 and cannot be inside the repository/web root.
+- Plan and metadata-only provenance: `data/portugal-base-download-plan.json`, `data/portugal-base-downloads.json`. No binary archives in Git; no extraction, XML/XLSX conversion, field scan, imports, browser/full tests or published dataset changes. Exact reuse terms and personal-field review remain prerequisites to publication.
+
+## Bounded expansion research — 30 September 2026
+
+- Battery constraint respected: seven small official metadata requests only, capped at 128 KiB per reply, serial, no retries/redirects; no browser automation, record downloads, raw-data scans, rebuilds or full test suite. No new procurement records imported; existing source counts and scores unchanged.
+- Preregistered deeper-coverage work in `data/expansion-plan.json`: same six French buyer SIRETs for separate 2023 backfill, exact-ID TED complementary evidence, same three Portugal buyer NIFs for national-source coverage, followed by Indonesia and Russia feasibility gates.
+- Located IMPIC's official 2012–2026 contract dataset metadata in dados.gov.pt (`other-pd` licence label; terms not yet reviewed). Advertised 2026 ZIP/XLSX resources are ~42–49 MB and were deliberately not downloaded. Guessed BASE documentation path returned 404, not proof that the source is unavailable.
+- LKPP portal and metadata API answered 200. Initial results are aggregate indicators with empty licence fields, not verified contract records. A private-network resource URL was excluded, never fetched. SIRUP/Russia requests failed at the network layer without diagnosing a permanent restriction or bypassing access controls.
+- Added `tools/expansion-plan.py`: default prints a network-free plan; explicit `--probe` uses cached metadata attempts and never fetches advertised resources. Evidence summaries/hashes in `data/expansion-source-checks.json`; follow-up gates and limits in `docs/expansion.md`.
+- Verification limited to five offline helper tests (0.006s), small JSON/link checks and documentation whitespace checks; all passed. No full-suite run on battery.
+
+## Repository presentation — 29 September 2026
+
+- Root `LICENSE` restored to standard MIT text; source-dependent data reuse notice moved to `data/LICENSE.md`, without relicensing third-party material.
+- README now opens with the public explorer link, an explicit prototype/validation caveat and a locally captured screenshot (`images/explorer.png`). Source-data licence register remains separate.
+- Handoff repository reference uses the public URL rather than a local machine path; machine-specific hook details removed.
+- No commit, push, release or GitHub settings change made by this delivery. GitHub's licence detection can only be rechecked after publication.
+
+## Readiness polish — 29 September 2026
+
+- Simpler default view: dataset, search, signals-only and an import shortcut; advanced filters closed initially and still remembered when opened. Unknown/not-assessed caveats remain visible.
+- Browser-local JSON/export-envelope, mapped CSV and OCDS award import in `import.js`. File/method/mapping → validated preview with missing-field counts → explicit load. Browse-only defaults to no scoring, including imported recognized data families. French v3 requires explicit opt-in; missing status stays unverified. No default EUR for imported amounts; no invented offer counts or direct-award classification. Compiled OCDS releases are accepted; ambiguous release histories are rejected rather than arbitrarily selected. Generic imports do not activate built-in cohort checks. Limits: 25 MiB, 20,000 records.
+- Imported notes are scoped by SHA-256 of file content and import settings rather than filename. Notes imports bounded and schema-checked; plaintext working notes are not protected case storage. CSV formula guard covers leading whitespace/control variants.
+- BOAMP dataset reuse is supported by DILA's legal notice and official BOAMP/API dataset licence records. Annuaire's documented LO 2.0 business dataset covers the limited supplier-name/status/identifier enrichment. Retained excerpts in `source-rights-evidence.json`; third-party attachments and personal-data publication questions remain separate.
+- `personal-data.md` investigates publisher transparency context and normalized/raw exposure across countries. `tools/audit-personal-data.py` reports aggregate field indicators, never values. SECOP raw account-number fields are placeholders in this cohort, not evidence of exposed accounts; supplier personal-document types and populated identity fields remain a distinct concern. Raw assets were not removed or sanitized by this delivery.
+- `adoption.md` provides a no-budget feedback exercise and municipal/publisher outreach templates; no contacts approached or validation claimed.
+- Verification: `sh tests/run-all.sh` passed locally, including 72 Python tests, new import/engine suites and Chromium HTTP/file://, responsive/CSP/preview tests. Test-only Playwright pinned to 1.58.2. Built-in scoring counts unchanged; source fingerprint diagnostics regenerated. Not deployed by this delivery.
+
 ## Run it
 
 From this folder:
