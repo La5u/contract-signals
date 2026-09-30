@@ -4,104 +4,72 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="no-referrer">
+  <meta name="color-scheme" content="light dark">
   <title>Contract signals</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <script src="theme.js"></script>
+  <script src="import.js" defer></script>
   <script src="script.js" defer></script>
 </head>
 <body>
-<main>
-  <header>
-    <h1>Contract signals</h1>
-    <p>Explore published procurement records from France, Colombia, Paraguay, Portugal, Romania and Ukraine.</p>
-    <p class="privacy-note">Runs entirely in your browser: no account, cookies, analytics or uploads. Filters live in the link after <code>#</code>, which browsers never send to a server.</p>
-  </header>
-  <section class="primary-controls" aria-label="Explore contracts">
-  <label class="dataset-selector">Dataset
-    <select id="dataset">
-      <optgroup label="France">
-        <option value="decp">France · Paris &amp; Ardèche — contracts · DECP</option>
-        <option value="cities">France · six cities — contracts · DECP</option>
-        <option value="tours">France · Tours — procurement notices · BOAMP/TED</option>
-        <option value="consultations">France · 3 Feb 2025 — consultation notices · BOAMP</option>
-        <option value="boamp">France · nationwide sample — award lots + audit dossiers · BOAMP/CRC</option>
-      </optgroup>
-      <optgroup label="Colombia">
-        <option value="colombia">Colombia · MEN / Caldas / Usaquén — contracts · SECOP II</option>
-      </optgroup>
-      <optgroup label="Paraguay">
-        <option value="paraguay">Paraguay · Fernando de la Mora — contract records · DNCP OCDS</option>
-        <option value="paraguay3">Paraguay · MOPC / Central / Asunción — contract records · DNCP OCDS</option>
-      </optgroup>
-      <optgroup label="Portugal">
-        <option value="portugal">Portugal · IP / Cávado / Lisboa — award notices · TED</option>
-      </optgroup>
-      <optgroup label="Romania">
-        <option value="romania">Romania · Finance / Cluj county / Cluj-Napoca — award notices · TED</option>
-      </optgroup>
-      <optgroup label="Ukraine">
-        <option value="ukraine">Ukraine · Health / Vinnytsia / Dnipro — contracts · Prozorro</option>
-      </optgroup>
-    </select>
-  </label>
-  <label class="search">Search<input id="search" type="search" placeholder="Buyer, supplier, subject, ID…"></label>
-  <label class="sort-control">Sort<select id="sort"><option value="score">Index · descending</option><option value="score-asc">Index · ascending</option><option value="official">Official findings first · outside the index</option><option value="amount">Amount · descending</option><option value="amount-asc">Amount · ascending</option><option value="date">Date · newest first</option><option value="date-asc">Date · oldest first</option><option value="publication">Notice publication · newest first</option><option value="publication-asc">Notice publication · oldest first</option><option value="sector">CPV sector · A–Z</option><option value="sector-desc">CPV sector · Z–A</option><option value="buyer">Buyer · A–Z</option><option value="supplier">Supplier · A–Z</option><option value="offers">Offers · ascending</option><option value="increase">Amount increase (%) · descending</option><option value="indicators">Indicators · most signals first</option><option value="indicators-asc">Indicators · fewest signals first</option></select></label>
-  </section>
-  <details class="advanced-filters" id="advanced-filters">
-    <summary>Advanced filters <span id="advanced-count"></span></summary>
-    <section class="controls" aria-label="Advanced search and filters">
-    <label>Minimum amount<input id="minimum" type="number" min="0" step="any" placeholder="0"></label>
-    <label>CPV purchase sector<select id="sector"><option value="">All sectors</option></select></label>
-    <label>Group by<select id="group-by"><option value="">No grouping</option><option value="project">Documented project</option><option value="sector">CPV sector</option><option value="buyer">Buyer</option><option value="supplier">Supplier (SIREN)</option></select></label>
-    <label>Project<select id="project"><option value="">All records</option></select></label>
-    <label>Assessment<select id="assessment"><option value="">All records</option><option value="unevaluated">Not assessed / excluded</option><option value="partial">Partial coverage</option><option value="zero">Zero after at least one evaluated check</option></select></label>
-    <label>Minimum index<select id="min-score"><option value="0">All indices</option><option value="20">20 and more</option><option value="40">40 and more</option><option value="70">70 and more</option></select></label>
-    <label>Indicator<select id="indicator"><option value="">All indicators</option><option value="short-bidding-period">Short bidding period (if assessable)</option><option value="amount-increase">Declared amount increase</option><option value="repeated-single-bid">Repeated low competition</option><option value="single-bid">Single offer</option><option value="direct-award">Award without competition · all amounts</option><option value="long-contract">Duration ≥ 10 years</option><option value="official-finding">Official finding</option><option value="supplier-concentration">Concentrated awards</option><option value="repeated-direct-award">Repeated direct awards</option><option value="secop2-plurality-award">SECOP II · declared absence of plurality / urgency</option><option value="secop2-repeated-plurality">SECOP II · repeated plurality-avoided awards</option><option value="secop2-concentration">SECOP II · concentrated awards by contract type</option><option value="secop2-long-duration">SECOP II · long declared duration</option><option value="dncp-single-tenderer">DNCP · single tenderer in a competitive procedure</option><option value="dncp-exception-award">DNCP · award by exception (CVE)</option><option value="dncp-repeated-single-tenderer">DNCP · repeated single-tenderer awards</option><option value="dncp-repeated-exception">DNCP · repeated exception awards</option><option value="dncp-concentration">DNCP · concentrated awards by category</option><option value="dncp-amount-increase">DNCP · declared amount increase</option><option value="ua-single-offer">Ukraine · single offer in a competitive procedure</option><option value="ua-direct-award">Ukraine · award without competition</option><option value="ua-repeated-single-offer">Ukraine · repeated single-offer awards</option><option value="ua-repeated-direct">Ukraine · repeated awards without competition</option><option value="ua-concentration">Ukraine · concentrated awards</option><option value="ted-single-offer">TED · single offer in a competitive procedure</option><option value="ted-direct-award">TED · award without competition</option><option value="ted-repeated-single-offer">TED · repeated single-offer awards</option><option value="ted-repeated-direct">TED · repeated awards without competition</option><option value="ted-concentration">TED · concentrated awards</option></select></label>
-    <label>Notice content · no points<select id="notice-context"><option value="">All records</option><option value="explanation">Procedure text / published reason</option><option value="criteria">Award criteria present</option><option value="correction">Correction identified</option><option value="ted">Matched TED XML</option></select></label>
-    <label>Legal context · no points<select id="legal"><option value="">All contexts</option><option value="direct">Declared without competition · all amounts</option><option value="cited">Article R2122 cited</option><option value="R2122-1">R2122-1 cited · imperative urgency</option><option value="R2122-3">R2122-3 cited · artistic, technical or exclusive-rights reasons</option><option value="py-ceiling">Paraguay · amendments at the 20 % ceiling (Ley 7021 Art. 67)</option><option value="py-complaint">Paraguay · complaint or investigation before the DNCP</option></select></label>
-    <label class="checkbox"><input id="flagged" type="checkbox">Show only heuristic signals</label>
-    <label class="checkbox"><input id="official" type="checkbox">Show only official audit findings</label>
-    <label class="checkbox"><input id="adjudicated" type="checkbox">Show contract-linked final corruption judgments (if documented)</label>
-    <label class="checkbox"><input id="investigation" type="checkbox">Show investigations reported at the time (current status unknown)</label>
-    <button id="clear-filters" type="button">Clear advanced filters</button>
-    </section>
-  </details>
-  <section id="file-help" hidden>
-    <p>Your browser may block automatic loading of a local file. Open <code id="file-path">data/decp-history.json</code> with the file picker below, or serve this folder with <code>python -m http.server 8000</code>.</p>
-  </section>
-  <p class="local-file"><label>Open your own JSON file <input id="file" type="file" accept=".json,application/json"></label> <span>Read in this browser only, never uploaded. <a href="docs/data-format.md">File format</a>.</span></p>
-  <p class="quick-caveat">Signals prompt review, not accusations. A zero or missing label does not mean a contract is clean. <a href="#about-results">How to read these results ↓</a></p>
-  <section id="project-panel" class="project-panel" aria-label="Documented project dossier" hidden></section>
-  <div class="results-bar">
-    <div class="results-summary">
-      <p id="status" role="status" aria-live="polite">Loading data…</p>
-      <p class="export-actions">Export all filtered records:
-        <button id="export-csv" type="button" disabled title="Download every filtered record (all pages) as CSV. Built in your browser; nothing is uploaded.">CSV</button>
-        <button id="export-json" type="button" disabled title="Download every filtered record (all pages) as JSON, with the current view and caveats. Built in your browser; nothing is uploaded.">JSON</button>
-      </p>
+<a class="skip-link" href="#results">Skip to results</a>
+<header class="topbar">
+  <div class="brand">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="currentColor"/><path d="M8 9h16M8 16h11M8 23h7" class="brand-lines" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="23" r="3" fill="#f2c14e"/></svg>
+    <div>
+      <h1>Contract signals</h1>
+      <p class="tagline">Explore published procurement records from France, Colombia, Paraguay, Portugal, Romania and Ukraine.</p>
     </div>
-    <nav id="pagination" class="pagination" aria-label="Table pagination" hidden>
-      <button id="previous" type="button">← Previous</button>
-      <span id="page-status" aria-live="polite"></span>
-      <button id="next" type="button">Next →</button>
-      <label class="page-size">Rows/page
-        <select id="page-size"><option value="25">25</option><option value="50" selected>50</option><option value="100">100</option><option value="250">250</option></select>
-      </label>
-      <button id="copy-page" type="button" title="Copy a short summary of this page with source URLs. Check for personal data before pasting into an external service.">Copy page summary</button>
-    </nav>
-    <span id="copy-status" class="visually-hidden" role="status" aria-live="polite"></span>
   </div>
-  <div class="table-wrap" tabindex="0" role="region" aria-label="Contracts table, horizontal scrolling possible">
-    <table class="main-table">
-      <caption>Contracts and documented records — click a subject to open the details and history.</caption>
-      <thead><tr><th scope="col" data-sort-key="date"><button type="button" class="sort-header">Date</button></th><th scope="col">Buyer</th><th scope="col">Supplier</th><th scope="col">Subject</th><th scope="col" title="Purchase sector, not the supplier’s NAF activity">CPV sector</th><th scope="col" class="numeric" data-sort-key="amount" title="Declared financial stake, outside the index; not necessarily an expense"><button type="button" class="sort-header">Declared amount</button></th><th scope="col" class="numeric">Offers</th><th scope="col" data-sort-key="indicators"><button type="button" class="sort-header">Indicators</button></th><th scope="col" class="numeric" data-sort-key="score" title="Vigilance index"><button type="button" class="sort-header">Index</button></th></tr></thead>
-      <tbody id="contracts"></tbody>
-    </table>
+  <div class="topbar-actions">
+    <button id="help-button" type="button" class="ghost" aria-haspopup="dialog">How to read · Method</button>
+    <button id="theme-toggle" type="button" class="ghost" aria-label="Colour theme: automatic" title="Colour theme: automatic">Theme: <span id="theme-label">Auto</span></button>
   </div>
-  <section class="reading-notes" id="about-results" aria-label="How to read the results">
-    <p><strong>The indicators flag characteristics for review—not proof of irregularity, favoritism or corruption.</strong> Public data can contain errors. A flag does not imply illegal behavior; no flag does not guarantee regularity. The copy button copies only summaries of the current page; large pages may exceed chat limits. Export CSV/JSON downloads every filtered record; an empty index cell means not assessed, not zero. Review personal data before pasting into any external service.</p>
+</header>
+<main>
+  <section class="primary-controls" aria-label="Explore contracts">
+    <label class="dataset-selector">Dataset
+      <select id="dataset">
+        <optgroup label="France">
+          <option value="decp">Paris &amp; Ardèche — contracts · DECP</option>
+          <option value="cities">six cities — contracts · DECP</option>
+          <option value="tours">Tours — procurement notices · BOAMP/TED</option>
+          <option value="consultations">3 Feb 2025 — consultation notices · BOAMP</option>
+          <option value="boamp">nationwide sample — award lots + audit dossiers · BOAMP/CRC</option>
+        </optgroup>
+        <optgroup label="Colombia">
+          <option value="colombia">MEN / Caldas / Usaquén — contracts · SECOP II</option>
+        </optgroup>
+        <optgroup label="Paraguay">
+          <option value="paraguay">Fernando de la Mora — contract records · DNCP OCDS</option>
+          <option value="paraguay3">MOPC / Central / Asunción — contract records · DNCP OCDS</option>
+        </optgroup>
+        <optgroup label="Portugal">
+          <option value="portugal">IP / Cávado / Lisboa — award notices · TED</option>
+        </optgroup>
+        <optgroup label="Romania">
+          <option value="romania">Finance / Cluj county / Cluj-Napoca — award notices · TED</option>
+        </optgroup>
+        <optgroup label="Ukraine">
+          <option value="ukraine">Health / Vinnytsia / Dnipro — contracts · Prozorro</option>
+        </optgroup>
+      </select>
+    </label>
+    <label class="search">Search<input id="search" type="search" placeholder="Buyer, supplier, subject, ID…" autocomplete="off">
+    </label>
+    <label class="checkbox basic-signal-filter"><input id="flagged" type="checkbox">Signals only</label>
+    <button id="open-import" type="button" class="link-button">Import a dataset</button>
+  </section>
+  <section id="file-help" class="notice-box" hidden>
+    <p>Your browser may block automatic loading of a local file. Open <code id="file-path">data/decp-history.json</code> with the file picker in the filter panel, or serve this folder with <code>python -m http.server 8000</code>.</p>
+  </section>
+
+  <section class="overview" aria-label="Dataset overview">
+    <div class="dataset-links">
+      <span class="quick-caveat">Signals prompt review, not proof of wrongdoing. Unknown is not zero; not assessed is not clear.</span>
     <details class="dataset-details">
-      <summary>Data scope and limits</summary>
+      <summary>Scope and limits</summary>
       <p id="dataset-note" class="dataset-note">Exploratory 24-month history: 2,594 DECP contracts from Paris and Ardèche, notified in 2024–2025. Modifications published may be later than 2025. This is not a guarantee of exhaustiveness of actual purchases.</p>
       <p class="dataset-note">Datasets are not merged; they may describe the same purchases. Do not add their amounts. “—” means unknown, not safe. <a id="coverage-link" href="data/decp-coverage.json">Coverage and provenance (JSON)</a>.</p>
       <p id="completeness" class="dataset-note" aria-live="polite"></p>
@@ -110,18 +78,128 @@
       <summary>Sources and how to verify</summary>
       <div id="sources-body" class="dataset-note"></div>
     </details>
-    <details class="score-help"><summary>Index and evidence labels</summary>
-      <div class="score-legend" aria-label="Vigilance scale, not a regularity measure">
-        <span class="score-chip level-none">0 · no threshold crossed in evaluated checks</span><span class="score-chip level-low">1–19 · low</span><span class="score-chip level-moderate">20–39 · moderate</span><span class="score-chip level-high">40–69 · high</span><span class="score-chip level-extreme">70–100 · very high</span><span class="score-chip level-unknown">Not assessed ≠ zero</span><span class="badge official">Official finding · outside the index</span>
-      </div>
-      <p>Index v3 is an editorial sorting aid, not a probability; zero requires an evaluated check and certifies nothing. Unknowns are shown separately. Amounts and official findings never add points.</p>
-      <p>One French dossier has a dated news report of an investigative step; its current status is unknown. No comparable report is linked in the Colombian or Paraguayan pilots. No contract-specific final corruption judgment is documented in these datasets. French CRC audit observations are not convictions. No match means <strong>not established here, not cleared</strong>.</p>
-    </details>
+    </div>
   </section>
-  <details class="method">
+
+  <div class="workspace">
+    <details class="filter-panel" id="advanced-filters">
+      <summary><span class="filter-toggle-label">Advanced filters</span> <span id="advanced-count" class="count-pill"></span></summary>
+      <section class="controls" aria-label="Filters">
+        <fieldset>
+          <legend>Signals</legend>
+          <label>Indicator<select id="indicator"><option value="">All indicators</option><option value="short-bidding-period">Short bidding period (if assessable)</option><option value="amount-increase">Declared amount increase</option><option value="repeated-single-bid">Repeated low competition</option><option value="single-bid">Single offer</option><option value="direct-award">Award without competition · all amounts</option><option value="long-contract">Duration ≥ 10 years</option><option value="official-finding">Official finding</option><option value="supplier-concentration">Concentrated awards</option><option value="repeated-direct-award">Repeated direct awards</option><option value="secop2-plurality-award">SECOP II · declared absence of plurality / urgency</option><option value="secop2-repeated-plurality">SECOP II · repeated plurality-avoided awards</option><option value="secop2-concentration">SECOP II · concentrated awards by contract type</option><option value="secop2-long-duration">SECOP II · long declared duration</option><option value="dncp-single-tenderer">DNCP · single tenderer in a competitive procedure</option><option value="dncp-exception-award">DNCP · award by exception (CVE)</option><option value="dncp-repeated-single-tenderer">DNCP · repeated single-tenderer awards</option><option value="dncp-repeated-exception">DNCP · repeated exception awards</option><option value="dncp-concentration">DNCP · concentrated awards by category</option><option value="dncp-amount-increase">DNCP · declared amount increase</option><option value="notice-late-change">Late notice change without extension</option><option value="ua-bid-attrition">Ukraine · other bids disqualified</option><option value="ua-single-offer">Ukraine · single offer in a competitive procedure</option><option value="ua-direct-award">Ukraine · award without competition</option><option value="ua-repeated-single-offer">Ukraine · repeated single-offer awards</option><option value="ua-repeated-direct">Ukraine · repeated awards without competition</option><option value="ua-concentration">Ukraine · concentrated awards</option><option value="ted-single-offer">TED · single offer in a competitive procedure</option><option value="ted-direct-award">TED · award without competition</option><option value="ted-repeated-single-offer">TED · repeated single-offer awards</option><option value="ted-repeated-direct">TED · repeated awards without competition</option><option value="ted-concentration">TED · concentrated awards</option></select></label>
+          <label>Minimum index<select id="min-score"><option value="0">Any index</option><option value="20">20+</option><option value="40">40+</option><option value="70">70+</option></select></label>
+          <label>Assessment<select id="assessment"><option value="">All records</option><option value="unevaluated">Not assessed / excluded</option><option value="partial">Partial coverage</option><option value="zero">Zero after at least one evaluated check</option></select></label>
+        </fieldset>
+        <fieldset>
+          <legend>Contract</legend>
+          <label>Minimum amount<input id="minimum" type="number" min="0" step="any" placeholder="Any"></label>
+          <label>CPV sector<select id="sector"><option value="">All sectors</option></select></label>
+          <label>Project<select id="project"><option value="">All records</option></select></label>
+        </fieldset>
+        <fieldset>
+          <legend>Your review</legend>
+          <label>Review status<select id="review"><option value="">All records</option><option value="@none">Not yet marked</option><option value="@any">Any mark</option><option value="follow-up">Follow up</option><option value="referred">Referred</option><option value="reviewed">Reviewed</option></select></label>
+          <p class="field-help">Stored in this browser only. <span id="review-summary"></span></p>
+          <p class="field-help button-row"><button id="export-review" type="button" class="link-button">Export notes</button> <label class="link-like">Import notes<input id="import-review" type="file" accept=".json,application/json" class="visually-hidden"></label></p>
+          <span id="review-status" class="field-help" role="status" aria-live="polite"></span>
+        </fieldset>
+        <details class="context-filters">
+          <summary>Context outside the index</summary>
+          <label>Notice content · no points<select id="notice-context"><option value="">All records</option><option value="explanation">Procedure text / published reason</option><option value="criteria">Award criteria present</option><option value="correction">Correction identified</option><option value="ted">Matched TED XML</option></select></label>
+          <label>Legal context · no points<select id="legal"><option value="">All contexts</option><option value="direct">Declared without competition · all amounts</option><option value="cited">Article R2122 cited</option><option value="R2122-1">R2122-1 cited · imperative urgency</option><option value="R2122-3">R2122-3 cited · artistic, technical or exclusive-rights reasons</option><option value="py-ceiling">Paraguay · amendments at the 20 % ceiling (Ley 7021 Art. 67)</option><option value="py-complaint">Paraguay · complaint or investigation before the DNCP</option></select></label>
+          <label class="checkbox"><input id="official" type="checkbox">Show only official audit findings</label>
+          <label class="checkbox"><input id="adjudicated" type="checkbox">Show contract-linked final corruption judgments (if documented)</label>
+          <label class="checkbox"><input id="investigation" type="checkbox">Show investigations reported at the time (current status unknown)</label>
+        </details>
+        <button id="clear-filters" type="button" class="reset-button">Reset filters</button>
+        <details class="local-file">
+          <summary>Import a dataset</summary>
+          <label for="import-method">Import method
+            <select id="import-method"><option value="browse" selected>Browse only · no scoring</option><option value="french">French v3 checks · explicit opt-in</option></select>
+          </label>
+          <label for="file">Dataset file (JSON, CSV or OCDS JSON)
+            <input id="file" type="file" accept=".json,.csv,application/json,text/csv">
+          </label>
+          <p class="field-help">CSV works best with canonical headers such as <code>id</code>, <code>date</code>, <code>buyer</code>, <code>supplier</code>, <code>description</code>, <code>amount</code>, and <code>currency</code>. OCDS JSON is also accepted. Files are read in this browser only, never uploaded. <a href="docs/data-format.md">Format details</a>.</p>
+          <fieldset id="import-mapping" hidden><legend>Map CSV columns</legend><div id="import-columns"></div></fieldset>
+          <button id="preview-import" type="button" disabled>Preview import</button>
+          <div id="import-preview" class="field-help"></div>
+          <button id="confirm-import" type="button" disabled>Load previewed records</button>
+          <p id="import-status" class="field-help" role="status" aria-live="polite"></p>
+        </details>
+      </section>
+    </details>
+
+    <section class="results" id="results" aria-label="Results" tabindex="-1">
+      <section id="project-panel" class="project-panel" aria-label="Documented project dossier" hidden></section>
+      <div class="results-bar">
+        <p id="status" role="status" aria-live="polite">Loading data…</p>
+        <div class="toolbar">
+          <label class="inline-label">Sort<select id="sort"><option value="score">Index · descending</option><option value="score-asc">Index · ascending</option><option value="official">Official findings first · outside the index</option><option value="amount">Amount · descending</option><option value="amount-asc">Amount · ascending</option><option value="date">Date · newest first</option><option value="date-asc">Date · oldest first</option><option value="publication">Notice publication · newest first</option><option value="publication-asc">Notice publication · oldest first</option><option value="sector">CPV sector · A–Z</option><option value="sector-desc">CPV sector · Z–A</option><option value="buyer">Buyer · A–Z</option><option value="buyer-desc">Buyer · Z–A</option><option value="supplier">Supplier · A–Z</option><option value="supplier-desc">Supplier · Z–A</option><option value="offers">Offers · ascending</option><option value="offers-desc">Offers · descending</option><option value="increase">Amount increase (%) · descending</option><option value="indicators">Indicators · most signals first</option><option value="indicators-asc">Indicators · fewest signals first</option></select></label>
+          <label class="inline-label">Group<select id="group-by"><option value="">No grouping</option><option value="project">Documented project</option><option value="sector">CPV sector</option><option value="buyer">Buyer</option><option value="supplier">Supplier (SIREN)</option></select></label>
+          <p class="export-actions" role="group" aria-label="Export all filtered records">
+            <span class="export-label">Export all results:</span>
+            <button id="export-csv" type="button" disabled title="Download every filtered record (all pages) as CSV. Built in your browser; nothing is uploaded.">CSV</button>
+            <button id="export-json" type="button" disabled title="Download every filtered record (all pages) as JSON, with the current view and caveats. Built in your browser; nothing is uploaded.">JSON</button>
+            <button id="copy-page" type="button" title="Copy a short summary of this page with source URLs. Consider context before sharing.">Copy page summary</button>
+          </p>
+        </div>
+      </div>
+      <span id="copy-status" class="visually-hidden" role="status" aria-live="polite"></span>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Contracts table, horizontal scrolling possible">
+        <table class="main-table">
+          <caption class="visually-hidden">Contracts and documented records — select a subject to open its details, evidence and sources.</caption>
+          <thead><tr><th scope="col" data-sort-key="date"><button type="button" class="sort-header">Date</button></th><th scope="col" data-sort-key="buyer"><button type="button" class="sort-header">Buyer</button></th><th scope="col" data-sort-key="supplier"><button type="button" class="sort-header">Supplier</button></th><th scope="col">Subject</th><th scope="col" data-sort-key="sector" title="Purchase sector, not the supplier’s NAF activity"><button type="button" class="sort-header">CPV sector</button></th><th scope="col" class="numeric" data-sort-key="amount" title="Declared financial stake, outside the index; not necessarily an expense"><button type="button" class="sort-header">Declared amount</button></th><th scope="col" class="numeric" data-sort-key="offers"><button type="button" class="sort-header">Offers</button></th><th scope="col" data-sort-key="indicators"><button type="button" class="sort-header">Signals</button></th><th scope="col" class="numeric" data-sort-key="score" title="Vigilance index: an editorial review priority, not a probability"><button type="button" class="sort-header">Index</button></th></tr></thead>
+          <tbody id="contracts"></tbody>
+        </table>
+      </div>
+      <nav id="pagination" class="pagination" aria-label="Table pagination" hidden>
+        <button id="previous" type="button">← Previous</button>
+        <span id="page-status" aria-live="polite"></span>
+        <button id="next" type="button">Next →</button>
+        <label class="page-size">Rows/page
+          <select id="page-size"><option value="25">25</option><option value="50" selected>50</option><option value="100">100</option><option value="250">250</option></select>
+        </label>
+      </nav>
+      <p class="reading-hint">These are records published by public bodies; context and source documents matter, and publication is not an allegation. Your review notes are separate browser-local working material, not confidential storage. Do not enter protected casework. <a href="docs/personal-data.md">How public records and personal data are handled</a>.</p>
+    </section>
+  </div>
+
+  <footer>Source links must be kept. Every official finding must point to the document of the originating authority and to its relevant passage. Always consult the complete document and any responses from the organization concerned. Runs entirely in your browser: no account, cookies, analytics or uploads. Filters live in the link after <code>#</code>, which browsers never send to a server.</footer>
+  <noscript><p>Enable JavaScript to load and explore the data.</p></noscript>
+</main>
+
+<aside id="detail-panel" class="detail-panel" aria-labelledby="detail-title" tabindex="-1" hidden>
+  <div class="detail-toolbar">
+    <button id="detail-previous" type="button" class="ghost small" title="Previous record (k)">‹ Previous</button>
+    <button id="detail-next" type="button" class="ghost small" title="Next record (j)">Next ›</button>
+    <span id="detail-position" class="detail-position"></span>
+    <button id="detail-print" type="button" class="ghost small" title="Print or save a case sheet for this record">Print</button>
+    <button id="detail-close" type="button" class="ghost small icon-only" aria-label="Close details" title="Close (Esc)">✕</button>
+  </div>
+  <div id="detail-body" class="detail-body"></div>
+</aside>
+
+<dialog id="help-dialog" class="help-dialog" aria-labelledby="help-title">
+  <div class="dialog-head">
+    <h2 id="help-title">How to read the results</h2>
+    <button id="help-close" type="button" class="ghost small icon-only" aria-label="Close">✕</button>
+  </div>
+  <section class="reading-notes" id="about-results" aria-label="How to read the results">
+    <p><strong>A signal prompts a review. It is not an accusation.</strong> A zero or missing label does not mean a contract is clean, and “Not assessed” is never zero.</p>
+    <div class="score-legend" aria-label="Vigilance scale, not a regularity measure">
+      <span class="score-chip level-none">0 · no threshold crossed in evaluated checks</span><span class="score-chip level-low">1–19 · low</span><span class="score-chip level-moderate">20–39 · moderate</span><span class="score-chip level-high">40–69 · high</span><span class="score-chip level-extreme">70–100 · very high</span><span class="score-chip level-unknown">Not assessed ≠ zero</span><span class="badge official">Official finding · outside the index</span>
+    </div>
+    <p>Index v3 is an editorial sorting aid, not a probability; zero requires an evaluated check and certifies nothing. Unknowns are shown separately. Amounts and official findings never add points.</p>
+    <p>One French dossier has a dated news report of an investigative step; its current status is unknown. No comparable report is linked in the Colombian or Paraguayan pilots. No contract-specific final corruption judgment is documented in these datasets. French CRC audit observations are not convictions. No match means <strong>not established here, not cleared</strong>.</p>
+    <p>Exports: CSV/JSON download every filtered record; <em>Copy page summary</em> copies only the current page, and large pages may exceed chat limits. Keyboard: <kbd>/</kbd> search · <kbd>j</kbd>/<kbd>k</kbd> next/previous record in the open panel · <kbd>Esc</kbd> close.</p>
+    <p>Review marks (<em>Follow up</em>, <em>Referred</em>, <em>Reviewed</em>) and notes are your own working notes. They are stored only in this browser, never change the index, and are not included in the shareable link. Use <em>Export notes</em> to keep or share them.</p>
+  </section>
+  <details class="method" open>
     <summary>Method: vigilance index</summary>
     <p><strong>Version 3.0.</strong> Score = competition maximum (up to 60) + execution/duration maximum (up to 40), with no renormalization by coverage, dataset or filter. Official findings are separate documentary elements, never points. No amount-based uplift. No target proportion of flagged contracts.</p>
-    <p><strong>Coverage:</strong> eight checks, each flagged, evaluated without a threshold crossed, not assessable, or out of scope. The evaluated/established-applicable ratio does not count unknown applicabilities: those are reported in addition, not as negative cases. All conflicting groups, duplicated identifiers and unverified records are excluded. Aggregate audit dossiers receive no individual index. No evaluated check = “Not assessed”, never zero.</p>
+    <p><strong>Coverage:</strong> dataset-specific checks, each flagged, evaluated without a threshold crossed, not assessable, or out of scope. The evaluated/established-applicable ratio does not count unknown applicabilities: those are reported in addition, not as negative cases. All conflicting groups, duplicated identifiers and unverified records are excluded. Aggregate audit dossiers receive no individual index. No evaluated check = “Not assessed”, never zero.</p>
     <p><strong>Weights:</strong> a single offer in an explicitly competitive procedure: 12; direct award: 18, all amounts. Bounded linear progressions rounded to the tenth: single-offer repetition and concentration, 12 at 60 % up to 40 at 100 %; direct repetition, 18 at 3 contracts up to 60 at 10; duration, 8 at 120 months up to 40 at 360 months; relative increase strictly &gt; 20 %, 8 near the threshold up to 40 at +100 %; period &lt; 15 days, 8 near the threshold up to 40 at 3 days. Entry/reliability thresholds remain: a graduated progression does not erase them. No points for an offer expected in a direct award.</p>
     <p>Editorial choices, not calibrated to predict irregularity. <a href="data/score-v3-review.json">Comparison v2.1/v3 and ranking sensitivity (JSON)</a>. Software verification is not legal or statistical validation. Flagged and unflagged cases must be reviewed. <a href="docs/score-v3.md">Full method and excerpt review</a> · <a href="docs/score-colombia.md">Colombia pilot method</a> · <a href="docs/international-pilots.md">Countries proposed for upcoming pilots</a>.</p>
     <p><strong>SECOP II · Colombia pilot:</strong> same v3.0 framework (families, family maxima, “Not assessed” semantics; <a href="docs/score-colombia.md">full method</a>), jurisdiction-specific check set. Four checks: award declared without supplier plurality or under manifest urgency (18); repeated such awards to the same buyer and supplier document (18 at 3 contracts up to 60 at 10); concentration within buyer and contract type (12 at 60 % up to 40 at 100 %, minimum 10 identified contracts and 80 % coverage); declared duration ≥ 36 months (8 at 36 up to 40 at 120, parsed read-only from the published free text). The four offer/timetable/history checks of the French method are out of scope here: no offers table, no publication–deadline chronology, no amendment history. The bare direct-family modality (≈82 % of this cohort) and ordinary justifications — professional services, interadministrative agreements, minimum-amount rules, regime statutes — add no points. Amounts in COP stay visible and sort only. Thresholds are editorial, not Colombian legal ones; no CPI, no country coefficient, no cross-country ranking.</p>
@@ -134,8 +212,6 @@
     <p><strong>Repeated low competition:</strong> only for single-offer contracts of the DECP cohort. Same buyer, three-digit CPV group, notifications 2024–2025, explicitly competitive procedures: at least 10 contracts with a known number of offers, at least 80 % coverage and at least 60 % at a single offer. Undetermined adapted procedures and groups in conflict are excluded. The statistics are computed over the whole file before filtering; they describe the published purchases retrospectively, not the regularity of a supplier. No repetition computation on the BOAMP sample.</p>
     <p>The former thresholds of €100k (direct award) and €50k (absolute increase) no longer enter the score. Unknown values trigger no indicator. Amounts: “≥” indicates a lower bound, “&gt;” a strict bound and “≈” a rounded value; the sort and the filter use the cited numeric value, not an assumed exact amount. These rules do not take account of legal exceptions or the context of each purchase.</p>
   </details>
-  <footer>Source links must be kept. Every official finding must point to the document of the originating authority and to its relevant passage. Always consult the complete document and any responses from the organization concerned.</footer>
-  <noscript><p>Enable JavaScript to load and explore the data.</p></noscript>
-</main>
+</dialog>
 </body>
 </html>
