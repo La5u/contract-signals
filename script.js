@@ -269,7 +269,7 @@ function getAssessment(c) {
   const checks = [];
   function add(id, label, family, applicability, evaluable, triggered, weight, reason) {
     if (aggregate) { applicability = 'no'; evaluable = false; reason = 'Aggregate dossier: not a comparable individual award.'; }
-    if (documentOnly && id !== 'short-bidding-period') { applicability = 'no'; evaluable = false; reason = 'Documentary notice, not a normalized attributed contract.'; }
+    if (documentOnly && !['short-bidding-period', 'notice-late-change'].includes(id)) { applicability = 'no'; evaluable = false; reason = 'Documentary notice, not a normalized attributed contract.'; }
     if (excludedReason) { applicability = 'unknown'; evaluable = false; reason = excludedReason; }
     const status = applicability === 'no' ? 'not-applicable' : applicability !== 'yes' || !evaluable ? 'unknown' : triggered ? 'signal' : 'clear';
     const severity = indicatorSeverity(weight || 0);
@@ -301,6 +301,12 @@ function getAssessment(c) {
   const supplier = c.supplierContext;
   add('supplier-concentration', 'Concentrated awards', 'competition', (c.supplierIds || []).length > 1 ? 'no' : 'yes', Boolean(supplier?.sufficient), supplier?.share >= 0.6,
     graduated(supplier?.share || 0, 0.6, 1, 12, 40), supplier ? `Same SIREN: ${supplier.wins}/${supplier.known} contracts to the known holder, out of ${supplier.total} eligible; CPV ${supplier.cpvGroup}, 2024–2025. Minimum 10 and 80 % coverage. From 12 points at 60 % to 40 at 100 %. Specialisation and framework agreements may explain this share. ${supplier.sufficient ? '' : 'Insufficient sample/coverage.'}` : 'Single holder or insufficient/unknown cohort context; no name-based matching.');
+  if (c.cohortId === 'tours-full-notices-2025') {
+    const change = c.noticeChange;
+    add('notice-late-change', 'Late notice change without deadline extension', 'competition', change?.status === 'not-applicable' ? 'no' : 'yes',
+      ['signal', 'clear'].includes(change?.status), change?.status === 'signal', 5,
+      change?.reason || 'Linked correction evidence not imported.');
+  }
   const directEnough = supplier?.directCount >= 3;
   const directKnown = supplier && supplier.directKnownCount === supplier.supplierContracts;
   add('repeated-direct-award', 'Repeated direct awards', 'competition', c.directAward === false ? 'no' : c.directAward === true ? 'yes' : 'unknown', Boolean(supplier && (directEnough || directKnown)), directEnough,
@@ -455,8 +461,8 @@ function getAssessmentDncp(c) {
 const NATIONAL_FAMILIES = {
   prozorro: { prefix: 'ua', doc: 'docs/score-ukraine.md', category: c => c.category, notScored: new Set(['reporting']),
     directLabel: 'Negotiated procedure without competition', directReason: 'negotiation or negotiation.quick',
-    outOfScope: { directKind: 'Direct-contract report (reporting): ordinary, mostly low-value purchases recorded without a procedure; not scored, like the bare Colombian direct modality.',
-      increase: 'Contract changes are published in the separate contracting API, not imported: increase out of scope.' } },
+    outOfScope: { directKind: 'Offer and direct-award checks are excluded for direct-contract reports (reporting), which are recorded without a procedure. Concentration remains assessable where cohort data permits.',
+      increase: 'Linked contract samples expose change metadata, not comparable dated amounts: increase out of scope.' } },
   ted: { prefix: 'ted', doc: 'docs/score-ted.md', notScored: new Set(), category: c => /^\d{8}/.test(c.cpv || '') ? c.cpv.slice(0, 2) : null,
     directLabel: 'Negotiated without prior publication', directReason: 'eForms procedure code neg-wo-call',
     outOfScope: { directKind: 'Procedure code outside the known competitive/direct list: not assessed.',
@@ -496,6 +502,12 @@ function getAssessmentNational(c) {
   const k = c.nationalConcentration;
   add(`${p}-concentration`, 'Concentrated awards within a category', 'competition', supplier ? 'yes' : 'unknown', Boolean(k?.sufficient), k?.share >= 0.6,
     graduated(k?.share || 0, 0.6, 1, 12, 40), k ? `Same buyer and category ${k.category}: ${k.wins}/${k.known} procedures won by this supplier, out of ${k.total} (${Math.round(k.coverage * 100)} % with an identified winner; lots of one procedure count once). Minimum 10 and 80 %; from 12 points at 60 % to 40 at 100 %. ${k.sufficient ? '' : 'Insufficient sample or coverage: not assessed.'}` : 'Supplier identity or category unknown: applicability not established.');
+  if (c.dataFamily === 'prozorro') {
+    const attrition = c.bidAttrition;
+    add('ua-bid-attrition', 'Other submitted bids explicitly disqualified', 'competition', !competitive || attrition?.status === 'not-applicable' ? 'no' : 'yes',
+      ['signal', 'clear'].includes(attrition?.status), attrition?.status === 'signal', 5,
+      attrition?.reason || 'Per-bid award decisions are not fully linked; not assessed.');
+  }
   add('amount-increase', 'Relative increase in declared amount', 'execution', 'no', false, false, null, spec.outOfScope.increase);
   add('short-bidding-period', 'Short bidding period', 'competition', 'no', false, false, null, 'No validated minimum period for this jurisdiction in this method: out of scope.');
   add('long-contract', 'Long declared duration', 'execution', 'no', false, false, null, 'No duration threshold validated for this jurisdiction: out of scope.');
@@ -1071,7 +1083,10 @@ function verificationLinks(c) {
     for (const complaint of c.complaints || []) for (const d of complaint.documents) add(d.url, `DNCP resolution on complaint ${complaint.id} · ${d.title || 'PDF'}${d.date ? ` · ${d.date}` : ''}`);
   }
   if (c.dataFamily === 'secop2') add(c.processUrl, 'Process page on SECOP II');
-  if (c.dataFamily === 'prozorro') add(c.portalUrl, 'Tender page on prozorro.gov.ua (bids, awards, contract documents; address built from the tender ID)');
+  if (c.dataFamily === 'prozorro') {
+    add(c.portalUrl, 'Tender page on prozorro.gov.ua (bids, awards, contract documents; address built from the tender ID)');
+    add(c.linkedContract?.url, 'Linked official contract record · separately dated snapshot');
+  }
   add(c.source, c.sourceLabel || 'Original source record');
   if (c.dataFamily === 'ted') add(c.xmlUrl, 'Official eForms XML of the notice (machine-readable)');
   add(c.reportUrl, 'Original official report');

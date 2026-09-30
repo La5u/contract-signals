@@ -8,7 +8,7 @@ function tally(rows) {
   const checks = {}; let flagged = 0, zero = 0, notAssessed = 0;
   for (const row of rows) {
     const a = run('getAssessment', row);
-    assert.equal(a.checks.length, 8);
+    assert.equal(a.checks.length, row.dataFamily === 'prozorro' ? 9 : 8);
     for (const c of a.checks) { checks[c.id] ??= {signal:0,clear:0,unknown:0,'not-applicable':0}; checks[c.id][c.status]++; }
     const s = run('getVigilanceScore', row);
     if (s == null) notAssessed++; else if (s > 0) flagged++; else zero++;
@@ -36,9 +36,15 @@ const pick = (t, prefix) => Object.fromEntries(Object.entries(t.checks).filter((
   const t = tally(rows);
   assert.deepEqual(pick(t, 'ua-'), {
     'ua-single-offer': [38,26,0,424], 'ua-direct-award': [0,64,0,424], 'ua-repeated-single-offer': [10,28,0,450],
-    'ua-repeated-direct': [0,0,0,488], 'ua-concentration': [0,483,5,0] });
+    'ua-repeated-direct': [0,0,0,488], 'ua-concentration': [0,483,5,0], 'ua-bid-attrition': [0,0,26,462] });
   assert.deepEqual(t.counts, [38,450,0]);
-  console.log('Ukraine Prozorro: 488 contracts, 38 flagged, reporting out of scope, offers counted per lot.');
+  const base = rows.find(r=>r.procedureDirect===false && r.offers>1);
+  const sample = {...base,nationalConcentration:null,bidAttrition:{status:'signal',reason:'Synthetic full decisions'}};
+  assert.equal(run('getVigilanceScore',sample),5);
+  assert.equal(run('getVigilanceScore',{...sample,offers:1}),12,'correlated competition checks use maximum, not addition');
+  assert.equal(rows.filter(r=>r.linkedContract).length,3);
+  for(const r of rows.filter(r=>r.linkedContract)) assert.ok(run('verificationLinks',r).some(l=>l.url===r.linkedContract.url));
+  console.log('Ukraine Prozorro: 488 contracts, 38 flagged, reporting excludes offer/direct-award checks but retains concentration; offers counted per lot.');
 }
 
 // ---- Portugal and Romania (TED) ----

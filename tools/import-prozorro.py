@@ -18,6 +18,10 @@ import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
+try:
+    from linked_evidence import bid_attrition
+except ModuleNotFoundError:
+    from tools.linked_evidence import bid_attrition
 
 ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data/prozorro/raw"
@@ -37,6 +41,19 @@ BUYERS = [
     {"code": "26510514", "name": "Дніпровська міська рада", "level": "municipal"},
 ]
 UA = {"User-Agent": "contract-signals/0.1 (public research; offline snapshot)"}
+LINKS_FILE = ROOT / 'data/prozorro-contract-links.json'
+CONTRACT_LINKS = json.loads(LINKS_FILE.read_text())['records'] if LINKS_FILE.exists() else []
+
+
+def linked_contract(tender, contract):
+    matches = [r for r in CONTRACT_LINKS if r.get('status') == 'linked'
+               and r.get('tenderId') == tender.get('id') and r.get('internalId') == contract.get('id')
+               and r.get('contractId') == contract.get('contractID')
+               and r.get('url') == f"{API}/contracts/{contract.get('id')}"]
+    if len(matches) != 1:
+        return None
+    r = matches[0]
+    return {k: r.get(k) for k in ['url', 'retrievedAt', 'sourceSha256', 'publishedChangeCount', 'contractStatus', 'changes']}
 
 
 def get_json(url, method="GET"):
@@ -167,6 +184,8 @@ def contract_rows(tender):
             "description": " — ".join(dict.fromkeys(x for x in [tender.get("title"), (lots.get(lot_id) or {}).get("title")] if x)),
             "amount": value.get("amount"), "currency": value.get("currency"),
             "procedure": kind, "procedureDirect": direct, "category": tender.get("mainProcurementCategory"), "cpv": cpv,
+            "bidAttrition": bid_attrition(tender, award, direct is False),
+            "contractInternalId": contract['id'], "linkedContract": linked_contract(tender, contract),
             "offers": offers, "offersNote": None if offers is not None else "No bids are published in this record: offers unknown, never zero.",
             "lotId": lot_id, "lotCount": len(lots), "contractId": contract.get("contractID"), "awardId": award["id"],
             "procedureId": tender["id"], "tenderID": tender["tenderID"], "tenderCreated": (tender.get("dateCreated") or "")[:10] or None,
@@ -203,7 +222,7 @@ def offline():
     rows.sort(key=lambda r: (r["tenderCreated"] or "", r["id"]))
     EXTRACT.write_text(json.dumps(rows, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     coverage = {"source": API, "discovery": SEARCH + " (prozorro.gov.ua site search, used only to list tender IDs)",
-                "license": "Not declared by the publisher (the Open Contracting data registry lists none); Prozorro data are published as open data under Ukrainian procurement law. To confirm before redistribution.",
+                "license": "Prozorro open-data reuse terms: copying, publishing, distribution and commercial reuse permitted with source attribution (https://prozorro.gov.ua/openprocurement). No named licence is stated there; do not infer CC BY for API records from a separate data.gov.ua catalogue entry.",
                 "attribution": "Prozorro, Ministry of Economy of Ukraine / State enterprise Prozorro",
                 "cohort": {"cohortId": COHORT, "buyers": BUYERS, "window": manifest["window"],
                            "selection": "One buyer per level, announced on 2026-09-25 before any tender record was downloaded; chosen by level and a reviewable tender count, outside occupied or front-line oblasts; never by indicator results."},
@@ -215,8 +234,8 @@ def offline():
                            "excludedContracts": excluded, "withOffers": sum(r["offers"] is not None for r in rows),
                            "currencies": sorted({r["currency"] for r in rows if r["currency"]})},
                 "limitations": ["Three buyers, not a country sample; wartime rules allow exceptions and withheld publications.",
-                                "Direct-contract reports (reporting) are recorded without a procedure; they are not scored.",
-                                "Contract changes live in the separate contracting API and were not imported.",
+                                "Direct-contract reports (reporting): offer/direct-award checks are out of scope; concentration remains assessable.",
+                                "Three exact contract API links checked in a separate dated sample; published change counts are context only, not a comparable amount/duration history.",
                                 "Amounts are in the published currency, never converted or summed across currencies."],
                 "reproduce": ["python tools/import-prozorro.py --offline", "python tools/import-prozorro.py --download"]}
     COVERAGE.write_text(json.dumps(coverage, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")

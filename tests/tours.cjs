@@ -12,7 +12,7 @@ for(const c of rows){
  check(e.buyers.some(b=>b.siret==='21370261600011'));
  check(e.noticeId===c.noticeId&&e.lotId===c.lotId);
  check(c.amount===null&&c.offers===null&&c.directAward===null&&c.date===null);
- check(run('getBiddingPeriod',c).status==='unavailable');check(run('getVigilanceScore',c)===null);
+ check(run('getBiddingPeriod',c).status==='unavailable');check(run('getVigilanceScore',c)===(c.noticeChange.status==='clear'?0:null));
  check(raw.some(r=>r.idweb===c.noticeId));
  for(const t of e.ted){check(fs.existsSync(t.localFile));check(t.noticeUuid===e.noticeUuid&&t.versionMatches);}
  for(const a of e.awardCriteria){check(a.lotId===c.lotId);check(a.source===c.source);check(a.path.includes('cac:AwardingTerms'));check(!a.path.includes('SelectionCriteria'));}
@@ -26,7 +26,10 @@ for(const sort of ['publication','publication-asc','date','date-asc','sector','s
 check(run('selectContracts',rows,{sort:'publication-asc'})[0].publicationDate==='2024-06-16');
 check(run('selectContracts',rows,{sort:'publication'})[0].publicationDate==='2026-04-19');
 for(const group of ['buyer','supplier','sector','project'])check(run('arrangeGroups',rows,group).rows.length===66);
+check(rows.filter(r=>run('getVigilanceScore',r)===0).length===6);
 const corrected=rows.find(r=>r.noticeId==='25-127301');
+check(run('getVigilanceScore',{...corrected,noticeChange:{status:'signal',reason:'Synthetic complete pair'}})===5);
+check(run('getVigilanceScore',{...corrected,noticeChange:{status:'unknown'}})===null);
 check(corrected.noticeEvidence.references[0].matchedNoticeIds[0]==='25-119055');
 for(const mutate of [c=>c.noticeEvidence.awardCriteria[0].lotId='LOT-WRONG',c=>c.noticeEvidence.ted[0].noticeUuid='wrong',c=>c.noticeEvidence.documents[0].url='javascript:alert(1)',c=>c.noticeEvidence.ted[0].localFile='../../secret',c=>c.noticeEvidence.ted[0].version='999']){
  const c=JSON.parse(JSON.stringify(corrected));mutate(c);assert.throws(()=>run('validateContracts',[c]));checks++;

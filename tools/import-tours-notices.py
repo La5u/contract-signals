@@ -13,6 +13,10 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
+try:
+    from linked_evidence import notice_change
+except ModuleNotFoundError:
+    from tools.linked_evidence import notice_change
 
 ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / 'data/tours-notices/raw'
@@ -201,6 +205,7 @@ def normalize(records, manifest, ted_manifest):
             deadline_conflict=any(t['versionMatches'] and (t['deadlineDate']!=dl['date'] or t['deadlineTime']!=dl['time']) for t in ted)
             if deadline_conflict: explanation.append('Horaires/fuseaux BOAMP et TED divergents pour la même version : aucune sélection arbitraire.')
             ev={'noticeId':rid,'noticeUuid':uuid,'version':version,'kind':nature,'lotId':lid,'lotReference':value(project,'cbc:ID'),
+                'lotTitle':value(project,'cbc:Name'),
                 'procedureId':value(root,'cbc:ContractFolderID'),'procedureReference':value(root,'cac:ProcurementProject','cbc:ID'),
                 'procedureType':proc['type'],'procedureDescription':proc['description'],'accelerated':proc['accelerated'],'relaunch':proc['relaunch'],
                 'legalBasis':value(root,'cbc:RegulatoryDomain'),'justifications':proc['justifications'],
@@ -242,6 +247,11 @@ def normalize(records, manifest, ted_manifest):
                             'version':te['version'],'kind':te['kind'],'publicationDate':te['publicationDate'],
                             'deadline':te['deadline']['iso'],'source':te['source'],'relation':direction,
                             'basis':'Référence explicite d’avis + même UUID de procédure + même identifiant de lot. Pas de transfert de montant ou de titulaire.'})
+    for row in rows:
+        refs = [ref for ref in row['noticeEvidence']['references'] if ref['kind'] == 'correction-of']
+        targets = [nid for ref in refs for nid in ref['matchedNoticeIds']]
+        previous = by_notice_lot.get((targets[0], row['lotId'])) if len(refs) == 1 and len(targets) == 1 else None
+        row['noticeChange'] = notice_change(row, previous)
     ids=[r['id'] for r in rows]
     if len(ids)!=len(set(ids)): raise ValueError('Identifiant avis/lot dupliqué ou versions contradictoires : import à examiner.')
     coverage={'retrievedAt':manifest['retrievedAt'],'source':API,'scope':{'buyerSiret':SIRET,'publicationFrom':'2025-01-01','publicationTo':'2025-12-31','where':WHERE,
@@ -256,7 +266,8 @@ def normalize(records, manifest, ted_manifest):
             'rowsWithProcedureDescription':sum(bool(r['noticeEvidence']['procedureDescription']) for r in rows),
             'rowsWithTedXml':sum(bool(r['noticeEvidence']['ted']) for r in rows),
             'rowsWithDeadlineConflict':sum(r['noticeEvidence']['deadlineConflict'] for r in rows),
-            'evaluableBiddingPeriods':0,'triggeredBiddingPeriods':0,'explicitNoticeLotLinks':len(links)}, 
+            'evaluableBiddingPeriods':0,'triggeredBiddingPeriods':0,'explicitNoticeLotLinks':len(links),
+            'noticeChangeChecks':{state:sum(r['noticeChange']['status']==state for r in rows) for state in ['signal','clear','unknown','not-applicable']}},
         'excludedBuyerNotices':excluded,'tedManifest':'data/tours-notices/raw/ted-manifest.json',
         'tedDownloads':len(ted_manifest.get('downloads',[])),
         'tedQualifiedNoticeMatches':len(set(r['noticeId'] for r in rows if r['noticeEvidence']['ted'])),
