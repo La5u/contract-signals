@@ -12,6 +12,8 @@ const coverage=JSON.parse(fs.readFileSync('data/decp-cities-coverage.json'));
 const identities=JSON.parse(fs.readFileSync('data/supplier-identities.json'));
 const rows=run('prepareContracts',data);
 check(raw.records.length===1865);check(rows.length===1270);
+check(coverage.procedureMapping.competitive.includes('Dialogue compétitif'));
+check(!coverage.procedureMapping.observed.includes('Dialogue compétitif')); // mapping fix has no effect on this snapshot
 check(new Set(raw.records.map(r=>r.acheteur_id+':'+r.id)).size===rows.length);
 check(new Set(rows.map(r=>r.buyerSiret)).size===6);
 check(rows.filter(r=>run('isAmbiguousCityContract',r)).length===172);

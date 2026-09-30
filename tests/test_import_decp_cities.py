@@ -26,6 +26,12 @@ class ImporterRegression(unittest.TestCase):
     def normalize(self, records):
         return mod.normalize({"records": records}, Path("."), {"counts": {}})
 
+    def test_competitive_dialogue_is_competitive_not_direct(self):
+        self.assertIs(mod.direct("Dialogue compétitif"), False)
+        self.assertIsNone(mod.direct("Procédure adaptée"))
+        result = self.normalize([dict(row("C-dialogue"), procedure="Dialogue compétitif")])[0]
+        self.assertIs(result["directAward"], False)
+
     def test_modified_only_row_retained(self):
         rows = self.normalize([row("C1", "1", 100, 130, mod_date="2024-04-02")])
         self.assertEqual(len(rows), 1)

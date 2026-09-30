@@ -31,8 +31,8 @@ spec.loader.exec_module(cities)
 
 COHORT = "decp-paris-ardeche-2024-2025"
 BUYERS = [("21750001600019", "Ville de Paris"), ("22070001700019", "Département de l’Ardèche")]
-# The original cohort also recognised "Dialogue compétitif" as competitive.
-COMPETITIVE = set(cities.PROCEDURE_COMPETITIVE) | {"Dialogue compétitif"}
+# Both DECP cohorts use the same exact-label competitive procedure mapping.
+COMPETITIVE = set(cities.PROCEDURE_COMPETITIVE)
 ALTERNATIVE_FIELDS = ["amount", "offers", "date", "durationMonths", "cpv", "procedure", "priceType", "priceForm", "nature", "supplierIds", "description"]
 CONFLICT_FIELDS = ALTERNATIVE_FIELDS
 TEXT = {
