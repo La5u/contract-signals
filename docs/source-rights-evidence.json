@@ -1,0 +1,45 @@
+{
+  "checkedOn": "2026-09-29",
+  "purpose": "Selected official statements establishing reuse terms; not a blanket privacy clearance or a licence for every third-party attachment.",
+  "evidence": [
+    {
+      "url": "https://www.boamp.fr/pages/mentions-legales/",
+      "excerpt": "Sauf mention contraire, tous les contenus de ce site sont sous licence etalab-2.0",
+      "licenceLink": "https://github.com/etalab/licence-ouverte/blob/master/LO.md",
+      "conclusion": "Default site-content Licence Ouverte 2.0, subject to exceptions."
+    },
+    {
+      "url": "https://www.data.gouv.fr/api/1/datasets/boamp/",
+      "selectedFields": { "title": "BOAMP", "license": "fr-lo", "organization": "Premier ministre" }
+    },
+    {
+      "url": "https://www.data.gouv.fr/api/1/datasets/api-boamp/",
+      "selectedFields": { "title": "API BOAMP", "license": "fr-lo", "organization": "Premier ministre" }
+    },
+    {
+      "url": "https://recherche-entreprises.api.gouv.fr/openapi.json",
+      "excerpt": "Une partie des données issues de la base de données utilisée par l'API est accessible sur data.gouv.",
+      "linkedDataset": "https://www.data.gouv.fr/fr/datasets/donnees-des-entreprises-utilisees-dans-lannuaire-des-entreprises/#/resources",
+      "note": "The OpenAPI's MIT label is not used as the business-data licence."
+    },
+    {
+      "url": "https://www.data.gouv.fr/api/1/datasets/donnees-des-entreprises-utilisees-dans-lannuaire-des-entreprises/",
+      "retrievedAt": "2026-09-29T22:31:16.486241+00:00",
+      "responseSha256": "73a3ccfef6a9753010863823bafc929cf52dcdf9d5814103b20ce6743dbb76f7",
+      "selectedFields": { "title": "Données des entreprises utilisées dans l'Annuaire des Entreprises", "license": "lov2" },
+      "excerpts": [
+        "Ces jeux de données contiennent certaines informations sur les entreprises françaises disponibles dans l'Annuaire des Entreprises et dans son API de Recherche.",
+        "État administratif (ACTIVE/CESSÉE)",
+        "Statut de diffusion (OUI/NON)",
+        "Nom complet affiché sur Annuaire des Entreprises"
+      ],
+      "conclusion": "Positive Licence Ouverte 2.0 evidence for the limited name/status/identifier fields used by this project's enrichment, not every API field or source."
+    },
+    {
+      "url": "https://www.data.gouv.fr/api/1/datasets/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/",
+      "retrievedAt": "2026-09-29T22:31:16.245637+00:00",
+      "responseSha256": "b5a20ca7094689b40e693bdd87240471d60e016cef1b498241353b1099a6aea5",
+      "selectedFields": { "title": "Base Sirene des entreprises et de leurs établissements (SIREN, SIRET)", "license": "lov2" }
+    }
+  ]
+}
