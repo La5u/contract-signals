@@ -1,23 +1,35 @@
 # Contract signals
 
+**[Open the explorer](https://contracts.lasu.dev)** · [Methods](docs/score-v3.md) · [Data licences](docs/data-sources.md)
+
 A static explorer for published public-procurement records from France, Colombia, Paraguay, Portugal, Romania and Ukraine. It flags contract characteristics that may deserve a closer look, such as awards without competition, single offers, repeated awards to the same supplier, or long durations. Every row links to its source and shows which checks could or could not be evaluated.
 
 **A signal prompts a review. It is not an accusation.** A zero or missing label does not mean a contract is clean, and “Not assessed” is never zero.
 
+**Prototype:** not independently validated for operational procurement review. It does not make legal findings or automate procurement decisions.
+
+![Explorer showing dataset selection, search, advanced filters and a table of sourced procurement signals.](docs/images/explorer.png)
+
+*Illustrative view of a bounded French cohort—not a ranking of wrongdoing.*
+
 ## Use it
 
-Open the published site, or run it locally from this folder:
+Open **[contracts.lasu.dev](https://contracts.lasu.dev)**, or run it locally from this folder:
 
 ```sh
 python -m http.server 8000   # then open http://localhost:8000
 ```
 
-You can also open `index.html` directly. If the browser blocks loading the data under `file://`, open the matching file from `data/` with the file picker.
+You can also open `index.html` directly. If the browser blocks loading built-in data under `file://`, use the local import control for a JSON or CSV file.
 
-- **Private by design:** no backend, account, cookies, analytics or uploads. All data is loaded from this site and processed in your browser.
-- **Share a view:** search, filters, sort, page and page size are kept in the link after `#`. Click the Date, Declared amount, Indicators or Index heading to sort by it (click again to reverse). Browsers never send that part to a server. To point someone to one contract, search its ID and share the link.
-- **Export:** *Export CSV* / *Export JSON* downloads every filtered record, not just the current page. An empty index means not assessed. *Copy page summary* copies the visible page as sourced notes.
-- **Your own data:** *Open your own JSON file* reads a file locally and never uploads it. Format and scoring caveats: [docs/data-format.md](docs/data-format.md).
+- **Browser-local processing:** no application backend, account, cookies, analytics or uploads. Data is processed in your browser; the static host still receives ordinary requests and may process network metadata. Only your theme, advanced-filter preference and review marks are saved in local storage. Notes and their JSON exports are plaintext, not confidential case storage.
+- **Filters:** advanced filters are closed by default; open them when needed. The choice is remembered in this browser, and the panel folds out on phones. The indicator list shows only the checks the loaded dataset runs, each with its count.
+- **Record panel:** click a subject to open its panel: why it is flagged, the record as published, context outside the index, every check, and *Verify it yourself*. Step through results with *Previous*/*Next* or <kbd>j</kbd>/<kbd>k</kbd>; <kbd>/</kbd> jumps to search, <kbd>Esc</kbd> closes. *Print* gives a one-record case sheet with its sources and the link it came from.
+- **Review marks:** mark a record *Follow up*, *Referred* or *Reviewed* and add a note. Marks never change the index, stay in this browser, and are not part of shared links; *Export notes* / *Import notes* move them between browsers or colleagues as a JSON file.
+- **Share a view:** search, filters, sort, page, page size and the open record are kept in the link after `#`; copy the address to share it. Click a column heading to sort by it (click again to reverse); the Sort list also has sorts no column offers (official findings first, notice publication, amount increase). Browsers never send that part to a server.
+- **Export:** *CSV* / *JSON* downloads every filtered record, not just the current page. An empty index means not assessed. *Copy page summary* copies the visible page as sourced notes.
+- **Theme:** light, dark or automatic (follows the system), from the button at the top right. *How to read · Method* opens the reading notes and the full method.
+- **Your own data:** *Import a dataset*, next to search, reads JSON, CSV or OCDS locally and never uploads it. CSV column mapping, a validation preview, and explicit confirmation are required before loading. Browse-only/no scoring is the default; French v3 is opt-in and does not verify jurisdiction, source, or completeness. Limits and JSON/OCDS details: [docs/data-format.md](docs/data-format.md).
 
 ## Datasets
 
@@ -25,7 +37,7 @@ You can also open `index.html` directly. If the browser blocks loading the data 
 | --- | ---: | --- |
 | France · Paris & Ardèche — DECP contracts 2024–2025 | 2,594 | French v3 checks |
 | France · six cities (Rennes, Nantes, Bordeaux, Grenoble, Dijon, Tours) — DECP 2024–2025 | 1,270 | French v3 checks |
-| France · Tours — BOAMP/TED notices | 66 | documents, not assessed |
+| France · Tours — BOAMP/TED notices | 66 | linked correction checks; 6 evaluated, 60 not assessed |
 | France · 3 Feb 2025 — BOAMP consultation notices | 10 | documents, not assessed |
 | France · nationwide BOAMP award sample + 8 CRC audit dossiers | 3,010 | French v3 checks; audit findings outside the index |
 | Colombia · MEN / Caldas / Usaquén — SECOP II contracts 2024–2026 | 7,560 | Colombian checks |
@@ -41,7 +53,7 @@ Each dataset is a bounded cohort chosen before scoring. None of them is exhausti
 
 ## The vigilance index
 
-`index = min(100, max(competition checks) + max(execution/duration checks))`: eight checks, each shown as *signal*, *evaluated*, *not assessable* or *out of scope*. Amounts, legal citations, company names and official findings never add points. Correlated signals in the same family are not summed. Thresholds are editorial choices, not calibrated probabilities. Colombia, Paraguay, Ukraine and the TED cohorts (Portugal, Romania) use their own checks, and nothing is compared across countries. TED holds only procedures above the EU thresholds, so the Portuguese and Romanian cohorts are not a picture of those countries' procurement.
+`index = min(100, max(competition checks) + max(execution/duration checks))`: dataset-specific checks, each shown as *signal*, *evaluated*, *not assessable* or *out of scope*. Amounts, legal citations, company names and official findings never add points. Correlated signals in the same family are not summed. Thresholds are editorial choices, not calibrated probabilities. Colombia, Paraguay, Ukraine and the TED cohorts (Portugal, Romania) use their own checks, and nothing is compared across countries. TED holds only procedures above the EU thresholds, so the Portuguese and Romanian cohorts are not a picture of those countries' procurement.
 
 - French method: [docs/score-v3.md](docs/score-v3.md)
 - Colombian method: [docs/score-colombia.md](docs/score-colombia.md)
@@ -51,6 +63,8 @@ Each dataset is a bounded cohort chosen before scoring. None of them is exhausti
 - Court outcomes and reported investigations (kept outside the index): [docs/adjudicated-outcomes.md](docs/adjudicated-outcomes.md)
 - Paraguay pilot notes and other candidate countries: [docs/paraguay-pilot.md](docs/paraguay-pilot.md), [docs/international-pilots.md](docs/international-pilots.md)
 - Dated history of every delivery, count and design decision: [docs/project-journal.md](docs/project-journal.md)
+- Low-cost, voluntary adoption and usability-feedback proposal: [docs/adoption.md](docs/adoption.md)
+- Bounded source/coverage expansion and metadata evidence: [docs/expansion.md](docs/expansion.md)
 
 ## Development
 
@@ -60,7 +74,9 @@ Plain HTML, CSS and JavaScript: no framework, build step, dependency or runtime 
 sh tests/run-all.sh            # every suite; NO_BROWSER=1 skips the Chromium test
 ```
 
-The browser test needs Playwright, installed outside the project: `npm install --prefix /tmp/procurement-browser playwright` (set `PLAYWRIGHT_PATH` for another location, `CHROMIUM_PATH` for another browser). GitHub Actions runs the same script on every push (`.github/workflows/tests.yml`). After any change to `script.js`, run `node tools/review-score-v3.cjs` so the review report matches the new script hash.
+The browser test needs Playwright **1.58.2**, installed outside the project: `npm install --prefix /tmp/procurement-browser playwright@1.58.2` (set `PLAYWRIGHT_PATH` for another location, `CHROMIUM_PATH` for another browser). GitHub Actions runs the same script on every push (`.github/workflows/tests.yml`). After any change to `script.js`, run `node tools/review-score-v3.cjs` so the review report matches the new script hash.
+
+BOAMP-published dataset content is documented under Licence Ouverte 2.0 based on DILA's legal notice and official data.gouv.fr dataset records; null licence fields in the BOAMP API catalogue do not undo that dataset-level evidence. Third-party attachment/content scope and privacy questions remain. The documented Annuaire business dataset supports LO 2.0 for the project's limited supplier name/status/identifier enrichment, not every API field. Retained source evidence: [docs/source-rights-evidence.json](docs/source-rights-evidence.json). See [docs/data-sources.md](docs/data-sources.md) and [personal-data inventory](docs/personal-data.md).
 
 Every dataset can be rebuilt offline from its raw snapshot:
 
@@ -76,6 +92,10 @@ Every dataset can be rebuilt offline from its raw snapshot:
 | Portugal, Romania (TED) | `python tools/import-ted-cohorts.py --cohort portugal\|romania --offline` |
 | Ukraine (Prozorro) | `python tools/import-prozorro.py --offline` |
 
+Linked notice/bid checks and the bounded three-contract API sample: [method and collection controls](docs/linked-evidence.md). `python tools/fetch-linked-records.py` shows its plan without making requests.
+
+**Portugal BASE preparation (not yet bundled):** `python tools/import-portugal-base.py` prints its plan without archive reads or network calls. The implemented streaming importer retains published supplier names but omits supplier NIFs and competitor identities; it produces a private, browse-only candidate before explicit publication review. Extraction is deferred while on battery. Commands, coverage/conflict handling and limits: [docs/portugal-base.md](docs/portugal-base.md).
+
 `--download` fetches a new snapshot instead; it is not a fixed archive (the DECP index, for instance, keeps only the latest modification of each contract). `python tools/enrich-suppliers.py` refreshes French supplier names and `python tools/fetch-dncp-sanctions.py` the Paraguayan sanction snapshot (`--offline` re-applies either).
 
 ## Hosting
@@ -84,4 +104,4 @@ Any static host works; all paths are relative. For Cloudflare Pages: no build co
 
 ## Licence
 
-Code and documentation: [MIT](LICENSE). The data keeps its source licences; see [docs/data-sources.md](docs/data-sources.md).
+Code and original documentation: [MIT](LICENSE). Third-party data and source documents retain their original rights; see [data/LICENSE.md](data/LICENSE.md) and the [source-by-source licence register](docs/data-sources.md).
