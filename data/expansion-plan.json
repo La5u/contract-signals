@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "announcedOn": "2026-09-30",
+  "status": "research-only; no new procurement records imported",
+  "collectionPolicy": {
+    "maxMetadataRequests": 7,
+    "maxBytesPerResponse": 131072,
+    "timeoutSeconds": 12,
+    "delaySeconds": 2,
+    "redirects": false,
+    "retries": 0,
+    "cachedResults": true,
+    "bulkCollectionEnabled": false
+  },
+  "workstreams": [
+    {
+      "id": "france-backfill",
+      "priority": 1,
+      "buyerSirets": ["21210231300013", "21330063500017", "21350238800019", "21370261600011", "21380185500015", "21440109300015"],
+      "purpose": "Improve historical coverage for the existing six municipal buyers, not add municipalities selected by score.",
+      "scope": "Use the buyer SIRETs already declared in data/decp-cities-coverage.json. Notifications 2023-01-01 inclusive to 2024-01-01 exclusive, as a separate historical cohort.",
+      "mode": "browse-only until historical completeness and context eligibility are reviewed",
+      "gates": ["Read metadata to establish historical availability and query totals before download", "Do not overwrite the existing 2024–2025 raw snapshot", "Latest-version DECP publication does not establish a complete amendment history", "Do not silently merge periods or enable existing cohort-specific checks"]
+    },
+    {
+      "id": "linked-evidence",
+      "priority": 2,
+      "purpose": "Add dated amendment/correction evidence to existing records before adding more unrelated award rows.",
+      "scope": "Portugal/Romania TED procedures already present; exact published procedure/notice/lot IDs only. Freeze the selected identifiers before any record collection.",
+      "mode": "context only; no new scores",
+      "gates": ["Document notice-type query and applicable identifier fields", "Match exact procedure and lot identifiers, never names or similar amounts", "Retain conflicting and missing links explicitly", "Attachment rights and personal-data review before downloading documents"]
+    },
+    {
+      "id": "portugal-base",
+      "priority": 3,
+      "purpose": "Complement above-threshold TED notices with national contract records, including potentially below-threshold coverage.",
+      "buyers": ["503933813", "508779472", "500051070"],
+      "scope": "The existing Portugal buyers; national-source publication dates 2024-09-01 inclusive to 2026-09-01 exclusive, if the source supports this field. Do not substitute signing dates silently.",
+      "mode": "separate browse-only cohort; no automatic TED scoring or cross-source spending sums",
+      "gates": ["Confirm official machine-readable access and reuse licence", "Verify stable contract/process and buyer IDs", "Check record/lot granularity, cancellations and amendment semantics", "Reconcile totals and disclose omissions", "Exact documented IDs required before linking BASE and TED"]
+    },
+    {
+      "id": "indonesia-feasibility",
+      "priority": 4,
+      "purpose": "Determine whether LKPP official public data contains reviewable awards/contracts rather than procurement plans alone.",
+      "scope": "Metadata only initially. Fix one buyer's official identifier and a complete 2025 calendar-year publication window before any records are collected.",
+      "mode": "browse-only if the gates pass; no French thresholds",
+      "gates": ["Confirm awarded/signed records versus SIRUP planning packages", "Confirm anonymous lawful machine-readable access and publisher reuse terms", "Document original IDR values and identifier granularity", "Freeze buyer identifier, window and selection before inspecting signals", "Review personal fields and lawful redistribution"]
+    },
+    {
+      "id": "russia-feasibility",
+      "priority": 5,
+      "purpose": "Assess the official EIS access/publication situation separately; access failure does not justify bypassing restrictions.",
+      "scope": "Official landing-page availability only; no buyer cohort or record crawl approved.",
+      "mode": "blocked pending access, rights and completeness review",
+      "gates": ["Confirm official data distribution and reuse terms", "Identify current publication exemptions and gaps", "No proxy rotation, CAPTCHA bypass, credentials or unofficial mirrors", "Stop on refusal, rate limiting or service overload", "No scoring method transplanted from another jurisdiction"]
+    }
+  ],
+  "metadataSources": [
+    { "id": "portugal-base-open-data", "country": "Portugal", "url": "https://www.base.gov.pt/Base4/pt/dados-abertos/", "purpose": "Official open-data documentation candidate; not a verified contract API." },
+    { "id": "portugal-catalogue", "country": "Portugal", "url": "https://dados.gov.pt/api/1/datasets/?q=contratos&page_size=3", "purpose": "Official catalogue metadata search, at most three dataset entries." },
+    { "id": "indonesia-lkpp-data", "country": "Indonesia", "url": "https://data.lkpp.go.id/", "purpose": "Official procurement-data portal candidate; access and licence unverified." },
+    { "id": "indonesia-sirup", "country": "Indonesia", "url": "https://sirup.lkpp.go.id/sirup/home", "purpose": "Procurement planning portal candidate; planning is not an award." },
+    { "id": "russia-eis", "country": "Russia", "url": "https://zakupki.gov.ru/epz/main/public/home.html", "purpose": "Official procurement portal landing page; no record collection." },
+    { "id": "portugal-contract-dataset", "country": "Portugal", "url": "https://dados.gov.pt/api/1/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/", "purpose": "Metadata-only follow-up for the IMPIC contract dataset found in the official catalogue; no resource downloads." },
+    { "id": "indonesia-lkpp-catalogue", "country": "Indonesia", "url": "https://data.lkpp.go.id/api/3/action/package_search?q=pengadaan&rows=3", "purpose": "Metadata-only CKAN search for procurement datasets; at most three entries, no records." }
+  ]
+}
