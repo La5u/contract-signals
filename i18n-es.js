@@ -596,6 +596,10 @@ window.I18N_DICTS.es = {
   "Amount increase": "Aumento del importe",
   "Term extended": "Plazo ampliado",
   "Late publication": "Publicación tardía",
+  "Show name": "Mostrar nombre",
+  "Working…": "Procesando…",
+  "Name unavailable": "Nombre no disponible",
+  "Published by the source register. Shown one record at a time; not in lists, search or exports.": "Publicado por el registro de origen. Se muestra un registro a la vez; no aparece en listas, búsquedas ni exportaciones.",
   "Late notice change without deadline extension": "Cambio tardío del anuncio sin prórroga del plazo"
  },
  "patterns": [
@@ -970,6 +974,10 @@ window.I18N_DICTS.es = {
   [
    "Colour theme: {a}. Change theme.",
    "Tema de color: {a}. Cambiar tema."
+  ],
+  [
+   "Natural person · {a}",
+   "Persona física · {a}"
   ],
   [
    "Also known as {a}",
