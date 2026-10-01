@@ -17,7 +17,7 @@ const server=http.createServer((req,res)=>{
  await new Promise(resolve=>server.listen(Number(process.env.PORT)||0,'127.0.0.1',resolve));
  const base=`http://127.0.0.1:${server.address().port}`;
  const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||(fs.existsSync('/usr/bin/chromium')?'/usr/bin/chromium':undefined),headless:true,args:['--no-sandbox']});
- const page=await browser.newPage({viewport:{width:1280,height:900}});
+ const page=await browser.newPage({locale:'en-GB',viewport:{width:1280,height:900}});
  await page.context().grantPermissions(['clipboard-read','clipboard-write']);
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  page.on('console',m=>{if(/Content Security Policy/i.test(m.text()))errors.push(m.text());});
@@ -29,8 +29,8 @@ const server=http.createServer((req,res)=>{
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2594'));
  assert.match(await page.locator('#dataset option:checked').textContent(),/^Paris.*contracts.*DECP$/);
  assert.equal(await page.locator('#dataset option:checked').evaluate(o=>o.parentElement.label),'France','the country is the option group, not repeated in the option');
- const multiSignalRow=page.locator('.contract-row').filter({has:page.locator('.badge:nth-of-type(2)')}).first();
- const badgeLabels=await multiSignalRow.locator('.badge').allTextContents();
+ const multiSignalRow=page.locator('.contract-row').filter({has:page.locator('.badge:not(.context):nth-of-type(2)')}).first();
+ const badgeLabels=(await multiSignalRow.locator('.badge:not(.context)').allTextContents()).map(t=>t.split(' · ')[0]);
  assert.ok(badgeLabels.length>1,'all indicators are visible on a multi-signal row');
  await openRow(page,multiSignalRow.locator('.row-toggle'));
  const triggeredLabels=await page.locator('#detail-panel .triggered-indicators li').allTextContents();
@@ -61,7 +61,7 @@ const server=http.createServer((req,res)=>{
  assert.equal(await page.locator('#advanced-filters').getAttribute('open'),'');
  // Only the checks this dataset runs are offered, each with its count.
  const indicatorOptions=await page.locator('#indicator option').evaluateAll(o=>o.map(x=>x.value));
- assert.ok(indicatorOptions.includes('single-bid')&&!indicatorOptions.some(v=>/^(secop2|dncp|ua|ted)-/.test(v)),'indicator list is scoped to the dataset');
+ assert.ok(indicatorOptions.includes('single-offer')&&!indicatorOptions.includes('term-extension')&&!indicatorOptions.includes('disqualified-better-bid'),'indicator list is scoped to the kinds this dataset runs');
  assert.match(await page.locator('#indicator option[value="direct-award"]').textContent(),/ · 262$/);
  await page.evaluate(()=>{const sort=document.querySelector('#sort');sort.value='offers';sort.dispatchEvent(new Event('input',{bubbles:true}));});
  let offerCounts=await page.locator('.contract-row').evaluateAll(rows=>rows.map(row=>Number(row.children[6].textContent.trim())).filter(Number.isFinite));
@@ -73,7 +73,7 @@ const server=http.createServer((req,res)=>{
  // Method and reading notes live in a dialog.
  await page.click('#help-button');
  assert.equal(await page.locator('#help-dialog').isVisible(),true);
- assert.match(await page.locator('#help-dialog').textContent(),/Version 3\.0/);
+ assert.match(await page.locator('#help-dialog').textContent(),/Version 3\.1/);
  await page.keyboard.press('Escape');
  assert.equal(await page.locator('#help-dialog').isVisible(),false,'Escape closes the help dialog');
  await page.click('#help-button');await page.click('#help-close');
@@ -88,6 +88,15 @@ const server=http.createServer((req,res)=>{
  await page.selectOption('#page-size','100');
  assert.equal(await page.locator('.contract-row').count(),100);
  assert.match(await page.locator('#page-status').textContent(),/100 rows per page/);
+ // Every signal is visible: no "+N more"; a second signal in the same family is marked as not added.
+ assert.equal(await page.locator('.badge-extra').count(),0);
+ const firstRow=page.locator('.contract-row').first();
+ const firstSignals=await firstRow.locator('td:nth-child(8) .badge:not(.context)').count();
+ assert.ok(firstSignals>=2,`top row shows ${firstSignals} signal chip(s)`);
+ assert.match(await firstRow.locator('td:nth-child(8)').textContent(),/competition/);
+ assert.ok(await page.locator('.badge.not-counted').count()>0);
+ assert.match(await page.locator('.badge.not-counted').first().textContent(),/not added/);
+ assert.match(await firstRow.locator('td:nth-child(8)').textContent(),/Context: single-vendor software maintenance/);
  await page.selectOption('#page-size','50');
  assert.equal(await page.locator('.contract-row').count(),50);
  await page.selectOption('#assessment','unevaluated');
@@ -98,10 +107,10 @@ const server=http.createServer((req,res)=>{
  assert.match(await page.locator('#status').textContent(),/355 \/ 2594/);
  assert.match(await page.locator('.contract-row').first().textContent(),/Not assessed/);
  await page.selectOption('#assessment','zero');
- assert.match(await page.locator('#status').textContent(),/1835 \/ 2594/);
+ assert.match(await page.locator('#status').textContent(),/1747 \/ 2594/);
  assert.match(await page.locator('.contract-row').first().textContent(),/0 \/ 100/);
  await openRow(page,page.locator('.row-toggle').first());
- assert.equal(await page.locator('#detail-panel .assessment-checks li').count(),8);
+ assert.equal(await page.locator('#detail-panel .assessment-checks li').count(),9);
  assert.match(await page.locator(panel).textContent(),/unknown applicabilities/);
  await page.selectOption('#assessment','');
  await page.evaluate(()=>{const el=document.querySelector('#legal');el.value='R2122-1';el.dispatchEvent(new Event('input',{bubbles:true}));});
@@ -110,8 +119,13 @@ const server=http.createServer((req,res)=>{
  assert.match(await page.locator(panel).textContent(),/R-2122-1/);
  assert.match(await page.locator(panel).textContent(),/No points added/);
  await page.evaluate(()=>{const el=document.querySelector('#legal');el.value='R2122-3';el.dispatchEvent(new Event('input',{bubbles:true}));});assert.equal(await page.locator('.contract-row').count(),4);
- await page.evaluate(()=>{const el=document.querySelector('#legal');el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
  await closePanel(page);
+ await page.evaluate(()=>{const el=document.querySelector('#legal');el.value='fr-software';el.dispatchEvent(new Event('input',{bubbles:true}));});assert.equal(await page.locator('.contract-row').count(),25);
+ assert.match(await page.locator('.contract-row').first().textContent(),/Context: single-vendor software maintenance/);
+ await openRow(page,page.locator('.row-toggle').first());
+ assert.match(await page.locator(panel).textContent(),/Proprietary status and exclusive rights are not verified/);
+ await closePanel(page);
+ await page.evaluate(()=>{const el=document.querySelector('#legal');el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
  await page.locator('#pagination').scrollIntoViewIfNeeded();
  const before=await page.evaluate(()=>({y:scrollY,height:document.querySelector('.table-wrap').clientHeight}));
  await page.click('#next');
@@ -178,7 +192,7 @@ const server=http.createServer((req,res)=>{
  assert.match(await page.locator(panel).textContent(),/per-exa/);
  assert.match(await page.locator(panel).textContent(),/25-119055/);
  assert.match(await page.locator(panel).textContent(),/extends the submission deadline/);
- assert.equal(await page.locator('#detail-panel .assessment-checks li').count(),9);
+ assert.equal(await page.locator('#detail-panel .assessment-checks li').count(),10);
  assert(await page.locator('#detail-panel a[download]').count()>0);
  await page.evaluate(()=>{const el=document.querySelector('#notice-context');el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});await page.fill('#search','R2122-8');
  assert.equal(await page.locator('.contract-row').count(),3);
@@ -199,16 +213,16 @@ const server=http.createServer((req,res)=>{
  await page.evaluate(()=>{const el=document.querySelector('#adjudicated');el.checked=false;el.dispatchEvent(new Event('input',{bubbles:true}));});
  assert.match(await page.locator('#dataset-note').textContent(),/SECOP II pilot · Colombia/);
  assert.equal(await page.locator('.contract-row').count(),50);
- assert.match(await page.locator('#status').textContent(),/215 with a heuristic signal/);
+ assert.match(await page.locator('#status').textContent(),/272 with a heuristic signal/);
  assert.match(await page.locator('#status').textContent(),/0 not assessed/);
  await page.check('#flagged');
- assert.match(await page.locator('#status').textContent(),/215 \/ 7560/);
- assert.match(await page.locator('.contract-row').first().textContent(),/Award declared without supplier plurality|Repeated awards declared without supplier plurality|Long declared duration/);
+ assert.match(await page.locator('#status').textContent(),/272 \/ 7560/);
+ assert.match(await page.locator('.contract-row').first().textContent(),/Award without competition|Repeated awards without competition|Long declared duration|Term extended after award/);
  await page.uncheck('#flagged');
  await page.selectOption('#assessment','zero');
- assert.match(await page.locator('#status').textContent(),/7345 \/ 7560/);
+ assert.match(await page.locator('#status').textContent(),/7288 \/ 7560/);
  await page.selectOption('#assessment','');
- await page.selectOption('#indicator','secop2-plurality-award');
+ await page.selectOption('#indicator','direct-award');
  assert.match(await page.locator('#status').textContent(),/176 \/ 7560/);
  await page.selectOption('#indicator','');
  await page.fill('#search','GOBERNACION DE CALDAS');
@@ -218,8 +232,16 @@ const server=http.createServer((req,res)=>{
  const copDetail=await page.locator(panel).textContent();
  assert.match(copDetail,/Declared modality/);
  assert.match(copDetail,/SECOP II — detalle del proceso/);
- assert.equal(await page.locator('#detail-panel .assessment-checks li').count(),8);
+ assert.equal(await page.locator('#detail-panel .assessment-checks li').count(),9);
  assert.match(copDetail,/docs\/score-colombia\.md|Colombian check/);
+ await closePanel(page);
+ await page.evaluate(()=>{const el=document.querySelector('#legal');el.value='co-public';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert.match(await page.locator('#status').textContent(),/442 \/ 7560/);
+ assert.match(await page.locator('.contract-row').first().textContent(),/Context: public-to-public agreement/);
+ await openRow(page,page.locator('.row-toggle').first());
+ assert.match(await page.locator(panel).textContent(),/Public-to-public agreement · context outside the index, no points.*The index is unchanged/);
+ await closePanel(page);
+ await page.evaluate(()=>{const el=document.querySelector('#legal');el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
  // Paraguay: linked contract records scored with Paraguayan checks only (docs/score-paraguay.md).
  await page.selectOption('#dataset','paraguay');
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 84'));
@@ -253,7 +275,7 @@ const server=http.createServer((req,res)=>{
  assert.match(pyDetail,/Contract period starts/);
  assert.match(pyDetail,/Signature date: not published/);
  assert.match(pyDetail,/PYG/);
- assert.equal(await page.locator('#detail-panel .assessment-checks li').count(),8);
+ assert.equal(await page.locator('#detail-panel .assessment-checks li').count(),9);
  assert.match(pyDetail,/Verify it yourself/);
  assert.match(pyDetail,/Award page on contrataciones\.gov\.py/);
  assert.match(pyDetail,/search the official portal for: OCID ocds-/);
@@ -280,7 +302,7 @@ const server=http.createServer((req,res)=>{
  await page.selectOption('#dataset','decp');
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2594'));
  // Shareable links: a fresh load restores dataset, filters, sort, page and page size.
- const linked=await browser.newPage({viewport:{width:1280,height:900}});
+ const linked=await browser.newPage({locale:'en-GB',viewport:{width:1280,height:900}});
  linked.on('pageerror',e=>errors.push(e.message));
  await linked.goto(base+'/#dataset=cities&sort=amount&flagged=1&page=2&size=25');
  await linked.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 1270'));
@@ -342,7 +364,7 @@ const server=http.createServer((req,res)=>{
  assert.notEqual(await linked.locator('#detail-title').textContent(),firstTitle,'j moves to the next record');
  await linked.keyboard.press('k');
  assert.equal(await linked.locator('#detail-title').textContent(),firstTitle,'k moves back');
- const fresh=await browser.newPage({viewport:{width:1280,height:900}});
+ const fresh=await browser.newPage({locale:'en-GB',viewport:{width:1280,height:900}});
  fresh.on('pageerror',e=>errors.push(e.message));
  await fresh.goto(base+'/#dataset=cities&open='+encodeURIComponent(cityRecord));
  await fresh.waitForFunction(()=>!document.querySelector('#detail-panel').hidden);
@@ -421,7 +443,63 @@ const server=http.createServer((req,res)=>{
  assert.match(await page.locator('#import-status').textContent(),/Unable to preview.*amount/);
  assert.equal(await page.locator('#confirm-import').isDisabled(),true);
  assert.deepEqual(errors,[]);
- const mobile=await browser.newPage({viewport:{width:390,height:844}});
+ // Buyer profile: filters the table to the buyer, compares rates with the dataset, closes back.
+ {
+  const prof=await browser.newPage({locale:'en-GB',viewport:{width:1280,height:900}});
+  prof.on('pageerror',e=>errors.push(e.message));
+  await prof.goto(base);
+  await prof.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2594'));
+  await openRow(prof,prof.locator('.row-toggle').first());
+  await prof.locator('#detail-panel button',{hasText:'Buyer profile'}).click();
+  assert.equal(await prof.locator(panel).isVisible(),false,'opening a profile closes the record panel');
+  assert.match(await prof.locator('#profile-panel h2').textContent(),/^Buyer profile · /);
+  assert.match(await prof.locator('#profile-panel').textContent(),/Whole dataset/);
+  assert.doesNotMatch(await prof.locator('#status').textContent(),/2594 \/ 2594/);
+  await prof.locator('#profile-panel button',{hasText:'Close profile'}).click();
+  assert.match(await prof.locator('#status').textContent(),/2594 \/ 2594/);
+  await prof.close();
+ }
+ // All countries side by side (over HTTP): each dataset prepared on its own, country shown per row, newest signals first.
+ const allPage=await browser.newPage({locale:'en-GB',viewport:{width:1280,height:900}});
+ allPage.on('pageerror',e=>errors.push(e.message));
+ await allPage.goto(base+'/#dataset=all');
+ await allPage.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 18501'),null,{timeout:60000});
+ assert.equal(await allPage.locator('#coverage-link').isHidden(),true);
+ await allPage.selectOption('#sort','recent-signal');
+ const firstAll=allPage.locator('.contract-row').first();
+ assert.match(await firstAll.locator('td').first().locator('.country').textContent(),/\S/);
+ assert.doesNotMatch(await firstAll.locator('td').last().textContent(),/Not assessed|^\s*0 \/ 100/);
+ await allPage.close();
+ // Spanish and French: interface text and number/date formats change; source evidence does not.
+ const sourceObject='MAINTENANCE ET HEBERGEMENT DE LA SOLUTION AIDEN';
+ for(const [lang,sort,sector,amount,signals] of [['es','Ordenar','Servicios informáticos','108.800,00\u00a0€',/^Señales: /],['fr','Trier','Services informatiques','108\u202f800,00\u00a0€',/^Signaux : /]]){
+  const lp=await browser.newPage({locale:'en-GB',viewport:{width:1280,height:900}});
+  lp.on('pageerror',e=>errors.push(e.message));
+  await lp.goto(base+'/?lang='+lang);
+  await lp.waitForFunction(()=>/2594 \/ 2594/.test(document.querySelector('#status').textContent));
+  assert.equal(await lp.evaluate(()=>document.documentElement.lang),lang);
+  assert.equal(await lp.locator('#lang').inputValue(),lang);
+  assert.match(await lp.locator('label:has(#sort)').textContent(),new RegExp('^'+sort));
+  const row=lp.locator('.contract-row').first();
+  assert.equal(await row.locator('.row-toggle').textContent(),sourceObject);
+  assert.match(await row.locator('td').nth(4).textContent(),new RegExp('^'+sector));
+  assert.equal(await row.locator('td').nth(5).textContent(),amount);
+  assert.match(await row.locator('.mobile-signals').first().textContent(),signals);
+  await openRow(lp,row.locator('.row-toggle'));
+  assert.doesNotMatch(await lp.locator(panel).textContent(),/Buyer: |Declared increase of /);
+  await lp.close();
+ }
+ // The selector remembers the choice in this browser only, and English drops the parameter.
+ const switcher=await browser.newPage({locale:'en-GB',viewport:{width:1280,height:900}});
+ switcher.on('pageerror',e=>errors.push(e.message));
+ await switcher.goto(base+'/?lang=fr');
+ await switcher.waitForFunction(()=>/2594/.test(document.querySelector('#status').textContent));
+ await Promise.all([switcher.waitForNavigation(),switcher.selectOption('#lang','en')]);
+ assert.equal(new URL(switcher.url()).searchParams.get('lang'),null);
+ await switcher.waitForFunction(()=>/2594 \/ 2594 results/.test(document.querySelector('#status').textContent));
+ assert.equal(await switcher.evaluate(()=>localStorage.getItem('contract-signals-lang')),'en');
+ await switcher.close();
+ const mobile=await browser.newPage({locale:'en-GB',viewport:{width:390,height:844}});
  mobile.on('pageerror',e=>errors.push(e.message));
  await mobile.goto(base);
  await mobile.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2594'));
@@ -434,8 +512,10 @@ const server=http.createServer((req,res)=>{
  assert.equal(await mobile.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'filter row must not overflow the page');
  await mobile.locator('#advanced-filters > summary').click();
  assert.equal(await mobile.locator('.contract-row').first().locator('td:visible').count(),3);
+ assert.equal(await mobile.locator('.contract-row').first().locator('.mobile-signals').first().isVisible(),true);
+ assert.match(await mobile.locator('.contract-row').first().locator('.mobile-signals').first().textContent(),/^Signals: /);
  // Paraguayan rows carry a note under the date; it must wrap, not squeeze the subject.
- const pyMobile=await browser.newPage({viewport:{width:390,height:844}});
+ const pyMobile=await browser.newPage({locale:'en-GB',viewport:{width:390,height:844}});
  pyMobile.on('pageerror',e=>errors.push(e.message));
  await pyMobile.goto(base+'/#dataset=paraguay3');
  await pyMobile.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 293'));

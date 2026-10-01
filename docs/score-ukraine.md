@@ -16,7 +16,7 @@ Written on 25 September 2026, before any record of this cohort was read. Procedu
 - **Without competition:** negotiation, negotiation.quick.
 - **Offer/direct-award checks excluded:** reporting — a direct-contract report recorded without a procedure. Reporting alone adds no points; the concentration check still applies.
 
-## The checks (nine with linked bid attrition)
+## The checks (nine with the universal late-publication check)
 
 | Check | ID | Family | Eligibility / trigger | Weight |
 | --- | --- | --- | --- | --- |
@@ -25,9 +25,9 @@ Written on 25 September 2026, before any record of this cohort was read. Procedu
 | Repeated single-offer awards | `ua-repeated-single-offer` | Competition | This award is single-offer; same buyer and supplier (EDRPOU or individual tax number) in ≥3 distinct tenders | **12 at 3 → 40 at 10** |
 | Repeated awards without competition | `ua-repeated-direct` | Competition | This award is negotiated; same buyer and supplier in ≥3 distinct tenders | **18 at 3 → 60 at 10** |
 | Concentrated awards | `ua-concentration` | Competition | Same buyer and main category (goods, works, services); ≥10 distinct procedures with identified suppliers, ≥80 % identification coverage, share ≥60 % | **12 at 60 % → 40 at 100 %** |
-| Other submitted bids explicitly disqualified | `ua-bid-attrition` | Competition | Completed competitive tender; ≥2 bids; every bid uniquely linked to a lot award decision; winner explicitly qualified/eligible, every other bid explicitly unqualified | **5** |
 | Amount increase | `amount-increase` | Execution | **Out of scope**: three contract links checked, but no comparable dated amendment history | — |
 | Short bidding period | `short-bidding-period` | Competition | **Out of scope** | — |
+| Better-ranked bidder disqualified | `ua-better-bid-disqualified` | Competition | Competitive type; on the awarded lot, at least one award to another bidder was declared unsuccessful before this award (added 2026-09-26) | **12**, flat |
 | Long declared duration | `long-contract` | Execution | **Out of scope** | — |
 
 Offers are counted per lot, which Prozorro publishes (unlike the Paraguayan data). When a record publishes no bids, offers are unknown, never zero. Complaints are shown as context outside the index.
@@ -43,13 +43,21 @@ Reproduced by `tests/national.cjs`. Ministry of Health (national, EDRPOU 0001292
 | `ua-repeated-single-offer` | 10 | 28 | 0 | 450 |
 | `ua-repeated-direct` | 0 | 0 | 0 | 488 |
 | `ua-concentration` | 0 | 483 | 5 | 0 |
-| `ua-bid-attrition` | 0 | 0 | 26 | 462 |
+| `ua-better-bid-disqualified` | 9 | 55 | 0 | 424 |
 
-38 contracts with a signal, 450 zero, 0 not assessed. 424 of 488 contracts are direct-contract reports (reporting). Their offer/direct-award checks are out of scope; their zeros come from the concentration check. 38 of the 64 competitive contracts had a single offer. Example lead: one company won the Ministry of Health's commemorative award items repeatedly, each time as the only bidder. No negotiated procedure appears in this cohort.
+47 contracts with a signal, 441 zero, 0 not assessed (38 before the disqualification check). 424 of 488 contracts are direct-contract reports (reporting), out of scope; they score zero only through the concentration check. 38 of the 64 competitive contracts had a single offer. Example lead: one company won the Ministry of Health's commemorative award items repeatedly, each time as the only bidder. No negotiated procedure appears in this cohort.
 
 The first run counted concentration in lots rather than procedures; this was corrected for both engines (see [score-ted.md](score-ted.md)). Ukrainian counts did not change.
 
-The bid-attrition rule and three-record contract-link sample were added on 2026-09-28 after inspecting existing fields. See [linked evidence](linked-evidence.md) for eligibility, unknown states, collection limits and why amendments still earn no points.
+## Better-ranked bidder disqualified (added 2026-09-26)
+
+Prozorro opens awards one at a time in ranking order (after the e-auction, or by the evaluated price): when the top-ranked bid is rejected, its award is marked `unsuccessful` and the next bidder is considered. The importer counts, on the awarded lot, the other bidders whose award was declared unsuccessful on or before the winning award's date (`disqualifiedBefore`). One or more gives 12 points in the competition family, so it is not added to a single-offer signal on the same row. The short-bidding-period slot, out of scope here, is used for it.
+
+- **Bid values are not compared.** Initial bid values in the record predate the e-auction, so “the lowest bid did not win” cannot be read from them reliably; the award sequence can.
+- **Result:** 9 of 64 competitive contracts (8 with one bidder set aside, 1 with two), all newly flagged: Ministry of Health equipment, lift and document-system purchases under the HEAL project, polyclinic and primary-care refurbishment works, rehabilitation vehicles, road maintenance services and linoleum.
+- Disqualification is often lawful (missing documents, a non-compliant or abnormally low offer). The reasons are in the award decisions on the Prozorro page, linked from each row.
+
+On 2026-09-28 a stricter bid-attrition rule (every other bid explicitly rejected as unqualified) and a three-record contract-link sample were added on a separate branch. When the branches were merged on 2026-10-01, the disqualification check above was kept as the scored rule. The per-bid decisions (`bidAttrition`) and linked contract records are shown as context only, with no points. See [linked evidence](linked-evidence.md).
 
 ## Licence
 

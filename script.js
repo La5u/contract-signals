@@ -9,7 +9,7 @@ function isAmbiguousCityContract(c) {
 const HISTORY_START = '2024-01-01';
 const HISTORY_END = '2025-12-31';
 
-const SCORE_VERSION = '3.0';
+const SCORE_VERSION = '3.1';
 
 // Conservative calendar-day upper bound: publication time is not supplied by BOAMP.
 function getBiddingPeriod(contract) {
@@ -102,8 +102,22 @@ const CO_AVOIDANCE_JUSTIFICATIONS = new Set([
   'No existe pluralidad de oferentes en el mercado',
   'Urgencia manifiesta',
 ]);
+// Public-to-public context, outside the index (docs/score-colombia.md).
+// SECOP II publishes no field for the counterparty's legal nature, so the
+// positive evidence is always the buyer's declared justification; names are
+// only used to withhold the label, never to grant it.
+const CO_INTERADMIN_JUSTIFICATIONS = new Set([
+  'Contratos o convenios Interadministrativos (con valor)',
+  'Contratos o convenios Interadministrativos (valor cero)',
+]);
+const CO_PERSON_DOCUMENTS = new Set(['Cédula de Ciudadanía', 'Cédula de Extranjería']);
+// Juntas de acción comunal are community bodies (Ley 2166 de 2021), not public entities.
+const CO_COMMUNITY_NAME = /acci[oó]n\s+comunal|desarrollo\s+comunal|^\s*jac|^\s*junta\b/i;
+const CO_LOAN_OF_USE_OR_CREDIT = new Set(['Comodato', 'Prestamo de uso', 'Operaciones de Crédito Público']);
 const CO_DURATION_ENTRY_MONTHS = 36;
 const CO_DURATION_MAX_MONTHS = 120;
+const CO_EXTENSION_ENTRY = 1;
+const CO_EXTENSION_MAX = 3;
 const CO_REPETITION_ENTRY = 3;
 const CO_REPETITION_MAX = 10;
 const CO_CONCENTRATION_GROUP_MIN = 10;
@@ -211,6 +225,85 @@ function dncpAtCeiling(c) {
   return increase.status === 'known' && increase.count > 0 && Math.abs(increase.percentage - PY_LEGAL_CEILING) <= 0.05;
 }
 
+// France: maintenance, support or licences of an existing software product
+// placed with one vendor. Context only, never points (docs/score-v3.md).
+// Proprietary status and exclusive rights are not verified.
+const FR_SOFTWARE_CPV = /^(48|7221|7225|7226)/;
+const FR_SOFTWARE_TEXT = /progiciel|licences? logicielles?|maint\w*\s+(?:\S+\s+){0,3}(?:du|des|de la|de l’|de l')\s*logiciels?/i;
+const FR_MAINTENANCE_TEXT = /\bmaint(?:enances?)?\b|\bsupport\b|\bassistance\b|mises? à jour|\bTMA\b|\bMCO\b|\blicences?\b|\babonnement|\bsouscription|droit de suivi/i;
+function softwareMaintenanceContext(c) {
+  if (c.dataFamily !== 'boamp' && c.dataFamily !== 'decp') return null;
+  const cpv = String(c.cpv || '').replace(/\D/g, '');
+  const text = typeof c.description === 'string' ? c.description : '';
+  const software = FR_SOFTWARE_CPV.test(cpv) ? 'cpv' : FR_SOFTWARE_TEXT.test(text) ? 'text' : null;
+  if (!software || !(/^72267/.test(cpv) || FR_MAINTENANCE_TEXT.test(text))) return null;
+  const vendor = c.directAward === true ? 'direct'
+    : getLegalContext(c).some(item => item.article === 'R2122-3') ? 'R2122-3'
+    : c.directAward == null && c.offers === 1 ? 'one-offer' : null;
+  return vendor ? { software, vendor } : null;
+}
+
+// Routine-context labels shown next to the signals; never read by scoring.
+function contextLabels(c) {
+  const labels = [];
+  if (softwareMaintenanceContext(c)) labels.push({ id: 'fr-software', short: 'single-vendor software maintenance', long: 'Maintenance, support or licences of an existing software product placed with one vendor (docs/score-v3.md).' });
+  if (c.secop2PublicCounterparty?.labelled) labels.push({ id: 'co-public', short: 'public-to-public agreement', long: 'Agreement declared between public bodies (docs/score-colombia.md).' });
+  if (c.dataFamily === 'dncp' && dncpAtCeiling(c)) labels.push({ id: 'py-ceiling', short: 'amendments at the 20 % ceiling', long: 'Published amendments total 20 % of the original amount, the ceiling in Ley 7021/22 Art. 67 (docs/score-paraguay.md).' });
+  return labels;
+}
+
+// One indicator catalogue for every country (docs/indicators.md). Each jurisdiction keeps
+// its own check ids, eligibility and thresholds; every check maps to one universal kind,
+// which is what the table, the filter and exports show.
+const INDICATOR_KINDS = {
+  'single-offer': 'Single offer in a competitive procedure',
+  'direct-award': 'Award without competition',
+  'repeated-single-offer': 'Repeated single-offer wins by the same supplier',
+  'repeated-direct': 'Repeated awards without competition to the same supplier',
+  'low-competition-rate': 'Buyer with repeated low competition',
+  'concentration': 'Concentrated awards',
+  'disqualified-better-bid': 'Better-ranked bidder disqualified',
+  'short-bidding-period': 'Short bidding period',
+  'late-notice-change': 'Late notice change without deadline extension',
+  'long-duration': 'Long declared duration',
+  'amount-increase': 'Amount increase after award',
+  'term-extension': 'Term extended after award',
+  'late-publication': 'Published long after the contract',
+};
+// Where a kind matches a red flag in a framework auditors already use (docs/indicators.md).
+const KIND_REFERENCES = {
+  'single-offer': 'OCP Cardinal R018 “Single bid received”; single bidding in the Fazekas Corruption Risk Index',
+  'direct-award': 'non-open procedure / no call for tender published in the Fazekas Corruption Risk Index',
+  'short-bidding-period': 'OCP Cardinal R003 “Short submission period”; advertisement period in the Fazekas Corruption Risk Index',
+  'disqualified-better-bid': 'related to OCP Cardinal R036 “Lowest bid disqualified” and R035, and to Ukraine’s State Audit Service risk indicators sas-3-2 and sas-3-5',
+  'repeated-direct': 'related to Ukraine’s State Audit Service risk indicator sas-3-3 (one supplier across many purchase codes)',
+  'concentration': 'related to Ukraine’s State Audit Service risk indicator sas-3-3 and OCP Cardinal R048 “Heterogeneous supplier”',
+};
+const KIND_OF_CHECK = {
+  'single-bid': 'single-offer', 'dncp-single-tenderer': 'single-offer',
+  'direct-award': 'direct-award', 'secop2-plurality-award': 'direct-award', 'dncp-exception-award': 'direct-award',
+  'repeated-direct-award': 'repeated-direct', 'secop2-repeated-plurality': 'repeated-direct', 'dncp-repeated-exception': 'repeated-direct',
+  'dncp-repeated-single-tenderer': 'repeated-single-offer', 'repeated-single-bid': 'low-competition-rate',
+  'supplier-concentration': 'concentration', 'secop2-concentration': 'concentration', 'dncp-concentration': 'concentration',
+  'long-contract': 'long-duration', 'secop2-long-duration': 'long-duration',
+  'amount-increase': 'amount-increase', 'dncp-amount-increase': 'amount-increase',
+  'secop2-term-extension': 'term-extension', 'ua-better-bid-disqualified': 'disqualified-better-bid',
+  'short-bidding-period': 'short-bidding-period', 'late-publication': 'late-publication', 'notice-late-change': 'late-notice-change',
+};
+function indicatorKind(id) {
+  if (INDICATOR_KINDS[id] && !KIND_OF_CHECK[id]) return id;
+  if (KIND_OF_CHECK[id]) return KIND_OF_CHECK[id];
+  const national = /^(?:ua|ted|uk|cl)-(single-offer|direct-award|repeated-single-offer|repeated-direct|concentration)$/.exec(id || '');
+  return national ? national[1] : null;
+}
+
+// Natural persons' national ID numbers are pseudonymised at import (tools/personal_ids.py).
+function isMaskedId(id) { return typeof id === 'string' && id.startsWith('masked-'); }
+function displayIdentifier(s) {
+  const type = s.identifierType || 'Identifier';
+  return isMaskedId(s.id) ? `${type} (a person's ID number, not republished here; pseudonym ${s.id.slice(7, 15)})` : `${type} ${s.id}`;
+}
+
 function indicatorSeverity(weight) {
   if (weight >= 40) return { id: 'extreme', label: 'Very high' };
   if (weight >= 25) return { id: 'high', label: 'High' };
@@ -254,10 +347,50 @@ function graduated(value, start, end, low, high) {
 
 // Eight heuristic checks, with explicit applicability and evaluation states.
 // Official findings and financial amounts are separate evidence/context, not points.
+// Transparency family, the same for every country (docs/indicators.md): the award or
+// contract data published more than 120 days after the contract date. 120 days exceeds
+// every deadline of the regimes covered (EU award notices 30 days, or quarterly grouping
+// plus 30 days for framework and DPS call-offs; UK 30 days; French essential data 2 months).
+const LATE_PUBLICATION_DAYS = 120;
+const LATE_PUBLICATION_MAX_DAYS = 730;
+const PUBLICATION_DATE_MEANING = { decp: 'essential data published on the buyer profile', boamp: 'BOAMP award notice', ted: 'TED award notice' };
+const NO_RELIABLE_CONTRACT_DATE = { fts: 'Find a Tender award notices can carry the date of an original contract signed years earlier (modification notices under PCR 2015 Regulation 72) or of admission to a dynamic purchasing system: the delay would not measure late publication. Out of scope.' };
+function latePublicationCheck(c, excludedReason) {
+  const meaning = PUBLICATION_DATE_MEANING[c.dataFamily];
+  const base = { id: 'late-publication', label: `Published more than ${LATE_PUBLICATION_DAYS} days after the contract`, family: 'transparency' };
+  const make = (applicability, status, weight, reason) => {
+    const severity = indicatorSeverity(weight || 0);
+    return { ...base, applicability, status, weight: status === 'signal' ? weight : null, reason, explanation: reason, severity: severity.id, severityLabel: severity.label };
+  };
+  if (excludedReason) return make('unknown', 'unknown', null, excludedReason);
+  if (!meaning) return make('no', 'not-applicable', null, NO_RELIABLE_CONTRACT_DATE[c.dataFamily] || 'This source publishes no publication date to compare with the contract date: out of scope.');
+  if (c.findingScope === 'aggregate' || (c.consultation && !c.contractId) || c.noticeEvidence && !c.date) return make('no', 'not-applicable', null, 'Not an individual awarded contract with a contract date.');
+  if (!c.date || !c.publicationDate) return make('yes', 'unknown', null, 'Contract date or publication date missing: delay not assessable.');
+  const days = Math.round((Date.parse(c.publicationDate) - Date.parse(c.date)) / 864e5);
+  if (!Number.isFinite(days)) return make('yes', 'unknown', null, 'Unreadable date: delay not assessable.');
+  if (days < 0) return make('yes', 'unknown', null, `Publication date (${c.publicationDate}) before the contract date (${c.date}): inconsistent dates, not assessed.`);
+  if (days <= LATE_PUBLICATION_DAYS) return make('yes', 'clear', null, `${days} day(s) between the contract date (${c.date}) and the ${meaning} (${c.publicationDate}): within ${LATE_PUBLICATION_DAYS} days. Not a conclusion of regularity.`);
+  const weight = graduated(days, LATE_PUBLICATION_DAYS, LATE_PUBLICATION_MAX_DAYS, 8, 16);
+  return make('yes', 'signal', weight, `${days} days between the contract date (${c.date}) and the ${meaning} (${c.publicationDate}). Above ${LATE_PUBLICATION_DAYS} days, beyond every legal deadline of the regimes covered: 8 points, linear to 16 at ${LATE_PUBLICATION_MAX_DAYS} days, in the transparency family. Late publication hides a contract from scrutiny while it runs; it can also be a clerical delay.`);
+}
+
 function getAssessment(c) {
   if (c.assessmentMode === 'browse') return { checks: [], applicable: 0, evaluated: 0, unknown: 0,
     unknownApplicability: 0, notApplicable: 0, signals: 0,
     excludedReason: 'Browse-only import: no jurisdiction or scoring eligibility has been established.' };
+  const base = getAssessmentLocal(c);
+  const late = latePublicationCheck(c, base.excludedReason);
+  const checks = [...base.checks, late];
+  return { ...base, checks,
+    applicable: base.applicable + (late.applicability === 'yes' ? 1 : 0),
+    evaluated: base.evaluated + (late.status === 'signal' || late.status === 'clear' ? 1 : 0),
+    unknown: base.unknown + (late.applicability === 'yes' && late.status === 'unknown' ? 1 : 0),
+    unknownApplicability: base.unknownApplicability + (late.applicability === 'unknown' ? 1 : 0),
+    notApplicable: base.notApplicable + (late.status === 'not-applicable' ? 1 : 0),
+    signals: base.signals + (late.status === 'signal' ? 1 : 0) };
+}
+
+function getAssessmentLocal(c) {
   if (c.dataFamily === 'secop2') return getAssessmentSecop2(c);
   if (c.dataFamily === 'dncp') return getAssessmentDncp(c);
   if (NATIONAL_FAMILIES[c.dataFamily]) return getAssessmentNational(c);
@@ -318,10 +451,10 @@ function getAssessment(c) {
     notApplicable: checks.filter(r => r.status === 'not-applicable').length,
     signals: checks.filter(r => r.status === 'signal').length, excludedReason };
 }
-// SECOP II assessment: four jurisdiction-specific checks plus the four
+// SECOP II assessment: five jurisdiction-specific checks plus the three
 // French checks that stay out of scope here (no offers table, no
-// publication–deadline chronology, no published amendment history).
-// Always eight checks, same status vocabulary as the French method.
+// publication–deadline chronology, no published amount additions).
+// Eight local checks (a ninth, universal transparency check is added by getAssessment).
 function getAssessmentSecop2(c) {
   const excludedReason = c.initialConflicts?.length || c.modificationConflicts?.length ? 'Conflicting versions: calculations excluded.' :
     c.identityAmbiguous ? 'Duplicate contract identifier: calculations excluded.' :
@@ -374,8 +507,18 @@ function getAssessmentSecop2(c) {
     'No offers/proposals table in this SECOP II extract: the number of offers was never imported; out of scope.');
   add('short-bidding-period', 'Short bidding period', 'competition', 'no', false, false, null,
     'No publication–deadline chronology in this extract: bidding period out of scope.');
-  add('amount-increase', 'Relative increase in declared amount', 'execution', 'no', false, false, null,
-    'No published amendment history with comparable amounts in this extract: increase out of scope. Declared COP amounts add no weight.');
+  // Term extension: published dias_adicionados against the original declared
+  // term. The published end date is not always updated after an extension, so
+  // it is not used. Amount additions are not published: out of scope.
+  const extensionRatio = c.daysAdded != null && durationMonths > 0 ? c.daysAdded / (durationMonths * 30.4375) : null;
+  add('secop2-term-extension', `Declared term more than doubled by extensions (> ${CO_EXTENSION_ENTRY * 100} %)`, 'execution',
+    c.daysAdded != null && typeof durationText === 'string' && durationText.trim() ? 'yes' : 'unknown',
+    extensionRatio != null, extensionRatio != null && extensionRatio > CO_EXTENSION_ENTRY,
+    graduated(extensionRatio || 0, CO_EXTENSION_ENTRY, CO_EXTENSION_MAX, 8, 40),
+    c.daysAdded == null ? 'Days added (dias_adicionados) not published for this row: applicability not established.' :
+    extensionRatio == null ? `${c.daysAdded} day(s) added, but the declared duration “${durationText || '—'}” is not comparable to days: not assessed.` :
+    extensionRatio > CO_EXTENSION_ENTRY ? `${c.daysAdded} day(s) added to a declared term of ${durationMonths} months (+${Math.round(extensionRatio * 100)} %). Strictly above +${CO_EXTENSION_ENTRY * 100} %: 8 points, linear to 40 at +${CO_EXTENSION_MAX * 100} %. Editorial threshold; an extension can be lawful and necessary (weather, design changes, budget calendars). Amount additions are not published in this extract.` :
+    `${c.daysAdded} day(s) added to a declared term of ${durationMonths} months (+${Math.round(extensionRatio * 100)} %): not above +${CO_EXTENSION_ENTRY * 100} %. Not a conclusion of regularity.`);
   add('repeated-single-bid', 'Repeated low competition', 'competition', 'no', false, false, null,
     'Depends on offer counts, absent from this extract: repetition of low competition out of scope.');
   const applicable = checks.filter(r => r.applicability === 'yes').length;
@@ -386,7 +529,7 @@ function getAssessmentSecop2(c) {
     signals: checks.filter(r => r.status === 'signal').length, excludedReason };
 }
 // DNCP assessment: six Paraguayan checks plus two kept out of scope.
-// Always eight checks, same status vocabulary as the French method.
+// Eight local checks (a ninth, universal transparency check is added by getAssessment).
 function getAssessmentDncp(c) {
   const excludedReason = c.dataStatus === 'unverified' ? 'Unverified record: calculations excluded.' : null;
   const checks = [];
@@ -467,11 +610,22 @@ const NATIONAL_FAMILIES = {
     directLabel: 'Negotiated without prior publication', directReason: 'eForms procedure code neg-wo-call',
     outOfScope: { directKind: 'Procedure code outside the known competitive/direct list: not assessed.',
       increase: 'Contract modification notices are separate TED notices, not imported: increase out of scope.' } },
+  fts: { prefix: 'uk', doc: 'docs/score-uk.md', notScored: new Set(), category: c => /^\d{8}/.test(c.cpv || '') ? c.cpv.slice(0, 2) : null,
+    directLabel: 'Award without prior publication', directReason: 'OCDS procurementMethod limited',
+    outOfScope: { directKind: 'Procurement method not published in this notice: not assessed.',
+      increase: 'Contract change notices are separate Find a Tender notices, not imported: increase out of scope.' } },
+  chile: { prefix: 'cl', doc: 'docs/score-chile.md', notScored: new Set(), category: c => c.category || null,
+    directLabel: 'Direct deal (trato directo)', directReason: 'trato directo',
+    directOutOfScope: 'This source lists licitaciones only: direct deals (trato directo) are published as purchase orders, not imported. Out of scope, not clear.',
+    outOfScope: { directKind: 'Procedure name not published: not assessed.',
+      increase: 'Contract modifications are not in this OCDS source: increase out of scope.' } },
 };
 function nationalSupplierIdentity(c) {
-  if (c.supplierIds?.length !== 1) return null;
-  const { id, identifierType } = c.supplierIds[0];
-  return ['EDRPOU', 'RNOKPP', 'NIF', 'CUI'].includes(identifierType) && typeof id === 'string' && id.trim() ? `${identifierType}:${id.trim()}` : null;
+  // Find a Tender rows carry the platform party id, plus a Companies House number when published.
+  const ids = c.dataFamily === 'fts' ? (c.supplierIds || []).filter(x => x.identifierType === 'GB-FTS') : c.supplierIds || [];
+  if (ids.length !== 1) return null;
+  const { id, identifierType } = ids[0];
+  return ['EDRPOU', 'RNOKPP', 'NIF', 'CUI', 'ICO', 'GB-FTS', 'CL-RUT'].includes(identifierType) && typeof id === 'string' && id.trim() ? `${identifierType}:${id.trim()}` : null;
 }
 function nationalOffersKnown(c) { return Number.isInteger(c.offers) && c.offers > 0; }
 function nationalSingle(c) { return c.procedureDirect === false && c.offers === 1; }
@@ -491,25 +645,28 @@ function getAssessmentNational(c) {
   add(`${p}-single-offer`, 'Single offer in a competitive procedure', 'competition', competitive ? 'yes' : direct ? 'no' : unknownKind, nationalOffersKnown(c), c.offers === 1, 12,
     direct ? 'Procedure without competition: one offer is expected, not a signal.' : !competitive ? spec.outOfScope.directKind :
     !nationalOffersKnown(c) ? (c.offersNote || 'Number of offers for this lot not published.') : `${c.offers} offer(s) published for this lot (${c.procedure}). One offer: 12 points, all amounts. Admissibility is not assessed.`);
-  add(`${p}-direct-award`, `Award without competition (${spec.directLabel})`, 'competition', c.procedureDirect == null ? unknownKind : 'yes', c.procedureDirect != null, direct, 18,
-    c.procedureDirect == null ? spec.outOfScope.directKind : direct ? `${c.procedure} (${spec.directReason}): award without a competitive call. 18 points, all amounts. A lawful ground may apply (urgency, exclusivity, failed call); not assessed here.` : `Competitive procedure (${c.procedure}): no direct-award signal.`);
+  add(`${p}-direct-award`, `Award without competition (${spec.directLabel})`, 'competition', spec.directOutOfScope ? 'no' : c.procedureDirect == null ? unknownKind : 'yes', c.procedureDirect != null, direct, 18,
+    spec.directOutOfScope ? spec.directOutOfScope : c.procedureDirect == null ? spec.outOfScope.directKind : direct ? `${c.procedure} (${spec.directReason}): award without a competitive call. 18 points, all amounts. A lawful ground may apply (urgency, exclusivity, failed call); not assessed here.` : `Competitive procedure (${c.procedure}): no direct-award signal.`);
   const rs = c.nationalRepeatedSingle;
   add(`${p}-repeated-single-offer`, 'Repeated single-offer awards to the same supplier', 'competition', nationalSingle(c) ? 'yes' : competitive && nationalOffersKnown(c) || direct ? 'no' : unknownKind, Boolean(rs), rs?.count >= 3,
     graduated(rs?.count || 0, 3, 10, 12, 40), !nationalSingle(c) ? 'Not a single-offer competitive award: outside the repetition scope.' : rs ? `Same buyer and supplier ${supplier}: ${rs.count} distinct procedure(s) in this cohort won with a single offer. From 12 points at 3, linear to 40 at 10.` : 'Supplier identifier not usable (not a national registration number): repetition not assessable.');
   const rd = c.nationalRepeatedDirect;
-  add(`${p}-repeated-direct`, 'Repeated awards without competition to the same supplier', 'competition', direct ? 'yes' : c.procedureDirect == null ? unknownKind : 'no', Boolean(rd), rd?.count >= 3,
-    graduated(rd?.count || 0, 3, 10, 18, 60), !direct ? 'Not an award without competition: outside the repetition scope.' : rd ? `Same buyer and supplier ${supplier}: ${rd.count} distinct procedure(s) without competition in this cohort. From 18 points at 3, linear to 60 at 10. Lawful grounds may apply to each.` : 'Supplier identifier not usable: repetition not assessable.');
+  add(`${p}-repeated-direct`, 'Repeated awards without competition to the same supplier', 'competition', spec.directOutOfScope ? 'no' : direct ? 'yes' : c.procedureDirect == null ? unknownKind : 'no', Boolean(rd), rd?.count >= 3,
+    graduated(rd?.count || 0, 3, 10, 18, 60), spec.directOutOfScope ? spec.directOutOfScope : !direct ? 'Not an award without competition: outside the repetition scope.' : rd ? `Same buyer and supplier ${supplier}: ${rd.count} distinct procedure(s) without competition in this cohort. From 18 points at 3, linear to 60 at 10. Lawful grounds may apply to each.` : 'Supplier identifier not usable: repetition not assessable.');
   const k = c.nationalConcentration;
   add(`${p}-concentration`, 'Concentrated awards within a category', 'competition', supplier ? 'yes' : 'unknown', Boolean(k?.sufficient), k?.share >= 0.6,
     graduated(k?.share || 0, 0.6, 1, 12, 40), k ? `Same buyer and category ${k.category}: ${k.wins}/${k.known} procedures won by this supplier, out of ${k.total} (${Math.round(k.coverage * 100)} % with an identified winner; lots of one procedure count once). Minimum 10 and 80 %; from 12 points at 60 % to 40 at 100 %. ${k.sufficient ? '' : 'Insufficient sample or coverage: not assessed.'}` : 'Supplier identity or category unknown: applicability not established.');
-  if (c.dataFamily === 'prozorro') {
-    const attrition = c.bidAttrition;
-    add('ua-bid-attrition', 'Other submitted bids explicitly disqualified', 'competition', !competitive || attrition?.status === 'not-applicable' ? 'no' : 'yes',
-      ['signal', 'clear'].includes(attrition?.status), attrition?.status === 'signal', 5,
-      attrition?.reason || 'Per-bid award decisions are not fully linked; not assessed.');
-  }
   add('amount-increase', 'Relative increase in declared amount', 'execution', 'no', false, false, null, spec.outOfScope.increase);
-  add('short-bidding-period', 'Short bidding period', 'competition', 'no', false, false, null, 'No validated minimum period for this jurisdiction in this method: out of scope.');
+  if (c.dataFamily === 'prozorro') {
+    // Prozorro creates awards in ranking order: an unsuccessful award before the
+    // winning one means a better-ranked bid was set aside (docs/score-ukraine.md).
+    const dq = c.disqualifiedBefore;
+    add('ua-better-bid-disqualified', 'Better-ranked bidder disqualified before the award', 'competition', competitive ? 'yes' : direct ? 'no' : unknownKind, Number.isInteger(dq), dq > 0, 12,
+      !competitive ? (direct ? 'Procedure without competition: no ranking of bids.' : spec.outOfScope.directKind) :
+      !Number.isInteger(dq) ? 'Award history without dates: disqualifications not assessable.' :
+      dq > 0 ? `${dq} better-ranked bidder(s) on this lot had their award declared unsuccessful before this award. 12 points, all amounts. Disqualification is often lawful (missing documents, non-compliant offer); read the award decisions linked on the Prozorro page.` :
+      'No better-ranked bid set aside before this award on this lot.');
+  } else add('short-bidding-period', 'Short bidding period', 'competition', 'no', false, false, null, 'No validated minimum period for this jurisdiction in this method: out of scope.');
   add('long-contract', 'Long declared duration', 'execution', 'no', false, false, null, 'No duration threshold validated for this jurisdiction: out of scope.');
   const applicable = checks.filter(r => r.applicability === 'yes').length;
   const evaluated = checks.filter(r => r.status === 'signal' || r.status === 'clear').length;
@@ -523,12 +680,14 @@ function hasAdjudicatedCorruption(contract) {
 function hasReportedInvestigation(contract) {
   return Array.isArray(contract.investigationReports) && contract.investigationReports.length > 0;
 }
-function getIndicators(contract) { return getAssessment(contract).checks.filter(r => r.status === 'signal'); }
+function getIndicators(contract) {
+  return getAssessment(contract).checks.filter(r => r.status === 'signal').map(r => ({ ...r, kind: indicatorKind(r.id), kindLabel: INDICATOR_KINDS[indicatorKind(r.id)] || r.label }));
+}
 function getScoreBreakdown(contract) {
   const assessment = getAssessment(contract);
-  const families = { competition: 0, execution: 0 };
+  const families = { competition: 0, execution: 0, transparency: 0 };
   for (const r of assessment.checks) if (r.status === 'signal') families[r.family] = Math.max(families[r.family], r.weight);
-  const score = assessment.evaluated ? Math.round(Math.min(100, families.competition + families.execution) * 10) / 10 : null;
+  const score = assessment.evaluated ? Math.round(Math.min(100, families.competition + families.execution + families.transparency) * 10) / 10 : null;
   return { ...families, score, assessment };
 }
 function getVigilanceScore(contract) { return getScoreBreakdown(contract).score; }
@@ -562,7 +721,7 @@ function getAmountEvolution(contract) {
 
 // Retrospective context on the COMPLETE loaded cohort, never on filtered/page rows.
 function prepareContracts(data) {
-  const contracts = validateContracts(data).map(c => ({ ...c, competitionContext: null, supplierContext: null, identityAmbiguous: false, secop2Concentration: null, secop2Repetition: null, dncpConcentration: null, dncpRepeatedSingle: null, dncpRepeatedException: null, nationalConcentration: null, nationalRepeatedSingle: null, nationalRepeatedDirect: null }));
+  const contracts = validateContracts(data).map(c => ({ ...c, competitionContext: null, supplierContext: null, identityAmbiguous: false, secop2Concentration: null, secop2Repetition: null, secop2PublicCounterparty: null, dncpConcentration: null, dncpRepeatedSingle: null, dncpRepeatedException: null, nationalConcentration: null, nationalRepeatedSingle: null, nationalRepeatedDirect: null }));
   const groups = new Map();
   const supplierGroups = new Map();
   const identityCounts = new Map();
@@ -653,6 +812,24 @@ function prepareContracts(data) {
   }
   for (const group of coRepetitionGroups.values()) {
     for (const c of group) c.secop2Repetition = { count: group.length };
+  }
+  // SECOP II public-to-public context (no points): a declared interadministrative
+  // agreement, or a comodato / public-credit contract whose counterparty document
+  // is the counterparty of such an agreement elsewhere in the cohort.
+  const coPublicAgreements = new Map();
+  for (const c of contracts) {
+    if (c.dataFamily !== 'secop2' || !CO_INTERADMIN_JUSTIFICATIONS.has(c.procedureJustification)) continue;
+    const supplierId = secop2SupplierIdentity(c);
+    const withheld = supplierId == null ? 'no-document' : CO_PERSON_DOCUMENTS.has(c.supplierIds[0].identifierType) ? 'person-document'
+      : CO_COMMUNITY_NAME.test(c.supplier || '') ? 'community-body' : null;
+    c.secop2PublicCounterparty = withheld ? { labelled: false, withheld } : { labelled: true, basis: 'declared-interadministrative' };
+    if (!withheld && !coPublicAgreements.has(supplierId)) coPublicAgreements.set(supplierId, c.contractId);
+  }
+  for (const c of contracts) {
+    if (c.dataFamily !== 'secop2' || c.secop2PublicCounterparty) continue;
+    if (!CO_LOAN_OF_USE_OR_CREDIT.has(c.contractType) && !CO_LOAN_OF_USE_OR_CREDIT.has(c.procedureJustification)) continue;
+    const agreement = coPublicAgreements.get(secop2SupplierIdentity(c));
+    if (agreement) c.secop2PublicCounterparty = { labelled: true, basis: 'counterparty-of-agreement', agreementContractId: agreement };
   }
   // DNCP: buyer/category concentration and repetition per buyer+supplier,
   // counted in distinct processes (OCIDs) so multi-contract processes do not inflate.
@@ -852,7 +1029,7 @@ function validateContracts(data) {
     if (c.findingScope != null && !['contract', 'aggregate'].includes(c.findingScope)) throw new Error(`${c.id} : invalid finding scope.`);
     if (c.amountQualifier != null && !['at-least', 'more-than', 'approximate'].includes(c.amountQualifier)) throw new Error(`${c.id} : invalid amount qualifier.`);
     if (c.assessmentMode != null && !['browse', 'french'].includes(c.assessmentMode)) throw new Error(`${c.id} : invalid import assessment mode.`);
-    if (c.dataFamily != null && !['decp', 'boamp', 'audit', 'secop2', 'dncp', 'prozorro', 'ted'].includes(c.dataFamily)) throw new Error(`${c.id} : invalid data family.`);
+    if (c.dataFamily != null && !['decp', 'boamp', 'audit', 'secop2', 'dncp', 'prozorro', 'ted', 'fts', 'chile'].includes(c.dataFamily)) throw new Error(`${c.id} : invalid data family.`);
     if (c.buyerSiret != null && !/^\d{14}$/.test(c.buyerSiret)) throw new Error(`${c.id} : invalid buyer SIRET.`);
     if (c.supplierIds != null && (!Array.isArray(c.supplierIds) || c.supplierIds.some(s => !s || typeof s.id !== 'string' || (s.identifierType != null && typeof s.identifierType !== 'string')))) throw new Error(`${c.id} : invalid supplier identifiers.`);
     if (c.supplierProfiles != null) {
@@ -926,7 +1103,7 @@ function selectContracts(contracts, { search = '', minimum = 0, minScore = 0, fl
     const noticeMatch = !noticeContext || Boolean(evidence && (noticeContext === 'criteria' ? evidence.awardCriteria.length : noticeContext === 'explanation' ? evidence.procedureDescription || evidence.justifications.some(j => j.text) : noticeContext === 'correction' ? evidence.kind === 'correction' : noticeContext === 'ted' ? evidence.ted.length : false));
     const text = normalize([c.id, c.buyer, c.buyerSiret, c.supplier, c.description, c.procedure, c.cpv, c.contractId, c.awardId, c.buyerId, c.lotId, c.noticeId, ...(c.supplierProfiles || []).map(p => p.name), c.consultation?.procedureReference, ...(c.consultation?.notices || []).map(n => n.id), ...(c.consultation?.lots || []).map(l => `${l.id || ''} ${l.description || ''}`), ...projectText, ...noticeText, ...(c.supplierIds || []).map(s => `${s.id} ${s.siren || ''}`)].join(' '));
     const citations = getLegalContext(c);
-    const legalMatch = !legal || (legal === 'py-ceiling' ? dncpAtCeiling(c) : legal === 'py-complaint' ? Boolean(c.complaints?.length) : legal === 'direct' ? c.directAward === true : legal === 'cited' ? citations.length > 0 : citations.some(item => item.article === legal));
+    const legalMatch = !legal || (legal === 'py-ceiling' ? dncpAtCeiling(c) : legal === 'py-complaint' ? Boolean(c.complaints?.length) : legal === 'co-public' ? Boolean(c.secop2PublicCounterparty?.labelled) : legal === 'fr-software' ? Boolean(softwareMaintenanceContext(c)) : legal === 'direct' ? c.directAward === true : legal === 'cited' ? citations.length > 0 : citations.some(item => item.article === legal));
     const evaluated = getAssessment(c);
     const assessmentMatch = !assessment || (assessment === 'unevaluated' ? scoreFor(c) == null : assessment === 'zero' ? scoreFor(c) === 0 : assessment === 'partial' ? evaluated.unknown > 0 || evaluated.unknownApplicability > 0 : false);
     const sectorMatch = !sector || getSector(c).code === sector;
@@ -934,17 +1111,19 @@ function selectContracts(contracts, { search = '', minimum = 0, minScore = 0, fl
     return terms.every(term => text.includes(term)) && assessmentMatch && noticeMatch && legalMatch && sectorMatch && projectMatch &&
       (minimum <= 0 || (c.amount != null && c.amount >= minimum)) && (minScore <= 0 || (scoreFor(c) != null && scoreFor(c) >= minScore)) &&
       (!flagged || getIndicators(c).length > 0) && (!official || c.officialFinding === true) && (!adjudicated || hasAdjudicatedCorruption(c)) && (!investigation || hasReportedInvestigation(c)) &&
-      (!indicator || (indicator === 'official-finding' ? c.officialFinding === true : getIndicators(c).some(i => i.id === indicator)));
+      (!indicator || (indicator === 'official-finding' ? c.officialFinding === true : getIndicators(c).some(i => i.kind === indicatorKind(indicator))));
   }).sort((a, b) => {
     const direction = ['score-asc', 'amount-asc', 'date-asc', 'publication-asc', 'indicators-asc', 'offers'].includes(sort) ? 1 : ['sector', 'sector-desc', 'buyer', 'buyer-desc', 'supplier', 'supplier-desc'].includes(sort) ? (sort.endsWith('-desc') ? -1 : 1) : -1;
-    const field = sort.startsWith('score') ? 'score' : sort.startsWith('amount') ? 'amount' : sort.startsWith('date') ? 'date' : sort.startsWith('indicators') ? 'indicators' : sort.startsWith('publication') ? 'publication' : sort.startsWith('sector') ? 'sector' : sort.startsWith('buyer') ? 'buyer' : sort.startsWith('supplier') ? 'supplier' : sort.startsWith('offers') ? 'offers' : sort;
-    const raw = c => field === 'score' ? scoreFor(c) : field === 'amount' ? c.amount : field === 'date' ? (c.date ? Date.parse(c.date) : null) :
+    const field = sort === 'recent-signal' ? 'recent-signal' : sort.startsWith('score') ? 'score' : sort.startsWith('amount') ? 'amount' : sort.startsWith('date') ? 'date' : sort.startsWith('indicators') ? 'indicators' : sort.startsWith('publication') ? 'publication' : sort.startsWith('sector') ? 'sector' : sort.startsWith('buyer') ? 'buyer' : sort.startsWith('supplier') ? 'supplier' : sort.startsWith('offers') ? 'offers' : sort;
+    const raw = c => field === 'recent-signal' ? (scoreFor(c) > 0 && c.date ? Date.parse(c.date) : null) : field === 'score' ? scoreFor(c) : field === 'amount' ? c.amount : field === 'date' ? (c.date ? Date.parse(c.date) : null) :
       field === 'publication' ? (c.publicationDate ? Date.parse(c.publicationDate) : null) : field === 'sector' ? getSector(c).label : field === 'buyer' ? c.buyer : field === 'supplier' ? c.supplier :
       field === 'indicators' ? (scoreFor(c) == null ? null : getIndicators(c).length) :
       field === 'official' ? (c.officialFinding === true ? 1 : null) : field === 'offers' ? c.offers : field === 'increase' ? increaseFor(c) : null;
     const av = raw(a), bv = raw(b);
     const nullOrder = av == null ? (bv == null ? 0 : 1) : bv == null ? -1 : 0;
     if (nullOrder) return nullOrder;
+    // Amounts are never compared across currencies: group by currency, then amount.
+    if (field === 'amount' && (a.currency || 'EUR') !== (b.currency || 'EUR')) return collator.compare(a.currency || 'EUR', b.currency || 'EUR');
     if (field === 'sector' && av === 'Sector not specified' && bv !== av) return 1;
     if (field === 'sector' && bv === 'Sector not specified' && av !== bv) return -1;
     const comparison = typeof av === 'string' ? collator.compare(av, bv) : av === bv ? 0 : av > bv ? 1 : -1;
@@ -965,7 +1144,7 @@ function pageSummaryForCopy(rows, { dataset, page, totalPages, totalResults }) {
     lines.push(`[${index + 1}] ${c.id}`, `Buyer: ${c.buyer}`, `Supplier: ${c.supplier || 'not specified'}${names.length ? ` (current register name: ${names.join('; ')})` : ''}`,
       `Subject: ${c.description}`, `Date (source field; see record for meaning): ${c.date || 'unknown'}`,
       `Declared amount: ${c.amount == null ? 'unknown' : `${c.amount} ${recordCurrency(c) || '(currency unknown)'}`} (not an audited payment)`,
-      `Index: ${score == null ? 'Not assessed' : `${score}/100`} · Heuristic signals: ${signals.length ? signals.map(i => i.label).join('; ') : score == null ? 'not assessed' : 'none among assessed checks'}`,
+      `Index: ${score == null ? 'Not assessed' : `${score}/100`} · Heuristic signals: ${signals.length ? signals.map(i => i.kindLabel).join('; ') : score == null ? 'not assessed' : 'none among assessed checks'}`,
       `Audit finding: ${c.officialFinding === true ? 'documented, separate from index' : 'not linked in this extract'} · Reported investigation: ${hasReportedInvestigation(c) ? 'reported at the time; current status unknown' : 'not linked in this extract'}`,
       `Record source: ${source || 'not available'}`);
     for (const link of verificationLinks(c)) if (link.url !== source && link.url !== safeSource(c.reportUrl)) lines.push(`Verify: ${link.label} · ${link.url}`);
@@ -1011,10 +1190,60 @@ function supplierNames(contract) {
   return (contract.supplierProfiles || []).map(p => p.name);
 }
 
+// Buyer and supplier profiles (never cross datasets; amounts never summed).
+function profileScope(c) { return c.datasetKey || c.cohortId || c.dataFamily || 'data'; }
+function profileKey(c, role) {
+  if (role === 'buyer') {
+    const id = c.buyerSiret || c.buyerNit || c.buyerId || c.buyer;
+    return id ? `${profileScope(c)}|${id}` : null;
+  }
+  const id = c.dataFamily === 'secop2' ? secop2SupplierIdentity(c) : c.dataFamily === 'dncp' ? dncpSupplierIdentity(c)
+    : NATIONAL_FAMILIES[c.dataFamily] ? nationalSupplierIdentity(c) : getSupplierIdentity(c);
+  return id ? `${profileScope(c)}|${id}` : null;
+}
+function buildProfile(contracts, role, key) {
+  const rows = contracts.filter(c => profileKey(c, role) === key);
+  if (!rows.length) return null;
+  const scope = contracts.filter(c => profileScope(c) === profileScope(rows[0]));
+  const rate = set => {
+    const out = {};
+    for (const c of set) for (const check of getAssessment(c).checks) {
+      const kind = indicatorKind(check.id);
+      if (!kind || (check.status !== 'signal' && check.status !== 'clear')) continue;
+      out[kind] ??= { signals: 0, evaluated: 0 };
+      out[kind].evaluated++;
+      if (check.status === 'signal') out[kind].signals++;
+    }
+    return out;
+  };
+  const other = role === 'buyer' ? 'supplier' : 'buyer';
+  const counterparts = new Map();
+  for (const c of rows) {
+    const name = (other === 'supplier' ? (supplierNames(c)[0] || c.supplier) : c.buyer) || 'not published';
+    const entry = counterparts.get(name) || { name, contracts: 0, flagged: 0 };
+    entry.contracts++;
+    if (getVigilanceScore(c) > 0) entry.flagged++;
+    counterparts.set(name, entry);
+  }
+  const currencies = {};
+  for (const c of rows) if (c.amount != null) {
+    const cur = c.currency || 'EUR';
+    currencies[cur] ??= { contracts: 0, largest: 0 };
+    currencies[cur].contracts++;
+    currencies[cur].largest = Math.max(currencies[cur].largest, c.amount);
+  }
+  const dates = rows.map(c => c.date).filter(Boolean).sort();
+  const scores = rows.map(getVigilanceScore);
+  return { role, key, name: role === 'buyer' ? rows[0].buyer : (supplierNames(rows[0])[0] || rows[0].supplier), country: rows[0].datasetCountry || null,
+    ids: new Set(rows.map(c => c.id)), contracts: rows.length, assessed: scores.filter(x => x != null).length, flagged: scores.filter(x => x > 0).length,
+    firstDate: dates[0] || null, lastDate: dates[dates.length - 1] || null, kinds: rate(rows), baseline: rate(scope), scopeSize: scope.length,
+    counterparts: [...counterparts.values()].sort((a, b) => b.contracts - a.contracts || b.flagged - a.flagged || a.name.localeCompare(b.name)).slice(0, 10), currencies };
+}
+
 // Export the whole filtered view as flat records. Unknown stays empty, never zero.
 const EXPORT_CAVEAT = 'Published declarations and heuristic signals only. A flag is not proof of wrongdoing; zero or no label is not clearance. Declared amounts are not audited payments; never sum amounts across datasets or currencies. Current supplier names are a register snapshot, not historical names.';
 const EXPORT_COLUMNS = ['id', 'date', 'buyer', 'buyerId', 'supplier', 'supplierCurrentName', 'supplierIds', 'description', 'cpv', 'sector', 'procedure',
-  'amount', 'currency', 'offers', 'durationMonths', 'index', 'indexStatus', 'signals', 'officialFinding', 'investigationReported', 'dataStatus', 'source', 'verifyUrls'];
+  'amount', 'currency', 'offers', 'durationMonths', 'index', 'indexStatus', 'signals', 'context', 'officialFinding', 'investigationReported', 'dataStatus', 'source', 'verifyUrls'];
 
 function exportRecord(c) {
   const score = getVigilanceScore(c);
@@ -1024,7 +1253,8 @@ function exportRecord(c) {
     supplierIds: (c.supplierIds || []).map(s => `${s.identifierType || 'identifier'} ${s.id}`).join('; ') || null,
     description: c.description, cpv: c.cpv ?? null, sector: getSector(c).label, procedure: c.procedure ?? null,
     amount: c.amount ?? null, currency: c.amount == null ? null : recordCurrency(c), offers: c.offers ?? null, durationMonths: c.durationMonths ?? null,
-    index: score, indexStatus: score == null ? 'not assessed' : 'assessed', signals: getIndicators(c).map(i => i.label).join('; ') || null,
+    index: score, indexStatus: score == null ? 'not assessed' : 'assessed', signals: getIndicators(c).map(i => i.kindLabel).join('; ') || null,
+    context: contextLabels(c).map(l => l.short).join('; ') || null,
     officialFinding: c.officialFinding === true, investigationReported: hasReportedInvestigation(c), dataStatus: c.dataStatus,
     source: safeSource(c.processUrl) || safeSource(c.source) || null,
     verifyUrls: verificationLinks(c).map(l => l.url).join(' ') || null
@@ -1083,6 +1313,8 @@ function verificationLinks(c) {
     for (const complaint of c.complaints || []) for (const d of complaint.documents) add(d.url, `DNCP resolution on complaint ${complaint.id} · ${d.title || 'PDF'}${d.date ? ` · ${d.date}` : ''}`);
   }
   if (c.dataFamily === 'secop2') add(c.processUrl, 'Process page on SECOP II');
+  if (c.dataFamily === 'chile') add(c.portalUrl, 'Tender page on Mercado Público (bids, evaluation and award documents; address built from the tender code)');
+  if (c.dataFamily === 'fts') add(c.portalUrl, 'Notice page on Find a Tender (full award notice; address built from the notice ID)');
   if (c.dataFamily === 'prozorro') {
     add(c.portalUrl, 'Tender page on prozorro.gov.ua (bids, awards, contract documents; address built from the tender ID)');
     add(c.linkedContract?.url, 'Linked official contract record · separately dated snapshot');
@@ -1099,7 +1331,7 @@ function verificationLinks(c) {
 // Identifiers to paste into the official portal's own search, if a link breaks.
 function verificationIdentifiers(c) {
   return [['OCID', c.ocid], ['Contract', c.contractId], ['Award', c.awardId], ['Process', c.processId], ['Buyer', c.buyerId || c.buyerSiret || c.buyerNit],
-    ...(c.supplierIds || []).map(s => [s.identifierType || 'Supplier', s.id])].filter(([, v]) => typeof v === 'string' && v.trim());
+    ...(c.supplierIds || []).filter(s => !isMaskedId(s.id)).map(s => [s.identifierType || 'Supplier', s.id])].filter(([, v]) => typeof v === 'string' && v.trim());
 }
 
 function renderNoticeEvidence(cell, c) {
@@ -1167,8 +1399,12 @@ function startExplorer() {
     paraguay: { path: 'data/paraguay-dncp.json', coverage: 'data/paraguay-dncp-coverage.json', sources: { publisher: 'Dirección Nacional de Contrataciones Públicas (DNCP), Paraguay', links: [['Public procurement portal · contrataciones.gov.py', 'https://www.contrataciones.gov.py/'], ['Open data and API documentation', 'https://www.contrataciones.gov.py/datos/api/v3/doc/'], ['Legal notice and licence (the OCDS packages cite /datos/legal, which now returns 404)', 'https://www.contrataciones.gov.py/datos/aviso-legal']], licence: 'CC BY 4.0', raw: 'data/paraguay-dncp/raw/', reproduce: 'python tools/import-paraguay-dncp.py --cohort fernando --offline', collected: 'Every process of the buyer whose call was published 2024-09-01 → 2025-09-01, then each full OCDS record by OCID.' }, note: 'Paraguay · DNCP OCDS pilot · Municipalidad de Fernando de la Mora only. Calls published 2024-09-01 → 2025-09-01: 88 process records, 84 linked contract entries retained; 2 contract entries excluded, 4 other processes without eligible contracts. PYG, no conversion. Source contract.period.startDate is not a signature date; no published dateSigned on retained rows. Raw OCDS records retained, 80 entries link a document typed contractSigned, contents not independently reviewed. Paraguayan checks only (docs/score-paraguay.md), fixed after reading this pilot’s field distributions: single tenderer in a competitive procedure, award by exception (CVE), their repetition per supplier, concentration by category, amount increase > 20 %. The 2 excluded entries are the separate records of 2 amount amendments (+20.0 %, +19.99 %), kept on their parent contracts. No French/Colombian rules applied. Not a national sample or payment audit.' },
     paraguay3: { path: 'data/paraguay-dncp-3buyers.json', coverage: 'data/paraguay-dncp-3buyers-coverage.json', sources: { publisher: 'Dirección Nacional de Contrataciones Públicas (DNCP), Paraguay', links: [['Public procurement portal · contrataciones.gov.py', 'https://www.contrataciones.gov.py/'], ['Open data and API documentation', 'https://www.contrataciones.gov.py/datos/api/v3/doc/'], ['Legal notice and licence (the OCDS packages cite /datos/legal, which now returns 404)', 'https://www.contrataciones.gov.py/datos/aviso-legal']], licence: 'CC BY 4.0', raw: 'data/paraguay-dncp-3buyers/raw/ (records gzipped, exact response bytes)', reproduce: 'python tools/import-paraguay-dncp.py --cohort 3buyers --offline', collected: 'Every process of three buyers announced before download (one per government level) whose call was published 2024-09-01 → 2026-09-01, then each full OCDS record by OCID.' }, note: 'Paraguay · DNCP OCDS · three buyers announced before download, one per level: Ministerio de Obras Públicas y Comunicaciones (national, 168 contracts), Gobierno Departamental de Central (departmental, 88), Municipalidad de Asunción (municipal, 37). Calls published 2024-09-01 → 2026-09-01: 339 processes, 293 linked contract entries retained; excluded: 12 amendment entries (kept on their parent contract), 21 budget-only entries, 1 multi-buyer process. PYG, no conversion. Paraguayan checks only (docs/score-paraguay.md), fixed before this cohort was downloaded: single tenderer in a competitive procedure, award by exception (CVE), their repetition per supplier, concentration by category, amount increase > 20 %. 92 multi-lot awards cannot be checked for a single tenderer (no per-lot count published). Not a national sample or payment audit.' },
     ukraine: { path: 'data/prozorro.json', coverage: 'data/prozorro-coverage.json', sources: { publisher: 'Prozorro (State enterprise Prozorro, Ministry of Economy of Ukraine)', links: [['Prozorro public portal', 'https://prozorro.gov.ua/'], ['Open-data reuse terms', 'https://prozorro.gov.ua/openprocurement'], ['Public API documentation', 'https://prozorro-api-docs.readthedocs.io/'], ['Public API used (official records)', 'https://public-api.prozorro.gov.ua/api/2.5/tenders']], licence: 'Prozorro open-data reuse terms: redistribution, including commercial reuse, permitted with source attribution; no named licence for API records', raw: 'data/prozorro/raw/ (official records gzipped, exact response bytes)', reproduce: 'python tools/import-prozorro.py --offline', collected: 'Search-discovered tenders for three preselected buyers, created 2024-09-01 → 2026-09-01, checked against the official API buyer field. Search completeness is not established; see docs/ukraine-audit.md.' }, note: 'Ukraine · Prozorro · 526 tenders and 488 signed contracts (2024–2026), three buyers. Amounts remain in UAH, EUR or USD. Reporting records skip offer/direct-award checks; concentration is still assessed. Wartime rules allow exceptions and withheld publications. Open-data reuse requires source attribution.' },
+    chile: { path: 'data/chile-mp.json', coverage: 'data/chile-mp-coverage.json', sources: { publisher: 'Dirección de Compras y Contratación Pública (ChileCompra) — Mercado Público', links: [['Mercado Público · buscador de licitaciones', 'https://www.mercadopublico.cl/Home/BusquedaLicitacion'], ['OCDS API used (tender and award releases)', 'https://api.mercadopublico.cl/APISOCDS/OCDS/listaOCDSAgnoMes/2025/03/0/10'], ['CC0 1.0 public-domain dedication', 'https://creativecommons.org/publicdomain/zero/1.0/']], licence: 'CC0 1.0 (declared in every release package)', raw: 'data/chile-mp/raw/ (monthly listings, prefix map, tender and award releases gzipped, exact response bytes)', reproduce: 'python tools/import-chilecompra.py --offline', collected: 'Every licitación of three purchasing units announced before download (one per level), listed 2024-09 → 2026-08, chosen from a map of all 4,582 purchasing-unit prefixes.' }, note: 'Chile · Mercado Público · three purchasing units announced before download: Ministerio de Obras Públicas (Dirección General de Aguas unit, national), Gobierno Regional del Maule (regional), I. Municipalidad de Puente Alto (municipal). Licitaciones listed 2024-09 → 2026-08: 844 tenders, 522 single-supplier awards. Licitaciones only: direct deals (trato directo) are purchase orders, not in this source. Amounts in CLP, never converted. Chilean checks (docs/score-chile.md): single tenderer, its repetition per supplier (RUT), concentration by UNSPSC segment. Tenderers counted per tender, not per line item. CC0 1.0.' },
+    uk: { path: 'data/uk-fts.json', coverage: 'data/uk-fts-coverage.json', sources: { publisher: 'Find a Tender service (Cabinet Office, United Kingdom)', links: [['Find a Tender · search notices', 'https://www.find-tender.service.gov.uk/Search'], ['OCDS API used (release packages)', 'https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages'], ['Open Government Licence v3.0', 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/']], licence: 'Open Government Licence v3.0', raw: 'data/uk-fts/raw/ (compact award index and full notices, gzipped exact response bytes)', reproduce: 'python tools/import-find-a-tender.py --offline', collected: 'Every award notice of three buyer accounts announced before download (one per level), released 2024-09-01 → 2026-09-01, chosen from a compact index of all 33,457 award releases in the window.' }, note: 'United Kingdom · Find a Tender · three buyer accounts announced before download: Foreign, Commonwealth and Development Office (national), Lincolnshire County Council (regional), Milton Keynes Council (municipal). Award releases 2024-09-01 → 2026-09-01: 516 notices, 1,081 single-supplier awards. Above-threshold and Procurement Act notices only. Amounts as published (mostly GBP), never converted. UK checks (docs/score-uk.md): single offer per lot, awards without prior publication, their repetition per supplier, concentration by category. Supplier identity is the Find a Tender party id, which can split one company across ids: repetition can only be undercounted. Open Government Licence v3.0.' },
     portugal: { path: 'data/ted-portugal.json', coverage: 'data/ted-portugal-coverage.json', sources: { publisher: 'Publications Office of the European Union — TED', links: [['TED search · ted.europa.eu', 'https://ted.europa.eu/'], ['TED Search API documentation', 'https://docs.ted.europa.eu/api/latest/search.html'], ['TED legal notice (reuse authorised)', 'https://ted.europa.eu/en/legal-notice']], licence: 'Free reuse, commercial or not (Commission Decision 2011/833/EU)', raw: 'data/ted-portugal/raw/ (official eForms XML gzipped)', reproduce: 'python tools/import-ted-cohorts.py --cohort portugal --offline', collected: 'Every TED award notice (can-standard) of three buyers announced before download, published 2024-09-01 → 2026-09-01, matched by identifier and its spelling variants.' }, note: 'Portugal · TED award notices (above EU thresholds only) · Infraestruturas de Portugal (national), Comunidade Intermunicipal do Cávado (regional), Município de Lisboa (municipal). Published 2024-09-01 → 2026-09-01: 442 notices, 493 awarded lots; 137 multi-winner framework results excluded (no single holder). The Cávado notices link no winning tender, so the regional level contributes almost nothing. EUR. EU eForms checks (docs/score-ted.md). Not a picture of Portuguese procurement: national below-threshold purchases are not in TED.' },
-    romania: { path: 'data/ted-romania.json', coverage: 'data/ted-romania-coverage.json', sources: { publisher: 'Publications Office of the European Union — TED', links: [['TED search · ted.europa.eu', 'https://ted.europa.eu/'], ['TED Search API documentation', 'https://docs.ted.europa.eu/api/latest/search.html'], ['TED legal notice (reuse authorised)', 'https://ted.europa.eu/en/legal-notice']], licence: 'Free reuse, commercial or not (Commission Decision 2011/833/EU)', raw: 'data/ted-romania/raw/ (official eForms XML gzipped)', reproduce: 'python tools/import-ted-cohorts.py --cohort romania --offline', collected: 'Every TED award notice (can-standard) of three buyers announced before download, published 2024-09-01 → 2026-09-01, matched by identifier and its spelling variants.' }, note: 'Romania · TED award notices (above EU thresholds only) · Ministerul Finanțelor (national), Județul Cluj (regional), Municipiul Cluj-Napoca (municipal). Published 2024-09-01 → 2026-09-01: 299 notices, 356 awarded lots; 289 multi-winner framework results excluded. RON and EUR as published, never converted. EU eForms checks (docs/score-ted.md). Not a picture of Romanian procurement: SEAP/SICAP below-threshold purchases are not in TED.' }
+    czechia: { path: 'data/ted-czechia.json', coverage: 'data/ted-czechia-coverage.json', sources: { publisher: 'Publications Office of the European Union — TED', links: [['TED search · ted.europa.eu', 'https://ted.europa.eu/'], ['TED Search API documentation', 'https://docs.ted.europa.eu/api/latest/search.html'], ['TED legal notice (reuse authorised)', 'https://ted.europa.eu/en/legal-notice']], licence: 'Free reuse, commercial or not (Commission Decision 2011/833/EU)', raw: 'data/ted-czechia/raw/ (official eForms XML gzipped)', reproduce: 'python tools/import-ted-cohorts.py --cohort czechia --offline', collected: 'Every TED award notice (can-standard) of three buyers announced before download, published 2024-09-01 → 2026-09-01, matched by IČO and its spelling variants.' }, note: 'Czechia · TED award notices (above EU thresholds only) · Ministry of Finance (national), Moravian-Silesian Region (regional), City of Ostrava with its districts, which share its IČO (municipal). Published 2024-09-01 → 2026-09-01: 661 notices, 674 awarded lots; 122 results with several or no winning references excluded. CZK and EUR as published. EU eForms checks (docs/score-ted.md). Not a picture of Czech procurement: below-threshold purchases are published nationally, not in TED.' },
+    romania: { path: 'data/ted-romania.json', coverage: 'data/ted-romania-coverage.json', sources: { publisher: 'Publications Office of the European Union — TED', links: [['TED search · ted.europa.eu', 'https://ted.europa.eu/'], ['TED Search API documentation', 'https://docs.ted.europa.eu/api/latest/search.html'], ['TED legal notice (reuse authorised)', 'https://ted.europa.eu/en/legal-notice']], licence: 'Free reuse, commercial or not (Commission Decision 2011/833/EU)', raw: 'data/ted-romania/raw/ (official eForms XML gzipped)', reproduce: 'python tools/import-ted-cohorts.py --cohort romania --offline', collected: 'Every TED award notice (can-standard) of three buyers announced before download, published 2024-09-01 → 2026-09-01, matched by identifier and its spelling variants.' }, note: 'Romania · TED award notices (above EU thresholds only) · Ministerul Finanțelor (national), Județul Cluj (regional), Municipiul Cluj-Napoca (municipal). Published 2024-09-01 → 2026-09-01: 299 notices, 356 awarded lots; 289 multi-winner framework results excluded. RON and EUR as published, never converted. EU eForms checks (docs/score-ted.md). Not a picture of Romanian procurement: SEAP/SICAP below-threshold purchases are not in TED.' },
+    all: { combined: true, path: null, coverage: null, note: 'All countries · every dataset listed together. Each dataset is prepared on its own (repetition and concentration never cross cohorts), then its rows are shown side by side with their country. Amounts stay in their own currency: never converted or summed, and the amount sort groups by currency. Dates have each source\u2019s meaning (signature, award or publication). Checks share one catalogue (docs/indicators.md) but eligibility and thresholds follow each jurisdiction\u2019s law and data. Open a row for its sources.' },
   };
   // Dataset-level provenance, so anyone can repeat the collection or check a row at its source.
   function renderSources(selected) {
@@ -1187,9 +1423,10 @@ function startExplorer() {
     body.append(element('p', 'To check one contract: open its row and follow “Verify it yourself”. Official pages come first; if a link has moved, search the portal for the identifiers listed there.'));
   }
   const provenance = { verified: 'Documented · public source', unverified: 'To verify · research lead', synthetic: 'Fictional · pedagogical comparison' };
-  const money = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2 });
-  const moneyCop = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
-  const moneyPyg = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'PYG', maximumFractionDigits: 0 });
+  const uiLocale = typeof i18nLocale === 'function' ? i18nLocale() : 'en-IE';
+  const money = new Intl.NumberFormat(uiLocale, { style: 'currency', currency: 'EUR', maximumFractionDigits: 2 });
+  const moneyCop = new Intl.NumberFormat(uiLocale, { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
+  const moneyPyg = new Intl.NumberFormat(uiLocale, { style: 'currency', currency: 'PYG', maximumFractionDigits: 0 });
   const otherMoney = new Map();
   // Local files may declare any ISO currency; amounts are never converted.
   const moneyFor = c => {
@@ -1197,10 +1434,10 @@ function startExplorer() {
     if (!c.assessmentMode && c.dataFamily === 'secop2') return moneyCop;
     if (!c.assessmentMode && c.dataFamily === 'dncp') return moneyPyg;
     if (!/^[A-Z]{3}$/.test(c.currency || '') || c.currency === 'EUR') return money;
-    if (!otherMoney.has(c.currency)) otherMoney.set(c.currency, new Intl.NumberFormat('en-IE', { style: 'currency', currency: c.currency, maximumFractionDigits: 2 }));
+    if (!otherMoney.has(c.currency)) otherMoney.set(c.currency, new Intl.NumberFormat(uiLocale, { style: 'currency', currency: c.currency, maximumFractionDigits: 2 }));
     return otherMoney.get(c.currency);
   };
-  const dateFormat = new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'short', year: 'numeric' });
+  const dateFormat = new Intl.DateTimeFormat(uiLocale === 'en-IE' ? 'en-GB' : uiLocale, { timeZone: 'UTC', day: 'numeric', month: 'short', year: 'numeric' });
   let contracts = [];
   let loaded = false;
   let loadVersion = 0;
@@ -1351,6 +1588,48 @@ function startExplorer() {
     controls['group-by'].value = id ? 'project' : '';
     refresh();
   }
+  let activeProfile = null;
+  const profilePanel = document.querySelector('#profile-panel');
+  function openProfile(c, role) {
+    const key = profileKey(c, role);
+    activeProfile = key ? buildProfile(contracts, role, key) : null;
+    page = 0;
+    render();
+    profilePanel.scrollIntoView({ block: 'start' });
+  }
+  function renderProfilePanel() {
+    profilePanel.replaceChildren();
+    profilePanel.hidden = !activeProfile;
+    if (!activeProfile) return;
+    const p = activeProfile;
+    const pct = (a, b) => b ? `${Math.round(a / b * 100)} %` : '—';
+    profilePanel.append(element('h2', `${p.role === 'buyer' ? 'Buyer' : 'Supplier'} profile · ${p.name || '—'}`),
+      element('p', `${p.contracts} contract(s)${p.country ? ` · ${p.country}` : ''}${p.firstDate ? ` · ${p.firstDate} → ${p.lastDate}` : ''} · ${p.assessed} assessed · ${p.flagged} with a signal (${pct(p.flagged, p.assessed)}). The table below now shows only these contracts. Compared with the ${p.scopeSize} records of the same dataset; amounts are never summed.`));
+    const table = element('table', null, 'profile-table');
+    const head = element('tr');
+    head.append(element('th', 'Indicator'), element('th', `This ${p.role}`), element('th', 'Whole dataset'));
+    table.append(head);
+    for (const kind of Object.keys(INDICATOR_KINDS)) {
+      const mine = p.kinds[kind], all = p.baseline[kind];
+      if (!mine && !all) continue;
+      const tr = element('tr');
+      tr.append(element('td', INDICATOR_KINDS[kind]), element('td', mine ? `${mine.signals} / ${mine.evaluated} evaluated (${pct(mine.signals, mine.evaluated)})` : 'not evaluated'),
+        element('td', all ? `${pct(all.signals, all.evaluated)} of ${all.evaluated} evaluated` : '—'));
+      table.append(tr);
+    }
+    profilePanel.append(table);
+    profilePanel.append(element('h3', p.role === 'buyer' ? 'Main suppliers' : 'Main buyers'));
+    const list = element('ol');
+    for (const cp of p.counterparts) list.append(element('li', `${cp.name} · ${cp.contracts} contract(s), ${cp.flagged} with a signal`));
+    profilePanel.append(list);
+    const money = Object.entries(p.currencies).map(([cur, v]) => `${v.contracts} with an amount in ${cur} (largest ${v.largest.toLocaleString('en-IE')} ${cur})`).join('; ');
+    if (money) profilePanel.append(element('p', `Declared amounts: ${money}. Not summed: declared amounts are not payments, and ceilings and amendments would double count.`));
+    profilePanel.append(element('p', 'A profile describes published declarations and heuristic signals only; a high rate is a reason to read the sources, not a finding.'));
+    const close = element('button', 'Close profile and show all contracts');
+    close.type = 'button';
+    close.addEventListener('click', () => { activeProfile = null; page = 0; render(); });
+    profilePanel.append(close);
+  }
   function renderProjectPanel() {
     projectPanel.replaceChildren();
     const project = projectCatalog.get(controls.project.value);
@@ -1376,9 +1655,16 @@ function startExplorer() {
     const officialCount = contracts.filter(c => c.officialFinding === true).length;
     signalCounts = new Map();
     const present = new Set();
-    for (const c of contracts) for (const r of getAssessment(c).checks) {
-      present.add(r.id);
-      if (r.status === 'signal') signalCounts.set(r.id, (signalCounts.get(r.id) || 0) + 1);
+    // Counted per shared indicator kind, the value the filter matches (one row per kind).
+    for (const c of contracts) {
+      const kinds = new Set();
+      for (const r of getAssessment(c).checks) {
+        const kind = indicatorKind(r.id);
+        if (!kind) continue;
+        present.add(kind);
+        if (r.status === 'signal') kinds.add(kind);
+      }
+      for (const kind of kinds) signalCounts.set(kind, (signalCounts.get(kind) || 0) + 1);
     }
     if (officialCount) { present.add('official-finding'); signalCounts.set('official-finding', officialCount); }
     const options = [...indicatorLabels].filter(([id]) => id && present.has(id)).sort((a, b) => (signalCounts.get(b[0]) || 0) - (signalCounts.get(a[0]) || 0));
@@ -1403,11 +1689,13 @@ function startExplorer() {
     syncSortHeaders();
     if (!loaded) return;
     const minimum = Math.max(0, Number(controls.minimum.value) || 0);
-    const filtered = selectContracts(controls.review.value ? contracts.filter(reviewMatch) : contracts, { search: controls.search.value, minimum, minScore: Number(controls['min-score'].value) || 0, flagged: controls.flagged.checked, official: controls.official.checked, adjudicated: controls.adjudicated.checked, investigation: controls.investigation.checked, indicator: controls.indicator.value, legal: controls.legal.value, noticeContext: controls['notice-context'].value, assessment: controls.assessment.value, sector: controls.sector.value, project: controls.project.value, sort: controls.sort.value });
+    const pool = activeProfile ? contracts.filter(c => activeProfile.ids.has(c.id)) : contracts;
+    const filtered = selectContracts(controls.review.value ? pool.filter(reviewMatch) : pool, { search: controls.search.value, minimum, minScore: Number(controls['min-score'].value) || 0, flagged: controls.flagged.checked, official: controls.official.checked, adjudicated: controls.adjudicated.checked, investigation: controls.investigation.checked, indicator: controls.indicator.value, legal: controls.legal.value, noticeContext: controls['notice-context'].value, assessment: controls.assessment.value, sector: controls.sector.value, project: controls.project.value, sort: controls.sort.value });
     const arrangement = arrangeGroups(filtered, controls['group-by'].value);
     const visible = arrangement.rows;
     visibleRows = visible;
     renderProjectPanel();
+    renderProfilePanel();
     const pageCount = Math.max(1, Math.ceil(visible.length / pageSize));
     page = Math.min(page, pageCount - 1);
     const pageRows = visible.slice(page * pageSize, (page + 1) * pageSize);
@@ -1443,6 +1731,7 @@ function startExplorer() {
       const dateCell = element('td', formatDate(c));
       if (c.noticeEvidence) dateCell.append(element('small', 'BOAMP publication', 'provenance'));
       if (c.dataFamily === 'dncp') dateCell.append(element('small', 'Contract-period start · not signature', 'provenance'));
+      if (c.datasetCountry) dateCell.append(element('small', c.datasetCountry, 'provenance country'));
       row.append(dateCell, element('td', c.buyer), supplierCell);
       const objectCell = element('td');
       const button = element('button', c.description, 'row-toggle');
@@ -1473,13 +1762,29 @@ function startExplorer() {
       sectorCell.append(element('small', c.cpv || 'unknown CPV', 'provenance'));
       row.append(objectCell, sectorCell, element('td', formatAmount(c), 'numeric'), element('td', c.offers ?? '—', 'numeric'));
       const badges = element('td');
-      for (const primary of indicators) {
-        const badge = element('span', primary.label, `badge severity-${primary.severity}`);
-        badge.title = `Raw weight ${primary.weight}; not summed with other signals in the same family. ${primary.explanation}`;
+      // Every signal is shown, heaviest first. Within a family only the
+      // heaviest counts; the others are marked as not added to the index.
+      const counted = new Set();
+      const ordered = [...indicators].sort((a, b) => b.weight - a.weight);
+      for (const indicator of ordered) {
+        const counts = !counted.has(indicator.family);
+        counted.add(indicator.family);
+        const familyName = indicator.family === 'competition' ? 'competition' : indicator.family === 'transparency' ? 'transparency' : 'execution/duration';
+        const badge = element('span', indicator.kindLabel, `badge severity-${indicator.severity}${counts ? '' : ' not-counted'}`);
+        badge.append(element('small', ` · ${familyName}${counts ? '' : ' · not added'}`, 'badge-family'));
+        badge.title = `${indicator.label} (this jurisdiction's check). Raw weight ${indicator.weight}. ${counts ? `Counts for the ${familyName} family.` : `Not added: a heavier ${familyName} signal already counts.`} ${indicator.explanation}`;
         badges.append(badge);
       }
-      const assessment = getScoreBreakdown(c).assessment;
-      const scoreValue = getVigilanceScore(c);
+      for (const label of contextLabels(c)) {
+        const badge = element('span', `Context: ${label.short}`, 'badge context');
+        badge.title = `${label.long} Context outside the index: no points added or removed.`;
+        badges.append(badge);
+      }
+      if (ordered.length) objectCell.append(element('small', `Signals: ${ordered.map(i => i.kindLabel).join(' · ')}`, 'mobile-signals'));
+      for (const label of contextLabels(c)) objectCell.append(element('small', `Context: ${label.short} · no points`, 'mobile-signals context'));
+      const breakdown = getScoreBreakdown(c);
+      const assessment = breakdown.assessment;
+      const scoreValue = breakdown.score;
       if (!indicators.length) badges.append(element('span', '—', 'muted'));
       const score = element('td', null, 'numeric');
       const coverageLabel = assessment.excludedReason ? 'Calculations excluded' : assessment.applicable ? `${assessment.signals} signal(s) · ${assessment.evaluated}/${assessment.applicable} known-applicable checks evaluated` : 'No check with established applicability';
@@ -1577,6 +1882,15 @@ function startExplorer() {
     });
     review.append(statusLabel, noteLabel, saved);
     head.append(review);
+    const profiles = element('p', null, 'profile-links');
+    for (const [role, label] of [['buyer', 'Buyer profile'], ['supplier', 'Supplier profile']]) {
+      if (!profileKey(c, role)) continue;
+      const button = element('button', label, 'group-link');
+      button.type = 'button';
+      button.addEventListener('click', () => { closeDetail({ restoreFocus: false }); openProfile(c, role); });
+      profiles.append(button, ' ');
+    }
+    if (profiles.childNodes.length) head.append(profiles);
 
     const sections = [];
 
@@ -1587,12 +1901,15 @@ function startExplorer() {
       const triggered = element('ul', null, 'triggered-indicators');
       for (const signal of indicators) {
         const item = element('li', null, `severity-line severity-${signal.severity}`);
-        item.append(element('strong', signal.label), element('span', ` · ${signal.weight} raw points · ${signal.severityLabel}, family ${signal.family}`), element('p', signal.explanation));
+        item.append(element('strong', signal.kindLabel));
+        if (signal.kindLabel !== signal.label) item.append(' (', element('span', signal.label), ')');
+        if (KIND_REFERENCES[signal.kind]) item.append(' · ', element('span', `also known as ${KIND_REFERENCES[signal.kind]}`));
+        item.append(element('span', ` · ${signal.weight} raw points · ${signal.severityLabel}, family ${signal.family}`), element('p', signal.explanation));
         triggered.append(item);
       }
       why.append(triggered);
     } else why.append(element('p', scoreValue == null ? 'No heuristic conclusion: not assessed. The documents and findings remain consultable.' : 'No threshold crossed among the evaluated checks only. Unknowns do not prove an absence of risk.'));
-    why.append(element('p', scoreValue == null ? 'Not assessed: no applicable check could be evaluated. This is not a zero score.' : `Competition: ${breakdown.competition} (maximum); execution/duration: ${breakdown.execution} (maximum). Total: ${scoreValue}/100. No compensation for unknown information.`),
+    why.append(element('p', scoreValue == null ? 'Not assessed: no applicable check could be evaluated. This is not a zero score.' : `Competition: ${breakdown.competition} (maximum); execution/duration: ${breakdown.execution} (maximum); transparency: ${breakdown.transparency} (maximum). Total: ${scoreValue}/100. No compensation for unknown information.`),
       element('p', `${assessment.evaluated}/${assessment.applicable} checks with established applicability evaluated; ${assessment.unknownApplicability} unknown applicabilities reported separately; ${assessment.notApplicable} checks out of scope. The ${assessment.checks.length} checks are listed under “All checks”.`, 'muted'),
       element('p', 'Separate financial stake: the declared amount increases no weight. An increase uses only the comparable percentage, not a payments total. No points for an official finding, a project or an R2122 citation.', 'muted'));
     sections.push(['Signals', why]);
@@ -1606,7 +1923,7 @@ function startExplorer() {
     if (c.notes) record.append(element('p', c.notes));
     record.append(element('p', `Identifiers — Buyer SIRET: ${c.buyerSiret || '—'} · Contract: ${c.contractId || '—'} · Lot: ${c.lotId || '—'} · CPV: ${c.cpv || '—'}`));
     if (c.noticeId || c.publicationDate) record.append(element('p', `Notice: ${c.noticeId || '—'} · Publication: ${c.publicationDate || '—'}`));
-    if (c.supplierIds?.length) record.append(element('p', `Holders: ${c.supplierIds.map(s => `${s.identifierType || 'Identifier'} ${s.id}${s.siren ? ` · SIREN ${s.siren}` : ''}`).join(' / ')}`));
+    if (c.supplierIds?.length) record.append(element('p', `Holders: ${c.supplierIds.map(s => `${displayIdentifier(s)}${s.siren ? ` · SIREN ${s.siren}` : ''}`).join(' / ')}`));
     if (c.identifierNote) record.append(element('p', c.identifierNote));
     if (c.executionModalities || c.techniques) record.append(element('p', `Published modalities: ${c.executionModalities || '—'} · Techniques: ${c.techniques || '—'}. Declared amounts, not observed spending; do not sum framework-agreement ceilings.`));
     if (c.frameworkId) record.append(element('p', `Parent framework agreement cited in the source: ${c.frameworkId}. A subsequent contract is not a distinct project by mere deduction.`));
@@ -1620,15 +1937,20 @@ function startExplorer() {
       for (const a of c.amendments || []) record.append(element('p', `Amendment ${a.date || '—'}: ${a.description || '—'}${a.amount == null ? '' : ` · ${moneyPyg.format(a.amount)}`}${a.entryId ? ` · source entry ${a.entryId}` : ''}.`));
       record.append(element('p', 'Paraguayan checks and their editorial thresholds: docs/score-paraguay.md. A signal is not a finding of irregularity.'));
     } else if (NATIONAL_FAMILIES[c.dataFamily]) {
-      const where = c.dataFamily === 'ted' ? 'TED eForms award notice' : 'Prozorro official record';
+      const where = c.dataFamily === 'ted' ? 'TED eForms award notice' : c.dataFamily === 'fts' ? 'Find a Tender award notice' : c.dataFamily === 'chile' ? 'Mercado Público award (OCDS)' : 'Prozorro official record';
       record.append(element('h4', `${where} — published procedure and competition`),
-        element('p', `Procedure: ${c.procedure || '—'}${c.procedureCode ? ` (${c.procedureCode})` : ''} · ${c.procedureDirect === true ? 'without competition' : c.procedureDirect === false ? 'competitive' : 'not classified'} · Offers on this lot: ${c.offers ?? 'not published'} · Lot: ${c.lotId || '—'} · CPV: ${c.cpv || '—'}.`),
+        element('p', `Procedure: ${c.procedure || '—'}${c.procedureCode ? ` (${c.procedureCode})` : ''} · ${c.procedureDirect === true ? 'without competition' : c.procedureDirect === false ? 'competitive' : 'not classified'} · ${c.dataFamily === 'chile' ? `Tenderers on this tender (not per line item): ${c.offers ?? 'not published'} · UNSPSC segment: ${c.category || '—'} · Tender code: ${c.tenderCode}` : `Offers on this lot: ${c.offers ?? 'not published'} · Lot: ${c.lotId || '—'} · CPV: ${c.cpv || '—'}`}.`),
         element('p', `Declared amount: ${c.amount == null ? '—' : `${c.amount.toLocaleString('en-IE')} ${c.currency || ''}`}, in the published currency, never converted. ${c.amountBasis || ''}`),
-        element('p', `Supplier identifier: ${(c.supplierIds || []).map(x => `${x.identifierType} ${x.id}`).join(' / ') || '—'}. Checks and editorial thresholds: ${NATIONAL_FAMILIES[c.dataFamily].doc}. A signal is not a finding of irregularity.`));
+        element('p', `Supplier identifier: ${(c.supplierIds || []).map(displayIdentifier).join(' / ') || '—'}. Checks and editorial thresholds: ${NATIONAL_FAMILIES[c.dataFamily].doc}. A signal is not a finding of irregularity.`));
     } else if (c.dataFamily === 'secop2') {
       record.append(element('h4', 'SECOP II — declared procedure and justification'),
         element('p', `Declared modality: ${c.procedure || '—'} · Contract status: ${c.contractStatus || '—'} · Contract type: ${c.contractType || '—'}.`),
         element('p', `Published justification of the modality: ${c.procedureJustification || '—'}. This is the buyer’s declared ground, kept verbatim in Spanish; its legal validity is not assessed here. Ordinary grounds (professional services, interadministrative agreements, minimum-amount rules, regime statutes) add no points; only a declared absence of supplier plurality or manifest urgency enters the Colombian check (docs/score-colombia.md).`));
+      const publicContext = c.secop2PublicCounterparty;
+      if (publicContext?.labelled) record.append(element('p', publicContext.basis === 'declared-interadministrative'
+        ? 'Public-to-public agreement · context outside the index, no points: the buyer declared an interadministrative agreement, a contract between public bodies. SECOP II publishes no field for the counterparty’s legal nature, so its public status is the buyer’s declaration, not verified here. The index is unchanged.'
+        : `Public-to-public agreement · context outside the index, no points: a ${c.contractType === 'Operaciones de Crédito Público' || c.procedureJustification === 'Operaciones de Crédito Público' ? 'public-credit operation (empréstito)' : 'loan of use (comodato)'} whose counterparty document is also the counterparty of a declared interadministrative agreement in this cohort (contract ${publicContext.agreementContractId}). The index is unchanged; a long declared duration is ordinary for this kind of contract.`));
+      else if (publicContext) record.append(element('p', `Declared as an interadministrative agreement, but the public-to-public context label is withheld: ${publicContext.withheld === 'person-document' ? 'the counterparty holds a personal identity document' : publicContext.withheld === 'community-body' ? 'the published counterparty name designates a community body (junta de acción comunal or similar), not a public entity' : 'no usable counterparty document is published'}. No points either way.`));
       if (c.processUrl) {
         const processParagraph = element('p', 'Process page on the official portal: ');
         processParagraph.append(sourceLink(c.processUrl, 'SECOP II — detalle del proceso'));
@@ -1636,8 +1958,8 @@ function startExplorer() {
       }
       record.append(
         element('p', `Amounts: declared ${c.amount == null ? '—' : moneyCop.format(c.amount)} · paid ${c.amountPaid == null ? '—' : moneyCop.format(c.amountPaid)} · invoiced ${c.amountInvoiced == null ? '—' : moneyCop.format(c.amountInvoiced)}. Paid and invoiced values are platform declarations, not audited payments, and are never summed. Declared amounts stay visible and sortable but add no weight to the index.`));
-      if (c.supplierIds?.length) record.append(element('p', `Supplier document: ${c.supplierIds[0].identifierType} ${c.supplierIds[0].id}. A personal or tax identifier identifies the declared holder; it implies no suspicion and no link to other contracts by itself.`));
-      record.append(element('p', `Pilot cohort: ${c.buyerLevel} buyer, signature window 2024-09 → 2026-09. Not exhaustive of the buyer’s procurement; no offers table was imported, so the offer-count checks are out of scope. The four Colombian checks and their editorial thresholds are documented in docs/score-colombia.md; a signal is not a finding of irregularity.`));
+      if (c.supplierIds?.length) record.append(element('p', `Supplier document: ${displayIdentifier(c.supplierIds[0])}. A personal or tax identifier identifies the declared holder; it implies no suspicion and no link to other contracts by itself.`));
+      record.append(element('p', `Pilot cohort: ${c.buyerLevel} buyer, signature window 2024-09 → 2026-09. Not exhaustive of the buyer’s procurement; no offers table was imported, so the offer-count checks are out of scope. The five Colombian checks and their editorial thresholds are documented in docs/score-colombia.md; a signal is not a finding of irregularity.`));
     } else if (c.dataFamily === 'decp') {
       record.append(element('h4', 'Published contract history'));
       record.append(element('p', `Price form: ${c.priceForm || '—'} · Type: ${c.priceType || '—'}. Declared amounts, not observed payments.`));
@@ -1671,7 +1993,7 @@ function startExplorer() {
         record.append(wrap);
       }
       const evolution = getAmountEvolution(c);
-      record.append(element('p', evolution.status === 'available' ? `Analysable declared evolution: +${money.format(evolution.delta)} (+${evolution.percentage.toLocaleString('en-IE', { maximumFractionDigits: 1 })} %), from ${money.format(evolution.initialAmount)} to ${money.format(evolution.revisedAmount)}, on ${evolution.date}. Quantities or scope may have changed; consult the source.` : `Increase calculation unavailable: ${evolution.reason}`));
+      record.append(element('p', evolution.status === 'available' ? `Analysable declared evolution: +${money.format(evolution.delta)} (+${evolution.percentage.toLocaleString(uiLocale, { maximumFractionDigits: 1 })} %), from ${money.format(evolution.initialAmount)} to ${money.format(evolution.revisedAmount)}, on ${evolution.date}. Quantities or scope may have changed; consult the source.` : `Increase calculation unavailable: ${evolution.reason}`));
       const supplierContext = c.supplierContext;
       if (supplierContext) record.append(element('p', `Single identified holder: SIREN ${getSupplierIdentity(c)}. Same buyer/CPV ${supplierContext.cpvGroup}, 2024–2025: ${supplierContext.wins}/${supplierContext.known} contracts to the known holder, out of ${supplierContext.total} eligible contracts (${Math.round(supplierContext.coverage * 100)} % coverage); ${supplierContext.directCount} awards without competition identified to this holder, all amounts; ${supplierContext.directKnownCount}/${supplierContext.supplierContracts} known competitive statuses. ${supplierContext.sufficient ? 'Sufficient sample to examine concentration.' : 'Concentration not computable: insufficient sample or coverage.'} The statistics do not change with your filters.`));
       const context = c.competitionContext;
@@ -1705,6 +2027,8 @@ function startExplorer() {
 
     // 3. Context that never adds points: legal basis, identity, findings, notices.
     const outside = detailSection('context', 'Context outside the index');
+    const software = softwareMaintenanceContext(c);
+    if (software) outside.append(element('h4', 'Single-vendor software maintenance — context, not an indicator'), element('p', `Maintenance, support or licences of an existing software product (${software.software === 'cpv' ? 'software CPV code' : 'software named in the object'}), placed with one vendor (${software.vendor === 'direct' ? 'award declared without competition' : software.vendor === 'R2122-3' ? 'article R2122-3 cited' : 'procedure not classified, one offer received'}). This is often routine: only the publisher or its appointed distributor can maintain its product. Proprietary status and exclusive rights are not verified here. No points added or removed; the index is unchanged.`));
     if (c.directAward === true || legalContext.length) {
       outside.append(element('h4', 'Declared legal basis — context, not an indicator'), element('p', 'A citation proves neither that the legal conditions are met nor an irregularity. A single offer received does not demonstrate exclusivity. No points added; no inference about other contracts.'));
       if (!legalContext.length) outside.append(element('p', 'Article R2122 not found in the imported object or procedure. Justification unknown in this extract, not absence of justification.'));
@@ -1767,7 +2091,15 @@ function startExplorer() {
     const all = detailSection('checks', `Heuristic index v${SCORE_VERSION} · all checks`);
     const checks = element('ul', null, 'assessment-checks');
     const states = { signal: 'Signal', clear: 'Evaluated · threshold not crossed', unknown: 'Not assessable', 'not-applicable': 'Out of scope' };
-    for (const r of assessment.checks) checks.append(element('li', `${r.label} — ${states[r.status]}${r.applicability === 'unknown' ? ' (unknown applicability)' : ''}${r.weight != null ? ` · ${r.weight} raw points` : ''}. ${r.reason}`, `check-${r.status}`));
+    // Label, status and reason in separate nodes so each can be translated on its own.
+    for (const r of assessment.checks) {
+      const item = element('li');
+      item.append(element('strong', r.label), ' — ', element('span', states[r.status]));
+      if (r.applicability === 'unknown') item.append(' ', element('span', '(unknown applicability)'));
+      if (r.weight != null) item.append(' · ', element('span', `${r.weight} raw points`));
+      item.append('. ', element('span', r.reason));
+      checks.append(item);
+    }
     all.append(checks);
     sections.push(['All checks', all]);
 
@@ -1862,8 +2194,8 @@ function startExplorer() {
     else if (openId && event.key === 'k') { event.preventDefault(); stepDetail(-1); }
   });
 
-  function accept(data) {
-    contracts = prepareContracts(data);
+  function accept(data, prepared = null) {
+    contracts = prepared || prepareContracts(data);
     const sectors = [...new Map(contracts.map(c => { const s = getSector(c); return [s.code, s]; })).values()].sort((a, b) => a.code === 'unknown' ? 1 : b.code === 'unknown' ? -1 : a.label.localeCompare(b.label, 'en'));
     fillSelect(controls.sector, [['', 'All sectors'], ...sectors.map(s => [s.code, `${s.code === 'unknown' ? '' : s.code + ' · '}${s.label}`])]);
     projectCatalog = new Map(contracts.filter(c => c.project).map(c => [c.project.id, c.project]));
@@ -1919,7 +2251,7 @@ function startExplorer() {
   });
   controls.sort.addEventListener('input', syncSortHeaders);
   syncSortHeaders();
-  document.querySelector('#clear-filters').addEventListener('click', () => { clearFilters(); refresh(); });
+  document.querySelector('#clear-filters').addEventListener('click', () => { activeProfile = null; clearFilters(); refresh(); });
   pageSizeSelect.addEventListener('change', () => {
     const nextSize = Number(pageSizeSelect.value);
     if (!PAGE_SIZES.includes(nextSize)) return;
@@ -2115,6 +2447,7 @@ function startExplorer() {
     const selected = datasets[datasetSelect.value];
     invalidateImport();
     const version = ++loadVersion;
+    activeProfile = null;
     loaded = false;
     closeDetail({ restoreFocus: false });
     usingLocalFile = false;
@@ -2138,6 +2471,22 @@ function startExplorer() {
     projectPanel.replaceChildren();
     viewport.scrollTop = 0;
     status.textContent = 'Loading data…';
+    if (selected.combined) {
+      document.querySelector('#coverage-link').hidden = true;
+      document.querySelector('#file-path').textContent = 'every data/*.json file above';
+      try {
+        const keys = Object.keys(datasets).filter(key => !datasets[key].combined);
+        const parts = await Promise.all(keys.map(async key => {
+          const response = await fetch(datasets[key].path);
+          if (!response.ok) throw new Error(`${datasets[key].path}: HTTP ${response.status}`);
+          const option = [...datasetSelect.options].find(o => o.value === key);
+          const country = option?.parentElement?.label || '';
+          return prepareContracts(await response.json()).map(c => ({ ...c, datasetKey: key, datasetCountry: country }));
+        }));
+        if (version === loadVersion) accept(null, parts.flat());
+      } catch (error) { if (version === loadVersion) fail(error); }
+      return;
+    }
     try {
       const response = await fetch(selected.path);
       if (!response.ok) throw new Error(`HTTP ${response.status}`);

@@ -16,6 +16,8 @@ def load(name, file):
 
 ted = load("ted", "import-ted-cohorts.py")
 ua = load("ua", "import-prozorro.py")
+uk = load("uk", "import-find-a-tender.py")
+cl = load("cl", "import-chilecompra.py")
 
 
 class TedTests(unittest.TestCase):
@@ -65,6 +67,54 @@ class ProzorroTests(unittest.TestCase):
                 if tender["procuringEntity"]["identifier"].get("id") == buyer["code"]:
                     built.update({r["id"]: r for r in ua.contract_rows(tender)[0]})
         for row in json.loads(ua.EXTRACT.read_text(encoding="utf-8")):
+            self.assertEqual(row, built[row["id"]], row["id"])
+
+
+
+class FindATenderTests(unittest.TestCase):
+    def test_offers_are_per_lot_and_unknown_without_statistics(self):
+        release = {"bids": {"statistics": [{"measure": "bids", "relatedLot": "1", "value": 3}, {"measure": "smeBids", "relatedLot": "1", "value": 1},
+                                           {"measure": "bids", "relatedLot": "2", "value": 1}]}}
+        self.assertEqual(uk.offers_for(release, "1", False), 3)
+        self.assertEqual(uk.offers_for(release, "2", False), 1)
+        self.assertIsNone(uk.offers_for(release, "3", False))
+        self.assertIsNone(uk.offers_for({}, "1", True))
+
+    def test_published_extract_is_what_the_importer_builds(self):
+        manifest = json.loads((uk.RAW / "manifest.json").read_text(encoding="utf-8"))
+        built = {}
+        for notice in manifest["noticeIds"]:
+            for release in json.loads(gzip.decompress((uk.RAW / "notices" / f"{notice}.json.gz").read_bytes()))["releases"]:
+                built.update({r["id"]: r for r in uk.notice_rows(release)[0]})
+        published = json.loads(uk.EXTRACT.read_text(encoding="utf-8"))
+        self.assertEqual(len(published), 1081)
+        for row in published:
+            self.assertEqual(row, built[row["id"]], row["id"])
+
+
+
+class ChileCompraTests(unittest.TestCase):
+    def test_procedure_kind_from_published_name(self):
+        self.assertIs(cl.tender_kind("Licitación Pública Menor a 100 UTM (L1)"), False)
+        self.assertIs(cl.tender_kind("Licitación Privada Menor a 100 UTM."), False)
+        self.assertIsNone(cl.tender_kind(None))
+
+    def test_published_extract_is_what_the_importer_builds(self):
+        manifest = json.loads((cl.RAW / "manifest.json").read_text(encoding="utf-8"))
+        built = {}
+        for buyer in manifest["buyers"]:
+            for code in buyer["codes"]:
+                apath, tpath = cl.RAW / "records" / "award" / f"{code}.json.gz", cl.RAW / "records" / "tender" / f"{code}.json.gz"
+                if not apath.exists() or cl.api_error(apath) is not None:
+                    continue
+                package = cl.load_gz(apath)
+                if not package.get("releases"):
+                    continue
+                tender = cl.load_gz(tpath)["releases"][0] if tpath.exists() and cl.api_error(tpath) is None else None
+                built.update({r["id"]: r for r in cl.award_rows(code, tender, package)[0]})
+        published = json.loads(cl.EXTRACT.read_text(encoding="utf-8"))
+        self.assertEqual(len(published), 522)
+        for row in published:
             self.assertEqual(row, built[row["id"]], row["id"])
 
 

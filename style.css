@@ -115,7 +115,7 @@ button.ghost:hover { background: var(--surface-3); color: var(--ink); }
 .brand-lines { stroke: var(--brand-ink); }
 h1 { margin: 0; font-size: 19px; line-height: 1.2; font-weight: 700; }
 .tagline { margin: 1px 0 0; font-size: 12.5px; color: var(--ink-3); }
-.topbar-actions { display: flex; gap: 4px; flex: 0 0 auto; }
+.topbar-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 4px; flex: 0 1 auto; }
 
 main { max-width: 1480px; margin: 0 auto; padding: 14px 24px 32px; }
 
@@ -231,7 +231,11 @@ th, td { padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align
 .badge { padding: 2px 6px; margin: 0 3px 3px 0; border: 1px solid transparent; }
 button.badge { font: inherit; font-size: 11px; font-weight: 650; cursor: pointer; text-align: left; }
 button.badge:hover { border-color: currentColor; }
-.contract-row td:nth-child(8) .badge { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+.contract-row td:nth-child(8) .badge { display: block; width: fit-content; max-width: 100%; }
+.badge-family { font-weight: 400; opacity: .8; }
+.badge.not-counted { opacity: .7; border-style: dashed; border-color: currentColor; }
+.badge.context { color: var(--unk-fg); background: var(--unk-bg); border: 1px dotted currentColor; font-weight: 500; }
+.mobile-signals { display: none; }
 .level-none, .severity-low { color: var(--none-fg); background: var(--none-bg); }
 .level-low { color: var(--low-fg); background: var(--low-bg); }
 .level-moderate, .severity-moderate { color: var(--mod-fg); background: var(--mod-bg); }
@@ -251,6 +255,11 @@ button.badge:hover { border-color: currentColor; }
 
 .project-panel { margin: 0 0 12px; font-size: 13px; padding: 10px 14px; background: var(--surface-2); border-left: 4px solid var(--accent); }
 .project-panel h2 { font-size: 16px; margin: 0 0 8px; }
+
+/* Buyer / supplier profile */
+.profile-table { border-collapse: collapse; margin: 8px 0; font-size: 12px; }
+.profile-table th, .profile-table td { border-bottom: 1px solid var(--line); padding: 4px 8px; text-align: left; }
+.profile-links { margin: 8px 0 0; display: flex; gap: 8px; flex-wrap: wrap; }
 .evidence-list { margin: 8px 0; padding-left: 20px; }
 .evidence-list li + li { margin-top: 5px; }
 
@@ -329,7 +338,7 @@ footer { margin-top: 28px; border-top: 1px solid var(--line); padding-top: 16px;
 
 @media (max-width: 760px) {
   .topbar { padding: 10px 14px 6px; flex-wrap: wrap; gap: 2px 12px; }
-  .topbar-actions { margin-left: auto; }
+  .topbar-actions { margin-left: auto; max-width: 100%; }
   .topbar-actions button { padding: 4px 6px; font-size: 13px; }
   .tagline { display: none; }
   main { padding: 6px 14px 24px; }
@@ -354,6 +363,8 @@ footer { margin-top: 28px; border-top: 1px solid var(--line); padding-top: 16px;
   .contract-row > td:nth-child(5), .contract-row > td:nth-child(6),
   .contract-row > td:nth-child(7), .contract-row > td:nth-child(8) { display: none; }
   .mobile-buyer { display: block; color: var(--ink-3); font-size: 11px; margin-top: 3px; }
+  .mobile-signals { display: block; color: var(--high-fg); font-size: 11px; margin-top: 3px; }
+  .mobile-signals.context { color: var(--unk-fg); }
   .main-table > tbody > .contract-row > td:last-child { position: static; }
   th, td { padding: 8px 6px; }
   .detail-panel { left: 0; width: auto; border-left: 0; }
@@ -382,6 +393,10 @@ footer { margin-top: 28px; border-top: 1px solid var(--line); padding-top: 16px;
   .detail-section { break-inside: auto; }
   .severity-line, .assessment-checks li { break-inside: avoid; }
 }
+
+/* Interface language */
+.lang-selector { flex-direction: row; align-items: center; gap: 4px; font-size: 12px; color: var(--ink-2); }
+.lang-selector select { font-size: 12px; padding: 2px 4px; width: auto; min-height: 0; }
 
 /* Very wide screens: make room for the panel instead of covering the table. */
 @media (min-width: 1700px) {

@@ -15,7 +15,9 @@ Date-only publication is conservatively bounded using UTC −14h to the followin
 
 **Current result:** six correction/lot pairs extend the deadline (five by three days, one by seven days). Six rows now have an evaluated zero; 60 remain not assessed. No new positive signal. Nationwide BOAMP award samples and Portuguese/Romanian TED award cohorts have no imported correction chain: this check is not transplanted to them.
 
-## Ukraine: bid attrition
+## Ukraine: bid attrition (context only since 2026-10-01)
+
+> When this branch was merged with the separately developed `ua-better-bid-disqualified` check (12 points, see [score-ukraine.md](score-ukraine.md)), that check was kept as the scored rule. The evaluation below is still computed and its per-bid decisions are shown as context, but it no longer adds points.
 
 One additional check on completed competitive tenders with at least two uniquely identified submitted bids on the awarded lot. Each must link to exactly one award decision on that lot. The selected winner must be active, explicitly qualified and eligible; every other bid must have an unsuccessful award explicitly marked `qualified=false`.
 
