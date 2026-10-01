@@ -249,6 +249,18 @@ for (const description of [null, '', '   ']) {
         self.assertEqual(candidate[0]['supplier'], ' / '.join(names))
         self.assertNotIn('supplierType', candidate[0])
 
+    def test_supplier_published_with_blank_nif_keeps_name_only(self):
+        for value, name in ((' - - Foreign Supplier Ltd', 'Foreign Supplier Ltd'), ('- - \t Person Published', 'Person Published'), ('– – Name', 'Name')):
+            with self.subTest(value=value):
+                candidate, report = collect_rows([row_fixture(adjudicatarios=[value])])
+                self.assertEqual(candidate[0]['supplierNamesPublished'], [name])
+                self.assertEqual(report['normalizationErrors'], {})
+        for value in (' - - ', ' - - 123456789', ' - - 123456789 - Person', ' - Name', '- - 12345678901'):
+            with self.subTest(value=value):
+                candidate, report = collect_rows([row_fixture(adjudicatarios=[value])])
+                self.assertEqual(candidate, [])
+                self.assertEqual(report['normalizationErrors'], {'supplier-shape': 1})
+
     def test_malformed_supplier_requires_review_without_leaking_identifier(self):
         values = [['123456789'], ['123456789 - '], ['12 - Person'],
                   ['123456789 - 234567890'], ['123456789 - 234567890 - Person'],

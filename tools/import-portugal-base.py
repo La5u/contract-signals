@@ -36,7 +36,7 @@ MAX_MEMBER_BYTES = 512 * 1024 * 1024
 YEARS = (2024, 2025, 2026)
 NOTES = [
     'Source documented; no independent factual verification. Browse only, no allegations.',
-    'Supplier names retained as published after removing NIF prefixes; no supplier or competitor identifiers, identities of competitors, or inferred party types.',
+    'Supplier names retained as published after removing NIF prefixes (holders published with a blank NIF keep their name); no supplier or competitor identifiers, identities of competitors, or inferred party types.',
     'precoContratual is a platform declaration; currency is unverified. Execution duration unit is unknown.',
     'Only dataPublicacao selects the window. Missing/invalid publication dates are excluded, never replaced by signing dates.',
     'Missing/unparseable buyers prevent a claim of full cohort coverage. Conflicting minimized variants are all omitted for review.',
@@ -50,6 +50,8 @@ ROW_COUNTS = ('matchingBuyerRows', 'outsideWindowRows', 'invalidPublicationDateR
               'duplicateIdenticalRows', 'conflictingRows', 'extractedRows')
 COUNT_KEYS = ('nationalRows', 'nonMatchingBuyerRows', 'unknownBuyerRows', 'buyerParseErrorRows') + ROW_COUNTS
 PARTY_PREFIX = re.compile(r'^\s*([0-9]{9})\s*[-–]\s*')
+# A holder published with a blank tax number: two separators, then the name (" - - NAME").
+BLANK_NIF_PREFIX = re.compile(r'^\s*[-–]\s*[-–]\s*')
 ID_RE = re.compile(r'[0-9]+\Z')
 CPV_RE = re.compile(r'([0-9]{8})(?:-[0-9])?(?:\s+[-–]\s+[^\r\n]+)?\Z')
 
@@ -181,6 +183,21 @@ def parse_party(value):
     return match.group(1), name
 
 
+def parse_supplier(value):
+    """A holder: strict NIF + name, or a blank NIF + name. Only the name is kept either way."""
+    party = parse_party(value)
+    if party is not None or not isinstance(value, str):
+        return party
+    match = BLANK_NIF_PREFIX.match(value)
+    if not match:
+        return None
+    name = value[match.end():]
+    # Same guards as parse_party: never keep an identifier, or nothing, as a name.
+    if not name.strip() or re.search(r'[0-9]{9}', name) or name.strip().isdigit():
+        return None
+    return None, name
+
+
 def parse_buyers(row, selected):
     values = row.get('adjudicante')
     if not isinstance(values, list) or not values:
@@ -228,7 +245,7 @@ def normalize(row, plan, buyers, matched, buyer_error=False):
         suppliers = []
     if not isinstance(suppliers, list):
         fail('supplier-shape')
-    parties = [parse_party(item) for item in suppliers]
+    parties = [parse_supplier(item) for item in suppliers]
     if any(party is None for party in parties):
         fail('supplier-shape')
     names = [party[1] for party in parties]
