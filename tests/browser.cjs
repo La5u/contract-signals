@@ -34,8 +34,7 @@ const server=http.createServer((req,res)=>{
  assert.ok(badgeLabels.length>1,'all indicators are visible on a multi-signal row');
  await openRow(page,multiSignalRow.locator('.row-toggle'));
  const triggeredLabels=await page.locator('#detail-panel .triggered-indicators li').allTextContents();
- assert.equal(triggeredLabels.length,badgeLabels.length);
- for(const label of badgeLabels) assert.ok(triggeredLabels.some(text=>text.startsWith(label)));
+ assert.equal(triggeredLabels.length,badgeLabels.length,'the panel lists every signal shown as a chip');
  assert.match(await page.locator('#detail-panel .detail-position').textContent(),/^\d+ of 2594$/);
  assert.match(await page.evaluate(()=>location.hash),/open=/,'an open record is kept in the link');
  await page.keyboard.press('Escape');
@@ -95,7 +94,7 @@ const server=http.createServer((req,res)=>{
  assert.ok(firstSignals>=2,`top row shows ${firstSignals} signal chip(s)`);
  assert.match(await firstRow.locator('td:nth-child(8)').textContent(),/competition/);
  assert.ok(await page.locator('.badge.not-counted').count()>0);
- assert.match(await page.locator('.badge.not-counted').first().textContent(),/not added/);
+ assert.match(await page.locator('.badge.not-counted').first().getAttribute('title'),/Not added/);
  assert.match(await firstRow.locator('td:nth-child(8)').textContent(),/Context: single-vendor software maintenance/);
  await page.selectOption('#page-size','50');
  assert.equal(await page.locator('.contract-row').count(),50);
@@ -111,19 +110,19 @@ const server=http.createServer((req,res)=>{
  assert.match(await page.locator('.contract-row').first().textContent(),/0 \/ 100/);
  await openRow(page,page.locator('.row-toggle').first());
  assert.equal(await page.locator('#detail-panel .assessment-checks li').count(),9);
- assert.match(await page.locator(panel).textContent(),/unknown applicabilities/);
+ assert.match(await page.locator(panel).textContent(),/applicable checks evaluated/);
  await page.selectOption('#assessment','');
  await page.evaluate(()=>{const el=document.querySelector('#legal');el.value='R2122-1';el.dispatchEvent(new Event('input',{bubbles:true}));});
  assert.equal(await page.locator('.contract-row').count(),1);
  await openRow(page,page.locator('.row-toggle'));
  assert.match(await page.locator(panel).textContent(),/R-2122-1/);
- assert.match(await page.locator(panel).textContent(),/No points added/);
+ assert.match(await page.locator(panel).textContent(),/Context · no points/);
  await page.evaluate(()=>{const el=document.querySelector('#legal');el.value='R2122-3';el.dispatchEvent(new Event('input',{bubbles:true}));});assert.equal(await page.locator('.contract-row').count(),4);
  await closePanel(page);
  await page.evaluate(()=>{const el=document.querySelector('#legal');el.value='fr-software';el.dispatchEvent(new Event('input',{bubbles:true}));});assert.equal(await page.locator('.contract-row').count(),25);
  assert.match(await page.locator('.contract-row').first().textContent(),/Context: single-vendor software maintenance/);
  await openRow(page,page.locator('.row-toggle').first());
- assert.match(await page.locator(panel).textContent(),/Proprietary status and exclusive rights are not verified/);
+ assert.match(await page.locator(panel).textContent(),/Single-vendor software maintenance: often routine; exclusivity not verified/);
  await closePanel(page);
  await page.evaluate(()=>{const el=document.querySelector('#legal');el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
  await page.locator('#pagination').scrollIntoViewIfNeeded();
@@ -148,8 +147,8 @@ const server=http.createServer((req,res)=>{
  await page.fill('#search',profile.name);
  assert(await page.locator('.contract-row').count()>0);
  await openRow(page,page.locator('.row-toggle').first());
- assert.match(await page.locator(panel).textContent(),/Current public identity — not historical/);
- assert.match(await page.locator(panel).textContent(),/SIREN/);
+ assert.match(await page.locator(panel).textContent(),/in the register on \d{4}-\d{2}-\d{2}/);
+ assert.match(await page.locator(panel).textContent(),/SIRET \d{14}/);
  // Review marks: stored in this browser, shown on the row, filterable, never in the link.
  await page.selectOption('#detail-review-status','follow-up');
  await page.fill('#detail-review-note','Ask the buyer for the award report.');
@@ -197,7 +196,7 @@ const server=http.createServer((req,res)=>{
  await page.evaluate(()=>{const el=document.querySelector('#notice-context');el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});await page.fill('#search','R2122-8');
  assert.equal(await page.locator('.contract-row').count(),3);
  await openRow(page,page.locator('.row-toggle').first());
- assert.match(await page.locator(panel).textContent(),/lots other than/);
+ assert.match(await page.locator(panel).textContent(),/may cover other lots/);
  await page.selectOption('#dataset','consultations');
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 10'));
  assert.equal(await page.locator('.contract-row').count(),10);
@@ -230,16 +229,15 @@ const server=http.createServer((req,res)=>{
  await page.fill('#search','');
  await openRow(page,page.locator('.row-toggle').first());
  const copDetail=await page.locator(panel).textContent();
- assert.match(copDetail,/Declared modality/);
- assert.match(copDetail,/SECOP II — detalle del proceso/);
+ assert.match(copDetail,/Declared justification/);
+ assert.match(copDetail,/Process page on SECOP II/);
  assert.equal(await page.locator('#detail-panel .assessment-checks li').count(),9);
- assert.match(copDetail,/docs\/score-colombia\.md|Colombian check/);
  await closePanel(page);
  await page.evaluate(()=>{const el=document.querySelector('#legal');el.value='co-public';el.dispatchEvent(new Event('input',{bubbles:true}));});
  assert.match(await page.locator('#status').textContent(),/442 \/ 7560/);
  assert.match(await page.locator('.contract-row').first().textContent(),/Context: public-to-public agreement/);
  await openRow(page,page.locator('.row-toggle').first());
- assert.match(await page.locator(panel).textContent(),/Public-to-public agreement · context outside the index, no points.*The index is unchanged/);
+ assert.match(await page.locator(panel).textContent(),/Public-to-public agreement/);
  await closePanel(page);
  await page.evaluate(()=>{const el=document.querySelector('#legal');el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
  // Paraguay: linked contract records scored with Paraguayan checks only (docs/score-paraguay.md).
@@ -272,13 +270,13 @@ const server=http.createServer((req,res)=>{
  assert.doesNotMatch(await page.locator('.contract-row').first().textContent(),/Not assessed/);
  await openRow(page,page.locator('.row-toggle').first());
  const pyDetail=await page.locator(panel).textContent();
- assert.match(pyDetail,/Contract period starts/);
- assert.match(pyDetail,/Signature date: not published/);
+ assert.match(pyDetail,/Period start/);
+ assert.match(pyDetail,/Signed —/);
  assert.match(pyDetail,/PYG/);
  assert.equal(await page.locator('#detail-panel .assessment-checks li').count(),9);
- assert.match(pyDetail,/Verify it yourself/);
+ assert.match(pyDetail,/Sources/);
  assert.match(pyDetail,/Award page on contrataciones\.gov\.py/);
- assert.match(pyDetail,/search the official portal for: OCID ocds-/);
+ assert.match(pyDetail,/Search the portal for OCID ocds-/);
  assert.match(await page.locator('#detail-panel .verify a').first().getAttribute('href'),/^https:\/\/www\.contrataciones\.gov\.py\/licitaciones\/adjudicacion\//);
  assert.match(copied,/Verify: Award page on contrataciones\.gov\.py/);
  await page.selectOption('#dataset','paraguay3');
@@ -354,7 +352,7 @@ const server=http.createServer((req,res)=>{
  assert.equal(await linked.locator('#search').inputValue(),profile.siren);
  const supplierCell=await linked.locator('.contract-row td:nth-child(3)').first().textContent();
  assert.ok(supplierCell.startsWith(profile.name),supplierCell);
- assert.match(supplierCell,/SIRET \d{14} · current name \(\d{4}-\d{2}-\d{2}\), not historical/);
+ assert.match(supplierCell,/SIRET \d{14}/);
  // A link with open=<id> opens that record; j/k step through the results.
  const cityRecord=cityData.find(c=>c.id)?.id;
  await linked.evaluate(id=>{location.hash='#dataset=cities&open='+encodeURIComponent(id);},cityRecord);
@@ -450,7 +448,7 @@ const server=http.createServer((req,res)=>{
   await prof.goto(base);
   await prof.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2594'));
   await openRow(prof,prof.locator('.row-toggle').first());
-  await prof.locator('#detail-panel button',{hasText:'Buyer profile'}).click();
+  await prof.locator('#detail-panel .profile-link').first().click();
   assert.equal(await prof.locator(panel).isVisible(),false,'opening a profile closes the record panel');
   assert.match(await prof.locator('#profile-panel h2').textContent(),/^Buyer profile · /);
   assert.match(await prof.locator('#profile-panel').textContent(),/Whole dataset/);

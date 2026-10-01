@@ -195,7 +195,7 @@ def contract_rows(tender):
             "buyer": buyer.get("legalName") or tender["procuringEntity"].get("name"), "buyerId": buyer.get("id"),
             "supplier": (supplier.get("identifier") or {}).get("legalName") or supplier.get("name"),
             "supplierIds": mask_ids([x for x in [supplier_identifier(supplier.get("identifier"))] if x]),
-            "description": " — ".join(dict.fromkeys(x for x in [tender.get("title"), (lots.get(lot_id) or {}).get("title")] if x)),
+            "description": " — ".join(dict.fromkeys(x.strip() for x in [tender.get("title"), (lots.get(lot_id) or {}).get("title")] if x and x.strip())),
             "amount": value.get("amount"), "currency": value.get("currency"),
             "procedure": kind, "procedureDirect": direct, "category": tender.get("mainProcurementCategory"), "cpv": cpv,
             "bidAttrition": bid_attrition(tender, award, direct is False),
