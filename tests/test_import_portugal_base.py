@@ -144,8 +144,8 @@ class NormalizationTests(unittest.TestCase):
             '123456789 - Fictional individual', '512345678 - Fictional company - Services'
         ])])
         code = base.person_code('Fictional individual')
-        self.assertEqual(candidate[0]['supplierNamesPublished'], [f'Natural person · {code}', 'Fictional company - Services'])
-        self.assertEqual(candidate[0]['supplier'], f'Natural person · {code} / Fictional company - Services')
+        self.assertEqual(candidate[0]['supplierNamesPublished'], [f'Individual or foreign holder · {code}', 'Fictional company - Services'])
+        self.assertEqual(candidate[0]['supplier'], f'Individual or foreign holder · {code} / Fictional company - Services')
         protected = candidate[0]['supplierProtectedNames']
         self.assertEqual([protected[0]['code'], protected[1]], [code, None])
         # The individual's name is not readable in the file, but one record can be unscrambled.
@@ -272,7 +272,7 @@ for (const description of [null, '', '   ']) {
         for value, name in ((' - - Foreign Supplier Ltd', 'Foreign Supplier Ltd'), ('- - \t Person Published', 'Person Published'), ('– – Name', 'Name')):
             with self.subTest(value=value):
                 candidate, report = collect_rows([row_fixture(adjudicatarios=[value])])
-                self.assertEqual(candidate[0]['supplierNamesPublished'], [f'Natural person · {base.person_code(name)}'])
+                self.assertEqual(candidate[0]['supplierNamesPublished'], [f'Individual or foreign holder · {base.person_code(name)}'])
                 self.assertEqual(unscramble(candidate[0]['id'], 0, candidate[0]['supplierProtectedNames'][0]['data']), name)
                 self.assertEqual(report['normalizationErrors'], {})
         for value in (' - - ', ' - - 123456789', ' - - 123456789 - Person', ' - Name', '- - 12345678901'):
@@ -298,7 +298,7 @@ for (const description of [null, '', '   ']) {
         candidate, _ = collect_rows([row_fixture(adjudicatarios=[' - - Maria  Exemplo Silva'],
                                                  descContrato='Legal services by MARIA EXEMPLO SILVA, lawyer')])
         code = base.person_code('Maria  Exemplo Silva')
-        self.assertEqual(candidate[0]['description'], f'Legal services by [natural person · {code}], lawyer')
+        self.assertEqual(candidate[0]['description'], f'Legal services by [individual or foreign holder · {code}], lawyer')
         self.assertNotIn('exemplo', json.dumps(candidate, ensure_ascii=False).lower())
         # A company holder's name in the subject is left as published.
         candidate, _ = collect_rows([row_fixture(descContrato='Works by Name, é & Sons')])
