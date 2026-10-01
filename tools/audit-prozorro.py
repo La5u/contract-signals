@@ -13,6 +13,9 @@ import urllib.error
 import urllib.request
 from collections import Counter
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from personal_ids import mask  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 START, END = "2024-09-01", "2026-09-01"
@@ -37,6 +40,17 @@ def offer_count(t, lot_id):
     return sum(any(v.get("relatedLot") == lot_id for v in b.get("lotValues") or []) for b in bids) if lot_id else len(bids)
 
 
+def supplier_ids(suppliers):
+    """Published supplier codes; a 10-digit UA-EDR code is a person's RNOKPP and is masked."""
+    ids = []
+    for s in suppliers or []:
+        identifier = s.get("identifier", {})
+        code = str(identifier.get("id") or "")
+        personal = identifier.get("scheme") == "UA-EDR" and code.isdigit() and len(code) == 10
+        ids.append(mask("RNOKPP", code) if personal else identifier.get("id"))
+    return ids
+
+
 def live_check(t, contract, award, offers, timeout=4):
     url = f"https://public-api.prozorro.gov.ua/api/2.5/tenders/{t['id']}"
     checked_at = datetime.now(timezone.utc).isoformat()
@@ -48,8 +62,7 @@ def live_check(t, contract, award, offers, timeout=4):
         live_award = live_awards.get(award.get("id"))
         live_contract = next((c for c in current.get("contracts") or []
                               if c.get("contractID") == contract.get("contractID")), None)
-        live_suppliers = ([s.get("identifier", {}).get("id") for s in live_award.get("suppliers") or []]
-                          if live_award else None)
+        live_suppliers = supplier_ids(live_award.get("suppliers")) if live_award else None
         live_offers = offer_count(current, (live_award or {}).get("lotID")) if live_award else None
         pairs = {
             "tenderID": (t.get("tenderID"), current.get("tenderID")),
@@ -59,7 +72,7 @@ def live_check(t, contract, award, offers, timeout=4):
                         (current.get("procuringEntity") or {}).get("identifier", {}).get("id")),
             "contractId": (contract.get("contractID"), (live_contract or {}).get("contractID") if live_contract else None),
             "awardId": (award.get("id"), (live_contract or {}).get("awardID") if live_contract else None),
-            "supplierIds": ([s.get("identifier", {}).get("id") for s in award.get("suppliers") or []], live_suppliers),
+            "supplierIds": (supplier_ids(award.get("suppliers")), live_suppliers),
             "offerCount": (offers, live_offers),
         }
         fields = {name: {"snapshot": expected, "live": actual,

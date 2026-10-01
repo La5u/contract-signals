@@ -1,0 +1,90 @@
+{
+ "source": "https://api.mercadopublico.cl/APISOCDS/OCDS",
+ "license": "CC0 1.0 (declared in every release package)",
+ "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+ "attribution": "Dirección de Compras y Contratación Pública (ChileCompra), Mercado Público",
+ "cohort": {
+  "cohortId": "chile-mp-3buyers-2024-2026",
+  "buyers": [
+   {
+    "id": "CL-MP-2015",
+    "prefix": "1019",
+    "name": "MINISTERIO DE OBRAS PUBLICAS DIRECCION GRAL DE OO PP DCYF",
+    "level": "national",
+    "listedTenders": 274
+   },
+   {
+    "id": "CL-MP-2592",
+    "prefix": "1596",
+    "name": "GOBIERNO REGIONAL VII REGION",
+    "level": "regional",
+    "listedTenders": 91
+   },
+   {
+    "id": "CL-MP-3414",
+    "prefix": "2422",
+    "name": "I MUNICIPALIDAD DE PUENTE ALTO",
+    "level": "municipal",
+    "listedTenders": 479
+   }
+  ],
+  "window": {
+   "months": [
+    "2024-09",
+    "2026-08"
+   ],
+   "basis": "listaOCDSAgnoMes listing month"
+  },
+  "selection": "Announced on 2026-09-26 after a map of every purchasing-unit prefix to its buyer (one tender read per prefix, buyer id and name only) and before any tender or award of the chosen units was read: per level, the unit with the most listed tenders, leaving out units above 500."
+ },
+ "retrieval": {
+  "startedAt": "2026-09-26T17:57:13.458775+00:00",
+  "finishedAt": "2026-09-26T18:18:42.329232+00:00",
+  "listedTendersInWindow": 224704,
+  "emptyMonths": [
+   "2026-08"
+  ],
+  "rawDirectory": "data/chile-mp/raw"
+ },
+ "counts": {
+  "tendersListed": 844,
+  "procedureTypes": {
+   "Licitación Pública Entre 100 y 1000 UTM (LE)": 390,
+   "Licitación Pública Menor a 100 UTM (L1)": 278,
+   "Licitación Pública Mayor 1000 UTM (LP)": 93,
+   "Licitación Pública Mayor a 5000 (LR)": 34,
+   "Licitación Pública entre a 2000 y 5000 UTM (LQ)": 27,
+   "Licitación Privada entre 100 y 1000 UTM.": 11,
+   "Licitación Privada Menor a 100 UTM.": 5,
+   "tender record unavailable": 4,
+   "Licitación Privada Mayor a 1000 UTM": 2
+  },
+  "retainedAwards": 522,
+  "excluded": {
+   "not exactly one supplier (line items split, no per-supplier amount)": 19,
+   "award not active (unsuccessful)": 144,
+   "award record unavailable (API error)": 47,
+   "award not active (cancelled)": 70,
+   "no award published": 24,
+   "award not active ()": 35,
+   "award package with no release": 1
+  },
+  "otherBuyer": 0,
+  "withOffers": 519,
+  "withRut": 522,
+  "currencies": [
+   "CLP"
+  ]
+ },
+ "limitations": [
+  "Three purchasing units, not a country sample.",
+  "This OCDS listing covers licitaciones only; direct deals (trato directo) are published as purchase orders and are not included.",
+  "Tenderers are counted on the whole tender, not per line item; awards split among several suppliers are excluded (no per-supplier amount).",
+  "The listing API answered 404 for August 2026 on 2026-09-26; that month is recorded as empty.",
+  "Amounts as published (CLP, sometimes UF or USD), never converted."
+ ],
+ "reproduce": [
+  "python tools/import-chilecompra.py --offline",
+  "python tools/import-chilecompra.py --discover --download"
+ ]
+}

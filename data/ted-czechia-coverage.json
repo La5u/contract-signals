@@ -1,0 +1,81 @@
+{
+ "source": "https://api.ted.europa.eu/v3/notices/search",
+ "notices": "https://ted.europa.eu/en/notice/{publication-number}/xml",
+ "license": "TED notices may be freely reused, for commercial or non-commercial purposes (Commission Decision 2011/833/EU; https://ted.europa.eu/en/legal-notice).",
+ "attribution": "Publications Office of the European Union, TED (Tenders Electronic Daily)",
+ "cohort": {
+  "cohortId": "ted-czechia-2024-2026",
+  "country": "CZE",
+  "buyers": [
+   {
+    "id": "00006947",
+    "name": "Ministerstvo financí",
+    "level": "national"
+   },
+   {
+    "id": "70890692",
+    "name": "Moravskoslezský kraj",
+    "level": "regional"
+   },
+   {
+    "id": "00845451",
+    "name": "Statutární město Ostrava",
+    "level": "municipal"
+   }
+  ],
+  "window": {
+   "startInclusive": "20240901",
+   "endExclusive": "20260901",
+   "basis": "TED publication date"
+  },
+  "selection": "One buyer per level, announced on 2026-09-26 before any notice XML was downloaded: from TED search totals of a candidate list (Ministries of the Interior, Defence, Health, Justice and Finance; the South Moravian, Moravian-Silesian, Vysočina, Olomouc and Plzeň regions; Brno, Ostrava, Plzeň, Olomouc and Prague), the largest at most 500 notices per level; Prague left out as both region and city. Never by indicator results.",
+  "identity": "Buyers matched by published identifier and its spelling variants (bare, country-prefixed, spaced), never by name."
+ },
+ "retrieval": {
+  "startedAt": "2026-09-26T18:40:20.489626+00:00",
+  "finishedAt": "2026-09-26T19:05:30.479805+00:00",
+  "queries": [
+   {
+    "buyerId": "00006947",
+    "query": "buyer-country=CZE AND notice-type=can-standard AND publication-date>=20240901 AND publication-date<20260901 AND organisation-identifier-buyer IN ('00006947' 'CZ 00006947' 'CZ-00006947' 'CZ00006947')",
+    "searchTotal": 257
+   },
+   {
+    "buyerId": "70890692",
+    "query": "buyer-country=CZE AND notice-type=can-standard AND publication-date>=20240901 AND publication-date<20260901 AND organisation-identifier-buyer IN ('70890692' 'CZ 70890692' 'CZ-70890692' 'CZ70890692')",
+    "searchTotal": 195
+   },
+   {
+    "buyerId": "00845451",
+    "query": "buyer-country=CZE AND notice-type=can-standard AND publication-date>=20240901 AND publication-date<20260901 AND organisation-identifier-buyer IN ('00845451' 'CZ 00845451' 'CZ-00845451' 'CZ00845451')",
+    "searchTotal": 214
+   }
+  ],
+  "rawDirectory": "data/ted-czechia/raw"
+ },
+ "counts": {
+  "notices": 661,
+  "retainedLots": 674,
+  "excludedResults": {
+   "several or no winning tender/contract references": 122
+  },
+  "lotsWithAnotherLeadBuyer": 11,
+  "conflictingLotIdsExcluded": 1,
+  "withOffers": 673,
+  "withAmount": 655,
+  "currencies": [
+   "CZK",
+   "EUR"
+  ]
+ },
+ "limitations": [
+  "TED publishes procedures above the EU thresholds only; most national procurement is not here.",
+  "Contract modification notices are separate TED notices and were not imported: no amount-increase check.",
+  "Offers are the 'tenders' statistic published per lot; admissibility is not assessed.",
+  "Amounts are in the published currency, never converted or summed across currencies."
+ ],
+ "reproduce": [
+  "python tools/import-ted-cohorts.py --cohort czechia --offline",
+  "python tools/import-ted-cohorts.py --cohort czechia --download"
+ ]
+}

@@ -367,25 +367,26 @@
     "note": "Tests are executable checks, not independent auditing of source accuracy."
   },
   "currentIndex": {
-    "version": "3.0",
+    "version": "3.1",
     "report": "score-v3-review.json",
     "note": "Earlier rule/count sections describe their preparation version, not the active v3 index. Source cohorts unchanged; unknown scores are null, findings separate."
   },
   "indexV3Metrics": {
-    "version": "3.0",
-    "scoreFormula": "min(100, max(competition) + max(execution)); null if no check evaluated; official findings separate",
+    "version": "3.1",
+    "scoreFormula": "min(100, max(competition) + max(execution) + max(transparency)); null if no check evaluated; official findings separate",
     "exclusion": "All initial or modification conflicts in this city cohort: no indicators, excluded from longitudinal denominators. Excluded rows are unevaluated (null), not zero. Zero requires at least one evaluated check.",
     "triggeredContracts": {
       "single-bid": 52,
       "long-contract": 4,
       "direct-award": 66,
       "repeated-direct-award": 3,
+      "late-publication": 144,
       "amount-increase": 2,
       "repeated-single-bid": 11
     },
-    "contractsWithAnyIndicator": 124,
+    "contractsWithAnyIndicator": 263,
     "unevaluated": 172,
-    "zero": 974,
+    "zero": 835,
     "officialFindings": 0,
     "amountEvolutionAvailable": 6,
     "repeatedSingleBid": {
