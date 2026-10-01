@@ -726,7 +726,7 @@ _NEW_PATTERNS = [
     ("Official audit finding: {a}.", "Hallazgo oficial de auditoría: {a}.", "Constat officiel de contrôle : {a}."),
     ("Colour theme: {a} · click to change", "Tema de color: {a} · clic para cambiar", "Thème de couleur : {a} · cliquer pour changer"),
     ("Colour theme: {a}. Change theme.", "Tema de color: {a}. Cambiar tema.", "Thème de couleur : {a}. Changer de thème."),
-    ("Natural person · {a}", "Persona física · {a}", "Personne physique · {a}"),
+    ("Individual or foreign holder · {a}", "Persona física o titular extranjero · {a}", "Personne physique ou titulaire étranger · {a}"),
     ("Also known as {a}", "También conocido como {a}", "Aussi appelé {a}"),
 ]
 _known = {en for en, *_ in EXACT}
