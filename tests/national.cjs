@@ -8,7 +8,7 @@ function tally(rows) {
   const checks = {}; let flagged = 0, zero = 0, notAssessed = 0;
   for (const row of rows) {
     const a = run('getAssessment', row);
-    assert.equal(a.checks.length, row.dataFamily === 'prozorro' ? 9 : 8);
+    assert.equal(a.checks.length, 9);
     for (const c of a.checks) { checks[c.id] ??= {signal:0,clear:0,unknown:0,'not-applicable':0}; checks[c.id][c.status]++; }
     const s = run('getVigilanceScore', row);
     if (s == null) notAssessed++; else if (s > 0) flagged++; else zero++;
@@ -36,23 +36,30 @@ const pick = (t, prefix) => Object.fromEntries(Object.entries(t.checks).filter((
   const t = tally(rows);
   assert.deepEqual(pick(t, 'ua-'), {
     'ua-single-offer': [38,26,0,424], 'ua-direct-award': [0,64,0,424], 'ua-repeated-single-offer': [10,28,0,450],
-    'ua-repeated-direct': [0,0,0,488], 'ua-concentration': [0,483,5,0], 'ua-bid-attrition': [0,0,26,462] });
-  assert.deepEqual(t.counts, [38,450,0]);
-  const base = rows.find(r=>r.procedureDirect===false && r.offers>1);
-  const sample = {...base,nationalConcentration:null,bidAttrition:{status:'signal',reason:'Synthetic full decisions'}};
-  assert.equal(run('getVigilanceScore',sample),5);
-  assert.equal(run('getVigilanceScore',{...sample,offers:1}),12,'correlated competition checks use maximum, not addition');
+    'ua-repeated-direct': [0,0,0,488], 'ua-concentration': [0,483,5,0], 'ua-better-bid-disqualified': [9,55,0,424] });
+  assert.deepEqual(t.counts, [47,441,0]);
+  // Disqualification before the award: counted per lot, only on competitive procedures, never on reporting.
+  for (const r of rows) {
+    if (r.procedureDirect !== false) assert.equal(r.disqualifiedBefore, null);
+    const ids = run('getAssessment', r).checks.map(c => c.id);
+    assert.equal(ids.length, 9); assert.ok(!ids.includes('short-bidding-period'));
+  }
+  const dq = (n) => run('getAssessment', { ...rows.find(r => r.procedureDirect === false), disqualifiedBefore: n }).checks.find(c => c.id === 'ua-better-bid-disqualified');
+  assert.equal(dq(0).status, 'clear'); assert.equal(dq(2).weight, 12); assert.equal(dq(null).status, 'unknown');
   assert.equal(rows.filter(r=>r.linkedContract).length,3);
   for(const r of rows.filter(r=>r.linkedContract)) assert.ok(run('verificationLinks',r).some(l=>l.url===r.linkedContract.url));
-  console.log('Ukraine Prozorro: 488 contracts, 38 flagged, reporting excludes offer/direct-award checks but retains concentration; offers counted per lot.');
+  assert.ok(rows.every(r=>!run('getAssessment',r).checks.some(c=>c.id==='ua-bid-attrition')),'bid-attrition decisions are context, not a check');
+  console.log('Ukraine Prozorro: 488 contracts, 47 flagged (9 by a better-ranked bidder disqualified), reporting out of scope, offers counted per lot.');
 }
 
 // ---- Portugal and Romania (TED) ----
 for (const [file, country, expected, counts] of [
   ['data/ted-portugal.json', 'PRT', { 'ted-single-offer': [64,322,43,64], 'ted-direct-award': [64,416,13,0], 'ted-repeated-single-offer': [20,43,44,386],
-    'ted-repeated-direct': [36,25,16,416], 'ted-concentration': [0,237,256,0] }, [128,359,6]],
+    'ted-repeated-direct': [36,25,16,416], 'ted-concentration': [0,237,256,0], 'late-publication': [12,481,0,0] }, [139,354,0]],
   ['data/ted-romania.json', 'ROU', { 'ted-single-offer': [132,209,11,4], 'ted-direct-award': [4,352,0,0], 'ted-repeated-single-offer': [42,77,24,213],
-    'ted-repeated-direct': [0,0,4,352], 'ted-concentration': [0,70,286,0] }, [136,220,0]],
+    'ted-repeated-direct': [0,0,4,352], 'ted-concentration': [0,70,286,0], 'late-publication': [26,330,0,0] }, [158,198,0]],
+  ['data/ted-czechia.json', 'CZE', { 'ted-single-offer': [92,280,280,22], 'ted-direct-award': [22,373,279,0], 'ted-repeated-single-offer': [16,73,283,302],
+    'ted-repeated-direct': [9,13,279,373], 'ted-concentration': [70,388,216,0], 'late-publication': [45,627,2,0] }, [201,473,0]],
 ]) {
   const rows = load(file), cov = JSON.parse(fs.readFileSync(file.replace('.json', '-coverage.json')));
   assert.equal(cov.cohort.country, country);
@@ -61,12 +68,57 @@ for (const [file, country, expected, counts] of [
     assert.equal(r.country, country); assert.ok(cov.cohort.buyers.some(b => b.id === r.buyerId));
     assert.match(r.source, /^https:\/\/ted\.europa\.eu\/en\/notice\/-\/detail\/\d+-\d{4}$/);
     assert.ok(r.publicationDate >= '2024-09-01' && r.publicationDate < '2026-09-01');
-    for (const s of r.supplierIds) if (['NIF','CUI'].includes(s.identifierType)) assert.match(s.id, /^\d+$/);
+    for (const s of r.supplierIds) if (['NIF','CUI','ICO'].includes(s.identifierType)) assert.match(s.id, /^\d+$/);
   }
   const t = tally(rows);
-  assert.deepEqual(pick(t, 'ted-'), expected);
+  assert.deepEqual({...pick(t, 'ted-'), ...pick(t, 'late-')}, expected);
   assert.deepEqual(t.counts, counts);
   console.log(`TED ${country}: ${rows.length} lots, ${counts[0]} flagged.`);
+}
+
+// ---- United Kingdom (Find a Tender) ----
+{
+  const rows = load('data/uk-fts.json'), cov = JSON.parse(fs.readFileSync('data/uk-fts-coverage.json'));
+  assert.deepEqual(cov.cohort.buyers.map(b => [b.id, b.level]), [['GB-FTS-131','national'],['GB-FTS-39','regional'],['GB-FTS-289','municipal']]);
+  assert.match(cov.license, /Open Government Licence v3\.0/);
+  assert.equal(cov.retrieval.indexedAwardReleases, 33457); assert.equal(cov.retrieval.noticesDownloaded, 516);
+  assert.equal(rows.length, 1081);
+  for (const r of rows) {
+    assert.equal(r.dataFamily, 'fts'); assert.ok(cov.cohort.buyers.some(b => b.id === r.buyerId));
+    assert.match(r.source, /^https:\/\/www\.find-tender\.service\.gov\.uk\/api\/1\.0\/ocdsReleasePackages\/\d{6}-\d{4}$/);
+    assert.ok(!/@|contactPoint|email/i.test(JSON.stringify(r)), 'no contact data imported');
+    if (r.procedureDirect !== false) assert.equal(r.offers, null);
+  }
+  const t = tally(rows);
+  assert.deepEqual(pick(t, 'uk-'), { 'uk-single-offer': [20,1031,7,23], 'uk-direct-award': [23,1053,5,0], 'uk-repeated-single-offer': [4,16,7,1054],
+    'uk-repeated-direct': [0,23,5,1053], 'uk-concentration': [0,359,722,0] });
+  assert.deepEqual(t.counts, [43,1036,2]);
+  // Identity: platform party id only; a Companies House number would not change the key.
+  const r0 = rows.find(r => r.supplierIds.length);
+  assert.equal(run('nationalSupplierIdentity', r0), `GB-FTS:${r0.supplierIds[0].id}`);
+  assert.equal(run('nationalSupplierIdentity', {...r0, supplierIds: [...r0.supplierIds, {id:'01234567', identifierType:'GB-COH'}]}), `GB-FTS:${r0.supplierIds[0].id}`);
+  console.log('United Kingdom Find a Tender: 1,081 awards, 43 flagged, no contact data, identity by platform id.');
+}
+
+// ---- Chile (Mercado Público) ----
+{
+  const rows = load('data/chile-mp.json'), cov = JSON.parse(fs.readFileSync('data/chile-mp-coverage.json'));
+  assert.deepEqual(cov.cohort.buyers.map(b => [b.id, b.level]), [['CL-MP-2015','national'],['CL-MP-2592','regional'],['CL-MP-3414','municipal']]);
+  assert.match(cov.license, /CC0 1\.0/); assert.deepEqual(cov.retrieval.emptyMonths, ['2026-08']);
+  assert.equal(cov.counts.tendersListed, 844); assert.equal(cov.counts.excluded['award record unavailable (API error)'], 47);
+  assert.equal(rows.length, 522);
+  for (const r of rows) {
+    assert.equal(r.dataFamily, 'chile'); assert.equal(r.currency, 'CLP'); assert.ok(cov.cohort.buyers.some(b => b.id === r.buyerId));
+    assert.equal(r.supplierIds.length, 1); assert.equal(r.supplierIds[0].identifierType, 'CL-RUT'); assert.match(r.supplierIds[0].id, /^(\d+[\dkK]?|masked-[0-9a-f]{16})$/);
+    assert.ok(!/@|contactPoint|email/i.test(JSON.stringify(r)), 'no contact data imported');
+    const direct = run('getAssessment', r).checks.find(c => c.id === 'cl-direct-award');
+    assert.equal(direct.status, 'not-applicable'); assert.match(direct.reason, /trato directo/);
+  }
+  const t = tally(rows);
+  assert.deepEqual(pick(t, 'cl-'), { 'cl-single-offer': [71,448,3,0], 'cl-direct-award': [0,0,0,522], 'cl-repeated-single-offer': [14,57,3,448],
+    'cl-repeated-direct': [0,0,0,522], 'cl-concentration': [0,296,226,0] });
+  assert.deepEqual(t.counts, [71,449,2]);
+  console.log('Chile Mercado Público: 522 awards, 71 flagged, direct deals out of scope, identity by RUT.');
 }
 
 // Concentration counts distinct procedures: a supplier winning many lots of one notice wins once.

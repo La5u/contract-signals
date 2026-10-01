@@ -1,0 +1,77 @@
+{
+ "source": "https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages",
+ "license": "Open Government Licence v3.0 (declared in every release package)",
+ "licenseUrl": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+ "attribution": "Find a Tender service, Cabinet Office (UK)",
+ "cohort": {
+  "cohortId": "uk-fts-3buyers-2024-2026",
+  "buyers": [
+   {
+    "id": "GB-FTS-131",
+    "name": "Foreign Commonwealth and Development Office",
+    "level": "national",
+    "indexNotices": 87
+   },
+   {
+    "id": "GB-FTS-39",
+    "name": "Lincolnshire County Council",
+    "level": "regional",
+    "indexNotices": 141
+   },
+   {
+    "id": "GB-FTS-289",
+    "name": "Milton Keynes Council",
+    "level": "municipal",
+    "indexNotices": 288
+   }
+  ],
+  "window": {
+   "startInclusive": "2024-09-01",
+   "endExclusive": "2026-09-01",
+   "basis": "award release date (API updatedFrom/updatedTo, one-day windows)"
+  },
+  "selection": "Announced on 2026-09-26 after a compact index of every award release in the window (notice id, date, buyer id, name and type only) and before any notice was downloaded: per level, the buyer id with the most award notices, leaving out ids above 500 notices."
+ },
+ "retrieval": {
+  "startedAt": "2026-09-26T17:30:03.054191+00:00",
+  "finishedAt": "2026-09-26T17:51:18.029545+00:00",
+  "indexedAwardReleases": 33457,
+  "noticesDownloaded": 516,
+  "rawDirectory": "data/uk-fts/raw"
+ },
+ "counts": {
+  "procurementMethods": {
+   "open": 356,
+   "selective": 132,
+   "limited": 22,
+   "null": 6
+  },
+  "retainedAwards": 1081,
+  "excludedAwards": {
+   "not exactly one supplier": 5,
+   "award not active (unsuccessful)": 147
+  },
+  "otherBuyerReleases": 0,
+  "withOffers": 1051,
+  "withCompaniesHouseNumber": 0,
+  "currencies": [
+   "BGN",
+   "CHF",
+   "EUR",
+   "GBP",
+   "JPY",
+   "USD"
+  ]
+ },
+ "limitations": [
+  "Three buyer accounts, not a country sample; other accounts of the same organisations are not merged by name.",
+  "Find a Tender publishes above-threshold notices (and, since 24 February 2025, Procurement Act notices); smaller contracts are not covered.",
+  "Supplier party ids are never shared by different names in this cohort, but one supplier can have several ids: repetition and concentration can only be undercounted.",
+  "Multi-supplier awards (frameworks, dynamic purchasing systems) are excluded: no single holder.",
+  "Amounts are as published, never converted or summed across currencies."
+ ],
+ "reproduce": [
+  "python tools/import-find-a-tender.py --offline",
+  "python tools/import-find-a-tender.py --discover --download"
+ ]
+}

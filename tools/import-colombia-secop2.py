@@ -34,6 +34,9 @@ import urllib.parse
 import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from personal_ids import mask, mask_ids  # noqa: E402
+
 RAW_DIR = os.path.join(ROOT, "data", "colombia-secop2", "raw")
 DATASET_URL = "https://www.datos.gov.co/resource/jbjy-vk9h.json"
 METADATA_URL = "https://www.datos.gov.co/api/views/jbjy-vk9h"
@@ -211,8 +214,8 @@ def normalize_row(raw: dict, buyer: dict) -> dict:
         "processId": raw.get("proceso_de_compra") or None,
         "processUrl": unwrap_url(raw.get("urlproceso")),
         "supplier": raw.get("proveedor_adjudicado") or None,
-        "supplierIds": ([{"identifierType": raw.get("tipodocproveedor") or "Documento",
-                          "id": supplier_document}] if supplier_document else []),
+        "supplierIds": mask_ids([{"identifierType": raw.get("tipodocproveedor") or "Documento",
+                                  "id": supplier_document}] if supplier_document else []),
         "supplierGroup": raw.get("es_grupo"),
         "supplierSme": raw.get("es_pyme"),
         "description": objeto,
@@ -230,6 +233,7 @@ def normalize_row(raw: dict, buyer: dict) -> dict:
         "amountPendingExecution": num("valor_pendiente_de_ejecucion"),
         "currency": "COP",
         "durationOriginal": raw.get("duraci_n_del_contrato") or None,
+        "daysAdded": int(raw["dias_adicionados"]) if str(raw.get("dias_adicionados", "")).isdigit() else None,
         "startDate": to_date(raw.get("fecha_de_inicio_del_contrato")),
         "endDate": to_date(raw.get("fecha_de_fin_del_contrato")),
         "lastUpdated": raw.get("ultima_actualizacion") or None,
@@ -387,9 +391,10 @@ def offline() -> None:
             "python tools/import-colombia-secop2.py --offline",
             "node tests/colombia.cjs",
         ],
-        "currentIndex": {"version": "3.0", "note": ("v3.0 framework with the jurisdiction-specific "
-                          "SECOP II check set: docs/score-v3.md (French cohorts) and "
-                          "docs/score-colombia.md (Colombia pilot).")},
+        "currentIndex": {"version": "3.1", "note": ("v3.1 framework (transparency family added; out of scope "
+                          "for SECOP II, which publishes no publication date) with the jurisdiction-specific "
+                          "SECOP II check set: docs/score-v3.md, docs/indicators.md and "
+                          "docs/score-colombia.md.")},
     }
     with open(os.path.join(ROOT, "data", "colombia-secop2-coverage.json"), "w", encoding="utf-8") as handle:
         json.dump(coverage, handle, ensure_ascii=False, indent=1)

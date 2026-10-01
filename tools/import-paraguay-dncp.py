@@ -16,6 +16,10 @@ from datetime import date, datetime, timedelta, timezone
 import gzip
 import json
 from pathlib import Path
+import os
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from personal_ids import mask, mask_ids  # noqa: E402
 import time
 from urllib.parse import quote, urlencode
 from urllib.request import Request, urlopen
@@ -233,7 +237,8 @@ SANCTIONS = ROOT / "data/dncp-sanctions.json"  # minimised snapshot, tools/fetch
 
 def sanctions_in_force(row, snapshot):
     """Debarments whose period covers the award date; context only, never points."""
-    supplier = {s["id"]: s for s in snapshot["suppliers"]}.get(row["supplierIds"][0]["id"]) if snapshot and row["supplierIds"] else None
+    # The snapshot stores persons' RUCs pseudonymised: compare both sides through the same mask.
+    supplier = {mask("RUC", s["id"]): s for s in snapshot["suppliers"]}.get(mask("RUC", row["supplierIds"][0]["id"])) if snapshot and row["supplierIds"] else None
     day = row.get("awardDate")
     return [s | {"retrievedAt": snapshot["retrievedAt"][:10]} for s in (supplier or {}).get("sanctions", [])
             if s["type"] in BARRING_SANCTIONS and day and s["start"] and s["start"] <= day and (s["end"] is None or day <= s["end"])]
@@ -348,6 +353,7 @@ def offline(cohort):
     snapshot = load(SANCTIONS) if SANCTIONS.exists() else None
     for row in rows:
         row["sanctionsInForceAtAward"] = sanctions_in_force(row, snapshot)
+        row["supplierIds"] = mask_ids(row["supplierIds"])
     save(cohort["extract"], rows)
     names = {buyer_id(b["code"]): b for b in cohort["buyers"]}
     single = len(cohort["buyers"]) == 1
