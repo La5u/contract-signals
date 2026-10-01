@@ -1390,7 +1390,7 @@ function renderNoticeEvidence(cell, c) {
   if (links.childNodes.length) { if (links.lastChild.textContent === ' · ') links.lastChild.remove(); cell.append(links); }
 }
 
-// Natural persons' names (Portugal BASE) are stored scrambled so they cannot be read or
+// Names of individuals and foreign holders without a tax number (Portugal BASE) are stored scrambled so they cannot be read or
 // collected in bulk from the data file; one name at a time can be shown in the record panel.
 // Same method as tools/import-portugal-base.py (scramble_name). A deterrent, not secrecy.
 const PROTECTED_NAME_SALT = 'contract-signals:base:name:v1';
@@ -1904,7 +1904,7 @@ function startExplorer() {
     const supplier = element('span');
     const protectedNames = Array.isArray(c.supplierProtectedNames) && Array.isArray(c.supplierNamesPublished) ? c.supplierProtectedNames : null;
     if (protectedNames?.some(Boolean)) {
-      // Each natural person's name is shown only on request, one record at a time.
+      // Each protected name is shown only on request, one record at a time.
       c.supplierNamesPublished.forEach((published, index) => {
         if (index) supplier.append(' / ');
         const item = protectedNames[index];

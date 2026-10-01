@@ -448,7 +448,7 @@ const server=http.createServer((req,res)=>{
   pn.on('pageerror',e=>errors.push(e.message));
   await pn.goto(base);
   await pn.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2594'));
-  const record={id:'base-1',buyer:'Public buyer',supplier:'Natural person · 0a1b2c3d / Company Lda',supplierNamesPublished:['Natural person · 0a1b2c3d','Company Lda'],
+  const record={id:'base-1',buyer:'Public buyer',supplier:'Individual or foreign holder · 0a1b2c3d / Company Lda',supplierNamesPublished:['Individual or foreign holder · 0a1b2c3d','Company Lda'],
    supplierProtectedNames:[{code:'0a1b2c3d',data:'gOAHCKdifNZHQSdVLA=='},null],description:'Synthetic service contract',amount:1000,date:'2025-01-02'};
   await pn.click('#advanced-filters > summary');await pn.locator('details.local-file > summary').click();
   await pn.setInputFiles('#file',{name:'protected.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify([record]))});
@@ -457,7 +457,7 @@ const server=http.createServer((req,res)=>{
   await pn.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 1'));
   assert.doesNotMatch(await pn.locator('body').textContent(),/Maria Exemplo/);
   await openRow(pn,pn.locator('.row-toggle').first());
-  assert.match(await pn.locator(panel).textContent(),/Natural person · 0a1b2c3d.*Company Lda/);
+  assert.match(await pn.locator(panel).textContent(),/Individual or foreign holder · 0a1b2c3d.*Company Lda/);
   assert.doesNotMatch(await pn.locator(panel).textContent(),/Maria Exemplo/);
   await pn.locator('#detail-panel button',{hasText:'Show name'}).click();
   await pn.waitForFunction(()=>document.querySelector('#detail-panel').textContent.includes('Maria Exemplo (0a1b2c3d)'),null,{timeout:20000});

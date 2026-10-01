@@ -976,8 +976,8 @@ window.I18N_DICTS.es = {
    "Tema de color: {a}. Cambiar tema."
   ],
   [
-   "Natural person · {a}",
-   "Persona física · {a}"
+   "Individual or foreign holder · {a}",
+   "Persona física o titular extranjero · {a}"
   ],
   [
    "Also known as {a}",

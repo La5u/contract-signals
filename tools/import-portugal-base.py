@@ -37,7 +37,7 @@ MAX_MEMBER_BYTES = 512 * 1024 * 1024
 YEARS = (2024, 2025, 2026)
 NOTES = [
     'Source documented; no independent factual verification. Browse only, no allegations.',
-    'Company names retained as published after removing NIF prefixes. A holder whose NIF is blank or begins with 1, 2, 3 or 45 is a natural person: the name is published by BASE and can be shown one record at a time, but it is stored scrambled and replaced by a stable code in lists, search and exports. No supplier or competitor identifiers.',
+    'Company names retained as published after removing NIF prefixes. A holder whose NIF is blank or begins with 1, 2, 3 or 45 is an individual, or a foreign entity without a Portuguese number: the name is published by BASE and can be shown one record at a time, but it is stored scrambled and replaced by a stable code in lists, search and exports. No supplier or competitor identifiers.',
     'precoContratual is a platform declaration; currency is unverified. Execution duration unit is unknown.',
     'Only dataPublicacao selects the window. Missing/invalid publication dates are excluded, never replaced by signing dates.',
     'Missing/unparseable buyers prevent a claim of full cohort coverage. Conflicting minimized variants are all omitted for review.',
@@ -46,9 +46,10 @@ AMOUNT_BASIS = 'Source precoContratual; platform declaration; currency unverifie
 SOURCE_LABEL = 'Official BASE dataset · search by contract identifier'
 DATE_NOTE = 'Source dataPublicacao: publication date, not signing or award date.'
 # Natural persons: Portuguese NIFs beginning 1, 2 or 3 (residents) or 45 (non-residents), and
-# holders whose NIF the register blanks. Their names stay viewable per record, not in bulk.
+# holders whose NIF the register blanks. A blank NIF can also be a foreign entity without a
+# Portuguese number, hence the neutral label. Names stay viewable per record, not in bulk.
 PERSON_NIF = re.compile(r'(?:[123][0-9]{8}|45[0-9]{7})\Z')
-PERSON_LABEL = 'Natural person'
+PERSON_LABEL = 'Individual or foreign holder'
 NAME_SALT = b'contract-signals:base:name:v1'
 NAME_ITERATIONS = 400_000  # deliberately slow; the browser repeats it for each name shown
 EMAIL = re.compile(r'[^\s@]+@[^\s@]+\.[^\s@]+')
