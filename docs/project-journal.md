@@ -2,6 +2,16 @@
 
 The former README, kept verbatim as the dated record of each delivery: selection choices, counts, reproduction commands and superseded v2.x rules. For current usage see the [README](../README.md); for the active method see [score-v3.md](score-v3.md) and [score-colombia.md](score-colombia.md). Commands below may predate later changes — the browser test now starts its own server (`node tests/browser.cjs`), and supplier names come from `tools/enrich-suppliers.py`.
 
+## Compact record panel, faster filters, Portugal BASE extraction — 1 October 2026
+
+- Simulated a reviewer opening records in every dataset. Before: 4,300–7,300 characters per panel, of which roughly one sixth concerned the record; the rest repeated dataset notes, method text and disclaimers. After: about 1,200 characters on average. Dataset-wide notes are shown once under “Scope and limits”; reasons are shortened to their first sentence; the full check list is folded.
+- Table rows went from about 165 px to about 85 px: one-line chips with short names, no repeated register note in the supplier cell.
+- Filtering and sorting: checks cached per record and search text built once, on demand. “All countries” (18,501 rows) went from about 900 ms to about 250 ms per action; Colombia from about 400 ms to about 160 ms.
+- Header: logo removed, shorter tagline, caveat moved into “Scope and limits”. Footer and the note under the table shortened.
+- Spanish and French: 150+ strings added for the redesign and the panel. A sweep of 261 panels (15 datasets, three languages, desktop and phone) found no script error, broken text or overflow.
+- Portugal BASE: full extraction run to a private candidate (3,353 rows kept, 616 set aside, mostly holders published without a tax number). Not published.
+- Ukraine: titles stripped of stray whitespace so identical tender and lot titles are no longer repeated (74 descriptions changed, counts unchanged).
+
 ## Audit fix and first commits of the pending work — 1 October 2026
 
 - `bid_attrition` kept partially collected per-bid decisions on inconclusive (`unknown`) results; four Ukraine rows displayed an incomplete “Published bid decisions” list. Decisions are now attached only to a conclusive result; regression test added; `data/prozorro.json` rebuilt offline (exactly those four rows changed, counts unchanged).

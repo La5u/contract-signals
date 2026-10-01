@@ -270,6 +270,14 @@ const INDICATOR_KINDS = {
   'term-extension': 'Term extended after award',
   'late-publication': 'Published long after the contract',
 };
+// Short names for the table chips; the full name is in the tooltip, the filter and the record panel.
+const KIND_SHORT = {
+  'single-offer': 'Single offer', 'direct-award': 'No competition', 'repeated-single-offer': 'Repeated single offer',
+  'repeated-direct': 'Repeated no competition', 'low-competition-rate': 'Low competition rate', 'concentration': 'Concentration',
+  'disqualified-better-bid': 'Better bid disqualified', 'short-bidding-period': 'Short bidding period',
+  'late-notice-change': 'Late notice change', 'long-duration': 'Long duration', 'amount-increase': 'Amount increase',
+  'term-extension': 'Term extended', 'late-publication': 'Late publication',
+};
 // Where a kind matches a red flag in a framework auditors already use (docs/indicators.md).
 const KIND_REFERENCES = {
   'single-offer': 'OCP Cardinal R018 “Single bid received”; single bidding in the Fazekas Corruption Risk Index',
@@ -374,7 +382,16 @@ function latePublicationCheck(c, excludedReason) {
   return make('yes', 'signal', weight, `${days} days between the contract date (${c.date}) and the ${meaning} (${c.publicationDate}). Above ${LATE_PUBLICATION_DAYS} days, beyond every legal deadline of the regimes covered: 8 points, linear to 16 at ${LATE_PUBLICATION_MAX_DAYS} days, in the transparency family. Late publication hides a contract from scrutiny while it runs; it can also be a clerical delay.`);
 }
 
+// The explorer turns this on once records are prepared: they no longer change, so each
+// record's checks are computed once instead of on every filter, sort and redraw.
+let assessmentCache = null;
 function getAssessment(c) {
+  if (!assessmentCache) return computeAssessment(c);
+  let cached = assessmentCache.get(c);
+  if (!cached) { cached = computeAssessment(c); assessmentCache.set(c, cached); }
+  return cached;
+}
+function computeAssessment(c) {
   if (c.assessmentMode === 'browse') return { checks: [], applicable: 0, evaluated: 0, unknown: 0,
     unknownApplicability: 0, notApplicable: 0, signals: 0,
     excludedReason: 'Browse-only import: no jurisdiction or scoring eligibility has been established.' };
@@ -1085,6 +1102,20 @@ function validateContracts(data) {
   return data;
 }
 
+// Normalised searchable text, built once per record (records do not change after preparation).
+const searchTextCache = new WeakMap();
+function searchText(c) {
+  let text = searchTextCache.get(c);
+  if (text === undefined) {
+    const projectText = c.project ? [c.project.title, c.project.basis] : [];
+    const evidence = c.noticeEvidence;
+    const noticeText = evidence ? [evidence.noticeUuid, evidence.lotReference, evidence.procedureId, evidence.procedureReference, evidence.procedureDescription, ...evidence.awardCriteria.map(a => [a.name, a.description, a.formula].join(' ')), ...evidence.justifications.map(j => j.text), ...evidence.references.map(r => r.id)] : [];
+    text = normalize([c.id, c.buyer, c.buyerSiret, c.supplier, c.description, c.procedure, c.cpv, c.contractId, c.awardId, c.buyerId, c.lotId, c.noticeId, ...(c.supplierProfiles || []).map(p => p.name), c.consultation?.procedureReference, ...(c.consultation?.notices || []).map(n => n.id), ...(c.consultation?.lots || []).map(l => `${l.id || ''} ${l.description || ''}`), ...projectText, ...noticeText, ...(c.supplierIds || []).map(s => `${s.id} ${s.siren || ''}`)].join(' '));
+    searchTextCache.set(c, text);
+  }
+  return text;
+}
+
 function selectContracts(contracts, { search = '', minimum = 0, minScore = 0, flagged = false, official = false, adjudicated = false, investigation = false, indicator = '', legal = '', noticeContext = '', assessment = '', sector = '', project = '', sort = 'score' } = {}) {
   const terms = normalize(search).trim().split(/\s+/).filter(Boolean);
   // Per-render caches only: no stale scores when data or cohort context changes.
@@ -1096,29 +1127,27 @@ function selectContracts(contracts, { search = '', minimum = 0, minScore = 0, fl
     return increases.get(c);
   };
   const collator = new Intl.Collator('en', { sensitivity: 'base', numeric: true });
-  return contracts.filter(c => {
-    const projectText = c.project ? [c.project.title, c.project.basis] : [];
+  const filtered = contracts.filter(c => {
     const evidence = c.noticeEvidence;
-    const noticeText = evidence ? [evidence.noticeUuid, evidence.lotReference, evidence.procedureId, evidence.procedureReference, evidence.procedureDescription, ...evidence.awardCriteria.map(a => [a.name, a.description, a.formula].join(' ')), ...evidence.justifications.map(j => j.text), ...evidence.references.map(r => r.id)] : [];
     const noticeMatch = !noticeContext || Boolean(evidence && (noticeContext === 'criteria' ? evidence.awardCriteria.length : noticeContext === 'explanation' ? evidence.procedureDescription || evidence.justifications.some(j => j.text) : noticeContext === 'correction' ? evidence.kind === 'correction' : noticeContext === 'ted' ? evidence.ted.length : false));
-    const text = normalize([c.id, c.buyer, c.buyerSiret, c.supplier, c.description, c.procedure, c.cpv, c.contractId, c.awardId, c.buyerId, c.lotId, c.noticeId, ...(c.supplierProfiles || []).map(p => p.name), c.consultation?.procedureReference, ...(c.consultation?.notices || []).map(n => n.id), ...(c.consultation?.lots || []).map(l => `${l.id || ''} ${l.description || ''}`), ...projectText, ...noticeText, ...(c.supplierIds || []).map(s => `${s.id} ${s.siren || ''}`)].join(' '));
-    const citations = getLegalContext(c);
+    const citations = legal && !['py-ceiling', 'py-complaint', 'co-public', 'fr-software', 'direct'].includes(legal) ? getLegalContext(c) : [];
     const legalMatch = !legal || (legal === 'py-ceiling' ? dncpAtCeiling(c) : legal === 'py-complaint' ? Boolean(c.complaints?.length) : legal === 'co-public' ? Boolean(c.secop2PublicCounterparty?.labelled) : legal === 'fr-software' ? Boolean(softwareMaintenanceContext(c)) : legal === 'direct' ? c.directAward === true : legal === 'cited' ? citations.length > 0 : citations.some(item => item.article === legal));
     const evaluated = getAssessment(c);
     const assessmentMatch = !assessment || (assessment === 'unevaluated' ? scoreFor(c) == null : assessment === 'zero' ? scoreFor(c) === 0 : assessment === 'partial' ? evaluated.unknown > 0 || evaluated.unknownApplicability > 0 : false);
     const sectorMatch = !sector || getSector(c).code === sector;
     const projectMatch = !project || (project === '@documented' ? Boolean(c.project) : c.project?.id === project);
-    return terms.every(term => text.includes(term)) && assessmentMatch && noticeMatch && legalMatch && sectorMatch && projectMatch &&
+    return (!terms.length || terms.every(term => searchText(c).includes(term))) && assessmentMatch && noticeMatch && legalMatch && sectorMatch && projectMatch &&
       (minimum <= 0 || (c.amount != null && c.amount >= minimum)) && (minScore <= 0 || (scoreFor(c) != null && scoreFor(c) >= minScore)) &&
       (!flagged || getIndicators(c).length > 0) && (!official || c.officialFinding === true) && (!adjudicated || hasAdjudicatedCorruption(c)) && (!investigation || hasReportedInvestigation(c)) &&
       (!indicator || (indicator === 'official-finding' ? c.officialFinding === true : getIndicators(c).some(i => i.kind === indicatorKind(indicator))));
-  }).sort((a, b) => {
-    const direction = ['score-asc', 'amount-asc', 'date-asc', 'publication-asc', 'indicators-asc', 'offers'].includes(sort) ? 1 : ['sector', 'sector-desc', 'buyer', 'buyer-desc', 'supplier', 'supplier-desc'].includes(sort) ? (sort.endsWith('-desc') ? -1 : 1) : -1;
-    const field = sort === 'recent-signal' ? 'recent-signal' : sort.startsWith('score') ? 'score' : sort.startsWith('amount') ? 'amount' : sort.startsWith('date') ? 'date' : sort.startsWith('indicators') ? 'indicators' : sort.startsWith('publication') ? 'publication' : sort.startsWith('sector') ? 'sector' : sort.startsWith('buyer') ? 'buyer' : sort.startsWith('supplier') ? 'supplier' : sort.startsWith('offers') ? 'offers' : sort;
-    const raw = c => field === 'recent-signal' ? (scoreFor(c) > 0 && c.date ? Date.parse(c.date) : null) : field === 'score' ? scoreFor(c) : field === 'amount' ? c.amount : field === 'date' ? (c.date ? Date.parse(c.date) : null) :
-      field === 'publication' ? (c.publicationDate ? Date.parse(c.publicationDate) : null) : field === 'sector' ? getSector(c).label : field === 'buyer' ? c.buyer : field === 'supplier' ? c.supplier :
-      field === 'indicators' ? (scoreFor(c) == null ? null : getIndicators(c).length) :
-      field === 'official' ? (c.officialFinding === true ? 1 : null) : field === 'offers' ? c.offers : field === 'increase' ? increaseFor(c) : null;
+  });
+  const direction = ['score-asc', 'amount-asc', 'date-asc', 'publication-asc', 'indicators-asc', 'offers'].includes(sort) ? 1 : ['sector', 'sector-desc', 'buyer', 'buyer-desc', 'supplier', 'supplier-desc'].includes(sort) ? (sort.endsWith('-desc') ? -1 : 1) : -1;
+  const field = sort === 'recent-signal' ? 'recent-signal' : sort.startsWith('score') ? 'score' : sort.startsWith('amount') ? 'amount' : sort.startsWith('date') ? 'date' : sort.startsWith('indicators') ? 'indicators' : sort.startsWith('publication') ? 'publication' : sort.startsWith('sector') ? 'sector' : sort.startsWith('buyer') ? 'buyer' : sort.startsWith('supplier') ? 'supplier' : sort.startsWith('offers') ? 'offers' : sort;
+  const raw = c => field === 'recent-signal' ? (scoreFor(c) > 0 && c.date ? Date.parse(c.date) : null) : field === 'score' ? scoreFor(c) : field === 'amount' ? c.amount : field === 'date' ? (c.date ? Date.parse(c.date) : null) :
+    field === 'publication' ? (c.publicationDate ? Date.parse(c.publicationDate) : null) : field === 'sector' ? getSector(c).label : field === 'buyer' ? c.buyer : field === 'supplier' ? c.supplier :
+    field === 'indicators' ? (scoreFor(c) == null ? null : getIndicators(c).length) :
+    field === 'official' ? (c.officialFinding === true ? 1 : null) : field === 'offers' ? c.offers : field === 'increase' ? increaseFor(c) : null;
+  return filtered.sort((a, b) => {
     const av = raw(a), bv = raw(b);
     const nullOrder = av == null ? (bv == null ? 0 : 1) : bv == null ? -1 : 0;
     if (nullOrder) return nullOrder;
@@ -1187,7 +1216,8 @@ function hashToViewState(hash) {
 }
 
 function supplierNames(contract) {
-  return (contract.supplierProfiles || []).map(p => p.name);
+  // The register repeats the acronym when it equals the name: “MGDIS (MGDIS)”.
+  return (contract.supplierProfiles || []).map(p => String(p.name || '').replace(/^(.+) \(\1\)$/, '$1'));
 }
 
 // Buyer and supplier profiles (never cross datasets; amounts never summed).
@@ -1335,52 +1365,38 @@ function verificationIdentifiers(c) {
 }
 
 function renderNoticeEvidence(cell, c) {
+  // The notice's own declarations, compactly; procedure-wide texts may concern other lots.
   const e = c.noticeEvidence;
-  cell.append(element('h4', 'Full notice · declared explanations and criteria'),
-    element('p', `Version ${e.version || '—'} · notice UUID ${e.noticeUuid || '—'} · lot ${e.lotId || '—'} · local lot reference ${e.lotReference || '—'} · ${e.kind}. A version/lot is a document, not a single attributed contract.`),
-    element('p', `Resolved buyers: ${e.buyers.map(b => `${b.name || '—'} (${b.siret || '—'})`).join(' / ')}. ${e.buyers.length > 1 ? 'Joint purchase: do not attribute all services or expenses to Tours.' : ''}`),
-    element('p', `Published legal framework: ${e.legalBasis || '—'} (directive/general framework, not a justification for an R2122 derogation).`));
-  cell.append(element('h4', 'Text declared by the buyer — whole-procedure scope'), element('p', 'These texts may concern lots other than the one displayed. Their presence proves neither their applicability to this lot nor their legal validity. No additional points.'));
-  if (e.procedureDescription) cell.append(element('blockquote', e.procedureDescription), sourceLink(e.source, 'Exact source · TenderingProcess/Description'));
-  else cell.append(element('p', 'Procedure description absent from the reproduced field: justification unknown in this extract, not absence of justification.'));
-  for (const j of e.justifications) {
-    cell.append(element('p', `Structured declaration · list ${j.category || '—'} · code ${j.code || '—'} · whole-procedure scope.`));
-    if (j.text) cell.append(element('blockquote', j.text));
-    cell.append(element('small', j.path, 'provenance'));
+  const p = (text, ...nodes) => { const el = element('p', text); el.append(...nodes); cell.append(el); };
+  cell.append(element('h4', 'Notice'));
+  p(`${e.kind} · version ${e.version || '—'} · lot ${e.lotId || '—'}${e.lotReference ? ` (${e.lotReference})` : ''} · deadline ${e.deadline.iso || [e.deadline.date, e.deadline.time].filter(Boolean).join(' ') || '—'}${e.accelerated ? ' · accelerated' : ''}${e.relaunch ? ' · relaunch' : ''}`);
+  if (e.buyers.length > 1) p(`Joint purchase: ${e.buyers.map(b => b.name || b.siret || '—').join(' / ')}`);
+  if (e.legalBasis) p(`Legal basis: ${e.legalBasis}`);
+  if (e.procedureDescription || e.justifications.some(j => j.text)) p('Procedure-wide text (may cover other lots):');
+  if (e.procedureDescription) cell.append(element('blockquote', e.procedureDescription));
+  for (const j of e.justifications) if (j.text) cell.append(element('blockquote', `${j.code ? `${j.code}: ` : ''}${j.text}`));
+  if (e.awardCriteria.length) {
+    const list = element('ul');
+    for (const a of e.awardCriteria) list.append(element('li', `${a.type || '—'} · ${a.name || a.description || a.formula || '—'}${a.parameters.length ? ` · ${a.parameters.map(x => `${x.rawValue ?? '—'}${x.code ? ` (${x.code})` : ''}`).join(', ')}` : ''}`));
+    cell.append(element('h4', 'Award criteria (this lot)'), list);
   }
-  cell.append(element('p', `Explicitly declared acceleration: ${e.accelerated == null ? 'unknown' : e.accelerated ? 'yes' : 'no'} · Declared relaunch: ${e.relaunch == null ? 'unknown' : e.relaunch ? 'yes' : 'no'}. A false acceleration value is not a justification of exclusivity.`));
-  cell.append(element('h4', `Award criteria for lot ${e.lotId || 'unknown'}`));
-  if (!e.awardCriteria.length) cell.append(element('p', 'Criteria not provided in the reproduced fields. They may appear in the consultation rules. Candidate-selection criteria are not substituted for award criteria.'));
-  for (const a of e.awardCriteria) {
-    const box = element('div', null, 'notice-criterion');
-    box.append(element('p', `${a.type || 'Type not specified'} · ${a.name || a.description || a.formula || 'Unknown label'}`));
-    if (a.description && a.name) box.append(element('p', a.description));
-    if (a.formula) box.append(element('p', `Published method: ${a.formula}`));
-    if (!a.parameters.length) box.append(element('p', 'Numeric weighting unknown in this field.'));
-    for (const p of a.parameters) box.append(element('p', `Published value: ${p.rawValue ?? '—'} · parameter code ${p.code || '—'} · list ${p.codeList || '—'}. Codes and values kept, without arbitrary conversion into percentages or sums.`));
-    box.append(element('small', a.path, 'provenance')); cell.append(box);
-  }
-  cell.append(element('p', 'Criteria and weights are context: a low price weight is not automatically suspect and earns no points.'));
-  cell.append(element('h4', 'Publications, deadlines and TED matching'), element('p', `BOAMP publication: ${e.publicationDate || '—'} · Declared dispatch: ${e.dispatchDate || '—'} ${e.dispatchTime || ''}. The dispatch date and the award date are not used as the initial publication.`),
-    element('p', `BOAMP bid deadline for the lot: ${e.deadline.date || '—'} ${e.deadline.time || ''}. Times and time zones kept as published.`));
-  for (const t of e.ted) {
-    const line = element('p', `TED ${t.publicationNumber} · publication ${t.publicationDate || '—'} · version ${t.version || '—'} · ${t.versionMatches ? 'UUID and version match' : 'different version: no substitution'} · deadline ${t.deadlineDate || '—'} ${t.deadlineTime || ''}. `);
-    line.append(sourceLink(t.source, 'Official XML'), element('span', ' · '));
-    const local = element('a', 'Downloaded local XML'); local.href = t.localFile; local.setAttribute('download', ''); line.append(local); cell.append(line);
-  }
-  if (e.deadlineConflict) cell.append(element('p', 'Diverging deadlines between sources: calculation excluded.'));
-  if (e.linkedNoticeLots.length) {
-    cell.append(element('h4', 'Partial chronology of the same lot — explicit references'), element('p', 'These links are documented, but their presence does not guarantee that all earlier versions or publications were recovered.'));
-    for (const n of e.linkedNoticeLots) cell.append(element('p', `${n.relation} · ${n.noticeId} · ${n.lotId} · version ${n.version || '—'} · ${n.kind} · publication ${n.publicationDate || '—'} · bid deadline ${n.deadline || '—'}. ${n.basis}`), sourceLink(n.source, 'Explicitly linked notice'));
-  }
-  cell.append(element('h4', 'Explicit references and documents'));
-  for (const r of e.references) {
-    cell.append(element('p', `${r.kind} · ${r.id} · ${r.ambiguous ? 'ambiguous reference' : r.matchedNoticeIds.length ? 'BOAMP notice resolved: '+r.matchedNoticeIds.join(', ') : 'reference kept, not resolved to a BOAMP notice'}. ${r.path}`));
-    if (r.tedSource) cell.append(sourceLink(r.tedSource, 'Earlier TED notice explicitly cited and downloaded'));
-  }
-  for (const n of e.sameProcedureNotices) cell.append(element('p', 'Same procedure UUID, without automatic attribution to the lot: '), sourceLink(n.source, n.id));
-  for (const d of e.documents) cell.append(element('p', 'Buyer-profile document cited, not downloaded: '), sourceLink(d.url, 'Open the document / profile'));
-  cell.append(element('p', 'No merging with DECP. No amounts, ceilings or notice versions summed. The bidding period remains non-assessable until the complete chain and the relevant initial publication are established.'));
+  if (e.deadlineConflict) p('Deadlines differ between sources.');
+  const links = element('p', null, 'link-row');
+  for (const t of e.ted) { links.append(sourceLink(t.source, `TED ${t.publicationNumber}${t.versionMatches ? '' : ' (other version)'}`), ' '); const local = element('a', 'XML'); local.href = t.localFile; local.setAttribute('download', ''); links.append(local, ' · '); }
+  for (const n of e.linkedNoticeLots) links.append(sourceLink(n.source, `${n.relation} ${n.noticeId}`), ' · ');
+  for (const r of e.references) if (r.tedSource) links.append(sourceLink(r.tedSource, `Cited TED ${r.id}`), ' · ');
+  for (const n of e.sameProcedureNotices) links.append(sourceLink(n.source, `Same procedure ${n.id}`), ' · ');
+  for (const d of e.documents) links.append(sourceLink(d.url, 'Buyer document'), ' · ');
+  if (links.childNodes.length) { if (links.lastChild.textContent === ' · ') links.lastChild.remove(); cell.append(links); }
+}
+
+// First sentence of a check's reason: the record's own fact, without the method text.
+function briefReason(text) {
+  // Translate the whole sentence first (the dictionaries hold full reasons), then shorten.
+  const full = String(text || '').trim();
+  const s = typeof i18nTranslate === 'function' ? i18nTranslate(full) : full;
+  const m = /^(.+?(?<!\b(?:Art|art|No|no|Nº|n|cf))[.!?])\s+(?=[\p{Lu}\d“"(«])/u.exec(s);
+  return m ? m[1] : s;
 }
 
 function startExplorer() {
@@ -1439,6 +1455,9 @@ function startExplorer() {
   };
   const dateFormat = new Intl.DateTimeFormat(uiLocale === 'en-IE' ? 'en-GB' : uiLocale, { timeZone: 'UTC', day: 'numeric', month: 'short', year: 'numeric' });
   let contracts = [];
+  // Notes repeated on many rows describe the dataset, not a record: shown once under “Scope and limits”.
+  let sharedNotes = new Set();
+  const fieldNotes = document.querySelector('#field-notes');
   let loaded = false;
   let loadVersion = 0;
   let page = 0;
@@ -1668,7 +1687,8 @@ function startExplorer() {
     }
     if (officialCount) { present.add('official-finding'); signalCounts.set('official-finding', officialCount); }
     const options = [...indicatorLabels].filter(([id]) => id && present.has(id)).sort((a, b) => (signalCounts.get(b[0]) || 0) - (signalCounts.get(a[0]) || 0));
-    fillSelect(controls.indicator, [['', 'All indicators'], ...options.map(([id, label]) => [id, `${label} · ${signalCounts.get(id) || 0}`])]);
+    const tr = typeof i18nTranslate === 'function' ? i18nTranslate : text => text;
+    fillSelect(controls.indicator, [['', 'All indicators'], ...options.map(([id, label]) => [id, `${tr(label)} · ${signalCounts.get(id) || 0}`])]);
   }
   // Full-width rows must span only the visible columns: on phones six columns are hidden,
   // and a colspan of 9 would create phantom columns that squeeze the subject.
@@ -1727,7 +1747,7 @@ function startExplorer() {
       row.dataset.id = c.id;
       const names = supplierNames(c);
       const supplierCell = element('td', names.length ? names.join(' / ') : c.supplier || '—');
-      if (names.length) supplierCell.append(element('small', `${c.supplier || 'Identifier not specified'} · current name (${c.supplierProfiles[0].retrievedAt.slice(0, 10)}), not historical`, 'provenance'));
+      if (names.length && c.supplier) supplierCell.append(element('small', c.supplier, 'provenance'));
       const dateCell = element('td', formatDate(c));
       if (c.noticeEvidence) dateCell.append(element('small', 'BOAMP publication', 'provenance'));
       if (c.dataFamily === 'dncp') dateCell.append(element('small', 'Contract-period start · not signature', 'provenance'));
@@ -1770,8 +1790,7 @@ function startExplorer() {
         const counts = !counted.has(indicator.family);
         counted.add(indicator.family);
         const familyName = indicator.family === 'competition' ? 'competition' : indicator.family === 'transparency' ? 'transparency' : 'execution/duration';
-        const badge = element('span', indicator.kindLabel, `badge severity-${indicator.severity}${counts ? '' : ' not-counted'}`);
-        badge.append(element('small', ` · ${familyName}${counts ? '' : ' · not added'}`, 'badge-family'));
+        const badge = element('span', KIND_SHORT[indicator.kind] || indicator.kindLabel, `badge severity-${indicator.severity}${counts ? '' : ' not-counted'}`);
         badge.title = `${indicator.label} (this jurisdiction's check). Raw weight ${indicator.weight}. ${counts ? `Counts for the ${familyName} family.` : `Not added: a heavier ${familyName} signal already counts.`} ${indicator.explanation}`;
         badges.append(badge);
       }
@@ -1834,291 +1853,257 @@ function startExplorer() {
     return section;
   }
   function renderDetail(c) {
+    // Only what is specific to this record. Dataset-wide notes live in “Scope and limits”;
+    // method text lives in “How to read · Method”.
     const indicators = getIndicators(c);
-    const names = supplierNames(c);
     const breakdown = getScoreBreakdown(c);
     const assessment = breakdown.assessment;
-    const scoreValue = breakdown.score;
-    const legalContext = getLegalContext(c);
+    const ids = c.supplierIds || [];
 
     const head = element('header', null, 'detail-head');
     const title = element('h2', c.description);
     title.id = 'detail-title';
     head.append(title);
     const facts = element('dl', null, 'detail-facts');
-    const fact = (label, value) => { const box = element('div'); box.append(element('dt', label)); const dd = element('dd'); dd.append(value); box.append(dd); facts.append(box); };
-    fact('Buyer', c.buyer || '—');
-    fact('Supplier', names.length ? names.join(' / ') : c.supplier || 'not specified');
-    fact(c.dataFamily === 'dncp' ? 'Contract-period start' : c.noticeEvidence ? 'BOAMP publication' : 'Date', formatDate(c));
-    fact('Declared amount', formatAmount(c));
-    fact('Offers', String(c.offers ?? '—'));
+    const fact = (label, ...values) => {
+      if (!values.length || values[0] == null || values[0] === '') return;
+      const box = element('div'); box.append(element('dt', label));
+      const dd = element('dd'); dd.append(...values); box.append(dd); facts.append(box);
+    };
+    const profileButton = role => {
+      if (!profileKey(c, role)) return [];
+      const button = element('button', 'Profile', 'link-button profile-link');
+      button.type = 'button';
+      button.title = role === 'buyer' ? 'All contracts of this buyer in the dataset' : 'All contracts of this supplier in the dataset';
+      button.addEventListener('click', () => { closeDetail({ restoreFocus: false }); openProfile(c, role); });
+      return [' · ', button];
+    };
+    fact('Buyer', c.buyer || '—', ...profileButton('buyer'));
+    // Supplier: published or register name, its identifiers, and the register status if enriched.
+    const names = supplierNames(c);
+    const supplierName = names.length ? names.join(' / ') : c.supplier || 'not specified';
+    const supplier = element('span', supplierName);
+    const supplierIdText = ids.map(s => { const shown = displayIdentifier(s); return s.siren && !shown.includes(s.siren) ? `${shown} · SIREN ${s.siren}` : shown; }).join(' / ');
+    if (supplierIdText && (names.length || !supplierIdText.includes(supplierName))) supplier.append(element('small', ` ${supplierIdText}`, 'muted'));
+    for (const p of c.supplierProfiles || []) {
+      const state = p.administrativeState === 'A' ? 'active' : p.administrativeState === 'C' ? 'ceased' : 'status unknown';
+      const status = element('small', ' · ', 'muted');
+      status.append(element('span', state), ' ', element('span', 'in the register on'), ` ${(p.retrievedAt || '').slice(0, 10)} `);
+      supplier.append(status, sourceLink(p.source, 'Annuaire'));
+    }
+    if (!c.noticeEvidence || c.supplier) fact('Supplier', supplier, ...profileButton('supplier'));
+    fact(c.dataFamily === 'dncp' ? 'Period start' : c.noticeEvidence ? 'Published' : 'Date', formatDate(c));
+    if (!c.noticeEvidence || c.amount != null) fact('Amount', formatAmount(c));
+    const offers = c.offers ?? (c.dataFamily === 'dncp' ? c.numberOfTenderers : null);
+    if (!c.noticeEvidence || offers != null) fact('Offers', offers == null ? '—' : String(offers));
+    const procedureKind = NATIONAL_FAMILIES[c.dataFamily] ? (c.procedureDirect === true ? 'without competition' : c.procedureDirect === false ? 'competitive' : 'not classified') : null;
+    fact('Procedure', [c.procedure || '—', c.procedureCode].filter(Boolean).join(' · '), ...(procedureKind ? [' · ', element('span', procedureKind)] : []));
+    if (c.durationMonths != null || c.durationOriginal) fact('Duration', ...(c.durationMonths != null ? [`${c.durationMonths} `, element('span', 'months')] : [c.durationOriginal]));
     fact('Index', scoreChip(c));
     head.append(facts);
+    if (c.dataStatus && c.dataStatus !== 'verified') head.append(element('p', provenance[c.dataStatus] || c.dataStatus, 'detail-status'));
 
     // Reviewer's own mark and note.
     const review = element('div', null, 'review-box');
     const current = reviewOf(c) || {};
-    const statusLabel = element('label', 'Your review');
     const statusSelect = element('select');
     statusSelect.id = 'detail-review-status';
+    statusSelect.setAttribute('aria-label', 'Your review');
     for (const [value, label] of [['', 'Not marked'], ...Object.entries(REVIEW_STATUSES)]) { const option = element('option', label); option.value = value; statusSelect.append(option); }
     statusSelect.value = current.status || '';
-    statusLabel.append(statusSelect);
-    const noteLabel = element('label', 'Note');
     const note = element('textarea');
     note.id = 'detail-review-note';
-    note.rows = 2;
+    note.rows = 1;
     note.maxLength = 10000;
-    note.placeholder = 'Reason, next step, who was contacted… stays in this browser.';
+    note.setAttribute('aria-label', 'Note');
+    note.placeholder = typeof i18nTranslate === 'function' ? i18nTranslate('Note (stays in this browser)') : 'Note (stays in this browser)';
     note.value = current.note || '';
-    noteLabel.append(note);
     const saved = element('span', '', 'field-help');
     saved.setAttribute('role', 'status');
-    statusSelect.addEventListener('change', () => { setReview(c, { status: statusSelect.value || null }); saved.textContent = reviewStorageWorks ? 'Saved in this browser.' : 'Storage blocked: kept until the page closes.'; render(); });
+    const savedText = () => reviewStorageWorks ? 'Saved' : 'Not saved: storage blocked';
+    statusSelect.addEventListener('change', () => { setReview(c, { status: statusSelect.value || null }); saved.textContent = savedText(); render(); });
     let noteTimer = null;
     note.addEventListener('input', () => {
       clearTimeout(noteTimer);
-      noteTimer = setTimeout(() => { setReview(c, { note: note.value }); saved.textContent = reviewStorageWorks ? 'Note saved in this browser.' : 'Storage blocked: kept until the page closes.'; }, 400);
+      noteTimer = setTimeout(() => { setReview(c, { note: note.value }); saved.textContent = savedText(); }, 400);
     });
-    review.append(statusLabel, noteLabel, saved);
+    review.append(statusSelect, note, saved);
     head.append(review);
-    const profiles = element('p', null, 'profile-links');
-    for (const [role, label] of [['buyer', 'Buyer profile'], ['supplier', 'Supplier profile']]) {
-      if (!profileKey(c, role)) continue;
-      const button = element('button', label, 'group-link');
-      button.type = 'button';
-      button.addEventListener('click', () => { closeDetail({ restoreFocus: false }); openProfile(c, role); });
-      profiles.append(button, ' ');
-    }
-    if (profiles.childNodes.length) head.append(profiles);
 
     const sections = [];
+    const line = (parent, text, ...nodes) => { const p = element('p', text); p.append(...nodes); parent.append(p); return p; };
+    const aside = (parent, text) => { const p = element('p', text, 'muted'); parent.append(p); return p; };
+    // “Label value · Label value”: labels are interface text, values stay as published.
+    const pairs = (parent, items, className) => {
+      const shown = items.filter(([, v]) => v != null && v !== '');
+      if (!shown.length) return null;
+      const p = element('p', null, className);
+      shown.forEach(([label, value], i) => p.append(i ? ' · ' : '', element('span', label), ` ${value}`));
+      parent.append(p);
+      return p;
+    };
 
-    // 1. Why it is flagged, in plain words first.
-    const why = detailSection('signals', indicators.length ? 'Why this record is flagged' : 'Signals');
-    if (assessment.excludedReason) why.append(element('p', assessment.excludedReason));
+    // 1. Signals: the triggered checks with this record's own facts.
+    const why = detailSection('signals', 'Signals');
+    if (assessment.excludedReason) line(why, assessment.excludedReason);
     if (indicators.length) {
       const triggered = element('ul', null, 'triggered-indicators');
-      for (const signal of indicators) {
+      const counted = new Set();
+      for (const signal of [...indicators].sort((a, b) => b.weight - a.weight)) {
+        const counts = !counted.has(signal.family);
+        counted.add(signal.family);
         const item = element('li', null, `severity-line severity-${signal.severity}`);
-        item.append(element('strong', signal.kindLabel));
-        if (signal.kindLabel !== signal.label) item.append(' (', element('span', signal.label), ')');
-        if (KIND_REFERENCES[signal.kind]) item.append(' · ', element('span', `also known as ${KIND_REFERENCES[signal.kind]}`));
-        item.append(element('span', ` · ${signal.weight} raw points · ${signal.severityLabel}, family ${signal.family}`), element('p', signal.explanation));
+        const name = element('strong', signal.kindLabel);
+        if (KIND_REFERENCES[signal.kind]) name.title = `Also known as ${KIND_REFERENCES[signal.kind]}`;
+        item.append(name, element('span', ` · ${signal.weight} pts`, 'muted'), ...(counts ? [] : [element('span', ' · not added (same family)', 'muted')]), element('p', briefReason(signal.explanation)));
         triggered.append(item);
       }
       why.append(triggered);
-    } else why.append(element('p', scoreValue == null ? 'No heuristic conclusion: not assessed. The documents and findings remain consultable.' : 'No threshold crossed among the evaluated checks only. Unknowns do not prove an absence of risk.'));
-    why.append(element('p', scoreValue == null ? 'Not assessed: no applicable check could be evaluated. This is not a zero score.' : `Competition: ${breakdown.competition} (maximum); execution/duration: ${breakdown.execution} (maximum); transparency: ${breakdown.transparency} (maximum). Total: ${scoreValue}/100. No compensation for unknown information.`),
-      element('p', `${assessment.evaluated}/${assessment.applicable} checks with established applicability evaluated; ${assessment.unknownApplicability} unknown applicabilities reported separately; ${assessment.notApplicable} checks out of scope. The ${assessment.checks.length} checks are listed under “All checks”.`, 'muted'),
-      element('p', 'Separate financial stake: the declared amount increases no weight. An increase uses only the comparable percentage, not a payments total. No points for an official finding, a project or an R2122 citation.', 'muted'));
-    sections.push(['Signals', why]);
+    } else if (!assessment.excludedReason) line(why, breakdown.score == null ? 'Not assessed: no check could be evaluated.' : 'No threshold crossed in the evaluated checks.');
+    if (breakdown.score != null) {
+      const parts = [['competition', breakdown.competition], ['execution', breakdown.execution], ['transparency', breakdown.transparency]].filter(([, v]) => v > 0);
+      const summary = element('p', null, 'muted');
+      if (parts.length) {
+        summary.append(element('span', 'Index'), ` ${breakdown.score} = `);
+        parts.forEach(([k, v], i) => summary.append(i ? ' + ' : '', element('span', k), ` ${v}`));
+        summary.append('. ');
+      }
+      summary.append(element('span', `${assessment.evaluated} of ${assessment.applicable} applicable checks evaluated.`));
+      if (assessment.unknownApplicability) summary.append(' ', element('span', `${assessment.unknownApplicability} with unknown applicability.`));
+      why.append(summary);
+    }
+    sections.push(why);
 
-    // 2. The record as published.
-    const record = detailSection('record', 'Record details');
-    record.append(element('p', `${provenance[c.dataStatus]} · Reference: ${c.id}`), element('p', `Procedure: ${c.procedure || 'not specified'} · Duration: ${c.durationMonths != null ? `${c.durationMonths} months` : c.durationOriginal || 'not specified'}`));
-    if (c.findingScope) record.append(element('p', c.findingScope === 'aggregate' ? 'Scope: a set of orders or services examined by the CRC, not an individual award. This finding is not extended to the buyer’s or supplier’s other contracts.' : 'Scope: the contract described in this record. This finding is not extended to the buyer’s or supplier’s other contracts.'));
-    if (c.dateNote) record.append(element('p', `Date: ${c.dateNote}`));
-    if (c.amountBasis) record.append(element('p', `Amount scope: ${c.amountBasis}`));
-    if (c.notes) record.append(element('p', c.notes));
-    record.append(element('p', `Identifiers — Buyer SIRET: ${c.buyerSiret || '—'} · Contract: ${c.contractId || '—'} · Lot: ${c.lotId || '—'} · CPV: ${c.cpv || '—'}`));
-    if (c.noticeId || c.publicationDate) record.append(element('p', `Notice: ${c.noticeId || '—'} · Publication: ${c.publicationDate || '—'}`));
-    if (c.supplierIds?.length) record.append(element('p', `Holders: ${c.supplierIds.map(s => `${displayIdentifier(s)}${s.siren ? ` · SIREN ${s.siren}` : ''}`).join(' / ')}`));
-    if (c.identifierNote) record.append(element('p', c.identifierNote));
-    if (c.executionModalities || c.techniques) record.append(element('p', `Published modalities: ${c.executionModalities || '—'} · Techniques: ${c.techniques || '—'}. Declared amounts, not observed spending; do not sum framework-agreement ceilings.`));
-    if (c.frameworkId) record.append(element('p', `Parent framework agreement cited in the source: ${c.frameworkId}. A subsequent contract is not a distinct project by mere deduction.`));
-    if (c.project) record.append(element('p', `Documented project: ${c.project.title}. ${c.project.basis}`));
+    // 2. Details published for this record (dataset-wide notes are left out).
+    const record = detailSection('record', 'Details');
+    const own = key => c[key] && !sharedNotes.has(c[key]) ? c[key] : null;
+    pairs(record, [['Contract', c.contractId], ['Lot', c.lotId], ['CPV', c.cpv], ['Notice', c.noticeId], ['Published', c.publicationDate],
+      ['Buyer SIRET', c.buyerSiret], ['Framework', c.frameworkId], ['Reference', c.contractId ? null : c.id]], 'muted');
+    for (const key of ['dateNote', 'amountBasis', 'notes', 'identifierNote']) if (own(key)) line(record, own(key));
+    if (c.findingScope === 'aggregate') line(record, 'Finding scope: a set of orders examined by the CRC, not one award.');
+    pairs(record, [['Modalities', [c.executionModalities, c.techniques].filter(x => x && x !== 'Sans objet').join(' · ')], ['Project', c.project ? `${c.project.title}. ${c.project.basis}` : null]]);
     if (c.dataFamily === 'dncp') {
-      record.append(element('h4', 'DNCP OCDS — published contract context'),
-        element('p', `OCID: ${c.ocid} · Award: ${c.awardId} · Contract: ${c.contractId} · Status: ${c.contractStatus || '—'}.`),
-        element('p', `Call published: ${c.callPublishedDate || '—'} · Contract period starts: ${c.date || '—'} · Signature date: ${c.signatureDate || 'not published'}. A contract period start is not proof of a signed document.`),
-        element('p', `Procedure: ${c.procedure || '—'} (OCDS method ${c.procurementMethod || '—'}) · Category: ${c.category || '—'} · Tenderers published: ${c.numberOfTenderers ?? '—'}${c.lotCount > 1 ? ` across ${c.lotCount} lots` : ''} · Tender period: ${c.tenderPeriodDays == null ? '—' : `${c.tenderPeriodDays} day(s)`}.`),
-        element('p', `Declared amount: ${c.amount == null ? '—' : moneyPyg.format(c.amount)}, not a verified payment. Published amendment entries: ${c.amendmentCount} · Releases in downloaded record: ${c.releaseCount}. Neither count proves history completeness.`));
-      for (const a of c.amendments || []) record.append(element('p', `Amendment ${a.date || '—'}: ${a.description || '—'}${a.amount == null ? '' : ` · ${moneyPyg.format(a.amount)}`}${a.entryId ? ` · source entry ${a.entryId}` : ''}.`));
-      record.append(element('p', 'Paraguayan checks and their editorial thresholds: docs/score-paraguay.md. A signal is not a finding of irregularity.'));
-    } else if (NATIONAL_FAMILIES[c.dataFamily]) {
-      const where = c.dataFamily === 'ted' ? 'TED eForms award notice' : c.dataFamily === 'fts' ? 'Find a Tender award notice' : c.dataFamily === 'chile' ? 'Mercado Público award (OCDS)' : 'Prozorro official record';
-      record.append(element('h4', `${where} — published procedure and competition`),
-        element('p', `Procedure: ${c.procedure || '—'}${c.procedureCode ? ` (${c.procedureCode})` : ''} · ${c.procedureDirect === true ? 'without competition' : c.procedureDirect === false ? 'competitive' : 'not classified'} · ${c.dataFamily === 'chile' ? `Tenderers on this tender (not per line item): ${c.offers ?? 'not published'} · UNSPSC segment: ${c.category || '—'} · Tender code: ${c.tenderCode}` : `Offers on this lot: ${c.offers ?? 'not published'} · Lot: ${c.lotId || '—'} · CPV: ${c.cpv || '—'}`}.`),
-        element('p', `Declared amount: ${c.amount == null ? '—' : `${c.amount.toLocaleString('en-IE')} ${c.currency || ''}`}, in the published currency, never converted. ${c.amountBasis || ''}`),
-        element('p', `Supplier identifier: ${(c.supplierIds || []).map(displayIdentifier).join(' / ') || '—'}. Checks and editorial thresholds: ${NATIONAL_FAMILIES[c.dataFamily].doc}. A signal is not a finding of irregularity.`));
+      pairs(record, [['OCID', c.ocid], ['Status', c.contractStatus || '—'], ['Call', c.callPublishedDate || '—'], ['Signed', c.signatureDate || '—']]);
+      pairs(record, [['Lots', c.lotCount > 1 ? c.lotCount : null], ['Tender period (days)', c.tenderPeriodDays ?? '—'], ['Category', c.category || '—']]);
+      if (c.amendments?.length) {
+        const list = element('ul');
+        for (const a of c.amendments) list.append(element('li', `${a.date || '—'} · ${a.description || '—'}${a.amount == null ? '' : ` · ${moneyPyg.format(a.amount)}`}`));
+        record.append(element('h4', `Amendments (${c.amendments.length})`), list);
+      }
+    } else if (c.dataFamily === 'chile') {
+      pairs(record, [['Tender', c.tenderCode]]);
+      line(record, 'Offers are counted on the whole tender, not per item.');
     } else if (c.dataFamily === 'secop2') {
-      record.append(element('h4', 'SECOP II — declared procedure and justification'),
-        element('p', `Declared modality: ${c.procedure || '—'} · Contract status: ${c.contractStatus || '—'} · Contract type: ${c.contractType || '—'}.`),
-        element('p', `Published justification of the modality: ${c.procedureJustification || '—'}. This is the buyer’s declared ground, kept verbatim in Spanish; its legal validity is not assessed here. Ordinary grounds (professional services, interadministrative agreements, minimum-amount rules, regime statutes) add no points; only a declared absence of supplier plurality or manifest urgency enters the Colombian check (docs/score-colombia.md).`));
-      const publicContext = c.secop2PublicCounterparty;
-      if (publicContext?.labelled) record.append(element('p', publicContext.basis === 'declared-interadministrative'
-        ? 'Public-to-public agreement · context outside the index, no points: the buyer declared an interadministrative agreement, a contract between public bodies. SECOP II publishes no field for the counterparty’s legal nature, so its public status is the buyer’s declaration, not verified here. The index is unchanged.'
-        : `Public-to-public agreement · context outside the index, no points: a ${c.contractType === 'Operaciones de Crédito Público' || c.procedureJustification === 'Operaciones de Crédito Público' ? 'public-credit operation (empréstito)' : 'loan of use (comodato)'} whose counterparty document is also the counterparty of a declared interadministrative agreement in this cohort (contract ${publicContext.agreementContractId}). The index is unchanged; a long declared duration is ordinary for this kind of contract.`));
-      else if (publicContext) record.append(element('p', `Declared as an interadministrative agreement, but the public-to-public context label is withheld: ${publicContext.withheld === 'person-document' ? 'the counterparty holds a personal identity document' : publicContext.withheld === 'community-body' ? 'the published counterparty name designates a community body (junta de acción comunal or similar), not a public entity' : 'no usable counterparty document is published'}. No points either way.`));
-      if (c.processUrl) {
-        const processParagraph = element('p', 'Process page on the official portal: ');
-        processParagraph.append(sourceLink(c.processUrl, 'SECOP II — detalle del proceso'));
-        record.append(processParagraph);
-      }
-      record.append(
-        element('p', `Amounts: declared ${c.amount == null ? '—' : moneyCop.format(c.amount)} · paid ${c.amountPaid == null ? '—' : moneyCop.format(c.amountPaid)} · invoiced ${c.amountInvoiced == null ? '—' : moneyCop.format(c.amountInvoiced)}. Paid and invoiced values are platform declarations, not audited payments, and are never summed. Declared amounts stay visible and sortable but add no weight to the index.`));
-      if (c.supplierIds?.length) record.append(element('p', `Supplier document: ${displayIdentifier(c.supplierIds[0])}. A personal or tax identifier identifies the declared holder; it implies no suspicion and no link to other contracts by itself.`));
-      record.append(element('p', `Pilot cohort: ${c.buyerLevel} buyer, signature window 2024-09 → 2026-09. Not exhaustive of the buyer’s procurement; no offers table was imported, so the offer-count checks are out of scope. The five Colombian checks and their editorial thresholds are documented in docs/score-colombia.md; a signal is not a finding of irregularity.`));
+      pairs(record, [['Status', c.contractStatus || '—'], ['Type', c.contractType || '—'], ['Declared justification', c.procedureJustification]]);
+      if (c.amountPaid != null || c.amountInvoiced != null) pairs(record, [['Paid', c.amountPaid == null ? '—' : moneyCop.format(c.amountPaid)], ['Invoiced', c.amountInvoiced == null ? '—' : moneyCop.format(c.amountInvoiced)]]);
     } else if (c.dataFamily === 'decp') {
-      record.append(element('h4', 'Published contract history'));
-      record.append(element('p', `Price form: ${c.priceForm || '—'} · Type: ${c.priceType || '—'}. Declared amounts, not observed payments.`));
+      pairs(record, [['Price', [c.priceForm, c.priceType].filter(Boolean).join(' · ')]]);
       if (c.initialConflicts?.length) {
-        record.append(element('p', `Contradictory initial versions (${c.initialConflicts.join(', ')}). No chronology is inferred from these differences.`));
-        const alternatives = element('ul');
-        (c.initialAlternatives || []).forEach((a, n) => {
-          const item = element('li', `Initial variant ${n + 1}: ${a.amount == null ? 'unknown amount' : money.format(a.amount)} — this is not a dated amendment.`);
-          if (c.cohortId === CITIES_COHORT) item.append(element('p', `Notification: ${a.date || '—'} · Publication: ${a.publicationDate || '—'} · CPV: ${a.cpv || '—'} · Offers: ${a.offers ?? '—'} · Procedure: ${a.procedure || '—'} · Holders: ${Array.isArray(a.supplierIds) ? a.supplierIds.map(s => s.id).join(' / ') || '—' : '—'}`), element('p', a.description || 'Unknown object in this variant.'));
-          alternatives.append(item);
-        });
-        record.append(alternatives);
+        line(record, `Conflicting initial versions (${c.initialConflicts.join(', ')}): no chronology inferred.`);
+        const list = element('ul');
+        (c.initialAlternatives || []).forEach((a, n) => list.append(element('li', `Variant ${n + 1}: ${a.amount == null ? 'amount unknown' : money.format(a.amount)}${c.cohortId === CITIES_COHORT ? ` · notified ${a.date || '—'} · ${a.procedure || '—'} · offers ${a.offers ?? '—'}` : ''}`)));
+        record.append(list);
       }
-      if (c.modificationConflicts?.length) record.append(element('p', `Conflicting modifications: ${c.modificationConflicts.map(m => `${m.id} (${m.fields.join(', ')})`).join(' ; ')}. No evolution calculation.`));
-      if (c.history?.length) {
-        const historyTable = element('table', null, 'history-table');
-        historyTable.append(element('caption', 'Available published versions — absence of a published amendment ≠ absence of a real modification.'));
-        const thead = element('thead');
-        const heading = element('tr');
-        ['Event', 'Notification', 'Publication', 'Declared amount'].forEach(label => { const th = element('th', label); th.scope = 'col'; heading.append(th); });
+      if (c.modificationConflicts?.length) line(record, `Conflicting modifications: ${c.modificationConflicts.map(m => `${m.id} (${m.fields.join(', ')})`).join('; ')}.`);
+      if (c.history?.length > 1) {
+        const table = element('table', null, 'history-table');
+        const thead = element('thead'); const heading = element('tr');
+        for (const label of ['Event', 'Notified', 'Published', 'Amount']) { const th = element('th', label); th.scope = 'col'; heading.append(th); }
         thead.append(heading);
-        const entries = element('tbody');
-        c.history.forEach(event => {
-          const entry = element('tr');
-          entry.append(element('td', event.kind === 'initial' ? 'Initial award' : `Modification ${event.id || '—'}`), element('td', event.date || '—'), element('td', event.publicationDate || '—'), element('td', event.amount == null ? '—' : money.format(event.amount), 'numeric'));
-          entries.append(entry);
-        });
-        historyTable.append(thead, entries);
-        const wrap = element('div', null, 'history-wrap');
-        wrap.append(historyTable);
-        record.append(wrap);
+        const rows = element('tbody');
+        for (const event of c.history) {
+          const tr = element('tr');
+          tr.append(element('td', event.kind === 'initial' ? 'Initial' : `Change ${event.id || '—'}`), element('td', event.date || '—'), element('td', event.publicationDate || '—'), element('td', event.amount == null ? '—' : money.format(event.amount)));
+          rows.append(tr);
+        }
+        table.append(thead, rows);
+        const wrap = element('div', null, 'history-wrap'); wrap.append(table); record.append(wrap);
       }
-      const evolution = getAmountEvolution(c);
-      record.append(element('p', evolution.status === 'available' ? `Analysable declared evolution: +${money.format(evolution.delta)} (+${evolution.percentage.toLocaleString(uiLocale, { maximumFractionDigits: 1 })} %), from ${money.format(evolution.initialAmount)} to ${money.format(evolution.revisedAmount)}, on ${evolution.date}. Quantities or scope may have changed; consult the source.` : `Increase calculation unavailable: ${evolution.reason}`));
-      const supplierContext = c.supplierContext;
-      if (supplierContext) record.append(element('p', `Single identified holder: SIREN ${getSupplierIdentity(c)}. Same buyer/CPV ${supplierContext.cpvGroup}, 2024–2025: ${supplierContext.wins}/${supplierContext.known} contracts to the known holder, out of ${supplierContext.total} eligible contracts (${Math.round(supplierContext.coverage * 100)} % coverage); ${supplierContext.directCount} awards without competition identified to this holder, all amounts; ${supplierContext.directKnownCount}/${supplierContext.supplierContracts} known competitive statuses. ${supplierContext.sufficient ? 'Sufficient sample to examine concentration.' : 'Concentration not computable: insufficient sample or coverage.'} The statistics do not change with your filters.`));
-      const context = c.competitionContext;
-      record.append(element('p', context ? `Retrospective context ${context.start}–${context.end}, same buyer and CPV ${context.cpvGroup}: ${context.single} single-offer contracts / ${context.known} with a known count, out of ${context.total} eligible competitive contracts (${Math.round(context.coverage * 100)} % coverage). ${context.sufficient ? 'Coverage thresholds met.' : 'Insufficient sample or coverage: no repetition indicator.'} Computed over the whole cohort, unchanged by your filters.` : 'Repeated competition not computable: procedure not explicitly competitive, version conflict, missing identifier or contract outside the cohort.'));
     }
-    if (c.noticeChange?.previousSource) {
-      record.append(element('p', `Linked deadline: ${c.noticeChange.oldDeadline} → ${c.noticeChange.newDeadline}. Extension: ${c.noticeChange.extensionDays} days.`),
-        sourceLink(c.noticeChange.previousSource, 'Previous notice · same procedure and lot'));
-    }
+    if (c.noticeChange?.previousSource) { const p = element('p'); p.append(element('span', 'Correction: deadline'), ` ${c.noticeChange.oldDeadline} → ${c.noticeChange.newDeadline} (${c.noticeChange.extensionDays > 0 ? '+' : ''}${c.noticeChange.extensionDays} d) `, sourceLink(c.noticeChange.previousSource, 'Previous notice')); record.append(p); }
     if (c.linkedContract) {
       const linked = c.linkedContract;
-      record.append(element('h4', 'Linked contract history'), element('p',
-        `Checked ${linked.retrievedAt?.slice(0, 10) || 'date unknown'} · ${linked.publishedChangeCount == null ? 'Change count not published' : `${linked.publishedChangeCount} published change(s)`}. Status: ${linked.contractStatus || 'unknown'}. Context only; no amendment points.`),
-        sourceLink(linked.url, 'Official contract record'));
-      if (linked.changes?.length) {
-        const changes = element('ul');
-        for (const change of linked.changes) changes.append(element('li',
-          `${change.dateSigned || change.date || 'Date unknown'} · ${change.id || 'ID unknown'} · ${change.status || 'Status unknown'} · ${(change.rationaleTypes || []).join(', ') || 'Reason code unknown'}`));
-        record.append(changes);
-      }
+      line(record, `Contract record (${linked.retrievedAt?.slice(0, 10) || 'date unknown'}): ${linked.contractStatus || 'status unknown'} · ${linked.publishedChangeCount == null ? 'changes not published' : `${linked.publishedChangeCount} change(s)`}${(linked.changes || []).map(x => ` · ${x.dateSigned || x.date || '—'} ${(x.rationaleTypes || []).join(', ')}`).join('')}. `, sourceLink(linked.url, 'Record'));
     }
     if (c.bidAttrition?.decisions?.length) {
-      record.append(element('h4', 'Published bid decisions'));
-      const decisions = element('ul');
-      for (const decision of c.bidAttrition.decisions) decisions.append(element('li',
-        `Award ${decision.awardId}: ${decision.status}. ${decision.title || ''} ${decision.description || ''}`));
-      record.append(decisions);
+      const list = element('ul');
+      for (const d of c.bidAttrition.decisions) list.append(element('li', `${d.status}${d.qualified === false ? ' · unqualified' : ''}: ${[d.title, d.description].filter(Boolean).join(' — ') || '—'}`));
+      record.append(element('h4', 'Bid decisions'), list);
     }
-    if (c.sourceReference) record.append(element('p', `Source passage: ${c.sourceReference}`));
-    sections.push(['Record', record]);
-
-    // 3. Context that never adds points: legal basis, identity, findings, notices.
-    const outside = detailSection('context', 'Context outside the index');
-    const software = softwareMaintenanceContext(c);
-    if (software) outside.append(element('h4', 'Single-vendor software maintenance — context, not an indicator'), element('p', `Maintenance, support or licences of an existing software product (${software.software === 'cpv' ? 'software CPV code' : 'software named in the object'}), placed with one vendor (${software.vendor === 'direct' ? 'award declared without competition' : software.vendor === 'R2122-3' ? 'article R2122-3 cited' : 'procedure not classified, one offer received'}). This is often routine: only the publisher or its appointed distributor can maintain its product. Proprietary status and exclusive rights are not verified here. No points added or removed; the index is unchanged.`));
-    if (c.directAward === true || legalContext.length) {
-      outside.append(element('h4', 'Declared legal basis — context, not an indicator'), element('p', 'A citation proves neither that the legal conditions are met nor an irregularity. A single offer received does not demonstrate exclusivity. No points added; no inference about other contracts.'));
-      if (!legalContext.length) outside.append(element('p', 'Article R2122 not found in the imported object or procedure. Justification unknown in this extract, not absence of justification.'));
-      if (c.initialConflicts?.length) outside.append(element('p', 'Diverging initial versions: context of the displayed text only, not validation of the basis. The variants remain to be examined in the source.'));
-      for (const item of legalContext) {
-        outside.append(element('p', `${item.article} · ${item.label} · exact citation: “${item.citation}”`), element('blockquote', item.excerpt),
-          sourceLink(item.source, `Source of the published text (${item.field === 'description' ? 'object' : 'procedure'})`));
-      }
-    }
-    if (c.supplierProfiles?.length) {
-      outside.append(element('h4', 'Current public identity — not historical'), element('p', 'SIREN matching derived from an explicitly typed French identifier. Name and status of the legal unit observed at retrieval time, not those of each establishment nor those at the contract date. No points for the name or status; no link between companies inferred.'));
-      for (const p of c.supplierProfiles) {
-        const state = p.administrativeState === 'A' ? 'active' : p.administrativeState === 'C' ? 'cessation declared' : 'unknown';
-        const paragraph = element('p', `${p.name} · SIREN ${p.siren} · current legal-unit status: ${state} · snapshot ${p.retrievedAt}. `);
-        paragraph.append(sourceLink(p.source, 'Annuaire des entreprises — exact source'));
-        outside.append(paragraph);
-      }
-    } else if (HISTORY_COHORTS.has(c.cohortId)) outside.append(element('p', 'No current public name attached: ambiguous or missing identifier, restricted diffusion in the company register, or no exact match. The historical name remains unknown.'));
-    if (c.officialFinding === true) outside.append(element('h4', 'Documented official finding — separate from the index'), element('p', `This finding keeps its scope, source and response; it earns no heuristic points and is not a presumed conviction. Passage: ${c.sourceReference || '—'}.`));
-    for (const report of c.investigationReports || []) {
-      outside.append(element('h4', 'Reported investigation — separate from findings and index'),
-        element('p', `${report.publisher}, ${report.reportedAt}: ${report.reportedFact} Event: ${report.eventDate}. Link to this dossier: ${report.linkageBasis}. ${report.currentStatus} News of an investigative step does not prove an offence, identify a guilty party or establish that the investigation remains open.`),
-        sourceLink(report.sourceUrl, 'Read the contemporary report'));
-    }
-    if (hasAdjudicatedCorruption(c)) {
-      const o = c.corruptionOutcome;
-      outside.append(element('h4', 'Contract-specific adjudicated outcome — outside the index'),
-        element('p', `${o.authority} · ${o.decisionId} · ${o.decisionDate} · offence: ${o.offence}. This judgment is linked to contract ${o.contractId}; it does not establish guilt of every named party. Linkage: ${o.linkageBasis}.`),
-        element('p', `Judgment passage: ${o.sourcePassage}. Finality checked as of ${o.verifiedAsOf}; later appeals or reversals must be checked.`),
-        sourceLink(o.judgmentUrl, 'Official judgment'), sourceLink(o.finalityUrl, 'Finality evidence'));
-    }
-    if (c.dataFamily === 'dncp') {
-      for (const x of c.sanctionsInForceAtAward || []) outside.append(element('p', `Supplier sanction · outside the index, no points: the DNCP register lists a ${x.type} (“${x.description || '—'}”, status ${x.status || '—'}) from ${x.start} to ${x.end || 'no end date'}, which covers this award date (${c.awardDate}). Register snapshot ${x.retrievedAt}; check the supplier's page on contrataciones.gov.py before drawing any conclusion.`));
-      const complaintKinds = { protest: 'protest by a participant (protesta)', investigation: 'DNCP investigation opened on a report (denuncia)', other: 'other proceeding' };
-      for (const k of c.complaints || []) outside.append(element('p', `Complaint before the DNCP · outside the index, no points: case ${k.id}, ${complaintKinds[k.kind]}, ${k.eventCount} recorded step(s) from ${k.firstEventDate || '—'} to ${k.lastEventDate || '—'}${k.closureRecorded ? ', closing resolution recorded' : ', no closing resolution recorded'}. A complaint is a filing, not a finding; the outcome is in the DNCP resolutions linked below. Names of participants are not reproduced.`));
-      if (dncpAtCeiling(c)) outside.append(element('p', `Legal context · no points: the published amendments raise the amount by ${dncpAmountIncrease(c).percentage.toFixed(2)} %, at the 20 % ceiling on contract modifications in Ley 7021/22 Art. 67. Reaching the ceiling is lawful; it means no further agreed increase is possible under that article. The law applicable to this process is not verified here.`));
-    }
-    if (NATIONAL_FAMILIES[c.dataFamily] && c.complaintCount) outside.append(element('p', `Complaints recorded on this tender: ${c.complaintCount} · outside the index, no points. A complaint is a filing, not a finding.`));
-    if (c.noticeEvidence) renderNoticeEvidence(outside, c);
+    if (c.noticeEvidence) renderNoticeEvidence(record, c);
     if (c.consultation) {
-      const timeline = c.consultation;
-      outside.append(element('h4', 'Consultation: publications and versions'), element('p', `Internal reference: ${timeline.procedureReference || '—'} · Procedure UUID: ${timeline.procedureId || '—'} · Lot analysed: ${timeline.lotId || '—'}. A row represents a notice, not an award.`));
-      const list = element('ol');
-      for (const n of [...timeline.notices, ...(timeline.matchedAwards || [])]) {
+      const t = c.consultation;
+      const list = element('ul');
+      for (const n of [...t.notices, ...(t.matchedAwards || [])]) {
         const item = element('li');
-        item.append(sourceLink(n.source, `${n.id} · ${n.kind} · state ${n.publicationState || '—'} · version ${n.version || '—'} · publication ${n.publicationDate || '—'}`),
-          element('span', ` · Published deadline: ${n.deadline || '—'} · Procedure: ${n.procedureType || '—'} · Accelerated: ${n.accelerated == null ? 'unknown' : n.accelerated ? 'yes' : 'no'} · Earlier references: ${(n.previousNoticeIds || []).join(', ') || '—'}`));
+        item.append(sourceLink(n.source, `${n.id} · ${n.kind}`), ` · ${n.publicationDate || '—'} · deadline ${n.deadline || '—'}${n.accelerated ? ' · accelerated' : ''}`);
         if (n.correctionText) item.append(element('p', n.correctionText));
         list.append(item);
       }
-      for (const lot of timeline.lots || []) outside.append(element('p', `Published lot: ${lot.id || 'unknown identifier'} · ${lot.description || '—'} · CPV ${(lot.cpv || []).join(', ') || '—'} · raw deadline ${lot.deadline || '—'}. No per-lot score without a verified calendar.`));
       const period = getBiddingPeriod(c);
-      outside.append(list, element('p', period.status === 'available' ? `Bidding period: ${period.days.toFixed(2)} days (upper bound), last deadline ${period.deadline}.` : `Bidding period not assessable: ${period.reason}`));
-      (timeline.exclusions || []).forEach(reason => outside.append(element('p', reason)));
-      outside.append(element('p', 'An award notice linked to this notice does not prove a match for every lot; no amount, holder or finding is transferred.'));
+      record.append(element('h4', 'Notices'), list);
+      line(record, period.status === 'available' ? `Bidding period: ${period.days.toFixed(1)} days (upper bound).` : `Bidding period not assessable: ${period.reason}`);
+      for (const reason of t.exclusions || []) line(record, reason);
     }
-    if (outside.children.length > 1) sections.push(['Context', outside]);
+    if (record.children.length > 1) sections.push(record);
 
-    // 4. Every check, with its state: signal, evaluated, not assessable, out of scope.
-    const all = detailSection('checks', `Heuristic index v${SCORE_VERSION} · all checks`);
+    // 3. Context that adds no points, one line each.
+    const outside = detailSection('context', 'Context · no points');
+    const software = softwareMaintenanceContext(c);
+    if (software) line(outside, 'Single-vendor software maintenance: often routine; exclusivity not verified.');
+    const publicContext = c.secop2PublicCounterparty;
+    if (publicContext?.labelled) line(outside, publicContext.basis === 'declared-interadministrative' ? 'Public-to-public agreement (declared interadministrative; not verified).' : `Public-to-public agreement: counterparty of interadministrative contract ${publicContext.agreementContractId}.`);
+    const legalContext = getLegalContext(c);
+    for (const item of legalContext) {
+      line(outside, `${item.article} cited: `, sourceLink(item.source, 'source'));
+      outside.append(element('blockquote', item.excerpt));
+    }
+    if (c.directAward === true && !legalContext.length && c.dataFamily === 'decp') line(outside, 'No R2122 article cited in the published text.');
+    if (c.officialFinding === true) line(outside, `Official audit finding${c.sourceReference ? `: ${c.sourceReference}` : ''}.`);
+    for (const report of c.investigationReports || []) line(outside, `Reported investigation (${report.publisher}, ${report.reportedAt}): ${report.reportedFact} Status: ${report.currentStatus} `, sourceLink(report.sourceUrl, 'Report'));
+    if (hasAdjudicatedCorruption(c)) {
+      const o = c.corruptionOutcome;
+      line(outside, `Judgment ${o.decisionId} (${o.authority}, ${o.decisionDate}): ${o.offence}. Finality checked ${o.verifiedAsOf}. `, sourceLink(o.judgmentUrl, 'Judgment'), ' · ', sourceLink(o.finalityUrl, 'Finality'));
+    }
+    if (c.dataFamily === 'dncp') {
+      for (const x of c.sanctionsInForceAtAward || []) line(outside, `Supplier ${x.type} in force at award (${x.start} → ${x.end || 'no end'}, ${x.status || 'status —'}).`);
+      for (const k of c.complaints || []) line(outside, `DNCP ${k.kind === 'protest' ? 'protest' : k.kind === 'investigation' ? 'investigation' : 'proceeding'} ${k.id}: ${k.eventCount} step(s), ${k.firstEventDate || '—'} → ${k.lastEventDate || '—'}${k.closureRecorded ? ', closed' : ''}.`);
+      if (dncpAtCeiling(c)) line(outside, `Amendments reach the legal 20 % ceiling (+${dncpAmountIncrease(c).percentage.toFixed(1)} %).`);
+    }
+    if (c.complaintCount) line(outside, `${c.complaintCount} complaint(s) filed on this tender.`);
+    if (outside.children.length > 1) sections.push(outside);
+
+    // 4. Every check, folded: one line each.
+    const all = element('details', null, 'detail-section detail-checks');
+    all.id = 'detail-checks';
+    all.append(element('summary', `All ${assessment.checks.length} checks`));
     const checks = element('ul', null, 'assessment-checks');
-    const states = { signal: 'Signal', clear: 'Evaluated · threshold not crossed', unknown: 'Not assessable', 'not-applicable': 'Out of scope' };
-    // Label, status and reason in separate nodes so each can be translated on its own.
+    const states = { signal: 'Signal', clear: 'Clear', unknown: 'Not assessable', 'not-applicable': 'Out of scope' };
     for (const r of assessment.checks) {
-      const item = element('li');
+      const item = element('li', null, `check-${r.status}`);
       item.append(element('strong', r.label), ' — ', element('span', states[r.status]));
-      if (r.applicability === 'unknown') item.append(' ', element('span', '(unknown applicability)'));
-      if (r.weight != null) item.append(' · ', element('span', `${r.weight} raw points`));
-      item.append('. ', element('span', r.reason));
+      if (r.status === 'signal' && r.weight != null) item.append(' · ', element('span', `${r.weight} pts`));
+      item.append('. ', element('span', briefReason(r.reason), 'muted'));
       checks.append(item);
     }
     all.append(checks);
-    sections.push(['All checks', all]);
+    sections.push(all);
 
-    // 5. Official pages and identifiers to check the record at its source.
-    const verify = detailSection('verify', 'Verify it yourself');
+    // 5. Where to check it.
+    const verify = detailSection('verify', 'Sources');
     verify.classList.add('verify');
     const links = verificationLinks(c);
     if (links.length) {
       const list = element('ul', null, 'verify-links');
-      links.forEach(l => { const item = element('li'); item.append(sourceLink(l.url, l.label)); list.append(item); });
+      for (const l of links) { const item = element('li'); item.append(sourceLink(l.url, l.label)); list.append(item); }
       verify.append(list);
-    } else verify.append(element('p', c.dataStatus === 'synthetic' ? 'Source: none, entirely fictional example.' : 'Original source not provided: this lead remains to be verified.'));
-    const ids = verificationIdentifiers(c);
-    if (ids.length) verify.append(element('p', `If a link has moved, search the official portal for: ${ids.map(([k, v]) => `${k} ${v}`).join(' · ')}.`));
-    if (!usingLocalFile && datasets[datasetSelect.value]?.sources) verify.append(element('p', `How this row was collected: ${datasets[datasetSelect.value].sources.collected} See “Sources and how to verify” in the dataset panel.`));
-    sections.push(['Verify', verify]);
+    } else line(verify, c.dataStatus === 'synthetic' ? 'None: fictional example.' : 'No source link published.');
+    const searchIds = verificationIdentifiers(c);
+    if (searchIds.length) { const p = element('p', null, 'muted'); p.append(element('span', 'Search the portal for'), ` ${searchIds.map(([k, v]) => `${k} ${v}`).join(' · ')}`); verify.append(p); }
+    sections.push(verify);
 
     const printed = element('p', `${currentDatasetLabel}. Printed ${new Date().toISOString().slice(0, 10)} from ${location.href}. Index v${SCORE_VERSION}: an editorial review aid, not a finding. Review notes are the reviewer’s own.`, 'print-only');
-    detailBody.replaceChildren(head, ...sections.map(([, section]) => section), printed);
+    detailBody.replaceChildren(head, ...sections, printed);
   }
   function markOpenRow() {
     for (const row of body.querySelectorAll('.contract-row')) {
@@ -2196,12 +2181,21 @@ function startExplorer() {
 
   function accept(data, prepared = null) {
     contracts = prepared || prepareContracts(data);
+    assessmentCache = new WeakMap();
     const sectors = [...new Map(contracts.map(c => { const s = getSector(c); return [s.code, s]; })).values()].sort((a, b) => a.code === 'unknown' ? 1 : b.code === 'unknown' ? -1 : a.label.localeCompare(b.label, 'en'));
     fillSelect(controls.sector, [['', 'All sectors'], ...sectors.map(s => [s.code, `${s.code === 'unknown' ? '' : s.code + ' · '}${s.label}`])]);
     projectCatalog = new Map(contracts.filter(c => c.project).map(c => [c.project.id, c.project]));
     fillSelect(controls.project, [['', 'All records'], ...(projectCatalog.size ? [['@documented', 'Documented projects only']] : []), ...[...projectCatalog.values()].map(p => [p.id, p.title])]);
     controls.project.disabled = projectCatalog.size === 0;
     computeOverview();
+    const noteCounts = new Map();
+    for (const c of contracts) for (const key of ['dateNote', 'amountBasis', 'notes', 'identifierNote', 'offersNote']) {
+      if (typeof c[key] === 'string' && c[key]) noteCounts.set(c[key], (noteCounts.get(c[key]) || 0) + 1);
+    }
+    const threshold = Math.max(5, contracts.length * 0.2);
+    sharedNotes = new Set([...noteCounts].filter(([, n]) => n >= threshold).map(([text]) => text));
+    fieldNotes.replaceChildren(...[...sharedNotes].map(text => element('li', text)));
+    fieldNotes.hidden = !sharedNotes.size;
     loaded = true;
     page = 0;
     pendingOpen = '';
@@ -2224,6 +2218,7 @@ function startExplorer() {
     projectPanel.hidden = true;
     projectPanel.replaceChildren();
     document.querySelector('#completeness').textContent = '';
+    fieldNotes.replaceChildren(); fieldNotes.hidden = true;
     status.textContent = `Unable to load the data: ${error.message}`;
     exportCsv.disabled = exportJson.disabled = true;
     fileHelp.hidden = false;
@@ -2458,6 +2453,7 @@ function startExplorer() {
     body.replaceChildren();
     pagination.hidden = true;
     document.querySelector('#completeness').textContent = '';
+    fieldNotes.replaceChildren(); fieldNotes.hidden = true;
     document.querySelector('#dataset-note').textContent = selected.note;
     document.querySelector('#coverage-link').href = selected.coverage;
     renderSources(selected);
