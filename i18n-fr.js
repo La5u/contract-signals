@@ -596,6 +596,10 @@ window.I18N_DICTS.fr = {
   "Amount increase": "Hausse du montant",
   "Term extended": "Durée prolongée",
   "Late publication": "Publication tardive",
+  "Show name": "Afficher le nom",
+  "Working…": "Traitement…",
+  "Name unavailable": "Nom indisponible",
+  "Published by the source register. Shown one record at a time; not in lists, search or exports.": "Publié par le registre source. Affiché un enregistrement à la fois ; absent des listes, de la recherche et des exports.",
   "Late notice change without deadline extension": "Modification tardive de l’avis sans report de la date limite"
  },
  "patterns": [
@@ -970,6 +974,10 @@ window.I18N_DICTS.fr = {
   [
    "Colour theme: {a}. Change theme.",
    "Thème de couleur : {a}. Changer de thème."
+  ],
+  [
+   "Natural person · {a}",
+   "Personne physique · {a}"
   ],
   [
    "Also known as {a}",

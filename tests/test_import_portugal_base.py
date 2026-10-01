@@ -16,10 +16,13 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('import_portugal_base', ROOT / 'tools/import-portugal-base.py')
 base = importlib.util.module_from_spec(spec)
+FULL_ITERATIONS = 400_000
+VECTOR = 'gOAHCKdifNZHQSdVLA=='
 spec.loader.exec_module(base)
+base.NAME_ITERATIONS = 1000  # fast for unit tests; the fixed-vector test uses the real count
 BUYER = '503933813'
 OTHER = '508779472'
-SUPPLIER_ID = '123456789'
+SUPPLIER_ID = '512345678'  # company NIF (first digit 5)
 COMPETITOR_ID = '987654321'
 
 
@@ -41,6 +44,16 @@ def row_fixture(**changes):
            'objectoContrato': 'Fallback subject', 'Observacoes': 'Unneeded private text'}
     row.update(changes)
     return row
+
+
+def unscramble(record_id, index, data):
+    """Mirror of the browser's reveal step (script.js revealProtectedName)."""
+    import base64
+    import hashlib
+    blob = base64.b64decode(data)
+    key = hashlib.pbkdf2_hmac('sha256', record_id.encode(), base.NAME_SALT + b':%d' % index, base.NAME_ITERATIONS, 32)
+    stream = b''.join(hashlib.sha256(key + bytes([n])).digest() for n in range(len(blob) // 32 + 1))
+    return bytes(a ^ b for a, b in zip(blob, stream)).decode('utf-8')
 
 
 def collect_rows(rows):
@@ -130,8 +143,14 @@ class NormalizationTests(unittest.TestCase):
         candidate, _ = collect_rows([row_fixture(adjudicatarios=[
             '123456789 - Fictional individual', '512345678 - Fictional company - Services'
         ])])
-        self.assertEqual(candidate[0]['supplierNamesPublished'], ['Fictional individual', 'Fictional company - Services'])
-        self.assertEqual(candidate[0]['supplier'], 'Fictional individual / Fictional company - Services')
+        code = base.person_code('Fictional individual')
+        self.assertEqual(candidate[0]['supplierNamesPublished'], [f'Natural person · {code}', 'Fictional company - Services'])
+        self.assertEqual(candidate[0]['supplier'], f'Natural person · {code} / Fictional company - Services')
+        protected = candidate[0]['supplierProtectedNames']
+        self.assertEqual([protected[0]['code'], protected[1]], [code, None])
+        # The individual's name is not readable in the file, but one record can be unscrambled.
+        self.assertNotIn('Fictional individual', json.dumps(candidate, ensure_ascii=False))
+        self.assertEqual(unscramble(candidate[0]['id'], 0, protected[0]['data']), 'Fictional individual')
         self.assertNotIn('123456789', json.dumps(candidate))
         self.assertNotIn('512345678', json.dumps(candidate))
         self.assertNotIn('supplierType', candidate[0])
@@ -244,7 +263,7 @@ for (const description of [null, '', '   ']) {
 
     def test_supplier_multiple_names_retained_no_party_type_guess(self):
         names = ['Name, é & Sons', 'Person "Published"  ']
-        candidate, _ = collect_rows([row_fixture(adjudicatarios=[f'{SUPPLIER_ID} - {names[0]}', f'234567890 – {names[1]}'])])
+        candidate, _ = collect_rows([row_fixture(adjudicatarios=[f'{SUPPLIER_ID} - {names[0]}', f'598765432 – {names[1]}'])])
         self.assertEqual(candidate[0]['supplierNamesPublished'], names)
         self.assertEqual(candidate[0]['supplier'], ' / '.join(names))
         self.assertNotIn('supplierType', candidate[0])
@@ -253,13 +272,42 @@ for (const description of [null, '', '   ']) {
         for value, name in ((' - - Foreign Supplier Ltd', 'Foreign Supplier Ltd'), ('- - \t Person Published', 'Person Published'), ('– – Name', 'Name')):
             with self.subTest(value=value):
                 candidate, report = collect_rows([row_fixture(adjudicatarios=[value])])
-                self.assertEqual(candidate[0]['supplierNamesPublished'], [name])
+                self.assertEqual(candidate[0]['supplierNamesPublished'], [f'Natural person · {base.person_code(name)}'])
+                self.assertEqual(unscramble(candidate[0]['id'], 0, candidate[0]['supplierProtectedNames'][0]['data']), name)
                 self.assertEqual(report['normalizationErrors'], {})
         for value in (' - - ', ' - - 123456789', ' - - 123456789 - Person', ' - Name', '- - 12345678901'):
             with self.subTest(value=value):
                 candidate, report = collect_rows([row_fixture(adjudicatarios=[value])])
                 self.assertEqual(candidate, [])
                 self.assertEqual(report['normalizationErrors'], {'supplier-shape': 1})
+
+    def test_person_rules_code_and_fixed_vector(self):
+        for nif, person in (('123456789', True), ('298765432', True), ('312345678', True), ('451234567', True),
+                            ('512345678', False), ('600000000', False), ('712345678', False), ('980000000', False), (None, True)):
+            self.assertIs(base.is_person(nif), person, nif)
+        self.assertEqual(base.person_code('Maria  EXEMPLO'), base.person_code('maria exemplo'))
+        self.assertNotEqual(base.person_code('Maria Exemplo'), base.person_code('Maria Exemplo Silva'))
+        # Fixed vector shared with tests/browser.cjs: both sides must scramble identically.
+        base.NAME_ITERATIONS = FULL_ITERATIONS
+        try:
+            self.assertEqual(base.scramble_name('base-1', 0, 'Maria Exemplo'), VECTOR)
+        finally:
+            base.NAME_ITERATIONS = 1000
+
+    def test_subject_repeating_a_protected_name_is_redacted(self):
+        candidate, _ = collect_rows([row_fixture(adjudicatarios=[' - - Maria  Exemplo Silva'],
+                                                 descContrato='Legal services by MARIA EXEMPLO SILVA, lawyer')])
+        code = base.person_code('Maria  Exemplo Silva')
+        self.assertEqual(candidate[0]['description'], f'Legal services by [natural person · {code}], lawyer')
+        self.assertNotIn('exemplo', json.dumps(candidate, ensure_ascii=False).lower())
+        # A company holder's name in the subject is left as published.
+        candidate, _ = collect_rows([row_fixture(descContrato='Works by Name, é & Sons')])
+        self.assertEqual(candidate[0]['description'], 'Works by Name, é & Sons')
+
+    def test_subject_with_email_is_set_aside(self):
+        candidate, report = collect_rows([row_fixture(descContrato='Support for product someone@example.org suite')])
+        self.assertEqual(candidate, [])
+        self.assertEqual(report['normalizationErrors'], {'subject': 1})
 
     def test_malformed_supplier_requires_review_without_leaking_identifier(self):
         values = [['123456789'], ['123456789 - '], ['12 - Person'],

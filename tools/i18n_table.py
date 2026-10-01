@@ -706,6 +706,8 @@ _NEW_EXACT = [
     ("Late notice change", "Cambio tardío del anuncio", "Avis modifié tardivement"), ("Long duration", "Duración larga", "Durée longue"),
     ("Amount increase", "Aumento del importe", "Hausse du montant"), ("Term extended", "Plazo ampliado", "Durée prolongée"),
     ("Late publication", "Publicación tardía", "Publication tardive"),
+    ("Show name", "Mostrar nombre", "Afficher le nom"), ("Working…", "Procesando…", "Traitement…"), ("Name unavailable", "Nombre no disponible", "Nom indisponible"),
+    ("Published by the source register. Shown one record at a time; not in lists, search or exports.", "Publicado por el registro de origen. Se muestra un registro a la vez; no aparece en listas, búsquedas ni exportaciones.", "Publié par le registre source. Affiché un enregistrement à la fois ; absent des listes, de la recherche et des exports."),
     ("Late notice change without deadline extension", "Cambio tardío del anuncio sin prórroga del plazo", "Modification tardive de l’avis sans report de la date limite"),
 ]
 _NEW_PATTERNS = [
@@ -724,6 +726,7 @@ _NEW_PATTERNS = [
     ("Official audit finding: {a}.", "Hallazgo oficial de auditoría: {a}.", "Constat officiel de contrôle : {a}."),
     ("Colour theme: {a} · click to change", "Tema de color: {a} · clic para cambiar", "Thème de couleur : {a} · cliquer pour changer"),
     ("Colour theme: {a}. Change theme.", "Tema de color: {a}. Cambiar tema.", "Thème de couleur : {a}. Changer de thème."),
+    ("Natural person · {a}", "Persona física · {a}", "Personne physique · {a}"),
     ("Also known as {a}", "También conocido como {a}", "Aussi appelé {a}"),
 ]
 _known = {en for en, *_ in EXACT}

@@ -1390,6 +1390,25 @@ function renderNoticeEvidence(cell, c) {
   if (links.childNodes.length) { if (links.lastChild.textContent === ' · ') links.lastChild.remove(); cell.append(links); }
 }
 
+// Natural persons' names (Portugal BASE) are stored scrambled so they cannot be read or
+// collected in bulk from the data file; one name at a time can be shown in the record panel.
+// Same method as tools/import-portugal-base.py (scramble_name). A deterrent, not secrecy.
+const PROTECTED_NAME_SALT = 'contract-signals:base:name:v1';
+const PROTECTED_NAME_ITERATIONS = 400000;
+async function revealProtectedName(recordId, index, data) {
+  if (!globalThis.crypto?.subtle) throw new Error('This browser cannot unscramble names here.');
+  const encoder = new TextEncoder();
+  const bytes = Uint8Array.from(atob(data), ch => ch.charCodeAt(0));
+  const material = await crypto.subtle.importKey('raw', encoder.encode(recordId), 'PBKDF2', false, ['deriveBits']);
+  const key = new Uint8Array(await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: encoder.encode(`${PROTECTED_NAME_SALT}:${index}`), iterations: PROTECTED_NAME_ITERATIONS }, material, 256));
+  const out = new Uint8Array(bytes.length);
+  for (let block = 0; block * 32 < bytes.length; block++) {
+    const stream = new Uint8Array(await crypto.subtle.digest('SHA-256', Uint8Array.from([...key, block])));
+    for (let i = 0; i < 32 && block * 32 + i < bytes.length; i++) out[block * 32 + i] = bytes[block * 32 + i] ^ stream[i];
+  }
+  return new TextDecoder('utf-8', { fatal: true }).decode(out);
+}
+
 // First sentence of a check's reason: the record's own fact, without the method text.
 function briefReason(text) {
   // Translate the whole sentence first (the dictionaries hold full reasons), then shorten.
@@ -1882,7 +1901,30 @@ function startExplorer() {
     // Supplier: published or register name, its identifiers, and the register status if enriched.
     const names = supplierNames(c);
     const supplierName = names.length ? names.join(' / ') : c.supplier || 'not specified';
-    const supplier = element('span', supplierName);
+    const supplier = element('span');
+    const protectedNames = Array.isArray(c.supplierProtectedNames) && Array.isArray(c.supplierNamesPublished) ? c.supplierProtectedNames : null;
+    if (protectedNames?.some(Boolean)) {
+      // Each natural person's name is shown only on request, one record at a time.
+      c.supplierNamesPublished.forEach((published, index) => {
+        if (index) supplier.append(' / ');
+        const item = protectedNames[index];
+        if (!item || typeof item.data !== 'string') { supplier.append(String(published)); return; }
+        const label = element('span', String(published));
+        const button = element('button', 'Show name', 'link-button profile-link');
+        button.type = 'button';
+        button.title = 'Published by the source register. Shown one record at a time; not in lists, search or exports.';
+        button.addEventListener('click', async () => {
+          button.disabled = true;
+          button.textContent = 'Working…';
+          try {
+            label.setAttribute('data-no-i18n', '');
+            label.textContent = `${await revealProtectedName(c.id, index, item.data)} (${item.code})`;
+            button.remove();
+          } catch (error) { button.textContent = 'Name unavailable'; button.title = error.message; }
+        });
+        supplier.append(label, ' ', button);
+      });
+    } else supplier.append(supplierName);
     const supplierIdText = ids.map(s => { const shown = displayIdentifier(s); return s.siren && !shown.includes(s.siren) ? `${shown} · SIREN ${s.siren}` : shown; }).join(' / ');
     if (supplierIdText && (names.length || !supplierIdText.includes(supplierName))) supplier.append(element('small', ` ${supplierIdText}`, 'muted'));
     for (const p of c.supplierProfiles || []) {

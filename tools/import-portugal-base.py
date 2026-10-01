@@ -10,6 +10,7 @@ A reviewer authorizes name disclosure/redistribution, not factual verification.
 No network code, archive extraction to disk, UI mutation, or inferred party type.
 """
 import argparse
+import base64
 from collections import Counter
 from datetime import date
 import hashlib
@@ -36,7 +37,7 @@ MAX_MEMBER_BYTES = 512 * 1024 * 1024
 YEARS = (2024, 2025, 2026)
 NOTES = [
     'Source documented; no independent factual verification. Browse only, no allegations.',
-    'Supplier names retained as published after removing NIF prefixes (holders published with a blank NIF keep their name); no supplier or competitor identifiers, identities of competitors, or inferred party types.',
+    'Company names retained as published after removing NIF prefixes. A holder whose NIF is blank or begins with 1, 2, 3 or 45 is a natural person: the name is published by BASE and can be shown one record at a time, but it is stored scrambled and replaced by a stable code in lists, search and exports. No supplier or competitor identifiers.',
     'precoContratual is a platform declaration; currency is unverified. Execution duration unit is unknown.',
     'Only dataPublicacao selects the window. Missing/invalid publication dates are excluded, never replaced by signing dates.',
     'Missing/unparseable buyers prevent a claim of full cohort coverage. Conflicting minimized variants are all omitted for review.',
@@ -44,6 +45,13 @@ NOTES = [
 AMOUNT_BASIS = 'Source precoContratual; platform declaration; currency unverified.'
 SOURCE_LABEL = 'Official BASE dataset · search by contract identifier'
 DATE_NOTE = 'Source dataPublicacao: publication date, not signing or award date.'
+# Natural persons: Portuguese NIFs beginning 1, 2 or 3 (residents) or 45 (non-residents), and
+# holders whose NIF the register blanks. Their names stay viewable per record, not in bulk.
+PERSON_NIF = re.compile(r'(?:[123][0-9]{8}|45[0-9]{7})\Z')
+PERSON_LABEL = 'Natural person'
+NAME_SALT = b'contract-signals:base:name:v1'
+NAME_ITERATIONS = 400_000  # deliberately slow; the browser repeats it for each name shown
+EMAIL = re.compile(r'[^\s@]+@[^\s@]+\.[^\s@]+')
 ERRORS = {'buyer-shape', 'supplier-shape', 'contract-id', 'amount', 'subject'}
 ROW_COUNTS = ('matchingBuyerRows', 'outsideWindowRows', 'invalidPublicationDateRows',
               'inWindowRows', 'rejectedNormalizationRows', 'normalizedRows',
@@ -198,6 +206,25 @@ def parse_supplier(value):
     return None, name
 
 
+def person_code(name):
+    """Stable short code for one published name, so repeat holders can be recognised."""
+    key = ' '.join(name.casefold().split()).encode('utf-8')
+    return hashlib.sha256(NAME_SALT + b':code:' + key).hexdigest()[:8]
+
+
+def scramble_name(record_id, index, name):
+    """XOR with a keystream from a slow, record-specific key. A deterrent to bulk collection,
+    not secrecy: the method is public and the names are public at the source."""
+    data = name.encode('utf-8')
+    key = hashlib.pbkdf2_hmac('sha256', record_id.encode('utf-8'), NAME_SALT + b':%d' % index, NAME_ITERATIONS, 32)
+    stream = b''.join(hashlib.sha256(key + bytes([block])).digest() for block in range(len(data) // 32 + 1))
+    return base64.b64encode(bytes(a ^ b for a, b in zip(data, stream))).decode('ascii')
+
+
+def is_person(nif):
+    return nif is None or bool(PERSON_NIF.match(nif))
+
+
 def parse_buyers(row, selected):
     values = row.get('adjudicante')
     if not isinstance(values, list) or not values:
@@ -248,7 +275,18 @@ def normalize(row, plan, buyers, matched, buyer_error=False):
     parties = [parse_supplier(item) for item in suppliers]
     if any(party is None for party in parties):
         fail('supplier-shape')
-    names = [party[1] for party in parties]
+    record_id = f'base-{cid}'
+    names, protected = [], []
+    for index, (nif, name) in enumerate(parties):
+        if is_person(nif):
+            if len(name.encode('utf-8')) > 255 * 32:
+                fail('supplier-shape')
+            code = person_code(name)
+            names.append(f'{PERSON_LABEL} · {code}')
+            protected.append({'code': code, 'data': scramble_name(record_id, index, name)})
+        else:
+            names.append(name)
+            protected.append(None)
     amount = row.get('precoContratual')
     if amount is not None and not number(amount):
         fail('amount')
@@ -259,8 +297,14 @@ def normalize(row, plan, buyers, matched, buyer_error=False):
             subject_key, subject = key, value
             break
     # Subject is the ONLY permitted source free-text field; no party/procedure raw dump.
-    if subject is None or re.search(r'(?<![0-9])[0-9]{9}(?![0-9])', subject):
+    if subject is None or re.search(r'(?<![0-9])[0-9]{9}(?![0-9])', subject) or EMAIL.search(subject):
         fail('subject')
+    # A subject line that repeats a protected holder's name would publish it in clear.
+    for (nif, name), item in zip(parties, protected):
+        words = name.split()
+        if item and len(words) >= 2:
+            pattern = re.compile(r'\s+'.join(re.escape(word) for word in words), re.IGNORECASE)
+            subject = pattern.sub(f'[{PERSON_LABEL.lower()} · {item["code"]}]', subject)
     publication = parse_date(row.get('dataPublicacao'))
     result = {
         'id': f'base-{cid}', 'contractId': cid, 'country': 'PT', 'source': plan['dataset'],
@@ -283,6 +327,8 @@ def normalize(row, plan, buyers, matched, buyer_error=False):
     if len(buyers) == 1:
         result['buyerId'] = matched[0]
     result['raw'] = {subject_key: subject}
+    if any(protected):
+        result['supplierProtectedNames'] = protected
     duration = row.get('prazoExecucao')
     if number(duration):
         result['baseDurationOriginal'] = {'value': duration, 'unit': 'unknown'}
@@ -544,7 +590,7 @@ REQUIRED_RECORD = {'id', 'contractId', 'country', 'source', 'sourceLabel', 'date
                    'supplier', 'supplierNamesPublished', 'description', 'publicationDate', 'amount',
                    'amountBasis', 'currency', 'durationMonths', 'offers', 'directAward', 'cpv',
                    'baseSigningDate', 'baseAwardDate', 'baseClosureDate', 'notes'}
-OPTIONAL_RECORD = {'buyerId', 'raw', 'baseDurationOriginal'}
+OPTIONAL_RECORD = {'buyerId', 'raw', 'baseDurationOriginal', 'supplierProtectedNames'}
 
 
 def safe_names(names, nonempty=False):
@@ -593,6 +639,23 @@ def validate_candidate(records, plan):
         supplier = ' / '.join(record['supplierNamesPublished']) if record['supplierNamesPublished'] else None
         if record['supplier'] != supplier:
             fail('Invalid supplier display.')
+        protected = record.get('supplierProtectedNames')
+        if protected is not None:
+            names = record['supplierNamesPublished']
+            if not isinstance(protected, list) or len(protected) != len(names) or not any(protected):
+                fail('Invalid protected-name list.')
+            for name, item in zip(names, protected):
+                if item is None:
+                    if name.startswith(PERSON_LABEL):
+                        fail('Unprotected natural-person label.')
+                    continue
+                if (not isinstance(item, dict) or item.keys() != {'code', 'data'}
+                        or not re.fullmatch(r'[0-9a-f]{8}', str(item['code']))
+                        or not isinstance(item['data'], str) or not re.fullmatch(r'[A-Za-z0-9+/]+=*', item['data'])
+                        or name != f"{PERSON_LABEL} · {item['code']}"):
+                    fail('Invalid protected name.')
+        elif any(name.startswith(PERSON_LABEL) for name in record['supplierNamesPublished']):
+            fail('Unprotected natural-person label.')
         ids = record['buyerIds']
         if (not isinstance(ids, list) or not ids or any(nif not in plan['buyerNifs'] for nif in ids)
                 or ids != sorted(set(ids)) or len(ids) > len(record['buyerNamesPublished'])):
