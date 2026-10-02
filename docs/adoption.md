@@ -2,6 +2,10 @@
 
 This is a proposal for learning whether a public buyer or data publisher can use the explorer to inspect published procurement records and explain data gaps. It is not a validated service, procurement audit, or independent evaluation. Do not describe it as independently validated or as detecting wrongdoing.
 
+## Feedback-period feature freeze
+
+Following the owner's decision after the first outreach requests, keep functionality stable while awaiting feedback. Further changes are limited to bug fixes, performance improvements and testing; no new features, datasets, scoring rules or interaction redesigns without an explicit decision to end the freeze. The already-requested French branding, palette and favicon update is the final visual change before this freeze.
+
 ## A realistic first contact
 
 Start with one municipality and one public-facing contact channel (for example, its procurement, open-data, or transparency mailbox). Ask for a short, voluntary usability conversation using only public records already published by the municipality or an official source. Do not ask staff to upload internal procurement files, change a live procurement, or make a decision based on the index. Keep the request small: one person, one publicly available sample, and about 20 minutes if they choose to participate. No payment, gift, procurement opportunity, or endorsement is offered or implied.
