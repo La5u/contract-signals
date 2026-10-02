@@ -1,13 +1,13 @@
 # Interface strings: (English, Spanish, French). Edit here, then run python tools/i18n-strings.py.
 # English keys must match the rendered text exactly (whitespace is normalised).
 
-TITLES = {"es": "Contract signals — señales en contratos públicos", "fr": "Contract signals — signaux dans les marchés publics"}
+TITLES = {"es": "Marchés ouverts — explorar la contratación pública", "fr": "Marchés ouverts — explorer la commande publique"}
 
 EXACT = [
     # ---- Header and main controls ----
     ("Language", "Idioma", "Langue"),
     ("Interface language", "Idioma de la interfaz", "Langue de l’interface"),
-    ("Contract signals", "Contract signals", "Contract signals"),
+    ("Marchés ouverts", "Marchés ouverts", "Marchés ouverts"),
     ("Explore published procurement records from France, Chile, Colombia, Czechia, Paraguay, Portugal, Romania, Ukraine and the United Kingdom.",
      "Explore registros publicados de contratación pública de Francia, Chile, Colombia, Chequia, Paraguay, Portugal, Rumanía, Ucrania y el Reino Unido.",
      "Explorez les données publiées de commande publique de France, du Chili, de Colombie, de Tchéquie, du Paraguay, du Portugal, de Roumanie, d’Ukraine et du Royaume-Uni."),
