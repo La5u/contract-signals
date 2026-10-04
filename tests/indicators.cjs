@@ -5,6 +5,7 @@ const ctx = vm.createContext({URL});
 vm.runInContext(fs.readFileSync('script.js','utf8'), ctx);
 const run = (fn,...args) => {ctx.args=args;return vm.runInContext(`${fn}(...args)`,ctx);};
 const kinds = vm.runInContext('INDICATOR_KINDS', ctx);
+assert.equal(Object.keys(kinds).length, 18);
 const files = ['decp-history','tours-notices','decp-cities','contracts','colombia-secop2','paraguay-dncp','paraguay-dncp-3buyers','prozorro','ted-portugal','ted-romania','ted-czechia','uk-fts','chile-mp'];
 const seen = new Set();
 for (const f of files) {
@@ -16,6 +17,8 @@ for (const f of files) {
   }
   for (const i of rows.flatMap(r => run('getIndicators', r))) assert.equal(i.kindLabel, kinds[i.kind]);
 }
+// Evidence-based checks appear only on records carrying indicatorEvidence, so their kinds are checked by id.
+for (const id of ['cap','execution','legalGround','unitPrice','exclusivity']) { const kind = run('indicatorKind', id); assert.ok(kind && kinds[kind], `evidence check ${id} has no universal kind`); seen.add(kind); }
 for (const kind of Object.keys(kinds)) assert.ok(seen.has(kind), `kind ${kind} never used`);
 for (const kind of Object.keys(vm.runInContext('KIND_REFERENCES', ctx))) assert.ok(kinds[kind], `reference for unknown kind ${kind}`);
 // The kind filter spans jurisdictions; an old check id in a saved link still works.

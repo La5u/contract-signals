@@ -2,9 +2,9 @@
 
 This is a proposal for learning whether a public buyer or data publisher can use the explorer to inspect published procurement records and explain data gaps. It is not a validated service, procurement audit, or independent evaluation. Do not describe it as independently validated or as detecting wrongdoing.
 
-## Feedback-period feature freeze
+## Feedback-period production feature freeze
 
-Following the owner's decision after the first outreach requests, keep functionality stable while awaiting feedback. Further changes are limited to bug fixes, performance improvements and testing; no new features, datasets, scoring rules or interaction redesigns without an explicit decision to end the freeze. The already-requested French branding, palette and favicon update is the final visual change before this freeze.
+Following the owner's decision after the first outreach requests, keep live functionality stable while awaiting feedback. Production changes are limited to bug fixes, performance improvements and testing; no new features, datasets, scoring rules or interaction redesigns without an explicit release decision. The already-requested French branding, palette and favicon update is the final production visual change before this freeze. The owner subsequently authorized isolated local indicator experiments and tests, but no push or deployment; see [the experimental indicator notes](experimental-indicators.md).
 
 ## A realistic first contact
 

@@ -51,7 +51,7 @@ check(run('secop2DurationMonths','10 Año(s)')===120);
 check(run('secop2DurationMonths','0 Mes(es)')===0);
 check(run('secop2DurationMonths','7 Hora(s)')===null);
 check(run('secop2DurationMonths',null)===null);
-// Exactly the eight-check Colombian set; French-only checks always out of scope
+// Colombian checks only (evidence checks appear only with indicatorEvidence); French-only checks stay out of scope
 const EXPECTED_IDS=['late-publication','repeated-single-bid','secop2-concentration','secop2-long-duration','secop2-plurality-award','secop2-repeated-plurality','secop2-term-extension','short-bidding-period','single-bid'].sort();
 const NA_FRENCH=['single-bid','short-bidding-period','repeated-single-bid','late-publication'];
 let flagged=0,nulls=0,zeros=0,positives=0,partials=0;
@@ -91,7 +91,7 @@ check(positives===272&&zeros===7288&&nulls===0&&flagged===272&&partials===73);
 check(scores.get(18)===170&&scores.get(36)===6&&scores.get(40)===10&&scores.get(17.1)===18);
 check(run('selectContracts',rows,{assessment:'unevaluated'}).length===0);
 check(run('selectContracts',rows,{assessment:'zero'}).length===7288);
-check(run('selectContracts',rows,{assessment:'partial'}).length===73);
+check(run('selectContracts',rows,{assessment:"partial"}).length===73);
 check(run('selectContracts',rows,{flagged:true}).length===272);
 check(run('selectContracts',rows,{indicator:'secop2-plurality-award'}).length===176);
 check(run('selectContracts',rows,{indicator:'secop2-repeated-plurality'}).length===15);

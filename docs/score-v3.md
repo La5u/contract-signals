@@ -1,4 +1,4 @@
-# Vigilance index 3.1 — active method
+# Vigilance index 3.2 — active method
 
 **An editorial sorting tool, not a probability, a measure of legal gravity or a certificate of regularity.** The existing data and PDFs are unchanged; the meaning of the score and some eligibility criteria deliberately change. A v2.1 30 must not be compared to a v3 30 as a real evolution of a contract.
 
@@ -12,7 +12,7 @@ The citation of an R2122 article, the buyer’s explanations, the current names/
 
 ## Unknown, zero and coverage
 
-`getAssessment` describes **eight local checks plus the universal late-publication check** (nine since v3.1), plus a tenth linked-notice check for Tours, with:
+`getAssessment` describes **eight local checks and the universal late-publication check, plus five evidence-based checks when present** (9 per record; the five evidence-based checks are described in [experimental-indicators.md](experimental-indicators.md) and are listed only on records carrying `indicatorEvidence`, otherwise omitted), plus a linked-notice check for Tours (10), with:
 
 - `signal`: evaluable check and threshold crossed;
 - `clear`: evaluable check, threshold not crossed — not a conclusion of regularity;
@@ -34,7 +34,7 @@ The progressions are linear after the entry threshold is crossed, bounded and ro
 | Check | Eligibility / triggering | Raw v3 weight | Family |
 | --- | --- | --- | --- |
 | Single offer | Explicitly competitive procedure (`directAward=false`), positive number of offers known and equal to 1 | **12** | Competition |
-| Award without competition | `directAward=true`, whatever the amount, even unknown | **18** | Competition |
+| Award without competition | `directAward=true` and a declared amount **at or above the legal no-publicity threshold in force on the contract date** (v3.2: not applicable below it, unknown without an amount) | **18** | Competition |
 | Repeated low competition | Contract itself competitive at a single offer; same buyer/CPV3/cohort, ≥10 known offers, coverage ≥80 %, rate ≥60 % | **12 at 60 % → 40 at 100 %**, linear | Competition |
 | Concentration | Single identified holder, same buyer/CPV3/cohort, ≥10 known holders, coverage ≥80 %, share ≥60 % | **12 at 60 % → 40 at 100 %**, linear | Competition |
 | Repeated direct awards | Same buyer/CPV3/SIREN, ≥3 distinct explicitly direct awards, contract itself direct; all amounts | **18 at 3 contracts → 60 at 10**, cap 60 | Competition |
@@ -44,11 +44,13 @@ The progressions are linear after the entry threshold is crossed, bounded and ro
 
 Examples: a concentration of 61 % is worth 12.7 points, 80 % is worth 26 and 95 % is worth 36.5; all else equal, going from 79 % to 80 % no longer adds an arbitrary tier. Three direct awards are worth 18, four are worth 24, ten are worth 60. A comparable increase of 21 % is worth 8.4, whether it is €100 → €121 or €1m → €1.21m.
 
-**Explicit eligibility changes:** removal of the €100k threshold for direct awards and their repetition, removal of the absolute €50k threshold for the increase, and non-evaluation of a single offer when the competitive character is unknown. An offer expected in a direct award no longer adds 5 points. In direct repetition, fewer than three known awards does not become an absence of repetition if other procedures of the holder are unknown; three identified facts are enough to document a minimum of three, even if others remain unknown.
+**Explicit eligibility changes:** removal of the €100k threshold for direct awards and their repetition (the legal threshold of v3.2 below decides eligibility, not a weight), removal of the absolute €50k threshold for the increase, and non-evaluation of a single offer when the competitive character is unknown. An offer expected in a direct award no longer adds 5 points. In direct repetition, fewer than three known awards does not become an absence of repetition if other procedures of the holder are unknown; three identified facts are enough to document a minimum of three, even if others remain unknown.
 
 **Limits:** a small-amount direct award can be perfectly ordinary and lawful. The rule describes an award modality, not an offence. A small relative increase can have a minimal financial stake; consult the amount column. Durations, shares and evolutions are not yet compared to a sufficiently large and validated sectoral sample. Neither a legitimate specialisation nor a legal exception is automatically recognized by the code.
 
-## Transparency family (v3.1, 27 September 2026)
+## Transparency family (v3.1, 27 September 2026; made buyer-relative in v3.2)
+
+*Since v3.2 the 120-day rule below also requires the delay to exceed the buyer's usual delay by more than 120 days: see the v3.2 section.*
 
 A third family, the same for every country ([indicators.md](indicators.md)): **published more than 120 days after the contract**. The delay runs from the contract date (French notification date in the DECP, declared conclusion date in BOAMP and TED notices) to the publication of the award (DECP essential data on the buyer profile, BOAMP or TED award notice). 120 days exceeds every legal deadline of the regimes covered: EU award notices within 30 days of conclusion, or grouped per quarter and published within 30 days of its end for framework and dynamic-purchasing call-offs (Directive 2014/24/EU, Art. 50); French essential data within two months of notification. **8 points just above 120 days, linear to 16 at two years**, in its own family, so the index becomes `min(100, max(competition) + max(execution/duration) + max(transparency))`. A negative delay (publication before the contract date) is inconsistent and stays unknown.
 
@@ -56,6 +58,39 @@ A third family, the same for every country ([indicators.md](indicators.md)): **p
 - **Results**: BOAMP 287 late of 2,980 dated awards, Paris & Ardèche 133, six municipalities 144; TED Portugal 12, Romania 26, Czechia 45.
 - **What it measures, and what it does not.** In the DECP, late publication is mostly a buyer's batch practice: 131 of Paris & Ardèche's late rows are the Ville de Paris, published in weekly batches (for example 32 on 13 October 2024) months after notification, and 108 of the six-city rows are Nantes. It compares buyers well and single contracts poorly, which is why its weight stays low. A very long delay in a TED notice (a 2015 contract published in 2026) may also concern an old contract being modified or re-announced: read the notice.
 - Withheld fields (eForms `FieldsPrivacy`, the explicit mark of information kept unpublished) were looked for and appear in none of the three TED cohorts; no check was built on them.
+
+## v3.2 (4 October 2026): buyer-relative publication, legal direct-award threshold, tie-breaks, placeholder weights
+
+Approved by the owner. Why: the v3.1 flags were dominated by two effects the data cannot separate from a contract's own behaviour (late publication measured buyer batch habits; small direct awards below the legal threshold are the lawful default).
+
+**A. Late publication is relative to the buyer.** During preparation, for each buyer (SIRET, else buyer id, else name) within one dataset, the median publication delay of the buyer's *other* dated rows is computed (leave-one-out), only for buyers with at least 10 dated rows; excluded, unverified and conflicting rows never enter it, filters never change it (computed on the whole cohort, like the repetition contexts). The check is a signal only when the delay exceeds 120 days **and** exceeds that baseline by more than 120 days (baseline 0 for a buyer with fewer than 10 dated rows, which the reason states). Points: 8 just above 120 days of excess, linear to 16 at 730 days (`LATE_PUBLICATION_DAYS`, `LATE_PUBLICATION_MAX_DAYS`, `LATE_PUBLICATION_DEFAULTS`; per-country or per-family overrides go in `LATE_PUBLICATION_OVERRIDES`, empty today, so 120 applies everywhere). A delay beyond 120 days within the buyer's habit evaluates *clear* with the reason "a buyer-level publication practice, not specific to this contract". Negative delays stay unknown; out-of-scope datasets are unchanged.
+
+**B. French direct award needs the legal threshold.** Below the threshold in force on the contract date, an award without publicity or competition is the legal default (Code de la commande publique, art. R2122-8): `direct-award` is *not applicable* with the threshold in the reason; with no usable amount it is *unknown* (it used to score). Amounts are taken as excluding tax. `repeated-direct-award` is unchanged and still counts every direct award (splitting is exactly a repetition of small awards). Other countries are unchanged.
+
+| Period | Supplies and services | Works (CPV 45) | Source |
+| --- | ---: | ---: | --- |
+| 1 Oct 2015 – 31 Dec 2019 | €25,000 | €25,000 | décret n° 2015-1163 |
+| 1 Jan 2020 – 31 Mar 2026 | €40,000 | €40,000 | décret n° 2019-1344 |
+| 24 Jul – 7 Dec 2020 | €40,000 | €70,000 | décret n° 2020-893 (to 10 Jul 2021, overtaken by the ASAP law) |
+| 8 Dec 2020 – 31 Dec 2022 | €40,000 | €100,000 | loi n° 2020-1525 (ASAP), art. 142 |
+| 2023 – 31 Dec 2025 | €40,000 | €100,000 | extended by décret n° 2022-1683 (to 31 Dec 2024) and décret n° 2024-1217 (to 31 Dec 2025) |
+| from 1 Jan 2026 | €40,000 to 31 Mar 2026, then **€60,000** | €100,000, now permanent | décret n° 2025-1386 of 29 Dec 2025 (works 1 Jan 2026, supplies and services 1 Apr 2026) |
+
+Sources: [marche-public.fr threshold chronology](https://www.marche-public.fr/Marches-publics/Definitions/Entrees/Seuil-dispense-publicite.htm), [décret 2020-893 on Légifrance](https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000042138128), [extensions to 2025](https://www.marche-public.fr/contrats-publics/Decret-2024-1217-seuil-travaux-ECOM2434725D.htm), [analysis of décret 2025-1386](https://blog.landot-avocats.net/2025/12/30/rehaussement-des-seuils-de-dispense-de-publicite-et-de-mise-en-concurrence-decryptage-du-decret-n-2025-1386-du-29-decembre-2025-modifiant-certains-seuils-relatifs-aux-marches-publics/). These were read from secondary legal-news pages; the decree texts themselves were not re-read on Légifrance, except the 2020 decree link. The law applies by the date the consultation is launched, which the data never gives. The contract date is used instead, so within 180 days after each change an amount between the old and the new threshold is *unknown*, never a signal. A row without CPV whose amount lies between the supplies and the works threshold is *unknown* too (works are CPV 45; the DECP `nature` field is "Marché" for every row and does not identify works). The €100,000 works exemption also covers lots under 100,000 provided they stay under 20 % of the whole; lots are not analysed.
+
+**C. Tie-breaking.** Equal scores are ordered by the number of families with a signal (descending), then the strongest single signal weight (descending), then the identifier. Unknown scores stay last in both directions; the sort names in the URL are unchanged.
+
+**D. The five evidence-based checks carry a uniform 8 points** (previously 20/10/5/3/1, which were arbitrary): the lowest entry weight of the existing graduated checks. It is an uncalibrated placeholder pending a reviewed public-evidence sample. Their contribution to the normal index is at most 8 (execution) + 8 (competition) = 16; the CLI diagnostic sum is at most 40.
+
+**Effect on the bundled French datasets** (`score-v3-review.json`):
+
+| Dataset | Flagged v3.1 → v3.2 | Zero | Not assessed | Late publication signals | Direct-award signals |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| BOAMP / CRC, 3,010 | 535 → 432 | 2,466 → 2,566 | 9 → 12 | 287 → 184 | 28 → 19 |
+| Paris / Ardèche, 2,594 | 492 → 358 | 1,747 → 1,881 | 355 → 355 | 133 → 121 | 262 → 86 |
+| Six municipalities, 1,270 | 263 → 149 | 835 → 949 | 172 → 172 | 144 → 62 | 66 → 31 |
+
+TED: late publication 12 → 10 (Portugal), 26 → 25 (Romania), 45 → 40 (Czechia). Direct-award rows that stopped scoring: BOAMP 9 (1 not applicable below the threshold, 8 unknown for lack of an amount), Paris / Ardèche 176 and six municipalities 35 (all not applicable below the threshold). Late publication changed from signal to clear in 103 BOAMP rows, 12 Paris / Ardèche rows and 82 municipal rows. Three BOAMP rows whose only evaluable check was a direct award with no amount are now not assessed. As before, none of this is calibration against irregularity.
 
 ## Results on the same data, with no inflation target
 
