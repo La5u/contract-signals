@@ -156,7 +156,7 @@ window.I18N_DICTS.es = {
   "40–69 · high": "40–69 · alta",
   "70–100 · very high": "70–100 · muy alta",
   "Not assessed ≠ zero": "No evaluado ≠ cero",
-  "Index v3.1 is an editorial sorting aid, not a probability; zero requires an evaluated check and certifies nothing. Unknowns are shown separately. Amounts and official findings never add points.": "El índice v3.1 es una ayuda editorial para ordenar, no una probabilidad; el cero exige una verificación evaluada y no certifica nada. Lo desconocido se muestra aparte. Los montos y los hallazgos oficiales nunca suman puntos.",
+  "Index v3.2 is an editorial sorting aid, not a probability; zero requires an evaluated check and certifies nothing. Unknowns are shown separately. Amounts and official findings never add points.": "El índice v3.2 es una ayuda editorial para ordenar, no una probabilidad; el cero exige una verificación evaluada y no certifica nada. Lo desconocido se muestra aparte. Los montos y los hallazgos oficiales nunca suman puntos.",
   "One French dossier has a dated news report of an investigative step; its current status is unknown. No comparable report is linked in the Colombian or Paraguayan pilots. No contract-specific final corruption judgment is documented in these datasets. French CRC audit observations are not convictions. No match means": "Un expediente francés cuenta con una noticia fechada sobre una diligencia de investigación; su estado actual se desconoce. No hay informe comparable en los pilotos de Colombia o Paraguay. Ninguna sentencia firme por corrupción ligada a un contrato está documentada en estos datos. Las observaciones de las CRC francesas no son condenas. La ausencia de coincidencia significa",
   "not established here, not cleared": "no establecido aquí, no descartado",
   "Method: vigilance index": "Método: índice de vigilancia",
@@ -167,7 +167,11 @@ window.I18N_DICTS.es = {
   "Colombia pilot method": "Método del piloto de Colombia",
   "Countries proposed for upcoming pilots": "Países propuestos para próximos pilotos",
   "Source links must be kept. Every official finding must point to the document of the originating authority and to its relevant passage. Always consult the complete document and any responses from the organization concerned.": "Deben conservarse los enlaces a las fuentes. Todo hallazgo oficial debe remitir al documento de la autoridad de origen y a su pasaje pertinente. Consulte siempre el documento completo y las respuestas de la organización afectada.",
-  "Version 3.1.": "Versión 3.1.",
+  "Version 3.2.": "Versión 3.2.",
+  "9 checks per record, 10 for Tours full notices (the jurisdiction’s own eight and the shared late-publication check; the five evidence-based checks are listed only on records that carry evidence for them), each flagged, evaluated without a threshold crossed, not assessable, or out of scope. The evaluated/established-applicable ratio does not count unknown applicabilities: those are reported in addition, not as negative cases. All conflicting groups, duplicated identifiers and unverified records are excluded. Aggregate audit dossiers receive no individual index. No evaluated check = “Not assessed”, never zero.": "9 verificaciones por registro, 10 en las notificaciones completas de Tours (las ocho propias de la jurisdicción y la verificación común de publicación tardía; las cinco verificaciones basadas en pruebas solo figuran en los registros que aportan pruebas para ellas), cada una señalada, evaluada sin umbral superado, no evaluable o fuera de alcance. La proporción evaluadas/aplicabilidad establecida no cuenta las aplicabilidades desconocidas: se indican aparte, no como casos negativos. Se excluyen todos los grupos en conflicto, los identificadores duplicados y los registros no verificados. Los expedientes de auditoría agregados no reciben índice individual. Ninguna verificación evaluada = «No evaluado», nunca cero.",
+  "a single offer in an explicitly competitive procedure: 12; direct award: 18 for a French award at or above the legal threshold for awards without publicity or competition (€40,000 excl. tax; €100,000 for works; €60,000 for supplies and services from 1 April 2026), not applicable below it, not assessed when the amount is missing. Bounded linear progressions rounded to the tenth: single-offer repetition and concentration, 12 at 60 % up to 40 at 100 %; direct repetition, 18 at 3 contracts up to 60 at 10; duration, 8 at 120 months up to 40 at 360 months; relative increase strictly > 20 %, 8 near the threshold up to 40 at +100 %; period < 15 days, 8 near the threshold up to 40 at 3 days. Entry/reliability thresholds remain: a graduated progression does not erase them. No points for an offer expected in a direct award. The five evidence-based checks (cap proximity, full payment against incomplete execution, legal-ground mismatch, comparable unit-price rise, exclusivity claim against comparable wins) carry 8 points each, an uncalibrated placeholder; they appear only on records that carry evidence for them.": "una sola oferta en un procedimiento explícitamente competitivo: 12; adjudicación directa: 18 para una adjudicación francesa igual o superior al umbral legal de adjudicación sin publicidad ni competencia (40 000 € sin IVA; 100 000 € para obras; 60 000 € para suministros y servicios desde el 1 de abril de 2026), no aplicable por debajo, no evaluada si falta el monto. Progresiones lineales acotadas y redondeadas a la décima: repetición de oferta única y concentración, 12 al 60 % hasta 40 al 100 %; repetición directa, 18 con 3 contratos hasta 60 con 10; duración, 8 a 120 meses hasta 40 a 360 meses; aumento relativo estrictamente > 20 %, 8 cerca del umbral hasta 40 con +100 %; plazo < 15 días, 8 cerca del umbral hasta 40 con 3 días. Se mantienen los umbrales de entrada y fiabilidad: una progresión gradual no los borra. Ningún punto por una oferta esperada en una adjudicación directa. Las cinco verificaciones basadas en pruebas (proximidad al tope, pago completo con ejecución incompleta, incompatibilidad del fundamento jurídico, alza comparable del precio unitario, exclusividad alegada frente a adjudicaciones competitivas comparables) valen 8 puntos cada una, un valor provisional sin calibrar; solo figuran en los registros que aportan pruebas para ellas.",
+  "the award notice or contract data published more than 120 days after the contract date, above every legal deadline of the regimes covered (EU award notices 30 days, or per quarter plus 30 days for framework and dynamic-purchasing call-offs; French essential data two months), and also more than 120 days later than this buyer’s usual delay (median of its other dated records in the same dataset, buyers with at least 10 dated records only; without that history the whole delay counts). A delay within the buyer’s habit is a buyer-level practice and scores nothing. 8 points just above the threshold up to 16 at two years later than usual. Out of scope where the source publishes no comparable dates (SECOP II, DNCP, Prozorro, Mercado Público, Find a Tender).": "el anuncio de adjudicación o los datos del contrato publicados más de 120 días después de la fecha del contrato, por encima de todos los plazos legales de los regímenes cubiertos (anuncios de adjudicación de la UE: 30 días, o por trimestre más 30 días para contratos basados en acuerdos marco y sistemas dinámicos de adquisición; datos esenciales franceses: dos meses), y además más de 120 días después del plazo habitual de este comprador (mediana de sus otros registros fechados del mismo conjunto de datos, solo compradores con al menos 10 registros fechados; sin ese historial cuenta todo el plazo). Un plazo dentro de la costumbre del comprador es una práctica del comprador y no puntúa. 8 puntos justo por encima del umbral hasta 16 a dos años más tarde de lo habitual. Fuera de alcance cuando la fuente no publica fechas comparables (SECOP II, DNCP, Prozorro, Mercado Público, Find a Tender).",
+  "The former thresholds of €100k (direct award) and €50k (absolute increase) no longer enter the score; the legal threshold only decides whether the French direct-award check applies. Unknown values trigger no indicator. Amounts: “≥” indicates a lower bound, “>” a strict bound and “≈” a rounded value; the sort and the filter use the cited numeric value, not an assumed exact amount. These rules do not take account of legal exceptions or the context of each purchase.": "Los antiguos umbrales de 100 k€ (adjudicación directa) y 50 k€ (aumento absoluto) ya no entran en la puntuación; el umbral legal solo decide si se aplica la verificación francesa de adjudicación directa. Los valores desconocidos no activan ningún indicador. Montos: «≥» indica un límite inferior, «>» un límite estricto y «≈» un valor redondeado; el orden y el filtro usan el valor numérico citado, no un monto exacto supuesto. Estas reglas no tienen en cuenta las excepciones legales ni el contexto de cada compra.",
   "Coverage:": "Cobertura:",
   "Weights:": "Pesos:",
   "SECOP II · Colombia pilot:": "SECOP II · piloto de Colombia:",
@@ -231,7 +235,7 @@ window.I18N_DICTS.es = {
   "Relative increase in declared amount": "Aumento relativo del monto declarado",
   "Repeated low competition": "Baja competencia repetida",
   "Repeated direct awards": "Adjudicaciones directas repetidas",
-  "Published more than 120 days after the contract": "Publicado más de 120 días después del contrato",
+  "Published late, beyond the legal deadlines and this buyer’s usual delay": "Publicado tarde, más allá de los plazos legales y del plazo habitual de este comprador",
   "Award declared without supplier plurality or under manifest urgency": "Adjudicación declarada sin pluralidad de oferentes o por urgencia manifiesta",
   "Repeated awards declared without supplier plurality": "Adjudicaciones repetidas declaradas sin pluralidad de oferentes",
   "Concentrated awards within a contract type": "Adjudicaciones concentradas en un tipo de contrato",
@@ -370,6 +374,11 @@ window.I18N_DICTS.es = {
   "BOAMP award notice": "el aviso de adjudicación del BOAMP",
   "TED award notice": "el aviso de adjudicación de TED",
   "Unreadable date: delay not assessable.": "Fecha ilegible: plazo no evaluable.",
+  "works": "obras",
+  "supplies and services": "suministros y servicios",
+  "works or supplies/services (CPV missing)": "obras o suministros/servicios (falta el CPV)",
+  "Declared amount missing: cannot tell whether the contract was below the legal threshold for an award without publicity or competition. Not assessed.": "Falta el monto declarado: no se puede saber si el contrato estaba por debajo del umbral legal de adjudicación sin publicidad ni competencia. No evaluado.",
+  "Contract date missing: the legal threshold in force cannot be determined. Not assessed.": "Falta la fecha del contrato: no se puede determinar el umbral legal vigente. No evaluado.",
   "Award explicitly declared without competition: 18 points, all amounts. May be legal; no bonus for an R2122 citation.": "Adjudicación declarada explícitamente sin competencia: 18 puntos, todos los montos. Puede ser legal; sin bonificación por citar el R2122.",
   "Rule reserved for explicitly open non-accelerated procedures; this record’s known type is out of scope.": "Regla reservada a los procedimientos abiertos explícitos no acelerados; el tipo conocido de este registro está fuera de alcance.",
   "No history for an identified holder: repetition unknown.": "Sin historial de un titular identificado: repetición desconocida.",
@@ -433,6 +442,76 @@ window.I18N_DICTS.es = {
   "Maintenance, support or licences of an existing software product placed with one vendor (docs/score-v3.md).": "Mantenimiento, soporte o licencias de un producto de software existente contratado con un único proveedor (docs/score-v3.md).",
   "Agreement declared between public bodies (docs/score-colombia.md).": "Convenio declarado entre entidades públicas (docs/score-colombia.md).",
   "Published amendments total 20 % of the original amount, the ceiling in Ley 7021/22 Art. 67 (docs/score-paraguay.md).": "Las modificaciones publicadas suman el 20 % del monto original, el tope de la Ley 7021/22 Art. 67 (docs/score-paraguay.md).",
+  "Monetary modifications near applicable cap": "Modificaciones monetarias cerca del tope aplicable",
+  "Full payment with incomplete documented execution": "Pago completo con ejecución documentada incompleta",
+  "Legal ground and purchase mismatch": "Incompatibilidad entre base jurídica y compra",
+  "Year-over-year comparable unit-price increase": "Aumento interanual del precio unitario comparable",
+  "Exclusivity claim and comparable competitive wins": "Alegación de exclusividad y adjudicaciones competitivas comparables",
+  "Near applicable cap": "Cerca del tope aplicable",
+  "Payment / execution": "Pago / ejecución",
+  "Legal ground mismatch": "Base jurídica incompatible",
+  "Unit-price increase": "Aumento del precio unitario",
+  "Exclusivity context": "Contexto de exclusividad",
+  "Above confirmed cap: separate contextual review, not automatic illegality.": "Por encima del tope confirmado: revisión contextual aparte, no ilegalidad automática.",
+  "Cumulative amendments compared with confirmed applicable cap.": "Modificaciones acumuladas comparadas con el tope aplicable confirmado.",
+  "Verified net payments compared with independently documented physical completion; dates are not a progress proxy.": "Pagos netos verificados comparados con el avance físico documentado de forma independiente; las fechas no representan el avance.",
+  "Explicit reviewed applicability mapping for this jurisdiction, classification, legal ground and period.": "Correspondencia de aplicabilidad explícita y revisada para esta jurisdicción, clasificación, base jurídica y periodo.",
+  "Matched consecutive-year actual unit prices, adjusted for inflation.": "Precios unitarios reales cotejados de años consecutivos, ajustados por inflación.",
+  "Context-only review of documented comparable competitive wins; this does not refute the claim.": "Revisión solo contextual de adjudicaciones competitivas comparables documentadas; no refuta la alegación.",
+  "Missing, unsupported, malformed or conflicting evidence.": "Evidencia ausente, no admitida, mal formada o contradictoria.",
+  "Explicitly inapplicable.": "Explícitamente no aplicable.",
+  "Missing verified evidence or evidence engine: not assessed.": "Falta evidencia verificada o el motor de evaluación: no evaluado.",
+  "Browse-only import: scoring eligibility not established.": "Importación solo para consulta: elegibilidad para puntuación no establecida.",
+  "Aggregate dossier: not a comparable individual award.": "Expediente agregado: no es una adjudicación individual comparable.",
+  "Documentary notice, not a normalized attributed contract.": "Anuncio documental, no un contrato adjudicado normalizado.",
+  "Snapshot collected": "Instantánea recopilada",
+  "Coverage period": "Periodo de cobertura",
+  "Source last updated": "Última actualización de la fuente",
+  "Unknown": "Desconocido",
+  "Dates vary by dataset": "Las fechas varían según el conjunto de datos",
+  "Dates and coverage basis vary by dataset": "Las fechas y la base de cobertura varían según el conjunto de datos",
+  "Dates vary by dataset; unknown unless recorded": "Las fechas varían según el conjunto de datos; desconocidas si no están registradas",
+  "No single collection or coverage date applies. Consult each dataset separately.": "No hay una fecha única de recopilación o cobertura. Consulte cada conjunto por separado.",
+  "BOAMP publication date for the Tours exact-SIRET candidate cohort": "Fecha de publicación BOAMP de la cohorte candidata de Tours con SIRET exacto",
+  "DECP datenotification (notification date)": "DECP datenotification (fecha de notificación)",
+  "BOAMP initial call publication date": "Fecha de publicación BOAMP de la convocatoria inicial",
+  "BOAMP publication date, not signature date": "Fecha de publicación BOAMP, no de firma",
+  "SECOP II fecha_de_firma (contract signature date)": "SECOP II fecha_de_firma (fecha de firma del contrato)",
+  "tipo_fecha=publicacion_llamado (call publication, NOT contract signature)": "tipo_fecha=publicacion_llamado (publicación de la convocatoria, NO firma del contrato)",
+  "official record dateCreated": "dateCreated del registro oficial",
+  "listaOCDSAgnoMes listing months (2024-09 through 2026-08), not signature or award dates": "Meses del listado listaOCDSAgnoMes (2024-09 a 2026-08), no fechas de firma ni adjudicación",
+  "award release date (API updatedFrom/updatedTo, one-day windows)": "Fecha de publicación de la adjudicación (API updatedFrom/updatedTo, ventanas de un día)",
+  "TED publication date": "Fecha de publicación TED",
+  "Not exhaustive: only the three announced buyers in the 24-month window.": "No exhaustivo: solo los tres compradores anunciados en la ventana de 24 meses.",
+  "SECOP II contract rows are declarations; amounts and statuses are not audited payments.": "Las filas de contratos SECOP II son declaraciones; los montos y estados no son pagos auditados.",
+  "No offers/proposals table was downloaded; no offer-count indicator exists for Colombia.": "No se descargó ninguna tabla de ofertas/propuestas; no hay indicador de número de ofertas para Colombia.",
+  "7 published supplier documents are missing or placeholders; supplier names remain, but identity-based checks exclude those identifiers.": "7 documentos publicados de proveedores faltan o son valores de relleno; se conservan los nombres, pero las verificaciones de identidad excluyen esos identificadores.",
+  "No country ranking, no currency conversion, no comparison with French cohorts.": "Sin clasificación de países, conversión de monedas ni comparación con cohortes francesas.",
+  "Editorial thresholds of docs/score-colombia.md are not Colombian legal thresholds; a signal is not a finding of irregularity, and no flag proves regularity.": "Los umbrales editoriales de docs/score-colombia.md no son umbrales legales colombianos; una señal no es un hallazgo de irregularidad y la ausencia de señales no prueba regularidad.",
+  "Calls published during the fixed window, not contracts signed during that window; later awards/contracts may appear in full records.": "Convocatorias publicadas durante la ventana fija, no contratos firmados en ella; los registros completos pueden incluir adjudicaciones/contratos posteriores.",
+  "Search pagination is checked against one observed total but the API does not promise an immutable snapshot; national completeness is unverified. The search API caps totals at 10,000, so only bounded per-buyer queries are used.": "La paginación se comprueba con un total observado, pero la API no promete una instantánea inmutable; la exhaustividad nacional no está verificada. La API limita los totales a 10.000, por lo que solo se usan consultas acotadas por comprador.",
+  "Only contracts with explicit awardID, one identified award supplier, and PYG contract value are retained; excluded counts are reported. Budget-only entries (no contract ID, only implementation.financialProgress) are not contracts. Excluded entries also include the separate contract entries the source publishes for amount amendments; the amendment itself stays attached to its parent contract.": "Solo se conservan contratos con awardID explícito, un proveedor adjudicatario identificado y valor contractual en PYG; se informan las exclusiones. Las entradas solo presupuestarias (sin ID de contrato, solo implementation.financialProgress) no son contratos. También se excluyen las entradas contractuales separadas publicadas para modificaciones del monto; la modificación sigue vinculada al contrato original.",
+  "The source's contractSigned document links are not a manual review of document contents; signatures, legal status and payments are not independently audited.": "Los enlaces contractSigned de la fuente no constituyen una revisión manual de los documentos; firmas, estado jurídico y pagos no se auditan de forma independiente.",
+  "Amendment and release counts are context, not a reconstructed value history; source versions can be incomplete.": "Los recuentos de modificaciones y publicaciones son contexto, no un historial de valores reconstruido; las versiones de la fuente pueden estar incompletas.",
+  "Paraguayan checks are editorial (docs/score-paraguay.md); French and Colombian rules are never applied.": "Las verificaciones paraguayas son editoriales (docs/score-paraguay.md); nunca se aplican reglas francesas ni colombianas.",
+  "A few buyers are not a country sample; no cross-country score or currency comparison.": "Unos pocos compradores no son una muestra del país; sin comparación internacional de puntuaciones ni monedas.",
+  "Three buyers, not a country sample; wartime rules allow exceptions and withheld publications.": "Tres compradores, no una muestra del país; las reglas de guerra permiten excepciones y publicaciones retenidas.",
+  "Direct-contract reports (reporting): offer/direct-award checks are out of scope; concentration remains assessable.": "Informes de contratos directos (reporting): verificaciones de ofertas/adjudicación directa fuera de alcance; la concentración sigue siendo evaluable.",
+  "Three exact contract API links checked in a separate dated sample; published change counts are context only, not a comparable amount/duration history.": "Tres enlaces API exactos de contratos comprobados en una muestra fechada aparte; los recuentos de cambios publicados son solo contexto, no un historial comparable de monto/duración.",
+  "Amounts are in the published currency, never converted or summed across currencies.": "Montos en la moneda publicada, nunca convertidos ni sumados entre monedas.",
+  "Three purchasing units, not a country sample.": "Tres unidades compradoras, no una muestra del país.",
+  "This OCDS listing covers licitaciones only; direct deals (trato directo) are published as purchase orders and are not included.": "Este listado OCDS cubre solo licitaciones; los tratos directos se publican como órdenes de compra y no están incluidos.",
+  "Tenderers are counted on the whole tender, not per line item; awards split among several suppliers are excluded (no per-supplier amount).": "Los oferentes se cuentan en toda la licitación, no por partida; se excluyen adjudicaciones repartidas entre varios proveedores (sin monto por proveedor).",
+  "The listing API answered 404 for August 2026 on 2026-09-26; that month is recorded as empty.": "La API del listado respondió 404 para agosto de 2026 el 2026-09-26; ese mes se registra como vacío.",
+  "Amounts as published (CLP, sometimes UF or USD), never converted.": "Montos publicados (CLP, a veces UF o USD), nunca convertidos.",
+  "Three buyer accounts, not a country sample; other accounts of the same organisations are not merged by name.": "Tres cuentas compradoras, no una muestra del país; otras cuentas de las mismas organizaciones no se fusionan por nombre.",
+  "Find a Tender publishes above-threshold notices (and, since 24 February 2025, Procurement Act notices); smaller contracts are not covered.": "Find a Tender publica anuncios por encima de los umbrales (y, desde el 24 de febrero de 2025, anuncios de la Procurement Act); los contratos menores no están cubiertos.",
+  "Supplier party ids are never shared by different names in this cohort, but one supplier can have several ids: repetition and concentration can only be undercounted.": "Los identificadores de proveedores nunca se comparten entre nombres distintos en esta cohorte, pero un proveedor puede tener varios: repetición y concentración solo pueden subestimarse.",
+  "Multi-supplier awards (frameworks, dynamic purchasing systems) are excluded: no single holder.": "Se excluyen adjudicaciones a varios proveedores (acuerdos marco, sistemas dinámicos de adquisición): sin titular único.",
+  "Amounts are as published, never converted or summed across currencies.": "Montos tal como se publican, nunca convertidos ni sumados entre monedas.",
+  "TED publishes procedures above the EU thresholds only; most national procurement is not here.": "TED solo publica procedimientos por encima de los umbrales de la UE; la mayoría de las compras nacionales no figura aquí.",
+  "Contract modification notices are separate TED notices and were not imported: no amount-increase check.": "Los anuncios de modificación son anuncios TED separados y no se importaron: sin verificación de aumento del monto.",
+  "Offers are the 'tenders' statistic published per lot; admissibility is not assessed.": "Las ofertas son la estadística «tenders» publicada por lote; no se evalúa la admisibilidad.",
   "Explore published procurement records.": "Explore registros publicados de contratación pública.",
   "Skip to results": "Ir a los resultados",
   "How to read · Method": "Cómo leer · Método",
@@ -604,6 +683,14 @@ window.I18N_DICTS.es = {
  },
  "patterns": [
   [
+   "{a} (end exclusive; {b})",
+   "{a} (fin excluido; {b})"
+  ],
+  [
+   "{a} (end inclusive; {b})",
+   "{a} (fin incluido; {b})"
+  ],
+  [
    "{a} / {b} results · {c} with a heuristic signal · {d} not assessed",
    "{a} / {b} resultados · {c} con señal heurística · {d} no evaluados"
   ],
@@ -744,6 +831,10 @@ window.I18N_DICTS.es = {
    "{a} / {b} evaluadas ({c})"
   ],
   [
+   "Record {a} of {b}",
+   "Registro {a} de {b}"
+  ],
+  [
    "{a} of {b} evaluated",
    "{a} de {b} evaluadas"
   ],
@@ -792,8 +883,36 @@ window.I18N_DICTS.es = {
    "Procedimiento competitivo ({a}): sin señal de adjudicación directa."
   ],
   [
-   "{a} days between the contract date ({b}) and the {c} ({d}). Above {e} days, beyond every legal deadline of the regimes covered: 8 points, linear to 16 at {f} days, in the transparency family. Late publication hides a contract from scrutiny while it runs; it can also be a clerical delay.",
-   "{a} días entre la fecha del contrato ({b}) y {c} ({d}). Más de {e} días, por encima de todos los plazos legales de los regímenes cubiertos: 8 puntos, lineal hasta 16 a los {f} días, en la familia de transparencia. La publicación tardía oculta un contrato al escrutinio mientras se ejecuta; también puede ser un retraso administrativo."
+   "{a} days between the contract date ({b}) and the {c} ({d}), beyond the legal deadlines. Its buyer’s usual delay is {e} days (median of {f} other records), so it is {g} days later than usual. Signal above {h} days of delay and {h} days later than usual: 8 points, linear to 16 at {i} days later than usual, in the transparency family. Late publication hides a contract from scrutiny while it runs; it can also be a clerical delay.",
+   "{a} días entre la fecha del contrato ({b}) y {c} ({d}), más allá de los plazos legales. El plazo habitual de su comprador es de {e} días (mediana de {f} otros registros), es decir {g} días más tarde de lo habitual. Señal por encima de {h} días de retraso y {h} días más tarde de lo habitual: 8 puntos, lineal hasta 16 a {i} días más tarde de lo habitual, en la familia de transparencia. La publicación tardía oculta un contrato al escrutinio mientras se ejecuta; también puede ser un retraso administrativo."
+  ],
+  [
+   "{a} days between the contract date ({b}) and the {c} ({d}), beyond the legal deadlines. No usual delay is established for this buyer (fewer than {e} dated records in this dataset), so the whole delay counts. Signal above {f} days of delay and {f} days later than usual: 8 points, linear to 16 at {g} days later than usual, in the transparency family. Late publication hides a contract from scrutiny while it runs; it can also be a clerical delay.",
+   "{a} días entre la fecha del contrato ({b}) y {c} ({d}), más allá de los plazos legales. No hay un plazo habitual establecido para este comprador (menos de {e} registros fechados en este conjunto de datos), por lo que cuenta todo el plazo. Señal por encima de {f} días de retraso y {f} días más tarde de lo habitual: 8 puntos, lineal hasta 16 a {g} días más tarde de lo habitual, en la familia de transparencia. La publicación tardía oculta un contrato al escrutinio mientras se ejecuta; también puede ser un retraso administrativo."
+  ],
+  [
+   "{a} days between the contract date ({b}) and the {c} ({d}), beyond the legal deadlines but within this buyer’s usual delay (median {e} days over {f} other records): a buyer-level publication practice, not specific to this contract. Not a conclusion of regularity.",
+   "{a} días entre la fecha del contrato ({b}) y {c} ({d}), más allá de los plazos legales pero dentro del plazo habitual de este comprador (mediana de {e} días sobre {f} otros registros): una práctica de publicación del comprador, no específica de este contrato. No es una conclusión de regularidad."
+  ],
+  [
+   "Declared amount {a} HT is below the legal threshold of {b} HT in force on {c} for {d} (art. R2122-8, décrets 2019-1344, 2022-1683, 2024-1217, 2025-1386): an award without publicity or competition is the legal default, not a signal.",
+   "El monto declarado de {a} sin IVA está por debajo del umbral legal de {b} sin IVA vigente el {c} para {d} (art. R2122-8, decretos 2019-1344, 2022-1683, 2024-1217, 2025-1386): una adjudicación sin publicidad ni competencia es la regla legal por defecto, no una señal."
+  ],
+  [
+   "Declared amount {a} HT reaches the legal threshold of {b} HT in force on {c} for {d}. Award explicitly declared without competition: 18 points. May be legal (R2122 exceptions); no bonus for an R2122 citation.",
+   "El monto declarado de {a} sin IVA alcanza el umbral legal de {b} sin IVA vigente el {c} para {d}. Adjudicación declarada explícitamente sin competencia: 18 puntos. Puede ser legal (excepciones del R2122); sin bonificación por citar el R2122."
+  ],
+  [
+   "Declared amount {a} HT: the threshold for {b} on {c} is uncertain (CPV missing, works and supplies have different thresholds). Not assessed.",
+   "Monto declarado de {a} sin IVA: el umbral para {b} el {c} es incierto (falta el CPV; obras y suministros tienen umbrales distintos). No evaluado."
+  ],
+  [
+   "Declared amount {a} HT: the threshold for {b} on {c} is uncertain (within 180 days of a legal change, the consultation may have been launched under the previous threshold). Not assessed.",
+   "Monto declarado de {a} sin IVA: el umbral para {b} el {c} es incierto (a menos de 180 días de un cambio legal, la consulta pudo lanzarse con el umbral anterior). No evaluado."
+  ],
+  [
+   "Contract date {a} precedes the legal regimes encoded (October 2015). Not assessed.",
+   "La fecha del contrato {a} es anterior a los regímenes legales codificados (octubre de 2015). No evaluado."
   ],
   [
    "Publication date ({a}) before the contract date ({b}): inconsistent dates, not assessed.",

@@ -1,0 +1,302 @@
+{
+  "tours": {
+    "coveragePath": "data/tours-notices-coverage.json",
+    "snapshot": {
+      "start": "2026-09-16T08:52:08.735633+00:00",
+      "end": "2026-09-16T08:52:08.735633+00:00"
+    },
+    "coverage": {
+      "start": "2025-01-01",
+      "end": "2026-01-01",
+      "endExclusive": true,
+      "basis": "BOAMP publication date for the Tours exact-SIRET candidate cohort"
+    },
+    "source_updated": null,
+    "notes": [
+      "Exact text SIRET search may miss notices with another establishment identifier, spacing or unindexed formats; not all purchases of Tours.",
+      "TED candidate discovery by name/date is not matching evidence: each XML association requires exact root notice UUID and records its version.",
+      "The TED search is not a complete procedure-version audit; no bidding score enabled. Conflicting timezone declarations remain visible.",
+      "RegulatoryDomain is a directive/legal framework, not proof of an R2122 exception. A procedure-wide explanation may concern lots outside the present notice.",
+      "Award criteria are context only; unspecified weights remain unknown. No buyer portal documents downloaded, only their published links.",
+      "Sources can themselves be inaccurate. No finding of irregularity, historical DECP join or payment total inferred.",
+      "BOAMP collected 2026-09-16T08:52:08.735633+00:00; TED retrieval 2026-09-16T09:12:09.130796+00:00 to 2026-09-16T09:16:32.873486+00:00 (last recorded download, not a completion timestamp). Related notices outside the coverage window retained."
+    ]
+  },
+  "cities": {
+    "coveragePath": "data/decp-cities-coverage.json",
+    "snapshot": {
+      "start": "2026-09-15T22:52:17.880816+00:00",
+      "end": "2026-09-15T22:52:17.880816+00:00"
+    },
+    "coverage": {
+      "start": "2024-01-01",
+      "end": "2026-01-01",
+      "endExclusive": true,
+      "basis": "DECP datenotification (notification date)"
+    },
+    "source_updated": null,
+    "notes": [
+      "DECP valid dataset publication is not proof of legal regularity or payment.",
+      "No names inferred for suppliers; identifiers and their published type are preserved.",
+      "The API may expose only indexed/latest modifications; absence of a published modification does NOT prove absence of a real amendment.",
+      "Absence de modification publiée ne prouve PAS l’absence d’un avenant ou d’une modification réelle.",
+      "Offset pagination is checked against total_count but the API provides no immutable snapshot; tied ordering and subsequent corrections can affect completeness.",
+      "Repeated buyer+contract identifiers with inconsistent objects or holders are ambiguous groups, not proven unique procurements; excluded from all calculations in this new cohort.",
+      "Current public company names are an identity context only, not historical names, establishment status, relationship evidence or scoring inputs."
+    ]
+  },
+  "consultations": {
+    "coveragePath": "data/consultations-coverage.json",
+    "snapshot": {
+      "start": "2026-09-15T06:14:08.554906+00:00",
+      "end": "2026-09-15T06:14:08.554906+00:00"
+    },
+    "coverage": {
+      "start": "2025-02-03",
+      "end": "2025-02-03",
+      "endExclusive": false,
+      "basis": "BOAMP initial call publication date"
+    },
+    "source_updated": null,
+    "notes": [
+      "10 premiers identifiants parmi 200 avis initiaux du jour, sans sélection par score ; pas représentatif.",
+      "Aucun téléchargement TED indépendant. Les recherches exactes annonce_lie ne garantissent pas la complétude des rectificatifs.",
+      "25-22678 reporte explicitement au 14 mars 2025 à 12:00 ; fuseau non donné dans le texte, aucun calcul automatique.",
+      "Absence de résultat lié ne signifie pas absence d’attribution. Aucun montant initial, plafond, avenant ou paiement additionné.",
+      "First 10 initial notice IDs of 200; linked notices can fall outside this day."
+    ]
+  },
+  "decp": {
+    "coveragePath": "data/decp-coverage.json",
+    "snapshot": null,
+    "coverage": {
+      "start": "2024-01-01",
+      "end": "2026-01-01",
+      "endExclusive": true,
+      "basis": "DECP datenotification (notification date)"
+    },
+    "source_updated": null,
+    "notes": [
+      "Une entrée par SIRET acheteur + identifiant de marché, qui peut désigner un lot. Les identifiants ne prouvent pas à eux seuls une opération économique distincte.",
+      "Les valeurs initiales divergentes sont mises à null et conservées comme alternatives sans leur inventer un ordre chronologique. Les groupes en conflit sont exclus des deux nouveaux indicateurs.",
+      "Le schéma définit le montant de modification comme nouveau montant, mais la saisie peut être erronée (certains montants ressemblent à des incréments). Aucun incrément n’est additionné.",
+      "L’API ne garantit pas l’historique complet des avenants ; absence de modification publiée ne signifie pas absence de modification réelle.",
+      "Les champs offresrecues sont des déclarations de l’acheteur, non une vérification de recevabilité.",
+      "Les taux de concurrence décrivent les seuls contrats concurrentiels admissibles publiés de la cohorte, pas tout le marché sectoriel ni toute l’activité de la collectivité.",
+      "Pas de fusion automatique avec BOAMP/TED : recoupements possibles, ne pas sommer les deux jeux.",
+      "Original collection recorded 2026-09-13T20:55:09.634227+00:00; current raw snapshot superseded it at rebuild 2026-09-25. Exact retrieval time for the current snapshot is unknown; rebuild date is not collection time."
+    ]
+  },
+  "boamp": {
+    "coveragePath": "data/coverage.json",
+    "snapshot": null,
+    "coverage": {
+      "start": "2025-02-01",
+      "end": "2025-05-01",
+      "endExclusive": true,
+      "basis": "BOAMP publication date, not signature date"
+    },
+    "source_updated": null,
+    "notes": [
+      "Échantillon non exhaustif, non représentatif de toute la commande publique française ; biais de couverture BOAMP, de période, de format et de disponibilité des champs.",
+      "2 153 avis hors structure eForms ContractAwardNotice attendue sont exclus, notamment FNSimple.",
+      "Les résultats sans attribution selec-w, sans titulaire résolu, avec plusieurs références LotTender ou plusieurs contrats SettledContract sont exclus. Les identifiants avis/lot présentant des variantes contradictoires sont exclus plutôt que de choisir arbitrairement un gagnant.",
+      "Des avis distincts peuvent encore concerner un même achat, notamment des rectificatifs : pas de déduplication inter-avis ni de total national des dépenses.",
+      "Les durées en jours, années ou dates de début/fin restent inconnues dans ce premier import conservateur.",
+      "Un total d’offres absent reste inconnu même si un nombre d’offres électroniques est présent.",
+      "Les valeurs publiées peuvent comporter des erreurs ; les montants ne sont pas nécessairement les paiements définitifs. Les dates de signature peuvent être antérieures à la fenêtre de publication.",
+      "Aucun exemple fictif. Huit dossiers CRC documentés manuellement, dont Rognac qui agrège plusieurs contrats.",
+      "Original collection recorded 2026-09-13T15:59:28.796214+00:00; current raw snapshot superseded it at rebuild 2026-09-25. Exact retrieval time for the current snapshot is unknown; rebuild date is not collection time."
+    ]
+  },
+  "colombia": {
+    "coveragePath": "data/colombia-secop2-coverage.json",
+    "snapshot": {
+      "start": "2026-09-21T23:13:04.407712+00:00",
+      "end": "2026-09-21T23:14:38.127584+00:00"
+    },
+    "coverage": {
+      "start": "2024-09-01",
+      "end": "2026-09-01",
+      "endExclusive": true,
+      "basis": "SECOP II fecha_de_firma (contract signature date)"
+    },
+    "source_updated": null,
+    "notes": [
+      "Not exhaustive: only the three announced buyers in the 24-month window.",
+      "SECOP II contract rows are declarations; amounts and statuses are not audited payments.",
+      "No offers/proposals table was downloaded; no offer-count indicator exists for Colombia.",
+      "7 published supplier documents are missing or placeholders; supplier names remain, but identity-based checks exclude those identifiers.",
+      "No country ranking, no currency conversion, no comparison with French cohorts.",
+      "Editorial thresholds of docs/score-colombia.md are not Colombian legal thresholds; a signal is not a finding of irregularity, and no flag proves regularity."
+    ]
+  },
+  "paraguay": {
+    "coveragePath": "data/paraguay-dncp-coverage.json",
+    "snapshot": {
+      "start": "2026-09-22T20:52:27.113548+00:00",
+      "end": "2026-09-22T21:00:17.073907+00:00"
+    },
+    "coverage": {
+      "start": "2024-09-01",
+      "end": "2025-09-01",
+      "endExclusive": true,
+      "basis": "tipo_fecha=publicacion_llamado (call publication, NOT contract signature)"
+    },
+    "source_updated": null,
+    "notes": [
+      "Calls published during the fixed window, not contracts signed during that window; later awards/contracts may appear in full records.",
+      "Search pagination is checked against one observed total but the API does not promise an immutable snapshot; national completeness is unverified. The search API caps totals at 10,000, so only bounded per-buyer queries are used.",
+      "Only contracts with explicit awardID, one identified award supplier, and PYG contract value are retained; excluded counts are reported. Budget-only entries (no contract ID, only implementation.financialProgress) are not contracts. Excluded entries also include the separate contract entries the source publishes for amount amendments; the amendment itself stays attached to its parent contract.",
+      "The source's contractSigned document links are not a manual review of document contents; signatures, legal status and payments are not independently audited.",
+      "Amendment and release counts are context, not a reconstructed value history; source versions can be incomplete.",
+      "Paraguayan checks are editorial (docs/score-paraguay.md); French and Colombian rules are never applied.",
+      "A few buyers are not a country sample; no cross-country score or currency comparison."
+    ]
+  },
+  "paraguay3": {
+    "coveragePath": "data/paraguay-dncp-3buyers-coverage.json",
+    "snapshot": {
+      "start": "2026-09-25T09:36:19.936689+00:00",
+      "end": "2026-09-25T09:47:28.097147+00:00"
+    },
+    "coverage": {
+      "start": "2024-09-01",
+      "end": "2026-09-01",
+      "endExclusive": true,
+      "basis": "tipo_fecha=publicacion_llamado (call publication, NOT contract signature)"
+    },
+    "source_updated": null,
+    "notes": [
+      "Calls published during the fixed window, not contracts signed during that window; later awards/contracts may appear in full records.",
+      "Search pagination is checked against one observed total but the API does not promise an immutable snapshot; national completeness is unverified. The search API caps totals at 10,000, so only bounded per-buyer queries are used.",
+      "Only contracts with explicit awardID, one identified award supplier, and PYG contract value are retained; excluded counts are reported. Budget-only entries (no contract ID, only implementation.financialProgress) are not contracts. Excluded entries also include the separate contract entries the source publishes for amount amendments; the amendment itself stays attached to its parent contract.",
+      "The source's contractSigned document links are not a manual review of document contents; signatures, legal status and payments are not independently audited.",
+      "Amendment and release counts are context, not a reconstructed value history; source versions can be incomplete.",
+      "Paraguayan checks are editorial (docs/score-paraguay.md); French and Colombian rules are never applied.",
+      "A few buyers are not a country sample; no cross-country score or currency comparison."
+    ]
+  },
+  "ukraine": {
+    "coveragePath": "data/prozorro-coverage.json",
+    "snapshot": {
+      "start": "2026-09-25T21:26:04.793512+00:00",
+      "end": "2026-09-25T21:38:58.878003+00:00"
+    },
+    "coverage": {
+      "start": "2024-09-01",
+      "end": "2026-09-01",
+      "endExclusive": true,
+      "basis": "official record dateCreated"
+    },
+    "source_updated": null,
+    "notes": [
+      "Three buyers, not a country sample; wartime rules allow exceptions and withheld publications.",
+      "Direct-contract reports (reporting): offer/direct-award checks are out of scope; concentration remains assessable.",
+      "Three exact contract API links checked in a separate dated sample; published change counts are context only, not a comparable amount/duration history.",
+      "Amounts are in the published currency, never converted or summed across currencies."
+    ]
+  },
+  "chile": {
+    "coveragePath": "data/chile-mp-coverage.json",
+    "snapshot": {
+      "start": "2026-09-26T17:57:13.458775+00:00",
+      "end": "2026-09-26T18:18:42.329232+00:00"
+    },
+    "coverage": {
+      "start": "2024-09-01",
+      "end": "2026-09-01",
+      "endExclusive": true,
+      "basis": "listaOCDSAgnoMes listing months (2024-09 through 2026-08), not signature or award dates"
+    },
+    "source_updated": null,
+    "notes": [
+      "Three purchasing units, not a country sample.",
+      "This OCDS listing covers licitaciones only; direct deals (trato directo) are published as purchase orders and are not included.",
+      "Tenderers are counted on the whole tender, not per line item; awards split among several suppliers are excluded (no per-supplier amount).",
+      "The listing API answered 404 for August 2026 on 2026-09-26; that month is recorded as empty.",
+      "Amounts as published (CLP, sometimes UF or USD), never converted."
+    ]
+  },
+  "uk": {
+    "coveragePath": "data/uk-fts-coverage.json",
+    "snapshot": {
+      "start": "2026-09-26T17:30:03.054191+00:00",
+      "end": "2026-09-26T17:51:18.029545+00:00"
+    },
+    "coverage": {
+      "start": "2024-09-01",
+      "end": "2026-09-01",
+      "endExclusive": true,
+      "basis": "award release date (API updatedFrom/updatedTo, one-day windows)"
+    },
+    "source_updated": null,
+    "notes": [
+      "Three buyer accounts, not a country sample; other accounts of the same organisations are not merged by name.",
+      "Find a Tender publishes above-threshold notices (and, since 24 February 2025, Procurement Act notices); smaller contracts are not covered.",
+      "Supplier party ids are never shared by different names in this cohort, but one supplier can have several ids: repetition and concentration can only be undercounted.",
+      "Multi-supplier awards (frameworks, dynamic purchasing systems) are excluded: no single holder.",
+      "Amounts are as published, never converted or summed across currencies."
+    ]
+  },
+  "portugal": {
+    "coveragePath": "data/ted-portugal-coverage.json",
+    "snapshot": {
+      "start": "2026-09-25T21:24:27.096795+00:00",
+      "end": "2026-09-25T21:30:28.945573+00:00"
+    },
+    "coverage": {
+      "start": "2024-09-01",
+      "end": "2026-09-01",
+      "endExclusive": true,
+      "basis": "TED publication date"
+    },
+    "source_updated": null,
+    "notes": [
+      "TED publishes procedures above the EU thresholds only; most national procurement is not here.",
+      "Contract modification notices are separate TED notices and were not imported: no amount-increase check.",
+      "Offers are the 'tenders' statistic published per lot; admissibility is not assessed.",
+      "Amounts are in the published currency, never converted or summed across currencies."
+    ]
+  },
+  "czechia": {
+    "coveragePath": "data/ted-czechia-coverage.json",
+    "snapshot": {
+      "start": "2026-09-26T18:40:20.489626+00:00",
+      "end": "2026-09-26T19:05:30.479805+00:00"
+    },
+    "coverage": {
+      "start": "2024-09-01",
+      "end": "2026-09-01",
+      "endExclusive": true,
+      "basis": "TED publication date"
+    },
+    "source_updated": null,
+    "notes": [
+      "TED publishes procedures above the EU thresholds only; most national procurement is not here.",
+      "Contract modification notices are separate TED notices and were not imported: no amount-increase check.",
+      "Offers are the 'tenders' statistic published per lot; admissibility is not assessed.",
+      "Amounts are in the published currency, never converted or summed across currencies."
+    ]
+  },
+  "romania": {
+    "coveragePath": "data/ted-romania-coverage.json",
+    "snapshot": {
+      "start": "2026-09-25T21:30:28.946501+00:00",
+      "end": "2026-09-25T21:34:42.311827+00:00"
+    },
+    "coverage": {
+      "start": "2024-09-01",
+      "end": "2026-09-01",
+      "endExclusive": true,
+      "basis": "TED publication date"
+    },
+    "source_updated": null,
+    "notes": [
+      "TED publishes procedures above the EU thresholds only; most national procurement is not here.",
+      "Contract modification notices are separate TED notices and were not imported: no amount-increase check.",
+      "Offers are the 'tenders' statistic published per lot; admissibility is not assessed.",
+      "Amounts are in the published currency, never converted or summed across currencies."
+    ]
+  }
+}

@@ -9,7 +9,7 @@ function isAmbiguousCityContract(c) {
 const HISTORY_START = '2024-01-01';
 const HISTORY_END = '2025-12-31';
 
-const SCORE_VERSION = '3.1';
+const SCORE_VERSION = '3.2';
 
 // Conservative calendar-day upper bound: publication time is not supplied by BOAMP.
 function getBiddingPeriod(contract) {
@@ -269,6 +269,11 @@ const INDICATOR_KINDS = {
   'amount-increase': 'Amount increase after award',
   'term-extension': 'Term extended after award',
   'late-publication': 'Published long after the contract',
+  'cap': 'Monetary modifications near applicable cap',
+  'execution': 'Full payment with incomplete documented execution',
+  'legalGround': 'Legal ground and purchase mismatch',
+  'unitPrice': 'Year-over-year comparable unit-price increase',
+  'exclusivity': 'Exclusivity claim and comparable competitive wins',
 };
 // Short names for the table chips; the full name is in the tooltip, the filter and the record panel.
 const KIND_SHORT = {
@@ -277,6 +282,8 @@ const KIND_SHORT = {
   'disqualified-better-bid': 'Better bid disqualified', 'short-bidding-period': 'Short bidding period',
   'late-notice-change': 'Late notice change', 'long-duration': 'Long duration', 'amount-increase': 'Amount increase',
   'term-extension': 'Term extended', 'late-publication': 'Late publication',
+  'cap': 'Near applicable cap', 'execution': 'Payment / execution',
+  'legalGround': 'Legal ground mismatch', 'unitPrice': 'Unit-price increase', 'exclusivity': 'Exclusivity context',
 };
 // Where a kind matches a red flag in a framework auditors already use (docs/indicators.md).
 const KIND_REFERENCES = {
@@ -288,6 +295,7 @@ const KIND_REFERENCES = {
   'concentration': 'related to Ukraine’s State Audit Service risk indicator sas-3-3 and OCP Cardinal R048 “Heterogeneous supplier”',
 };
 const KIND_OF_CHECK = {
+  cap: 'cap', execution: 'execution', legalGround: 'legalGround', unitPrice: 'unitPrice', exclusivity: 'exclusivity',
   'single-bid': 'single-offer', 'dncp-single-tenderer': 'single-offer',
   'direct-award': 'direct-award', 'secop2-plurality-award': 'direct-award', 'dncp-exception-award': 'direct-award',
   'repeated-direct-award': 'repeated-direct', 'secop2-repeated-plurality': 'repeated-direct', 'dncp-repeated-exception': 'repeated-direct',
@@ -353,6 +361,47 @@ function graduated(value, start, end, low, high) {
   return Math.round((low + (high - low) * Math.min(1, Math.max(0, (value - start) / (end - start)))) * 10) / 10;
 }
 
+// French legal threshold below which a contract may be awarded without publicity or competition
+// (Code de la commande publique, art. R2122-8): below it a direct award is the legal default, not a
+// signal. Amounts are HT. The regime applies by the date the consultation is launched, which the
+// data never gives, so the contract date is used and amounts that fall between the old and the new
+// threshold during TRANSITION_DAYS after a change stay unknown. Sources (checked 2026-10-04):
+//  - 25 000 EUR from 1 Oct 2015 (décret n° 2015-1163), 40 000 EUR from 1 Jan 2020 (décret n° 2019-1344)
+//    https://www.marche-public.fr/Marches-publics/Definitions/Entrees/Seuil-dispense-publicite.htm
+//  - works 70 000 EUR from 24 Jul 2020 (décret n° 2020-893, https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000042138128);
+//    works 100 000 EUR by loi ASAP n° 2020-1525 art. 142 (published 8 Dec 2020), to 31 Dec 2022, extended to 31 Dec 2024
+//    (décret n° 2022-1683) and to 31 Dec 2025 (décret n° 2024-1217)
+//    https://www.marche-public.fr/contrats-publics/Decret-2024-1217-seuil-travaux-ECOM2434725D.htm
+//  - décret n° 2025-1386 of 29 Dec 2025: works 100 000 EUR made permanent from 1 Jan 2026, supplies and services 60 000 EUR from 1 Apr 2026
+//    https://blog.landot-avocats.net/2025/12/30/rehaussement-des-seuils-de-dispense-de-publicite-et-de-mise-en-concurrence-decryptage-du-decret-n-2025-1386-du-29-decembre-2025-modifiant-certains-seuils-relatifs-aux-marches-publics/
+const FR_DIRECT_THRESHOLDS = {
+  general: [['2015-10-01', 25000], ['2020-01-01', 40000], ['2026-04-01', 60000]],
+  works: [['2015-10-01', 25000], ['2020-01-01', 40000], ['2020-07-24', 70000], ['2020-12-08', 100000]]
+};
+const FR_THRESHOLD_TRANSITION_DAYS = 180;
+function frenchThresholdBand(series, date) {
+  let i = -1;
+  series.forEach(([from], k) => { if (date >= from) i = k; });
+  if (i < 0) return null;
+  const current = series[i][1];
+  const recent = i > 0 && Date.parse(date) < Date.parse(series[i][0]) + FR_THRESHOLD_TRANSITION_DAYS * 864e5;
+  return { current, previous: recent ? series[i - 1][1] : current };   // below previous: certain; from current: certain
+}
+function frenchDirectAwardEligibility(c) {
+  const euros = n => `€${n.toLocaleString('en-GB')}`;
+  if (!(c.amount > 0) || (c.currency && c.currency !== 'EUR')) return { status: 'unknown', reason: 'Declared amount missing: cannot tell whether the contract was below the legal threshold for an award without publicity or competition. Not assessed.' };
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(c.date || '')) return { status: 'unknown', reason: 'Contract date missing: the legal threshold in force cannot be determined. Not assessed.' };
+  const works = typeof c.cpv === 'string' && /^\d/.test(c.cpv) ? c.cpv.startsWith('45') : null;
+  const bands = [works !== false && frenchThresholdBand(FR_DIRECT_THRESHOLDS.works, c.date), works !== true && frenchThresholdBand(FR_DIRECT_THRESHOLDS.general, c.date)].filter(b => b !== false);
+  if (bands.some(b => !b)) return { status: 'unknown', reason: `Contract date ${c.date} precedes the legal regimes encoded (October 2015). Not assessed.` };
+  const sure = bands.map(b => c.amount < b.previous ? 'below' : c.amount >= b.current ? 'above' : 'unknown');
+  const kind = works === true ? 'works' : works === false ? 'supplies and services' : 'works or supplies/services (CPV missing)';
+  const limits = bands.map(b => euros(b.current)).join(' / ');
+  if (sure.every(x => x === 'below')) return { status: 'below', reason: `Declared amount ${euros(c.amount)} HT is below the legal threshold of ${limits} HT in force on ${c.date} for ${kind} (art. R2122-8, décrets 2019-1344, 2022-1683, 2024-1217, 2025-1386): an award without publicity or competition is the legal default, not a signal.` };
+  if (sure.every(x => x === 'above')) return { status: 'above', reason: `Declared amount ${euros(c.amount)} HT reaches the legal threshold of ${limits} HT in force on ${c.date} for ${kind}.` };
+  return { status: 'unknown', reason: `Declared amount ${euros(c.amount)} HT: the threshold for ${kind} on ${c.date} is uncertain (${works === null ? 'CPV missing, works and supplies have different thresholds' : `within ${FR_THRESHOLD_TRANSITION_DAYS} days of a legal change, the consultation may have been launched under the previous threshold`}). Not assessed.` };
+}
+
 // Eight heuristic checks, with explicit applicability and evaluation states.
 // Official findings and financial amounts are separate evidence/context, not points.
 // Transparency family, the same for every country (docs/indicators.md): the award or
@@ -361,11 +410,49 @@ function graduated(value, start, end, low, high) {
 // plus 30 days for framework and DPS call-offs; UK 30 days; French essential data 2 months).
 const LATE_PUBLICATION_DAYS = 120;
 const LATE_PUBLICATION_MAX_DAYS = 730;
+// Buyer-relative since score 3.2: a delay beyond LATE_PUBLICATION_DAYS only counts when it also
+// exceeds the buyer's usual delay (median of its other dated records, same cohort) by more than
+// that many days. Per-jurisdiction overrides go here, keyed by country code or dataFamily, e.g.
+// { decp: { days: 150 } }; every family uses these defaults for now.
+const LATE_PUBLICATION_DEFAULTS = { days: LATE_PUBLICATION_DAYS, maxDays: LATE_PUBLICATION_MAX_DAYS, minBuyerRecords: 10 };
+const LATE_PUBLICATION_OVERRIDES = {};
+function latePublicationConfig(c) { return { ...LATE_PUBLICATION_DEFAULTS, ...(LATE_PUBLICATION_OVERRIDES[c.country] || LATE_PUBLICATION_OVERRIDES[c.dataFamily] || {}) }; }
 const PUBLICATION_DATE_MEANING = { decp: 'essential data published on the buyer profile', boamp: 'BOAMP award notice', ted: 'TED award notice' };
 const NO_RELIABLE_CONTRACT_DATE = { fts: 'Find a Tender award notices can carry the date of an original contract signed years earlier (modification notices under PCR 2015 Regulation 72) or of admission to a dynamic purchasing system: the delay would not measure late publication. Out of scope.' };
+// Publication delay in days for a row the late-publication check can measure, else null.
+// Excluded, aggregate and documentary rows never feed a buyer baseline.
+function latePublicationDelay(c) {
+  if (!PUBLICATION_DATE_MEANING[c.dataFamily] || c.assessmentMode === 'browse' || c.findingScope === 'aggregate' || (c.consultation && !c.contractId) || (c.noticeEvidence && !c.date) ||
+      c.initialConflicts?.length || c.modificationConflicts?.length || c.identityAmbiguous || c.dataStatus === 'unverified' || !c.date || !c.publicationDate) return null;
+  const days = Math.round((Date.parse(c.publicationDate) - Date.parse(c.date)) / 864e5);
+  return Number.isFinite(days) && days >= 0 ? days : null;
+}
+// Leave-one-out median delay per buyer, over the whole cohort before any filter.
+function assignPublicationBaselines(contracts) {
+  const buyers = new Map();
+  for (const c of contracts) {
+    c.latePublicationBaseline = null;
+    const delay = latePublicationDelay(c), buyer = c.buyerSiret || c.buyerId || c.buyer;
+    if (delay == null || !buyer) continue;
+    const key = `${c.dataFamily}|${buyer}`;
+    if (!buyers.has(key)) buyers.set(key, []);
+    buyers.get(key).push({ c, delay });
+  }
+  for (const rows of buyers.values()) {
+    if (rows.length < latePublicationConfig(rows[0].c).minBuyerRecords) continue;
+    const sorted = rows.map(r => r.delay).sort((x, y) => x - y), m = sorted.length - 1;
+    for (const { c, delay } of rows) {
+      const p = sorted.indexOf(delay);   // any position holding this value gives the same remaining multiset
+      const at = i => sorted[i < p ? i : i + 1];
+      const median = m % 2 ? (at((m - 1) / 2) + at((m + 1) / 2)) / 2 : at(m / 2);
+      c.latePublicationBaseline = { median, others: m };
+    }
+  }
+}
 function latePublicationCheck(c, excludedReason) {
   const meaning = PUBLICATION_DATE_MEANING[c.dataFamily];
-  const base = { id: 'late-publication', label: `Published more than ${LATE_PUBLICATION_DAYS} days after the contract`, family: 'transparency' };
+  const cfg = latePublicationConfig(c);
+  const base = { id: 'late-publication', label: 'Published late, beyond the legal deadlines and this buyer’s usual delay', family: 'transparency' };
   const make = (applicability, status, weight, reason) => {
     const severity = indicatorSeverity(weight || 0);
     return { ...base, applicability, status, weight: status === 'signal' ? weight : null, reason, explanation: reason, severity: severity.id, severityLabel: severity.label };
@@ -377,9 +464,15 @@ function latePublicationCheck(c, excludedReason) {
   const days = Math.round((Date.parse(c.publicationDate) - Date.parse(c.date)) / 864e5);
   if (!Number.isFinite(days)) return make('yes', 'unknown', null, 'Unreadable date: delay not assessable.');
   if (days < 0) return make('yes', 'unknown', null, `Publication date (${c.publicationDate}) before the contract date (${c.date}): inconsistent dates, not assessed.`);
-  if (days <= LATE_PUBLICATION_DAYS) return make('yes', 'clear', null, `${days} day(s) between the contract date (${c.date}) and the ${meaning} (${c.publicationDate}): within ${LATE_PUBLICATION_DAYS} days. Not a conclusion of regularity.`);
-  const weight = graduated(days, LATE_PUBLICATION_DAYS, LATE_PUBLICATION_MAX_DAYS, 8, 16);
-  return make('yes', 'signal', weight, `${days} days between the contract date (${c.date}) and the ${meaning} (${c.publicationDate}). Above ${LATE_PUBLICATION_DAYS} days, beyond every legal deadline of the regimes covered: 8 points, linear to 16 at ${LATE_PUBLICATION_MAX_DAYS} days, in the transparency family. Late publication hides a contract from scrutiny while it runs; it can also be a clerical delay.`);
+  const dates = `between the contract date (${c.date}) and the ${meaning} (${c.publicationDate})`;
+  if (days <= cfg.days) return make('yes', 'clear', null, `${days} day(s) ${dates}: within ${cfg.days} days. Not a conclusion of regularity.`);
+  const usual = c.latePublicationBaseline;
+  const baseline = usual ? usual.median : 0;
+  const excess = days - baseline;
+  if (excess <= cfg.days) return make('yes', 'clear', null, `${days} days ${dates}, beyond the legal deadlines but within this buyer’s usual delay (median ${baseline} days over ${usual.others} other records): a buyer-level publication practice, not specific to this contract. Not a conclusion of regularity.`);
+  const weight = graduated(excess, cfg.days, cfg.maxDays, 8, 16);
+  const practice = usual ? `Its buyer’s usual delay is ${baseline} days (median of ${usual.others} other records), so it is ${excess} days later than usual.` : `No usual delay is established for this buyer (fewer than ${cfg.minBuyerRecords} dated records in this dataset), so the whole delay counts.`;
+  return make('yes', 'signal', weight, `${days} days ${dates}, beyond the legal deadlines. ${practice} Signal above ${cfg.days} days of delay and ${cfg.days} days later than usual: 8 points, linear to 16 at ${cfg.maxDays} days later than usual, in the transparency family. Late publication hides a contract from scrutiny while it runs; it can also be a clerical delay.`);
 }
 
 // The explorer turns this on once records are prepared: they no longer change, so each
@@ -391,20 +484,45 @@ function getAssessment(c) {
   if (!cached) { cached = computeAssessment(c); assessmentCache.set(c, cached); }
   return cached;
 }
+// Listed only for the checks a record carries evidence for: no bundled dataset maps any yet,
+// and five permanent "not assessed" lines on every row would say nothing.
+function getAdditionalIndicatorChecks(c, excludedReason) {
+  const evidence = c.indicatorEvidence && typeof c.indicatorEvidence === 'object' ? c.indicatorEvidence : {};
+  const ids = ['cap', 'execution', 'legalGround', 'unitPrice', 'exclusivity'].filter(id => Object.hasOwn(evidence, id));
+  if (!ids.length) return [];
+  excludedReason = excludedReason || (c.assessmentMode === 'browse' ? 'Browse-only import: scoring eligibility not established.' :
+    c.initialConflicts?.length || c.modificationConflicts?.length ? 'Conflicting versions: calculations excluded.' :
+    c.identityAmbiguous ? 'Duplicate contract identifier: calculations excluded.' :
+    c.dataStatus === 'unverified' ? 'Unverified record: calculations excluded.' : null);
+  const blocked = excludedReason || (c.findingScope === 'aggregate' ? 'Aggregate dossier: not a comparable individual award.' :
+    c.consultation && !c.contractId || c.noticeEvidence && !c.date ? 'Documentary notice, not a normalized attributed contract.' : null);
+  let results = [];
+  if (!blocked && globalThis.IndicatorEvidence?.assess) {
+    try { results = globalThis.IndicatorEvidence.assess({ indicators: c.indicatorEvidence || {} }).indicators; }
+    catch { /* Unsupported evidence remains unknown. */ }
+  }
+  return ids.map(id => {
+    const r = results.find(r => r.id === id);
+    const applicability = blocked ? excludedReason ? 'unknown' : 'no' : !r || r.status === 'not-assessed' ? 'unknown' : r.status === 'not-applicable' ? 'no' : 'yes';
+    const status = applicability === 'no' ? 'not-applicable' : applicability === 'unknown' ? 'unknown' : r.status === 'signal' ? 'signal' : 'clear';
+    const weight = status === 'signal' ? r.points : null;
+    const severity = indicatorSeverity(weight || 0);
+    const reason = blocked || r?.reason || 'Missing verified evidence or evidence engine: not assessed.';
+    return { id, label: INDICATOR_KINDS[id], family: ['cap', 'execution', 'unitPrice'].includes(id) ? 'execution' : 'competition',
+      applicability, status, weight, reason, explanation: reason, severity: severity.id, severityLabel: severity.label };
+  });
+}
 function computeAssessment(c) {
-  if (c.assessmentMode === 'browse') return { checks: [], applicable: 0, evaluated: 0, unknown: 0,
-    unknownApplicability: 0, notApplicable: 0, signals: 0,
-    excludedReason: 'Browse-only import: no jurisdiction or scoring eligibility has been established.' };
-  const base = getAssessmentLocal(c);
-  const late = latePublicationCheck(c, base.excludedReason);
-  const checks = [...base.checks, late];
+  const browse = c.assessmentMode === 'browse';
+  const base = browse ? { checks: [], excludedReason: 'Browse-only import: no jurisdiction or scoring eligibility has been established.' } : getAssessmentLocal(c);
+  const checks = [...base.checks, ...(browse ? [] : [latePublicationCheck(c, base.excludedReason)]), ...getAdditionalIndicatorChecks(c, base.excludedReason)];
   return { ...base, checks,
-    applicable: base.applicable + (late.applicability === 'yes' ? 1 : 0),
-    evaluated: base.evaluated + (late.status === 'signal' || late.status === 'clear' ? 1 : 0),
-    unknown: base.unknown + (late.applicability === 'yes' && late.status === 'unknown' ? 1 : 0),
-    unknownApplicability: base.unknownApplicability + (late.applicability === 'unknown' ? 1 : 0),
-    notApplicable: base.notApplicable + (late.status === 'not-applicable' ? 1 : 0),
-    signals: base.signals + (late.status === 'signal' ? 1 : 0) };
+    applicable: checks.filter(r => r.applicability === 'yes').length,
+    evaluated: checks.filter(r => r.status === 'signal' || r.status === 'clear').length,
+    unknown: checks.filter(r => r.applicability === 'yes' && r.status === 'unknown').length,
+    unknownApplicability: checks.filter(r => r.applicability === 'unknown').length,
+    notApplicable: checks.filter(r => r.status === 'not-applicable').length,
+    signals: checks.filter(r => r.status === 'signal').length };
 }
 
 function getAssessmentLocal(c) {
@@ -430,8 +548,12 @@ function getAssessmentLocal(c) {
   const knownOffers = Number.isInteger(c.offers) && c.offers > 0;
   add('single-bid', 'Single offer in a competitive procedure', 'competition', c.directAward === true ? 'no' : competitive ? 'yes' : 'unknown', knownOffers, c.offers === 1, 12,
     !competitive ? 'An offer expected in a direct award adds nothing; competitive procedure not established if unknown.' : !knownOffers ? 'Positive number of offers unknown or unusable.' : `${c.offers} offer(s) declared, without presuming admissibility. One offer: 12 points, regardless of amount.`);
-  add('direct-award', 'Award without competition', 'competition', 'yes', typeof c.directAward === 'boolean', c.directAward === true, 18,
-    c.directAward == null ? 'Competitive character unknown.' : c.directAward === false ? 'Explicitly competitive procedure: no direct-award signal.' : 'Award explicitly declared without competition: 18 points, all amounts. May be legal; no bonus for an R2122 citation.');
+  const directEligibility = c.directAward === true ? frenchDirectAwardEligibility(c) : null;
+  add('direct-award', 'Award without competition', 'competition',
+    directEligibility?.status === 'below' ? 'no' : directEligibility?.status === 'unknown' ? 'unknown' : 'yes',
+    typeof c.directAward === 'boolean' && directEligibility?.status !== 'unknown', c.directAward === true, 18,
+    c.directAward == null ? 'Competitive character unknown.' : c.directAward === false ? 'Explicitly competitive procedure: no direct-award signal.' :
+    directEligibility.status === 'above' ? `${directEligibility.reason} Award explicitly declared without competition: 18 points. May be legal (R2122 exceptions); no bonus for an R2122 citation.` : directEligibility.reason);
   add('long-contract', 'Declared duration ≥ 10 years', 'execution', 'yes', c.durationMonths != null, c.durationMonths >= 120,
     graduated(c.durationMonths || 0, 120, 360, 8, 40), c.durationMonths == null ? 'Declared duration unknown.' : `${c.durationMonths} months declared. From 120 months: 8 points, linear progression up to 40 at 360 months; renewals are not invented. Not a sectoral comparison nor an illegality threshold.`);
   const bidding = getBiddingPeriod(c);
@@ -748,6 +870,7 @@ function prepareContracts(data) {
     identityCounts.set(identity, (identityCounts.get(identity) || 0) + 1);
   }
   for (const c of contracts) c.identityAmbiguous = c.dataFamily === 'decp' && Boolean(c.buyerSiret && c.contractId && identityCounts.get(`${c.buyerSiret}:${c.contractId}`) > 1);
+  assignPublicationBaselines(contracts);
   for (const c of contracts) {
     if (c.dataFamily !== 'decp' || !HISTORY_COHORTS.has(c.cohortId) || c.modificationConflicts?.length ||
         !c.buyerSiret || !c.contractId || identityCounts.get(`${c.buyerSiret}:${c.contractId}`) !== 1 ||
@@ -1127,6 +1250,15 @@ function selectContracts(contracts, { search = '', minimum = 0, minScore = 0, fl
     return increases.get(c);
   };
   const collator = new Intl.Collator('en', { sensitivity: 'base', numeric: true });
+  // Equal scores: more families with a signal first, then the strongest single signal.
+  const strengths = new Map();
+  const strengthFor = c => {
+    if (!strengths.has(c)) {
+      const signals = getAssessment(c).checks.filter(r => r.status === 'signal');
+      strengths.set(c, [new Set(signals.map(r => r.family)).size, signals.reduce((m, r) => Math.max(m, r.weight), 0)]);
+    }
+    return strengths.get(c);
+  };
   const filtered = contracts.filter(c => {
     const evidence = c.noticeEvidence;
     const noticeMatch = !noticeContext || Boolean(evidence && (noticeContext === 'criteria' ? evidence.awardCriteria.length : noticeContext === 'explanation' ? evidence.procedureDescription || evidence.justifications.some(j => j.text) : noticeContext === 'correction' ? evidence.kind === 'correction' : noticeContext === 'ted' ? evidence.ted.length : false));
@@ -1156,7 +1288,7 @@ function selectContracts(contracts, { search = '', minimum = 0, minScore = 0, fl
     if (field === 'sector' && av === 'Sector not specified' && bv !== av) return 1;
     if (field === 'sector' && bv === 'Sector not specified' && av !== bv) return -1;
     const comparison = typeof av === 'string' ? collator.compare(av, bv) : av === bv ? 0 : av > bv ? 1 : -1;
-    return comparison * direction || ((scoreFor(b) ?? -1) - (scoreFor(a) ?? -1)) || collator.compare(a.id, b.id);
+    return comparison * direction || ((scoreFor(b) ?? -1) - (scoreFor(a) ?? -1)) || (strengthFor(b)[0] - strengthFor(a)[0]) || (strengthFor(b)[1] - strengthFor(a)[1]) || collator.compare(a.id, b.id);
   });
 }
 
@@ -1441,6 +1573,18 @@ function startExplorer() {
     romania: { path: 'data/ted-romania.json', coverage: 'data/ted-romania-coverage.json', sources: { publisher: 'Publications Office of the European Union — TED', links: [['TED search · ted.europa.eu', 'https://ted.europa.eu/'], ['TED Search API documentation', 'https://docs.ted.europa.eu/api/latest/search.html'], ['TED legal notice (reuse authorised)', 'https://ted.europa.eu/en/legal-notice']], licence: 'Free reuse, commercial or not (Commission Decision 2011/833/EU)', raw: 'data/ted-romania/raw/ (official eForms XML gzipped)', reproduce: 'python tools/import-ted-cohorts.py --cohort romania --offline', collected: 'Every TED award notice (can-standard) of three buyers announced before download, published 2024-09-01 → 2026-09-01, matched by identifier and its spelling variants.' }, note: 'Romania · TED award notices (above EU thresholds only) · Ministerul Finanțelor (national), Județul Cluj (regional), Municipiul Cluj-Napoca (municipal). Published 2024-09-01 → 2026-09-01: 299 notices, 356 awarded lots; 289 multi-winner framework results excluded. RON and EUR as published, never converted. EU eForms checks (docs/score-ted.md). Not a picture of Romanian procurement: SEAP/SICAP below-threshold purchases are not in TED.' },
     all: { combined: true, path: null, coverage: null, note: 'All countries · every dataset listed together. Each dataset is prepared on its own (repetition and concentration never cross cohorts), then its rows are shown side by side with their country. Amounts stay in their own currency: never converted or summed, and the amount sort groups by currency. Dates have each source\u2019s meaning (signature, award or publication). Checks share one catalogue (docs/indicators.md) but eligibility and thresholds follow each jurisdiction\u2019s law and data. Open a row for its sources.' },
   };
+  let datasetMetadata = {};
+  function renderDatasetDates(key) {
+    const dates = document.querySelector('#dataset-dates');
+    const notes = document.querySelector('#dataset-date-notes');
+    const metadata = globalThis.DatasetMetadata.formatEntries(key, datasetMetadata);
+    dates.replaceChildren(); notes.replaceChildren();
+    for (const field of metadata.fields) {
+      dates.append(element('dt', field.label), element('dd', field.value));
+    }
+    for (const note of metadata.notes) notes.append(element('li', note));
+    notes.hidden = metadata.notes.length === 0;
+  }
   // Dataset-level provenance, so anyone can repeat the collection or check a row at its source.
   function renderSources(selected) {
     const panel = document.querySelector('#dataset-sources');
@@ -1514,6 +1658,7 @@ function startExplorer() {
   let visibleRows = [];
   let signalCounts = new Map();
   const indicatorLabels = new Map([...controls.indicator.options].map(option => [option.value, option.textContent]));
+  for (const [id, label] of Object.entries(INDICATOR_KINDS)) if (!indicatorLabels.has(id)) indicatorLabels.set(id, label);
 
   // Filters: a collapsible sidebar on wide screens (choice remembered in this browser), folded on narrow ones.
   const FILTERS_STORE = 'contract-signals-filters';
@@ -2157,7 +2302,7 @@ function startExplorer() {
   function updateDetailPosition() {
     if (!openId) return;
     const index = visibleRows.findIndex(c => c.id === openId);
-    document.querySelector('#detail-position').textContent = index === -1 ? 'Not in the current results' : `${index + 1} of ${visibleRows.length}`;
+    document.querySelector('#detail-position').textContent = index === -1 ? 'Not in the current results' : `Record ${index + 1} of ${visibleRows.length}`;
     document.querySelector('#detail-previous').disabled = index <= 0;
     document.querySelector('#detail-next').disabled = index === -1 ? !visibleRows.length : index >= visibleRows.length - 1;
   }
@@ -2476,6 +2621,7 @@ function startExplorer() {
       document.querySelector('#dataset-note').textContent = `Local file: ${file.name}. ${preview.method === 'browse' ? 'No scoring method selected.' : 'French thresholds explicitly selected; imported status is not independent verification.'} The file is not certified complete. Repetition and concentration need a validated cohort and are not enabled by this generic import.`;
       document.querySelector('#coverage-link').hidden = true;
       document.querySelector('#dataset-sources').hidden = true;
+      renderDatasetDates('local');
       importStatus.textContent = `${preview.records.length} records loaded locally. Review marks are scoped to this file’s SHA-256 fingerprint and import settings.`;
     } catch (error) { importStatus.textContent = `Unable to load: ${error.message}`; }
     if (version === importVersion) confirmImport.disabled = false;
@@ -2499,6 +2645,7 @@ function startExplorer() {
     document.querySelector('#dataset-note').textContent = selected.note;
     document.querySelector('#coverage-link').href = selected.coverage;
     renderSources(selected);
+    renderDatasetDates(datasetSelect.value);
     document.querySelector('#coverage-link').hidden = false;
     document.querySelector('#file-path').textContent = selected.path;
     document.querySelector('#file').value = '';
@@ -2549,6 +2696,13 @@ function startExplorer() {
       pendingOpen = '';
     }
   });
+  fetch('data/dataset-metadata.json').then(response => {
+    if (!response.ok) throw new Error('Dataset date metadata unavailable');
+    return response.json();
+  }).then(metadata => {
+    datasetMetadata = metadata;
+    renderDatasetDates(usingLocalFile ? 'local' : datasetSelect.value);
+  }).catch(() => { /* Dates remain unknown; record loading is independent. */ });
   loadDataset();
 }
 

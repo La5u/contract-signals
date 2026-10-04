@@ -31,6 +31,10 @@ const server=http.createServer((req,res)=>{
  assert.equal(await page.locator('.brand img, .brand svg').count(),0,'branding icon is favicon-only');
  assert.equal(await page.locator('link[rel="icon"]').getAttribute('href'),'favicon.svg');
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2594'));
+ for (const id of ['cap','execution','legalGround','unitPrice','exclusivity']) assert.equal(await page.locator(`#indicator option[value="${id}"]`).count(),0,'evidence-only indicators are absent when no record carries evidence');
+ await page.waitForFunction(()=>document.querySelector('#dataset-dates').textContent.includes('Coverage period'));
+ assert.equal(await page.locator('#dataset-dates dt').count(),3);
+ assert.match(await page.locator('#dataset-dates').textContent(),/Snapshot collectedUnknown/,'current DECP snapshot is not invented');
  assert.match(await page.locator('#dataset option:checked').textContent(),/^Paris.*contracts.*DECP$/);
  assert.equal(await page.locator('#dataset option:checked').evaluate(o=>o.parentElement.label),'France','the country is the option group, not repeated in the option');
  const multiSignalRow=page.locator('.contract-row').filter({has:page.locator('.badge:not(.context):nth-of-type(2)')}).first();
@@ -39,7 +43,7 @@ const server=http.createServer((req,res)=>{
  await openRow(page,multiSignalRow.locator('.row-toggle'));
  const triggeredLabels=await page.locator('#detail-panel .triggered-indicators li').allTextContents();
  assert.equal(triggeredLabels.length,badgeLabels.length,'the panel lists every signal shown as a chip');
- assert.match(await page.locator('#detail-panel .detail-position').textContent(),/^\d+ of 2594$/);
+ assert.match(await page.locator('#detail-panel .detail-position').textContent(),/^Record \d+ of 2594$/);
  assert.match(await page.evaluate(()=>location.hash),/open=/,'an open record is kept in the link');
  await page.keyboard.press('Escape');
  assert.equal(await page.locator(panel).isVisible(),false,'Escape closes the record panel');
@@ -65,7 +69,7 @@ const server=http.createServer((req,res)=>{
  // Only the checks this dataset runs are offered, each with its count.
  const indicatorOptions=await page.locator('#indicator option').evaluateAll(o=>o.map(x=>x.value));
  assert.ok(indicatorOptions.includes('single-offer')&&!indicatorOptions.includes('term-extension')&&!indicatorOptions.includes('disqualified-better-bid'),'indicator list is scoped to the kinds this dataset runs');
- assert.match(await page.locator('#indicator option[value="direct-award"]').textContent(),/ · 262$/);
+ assert.match(await page.locator('#indicator option[value="direct-award"]').textContent(),/ · 86$/);
  await page.evaluate(()=>{const sort=document.querySelector('#sort');sort.value='offers';sort.dispatchEvent(new Event('input',{bubbles:true}));});
  let offerCounts=await page.locator('.contract-row').evaluateAll(rows=>rows.map(row=>Number(row.children[6].textContent.trim())).filter(Number.isFinite));
  assert.ok(offerCounts.length>1&&offerCounts.every((n,i)=>!i||offerCounts[i-1]<=n),'historical sort=offers URL semantics remain ascending');
@@ -76,7 +80,7 @@ const server=http.createServer((req,res)=>{
  // Method and reading notes live in a dialog.
  await page.click('#help-button');
  assert.equal(await page.locator('#help-dialog').isVisible(),true);
- assert.match(await page.locator('#help-dialog').textContent(),/Version 3\.1/);
+ assert.match(await page.locator('#help-dialog').textContent(),/Version 3\.2/);
  await page.keyboard.press('Escape');
  assert.equal(await page.locator('#help-dialog').isVisible(),false,'Escape closes the help dialog');
  await page.click('#help-button');await page.click('#help-close');
@@ -84,7 +88,7 @@ const server=http.createServer((req,res)=>{
  for(const key of ['buyer','supplier','sector','offers']) assert.equal(await page.locator(`th[data-sort-key="${key}"] button`).count(),1);
  assert.equal(await page.locator('button.badge').count(),0,'badges describe; filtering is done with the Indicator filter');
  await page.selectOption('#indicator','direct-award');
- assert.match(await page.locator('#status').textContent(),/^262 \/ 2594/);
+ assert.match(await page.locator('#status').textContent(),/^86 \/ 2594/);
  assert.match(await page.locator('#advanced-count').textContent(),/1 active/);
  await page.click('#clear-filters');
  assert.equal(await page.locator('#indicator').inputValue(),'');
@@ -110,7 +114,7 @@ const server=http.createServer((req,res)=>{
  assert.match(await page.locator('#status').textContent(),/355 \/ 2594/);
  assert.match(await page.locator('.contract-row').first().textContent(),/Not assessed/);
  await page.selectOption('#assessment','zero');
- assert.match(await page.locator('#status').textContent(),/1747 \/ 2594/);
+ assert.match(await page.locator('#status').textContent(),/1881 \/ 2594/);
  assert.match(await page.locator('.contract-row').first().textContent(),/0 \/ 100/);
  await openRow(page,page.locator('.row-toggle').first());
  assert.equal(await page.locator('#detail-panel .assessment-checks li').count(),9);
@@ -420,7 +424,7 @@ const server=http.createServer((req,res)=>{
  for(let i=0;i<8;i++)assert.match(await page.locator('.contract-row').nth(i).textContent(),/Official audit finding/);
  assert(!((await page.locator('body').textContent()).includes('null / 100')));
  // Mapped CSV preview is non-destructive, text is escaped, and currency stays unknown.
- await page.setInputFiles('#file',{name:'mapped.csv',mimeType:'text/csv',buffer:Buffer.from('key,owner,title,amount,directAward,dataStatus\nx,Council,<img src=x onerror=alert(1)>,42,true,verified')});
+ await page.setInputFiles('#file',{name:'mapped.csv',mimeType:'text/csv',buffer:Buffer.from('key,owner,title,amount,directAward,dataStatus,date\nx,Council,<img src=x onerror=alert(1)>,150000,true,verified,2024-06-01')});
  await page.waitForFunction(()=>!document.querySelector('#preview-import').disabled);
  await page.selectOption('#import-columns select[data-field="id"]','key');
  await page.selectOption('#import-columns select[data-field="buyer"]','owner');
@@ -513,6 +517,7 @@ const server=http.createServer((req,res)=>{
   assert.match(await row.locator('.mobile-signals').first().textContent(),signals);
   await openRow(lp,row.locator('.row-toggle'));
   assert.doesNotMatch(await lp.locator(panel).textContent(),/Buyer: |Declared increase of /);
+  assert.match(await lp.locator('#detail-position').textContent(),lang==='fr' ? /^Fiche \d+ sur 2594$/ : /^Registro \d+ de 2594$/);
   await lp.close();
  }
  // The selector remembers the choice in this browser only, and English drops the parameter.

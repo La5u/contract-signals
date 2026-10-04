@@ -1,0 +1,80 @@
+{
+  "indicators": {
+    "cap": {
+      "applicability": "applicable",
+      "sourceRefs": ["synthetic:fictional-cap-and-amendments"],
+      "legalCapConfirmed": true,
+      "baseVerified": true,
+      "amendmentsVerified": true,
+      "baseAmount": 100,
+      "cumulativeAmendments": 19,
+      "capRate": 0.2,
+      "baseBasis": "EUR net original base",
+      "amendmentsBasis": "EUR net original base"
+    },
+    "execution": {
+      "applicability": "applicable",
+      "sourceRefs": ["synthetic:fictional-payments-and-progress"],
+      "paymentsVerified": true,
+      "completionIndependentlyDocumented": true,
+      "actualPayments": 109,
+      "advances": 5,
+      "refunds": 5,
+      "payableAmount": 100,
+      "physicalCompletion": 0.8,
+      "samePaymentBasis": true,
+      "paymentsAsOf": "2025-06-30",
+      "completionAsOf": "2025-06-30"
+    },
+    "legalGround": {
+      "applicability": "applicable",
+      "sourceRefs": ["synthetic:fictional-jurisdiction-and-reviewed-mapping"],
+      "mappingReviewed": true,
+      "classificationVerified": true,
+      "jurisdiction": "Fictional jurisdiction",
+      "mappingJurisdiction": "Fictional jurisdiction",
+      "classification": "Test category",
+      "mappingClassification": "Test category",
+      "legalGround": "Test ground",
+      "mappingLegalGround": "Test ground",
+      "date": "2024-02-29",
+      "validFrom": "2024-01-01",
+      "validTo": "2024-12-31",
+      "compatible": false
+    },
+    "unitPrice": {
+      "applicability": "applicable",
+      "sourceRefs": ["synthetic:fictional-matched-unit-prices-and-inflation"],
+      "unitPricesVerified": true,
+      "previousYear": 2023,
+      "currentYear": 2024,
+      "previousUnitPrice": 100,
+      "currentUnitPrice": 143,
+      "inflationFactor": 1.1,
+      "matched": {
+        "buyer": true,
+        "supplier": true,
+        "item": true,
+        "specification": true,
+        "quantity": true,
+        "unit": true,
+        "currency": true,
+        "taxTerms": true,
+        "deliveryTerms": true
+      }
+    },
+    "exclusivity": {
+      "applicability": "applicable",
+      "sourceRefs": ["synthetic:fictional-claim-and-comparable-competitive-win"],
+      "claim": "exclusivity",
+      "claimDocumented": true,
+      "supplierIdentityVerified": true,
+      "comparableCompetitiveWinDocumented": true,
+      "sameMarket": true,
+      "sameServiceTerritory": true,
+      "relevantTime": true,
+      "comparableRightsContext": true,
+      "competitiveOfferCount": 2
+    }
+  }
+}
