@@ -2,17 +2,28 @@
 
 Updated: 2026-10-03. The newest checkpoint below supersedes older session-status statements; preserve the Portugal evidence and constraints further down. Delivery history is in `docs/project-journal.md` and git.
 
-## Restart here — latest checkpoint (2026-10-03)
+## Restart here — latest checkpoint (2026-10-05)
 
-### Owner decisions, production and working-tree truth
+### Production and working-tree truth
 
-- **Do not push or deploy without new explicit authorization.** Every push to `main` deploys Cloudflare Pages. The earlier direct-to-main workflow is not current release permission.
-- Production is https://contracts.lasu.dev. Latest commit/last authorized branding deployment: **`4438351`**, `Refresh French branding and palette; freeze features during outreach`. The deployed identity is **Marchés ouverts**, teal/slate styling and a document/magnifier favicon (favicon only, not a header logo). Deployment was verified. Earlier commits include `d9f17db` and `c0bada2` for Portuguese holder handling.
-- Owner subsequently allowed **local feature development despite the production freeze**. The five new indicators must appear in the normal website, not an experimental page or opt-in toggle. This was implemented locally, not deployed. `docs/adoption.md` records the qualified freeze.
-- Current calibration/indicator/metadata work is uncommitted. Latest status showed no staged diff. Do not stage the whole tree or overwrite unrelated work. Pre-existing dirty Portugal files include `HANDOFF.md`, `docs/portugal-base.md`, `tools/import-portugal-base.py`, `tests/test_import_portugal_base.py` and untracked `docs/portugal-base-review.md`.
-- Other tracked local changes: `script.js`, `index.html`, `data/score-v3-review.json`, `i18n-es.js`, `i18n-fr.js`, `tools/i18n_table.py`, `docs/adoption.md`, `tests/browser.cjs`, `tests/run-all.sh` and scoring/import/catalogue regression tests. New files are listed in the topical sections below. Inspect `git status --short` before integration; branding itself is already committed.
+- Production https://contracts.lasu.dev is at **`1fdac98`**, *Score 3.3: legal anchoring and national DECP evidence*. Deployment was verified in an isolated headless Chromium (desktop and mobile, no console errors). The working tree is clean. Pushes of score 3.2 and 3.3 were explicitly authorized by the owner on 2026-10-04/05. **That is not standing permission:** every push to `main` deploys Cloudflare Pages, so ask before the next one.
+- Score history this session: **3.2** (buyer-relative late publication; French direct award only from the legal no-publicity threshold; tie-breaks; five evidence checks at 8 points and **hidden on records without evidence**, an owner-approved reversal of the earlier "always visible" decision). **3.3** (Paraguay 20 % ceiling bands, 8 points at the ceiling by owner decision; DECP late-publication excess 240 days; long-duration maximum 16, was 40; concentration entry kept at 60 % by owner decision).
 - Owner dislikes long delays: give bounded progress and honest completion status. Never claim a working empirical model, completed outcome review, independent expert validation, or a deployment when only documentary/synthetic checks were done.
-- Preserve the earlier battery restrictions for **unrelated heavy work**, especially national BASE rebuilds. Local browser/full-suite work was authorized and performed for this session; it is not blanket authorization for archive processing, publication or additional heavy downloads.
+- Battery rule still applies to heavy work (national BASE rebuilds, large downloads): check AC power and get explicit authorization.
+- Model usage: the owner wants long or mechanical tasks delegated to Sonnet subagents or Codex (`codex-sub`) to save usage. Codex has a separate usage limit that can run out mid-task.
+
+### Local research state outside git
+
+- `~/.cache/contract-signals/venv` (pyarrow, numpy, scipy, sklearn) runs `tools/analyze-decp-national.py`. System Python lacks pyarrow, so its tests skip there.
+- `~/.cache/contract-signals/decp-national/decp.parquet`: national DECP, data.gouv.fr dataset `608c055b35eb4e6ee20eb325`, Licence Ouverte 2.0, SHA-256 in `manifest.json`. A full analysis run takes about 7.5 minutes.
+- `~/.cache/contract-signals/labels/` (about 810 MB): raw responses from the SECOP and DASU label collectors and the Ukrainian cohort, including buyers' public contact fields. Never copy them into the repo.
+
+### Next work (ranked)
+
+1. Practitioner feedback: if Rennes or Nantes reply, have them review the top-ranked rows. This is the most realistic validation available.
+2. Ukraine: legal minimum submission periods per procedure need the primary texts of Law 922-VIII and Resolution 1178, and the importer must read `tenderPeriod`. A flat short-period check would flag the norm (about 62 % of tenders are under 10 days).
+3. France: anchoring the short bidding period and modification caps needs data showing whether a contract is above the EU threshold. Colombia's 50 % additions cap needs the addition value, which SECOP II does not publish.
+4. Concentration: on the national DECP, risk rises from 40 %, but the 60–70 % bin dips, so the predeclared rule only supports 90 %. Revisit with more data before moving the 60 % entry.
 
 - **2026-10-04 score 3.3, DECP late publication:** for DECP only, the buyer-relative late-publication excess must exceed 240 days (was 120); buyers without a usual delay keep the legal 120 days; BOAMP/TED unchanged. Evidence in `research/thresholds/france-national.md` and `docs/threshold-calibration.md`. Paris & Ardèche 355/1,966/273 (was 1,881 zero/358 flagged), six cities 172/987/111 (was 949/149), BOAMP unchanged. Expectations updated in `tests/cities.cjs` and `tests/browser.cjs`; `sh tests/run-all.sh` passes. Owner decisions 2026-10-05: keep the concentration entry at 60 % (the predeclared rule gives 90 %), keep 8 points for Paraguayan amendments at the 20 % ceiling, and lower the long-duration maximum from 40 to 16 (France and Colombia), because national DECP single-bid odds fall with duration. Committed and pushed as score 3.3.
 
