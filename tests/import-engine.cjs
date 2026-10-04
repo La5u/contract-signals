@@ -8,6 +8,8 @@ const text = JSON.stringify([{ id: 'local', buyer: 'Buyer', description: 'Work',
 const browsed = run('prepareContracts', importer.parse(text).records)[0];
 assert.equal(run('getVigilanceScore', browsed), null);
 assert.equal(run('getIndicators', browsed).length, 0);
+const evidenceIds = ['cap', 'execution', 'legalGround', 'unitPrice', 'exclusivity'];
+assert.ok(run('getAssessment', browsed).checks.every(c => !evidenceIds.includes(c.id)));
 assert.equal(run('exportRecord', browsed).currency, null);
 assert.match(run('pageSummaryForCopy', [browsed], { dataset: 'Local', page: 1, totalPages: 1, totalResults: 1 }), /currency unknown/);
 const french = run('prepareContracts', importer.parse(text, { method: 'french' }).records)[0];

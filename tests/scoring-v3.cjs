@@ -9,51 +9,82 @@ const rule=(c,id)=>assessment(c).checks.find(r=>r.id===id);
 check(score(base)===null,'unknown is not zero');
 check(assessment(base).evaluated===0);
 check(score({...base,directAward:false})===0,'zero requires evaluated negative check');
+// French direct award: below the legal threshold in force it is the lawful default (not applicable), missing amount is unknown.
 for(const amount of [null,0,1,99999,100000,1e6,1e12]){
- check(score({...base,amount,directAward:true,offers:1})===18,'direct award independent of amount');
  check(rule({...base,amount,directAward:true,offers:1},'single-bid').status==='not-applicable');
  check(score({...base,amount,directAward:false,offers:1})===12);
  check(score({...base,amount})===null);
 }
-check(rule({...base,offers:1},'single-bid').applicability==='unknown');
-check(rule({...base,offers:0,directAward:false},'single-bid').status==='unknown');
-for(const c of [base,{...base,directAward:true},{...base,offers:1,directAward:false}])check(score(c)===score({...c,officialFinding:true}));
-check(score({...base,findingScope:'aggregate',officialFinding:true,durationMonths:240,directAward:true})===null);
-for(const dataFamily of ['decp','boamp','audit']){
- for(const conflict of [{initialConflicts:['amount']},{modificationConflicts:[{id:'1',fields:['amount']}]},{identityAmbiguous:true},{dataStatus:'unverified'}]){
-  const c={...base,dataFamily,directAward:true,durationMonths:360,...conflict};check(score(c)===null);check(run('getIndicators',c).length===0);
- }
-}
-for(const [duration,weight] of [[119,null],[120,8],[121,8.1],[180,16],[240,24],[360,40],[600,40]])check(rule({...base,durationMonths:duration},'long-contract').weight===weight);
-const evo=(a,b)=>({...base,dataFamily:'decp',priceType:'Définitif ferme',date:'2024-01-01',amount:a,initialConflicts:[],history:[{kind:'initial',date:'2024-01-01',amount:a},{kind:'modification',id:'1',date:'2025-01-01',amount:b}]});
-check(rule(evo(100,120),'amount-increase').status==='clear');
-check(rule(evo(100,121),'amount-increase').weight===8.4);
-check(rule(evo(1000000,1210000),'amount-increase').weight===8.4);
-check(rule(evo(100,200),'amount-increase').weight===40);
-check(rule({...evo(100,200),priceType:'Définitif révisable'},'amount-increase').status==='not-applicable');
-check(rule({...base,dataFamily:'decp',priceType:'Définitif ferme',history:[{kind:'initial'}],initialConflicts:[]},'amount-increase').status==='unknown');
-check(run('getAmountEvolution',{...evo(100,200),history:[{kind:'initial',date:'2024-01-01',amount:100},{kind:'modification',date:'2025-01-01',amount:null}]}).status==='unavailable');
-const context={known:10,total:10,single:6,rate:.6,coverage:1,sufficient:true,cpvGroup:'713'};
-const supplier={known:10,total:10,wins:6,share:.6,coverage:1,sufficient:true,cpvGroup:'713',directCount:3,directKnownCount:3,supplierContracts:3};
-for(const [rate,expected] of [[.59,null],[.6,12],[.61,12.7],[.8,26],[1,40]]){
- check(rule({...base,directAward:false,offers:1,competitionContext:{...context,rate}},'repeated-single-bid').weight===expected);
- check(rule({...base,supplierContext:{...supplier,share:rate}},'supplier-concentration').weight===expected);
-}
-check(rule({...base,directAward:false,offers:1,competitionContext:{...context,sufficient:false}},'repeated-single-bid').status==='unknown');
-check(rule({...base,directAward:true,supplierContext:{...supplier,directCount:2,directKnownCount:2,supplierContracts:3}},'repeated-direct-award').status==='unknown');
-check(rule({...base,directAward:true,supplierContext:{...supplier,directCount:2}},'repeated-direct-award').status==='clear');
-for(const [count,weight] of [[3,18],[4,24],[7,42],[10,60],[100,60]])check(rule({...base,directAward:true,supplierContext:{...supplier,directCount:count}},'repeated-direct-award').weight===weight);
-check(score({...base,directAward:true,offers:1,supplierContext:{...supplier,share:1,directCount:10},durationMonths:360})===100,'max families, cap 100');
-check(score({...base,directAward:false,offers:1,competitionContext:{...context,rate:.8},supplierContext:{...supplier,share:.7}})===26,'correlated signals not added');
-const notice={id:'n',version:'01',kind:'initial',source:'https://example.org/',publicationDate:'2025-02-01',deadline:'2025-02-15T00:00:00Z',procedureType:'open',accelerated:false,previousNoticeIds:[]};
-const bidding=()=>({...base,consultation:{procedureId:'p',lotId:'lot',initialNoticeId:'n',searchComplete:true,exclusions:[],notices:[{...notice}]}});
-let c=bidding();check(score(c)===10.7);c.consultation.notices[0].deadline='2025-02-16T00:00:00Z';check(score(c)===0);
-c=bidding();c.consultation.notices[0].deadline='2025-02-04T00:00:00Z';check(score(c)===40);
-for(const mutate of [c=>c.consultation.searchComplete=false,c=>c.consultation.notices[0].accelerated=null,c=>c.consultation.notices[0].deadline=null,c=>c.consultation.notices.push({...notice})]){c=bidding();mutate(c);check(score(c)===null);}
-c=bidding();c.consultation.notices.push({...notice,id:'corr',version:'02',kind:'correction',publicationDate:'2025-02-10',deadline:'2025-03-01T00:00:00Z',previousNoticeIds:['n']});check(score(c)===0);
+const dated={...base,date:'2024-06-01',cpv:'30000000-1',offers:1};
+const direct=(c)=>rule({...dated,directAward:true,...c},'direct-award');
+check(direct({amount:39999.99}).status==='not-applicable'&&/40,000/.test(direct({amount:39999.99}).reason),'below 40k supplies: not applicable, threshold cited');
+check(direct({amount:40000}).status==='signal'&&direct({amount:40000}).weight===18,'at 40k: signal');
+check(direct({amount:1e6}).status==='signal');
+check(direct({amount:null}).status==='unknown'&&direct({amount:null}).applicability==='unknown','missing amount: unknown, never scored');
+check(direct({amount:0}).status==='unknown');
+check(score({...dated,directAward:true,amount:null})===null,'missing amount direct award alone is not assessed');
+check(direct({amount:24000,date:'2019-06-01'}).status==='not-applicable'&&direct({amount:26000,date:'2019-06-01'}).status==='signal','25k threshold before 2020');
+check(direct({amount:30000,date:'2019-12-31'}).status==='signal'&&direct({amount:30000,date:'2020-01-15'}).status==='unknown','1 Jan 2020 change: transition window is unknown');
+check(direct({amount:30000,date:'2020-09-01'}).status==='not-applicable','40k from 2020 once the window has passed');
+const works={cpv:'45233120-6'};
+check(direct({...works,amount:99999}).status==='not-applicable'&&direct({...works,amount:100000}).status==='signal','works exemption: 100k');
+check(direct({...works,amount:60000,date:'2022-03-01'}).status==='not-applicable'&&direct({...works,amount:60000,date:'2025-03-01'}).status==='not-applicable','works exemption in force 2022 and 2025');
+check(direct({...works,amount:80000,date:'2026-03-01'}).status==='not-applicable','works 100k permanent from 2026');
+check(direct({...works,amount:80000,date:'2020-10-01'}).status==='signal'&&direct({...works,amount:60000,date:'2020-10-01'}).status==='unknown','works 70k from 24 Jul 2020 (40k to 70k uncertain during the transition)');
+check(direct({...works,amount:80000,date:'2020-12-20'}).status==='unknown','70k to 100k right after the ASAP law: uncertain');
+check(direct({amount:80000}).status==='signal'&&direct({amount:80000,cpv:undefined}).status==='unknown','CPV missing between supplies and works thresholds: unknown');
+check(direct({amount:30000,cpv:undefined}).status==='not-applicable'&&direct({amount:150000,cpv:undefined}).status==='signal');
+check(direct({amount:50000,date:'2026-02-01'}).status==='signal'&&direct({amount:50000,date:'2026-04-10'}).status==='unknown'&&direct({amount:50000,date:'2026-10-01'}).status==='not-applicable','60k supplies/services from 1 Apr 2026');
+check(direct({amount:90000,date:'2024-06-01',date:undefined}).status==='unknown');
+check(rule({...dated,directAward:true,amount:10000,supplierContext:{known:10,total:10,wins:3,share:.3,coverage:1,sufficient:true,cpvGroup:'300',directCount:3,directKnownCount:3,supplierContracts:3}},'repeated-direct-award').status==='signal','repeated direct awards still count small awards');
+check(direct({amount:30000,directAward:false}).status==='clear'&&direct({amount:30000,directAward:null}).status==='unknown');
+// Late publication relative to the buyer (leave-one-out median over at least 10 dated rows of the cohort).
+const siret=b=>String(b.charCodeAt(0)).padStart(14,'0');
+const late=(id,buyer,delay,more={})=>({...base,id,buyer,buyerSiret:siret(buyer),dataFamily:'decp',cohortId:'t',date:'2024-01-01',publicationDate:new Date(Date.parse('2024-01-01')+delay*864e5).toISOString().slice(0,10),...more});
+const lateRule=c=>rule(c,'late-publication');
+const solo=late('solo','S',300);
+check(lateRule(solo).status==='signal'&&lateRule(solo).weight===graduatedLate(300),'no baseline: whole delay counts');
+check(/No usual delay is established/.test(lateRule(solo).reason));
+function graduatedLate(d){return Math.round((8+8*Math.min(1,Math.max(0,(d-120)/610)))*10)/10;}
+const batch=[...Array.from({length:12},(_,i)=>late('b'+i,'B',200)),late('bout','B',900)];
+const prepared=run('prepareContracts',batch);
+const byId=id=>prepared.find(r=>r.id===id);
+check(lateRule(byId('b0')).status==='clear'&&/within this buyer.s usual delay \(median 200 days over 12 other records\)/.test(lateRule(byId('b0')).reason),'delay equal to buyer habit: clear');
+check(lateRule(byId('bout')).status==='signal'&&lateRule(byId('bout')).weight===graduatedLate(700),'excess over the buyer median is what counts (900-200)');
+check(byId('b0').latePublicationBaseline.median===200&&byId('b0').latePublicationBaseline.others===12,'leave-one-out: the row is not in its own baseline');
+check(byId('bout').latePublicationBaseline.median===200,'outlier excluded from its own median');
+const few=run('prepareContracts',Array.from({length:9},(_,i)=>late('f'+i,'F',300)));
+check(few.every(r=>r.latePublicationBaseline===null&&lateRule(r).status==='signal'),'fewer than 10 dated rows: no baseline');
+const ten=run('prepareContracts',Array.from({length:10},(_,i)=>late('t'+i,'T',300)));
+check(ten.every(r=>r.latePublicationBaseline?.others===9&&lateRule(r).status==='clear'),'exactly 10 dated rows establish a baseline');
+const mixed=run('prepareContracts',[...batch,late('x','X',200,{buyer:'B'})]);
+check(mixed.find(r=>r.id==='x').latePublicationBaseline===null,'different buyer identifier is a different buyer');
+const excl=run('prepareContracts',[...batch,...Array.from({length:20},(_,i)=>late('e'+i,'B',5,{dataStatus:'unverified'}))]);
+check(excl.find(r=>r.id==='b0').latePublicationBaseline.median===200,'unverified rows never feed a baseline');
+check(lateRule(late('neg','B',-3)).status==='unknown'&&lateRule(late('ok','B',120)).status==='clear'&&lateRule(late('k','B',121)).weight===8,'negative unknown; 120 days clear; just above 120 scores 8 without baseline');
+check(lateRule({...solo,dataFamily:'secop2'}).status==='not-applicable'||lateRule({...solo,dataFamily:'secop2'}).status==='unknown');
+check(run('selectContracts',prepared,{indicator:'late-publication'}).length===run('selectContracts',prepared,{indicator:'late-publication'}).length);
+// Filters never change baselines: they are fixed at preparation.
+const before=byId('b0').latePublicationBaseline.median;run('selectContracts',prepared,{search:'zzz'});check(byId('b0').latePublicationBaseline.median===before);
+// Tie-breaking: equal scores order by number of families with a signal, then strongest single signal, then id.
+const tie=(id,more)=>({...base,id,dataFamily:'decp',date:'2024-01-01',cpv:'30000000-1',...more});
+const oneFamily=tie('a-one',{directAward:true,amount:50000});                                   // competition 18
+const twoFamilies=tie('z-two',{durationMonths:135,publicationDate:'2024-05-01',cohortId:'t'}); // execution 10 + transparency 8
+check(score(oneFamily)===18&&score(twoFamilies)===18);
+check(run('selectContracts',[oneFamily,twoFamilies],{sort:'score'}).map(r=>r.id).join()==='z-two,a-one','more families first at equal score');
+check(run('selectContracts',[oneFamily,twoFamilies],{sort:'score-asc'}).map(r=>r.id).join()==='z-two,a-one','same tie order when ascending');
+const weaker=tie('a-weak',{directAward:false,offers:1,durationMonths:165});                    // competition 12 + execution 14 = 26
+const stronger=tie('z-strong',{directAward:true,amount:50000,publicationDate:'2024-05-01'});    // competition 18 + transparency 8 = 26
+check(score(weaker)===26&&score(stronger)===26);
+check(run('selectContracts',[weaker,stronger],{sort:'score'}).map(r=>r.id).join()==='z-strong,a-weak','same families: strongest single signal first');
+const twin=tie('a-twin',{directAward:true,amount:50000,publicationDate:'2024-05-01'});
+check(run('selectContracts',[stronger,twin],{sort:'score'}).map(r=>r.id).join()==='a-twin,z-strong','then id');
+const unknownRow=tie('0-unknown',{});
+for(const sort of ['score','score-asc'])check(run('selectContracts',[unknownRow,oneFamily,twoFamilies],{sort}).at(-1).id==='0-unknown','unknown scores stay last');
 const datasets=['contracts','decp-history','decp-cities','consultations','tours-notices'];
+// v3.2: buyer-relative late publication and French direct-award threshold eligibility reduce flags (v3.1: 9/2466/535, 355/1747/492, 172/835/263).
 // v3.1 adds the transparency family (late publication): counts differ from v3.0 (68/2665/277, 355/1835/404, 172/974/124).
-const expected={contracts:[9,2466,535],'decp-history':[355,1747,492],'decp-cities':[172,835,263],consultations:[10,0,0],'tours-notices':[60,6,0]};
+const expected={contracts:[12,2566,432],'decp-history':[355,1881,358],'decp-cities':[172,949,149],consultations:[10,0,0],'tours-notices':[60,6,0]};
 for(const file of datasets){
  const rows=run('prepareContracts',JSON.parse(fs.readFileSync(`data/${file}.json`)));
  const values=rows.map(score), exp=expected[file];
@@ -65,7 +96,7 @@ for(const file of datasets){
   check(a.evaluated<=a.applicable);
   check(s===null ? a.evaluated===0 : a.evaluated>0&&s>=0&&s<=100);
   check(score({...r,officialFinding:!r.officialFinding})===s,'finding never changes score');
-  if(!r.history)check(score({...r,amount:1e12})===s,'amount never changes standalone heuristics');
+  if(!r.history&&r.directAward!==true)check(score({...r,amount:1e12})===s,'amount never changes standalone heuristics (French direct awards use it only for legal-threshold eligibility)');
  }
  for(const order of ['score','score-asc']){
   const sorted=run('selectContracts',rows,{sort:order});const pos=sorted.findIndex(r=>score(r)===null);

@@ -42,7 +42,7 @@ for(const b of coverage.scope.buyers){
  check(pages.reduce((n,p)=>n+p.count,0)===raw.totals[b.siret]);
  check(pages.every((p,i)=>p.offset===i*100&&p.total===raw.totals[b.siret]));
 }
-for(const [indicator,count] of [['single-bid',52],['long-contract',4],['direct-award',66],['repeated-single-bid',11],['amount-increase',2],['supplier-concentration',0],['repeated-direct-award',3]])check(run('selectContracts',rows,{indicator}).length===count);
+for(const [indicator,count] of [['single-bid',52],['long-contract',4],['direct-award',31],['late-publication',62],['repeated-single-bid',11],['amount-increase',2],['supplier-concentration',0],['repeated-direct-award',3]])check(run('selectContracts',rows,{indicator}).length===count);
 for(const mode of ['buyer','supplier','sector','project']){
  const arranged=run('arrangeGroups',rows,mode);check(arranged.rows.length===1270);check(new Set(arranged.rows.map(r=>r.id)).size===1270);
 }

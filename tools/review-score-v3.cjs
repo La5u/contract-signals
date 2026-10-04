@@ -8,7 +8,7 @@ const datasets=['contracts','decp-history','decp-cities','consultations','tours-
 function ranks(values){const pairs=values.map((value,i)=>({value,i})).sort((a,b)=>b.value-a.value);const ranks=[];for(let i=0;i<pairs.length;){let end=i+1;while(end<pairs.length&&pairs[end].value===pairs[i].value)end++;const rank=(i+1+end)/2;for(let k=i;k<end;k++)ranks[pairs[k].i]=rank;i=end;}return ranks;}
 function correlation(a,b){if(a.length<2)return null;const ar=ranks(a),br=ranks(b),mean=(a.length+1)/2;let xy=0,xx=0,yy=0;for(let i=0;i<a.length;i++){const x=ar[i]-mean,y=br[i]-mean;xy+=x*y;xx+=x*x;yy+=y*y;}return xx&&yy?Math.round(xy/Math.sqrt(xx*yy)*10000)/10000:null;}
 function altScore(indicators,multipliers){const families={competition:0,execution:0,transparency:0};for(const i of indicators)families[i.family]=Math.max(families[i.family],i.weight*(multipliers[i.family]||1));return Math.round(Math.min(100,families.competition+families.execution+families.transparency)*10)/10;}
-const report={version:'3.1',generatedAt:new Date().toISOString(),sourceCodeHashes:{v21:old.hash,v3:current.hash},
+const report={version:'3.2',generatedAt:new Date().toISOString(),sourceCodeHashes:{v21:old.hash,v3:current.hash},
  interpretation:'Editorial triage, not probability. Threshold eligibility is not statistical calibration. Null is unevaluated, not a negative. Official findings are separate evidence. No target fraction of flagged contracts.',
  coverageDefinition:'evaluated/applicable-known checks plus separately displayed unknown-applicability checks; no normalization by missingness',
  changes:['Amounts do not amplify scores; direct awards and direct repetition include all amounts.','Amount evolution uses comparable relative increase >20%, no EUR50000 threshold.','Single-bid rule requires explicitly competitive procedure, not presumed from missing directAward.','All initial/modification conflicts, duplicate DECP identifiers, unverified dossiers excluded; aggregate audits not individual scoring units.','Official findings removed from heuristic points, still available as evidence/filter/sort.'],
@@ -46,7 +46,7 @@ fs.writeFileSync(path.join(root,'data/score-v3-review.json'),JSON.stringify(repo
 // Preserve historic coverage snapshots/rule counts; explicitly point at current index.
 for(const name of ['coverage','decp-coverage','decp-cities-coverage','consultations-coverage','tours-notices-coverage']){
  const dest=path.join(root,`data/${name}.json`);const coverage=JSON.parse(fs.readFileSync(dest));
- coverage.currentIndex={version:'3.1',report:'score-v3-review.json',note:'Earlier rule/count sections describe their preparation version, not the active v3 index. Source cohorts unchanged; unknown scores are null, findings separate.'};
+ coverage.currentIndex={version:'3.2',report:'score-v3-review.json',note:'Earlier rule/count sections describe their preparation version, not the active v3 index. Source cohorts unchanged; unknown scores are null, findings separate.'};
  fs.writeFileSync(dest,JSON.stringify(coverage,null,2)+'\n');
 }
 console.log(Object.fromEntries(Object.entries(report.datasets).map(([name,d])=>[name,d.v3])));

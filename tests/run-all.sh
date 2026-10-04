@@ -2,7 +2,7 @@
 # Every suite in one command. Browser test last; skip it with NO_BROWSER=1.
 set -e
 cd "$(dirname "$0")/.."
-for t in import import-engine scoring-v3 score-review rules cities tours colombia paraguay national indicators outcomes page-copy view-export; do
+for t in import import-engine scoring-v3 score-review rules cities tours colombia paraguay national indicators additional-indicators experimental-indicators dataset-metadata outcomes page-copy view-export; do
   node "tests/$t.cjs"
 done
 python -m unittest discover -s tests -p 'test_*.py'
