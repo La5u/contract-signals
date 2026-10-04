@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "review_date_utc": "2026-10-03",
+  "purpose": "Verified award-reference facts and remaining outcome-linkage limitations; not additional training positives",
+  "historical_dataset": "DS01004 / RS00934",
+  "currency_and_value_caveat": "Recorded supplier_contract_amount is not independently established as the full original-currency signed JV contract price; do not substitute it for a contract total",
+  "groups": [
+    {
+      "case_group": "wb-134-vietnam",
+      "decision_url": "https://www.worldbank.org/content/dam/documents/sanctions/sanctions-board/2021/nov/Sanctions%20Board%20Decision%20No.%20134.pdf",
+      "records": [
+        {"project_id": "P118610", "wb_contract_number": "1519142", "borrower_reference": "2.1 PART 1", "recorded_signing_date": "2014-06-25", "recorded_supplier_amount": "1489050", "source_url": "https://datacatalogapi.worldbank.org/dexapps/fone/api/apiservice?datasetId=DS01004&resourceId=RS00934&top=100&type=json&filter=project_id%3D%27P118610%27", "finding_scope": "Decision's Package2.1 fraud exposure; party/JV linkage pending", "labels": {"corruption": null, "fraud": null, "irregularity": null}},
+        {"project_id": "P123384", "wb_contract_number": "1519141", "borrower_reference": "2.1 PART 2", "recorded_signing_date": "2014-11-14", "recorded_supplier_amount": "2945937", "source_url": "https://datacatalogapi.worldbank.org/dexapps/fone/api/apiservice?datasetId=DS01004&resourceId=RS00934&top=50&type=json&filter=project_id%3D%27P123384%27", "finding_scope": "Decision's Package2.1 fraud exposure; party/JV linkage pending", "labels": {"corruption": null, "fraud": null, "irregularity": null}},
+        {"project_id": "P123384", "wb_contract_number": "1517284", "borrower_reference": "CONTRACT 3.3/DSCDP-PIIP", "recorded_signing_date": "2014-04-02", "recorded_supplier_amount": "3904419", "source_url": "https://datacatalogapi.worldbank.org/dexapps/fone/api/apiservice?datasetId=DS01004&resourceId=RS00934&top=50&type=json&filter=project_id%3D%27P123384%27", "finding_scope": "Obstruction-related contract; must not inherit Package2.1 fraud finding or label recorded supplier as respondent", "labels": {"corruption": null, "fraud": null, "irregularity": null}}
+      ],
+      "established": ["Exact package references, project associations, scopes and recorded signing dates matching decision's April-November2014 window", "SQL-style filter checked against all returned project IDs and impossible-project negative query"],
+      "remaining": ["Full winning JV membership and legal party identity unresolved", "Recorded supplier name alone does not identify sanctioned respondent", "Notice and historical-award method discrepancy: QCBS versus CQS for2.1", "Whole signed contract prices and original currencies unresolved"],
+      "split_rule": "All related packages and decision records must remain in one train/test group"
+    },
+    {
+      "case_group": "wb-133-drc",
+      "project_id": "P069258",
+      "decision_url": "https://www.worldbank.org/content/dam/documents/sanctions/sanctions-board/2021/apr/Sanctions%20Board%20Decision%20No.%20133.pdf",
+      "source_url": "https://datacatalogapi.worldbank.org/dexapps/fone/api/apiservice?datasetId=DS01004&resourceId=RS00934&top=100&type=json&filter=project_id%3D%27P069258%27",
+      "source_filter_check": "51returned rows, reported count51, every projectID P069258; source as_of_date11-Mar-2022",
+      "records": [
+        {"wb_contract_number": "1246937", "borrower_reference": "296/SAPMP/SNEL-BCECO/DG/DPM/HMS/", "recorded_signing_date": "2004-12-13", "recorded_supplier_amount": "3517321", "scope": "Feasibility studies, bidding documents and monitoring, Phase1", "labels": {"corruption": null, "fraud": null, "irregularity": null}},
+        {"wb_contract_number": "1246938", "borrower_reference": "297/SAPMP/SNEL-BCECO/DG/DPM/HMS/", "recorded_signing_date": "2004-12-13", "recorded_supplier_amount": "23538064", "scope": "Monitoring project activities, Phase2", "labels": {"corruption": null, "fraud": null, "irregularity": null}}
+      ],
+      "established": ["Paired consulting records, exact2004-12-13 date, project and service scope strongly corroborate the two agreements in decision"],
+      "remaining": ["Decision anonymizes the Consultant; respondent-employer attribution remains inferential", "Clarify observation target: corrupt conduct during consultancy execution versus a corruptly awarded contractor contract", "Do not treat recorded consultant supplier as a company-wide corruption positive", "Supplier amount is not a verified whole-contract/JV amount or original currency", "Do not duplicate the same episode using reconsiderationDecision132"],
+      "split_rule": "Both agreements, related affected contracts and all connected decisions must remain in one case/project group"
+    }
+  ]
+}
