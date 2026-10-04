@@ -304,6 +304,32 @@ for (const description of [null, '', '   ']) {
         candidate, _ = collect_rows([row_fixture(descContrato='Works by Name, é & Sons')])
         self.assertEqual(candidate[0]['description'], 'Works by Name, é & Sons')
 
+    def test_single_word_protected_name_is_redacted_with_word_boundaries(self):
+        candidate, _ = collect_rows([row_fixture(adjudicatarios=[' - - Exemplo'],
+                                                 descContrato='Exemplos by EXEMPLO, consultant')])
+        code = base.person_code('Exemplo')
+        self.assertEqual(candidate[0]['description'], f'Exemplos by [individual or foreign holder · {code}], consultant')
+
+    def test_publication_validation_rejects_subject_email(self):
+        candidate, _ = collect_rows([row_fixture()])
+        candidate[0]['description'] = 'Contact someone@example.org'
+        candidate[0]['raw'] = {'descContrato': candidate[0]['description']}
+        with self.assertRaisesRegex(ValueError, 'Invalid minimized source subject'):
+            base.validate_candidate(candidate, plan_fixture())
+
+    def test_publication_validation_rejects_bad_payload_framing(self):
+        candidate, _ = collect_rows([row_fixture(adjudicatarios=[' - - Maria Exemplo'])])
+        for data in ('A', 'AAA', 'AB==', 'AAAA====', 'YQ==' * 3000):
+            with self.subTest(data_length=len(data)):
+                changed = copy.deepcopy(candidate)
+                changed[0]['supplierProtectedNames'][0]['data'] = data
+                with self.assertRaisesRegex(ValueError, 'Invalid protected name'):
+                    base.validate_candidate(changed, plan_fixture())
+        import base64
+        candidate[0]['supplierProtectedNames'][0]['data'] = base64.b64encode(b'x' * (255 * 32 + 1)).decode('ascii')
+        with self.assertRaisesRegex(ValueError, 'Invalid protected name payload'):
+            base.validate_candidate(candidate, plan_fixture())
+
     def test_subject_with_email_is_set_aside(self):
         candidate, report = collect_rows([row_fixture(descContrato='Support for product someone@example.org suite')])
         self.assertEqual(candidate, [])
