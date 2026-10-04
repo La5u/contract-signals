@@ -88,7 +88,7 @@ check(ext(Math.round(3*3*30.4375)).weight===40&&ext(10000).weight===40);
 check(ext(0).status==='clear'&&ext(null).status==='unknown');
 check(run('getAssessment',{...rows[0],durationOriginal:'7 Hora(s)',daysAdded:30}).checks.find(r=>r.id==='secop2-term-extension').status==='unknown');
 check(positives===272&&zeros===7288&&nulls===0&&flagged===272&&partials===73);
-check(scores.get(18)===170&&scores.get(36)===6&&scores.get(40)===10&&scores.get(17.1)===18);
+check(scores.get(18)===170&&scores.get(36)===6&&scores.get(40)===6&&scores.get(10.3)===18);
 check(run('selectContracts',rows,{assessment:'unevaluated'}).length===0);
 check(run('selectContracts',rows,{assessment:'zero'}).length===7288);
 check(run('selectContracts',rows,{assessment:"partial"}).length===73);

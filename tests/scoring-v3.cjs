@@ -45,12 +45,17 @@ const lateRule=c=>rule(c,'late-publication');
 const solo=late('solo','S',300);
 check(lateRule(solo).status==='signal'&&lateRule(solo).weight===graduatedLate(300),'no baseline: whole delay counts');
 check(/No usual delay is established/.test(lateRule(solo).reason));
-function graduatedLate(d){return Math.round((8+8*Math.min(1,Math.max(0,(d-120)/610)))*10)/10;}
+function graduatedLate(d,from=120){return Math.round((8+8*Math.min(1,Math.max(0,(d-from)/(730-from))))*10)/10;}
 const batch=[...Array.from({length:12},(_,i)=>late('b'+i,'B',200)),late('bout','B',900)];
 const prepared=run('prepareContracts',batch);
 const byId=id=>prepared.find(r=>r.id===id);
 check(lateRule(byId('b0')).status==='clear'&&/within this buyer.s usual delay \(median 200 days over 12 other records\)/.test(lateRule(byId('b0')).reason),'delay equal to buyer habit: clear');
-check(lateRule(byId('bout')).status==='signal'&&lateRule(byId('bout')).weight===graduatedLate(700),'excess over the buyer median is what counts (900-200)');
+check(lateRule(byId('bout')).status==='signal'&&lateRule(byId('bout')).weight===graduatedLate(700,240),'excess over the buyer median is what counts (900-200), from 240 days in the DECP');
+// DECP (score 3.3): with an established usual delay, the excess counts from 240 days; other families keep 120.
+const mid=run('prepareContracts',[...Array.from({length:12},(_,i)=>late('m'+i,'M',200)),late('mout','M',430)]).find(r=>r.id==='mout');
+check(lateRule(mid).status==='clear','DECP: 230 days later than usual stays clear');
+const midBoamp=run('prepareContracts',[...Array.from({length:12},(_,i)=>late('n'+i,'N',200,{dataFamily:'boamp'})),late('nout','N',430,{dataFamily:'boamp'})]).find(r=>r.id==='nout');
+check(lateRule(midBoamp).status==='signal'&&lateRule(midBoamp).weight===graduatedLate(230),'BOAMP keeps the 120-day excess');
 check(byId('b0').latePublicationBaseline.median===200&&byId('b0').latePublicationBaseline.others===12,'leave-one-out: the row is not in its own baseline');
 check(byId('bout').latePublicationBaseline.median===200,'outlier excluded from its own median');
 const few=run('prepareContracts',Array.from({length:9},(_,i)=>late('f'+i,'F',300)));
@@ -69,11 +74,11 @@ const before=byId('b0').latePublicationBaseline.median;run('selectContracts',pre
 // Tie-breaking: equal scores order by number of families with a signal, then strongest single signal, then id.
 const tie=(id,more)=>({...base,id,dataFamily:'decp',date:'2024-01-01',cpv:'30000000-1',...more});
 const oneFamily=tie('a-one',{directAward:true,amount:50000});                                   // competition 18
-const twoFamilies=tie('z-two',{durationMonths:135,publicationDate:'2024-05-01',cohortId:'t'}); // execution 10 + transparency 8
+const twoFamilies=tie('z-two',{durationMonths:180,publicationDate:'2024-05-01',cohortId:'t'}); // execution 10 + transparency 8
 check(score(oneFamily)===18&&score(twoFamilies)===18);
 check(run('selectContracts',[oneFamily,twoFamilies],{sort:'score'}).map(r=>r.id).join()==='z-two,a-one','more families first at equal score');
 check(run('selectContracts',[oneFamily,twoFamilies],{sort:'score-asc'}).map(r=>r.id).join()==='z-two,a-one','same tie order when ascending');
-const weaker=tie('a-weak',{directAward:false,offers:1,durationMonths:165});                    // competition 12 + execution 14 = 26
+const weaker=tie('a-weak',{directAward:false,offers:1,durationMonths:300});                    // competition 12 + execution 14 = 26
 const stronger=tie('z-strong',{directAward:true,amount:50000,publicationDate:'2024-05-01'});    // competition 18 + transparency 8 = 26
 check(score(weaker)===26&&score(stronger)===26);
 check(run('selectContracts',[weaker,stronger],{sort:'score'}).map(r=>r.id).join()==='z-strong,a-weak','same families: strongest single signal first');
@@ -84,7 +89,7 @@ for(const sort of ['score','score-asc'])check(run('selectContracts',[unknownRow,
 const datasets=['contracts','decp-history','decp-cities','consultations','tours-notices'];
 // v3.2: buyer-relative late publication and French direct-award threshold eligibility reduce flags (v3.1: 9/2466/535, 355/1747/492, 172/835/263).
 // v3.1 adds the transparency family (late publication): counts differ from v3.0 (68/2665/277, 355/1835/404, 172/974/124).
-const expected={contracts:[12,2566,432],'decp-history':[355,1881,358],'decp-cities':[172,949,149],consultations:[10,0,0],'tours-notices':[60,6,0]};
+const expected={contracts:[12,2566,432],'decp-history':[355,1966,273],'decp-cities':[172,987,111],consultations:[10,0,0],'tours-notices':[60,6,0]};
 for(const file of datasets){
  const rows=run('prepareContracts',JSON.parse(fs.readFileSync(`data/${file}.json`)));
  const values=rows.map(score), exp=expected[file];

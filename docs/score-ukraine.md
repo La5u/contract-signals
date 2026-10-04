@@ -67,6 +67,10 @@ On 2026-09-28 a stricter bid-attrition rule (every other bid explicitly rejected
 
 The [snapshot and sampled live audit](ukraine-audit.md) reconciles 542 discovered records, 526 buyer-matched tenders and 488 retained contracts. The 16 buyer-search mismatches are excluded. Offer counts agree for all 64 competitive rows. Search completeness remains unverified; do not read this as all procurement by these buyers.
 
+## Legal anchoring (v3.3)
+
+Reviewed 4 October 2026; no check changed. The raw tender records carry `tenderPeriod`; open tenders mostly last about 7 days, which would make a flat "short period" flag the norm. A check anchored to the legal minimum (Law 922-VIII art. 21 and the martial-law Resolution 1178 rules) needs the primary text, which was not verified (search results only), so it is a follow-up. Reporting (below-threshold direct contracts) already skips offer and direct-award checks. Counts unchanged (47 / 441 / 0).
+
 ## Reproduction
 
 ```sh
