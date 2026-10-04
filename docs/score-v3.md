@@ -1,4 +1,4 @@
-# Vigilance index 3.2 — active method
+# Vigilance index 3.3 — active method
 
 **An editorial sorting tool, not a probability, a measure of legal gravity or a certificate of regularity.** The existing data and PDFs are unchanged; the meaning of the score and some eligibility criteria deliberately change. A v2.1 30 must not be compared to a v3 30 as a real evolution of a contract.
 
@@ -39,7 +39,7 @@ The progressions are linear after the entry threshold is crossed, bounded and ro
 | Concentration | Single identified holder, same buyer/CPV3/cohort, ≥10 known holders, coverage ≥80 %, share ≥60 % | **12 at 60 % → 40 at 100 %**, linear | Competition |
 | Repeated direct awards | Same buyer/CPV3/SIREN, ≥3 distinct explicitly direct awards, contract itself direct; all amounts | **18 at 3 contracts → 60 at 10**, cap 60 | Competition |
 | Short bidding period | Reliable chronology as defined in the README; explicitly open non-accelerated procedure; period strictly <15 days | **8 near 15 days → 40 at 3 days**, cap 40 | Competition |
-| Long declared duration | Known duration ≥120 months, without invented renewals | **8 at 120 months → 40 at 360 months**, cap 40 | Execution/duration |
+| Long declared duration | Known duration ≥120 months, without invented renewals | **8 at 120 months → 16 at 360 months**, cap 16 (40 before v3.3) | Execution/duration |
 | Declared relative increase | Same comparable history, price exclusively firm, without conflicts or identified change of holder; increase strictly >20 % | **8 near +20 % → 40 at +100 %**, cap 40 | Execution/duration |
 
 Examples: a concentration of 61 % is worth 12.7 points, 80 % is worth 26 and 95 % is worth 36.5; all else equal, going from 79 % to 80 % no longer adds an arbitrary tier. Three direct awards are worth 18, four are worth 24, ten are worth 60. A comparable increase of 21 % is worth 8.4, whether it is €100 → €121 or €1m → €1.21m.
@@ -91,6 +91,17 @@ Sources: [marche-public.fr threshold chronology](https://www.marche-public.fr/Ma
 | Six municipalities, 1,270 | 263 → 149 | 835 → 949 | 172 → 172 | 144 → 62 | 66 → 31 |
 
 TED: late publication 12 → 10 (Portugal), 26 → 25 (Romania), 45 → 40 (Czechia). Direct-award rows that stopped scoring: BOAMP 9 (1 not applicable below the threshold, 8 unknown for lack of an amount), Paris / Ardèche 176 and six municipalities 35 (all not applicable below the threshold). Late publication changed from signal to clear in 103 BOAMP rows, 12 Paris / Ardèche rows and 82 municipal rows. Three BOAMP rows whose only evaluable check was a direct award with no amount are now not assessed. As before, none of this is calibration against irregularity.
+
+## v3.3 (4 October 2026): legal anchoring
+
+**Long declared duration, maximum 16 (was 40), owner decision of 5 October 2026.** On the national DECP, single-bid odds fall as duration rises (OR 0.54–0.68 from 12 months; 0.56 [0.43, 0.74] from 120 months). That does not refute an execution-risk check, but nothing supports letting a long duration alone weigh as much as the strongest signals. France: 8 at 120 months → 16 at 360 months. Colombia: 8 at 36 months → 16 at 120 months.
+
+Approved by the owner. Eligibility and thresholds follow each jurisdiction's law wherever the law gives an anchor and the data can test it; weights are unchanged. The full per-check table is in [indicators.md](indicators.md#legal-anchor-of-each-check-v33-4-october-2026).
+
+- **Paraguay amount increase**, the one check changed: Ley 7021/22 art. 67 caps modifications at 20 % of the original amount and term. Entry moves from "above 20 %" to "from 19 % up to the ceiling" (8 points, a review prompt, because reaching the ceiling is lawful) and "beyond the ceiling" (16 points just above, linear to 40 at +100 %); only processes launched from 19 Feb 2024 (an earlier call is out of scope, a missing date unknown). Pilot 35 → 36 flagged, three-buyer cohort 53 → 58; the 10 at-ceiling rows (previously a no-points context label, now removed) are the new signals; none is beyond the ceiling. See [score-paraguay.md](score-paraguay.md).
+- **Unchanged, with reasons.** Colombia: Ley 80 art. 40 caps value additions (not terms), and the extract has no addition value, so term extension and duration stay editorial. Chile: no direct deals, tender periods or modifications in the source. Ukraine, TED, UK: no amount-eligibility threshold applies (TED and Find a Tender hold above-threshold notices by construction); Ukrainian and French minimum bidding periods and the French modification caps depend on facts the data lacks (procedure ground, EU threshold) or on legal text not verified: follow-ups.
+- **French DECP late publication (buyer-relative excess)**: for the DECP data family only, a buyer with an established usual delay is flagged when the excess over that usual delay exceeds **240 days** (was 120). Buyers without an established usual delay still use the legal 120 days on the whole delay; BOAMP and TED are unchanged. Evidence ([france-national.md](../research/thresholds/france-national.md)): national DECP, 210,018 competitive contracts, 8,702 buyers; the buyer-relative excess is first reliably associated with single bidding from 241 days (OR 1.14 [1.01, 1.29]) and 1.71 [1.32, 2.22] beyond 730 days; the raw delay shows no association. Counts: Paris and Ardeche 355 not assessed / 1,966 zero / 273 flagged (was 1,881 zero / 358 flagged; late-publication signals 121 to 22); six municipalities 172 / 987 / 111 (was 949 zero / 149 flagged; late-publication signals 62 to 22); BOAMP unchanged (12 / 2,566 / 432).
+- TED, UK, Ukraine, Chile and Colombia: before and after counts are identical (score-v3-review.json regenerated).
 
 ## Results on the same data, with no inflation target
 

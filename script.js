@@ -9,7 +9,7 @@ function isAmbiguousCityContract(c) {
 const HISTORY_START = '2024-01-01';
 const HISTORY_END = '2025-12-31';
 
-const SCORE_VERSION = '3.2';
+const SCORE_VERSION = '3.3';
 
 // Conservative calendar-day upper bound: publication time is not supplied by BOAMP.
 function getBiddingPeriod(contract) {
@@ -172,7 +172,16 @@ const PY_REPETITION_MAX = 10;
 const PY_CONCENTRATION_GROUP_MIN = 10;
 const PY_CONCENTRATION_COVERAGE = 0.8;
 const PY_CONCENTRATION_ENTRY_SHARE = 0.6;
-const PY_INCREASE_ENTRY = 20;
+// Ley 7021/22 Art. 67 (docs/score-paraguay.md): modifications, unilateral or agreed, may not exceed jointly or
+// separately 20 % of the amount and term originally agreed. Score 3.3 anchors the amount-increase check to this
+// ceiling: 'at' = within PY_CEILING_NEAR_SHARE of it up to the ceiling (plus rounding tolerance), 'beyond' = above it.
+// Applies to all processes launched from 19 Feb 2024 (DNCP: Ley 7021 and decree 9823/2023 applied to every process
+// from that date; https://www.ultimahora.com/todas-las-licitaciones-publicas-seran-procesadas-bajo-la-ley-7021-22-desde-el-lunes).
+// An earlier or missing call date is unknown: the process may still be under Ley 2051/03.
+const PY_LEGAL_CEILING = 20;
+const PY_CEILING_NEAR_SHARE = 0.95;
+const PY_CEILING_TOLERANCE = 0.05;
+const PY_LAW_7021_FROM = '2024-02-19';
 
 function dncpMethodState(c) {
   if (PY_COMPETITIVE_METHODS.has(c.procurementMethod)) return 'competitive';
@@ -216,13 +225,15 @@ function dncpAmountIncrease(c) {
   return { status: 'known', count: monetary.length, delta, percentage: delta / c.amount * 100 };
 }
 
-// Ley 7021/22, Art. 67: modifications may not exceed, jointly or separately,
-// 20 % of the originally agreed amount and term. Context only, never points;
-// the law applicable to each process is not verified here.
-const PY_LEGAL_CEILING = 20;
-function dncpAtCeiling(c) {
-  const increase = dncpAmountIncrease(c);
-  return increase.status === 'known' && increase.count > 0 && Math.abs(increase.percentage - PY_LEGAL_CEILING) <= 0.05;
+function dncpCeilingBand(percentage) {
+  // Round away binary-float artefacts (0.57 / 3 = 18.999999999999996 %) before comparing bands.
+  const p = Math.round(percentage * 1e6) / 1e6;
+  if (p > PY_LEGAL_CEILING + PY_CEILING_TOLERANCE) return 'beyond';
+  return p >= PY_LEGAL_CEILING * PY_CEILING_NEAR_SHARE ? 'at' : 'below';
+}
+function validIsoDate(value) {
+  const d = typeof value === 'string' ? value.slice(0, 10) : '';
+  return /^\d{4}-\d{2}-\d{2}$/.test(d) && !Number.isNaN(Date.parse(`${d}T00:00:00Z`)) && new Date(`${d}T00:00:00Z`).toISOString().slice(0, 10) === d ? d : null;
 }
 
 // France: maintenance, support or licences of an existing software product
@@ -248,7 +259,6 @@ function contextLabels(c) {
   const labels = [];
   if (softwareMaintenanceContext(c)) labels.push({ id: 'fr-software', short: 'single-vendor software maintenance', long: 'Maintenance, support or licences of an existing software product placed with one vendor (docs/score-v3.md).' });
   if (c.secop2PublicCounterparty?.labelled) labels.push({ id: 'co-public', short: 'public-to-public agreement', long: 'Agreement declared between public bodies (docs/score-colombia.md).' });
-  if (c.dataFamily === 'dncp' && dncpAtCeiling(c)) labels.push({ id: 'py-ceiling', short: 'amendments at the 20 % ceiling', long: 'Published amendments total 20 % of the original amount, the ceiling in Ley 7021/22 Art. 67 (docs/score-paraguay.md).' });
   return labels;
 }
 
@@ -413,9 +423,13 @@ const LATE_PUBLICATION_MAX_DAYS = 730;
 // Buyer-relative since score 3.2: a delay beyond LATE_PUBLICATION_DAYS only counts when it also
 // exceeds the buyer's usual delay (median of its other dated records, same cohort) by more than
 // that many days. Per-jurisdiction overrides go here, keyed by country code or dataFamily, e.g.
-// { decp: { days: 150 } }; every family uses these defaults for now.
-const LATE_PUBLICATION_DEFAULTS = { days: LATE_PUBLICATION_DAYS, maxDays: LATE_PUBLICATION_MAX_DAYS, minBuyerRecords: 10 };
-const LATE_PUBLICATION_OVERRIDES = {};
+// { decp: { days: 150 } }; `excessDays` applies only where a buyer's usual delay is established.
+const LATE_PUBLICATION_DEFAULTS = { days: LATE_PUBLICATION_DAYS, excessDays: LATE_PUBLICATION_DAYS, maxDays: LATE_PUBLICATION_MAX_DAYS, minBuyerRecords: 10 };
+// DECP (score 3.3): the excess over the buyer's usual delay counts from 240 days. On the national
+// DECP (210,018 competitive contracts, 8,702 buyers), single-bid odds first rise reliably from
+// 241 days later than usual (OR 1.14, 95 % CI 1.01-1.29; 1.71 beyond 730 days), not from 120:
+// research/thresholds/france-national.md.
+const LATE_PUBLICATION_OVERRIDES = { decp: { excessDays: 240 } };
 function latePublicationConfig(c) { return { ...LATE_PUBLICATION_DEFAULTS, ...(LATE_PUBLICATION_OVERRIDES[c.country] || LATE_PUBLICATION_OVERRIDES[c.dataFamily] || {}) }; }
 const PUBLICATION_DATE_MEANING = { decp: 'essential data published on the buyer profile', boamp: 'BOAMP award notice', ted: 'TED award notice' };
 const NO_RELIABLE_CONTRACT_DATE = { fts: 'Find a Tender award notices can carry the date of an original contract signed years earlier (modification notices under PCR 2015 Regulation 72) or of admission to a dynamic purchasing system: the delay would not measure late publication. Out of scope.' };
@@ -469,10 +483,12 @@ function latePublicationCheck(c, excludedReason) {
   const usual = c.latePublicationBaseline;
   const baseline = usual ? usual.median : 0;
   const excess = days - baseline;
-  if (excess <= cfg.days) return make('yes', 'clear', null, `${days} days ${dates}, beyond the legal deadlines but within this buyer’s usual delay (median ${baseline} days over ${usual.others} other records): a buyer-level publication practice, not specific to this contract. Not a conclusion of regularity.`);
-  const weight = graduated(excess, cfg.days, cfg.maxDays, 8, 16);
+  // Without an established usual delay the whole delay counts against the legal threshold.
+  const excessDays = usual ? cfg.excessDays : cfg.days;
+  if (excess <= excessDays) return make('yes', 'clear', null, `${days} days ${dates}, beyond the legal deadlines but within this buyer’s usual delay (median ${baseline} days over ${usual.others} other records): a buyer-level publication practice, not specific to this contract. Not a conclusion of regularity.`);
+  const weight = graduated(excess, excessDays, cfg.maxDays, 8, 16);
   const practice = usual ? `Its buyer’s usual delay is ${baseline} days (median of ${usual.others} other records), so it is ${excess} days later than usual.` : `No usual delay is established for this buyer (fewer than ${cfg.minBuyerRecords} dated records in this dataset), so the whole delay counts.`;
-  return make('yes', 'signal', weight, `${days} days ${dates}, beyond the legal deadlines. ${practice} Signal above ${cfg.days} days of delay and ${cfg.days} days later than usual: 8 points, linear to 16 at ${cfg.maxDays} days later than usual, in the transparency family. Late publication hides a contract from scrutiny while it runs; it can also be a clerical delay.`);
+  return make('yes', 'signal', weight, `${days} days ${dates}, beyond the legal deadlines. ${practice} Signal above ${cfg.days} days of delay and ${excessDays} days later than usual: 8 points, linear to 16 at ${cfg.maxDays} days later than usual, in the transparency family. Late publication hides a contract from scrutiny while it runs; it can also be a clerical delay.`);
 }
 
 // The explorer turns this on once records are prepared: they no longer change, so each
@@ -555,7 +571,7 @@ function getAssessmentLocal(c) {
     c.directAward == null ? 'Competitive character unknown.' : c.directAward === false ? 'Explicitly competitive procedure: no direct-award signal.' :
     directEligibility.status === 'above' ? `${directEligibility.reason} Award explicitly declared without competition: 18 points. May be legal (R2122 exceptions); no bonus for an R2122 citation.` : directEligibility.reason);
   add('long-contract', 'Declared duration ≥ 10 years', 'execution', 'yes', c.durationMonths != null, c.durationMonths >= 120,
-    graduated(c.durationMonths || 0, 120, 360, 8, 40), c.durationMonths == null ? 'Declared duration unknown.' : `${c.durationMonths} months declared. From 120 months: 8 points, linear progression up to 40 at 360 months; renewals are not invented. Not a sectoral comparison nor an illegality threshold.`);
+    graduated(c.durationMonths || 0, 120, 360, 8, 16), c.durationMonths == null ? 'Declared duration unknown.' : `${c.durationMonths} months declared. From 120 months: 8 points, linear progression up to 16 at 360 months; renewals are not invented. Not a sectoral comparison nor an illegality threshold.`);
   const bidding = getBiddingPeriod(c);
   const initial = c.consultation?.notices?.find(n => n.kind === 'initial');
   const biddingApplicability = c.directAward === true || (initial?.procedureType && initial.procedureType !== 'open') || initial?.accelerated === true ? 'no' :
@@ -638,9 +654,9 @@ function getAssessmentSecop2(c) {
   add('secop2-long-duration', `Long declared duration (≥ ${CO_DURATION_ENTRY_MONTHS} months)`, 'execution',
     typeof durationText === 'string' && durationText.trim() ? 'yes' : 'unknown',
     durationMonths != null, durationMonths != null && durationMonths >= CO_DURATION_ENTRY_MONTHS,
-    graduated(durationMonths || 0, CO_DURATION_ENTRY_MONTHS, CO_DURATION_MAX_MONTHS, 8, 40),
+    graduated(durationMonths || 0, CO_DURATION_ENTRY_MONTHS, CO_DURATION_MAX_MONTHS, 8, 16),
     durationMonths == null ? (typeof durationText === 'string' && durationText.trim() ? `Declared duration “${durationText}” not comparable to months: not assessed.` : 'Declared duration field missing: applicability not established.') :
-    durationMonths >= CO_DURATION_ENTRY_MONTHS ? `${durationMonths} months declared (parsed read-only from “${durationText}”). From ${CO_DURATION_ENTRY_MONTHS} months: 8 points, linear to 40 at ${CO_DURATION_MAX_MONTHS} months. Editorial threshold for this cohort, not a Colombian legal threshold; renewals are not invented.` :
+    durationMonths >= CO_DURATION_ENTRY_MONTHS ? `${durationMonths} months declared (parsed read-only from “${durationText}”). From ${CO_DURATION_ENTRY_MONTHS} months: 8 points, linear to 16 at ${CO_DURATION_MAX_MONTHS} months. Editorial threshold for this cohort, not a Colombian legal threshold; renewals are not invented.` :
     `${durationMonths} months declared (parsed read-only from “${durationText}”): below the ${CO_DURATION_ENTRY_MONTHS}-month entry threshold. Not a conclusion of regularity.`);
   add('single-bid', 'Single offer in a competitive procedure', 'competition', 'no', false, false, null,
     'No offers/proposals table in this SECOP II extract: the number of offers was never imported; out of scope.');
@@ -720,12 +736,20 @@ function getAssessmentDncp(c) {
     concentration ? `Same buyer and category (${concentration.category || 'unspecified'}): ${concentration.wins}/${concentration.known} contracts to this supplier, out of ${concentration.total} in the group (${Math.round(concentration.coverage * 100)} % coverage). Minimum ${PY_CONCENTRATION_GROUP_MIN} identified contracts and ${Math.round(PY_CONCENTRATION_COVERAGE * 100)} % coverage; from 12 points at ${Math.round(PY_CONCENTRATION_ENTRY_SHARE * 100)} % to 40 at 100 %. ${concentration.sufficient ? '' : 'Insufficient sample or coverage: not assessed.'} Specialisation may explain a share.` :
     'Supplier identity unknown: applicability not established.');
   const increase = dncpAmountIncrease(c);
-  add('dncp-amount-increase', `Declared amount increase > ${PY_INCREASE_ENTRY} %`, 'execution',
-    'yes', increase.status === 'known', increase.percentage > PY_INCREASE_ENTRY,
-    graduated(increase.percentage || 0, PY_INCREASE_ENTRY, 100, 8, 40),
+  const callDate = validIsoDate(c.callPublishedDate);
+  const lawApplies = callDate ? callDate >= PY_LAW_7021_FROM : null;
+  const band = increase.status === 'known' && increase.count ? dncpCeilingBand(increase.percentage) : null;
+  const ceilingPoints = band === 'beyond' ? graduated(increase.percentage, PY_LEGAL_CEILING, 5 * PY_LEGAL_CEILING, 16, 40) : 8;
+  add('dncp-amount-increase', `Declared amount increase at or beyond the ${PY_LEGAL_CEILING} % legal ceiling`, 'execution',
+    lawApplies === false ? 'no' : lawApplies === null ? 'unknown' : 'yes', increase.status === 'known' && lawApplies === true, band === 'at' || band === 'beyond',
+    ceilingPoints,
+    lawApplies === false ? `Process launched on ${callDate}, before Ley 7021/22 applied to every process (${PY_LAW_7021_FROM}): the Art. 67 ceiling is not applied. Out of scope.` :
     increase.status !== 'known' ? increase.reason :
+    lawApplies === null ? 'Call publication date missing or invalid: whether Ley 7021/22 Art. 67 applies to this process cannot be determined. Not assessed.' :
     !increase.count ? 'No published amount amendment in the downloaded record. The absence of a published amendment does not prove the absence of a real change.' :
-    `${increase.count} published amount amendment(s): +${increase.percentage.toFixed(2)} % of the original declared amount. Signal strictly above ${PY_INCREASE_ENTRY} %, 8 points near the threshold to 40 at +100 %. Ley 7021/22 Art. 67 caps agreed modifications at 20 % of the original amount; DNCP rules allow a separate 20 % for unilateral public-interest changes (Art. 65 b), so a larger total is not by itself unlawful. Extra works or quantities may explain an increase; declared, not paid.`);
+    band === 'beyond' ? `${increase.count} published amount amendment(s): +${increase.percentage.toFixed(2)} % of the original declared amount, above the ${PY_LEGAL_CEILING} % ceiling of Ley 7021/22 Art. 67 on modifications. 16 points just above the ceiling, linear to 40 at +100 %. DNCP rules allow a separate 20 % for unilateral public-interest changes (Art. 65 b), so a larger total is not by itself unlawful; a new procedure may also have been required. Declared, not paid.` :
+    band === 'at' ? `${increase.count} published amount amendment(s): +${increase.percentage.toFixed(2)} % of the original declared amount, at the ${PY_LEGAL_CEILING} % ceiling of Ley 7021/22 Art. 67 on modifications (from ${PY_LEGAL_CEILING * PY_CEILING_NEAR_SHARE} %). 8 points. Reaching the ceiling is lawful and leaves no further agreed increase; the term, also capped at 20 %, is not published.` :
+    `${increase.count} published amount amendment(s): +${increase.percentage.toFixed(2)} % of the original declared amount, below ${PY_LEGAL_CEILING * PY_CEILING_NEAR_SHARE} % (the near-ceiling band of Ley 7021/22 Art. 67). Not a conclusion of regularity.`);
   add('short-bidding-period', 'Short bidding period', 'competition', 'no', false, false, null,
     `No validated Paraguayan minimum period per modality in this method: out of scope. Published tender period: ${c.tenderPeriodDays == null ? 'not published' : `${c.tenderPeriodDays} day(s)`}, shown as context only.`);
   add('long-contract', 'Long declared duration', 'execution', 'no', false, false, null,
@@ -1262,8 +1286,8 @@ function selectContracts(contracts, { search = '', minimum = 0, minScore = 0, fl
   const filtered = contracts.filter(c => {
     const evidence = c.noticeEvidence;
     const noticeMatch = !noticeContext || Boolean(evidence && (noticeContext === 'criteria' ? evidence.awardCriteria.length : noticeContext === 'explanation' ? evidence.procedureDescription || evidence.justifications.some(j => j.text) : noticeContext === 'correction' ? evidence.kind === 'correction' : noticeContext === 'ted' ? evidence.ted.length : false));
-    const citations = legal && !['py-ceiling', 'py-complaint', 'co-public', 'fr-software', 'direct'].includes(legal) ? getLegalContext(c) : [];
-    const legalMatch = !legal || (legal === 'py-ceiling' ? dncpAtCeiling(c) : legal === 'py-complaint' ? Boolean(c.complaints?.length) : legal === 'co-public' ? Boolean(c.secop2PublicCounterparty?.labelled) : legal === 'fr-software' ? Boolean(softwareMaintenanceContext(c)) : legal === 'direct' ? c.directAward === true : legal === 'cited' ? citations.length > 0 : citations.some(item => item.article === legal));
+    const citations = legal && !['py-complaint', 'co-public', 'fr-software', 'direct'].includes(legal) ? getLegalContext(c) : [];
+    const legalMatch = !legal || (legal === 'py-complaint' ? Boolean(c.complaints?.length) : legal === 'co-public' ? Boolean(c.secop2PublicCounterparty?.labelled) : legal === 'fr-software' ? Boolean(softwareMaintenanceContext(c)) : legal === 'direct' ? c.directAward === true : legal === 'cited' ? citations.length > 0 : citations.some(item => item.article === legal));
     const evaluated = getAssessment(c);
     const assessmentMatch = !assessment || (assessment === 'unevaluated' ? scoreFor(c) == null : assessment === 'zero' ? scoreFor(c) === 0 : assessment === 'partial' ? evaluated.unknown > 0 || evaluated.unknownApplicability > 0 : false);
     const sectorMatch = !sector || getSector(c).code === sector;
@@ -2255,7 +2279,6 @@ function startExplorer() {
     if (c.dataFamily === 'dncp') {
       for (const x of c.sanctionsInForceAtAward || []) line(outside, `Supplier ${x.type} in force at award (${x.start} → ${x.end || 'no end'}, ${x.status || 'status —'}).`);
       for (const k of c.complaints || []) line(outside, `DNCP ${k.kind === 'protest' ? 'protest' : k.kind === 'investigation' ? 'investigation' : 'proceeding'} ${k.id}: ${k.eventCount} step(s), ${k.firstEventDate || '—'} → ${k.lastEventDate || '—'}${k.closureRecorded ? ', closed' : ''}.`);
-      if (dncpAtCeiling(c)) line(outside, `Amendments reach the legal 20 % ceiling (+${dncpAmountIncrease(c).percentage.toFixed(1)} %).`);
     }
     if (c.complaintCount) line(outside, `${c.complaintCount} complaint(s) filed on this tender.`);
     if (outside.children.length > 1) sections.push(outside);

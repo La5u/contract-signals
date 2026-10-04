@@ -83,6 +83,10 @@ The first computation counted concentration in **lots**, so one notice with 24 l
 
 The EU directive caps framework agreements at four years except in justified cases, so a longer declared framework duration would be a legal-threshold check rather than an editorial one. The raw notices were read for it: no framework lot declares more than 48 months (Romania 458 lots, all at most 48 months; Portugal 4 lots at most 48 months and 120 with no duration). A check that cannot fire here, and would leave 120 Portuguese lots unknown, was not added; the `long-contract` slot stays out of scope. Most framework results are also excluded from the rows because they name several winners.
 
+## Legal anchoring (v3.3)
+
+Reviewed 4 October 2026; no check changed. TED notices are above the EU thresholds by construction, so no amount eligibility applies to `neg-wo-call`; its legal basis is the directive's grounds (Directive 2014/24/EU art. 32), not an amount. Directive minimum periods (35/30/15 days) need the contract-notice chain, which is not imported: follow-up. Counts unchanged.
+
 ## Reproduction
 
 ```sh

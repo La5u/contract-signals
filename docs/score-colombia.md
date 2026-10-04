@@ -89,6 +89,10 @@ The label is **withheld** on a declared interadministrative agreement when publi
 - A lawful ground may underlie any signal; a zero or an unflagged row proves nothing. Flagged **and** unflagged examples must be read in the source (`processUrl` on every row).
 - Thresholds are editorial and were chosen from the field semantics and this cohort’s structure, not calibrated against labelled ground truth. No precision, recall or probability is claimed.
 
+## Legal anchoring (v3.3)
+
+Reviewed 4 October 2026; no check changed. Ley 80/1993 art. 40 parágrafo caps additions at 50 % of the initial value in SMMLV ([text](https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=304)); it concerns value, not term, and the SECOP II extract publishes no addition value (only `dias_adicionados`). Term extension and long duration therefore have no legal anchor and stay editorial. The plurality/urgency check follows Ley 1150/2007 art. 2 num. 4 grounds, which have no amount threshold; the minimum-amount (mínima cuantía) modality is not a signal. Counts unchanged (272 / 7,288 / 0).
+
 ## Reproduction
 
 ```sh

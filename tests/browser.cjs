@@ -114,7 +114,7 @@ const server=http.createServer((req,res)=>{
  assert.match(await page.locator('#status').textContent(),/355 \/ 2594/);
  assert.match(await page.locator('.contract-row').first().textContent(),/Not assessed/);
  await page.selectOption('#assessment','zero');
- assert.match(await page.locator('#status').textContent(),/1881 \/ 2594/);
+ assert.match(await page.locator('#status').textContent(),/1966 \/ 2594/);
  assert.match(await page.locator('.contract-row').first().textContent(),/0 \/ 100/);
  await openRow(page,page.locator('.row-toggle').first());
  assert.equal(await page.locator('#detail-panel .assessment-checks li').count(),9);
@@ -253,7 +253,7 @@ const server=http.createServer((req,res)=>{
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 84'));
  assert.match(await page.locator('#dataset-note').textContent(),/Fernando de la Mora/);
  assert.match(await page.locator('#dataset option:checked').textContent(),/^Fernando de la Mora.*contract records.*DNCP OCDS$/);
- assert.match(await page.locator('#status').textContent(),/35 with a heuristic signal · 0 not assessed/);
+ assert.match(await page.locator('#status').textContent(),/36 with a heuristic signal · 0 not assessed/);
  assert.equal(await page.locator('#dataset-sources').isHidden(),false);
  const pySources=await page.locator('#sources-body').textContent();
  assert.match(pySources,/Dirección Nacional de Contrataciones Públicas/);
