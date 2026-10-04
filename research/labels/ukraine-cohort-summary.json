@@ -1,0 +1,93 @@
+{
+ "requests_total_including_prior": 8499,
+ "requests_this_run": 2040,
+ "request_cap": 9000,
+ "monitoring_feed": {
+  "entries_read": 29734,
+  "pool_tenders_with_in_window_monitoring": 21668,
+  "strata": {
+   "true": {
+    "pool": 13526,
+    "sampled": 1250
+   },
+   "false": {
+    "pool": 8115,
+    "sampled": 1250
+   },
+   "null": {
+    "pool": 27,
+    "sampled": 27
+   }
+  }
+ },
+ "monitored_tenders_sampled": 2527,
+ "monitored_unavailable": 0,
+ "monitored_by_label": {
+  "true": 1250,
+  "false": 1250,
+  "null": 27
+ },
+ "monitored_with_rows_by_label": {
+  "true": 1135,
+  "false": 1197,
+  "null": 20
+ },
+ "comparison_tenders": 1282,
+ "comparison_selection": {
+  "same_buyer_same_method_90d": 1050,
+  "same_buyer_other_method_90d": 232
+ },
+ "comparisons_missing": {
+  "no_candidate": 1218
+ },
+ "rows": 3857,
+ "rows_by_role": {
+  "monitored": 2484,
+  "comparison": 1373
+ },
+ "rows_by_procedure_role": {
+  "monitored": {
+   "aboveThreshold": 2057,
+   "reporting": 240,
+   "belowThreshold": 182,
+   "aboveThresholdEU": 2,
+   "aboveThresholdUA": 2,
+   "priceQuotation": 1
+  },
+  "comparison": {
+   "aboveThreshold": 940,
+   "belowThreshold": 81,
+   "reporting": 344,
+   "priceQuotation": 8
+  }
+ },
+ "buyers_monitored": 1665,
+ "buyers_comparison": 955,
+ "buyers_total": 1665,
+ "violation_types_in_true_tenders": {
+  "other": 1231,
+  "corruptionAwarded": 15,
+  "corruptionBiddingDocuments": 14,
+  "corruptionPublicDisclosure": 4,
+  "corruptionFailureDocuments": 2,
+  "corruptionCancelled": 2,
+  "contractsWithoutProcurement": 1,
+  "corruptionChanges": 1
+ },
+ "violation_type_detail_fetched_tenders": 1250,
+ "corruption_category_tenders": 30,
+ "status_mapping_spot_check": {
+  "details_fetched": 1280,
+  "concluded": 1280,
+  "mismatches": 0
+ },
+ "scan_complete": false,
+ "stopped_early": null,
+ "notes": [
+  "public tender feed scan incomplete (budget); comparisons cover only the scanned period"
+ ],
+ "built_at": "2026-10-04T11:58:27+00:00",
+ "cohort_file": "ukraine-cohort.json.gz",
+ "cohort_sha256": "edc056957451672fe51ca20f9e78491603f1e669a9e7be2b135ca89fe10a3fff",
+ "selection_caveat": "DASU selects tenders with its own risk indicators, which overlap the explorer indicators; a reviewed negative is conditional on selection; unmonitored comparison tenders are unlabelled (null), not clean; restricted monitorings may be absent from the public feed."
+}
