@@ -265,6 +265,17 @@ threshold exists. Call publication before contract start is not contract
 publication and is not substituted into publication delay. No CPV concentration
 is calculated from the national goods/works/services categories.
 
+### National DECP (2026-10-04)
+
+Source: [france-national.md](../research/thresholds/france-national.md) (national DECP, 210,018 competitive contracts, 8,702 buyers).
+
+- **Buyer-relative publication delay**: the excess over the buyer's usual delay is first reliably associated with single bidding from 241 days (OR 1.14 [1.01, 1.29]), 1.71 [1.32, 2.22] beyond 730 days; the raw delay shows no association. Recommended entry at 241 days or more; applied in score 3.3 for the DECP family (excess above 240 days).
+- **Concentration risk**: elevated from 40 % (OR 1.56 [1.25, 1.95]), rising to 3.68 at 80-90 %. The predeclared monotone rule yields only 90 % or more because the 60-70 % bin dips (OR 1.34 [0.86, 2.10]). The editorial 60 % entry is kept pending an owner decision.
+- **Duration**: inversely associated (OR about 0.54-0.68 for 12 months or more), so not evidence for the long-duration check.
+- **Amount increase**: no association.
+- **MAPA**: no eligible outcomes.
+- **Separation fix**: one buyer with 913 rows and zero single bids caused a separation issue in the model; handled in the analysis.
+
 ## Validation
 
 13 unittest cases passed. Synthetic data recovers a known adjusted jump at
