@@ -60,12 +60,12 @@ function commonRowChecks(rows, cov, start, end) {
     'dncp-repeated-single-tenderer': {signal:21,clear:13,unknown:3,'not-applicable':47},
     'dncp-repeated-exception':       {signal:0,clear:1,unknown:0,'not-applicable':83},
     'dncp-concentration':            {signal:0,clear:77,unknown:7,'not-applicable':0},
-    'dncp-amount-increase':          {signal:0,clear:84,unknown:0,'not-applicable':0},
+    'dncp-amount-increase':          {signal:2,clear:82,unknown:0,'not-applicable':0},
     'short-bidding-period':          {signal:0,clear:0,unknown:0,'not-applicable':84},
     'long-contract':                 {signal:0,clear:0,unknown:0,'not-applicable':84},
     'late-publication':              {signal:0,clear:0,unknown:0,'not-applicable':84},
   });
-  assert.deepEqual([t.flagged,t.zero,t.notAssessed],[35,49,0]);
+  assert.deepEqual([t.flagged,t.zero,t.notAssessed],[36,48,0]);
   // The two published amount amendments are +20.0 % and +19.99 %: evaluated, not above the threshold.
   const amended = rows.filter(r=>r.amendments.some(a=>a.amount!=null));
   assert.equal(amended.length,2);
@@ -109,31 +109,49 @@ function commonRowChecks(rows, cov, start, end) {
     'dncp-repeated-single-tenderer': {signal:3,clear:48,unknown:108,'not-applicable':134},
     'dncp-repeated-exception':       {signal:0,clear:2,unknown:0,'not-applicable':291},
     'dncp-concentration':            {signal:0,clear:282,unknown:11,'not-applicable':0},
-    'dncp-amount-increase':          {signal:0,clear:293,unknown:0,'not-applicable':0},
+    'dncp-amount-increase':          {signal:8,clear:285,unknown:0,'not-applicable':0},
     'short-bidding-period':          {signal:0,clear:0,unknown:0,'not-applicable':293},
     'long-contract':                 {signal:0,clear:0,unknown:0,'not-applicable':293},
     'late-publication':              {signal:0,clear:0,unknown:0,'not-applicable':293},
   });
-  assert.deepEqual([t.flagged,t.zero,t.notAssessed],[53,240,0]);
+  assert.deepEqual([t.flagged,t.zero,t.notAssessed],[58,235,0]);
   // 12 published amount amendments, none strictly above +20 %.
   const pct = rows.filter(r=>r.amendments.length).map(r=>run('dncpAmountIncrease',r).percentage);
   assert.equal(pct.length,12); assert.ok(pct.every(p=>p<=20.0001));
   console.log(`Paraguay three buyers: 293 rows, ${t.flagged} flagged, ${t.zero} zero, ${t.notAssessed} not assessed.`);
 }
 
-// Ley 7021/22 Art. 67 ceiling: a context label with no points, never a signal.
+// Ley 7021/22 Art. 67 ceiling (score 3.3): the amount-increase check is anchored to the 20 % legal ceiling.
 {
   const all = [...run('prepareContracts',JSON.parse(fs.readFileSync('data/paraguay-dncp.json'))), ...run('prepareContracts',JSON.parse(fs.readFileSync('data/paraguay-dncp-3buyers.json')))];
-  const atCeiling = all.filter(r=>run('dncpAtCeiling',r));
-  assert.equal(atCeiling.length, 10); // pilot 2 + three buyers 8 (6 × 20.00 %, 2 × 19.99 %)
-  for (const r of atCeiling) {
-    assert.equal(run('getAssessment',r).checks.find(c=>c.id==='dncp-amount-increase').status,'clear');
-    assert.equal(run('getVigilanceScore',{...r,amendments:[]}),run('getVigilanceScore',r));
-  }
-  assert.equal(run('selectContracts',all,{legal:'py-ceiling'}).length,10);
-  assert.ok(!run('dncpAtCeiling',{amount:100,amendments:[]}));
-  assert.ok(!run('dncpAtCeiling',{amount:100,amendments:[{amount:10,currency:'PYG'}]}));
-  console.log('Paraguay 20 % ceiling: 10 contracts labelled, no points.');
+  const check = r => run('getAssessment',r).checks.find(c=>c.id==='dncp-amount-increase');
+  const atCeiling = all.filter(r=>check(r).status==='signal');
+  assert.equal(atCeiling.length, 10); // pilot 2 + three buyers 8 (6 x 20.00 %, 2 x 19.99 %): at the ceiling, none beyond
+  for (const r of atCeiling) assert.equal(check(r).weight,8);
+  // Bands on a synthetic row: below the near band, at it, at the ceiling, within rounding, beyond it, far beyond.
+  const base = {dataFamily:'dncp',dataStatus:'verified',amount:1000,callPublishedDate:'2025-03-01',procedure:'x',procurementMethod:'open'};
+  const at = pctv => check({...base,amendments:[{amount:pctv*10,currency:'PYG'}]});
+  assert.equal(at(18.9).status,'clear');
+  assert.equal(at(19).status,'signal'); assert.equal(at(19).weight,8);
+  assert.equal(at(20).weight,8); assert.equal(at(20.04).weight,8);
+  assert.equal(at(20.1).status,'signal'); assert.equal(at(20.1).weight,16.0);
+  assert.equal(at(60).weight,28); assert.equal(at(100).weight,40); assert.equal(at(250).weight,40);
+  assert.ok(at(30).weight > at(20).weight);
+  // No amendment: clear, not a signal; unreadable amount: unknown.
+  assert.equal(check({...base,amendments:[]}).status,'clear');
+  assert.equal(check({...base,amount:0,amendments:[]}).status,'unknown');
+  // Transition: a process launched before Ley 7021/22 applied to everything (19 Feb 2024) is out of scope; a missing call date is unknown.
+  assert.equal(check({...base,callPublishedDate:'2024-02-18',amendments:[{amount:500,currency:'PYG'}]}).status,'not-applicable');
+  assert.equal(check({...base,callPublishedDate:'2024-02-19',amendments:[{amount:500,currency:'PYG'}]}).status,'signal');
+  assert.equal(check({...base,callPublishedDate:null,amendments:[{amount:500,currency:'PYG'}]}).status,'unknown');
+  // Float artefacts at the band edges (found in review): 0.57/3 and 400.8+0.1+0.1 of 2000.
+  assert.equal(check({...base,amount:3,amendments:[{amount:0.57,currency:'PYG'}]}).weight,8);
+  assert.equal(check({...base,amount:2000,amendments:[400.8,0.1,0.1].map(amount=>({amount,currency:'PYG'}))}).weight,8);
+  // A missing or impossible call date leaves applicability unknown, never a signal.
+  assert.equal(check({...base,callPublishedDate:null,amendments:[]}).applicability,'unknown');
+  assert.equal(check({...base,callPublishedDate:'2024-99-99',amendments:[{amount:200,currency:'PYG'}]}).status,'unknown');
+  assert.equal(run('dncpCeilingBand',20.05),'at'); assert.equal(run('dncpCeilingBand',20.06),'beyond'); assert.equal(run('dncpCeilingBand',18.99),'below');
+  console.log('Paraguay 20 % ceiling: 10 contracts at the ceiling (8 points), bands and transition covered.');
 }
 
 // Multi-lot awards stay unknown for single tenderer, but always point at the per-lot evidence.

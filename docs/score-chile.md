@@ -54,6 +54,10 @@ Reproduced by `tests/national.cjs`.
 - **Examples read.** The strongest lead: **Inducien Instruments S.A.** won eight Dirección General de Aguas tenders for current meters, gauging reels and spare parts as the only tenderer, several specifying a brand “o equivalente” (OTT, Gurley), a common reason for a single bid. The Universidad de Concepción won three limnology and water-sampling tenders alone. In Puente Alto, single tenders are small purchases (Adobe licences, wool shawls, event entertainment, catering, printing), one supplier three times. The Maule regional government's are printers, building insurance, cloud hosting, internet and an X-ray scanner.
 - **Unflagged near-misses:** 448 awards with two or more tenderers; concentration is mostly unknown (226) because few buyer/segment groups reach ten tenders.
 
+## Legal anchoring (v3.3)
+
+Reviewed 4 October 2026; no check changed. Direct deals (trato directo, Ley 19.886) are outside this source, and the OCDS releases carry no tender period or modification, so the direct-award, short-period and increase anchors cannot be tested. The UTM bands in procedure names are not used. Counts unchanged (71 / 449 / 2).
+
 ## Reproduction
 
 ```sh

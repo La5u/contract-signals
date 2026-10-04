@@ -54,6 +54,10 @@ Reproduced by `tests/national.cjs`.
 - **Examples read.** Awards without prior publication are all FCDO: energy supply for a mission abroad, patrol vessels for Montserrat and the Turks and Caicos Islands, stabilisation and sanctions-implementation programmes, legal advice: often lawful routes (urgency, overseas security, extension of an incumbent), not assessed here. Single offers: Milton Keynes home-care lots by age band (one provider, Chiltern Healthcare, won four 0–15 years lots alone, hence the repetition signal), embassy medical insurance, office supplies and guarding, a Lincolnshire NHS health-check area.
 - **Unflagged near-misses:** 1,031 competitive awards had two offers or more (764 had ten or more). Concentration is mostly unknown (722): few buyer/CPV-division groups reach ten distinct procedures.
 
+## Legal anchoring (v3.3)
+
+Reviewed 4 October 2026; no check changed. Find a Tender holds above-threshold notices, so no amount eligibility applies; the direct-award check follows the Procurement Act 2023 / PCR 2015 grounds, not an amount. Minimum tender periods and change notices are not imported: follow-up. Counts unchanged.
+
 ## Reproduction
 
 ```sh

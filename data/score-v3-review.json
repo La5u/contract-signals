@@ -1,9 +1,9 @@
 {
   "version": "3.2",
-  "generatedAt": "2026-10-04T08:49:59.731Z",
+  "generatedAt": "2026-10-04T22:22:48.717Z",
   "sourceCodeHashes": {
     "v21": "7055ce9a7cf02702232bb7dcb91a3858579c440e31e967a8adbb6f2ab13b6c87",
-    "v3": "da93ed068bfd2461295aa66b67afdc95271b08756077363f77dc40680147a728"
+    "v3": "9cfff4652b5d9baf9ba3c770e62b9d506940d6532a459eb806b166885e1e3a74"
   },
   "interpretation": "Editorial triage, not probability. Threshold eligibility is not statistical calibration. Null is unevaluated, not a negative. Official findings are separate evidence. No target fraction of flagged contracts.",
   "coverageDefinition": "evaluated/applicable-known checks plus separately displayed unknown-applicability checks; no normalization by missingness",
@@ -49,12 +49,12 @@
             "competition": 0.8,
             "execution": 1.2
           },
-          "spearmanPositiveOnly": 0.7853,
+          "spearmanPositiveOnly": 0.7814,
           "positiveRows": 432,
           "topK": 20,
-          "topKOverlap": 20,
-          "baselineCutoff": 20.2,
-          "baselineCutoffTies": 3,
+          "topKOverlap": 18,
+          "baselineCutoff": 18.3,
+          "baselineCutoffTies": 1,
           "scenarioCutoffTies": 3
         },
         "executionLower": {
@@ -62,13 +62,13 @@
             "competition": 1.2,
             "execution": 0.8
           },
-          "spearmanPositiveOnly": 0.9198,
+          "spearmanPositiveOnly": 0.9096,
           "positiveRows": 432,
           "topK": 20,
           "topKOverlap": 19,
-          "baselineCutoff": 20.2,
-          "baselineCutoffTies": 3,
-          "scenarioCutoffTies": 2
+          "baselineCutoff": 18.3,
+          "baselineCutoffTies": 1,
+          "scenarioCutoffTies": 14
         }
       },
       "reviewQueue": [
@@ -165,13 +165,13 @@
         "zero": 1860
       },
       "v3": {
-        "positive": 358,
-        "zero": 1881,
+        "positive": 273,
+        "zero": 1966,
         "unevaluated": 355,
         "excluded": 355,
         "indicators": {
           "single-bid": 119,
-          "late-publication": 121,
+          "late-publication": 22,
           "direct-award": 86,
           "supplier-concentration": 8,
           "repeated-direct-award": 28,
@@ -182,9 +182,9 @@
         "meanEvaluatedChecks": 3.17
       },
       "transitions": {
-        "positiveToZero": 418,
+        "positiveToZero": 449,
         "positiveToUnevaluated": 37,
-        "zeroToPositive": 79
+        "zeroToPositive": 25
       },
       "sensitivity": {
         "competitionLower": {
@@ -192,12 +192,12 @@
             "competition": 0.8,
             "execution": 1.2
           },
-          "spearmanPositiveOnly": 0.9374,
-          "positiveRows": 358,
+          "spearmanPositiveOnly": 0.9392,
+          "positiveRows": 273,
           "topK": 20,
-          "topKOverlap": 19,
-          "baselineCutoff": 27.2,
-          "baselineCutoffTies": 1,
+          "topKOverlap": 18,
+          "baselineCutoff": 26,
+          "baselineCutoffTies": 8,
           "scenarioCutoffTies": 1
         },
         "executionLower": {
@@ -205,13 +205,13 @@
             "competition": 1.2,
             "execution": 0.8
           },
-          "spearmanPositiveOnly": 0.9899,
-          "positiveRows": 358,
+          "spearmanPositiveOnly": 0.9924,
+          "positiveRows": 273,
           "topK": 20,
-          "topKOverlap": 15,
-          "baselineCutoff": 27.2,
-          "baselineCutoffTies": 1,
-          "scenarioCutoffTies": 9
+          "topKOverlap": 16,
+          "baselineCutoff": 26,
+          "baselineCutoffTies": 8,
+          "scenarioCutoffTies": 8
         }
       },
       "reviewQueue": [
@@ -220,7 +220,7 @@
           "id": "decp-21750001600019-2023F12498",
           "source": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272023F12498%27&limit=100",
           "oldScore": 5,
-          "v3Score": 9.8,
+          "v3Score": 8.3,
           "signals": [
             "late-publication"
           ],
@@ -308,8 +308,8 @@
         "zero": 1037
       },
       "v3": {
-        "positive": 149,
-        "zero": 949,
+        "positive": 111,
+        "zero": 987,
         "unevaluated": 172,
         "excluded": 172,
         "indicators": {
@@ -317,16 +317,16 @@
           "long-contract": 4,
           "direct-award": 31,
           "repeated-direct-award": 3,
-          "late-publication": 62,
+          "late-publication": 22,
           "amount-increase": 2,
           "repeated-single-bid": 11
         },
         "meanEvaluatedChecks": 2.8
       },
       "transitions": {
-        "positiveToZero": 136,
+        "positiveToZero": 141,
         "positiveToUnevaluated": 0,
-        "zeroToPositive": 52
+        "zeroToPositive": 19
       },
       "sensitivity": {
         "competitionLower": {
@@ -334,8 +334,8 @@
             "competition": 0.8,
             "execution": 1.2
           },
-          "spearmanPositiveOnly": 0.8855,
-          "positiveRows": 149,
+          "spearmanPositiveOnly": 0.8904,
+          "positiveRows": 111,
           "topK": 20,
           "topKOverlap": 17,
           "baselineCutoff": 18,
@@ -347,8 +347,8 @@
             "competition": 1.2,
             "execution": 0.8
           },
-          "spearmanPositiveOnly": 0.9936,
-          "positiveRows": 149,
+          "spearmanPositiveOnly": 0.9829,
+          "positiveRows": 111,
           "topK": 20,
           "topKOverlap": 20,
           "baselineCutoff": 18,
@@ -374,16 +374,16 @@
         },
         {
           "stratum": "signal",
-          "id": "decp-21350238800019-2024S00060",
-          "source": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721350238800019%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27+AND+id%3D%272024S00060%27&limit=100&order_by=datenotification+asc%2Cid+asc",
-          "oldScore": 5,
-          "v3Score": 8.1,
+          "id": "decp-21380185500015-24BSM0",
+          "source": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721380185500015%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27+AND+id%3D%2724BSM0%27&limit=100&order_by=datenotification+asc%2Cid+asc",
+          "oldScore": 8,
+          "v3Score": 10.3,
           "signals": [
             "late-publication"
           ],
-          "evaluated": 4,
+          "evaluated": 2,
           "applicableKnown": 5,
-          "unknownApplicability": 0,
+          "unknownApplicability": 4,
           "excludedReason": null,
           "reviewStatus": "queued-not-ground-truth"
         },
