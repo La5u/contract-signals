@@ -11,6 +11,7 @@ No network code, archive extraction to disk, UI mutation, or inferred party type
 """
 import argparse
 import base64
+import binascii
 from collections import Counter
 from datetime import date
 import hashlib
@@ -303,8 +304,8 @@ def normalize(row, plan, buyers, matched, buyer_error=False):
     # A subject line that repeats a protected holder's name would publish it in clear.
     for (nif, name), item in zip(parties, protected):
         words = name.split()
-        if item and len(words) >= 2:
-            pattern = re.compile(r'\s+'.join(re.escape(word) for word in words), re.IGNORECASE)
+        if item and words:
+            pattern = re.compile(r'(?<!\w)' + r'\s+'.join(re.escape(word) for word in words) + r'(?!\w)', re.IGNORECASE)
             subject = pattern.sub(f'[{PERSON_LABEL.lower()} · {item["code"]}]', subject)
     publication = parse_date(row.get('dataPublicacao'))
     result = {
@@ -655,6 +656,14 @@ def validate_candidate(records, plan):
                         or not isinstance(item['data'], str) or not re.fullmatch(r'[A-Za-z0-9+/]+=*', item['data'])
                         or name != f"{PERSON_LABEL} · {item['code']}"):
                     fail('Invalid protected name.')
+                # Validate framing cheaply; decoding the name itself requires PBKDF2
+                # and remains a separate review, not a bulk publication-time scan.
+                try:
+                    payload = base64.b64decode(item['data'], validate=True)
+                except (ValueError, binascii.Error):
+                    fail('Invalid protected name payload.')
+                if not 0 < len(payload) <= 255 * 32 or base64.b64encode(payload).decode('ascii') != item['data']:
+                    fail('Invalid protected name payload.')
         elif any(name.startswith(PERSON_LABEL) for name in record['supplierNamesPublished']):
             fail('Unprotected natural-person label.')
         ids = record['buyerIds']
@@ -685,7 +694,7 @@ def validate_candidate(records, plan):
         subject = record['description']
         raw = record.get('raw')
         if (not isinstance(subject, str) or not subject.strip()
-                or re.search(r'(?<![0-9])[0-9]{9}(?![0-9])', subject)
+                or re.search(r'(?<![0-9])[0-9]{9}(?![0-9])', subject) or EMAIL.search(subject)
                 or not isinstance(raw, dict) or len(raw) != 1
                 or not set(raw) <= {'descContrato', 'objectoContrato'} or next(iter(raw.values())) != subject):
             fail('Invalid minimized source subject.')

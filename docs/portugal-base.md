@@ -1,6 +1,6 @@
 # Portugal BASE: bounded archive and rights inspection
 
-Checked 2026-09-30. This completes the initial **format/header inspection and source-rights/personal-field review**, not extraction, cohort import, independent validation or blanket legal clearance. A streaming candidate importer is now implemented below; no national extraction or public BASE dataset has been run.
+Initial bounded inspection: 2026-09-30. A private national extraction was subsequently completed on AC power on 2026-10-01 (3,966 retained rows); nothing has been published. The 2026-10-02 battery-only [technical review](portugal-base-review.md) recommends withholding publication pending candidate-level checks. Neither extraction nor review provides independent factual verification or blanket legal clearance.
 
 ## 1. What is actually inside the downloads
 
@@ -54,7 +54,7 @@ Official statements/excerpts, response hashes and remaining questions are retain
 | --- | --- |
 | Three preselected public buyers' NIFs and names | Exact-match buyer filter and provenance, with organization identity verified. |
 | Contract/process identifiers and source date fields | Retain only needed procurement identifiers and clearly labelled dates; verify source links and version handling. |
-| Supplier names | Retain the published holder names needed to identify contract participants, including company and individual/sole-trader names where appropriate. Names are not suspicion labels. Do not guess entity type from a NIF prefix or automatically anonymize every individual. The minimized cohort still requires a publication-purpose/incidental-data review before redistribution. |
+| Supplier names | Retain the published holder names needed to identify contract participants, including company and individual/sole-trader names where appropriate. Names are not suspicion labels. Blank NIFs and prefixes 1, 2, 3 or 45 route holders to conservative name protection, not a verified legal entity-type classification. Blank NIFs can also represent foreign entities; the display label is “Individual or foreign holder”. The minimized cohort still requires a publication-purpose/incidental-data review before redistribution. |
 | Supplier NIFs | Strip the numeric prefix from holder display strings; do not include supplier IDs in the public candidate, search, exports or reports. Published names and personal identifier numbers are separate decisions. |
 | Unsuccessful competitors' names/NIFs | Omit by default from the public extract; no need to republish named bidder lists for browse-only contract review. Any later aggregate count needs separately verified semantics. |
 | Free text and document links | Review the selected cohort for incidental personal details. Keep verified contract subject/source links; omit unnecessary notes and avoid automatic attachment downloads. |
@@ -76,7 +76,7 @@ python tools/inspect-base-archives.py          # ZIP directory + bounded prefixe
 python tools/inspect-base-archives.py --write  # retain aggregate schema report only
 ```
 
-No full-file scan/hash, whole extraction, cohort filtering, browser test or dataset rebuild is required. The heavier extraction remains deferred until separately authorized. No source inquiries were sent, and no BASE cohort is currently available in the explorer.
+These inspection commands require no full-file scan/hash, whole extraction, cohort filtering, browser test or dataset rebuild. The private extraction was completed separately on 2026-10-01; any new heavy processing still requires authorization. No source inquiries were sent, and no BASE cohort is currently available in the explorer.
 
 ## Implemented candidate importer
 
@@ -93,7 +93,7 @@ python tools/import-portugal-base.py --publish-reviewed \
 
 The private output defaults to `~/.cache/contract-signals/base-candidate/`: `candidate.json`, `coverage.json`, `manifest.json`, with mode 0600 files in a mode 0700 directory. Existing candidates are not overwritten. This stage does not publish, register a menu option or contact external services.
 
-Published supplier names are retained exactly after removing the NIF prefix, including multiple holders. A malformed holder string is sent to the normalization-review queue rather than exposing an identifier as a name. Unsuccessful bidder identities, supplier IDs, incidental notes and unrelated raw fields are excluded. Source subject text is retained and still requires review; automated safeguards are not legal clearance. No company/individual classification is inferred.
+Company supplier names are retained after removing the NIF prefix, including multiple holders. Holders with blank NIFs or prefixes 1, 2, 3 or 45 have names stored reversibly scrambled, with stable codes in ordinary lists/search/exports and a per-record reveal button. This is a bulk-collection deterrent, not secrecy or anonymization: all decoding inputs are public and codes allow guessed-name matching. The rule routes protection; it does not establish every holder's legal entity type. A malformed holder string goes to the normalization-review queue rather than exposing an identifier as a name. Unsuccessful bidder identities, supplier IDs, incidental notes and unrelated raw fields are excluded. Exact protected-name repeats are redacted from subjects, and detected emails/nine-digit identifiers cause rejection; variants and other incidental details still require review. See the [technical review](portugal-base-review.md) for remaining limits.
 
 Normalized records use valid source URLs and text notes accepted by the explorer. `date` is explicitly the publication date; signing/decision/closure dates remain separately labelled. Currency, duration months, direct-award classification and offer counts remain unknown. **`assessmentMode: browse` and `dataStatus: unverified` remain mandatory**, even after publication review: names identify published participants, not investigated people or independently verified facts.
 
