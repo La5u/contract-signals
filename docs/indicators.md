@@ -15,24 +15,24 @@ What stays local, and why: **eligibility and thresholds follow each jurisdiction
 | Better-ranked bidder disqualified | competition | — | — | — | `ua-better-bid-disqualified` | — (TED publishes no award sequence) | — | — |
 | Short bidding period | competition | `short-bidding-period` (reliable chronology only) | out of scope | out of scope | — | out of scope | out of scope | out of scope |
 | Long declared duration | execution | `long-contract` (≥ 120 months) | `secop2-long-duration` (≥ 36 months) | out of scope | out of scope | out of scope | out of scope | out of scope |
-| Amount increase after award | execution | `amount-increase` (> 20 %, firm price) | out of scope | `dncp-amount-increase` (from 19 % to the legal 20 % ceiling: 8; beyond it: 16 → 40) | out of scope | out of scope | out of scope | out of scope |
+| Amount increase after award | execution | `amount-increase` (> 20 %, firm price) | out of scope | `dncp-amount-increase` (from 19 % to the provisional 20 % reference ceiling: 8; beyond it: 16 → 40) | out of scope | out of scope | out of scope | out of scope |
 | Term extended after award | execution | — | `secop2-term-extension` (> +100 % of the declared term) | — | — | — | — | — |
-| Published long after the contract | transparency | `late-publication` (> 120 days and > 120 days later than the buyer's usual delay) | out of scope | out of scope | out of scope | `late-publication` (same rule) | out of scope (contract dates not comparable) | out of scope |
+| Published long after the contract | transparency | `late-publication` (delay > 120 days; DECP excess > 240 days with an established buyer baseline, otherwise whole delay > 120 days; BOAMP excess > 120 days) | out of scope | out of scope | out of scope | `late-publication` (delay > 120 days and excess > 120 days; whole delay > 120 days without a buyer baseline) | out of scope (contract dates not comparable) | out of scope |
 
 “—” means the check does not exist for that dataset; “out of scope” means it is listed on every row with the reason. Details and thresholds: [score-v3.md](score-v3.md) (France), [score-colombia.md](score-colombia.md), [score-paraguay.md](score-paraguay.md), [score-ukraine.md](score-ukraine.md), [score-ted.md](score-ted.md), [score-uk.md](score-uk.md), [score-chile.md](score-chile.md).
 
 ## Legal anchor of each check (v3.3, 4 October 2026)
 
-Anchored means the eligibility or threshold follows a legal text. Weights are unchanged (same per universal kind). “Editorial” means no legal anchor was found that the data can test.
+Anchored means the eligibility or threshold follows a legal text, subject to the verification limits below. Weights are editorial, not empirically calibrated; v3.3 reduces the France and Colombia long-duration maximum from 40 to 16 by owner decision. French single-bid associations do not justify a Colombian execution-risk weight. “Editorial” means no legal anchor was found that the data can test.
 
 | Country | Check | Legal anchor and source | Status |
 | --- | --- | --- | --- |
 | France | direct award | CCP art. R2122-8, dated thresholds ([score-v3.md](score-v3.md)) | anchored (v3.2) |
-| France | late publication | EU award notice 30 days (Directive 2014/24/EU art. 50), essential data 2 months | anchored |
+| France | late publication | EU award notice 30 days (Directive 2014/24/EU art. 50), essential data 2 months; scoring cutoffs are not legal deadlines | editorial: DECP excess > 240 days is exploratory single-bid proxy evidence, not corruption calibration; fallback and BOAMP 120 days |
 | France | short bidding period | EU/French minimums per procedure (CCP R2161-2 to R2161-5: 35 days, 30 with e-submission, 15 in urgency) apply only above EU thresholds, which the data does not give; the 15-day cut is the lowest legal minimum | follow-up |
 | France | amount increase (> 20 %) | R2194-5 (50 % per modification, unforeseeable circumstances only), R2194-8 (10 % services/supplies, 15 % works, below EU thresholds only). The applicable cap depends on the modification's ground, not in the data | editorial; follow-up |
 | France | long duration, single offer, repetition, concentration | none | editorial, no legal anchor |
-| Paraguay | amount increase | Ley 7021/22 art. 67, 20 % of amount and term; processes from 19 Feb 2024 ([score-paraguay.md](score-paraguay.md)) | anchored (v3.3): at the ceiling 8, beyond 16 → 40 |
+| Paraguay | amount increase | Ley 7021/22 art. 67, reported 20 % of amount and term; processes from 19 Feb 2024 ([score-paraguay.md](score-paraguay.md)) | provisional legal basis: full text and exceptions unverified, not a universally verified cap; at reference ceiling 8, beyond 16 → 40 |
 | Paraguay | exception award (CVE) | grounds, not an amount | no amount anchor |
 | Paraguay | short bidding period | decree 2264/24 minimums not verified | out of scope |
 | Paraguay | single tenderer, repetition, concentration | none | editorial, no legal anchor |

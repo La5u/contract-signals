@@ -32,6 +32,15 @@ check(direct({...works,amount:60000,date:'2022-03-01'}).status==='not-applicable
 check(direct({...works,amount:80000,date:'2026-03-01'}).status==='not-applicable','works 100k permanent from 2026');
 check(direct({...works,amount:80000,date:'2020-10-01'}).status==='signal'&&direct({...works,amount:60000,date:'2020-10-01'}).status==='unknown','works 70k from 24 Jul 2020 (40k to 70k uncertain during the transition)');
 check(direct({...works,amount:80000,date:'2020-12-20'}).status==='unknown','70k to 100k right after the ASAP law: uncertain');
+check(direct({...works,amount:50000,date:'2020-12-20'}).status==='unknown','overlapping changes: the 180-day window also includes the 40k works regime');
+check(direct({...works,amount:39999,date:'2020-12-20'}).status==='not-applicable','below all three possible works thresholds');
+check(direct({...works,amount:100000,date:'2020-12-20'}).status==='signal','at or above all possible works thresholds');
+check(direct({...works,amount:50000,date:'2021-01-19'}).status==='unknown','earlier works transition still inside 180 days');
+check(direct({...works,amount:50000,date:'2021-01-20'}).status==='not-applicable','earlier works transition ends at exactly 180 days');
+for(const date of ['2024-99-99','2024-02-30','2023-02-29','2024-00-01','2024-01-00','2024-06-01junk']) {
+ check(direct({amount:50000,date}).status==='unknown',`invalid calendar date ${date}: no direct-award points`);
+}
+check(direct({amount:50000,date:'2024-02-29'}).status==='signal','valid leap day remains assessable');
 check(direct({amount:80000}).status==='signal'&&direct({amount:80000,cpv:undefined}).status==='unknown','CPV missing between supplies and works thresholds: unknown');
 check(direct({amount:30000,cpv:undefined}).status==='not-applicable'&&direct({amount:150000,cpv:undefined}).status==='signal');
 check(direct({amount:50000,date:'2026-02-01'}).status==='signal'&&direct({amount:50000,date:'2026-04-10'}).status==='unknown'&&direct({amount:50000,date:'2026-10-01'}).status==='not-applicable','60k supplies/services from 1 Apr 2026');
@@ -62,6 +71,20 @@ const few=run('prepareContracts',Array.from({length:9},(_,i)=>late('f'+i,'F',300
 check(few.every(r=>r.latePublicationBaseline===null&&lateRule(r).status==='signal'),'fewer than 10 dated rows: no baseline');
 const ten=run('prepareContracts',Array.from({length:10},(_,i)=>late('t'+i,'T',300)));
 check(ten.every(r=>r.latePublicationBaseline?.others===9&&lateRule(r).status==='clear'),'exactly 10 dated rows establish a baseline');
+// Compare every leave-one-out baseline with an independently sorted median; cover
+// both parities, duplicates, and removal below/at/above the middle.
+for(const delays of [Array.from({length:10},(_,i)=>i*100),Array.from({length:11},(_,i)=>i*100),[0,0,100,100,200,300,300,400,500,900]]) {
+ const rows=delays.map((d,i)=>late('median'+i,'V',d));
+ run('assignPublicationBaselines',rows);
+ rows.forEach((r,i)=>{
+  const peers=delays.filter((_,j)=>j!==i).sort((a,b)=>a-b),middle=Math.floor(peers.length/2);
+  const expectedMedian=peers.length%2?peers[middle]:(peers[middle-1]+peers[middle])/2;
+  check(r.latePublicationBaseline.median===expectedMedian,`exact leave-one-out median for ${delays.length} rows, removal ${i}`);
+ });
+}
+// The parity bug could hide a signal at the DECP excess boundary.
+const boundary=run('prepareContracts',[...Array.from({length:9},(_,i)=>late('edge'+i,'E',i*100)),late('edge-out','E',641)]).find(r=>r.id==='edge-out');
+check(boundary.latePublicationBaseline.median===400&&lateRule(boundary).status==='signal','241-day excess uses the true odd median');
 const mixed=run('prepareContracts',[...batch,late('x','X',200,{buyer:'B'})]);
 check(mixed.find(r=>r.id==='x').latePublicationBaseline===null,'different buyer identifier is a different buyer');
 const excl=run('prepareContracts',[...batch,...Array.from({length:20},(_,i)=>late('e'+i,'B',5,{dataStatus:'unverified'}))]);
