@@ -12,6 +12,13 @@ Updated: 2026-10-03. The newest checkpoint below supersedes older session-status
 - Battery rule still applies to heavy work (national BASE rebuilds, large downloads): check AC power and get explicit authorization.
 - Model usage: the owner wants long or mechanical tasks delegated to Sonnet subagents or Codex (`codex-sub`) to save usage. Codex has a separate usage limit that can run out mid-task.
 
+### Audit corrections — owner-authorized release
+
+- Corrected v3.3 leave-one-out median parity, French invalid-calendar-date eligibility and overlapping 180-day threshold transitions; regression tests added. No weights or source cohorts changed.
+- Impact versus `5f94c8e`: 18,501 rows across 14 datasets; 21 changed scores (17 BOAMP, 4 Portugal TED), two added late-publication signals. Portugal positive/zero/unknown now 138/355/0; BOAMP positive total unchanged, one top-20 entry changes. Other 12 datasets unchanged. Details: `docs/score-audit.md`, `data/score-audit-impact.json`; reusable comparison: `tools/compare-score-revisions.cjs`.
+- Regenerated score review; generator reads actual `SCORE_VERSION` (3.3), corrected stale report/coverage version pointers. Shared/country docs distinguish editorial weights, exploratory proxy evidence, legal rules and provisional Paraguay basis.
+- All non-browser suites pass: 225 Python tests, 11 skipped; isolated headless Chromium browser suite passes. Playwright test dependency was restored under `/tmp/procurement-browser` after restart; `/tmp` is ephemeral. Owner explicitly authorized pushing these changes to `main` in the current session. Deployment confirmation must be checked after the push; prior authorization is not standing permission for future releases.
+
 ### Local research state outside git
 
 - `~/.cache/contract-signals/venv` (pyarrow, numpy, scipy, sklearn) runs `tools/analyze-decp-national.py`. System Python lacks pyarrow, so its tests skip there.

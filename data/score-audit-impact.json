@@ -1,0 +1,5140 @@
+{
+  "sourceCodeHashes": {
+    "before": "9cfff4652b5d9baf9ba3c770e62b9d506940d6532a459eb806b166885e1e3a74",
+    "after": "5d8f6090f297842ab6568d80b7c3bb72694e42c63db9a91215fc662b9f858cc2"
+  },
+  "method": "Same bundled inputs, independent preparation. Positive-score ranks and top 20 use each engine selectContracts(rows, {sort: \"score\"}); zero/null excluded. Offline revision diagnostics, not ground-truth validation.",
+  "datasets": {
+    "data/tours-notices.json": {
+      "inputSha256": "a029071945d3a7928afc7a02fc479f039f0deb84c584464a6f884e448e48c294",
+      "before": {
+        "rows": 66,
+        "positive": 0,
+        "zero": 6,
+        "null": 60
+      },
+      "after": {
+        "rows": 66,
+        "positive": 0,
+        "zero": 6,
+        "null": 60
+      },
+      "changedScoreRows": 0,
+      "changedIndicatorRows": 0,
+      "changedRankRows": 0,
+      "changedRows": [],
+      "top20": {
+        "before": [],
+        "after": [],
+        "entered": [],
+        "left": [],
+        "reordered": []
+      }
+    },
+    "data/decp-cities.json": {
+      "inputSha256": "d5126b0742d27858d68acc4b63c7a967db9653fd7cfbd96e1bfef6c98cfd1184",
+      "before": {
+        "rows": 1270,
+        "positive": 111,
+        "zero": 987,
+        "null": 172
+      },
+      "after": {
+        "rows": 1270,
+        "positive": 111,
+        "zero": 987,
+        "null": 172
+      },
+      "changedScoreRows": 0,
+      "changedIndicatorRows": 0,
+      "changedRankRows": 0,
+      "changedRows": [],
+      "top20": {
+        "before": [
+          {
+            "id": "decp-21370261600011-202525F0050648",
+            "score": 40,
+            "rank": 1
+          },
+          {
+            "id": "decp-21370261600011-202525F0050748",
+            "score": 40,
+            "rank": 2
+          },
+          {
+            "id": "decp-21370261600011-202525F0050848",
+            "score": 40,
+            "rank": 3
+          },
+          {
+            "id": "decp-21370261600011-202525F0051148",
+            "score": 40,
+            "rank": 4
+          },
+          {
+            "id": "decp-21370261600011-202525F0053248",
+            "score": 40,
+            "rank": 5
+          },
+          {
+            "id": "decp-21370261600011-202525F0053948",
+            "score": 40,
+            "rank": 6
+          },
+          {
+            "id": "decp-21370261600011-202525F0054448",
+            "score": 40,
+            "rank": 7
+          },
+          {
+            "id": "decp-21370261600011-202525F0054548",
+            "score": 40,
+            "rank": 8
+          },
+          {
+            "id": "decp-21370261600011-202525F0054648",
+            "score": 40,
+            "rank": 9
+          },
+          {
+            "id": "decp-21370261600011-202525F0054848",
+            "score": 40,
+            "rank": 10
+          },
+          {
+            "id": "decp-21370261600011-202525F0055448",
+            "score": 40,
+            "rank": 11
+          },
+          {
+            "id": "decp-21350238800019-2026S03348",
+            "score": 26.5,
+            "rank": 12
+          },
+          {
+            "id": "decp-21210231300013-2023VDSC149500",
+            "score": 18,
+            "rank": 13
+          },
+          {
+            "id": "decp-21210231300013-2024VDMS0414",
+            "score": 18,
+            "rank": 14
+          },
+          {
+            "id": "decp-21210231300013-2024VDMS0519",
+            "score": 18,
+            "rank": 15
+          },
+          {
+            "id": "decp-21210231300013-2024VDMS0581",
+            "score": 18,
+            "rank": 16
+          },
+          {
+            "id": "decp-21210231300013-2024VDMS003900",
+            "score": 18,
+            "rank": 17
+          },
+          {
+            "id": "decp-21210231300013-2024VDSC",
+            "score": 18,
+            "rank": 18
+          },
+          {
+            "id": "decp-21210231300013-2024VDSC0379",
+            "score": 18,
+            "rank": 19
+          },
+          {
+            "id": "decp-21210231300013-2024VDSC0484",
+            "score": 18,
+            "rank": 20
+          }
+        ],
+        "after": [
+          {
+            "id": "decp-21370261600011-202525F0050648",
+            "score": 40,
+            "rank": 1
+          },
+          {
+            "id": "decp-21370261600011-202525F0050748",
+            "score": 40,
+            "rank": 2
+          },
+          {
+            "id": "decp-21370261600011-202525F0050848",
+            "score": 40,
+            "rank": 3
+          },
+          {
+            "id": "decp-21370261600011-202525F0051148",
+            "score": 40,
+            "rank": 4
+          },
+          {
+            "id": "decp-21370261600011-202525F0053248",
+            "score": 40,
+            "rank": 5
+          },
+          {
+            "id": "decp-21370261600011-202525F0053948",
+            "score": 40,
+            "rank": 6
+          },
+          {
+            "id": "decp-21370261600011-202525F0054448",
+            "score": 40,
+            "rank": 7
+          },
+          {
+            "id": "decp-21370261600011-202525F0054548",
+            "score": 40,
+            "rank": 8
+          },
+          {
+            "id": "decp-21370261600011-202525F0054648",
+            "score": 40,
+            "rank": 9
+          },
+          {
+            "id": "decp-21370261600011-202525F0054848",
+            "score": 40,
+            "rank": 10
+          },
+          {
+            "id": "decp-21370261600011-202525F0055448",
+            "score": 40,
+            "rank": 11
+          },
+          {
+            "id": "decp-21350238800019-2026S03348",
+            "score": 26.5,
+            "rank": 12
+          },
+          {
+            "id": "decp-21210231300013-2023VDSC149500",
+            "score": 18,
+            "rank": 13
+          },
+          {
+            "id": "decp-21210231300013-2024VDMS0414",
+            "score": 18,
+            "rank": 14
+          },
+          {
+            "id": "decp-21210231300013-2024VDMS0519",
+            "score": 18,
+            "rank": 15
+          },
+          {
+            "id": "decp-21210231300013-2024VDMS0581",
+            "score": 18,
+            "rank": 16
+          },
+          {
+            "id": "decp-21210231300013-2024VDMS003900",
+            "score": 18,
+            "rank": 17
+          },
+          {
+            "id": "decp-21210231300013-2024VDSC",
+            "score": 18,
+            "rank": 18
+          },
+          {
+            "id": "decp-21210231300013-2024VDSC0379",
+            "score": 18,
+            "rank": 19
+          },
+          {
+            "id": "decp-21210231300013-2024VDSC0484",
+            "score": 18,
+            "rank": 20
+          }
+        ],
+        "entered": [],
+        "left": [],
+        "reordered": []
+      }
+    },
+    "data/consultations.json": {
+      "inputSha256": "3bacd53cad545018ca51720273f639f535fdc7951059ee05d9b7fbf8231c3680",
+      "before": {
+        "rows": 10,
+        "positive": 0,
+        "zero": 0,
+        "null": 10
+      },
+      "after": {
+        "rows": 10,
+        "positive": 0,
+        "zero": 0,
+        "null": 10
+      },
+      "changedScoreRows": 0,
+      "changedIndicatorRows": 0,
+      "changedRankRows": 0,
+      "changedRows": [],
+      "top20": {
+        "before": [],
+        "after": [],
+        "entered": [],
+        "left": [],
+        "reordered": []
+      }
+    },
+    "data/decp-history.json": {
+      "inputSha256": "8f8837d8e9e72e9129b6688e12f615c4354475b0787ba65260b190430bf745c2",
+      "before": {
+        "rows": 2594,
+        "positive": 273,
+        "zero": 1966,
+        "null": 355
+      },
+      "after": {
+        "rows": 2594,
+        "positive": 273,
+        "zero": 1966,
+        "null": 355
+      },
+      "changedScoreRows": 0,
+      "changedIndicatorRows": 0,
+      "changedRankRows": 0,
+      "changedRows": [],
+      "top20": {
+        "before": [
+          {
+            "id": "decp-22070001700019-2024DI08",
+            "score": 58,
+            "rank": 1
+          },
+          {
+            "id": "decp-22070001700019-202423DI17",
+            "score": 58,
+            "rank": 2
+          },
+          {
+            "id": "decp-22070001700019-2024DI02",
+            "score": 55.2,
+            "rank": 3
+          },
+          {
+            "id": "decp-22070001700019-2025DI01",
+            "score": 52,
+            "rank": 4
+          },
+          {
+            "id": "decp-21750001600019-2024T00354",
+            "score": 44.3,
+            "rank": 5
+          },
+          {
+            "id": "decp-22070001700019-2024SREF04B",
+            "score": 40,
+            "rank": 6
+          },
+          {
+            "id": "decp-22070001700019-2024SREF04D",
+            "score": 40,
+            "rank": 7
+          },
+          {
+            "id": "decp-22070001700019-2024TESH233",
+            "score": 40,
+            "rank": 8
+          },
+          {
+            "id": "decp-22070001700019-202423DI20",
+            "score": 40,
+            "rank": 9
+          },
+          {
+            "id": "decp-22070001700019-202524DI04",
+            "score": 40,
+            "rank": 10
+          },
+          {
+            "id": "decp-21750001600019-2024T00731",
+            "score": 36,
+            "rank": 11
+          },
+          {
+            "id": "decp-21750001600019-2024T01007",
+            "score": 36,
+            "rank": 12
+          },
+          {
+            "id": "decp-21750001600019-2024T02268",
+            "score": 36,
+            "rank": 13
+          },
+          {
+            "id": "decp-21750001600019-2024T03512",
+            "score": 36,
+            "rank": 14
+          },
+          {
+            "id": "decp-21750001600019-2024T04667",
+            "score": 36,
+            "rank": 15
+          },
+          {
+            "id": "decp-22070001700019-20252024SMG08B",
+            "score": 34.9,
+            "rank": 16
+          },
+          {
+            "id": "decp-22070001700019-2023D22",
+            "score": 30,
+            "rank": 17
+          },
+          {
+            "id": "decp-22070001700019-20252024SMG08D",
+            "score": 27.9,
+            "rank": 18
+          },
+          {
+            "id": "decp-21750001600019-2024T00756",
+            "score": 26.1,
+            "rank": 19
+          },
+          {
+            "id": "decp-21750001600019-2024S01387",
+            "score": 26,
+            "rank": 20
+          }
+        ],
+        "after": [
+          {
+            "id": "decp-22070001700019-2024DI08",
+            "score": 58,
+            "rank": 1
+          },
+          {
+            "id": "decp-22070001700019-202423DI17",
+            "score": 58,
+            "rank": 2
+          },
+          {
+            "id": "decp-22070001700019-2024DI02",
+            "score": 55.2,
+            "rank": 3
+          },
+          {
+            "id": "decp-22070001700019-2025DI01",
+            "score": 52,
+            "rank": 4
+          },
+          {
+            "id": "decp-21750001600019-2024T00354",
+            "score": 44.3,
+            "rank": 5
+          },
+          {
+            "id": "decp-22070001700019-2024SREF04B",
+            "score": 40,
+            "rank": 6
+          },
+          {
+            "id": "decp-22070001700019-2024SREF04D",
+            "score": 40,
+            "rank": 7
+          },
+          {
+            "id": "decp-22070001700019-2024TESH233",
+            "score": 40,
+            "rank": 8
+          },
+          {
+            "id": "decp-22070001700019-202423DI20",
+            "score": 40,
+            "rank": 9
+          },
+          {
+            "id": "decp-22070001700019-202524DI04",
+            "score": 40,
+            "rank": 10
+          },
+          {
+            "id": "decp-21750001600019-2024T00731",
+            "score": 36,
+            "rank": 11
+          },
+          {
+            "id": "decp-21750001600019-2024T01007",
+            "score": 36,
+            "rank": 12
+          },
+          {
+            "id": "decp-21750001600019-2024T02268",
+            "score": 36,
+            "rank": 13
+          },
+          {
+            "id": "decp-21750001600019-2024T03512",
+            "score": 36,
+            "rank": 14
+          },
+          {
+            "id": "decp-21750001600019-2024T04667",
+            "score": 36,
+            "rank": 15
+          },
+          {
+            "id": "decp-22070001700019-20252024SMG08B",
+            "score": 34.9,
+            "rank": 16
+          },
+          {
+            "id": "decp-22070001700019-2023D22",
+            "score": 30,
+            "rank": 17
+          },
+          {
+            "id": "decp-22070001700019-20252024SMG08D",
+            "score": 27.9,
+            "rank": 18
+          },
+          {
+            "id": "decp-21750001600019-2024T00756",
+            "score": 26.1,
+            "rank": 19
+          },
+          {
+            "id": "decp-21750001600019-2024S01387",
+            "score": 26,
+            "rank": 20
+          }
+        ],
+        "entered": [],
+        "left": [],
+        "reordered": []
+      }
+    },
+    "data/contracts.json": {
+      "inputSha256": "a02b90a427d9310ec57b6b2a7b18c21d9c999f8ebba0542835c7161a6cdf6400",
+      "before": {
+        "rows": 3010,
+        "positive": 432,
+        "zero": 2566,
+        "null": 12
+      },
+      "after": {
+        "rows": 3010,
+        "positive": 432,
+        "zero": 2566,
+        "null": 12
+      },
+      "changedScoreRows": 17,
+      "changedIndicatorRows": 1,
+      "changedRankRows": 197,
+      "changedRows": [
+        {
+          "id": "boamp-25-11454-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 59,
+          "newRank": 60,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-11584-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 60,
+          "newRank": 61,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-11757-lot-0004",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 61,
+          "newRank": 62,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-11790-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 62,
+          "newRank": 63,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-11790-lot-0004",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 63,
+          "newRank": 64,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-11806-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 64,
+          "newRank": 65,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-11852-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 65,
+          "newRank": 66,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-11921-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 18,
+          "afterScore": 18,
+          "oldRank": 21,
+          "newRank": 22,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-12058-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 18,
+          "afterScore": 18,
+          "oldRank": 22,
+          "newRank": 23,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-12084-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 66,
+          "newRank": 67,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-12084-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 67,
+          "newRank": 68,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-12093-lot-0012",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 68,
+          "newRank": 69,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-12246-lot-0007",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 69,
+          "newRank": 70,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-12246-lot-0035",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 70,
+          "newRank": 71,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-12246-lot-0039",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 71,
+          "newRank": 72,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-12316-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 72,
+          "newRank": 73,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-12320-lot-0004",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 73,
+          "newRank": 74,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-12396-lot-0004",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 74,
+          "newRank": 75,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-13291-lot-0009",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 75,
+          "newRank": 76,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-13300-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 76,
+          "newRank": 77,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-13357-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 77,
+          "newRank": 78,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-13357-lot-0003",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 78,
+          "newRank": 79,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-13468-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 79,
+          "newRank": 80,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-13561-lot-0007",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 80,
+          "newRank": 81,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-13561-lot-0014",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 81,
+          "newRank": 82,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-13561-lot-0017",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 82,
+          "newRank": 83,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-13561-lot-0019",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 83,
+          "newRank": 84,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-13561-lot-0021",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 84,
+          "newRank": 85,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-13851-lot-0005",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 85,
+          "newRank": 86,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-14041-lot-0004",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 86,
+          "newRank": 87,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-14041-lot-0005",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 87,
+          "newRank": 88,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-14063-lot-0010",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 88,
+          "newRank": 89,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-14146-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 89,
+          "newRank": 90,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-14295-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 26.1,
+          "afterScore": 26.2,
+          "oldRank": 2,
+          "newRank": 2,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-14295-lot-0004",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 26.1,
+          "afterScore": 26.2,
+          "oldRank": 3,
+          "newRank": 3,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-14295-lot-0007",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 26.1,
+          "afterScore": 26.2,
+          "oldRank": 4,
+          "newRank": 4,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-14295-lot-0008",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 26.1,
+          "afterScore": 26.2,
+          "oldRank": 5,
+          "newRank": 5,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-14376-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 90,
+          "newRank": 91,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-14391-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 91,
+          "newRank": 92,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-14391-lot-0005",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 92,
+          "newRank": 93,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-14453-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 93,
+          "newRank": 94,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-14684-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.2,
+          "afterScore": 8.2,
+          "oldRank": 388,
+          "newRank": 390,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-14829-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.6,
+          "afterScore": 8.6,
+          "oldRank": 357,
+          "newRank": 361,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-15358-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 94,
+          "newRank": 95,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-15378-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 95,
+          "newRank": 96,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-15573-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 96,
+          "newRank": 97,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-15796-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 16,
+          "afterScore": 16,
+          "oldRank": 35,
+          "newRank": 36,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-15837-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.2,
+          "afterScore": 8.2,
+          "oldRank": 389,
+          "newRank": 391,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-16003-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 97,
+          "newRank": 98,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-16134-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 98,
+          "newRank": 99,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-16362-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 99,
+          "newRank": 100,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-16419-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 100,
+          "newRank": 101,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-16868-lot-0004",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 101,
+          "newRank": 102,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-17021-lot-0008",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 102,
+          "newRank": 103,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-17156-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 103,
+          "newRank": 104,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-17159-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 104,
+          "newRank": 105,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-17410-lot-0026",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 105,
+          "newRank": 106,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-17415-lot-0016",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 106,
+          "newRank": 107,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-17431-lot-0006",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 107,
+          "newRank": 108,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-17548-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 18,
+          "afterScore": 18,
+          "oldRank": 23,
+          "newRank": 24,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-17573-lot-0006",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 108,
+          "newRank": 109,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-17983-lot-0005",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 109,
+          "newRank": 110,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-18436-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 110,
+          "newRank": 111,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-18920-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 16,
+          "afterScore": 16,
+          "oldRank": 36,
+          "newRank": 37,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-18979-lot-0004",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 111,
+          "newRank": 112,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-19293-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 112,
+          "newRank": 113,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-19522-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 113,
+          "newRank": 114,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-19524-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 114,
+          "newRank": 115,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-19567-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 115,
+          "newRank": 116,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-19905-lot-0003",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 116,
+          "newRank": 117,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-19959-lot-0005",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 117,
+          "newRank": 118,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-20071-lot-0004",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 20.6,
+          "afterScore": 20.7,
+          "oldRank": 9,
+          "newRank": 9,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-20071-lot-0009",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 20.6,
+          "afterScore": 20.7,
+          "oldRank": 10,
+          "newRank": 10,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-20073-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 118,
+          "newRank": 119,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-20078-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12.2,
+          "afterScore": 12.2,
+          "oldRank": 52,
+          "newRank": 57,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-20172-lot-0003",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.6,
+          "afterScore": 8.8,
+          "oldRank": 358,
+          "newRank": 346,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-20172-lot-0011",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.6,
+          "afterScore": 8.8,
+          "oldRank": 359,
+          "newRank": 347,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-20172-lot-0020",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.6,
+          "afterScore": 8.8,
+          "oldRank": 360,
+          "newRank": 348,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-20172-lot-0025",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.6,
+          "afterScore": 8.8,
+          "oldRank": 361,
+          "newRank": 349,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-20201-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 119,
+          "newRank": 120,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-20423-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.7,
+          "afterScore": 8.7,
+          "oldRank": 350,
+          "newRank": 354,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-20688-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 120,
+          "newRank": 121,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-20688-lot-0004",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 121,
+          "newRank": 122,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-20844-lot-0005",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12.6,
+          "afterScore": 12.6,
+          "oldRank": 46,
+          "newRank": 47,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-20844-lot-0013",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12.6,
+          "afterScore": 12.6,
+          "oldRank": 47,
+          "newRank": 48,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-20844-lot-0017",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12.6,
+          "afterScore": 12.6,
+          "oldRank": 48,
+          "newRank": 49,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-20844-lot-0018",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12.6,
+          "afterScore": 12.6,
+          "oldRank": 49,
+          "newRank": 50,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-20904-lot-0014",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 122,
+          "newRank": 123,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-21047-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 123,
+          "newRank": 124,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-21228-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 124,
+          "newRank": 125,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-21228-lot-0003",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 125,
+          "newRank": 126,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-21329-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 18,
+          "afterScore": 18,
+          "oldRank": 24,
+          "newRank": 25,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-21776-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 126,
+          "newRank": 127,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-21842-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 127,
+          "newRank": 128,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-21863-lot-0005",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 128,
+          "newRank": 129,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-22138-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 129,
+          "newRank": 130,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-22318-lot-0006",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 130,
+          "newRank": 131,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-22655-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 131,
+          "newRank": 132,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-22667-lot-0005",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 132,
+          "newRank": 133,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-22732-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.7,
+          "afterScore": 8.7,
+          "oldRank": 351,
+          "newRank": 355,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-22812-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 18,
+          "afterScore": 18,
+          "oldRank": 25,
+          "newRank": 26,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-22901-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 133,
+          "newRank": 134,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-23095-lot-0006",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.8,
+          "afterScore": 8.8,
+          "oldRank": 346,
+          "newRank": 350,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-23095-lot-0008",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.7,
+          "afterScore": 8.7,
+          "oldRank": 352,
+          "newRank": 356,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-23100-lot-0012",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 134,
+          "newRank": 135,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-23156-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 135,
+          "newRank": 136,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-23258-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 136,
+          "newRank": 137,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-23277-lot-0003",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 137,
+          "newRank": 138,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-23277-lot-0004",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 138,
+          "newRank": 139,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-23635-lot-0009",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 139,
+          "newRank": 140,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-23635-lot-0014",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 140,
+          "newRank": 141,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-23635-lot-0016",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 141,
+          "newRank": 142,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-23635-lot-0019",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 142,
+          "newRank": 143,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-23640-lot-0006",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 143,
+          "newRank": 144,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-23640-lot-0007",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 144,
+          "newRank": 145,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-23649-lot-0013",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 145,
+          "newRank": 146,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-23649-lot-0014",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 146,
+          "newRank": 147,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-23649-lot-0028",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 147,
+          "newRank": 148,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-23649-lot-0036",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 148,
+          "newRank": 149,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-23649-lot-0037",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 149,
+          "newRank": 150,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-23770-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.2,
+          "afterScore": 8.3,
+          "oldRank": 390,
+          "newRank": 378,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-23770-lot-0003",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.2,
+          "afterScore": 8.3,
+          "oldRank": 391,
+          "newRank": 379,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-23914-lot-0022",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 150,
+          "newRank": 151,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-23966-lot-0003",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 151,
+          "newRank": 152,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-24009-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 152,
+          "newRank": 153,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-24634-lot-0005",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 153,
+          "newRank": 154,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-24634-lot-0014",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 154,
+          "newRank": 155,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-24634-lot-0015",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 155,
+          "newRank": 156,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-24703-lot-0010",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 13.9,
+          "afterScore": 13.9,
+          "oldRank": 41,
+          "newRank": 42,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-24814-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 156,
+          "newRank": 157,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-24915-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 157,
+          "newRank": 158,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-24992-lot-0011",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 158,
+          "newRank": 159,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-24992-lot-0012",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 159,
+          "newRank": 160,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-24992-lot-0014",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 160,
+          "newRank": 161,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-25197-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 161,
+          "newRank": 162,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-25299-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 18,
+          "afterScore": 18,
+          "oldRank": 26,
+          "newRank": 27,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-25328-lot-0008",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 162,
+          "newRank": 163,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-25328-lot-0009",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 163,
+          "newRank": 164,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-25328-lot-0012",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 164,
+          "newRank": 165,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-25377-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 165,
+          "newRank": 166,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-25440-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 166,
+          "newRank": 167,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-25442-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 18,
+          "afterScore": 18,
+          "oldRank": 27,
+          "newRank": 28,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-25509-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.7,
+          "afterScore": 8.7,
+          "oldRank": 353,
+          "newRank": 357,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-25660-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 167,
+          "newRank": 168,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-26028-lot-0025",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 168,
+          "newRank": 169,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-26028-lot-0026",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 169,
+          "newRank": 170,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-26028-lot-0027",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 170,
+          "newRank": 171,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-26028-lot-0034",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 171,
+          "newRank": 172,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-26384-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 172,
+          "newRank": 173,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-26764-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 173,
+          "newRank": 174,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-26904-lot-0004",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 174,
+          "newRank": 175,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-26904-lot-0009",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 175,
+          "newRank": 176,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-27101-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 176,
+          "newRank": 177,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-27351-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 177,
+          "newRank": 178,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-27484-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 178,
+          "newRank": 179,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-27560-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 179,
+          "newRank": 180,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-27599-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 180,
+          "newRank": 181,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-27652-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 181,
+          "newRank": 182,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-28495-lot-0005",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 182,
+          "newRank": 183,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-28636-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 183,
+          "newRank": 184,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-28728-lot-0007",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 184,
+          "newRank": 185,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-28733-lot-0012",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 185,
+          "newRank": 186,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-29647-lot-0011",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 186,
+          "newRank": 187,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-29650-lot-0009",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.8,
+          "afterScore": 8.8,
+          "oldRank": 347,
+          "newRank": 351,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-29696-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 187,
+          "newRank": 188,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-29696-lot-0003",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 188,
+          "newRank": 189,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-29702-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 189,
+          "newRank": 190,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-30006-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12.7,
+          "afterScore": 12.7,
+          "oldRank": 45,
+          "newRank": 46,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-30125-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 20,
+          "oldRank": 190,
+          "newRank": 20,
+          "indicatorsAdded": [
+            "late-publication"
+          ],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-30803-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 18,
+          "afterScore": 18,
+          "oldRank": 28,
+          "newRank": 29,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-30854-lot-0000",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 18,
+          "afterScore": 18,
+          "oldRank": 29,
+          "newRank": 30,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-31099-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12.4,
+          "afterScore": 12.4,
+          "oldRank": 50,
+          "newRank": 51,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-31099-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12.4,
+          "afterScore": 12.4,
+          "oldRank": 51,
+          "newRank": 52,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-31149-lot-0002",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 16,
+          "afterScore": 16,
+          "oldRank": 37,
+          "newRank": 38,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-31158-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 18.3,
+          "afterScore": 18.3,
+          "oldRank": 20,
+          "newRank": 21,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-31165-lot-0005",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 16,
+          "afterScore": 16,
+          "oldRank": 38,
+          "newRank": 39,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-31165-lot-0009",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 16,
+          "afterScore": 16,
+          "oldRank": 39,
+          "newRank": 40,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-31165-lot-0010",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 16,
+          "afterScore": 16,
+          "oldRank": 40,
+          "newRank": 41,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-33357-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 18,
+          "afterScore": 18,
+          "oldRank": 30,
+          "newRank": 31,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-34479-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.8,
+          "afterScore": 8.8,
+          "oldRank": 348,
+          "newRank": 352,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-34772-lot-0005",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12.2,
+          "afterScore": 12.3,
+          "oldRank": 53,
+          "newRank": 53,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-34772-lot-0012",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12.2,
+          "afterScore": 12.3,
+          "oldRank": 54,
+          "newRank": 54,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-34772-lot-0021",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12.2,
+          "afterScore": 12.3,
+          "oldRank": 55,
+          "newRank": 55,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-34772-lot-0037",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12.2,
+          "afterScore": 12.3,
+          "oldRank": 56,
+          "newRank": 56,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-37315-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12.8,
+          "afterScore": 12.8,
+          "oldRank": 43,
+          "newRank": 44,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-37315-lot-0003",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12.8,
+          "afterScore": 12.8,
+          "oldRank": 44,
+          "newRank": 45,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-37470-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.7,
+          "afterScore": 8.7,
+          "oldRank": 354,
+          "newRank": 358,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-38872-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.8,
+          "afterScore": 8.8,
+          "oldRank": 349,
+          "newRank": 353,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-40770-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.3,
+          "afterScore": 8.3,
+          "oldRank": 378,
+          "newRank": 380,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-40770-lot-0003",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.3,
+          "afterScore": 8.3,
+          "oldRank": 379,
+          "newRank": 381,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-40770-lot-0012",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.3,
+          "afterScore": 8.3,
+          "oldRank": 380,
+          "newRank": 382,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-40770-lot-0014",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.3,
+          "afterScore": 8.3,
+          "oldRank": 381,
+          "newRank": 383,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-40770-lot-0016",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.3,
+          "afterScore": 8.3,
+          "oldRank": 382,
+          "newRank": 384,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-40770-lot-0030",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.3,
+          "afterScore": 8.3,
+          "oldRank": 383,
+          "newRank": 385,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-40770-lot-0044",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.3,
+          "afterScore": 8.3,
+          "oldRank": 384,
+          "newRank": 386,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-40770-lot-0045",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.3,
+          "afterScore": 8.3,
+          "oldRank": 385,
+          "newRank": 387,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-41671-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 18,
+          "afterScore": 18,
+          "oldRank": 31,
+          "newRank": 32,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-41673-lot-0011",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.3,
+          "afterScore": 8.3,
+          "oldRank": 386,
+          "newRank": 388,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-42059-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 18,
+          "afterScore": 18,
+          "oldRank": 32,
+          "newRank": 33,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-43576-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 18,
+          "afterScore": 18,
+          "oldRank": 33,
+          "newRank": 34,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-46857-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.7,
+          "afterScore": 8.7,
+          "oldRank": 355,
+          "newRank": 359,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-47796-lot-0003",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12.9,
+          "afterScore": 12.9,
+          "oldRank": 42,
+          "newRank": 43,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-48414-lot-0003",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.3,
+          "afterScore": 8.3,
+          "oldRank": 387,
+          "newRank": 389,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-48523-lot-0001",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.7,
+          "afterScore": 8.7,
+          "oldRank": 356,
+          "newRank": 360,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-846-lot-1",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 57,
+          "newRank": 58,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "boamp-25-846-lot-2",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 12,
+          "afterScore": 12,
+          "oldRank": 58,
+          "newRank": 59,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "crc-chapelle-gandonniere",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 18,
+          "afterScore": 18,
+          "oldRank": 34,
+          "newRank": 35,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        }
+      ],
+      "top20": {
+        "before": [
+          {
+            "id": "boamp-25-40460-lot-0001",
+            "score": 31.1,
+            "rank": 1
+          },
+          {
+            "id": "boamp-25-14295-lot-0002",
+            "score": 26.1,
+            "rank": 2
+          },
+          {
+            "id": "boamp-25-14295-lot-0004",
+            "score": 26.1,
+            "rank": 3
+          },
+          {
+            "id": "boamp-25-14295-lot-0007",
+            "score": 26.1,
+            "rank": 4
+          },
+          {
+            "id": "boamp-25-14295-lot-0008",
+            "score": 26.1,
+            "rank": 5
+          },
+          {
+            "id": "boamp-25-33928-lot-0001",
+            "score": 22.2,
+            "rank": 6
+          },
+          {
+            "id": "boamp-25-38724-lot-0003",
+            "score": 21.8,
+            "rank": 7
+          },
+          {
+            "id": "boamp-25-12547-lot-0000",
+            "score": 21.3,
+            "rank": 8
+          },
+          {
+            "id": "boamp-25-20071-lot-0004",
+            "score": 20.6,
+            "rank": 9
+          },
+          {
+            "id": "boamp-25-20071-lot-0009",
+            "score": 20.6,
+            "rank": 10
+          },
+          {
+            "id": "boamp-25-24559-lot-0002",
+            "score": 20.6,
+            "rank": 11
+          },
+          {
+            "id": "boamp-25-20588-lot-0004",
+            "score": 20.5,
+            "rank": 12
+          },
+          {
+            "id": "boamp-25-11411-lot-0001",
+            "score": 20.3,
+            "rank": 13
+          },
+          {
+            "id": "boamp-25-46160-lot-0003",
+            "score": 20.3,
+            "rank": 14
+          },
+          {
+            "id": "boamp-25-48261-lot-0001",
+            "score": 20.2,
+            "rank": 15
+          },
+          {
+            "id": "boamp-25-48261-lot-0005",
+            "score": 20.2,
+            "rank": 16
+          },
+          {
+            "id": "boamp-25-48261-lot-0007",
+            "score": 20.2,
+            "rank": 17
+          },
+          {
+            "id": "boamp-25-40129-lot-0002",
+            "score": 20.1,
+            "rank": 18
+          },
+          {
+            "id": "boamp-25-43250-lot-0007",
+            "score": 20.1,
+            "rank": 19
+          },
+          {
+            "id": "boamp-25-31158-lot-0001",
+            "score": 18.3,
+            "rank": 20
+          }
+        ],
+        "after": [
+          {
+            "id": "boamp-25-40460-lot-0001",
+            "score": 31.1,
+            "rank": 1
+          },
+          {
+            "id": "boamp-25-14295-lot-0002",
+            "score": 26.2,
+            "rank": 2
+          },
+          {
+            "id": "boamp-25-14295-lot-0004",
+            "score": 26.2,
+            "rank": 3
+          },
+          {
+            "id": "boamp-25-14295-lot-0007",
+            "score": 26.2,
+            "rank": 4
+          },
+          {
+            "id": "boamp-25-14295-lot-0008",
+            "score": 26.2,
+            "rank": 5
+          },
+          {
+            "id": "boamp-25-33928-lot-0001",
+            "score": 22.2,
+            "rank": 6
+          },
+          {
+            "id": "boamp-25-38724-lot-0003",
+            "score": 21.8,
+            "rank": 7
+          },
+          {
+            "id": "boamp-25-12547-lot-0000",
+            "score": 21.3,
+            "rank": 8
+          },
+          {
+            "id": "boamp-25-20071-lot-0004",
+            "score": 20.7,
+            "rank": 9
+          },
+          {
+            "id": "boamp-25-20071-lot-0009",
+            "score": 20.7,
+            "rank": 10
+          },
+          {
+            "id": "boamp-25-24559-lot-0002",
+            "score": 20.6,
+            "rank": 11
+          },
+          {
+            "id": "boamp-25-20588-lot-0004",
+            "score": 20.5,
+            "rank": 12
+          },
+          {
+            "id": "boamp-25-11411-lot-0001",
+            "score": 20.3,
+            "rank": 13
+          },
+          {
+            "id": "boamp-25-46160-lot-0003",
+            "score": 20.3,
+            "rank": 14
+          },
+          {
+            "id": "boamp-25-48261-lot-0001",
+            "score": 20.2,
+            "rank": 15
+          },
+          {
+            "id": "boamp-25-48261-lot-0005",
+            "score": 20.2,
+            "rank": 16
+          },
+          {
+            "id": "boamp-25-48261-lot-0007",
+            "score": 20.2,
+            "rank": 17
+          },
+          {
+            "id": "boamp-25-40129-lot-0002",
+            "score": 20.1,
+            "rank": 18
+          },
+          {
+            "id": "boamp-25-43250-lot-0007",
+            "score": 20.1,
+            "rank": 19
+          },
+          {
+            "id": "boamp-25-30125-lot-0000",
+            "score": 20,
+            "rank": 20
+          }
+        ],
+        "entered": [
+          {
+            "id": "boamp-25-30125-lot-0000",
+            "beforeScore": 12,
+            "afterScore": 20,
+            "oldRank": 190,
+            "newRank": 20
+          }
+        ],
+        "left": [
+          {
+            "id": "boamp-25-31158-lot-0001",
+            "beforeScore": 18.3,
+            "afterScore": 18.3,
+            "oldRank": 20,
+            "newRank": 21
+          }
+        ],
+        "reordered": []
+      }
+    },
+    "data/colombia-secop2.json": {
+      "inputSha256": "4918454a88ffc76f5cd75f71ba4c6eeb6607f16ed7b80792291c52e88b614a7b",
+      "before": {
+        "rows": 7560,
+        "positive": 272,
+        "zero": 7288,
+        "null": 0
+      },
+      "after": {
+        "rows": 7560,
+        "positive": 272,
+        "zero": 7288,
+        "null": 0
+      },
+      "changedScoreRows": 0,
+      "changedIndicatorRows": 0,
+      "changedRankRows": 0,
+      "changedRows": [],
+      "top20": {
+        "before": [
+          {
+            "id": "secop2-caldas-CO1.PCCNTR.6824618",
+            "score": 40,
+            "rank": 1
+          },
+          {
+            "id": "secop2-caldas-CO1.PCCNTR.8476788",
+            "score": 40,
+            "rank": 2
+          },
+          {
+            "id": "secop2-caldas-CO1.PCCNTR.8883159",
+            "score": 40,
+            "rank": 3
+          },
+          {
+            "id": "secop2-usaquen-CO1.PCCNTR.8734757",
+            "score": 40,
+            "rank": 4
+          },
+          {
+            "id": "secop2-usaquen-CO1.PCCNTR.8744272",
+            "score": 40,
+            "rank": 5
+          },
+          {
+            "id": "secop2-usaquen-CO1.PCCNTR.8749221",
+            "score": 40,
+            "rank": 6
+          },
+          {
+            "id": "secop2-caldas-CO1.PCCNTR.9770799",
+            "score": 37.7,
+            "rank": 7
+          },
+          {
+            "id": "secop2-men-CO1.PCCNTR.7347733",
+            "score": 36,
+            "rank": 8
+          },
+          {
+            "id": "secop2-men-CO1.PCCNTR.7859288",
+            "score": 36,
+            "rank": 9
+          },
+          {
+            "id": "secop2-men-CO1.PCCNTR.7924107",
+            "score": 36,
+            "rank": 10
+          },
+          {
+            "id": "secop2-men-CO1.PCCNTR.9134939",
+            "score": 36,
+            "rank": 11
+          },
+          {
+            "id": "secop2-men-CO1.PCCNTR.9260821",
+            "score": 36,
+            "rank": 12
+          },
+          {
+            "id": "secop2-men-CO1.PCCNTR.9297226",
+            "score": 36,
+            "rank": 13
+          },
+          {
+            "id": "secop2-caldas-CO1.PCCNTR.8203650",
+            "score": 35.4,
+            "rank": 14
+          },
+          {
+            "id": "secop2-caldas-CO1.PCCNTR.8256509",
+            "score": 31.4,
+            "rank": 15
+          },
+          {
+            "id": "secop2-caldas-CO1.PCCNTR.8265507",
+            "score": 31.4,
+            "rank": 16
+          },
+          {
+            "id": "secop2-caldas-CO1.PCCNTR.8314868",
+            "score": 29.7,
+            "rank": 17
+          },
+          {
+            "id": "secop2-caldas-CO1.PCCNTR.8183246",
+            "score": 27.5,
+            "rank": 18
+          },
+          {
+            "id": "secop2-caldas-CO1.PCCNTR.9692953",
+            "score": 24.2,
+            "rank": 19
+          },
+          {
+            "id": "secop2-caldas-CO1.PCCNTR.8214715",
+            "score": 24.1,
+            "rank": 20
+          }
+        ],
+        "after": [
+          {
+            "id": "secop2-caldas-CO1.PCCNTR.6824618",
+            "score": 40,
+            "rank": 1
+          },
+          {
+            "id": "secop2-caldas-CO1.PCCNTR.8476788",
+            "score": 40,
+            "rank": 2
+          },
+          {
+            "id": "secop2-caldas-CO1.PCCNTR.8883159",
+            "score": 40,
+            "rank": 3
+          },
+          {
+            "id": "secop2-usaquen-CO1.PCCNTR.8734757",
+            "score": 40,
+            "rank": 4
+          },
+          {
+            "id": "secop2-usaquen-CO1.PCCNTR.8744272",
+            "score": 40,
+            "rank": 5
+          },
+          {
+            "id": "secop2-usaquen-CO1.PCCNTR.8749221",
+            "score": 40,
+            "rank": 6
+          },
+          {
+            "id": "secop2-caldas-CO1.PCCNTR.9770799",
+            "score": 37.7,
+            "rank": 7
+          },
+          {
+            "id": "secop2-men-CO1.PCCNTR.7347733",
+            "score": 36,
+            "rank": 8
+          },
+          {
+            "id": "secop2-men-CO1.PCCNTR.7859288",
+            "score": 36,
+            "rank": 9
+          },
+          {
+            "id": "secop2-men-CO1.PCCNTR.7924107",
+            "score": 36,
+            "rank": 10
+          },
+          {
+            "id": "secop2-men-CO1.PCCNTR.9134939",
+            "score": 36,
+            "rank": 11
+          },
+          {
+            "id": "secop2-men-CO1.PCCNTR.9260821",
+            "score": 36,
+            "rank": 12
+          },
+          {
+            "id": "secop2-men-CO1.PCCNTR.9297226",
+            "score": 36,
+            "rank": 13
+          },
+          {
+            "id": "secop2-caldas-CO1.PCCNTR.8203650",
+            "score": 35.4,
+            "rank": 14
+          },
+          {
+            "id": "secop2-caldas-CO1.PCCNTR.8256509",
+            "score": 31.4,
+            "rank": 15
+          },
+          {
+            "id": "secop2-caldas-CO1.PCCNTR.8265507",
+            "score": 31.4,
+            "rank": 16
+          },
+          {
+            "id": "secop2-caldas-CO1.PCCNTR.8314868",
+            "score": 29.7,
+            "rank": 17
+          },
+          {
+            "id": "secop2-caldas-CO1.PCCNTR.8183246",
+            "score": 27.5,
+            "rank": 18
+          },
+          {
+            "id": "secop2-caldas-CO1.PCCNTR.9692953",
+            "score": 24.2,
+            "rank": 19
+          },
+          {
+            "id": "secop2-caldas-CO1.PCCNTR.8214715",
+            "score": 24.1,
+            "rank": 20
+          }
+        ],
+        "entered": [],
+        "left": [],
+        "reordered": []
+      }
+    },
+    "data/paraguay-dncp.json": {
+      "inputSha256": "fc7dec51d947c79129cf946b5d04ff69cd06842c09ad8862cda66c715ea3b483",
+      "before": {
+        "rows": 84,
+        "positive": 36,
+        "zero": 48,
+        "null": 0
+      },
+      "after": {
+        "rows": 84,
+        "positive": 36,
+        "zero": 48,
+        "null": 0
+      },
+      "changedScoreRows": 0,
+      "changedIndicatorRows": 0,
+      "changedRankRows": 0,
+      "changedRows": [],
+      "top20": {
+        "before": [
+          {
+            "id": "dncp-ocds-03ad3f-454145-1-MN-30173-24-246543",
+            "score": 20,
+            "rank": 1
+          },
+          {
+            "id": "dncp-ocds-03ad3f-453516-1-MN-30173-24-244373",
+            "score": 20,
+            "rank": 2
+          },
+          {
+            "id": "dncp-ocds-03ad3f-453517-1-MN-30173-24-244851",
+            "score": 20,
+            "rank": 3
+          },
+          {
+            "id": "dncp-ocds-03ad3f-453643-1-MN-30173-24-244854",
+            "score": 20,
+            "rank": 4
+          },
+          {
+            "id": "dncp-ocds-03ad3f-460530-1-MN-30173-25-250786",
+            "score": 20,
+            "rank": 5
+          },
+          {
+            "id": "dncp-ocds-03ad3f-460532-1-MN-30173-25-250785",
+            "score": 20,
+            "rank": 6
+          },
+          {
+            "id": "dncp-ocds-03ad3f-460843-1-MN-30173-25-251990",
+            "score": 20,
+            "rank": 7
+          },
+          {
+            "id": "dncp-ocds-03ad3f-470006-1-MN-30173-25-252790",
+            "score": 20,
+            "rank": 8
+          },
+          {
+            "id": "dncp-ocds-03ad3f-471271-1-MN-30173-25-254031",
+            "score": 20,
+            "rank": 9
+          },
+          {
+            "id": "dncp-ocds-03ad3f-471706-1-MN-30173-25-257741",
+            "score": 20,
+            "rank": 10
+          },
+          {
+            "id": "dncp-ocds-03ad3f-471726-1-MN-30173-25-257044",
+            "score": 20,
+            "rank": 11
+          },
+          {
+            "id": "dncp-ocds-03ad3f-462322-1-CE-30173-25-252836",
+            "score": 18,
+            "rank": 12
+          },
+          {
+            "id": "dncp-ocds-03ad3f-454144-1-MN-30173-24-246324",
+            "score": 16,
+            "rank": 13
+          },
+          {
+            "id": "dncp-ocds-03ad3f-455613-1-MN-30173-24-244807",
+            "score": 16,
+            "rank": 14
+          },
+          {
+            "id": "dncp-ocds-03ad3f-459477-1-MN-30173-25-249944",
+            "score": 16,
+            "rank": 15
+          },
+          {
+            "id": "dncp-ocds-03ad3f-470861-1-MN-30173-25-255687",
+            "score": 16,
+            "rank": 16
+          },
+          {
+            "id": "dncp-ocds-03ad3f-471629-1-MN-30173-25-256767",
+            "score": 16,
+            "rank": 17
+          },
+          {
+            "id": "dncp-ocds-03ad3f-471630-1-MN-30173-25-255936",
+            "score": 16,
+            "rank": 18
+          },
+          {
+            "id": "dncp-ocds-03ad3f-472659-1-MN-30173-25-257367",
+            "score": 16,
+            "rank": 19
+          },
+          {
+            "id": "dncp-ocds-03ad3f-472660-1-MN-30173-25-257365",
+            "score": 16,
+            "rank": 20
+          }
+        ],
+        "after": [
+          {
+            "id": "dncp-ocds-03ad3f-454145-1-MN-30173-24-246543",
+            "score": 20,
+            "rank": 1
+          },
+          {
+            "id": "dncp-ocds-03ad3f-453516-1-MN-30173-24-244373",
+            "score": 20,
+            "rank": 2
+          },
+          {
+            "id": "dncp-ocds-03ad3f-453517-1-MN-30173-24-244851",
+            "score": 20,
+            "rank": 3
+          },
+          {
+            "id": "dncp-ocds-03ad3f-453643-1-MN-30173-24-244854",
+            "score": 20,
+            "rank": 4
+          },
+          {
+            "id": "dncp-ocds-03ad3f-460530-1-MN-30173-25-250786",
+            "score": 20,
+            "rank": 5
+          },
+          {
+            "id": "dncp-ocds-03ad3f-460532-1-MN-30173-25-250785",
+            "score": 20,
+            "rank": 6
+          },
+          {
+            "id": "dncp-ocds-03ad3f-460843-1-MN-30173-25-251990",
+            "score": 20,
+            "rank": 7
+          },
+          {
+            "id": "dncp-ocds-03ad3f-470006-1-MN-30173-25-252790",
+            "score": 20,
+            "rank": 8
+          },
+          {
+            "id": "dncp-ocds-03ad3f-471271-1-MN-30173-25-254031",
+            "score": 20,
+            "rank": 9
+          },
+          {
+            "id": "dncp-ocds-03ad3f-471706-1-MN-30173-25-257741",
+            "score": 20,
+            "rank": 10
+          },
+          {
+            "id": "dncp-ocds-03ad3f-471726-1-MN-30173-25-257044",
+            "score": 20,
+            "rank": 11
+          },
+          {
+            "id": "dncp-ocds-03ad3f-462322-1-CE-30173-25-252836",
+            "score": 18,
+            "rank": 12
+          },
+          {
+            "id": "dncp-ocds-03ad3f-454144-1-MN-30173-24-246324",
+            "score": 16,
+            "rank": 13
+          },
+          {
+            "id": "dncp-ocds-03ad3f-455613-1-MN-30173-24-244807",
+            "score": 16,
+            "rank": 14
+          },
+          {
+            "id": "dncp-ocds-03ad3f-459477-1-MN-30173-25-249944",
+            "score": 16,
+            "rank": 15
+          },
+          {
+            "id": "dncp-ocds-03ad3f-470861-1-MN-30173-25-255687",
+            "score": 16,
+            "rank": 16
+          },
+          {
+            "id": "dncp-ocds-03ad3f-471629-1-MN-30173-25-256767",
+            "score": 16,
+            "rank": 17
+          },
+          {
+            "id": "dncp-ocds-03ad3f-471630-1-MN-30173-25-255936",
+            "score": 16,
+            "rank": 18
+          },
+          {
+            "id": "dncp-ocds-03ad3f-472659-1-MN-30173-25-257367",
+            "score": 16,
+            "rank": 19
+          },
+          {
+            "id": "dncp-ocds-03ad3f-472660-1-MN-30173-25-257365",
+            "score": 16,
+            "rank": 20
+          }
+        ],
+        "entered": [],
+        "left": [],
+        "reordered": []
+      }
+    },
+    "data/paraguay-dncp-3buyers.json": {
+      "inputSha256": "3cde41c2949f14773775ee1d0e609784089c2ae10a18c2c3a2fca7f80c2baad7",
+      "before": {
+        "rows": 293,
+        "positive": 58,
+        "zero": 235,
+        "null": 0
+      },
+      "after": {
+        "rows": 293,
+        "positive": 58,
+        "zero": 235,
+        "null": 0
+      },
+      "changedScoreRows": 0,
+      "changedIndicatorRows": 0,
+      "changedRankRows": 0,
+      "changedRows": [],
+      "top20": {
+        "before": [
+          {
+            "id": "dncp-ocds-03ad3f-452080-1-CE-30001-25-249865",
+            "score": 26,
+            "rank": 1
+          },
+          {
+            "id": "dncp-ocds-03ad3f-465374-1-MN-30001-25-255087",
+            "score": 20,
+            "rank": 2
+          },
+          {
+            "id": "dncp-ocds-03ad3f-470747-1-MN-22011-25-255677",
+            "score": 20,
+            "rank": 3
+          },
+          {
+            "id": "dncp-ocds-03ad3f-452115-1-CE-30001-25-249917",
+            "score": 18,
+            "rank": 4
+          },
+          {
+            "id": "dncp-ocds-03ad3f-443482-1-MN-30001-25-250344",
+            "score": 12,
+            "rank": 5
+          },
+          {
+            "id": "dncp-ocds-03ad3f-443487-1-MN-30001-25-250329",
+            "score": 12,
+            "rank": 6
+          },
+          {
+            "id": "dncp-ocds-03ad3f-444189-1-MN-30001-25-252861",
+            "score": 12,
+            "rank": 7
+          },
+          {
+            "id": "dncp-ocds-03ad3f-445778-1-MN-30001-25-249959",
+            "score": 12,
+            "rank": 8
+          },
+          {
+            "id": "dncp-ocds-03ad3f-447653-1-LP-12013-24-249000",
+            "score": 12,
+            "rank": 9
+          },
+          {
+            "id": "dncp-ocds-03ad3f-452640-1-MN-22011-24-244082",
+            "score": 12,
+            "rank": 10
+          },
+          {
+            "id": "dncp-ocds-03ad3f-453191-1-MN-12013-25-251358",
+            "score": 12,
+            "rank": 11
+          },
+          {
+            "id": "dncp-ocds-03ad3f-453456-1-MN-30001-25-250328",
+            "score": 12,
+            "rank": 12
+          },
+          {
+            "id": "dncp-ocds-03ad3f-454009-1-MN-30001-25-253348",
+            "score": 12,
+            "rank": 13
+          },
+          {
+            "id": "dncp-ocds-03ad3f-454259-1-MN-22011-24-245893",
+            "score": 12,
+            "rank": 14
+          },
+          {
+            "id": "dncp-ocds-03ad3f-454271-1-MN-22011-24-246247",
+            "score": 12,
+            "rank": 15
+          },
+          {
+            "id": "dncp-ocds-03ad3f-455099-1-LP-12013-24-249733",
+            "score": 12,
+            "rank": 16
+          },
+          {
+            "id": "dncp-ocds-03ad3f-455439-1-MN-22011-24-246703",
+            "score": 12,
+            "rank": 17
+          },
+          {
+            "id": "dncp-ocds-03ad3f-456240-1-MN-22011-24-245812",
+            "score": 12,
+            "rank": 18
+          },
+          {
+            "id": "dncp-ocds-03ad3f-456337-1-MN-22011-24-245512",
+            "score": 12,
+            "rank": 19
+          },
+          {
+            "id": "dncp-ocds-03ad3f-458284-1-LP-30001-25-256003",
+            "score": 12,
+            "rank": 20
+          }
+        ],
+        "after": [
+          {
+            "id": "dncp-ocds-03ad3f-452080-1-CE-30001-25-249865",
+            "score": 26,
+            "rank": 1
+          },
+          {
+            "id": "dncp-ocds-03ad3f-465374-1-MN-30001-25-255087",
+            "score": 20,
+            "rank": 2
+          },
+          {
+            "id": "dncp-ocds-03ad3f-470747-1-MN-22011-25-255677",
+            "score": 20,
+            "rank": 3
+          },
+          {
+            "id": "dncp-ocds-03ad3f-452115-1-CE-30001-25-249917",
+            "score": 18,
+            "rank": 4
+          },
+          {
+            "id": "dncp-ocds-03ad3f-443482-1-MN-30001-25-250344",
+            "score": 12,
+            "rank": 5
+          },
+          {
+            "id": "dncp-ocds-03ad3f-443487-1-MN-30001-25-250329",
+            "score": 12,
+            "rank": 6
+          },
+          {
+            "id": "dncp-ocds-03ad3f-444189-1-MN-30001-25-252861",
+            "score": 12,
+            "rank": 7
+          },
+          {
+            "id": "dncp-ocds-03ad3f-445778-1-MN-30001-25-249959",
+            "score": 12,
+            "rank": 8
+          },
+          {
+            "id": "dncp-ocds-03ad3f-447653-1-LP-12013-24-249000",
+            "score": 12,
+            "rank": 9
+          },
+          {
+            "id": "dncp-ocds-03ad3f-452640-1-MN-22011-24-244082",
+            "score": 12,
+            "rank": 10
+          },
+          {
+            "id": "dncp-ocds-03ad3f-453191-1-MN-12013-25-251358",
+            "score": 12,
+            "rank": 11
+          },
+          {
+            "id": "dncp-ocds-03ad3f-453456-1-MN-30001-25-250328",
+            "score": 12,
+            "rank": 12
+          },
+          {
+            "id": "dncp-ocds-03ad3f-454009-1-MN-30001-25-253348",
+            "score": 12,
+            "rank": 13
+          },
+          {
+            "id": "dncp-ocds-03ad3f-454259-1-MN-22011-24-245893",
+            "score": 12,
+            "rank": 14
+          },
+          {
+            "id": "dncp-ocds-03ad3f-454271-1-MN-22011-24-246247",
+            "score": 12,
+            "rank": 15
+          },
+          {
+            "id": "dncp-ocds-03ad3f-455099-1-LP-12013-24-249733",
+            "score": 12,
+            "rank": 16
+          },
+          {
+            "id": "dncp-ocds-03ad3f-455439-1-MN-22011-24-246703",
+            "score": 12,
+            "rank": 17
+          },
+          {
+            "id": "dncp-ocds-03ad3f-456240-1-MN-22011-24-245812",
+            "score": 12,
+            "rank": 18
+          },
+          {
+            "id": "dncp-ocds-03ad3f-456337-1-MN-22011-24-245512",
+            "score": 12,
+            "rank": 19
+          },
+          {
+            "id": "dncp-ocds-03ad3f-458284-1-LP-30001-25-256003",
+            "score": 12,
+            "rank": 20
+          }
+        ],
+        "entered": [],
+        "left": [],
+        "reordered": []
+      }
+    },
+    "data/prozorro.json": {
+      "inputSha256": "3debdb8775aa1d19c273a822fbc197eefe8a33f792eba83b6c8be553ed8c2682",
+      "before": {
+        "rows": 488,
+        "positive": 47,
+        "zero": 441,
+        "null": 0
+      },
+      "after": {
+        "rows": 488,
+        "positive": 47,
+        "zero": 441,
+        "null": 0
+      },
+      "changedScoreRows": 0,
+      "changedIndicatorRows": 0,
+      "changedRankRows": 0,
+      "changedRows": [],
+      "top20": {
+        "before": [
+          {
+            "id": "prozorro-UA-2024-10-14-006883-a-ffb53096",
+            "score": 24,
+            "rank": 1
+          },
+          {
+            "id": "prozorro-UA-2024-10-29-013092-a-eaa41d55",
+            "score": 24,
+            "rank": 2
+          },
+          {
+            "id": "prozorro-UA-2024-11-06-012897-a-3ed111a7",
+            "score": 24,
+            "rank": 3
+          },
+          {
+            "id": "prozorro-UA-2025-03-10-011698-a-aa5a79f0",
+            "score": 24,
+            "rank": 4
+          },
+          {
+            "id": "prozorro-UA-2025-07-24-004946-a-7a5a3016",
+            "score": 24,
+            "rank": 5
+          },
+          {
+            "id": "prozorro-UA-2026-05-21-011480-a-58d02c25",
+            "score": 24,
+            "rank": 6
+          },
+          {
+            "id": "prozorro-UA-2024-12-20-005359-a-7cf7bef3",
+            "score": 16,
+            "rank": 7
+          },
+          {
+            "id": "prozorro-UA-2024-12-31-004036-a-0a3f4c67",
+            "score": 16,
+            "rank": 8
+          },
+          {
+            "id": "prozorro-UA-2025-12-18-010764-a-e6b78a35",
+            "score": 16,
+            "rank": 9
+          },
+          {
+            "id": "prozorro-UA-2025-12-30-003962-a-3a892f61",
+            "score": 16,
+            "rank": 10
+          },
+          {
+            "id": "prozorro-UA-2024-10-24-016315-a-2e4b0726",
+            "score": 12,
+            "rank": 11
+          },
+          {
+            "id": "prozorro-UA-2024-11-05-002873-a-3a3e3db1",
+            "score": 12,
+            "rank": 12
+          },
+          {
+            "id": "prozorro-UA-2024-11-18-003142-a-16cf75ae",
+            "score": 12,
+            "rank": 13
+          },
+          {
+            "id": "prozorro-UA-2024-12-04-012344-a-dc149442",
+            "score": 12,
+            "rank": 14
+          },
+          {
+            "id": "prozorro-UA-2024-12-10-022473-a-d3bca451",
+            "score": 12,
+            "rank": 15
+          },
+          {
+            "id": "prozorro-UA-2024-12-24-011058-a-db4d8eae",
+            "score": 12,
+            "rank": 16
+          },
+          {
+            "id": "prozorro-UA-2025-01-27-016831-a-c72b6abd",
+            "score": 12,
+            "rank": 17
+          },
+          {
+            "id": "prozorro-UA-2025-01-28-018768-a-7f899422",
+            "score": 12,
+            "rank": 18
+          },
+          {
+            "id": "prozorro-UA-2025-01-31-010907-a-9d07159f",
+            "score": 12,
+            "rank": 19
+          },
+          {
+            "id": "prozorro-UA-2025-02-18-006417-a-eece05f2",
+            "score": 12,
+            "rank": 20
+          }
+        ],
+        "after": [
+          {
+            "id": "prozorro-UA-2024-10-14-006883-a-ffb53096",
+            "score": 24,
+            "rank": 1
+          },
+          {
+            "id": "prozorro-UA-2024-10-29-013092-a-eaa41d55",
+            "score": 24,
+            "rank": 2
+          },
+          {
+            "id": "prozorro-UA-2024-11-06-012897-a-3ed111a7",
+            "score": 24,
+            "rank": 3
+          },
+          {
+            "id": "prozorro-UA-2025-03-10-011698-a-aa5a79f0",
+            "score": 24,
+            "rank": 4
+          },
+          {
+            "id": "prozorro-UA-2025-07-24-004946-a-7a5a3016",
+            "score": 24,
+            "rank": 5
+          },
+          {
+            "id": "prozorro-UA-2026-05-21-011480-a-58d02c25",
+            "score": 24,
+            "rank": 6
+          },
+          {
+            "id": "prozorro-UA-2024-12-20-005359-a-7cf7bef3",
+            "score": 16,
+            "rank": 7
+          },
+          {
+            "id": "prozorro-UA-2024-12-31-004036-a-0a3f4c67",
+            "score": 16,
+            "rank": 8
+          },
+          {
+            "id": "prozorro-UA-2025-12-18-010764-a-e6b78a35",
+            "score": 16,
+            "rank": 9
+          },
+          {
+            "id": "prozorro-UA-2025-12-30-003962-a-3a892f61",
+            "score": 16,
+            "rank": 10
+          },
+          {
+            "id": "prozorro-UA-2024-10-24-016315-a-2e4b0726",
+            "score": 12,
+            "rank": 11
+          },
+          {
+            "id": "prozorro-UA-2024-11-05-002873-a-3a3e3db1",
+            "score": 12,
+            "rank": 12
+          },
+          {
+            "id": "prozorro-UA-2024-11-18-003142-a-16cf75ae",
+            "score": 12,
+            "rank": 13
+          },
+          {
+            "id": "prozorro-UA-2024-12-04-012344-a-dc149442",
+            "score": 12,
+            "rank": 14
+          },
+          {
+            "id": "prozorro-UA-2024-12-10-022473-a-d3bca451",
+            "score": 12,
+            "rank": 15
+          },
+          {
+            "id": "prozorro-UA-2024-12-24-011058-a-db4d8eae",
+            "score": 12,
+            "rank": 16
+          },
+          {
+            "id": "prozorro-UA-2025-01-27-016831-a-c72b6abd",
+            "score": 12,
+            "rank": 17
+          },
+          {
+            "id": "prozorro-UA-2025-01-28-018768-a-7f899422",
+            "score": 12,
+            "rank": 18
+          },
+          {
+            "id": "prozorro-UA-2025-01-31-010907-a-9d07159f",
+            "score": 12,
+            "rank": 19
+          },
+          {
+            "id": "prozorro-UA-2025-02-18-006417-a-eece05f2",
+            "score": 12,
+            "rank": 20
+          }
+        ],
+        "entered": [],
+        "left": [],
+        "reordered": []
+      }
+    },
+    "data/chile-mp.json": {
+      "inputSha256": "bfc68f82c3e2a888d7ca63c224821e543d11d39a208612b79af978b727d35cfb",
+      "before": {
+        "rows": 522,
+        "positive": 71,
+        "zero": 449,
+        "null": 2
+      },
+      "after": {
+        "rows": 522,
+        "positive": 71,
+        "zero": 449,
+        "null": 2
+      },
+      "changedScoreRows": 0,
+      "changedIndicatorRows": 0,
+      "changedRankRows": 0,
+      "changedRows": [],
+      "top20": {
+        "before": [
+          {
+            "id": "chile-1019-7-LP26-9635231",
+            "score": 32,
+            "rank": 1
+          },
+          {
+            "id": "chile-1019-27-LP26-9649078",
+            "score": 32,
+            "rank": 2
+          },
+          {
+            "id": "chile-1019-34-LE26-9653803",
+            "score": 32,
+            "rank": 3
+          },
+          {
+            "id": "chile-1019-41-LP25-9518026",
+            "score": 32,
+            "rank": 4
+          },
+          {
+            "id": "chile-1019-48-LE26-9675170",
+            "score": 32,
+            "rank": 5
+          },
+          {
+            "id": "chile-1019-71-LE25-9537658",
+            "score": 32,
+            "rank": 6
+          },
+          {
+            "id": "chile-1019-73-LE25-9538307",
+            "score": 32,
+            "rank": 7
+          },
+          {
+            "id": "chile-1019-93-LE24-9433169",
+            "score": 32,
+            "rank": 8
+          },
+          {
+            "id": "chile-1019-1-LE26-9624644",
+            "score": 12,
+            "rank": 9
+          },
+          {
+            "id": "chile-1019-1-LQ25-9493361",
+            "score": 12,
+            "rank": 10
+          },
+          {
+            "id": "chile-1019-12-LE25-9503475",
+            "score": 12,
+            "rank": 11
+          },
+          {
+            "id": "chile-1019-29-L125-9513964",
+            "score": 12,
+            "rank": 12
+          },
+          {
+            "id": "chile-1019-37-LE26-9659008",
+            "score": 12,
+            "rank": 13
+          },
+          {
+            "id": "chile-1019-40-LE25-9517388",
+            "score": 12,
+            "rank": 14
+          },
+          {
+            "id": "chile-1019-42-LP25-9518053",
+            "score": 12,
+            "rank": 15
+          },
+          {
+            "id": "chile-1019-46-B226-9668856",
+            "score": 12,
+            "rank": 16
+          },
+          {
+            "id": "chile-1019-49-LE25-9525155",
+            "score": 12,
+            "rank": 17
+          },
+          {
+            "id": "chile-1019-53-LE25-9530847",
+            "score": 12,
+            "rank": 18
+          },
+          {
+            "id": "chile-1019-60-LE25-9531994",
+            "score": 12,
+            "rank": 19
+          },
+          {
+            "id": "chile-1019-66-CO25-9535031",
+            "score": 12,
+            "rank": 20
+          }
+        ],
+        "after": [
+          {
+            "id": "chile-1019-7-LP26-9635231",
+            "score": 32,
+            "rank": 1
+          },
+          {
+            "id": "chile-1019-27-LP26-9649078",
+            "score": 32,
+            "rank": 2
+          },
+          {
+            "id": "chile-1019-34-LE26-9653803",
+            "score": 32,
+            "rank": 3
+          },
+          {
+            "id": "chile-1019-41-LP25-9518026",
+            "score": 32,
+            "rank": 4
+          },
+          {
+            "id": "chile-1019-48-LE26-9675170",
+            "score": 32,
+            "rank": 5
+          },
+          {
+            "id": "chile-1019-71-LE25-9537658",
+            "score": 32,
+            "rank": 6
+          },
+          {
+            "id": "chile-1019-73-LE25-9538307",
+            "score": 32,
+            "rank": 7
+          },
+          {
+            "id": "chile-1019-93-LE24-9433169",
+            "score": 32,
+            "rank": 8
+          },
+          {
+            "id": "chile-1019-1-LE26-9624644",
+            "score": 12,
+            "rank": 9
+          },
+          {
+            "id": "chile-1019-1-LQ25-9493361",
+            "score": 12,
+            "rank": 10
+          },
+          {
+            "id": "chile-1019-12-LE25-9503475",
+            "score": 12,
+            "rank": 11
+          },
+          {
+            "id": "chile-1019-29-L125-9513964",
+            "score": 12,
+            "rank": 12
+          },
+          {
+            "id": "chile-1019-37-LE26-9659008",
+            "score": 12,
+            "rank": 13
+          },
+          {
+            "id": "chile-1019-40-LE25-9517388",
+            "score": 12,
+            "rank": 14
+          },
+          {
+            "id": "chile-1019-42-LP25-9518053",
+            "score": 12,
+            "rank": 15
+          },
+          {
+            "id": "chile-1019-46-B226-9668856",
+            "score": 12,
+            "rank": 16
+          },
+          {
+            "id": "chile-1019-49-LE25-9525155",
+            "score": 12,
+            "rank": 17
+          },
+          {
+            "id": "chile-1019-53-LE25-9530847",
+            "score": 12,
+            "rank": 18
+          },
+          {
+            "id": "chile-1019-60-LE25-9531994",
+            "score": 12,
+            "rank": 19
+          },
+          {
+            "id": "chile-1019-66-CO25-9535031",
+            "score": 12,
+            "rank": 20
+          }
+        ],
+        "entered": [],
+        "left": [],
+        "reordered": []
+      }
+    },
+    "data/uk-fts.json": {
+      "inputSha256": "edf5433d2e92685e4d07857e7f88f1e9c0bc11bce1d97e91bf4bfacc1a7b3ecf",
+      "before": {
+        "rows": 1081,
+        "positive": 43,
+        "zero": 1036,
+        "null": 2
+      },
+      "after": {
+        "rows": 1081,
+        "positive": 43,
+        "zero": 1036,
+        "null": 2
+      },
+      "changedScoreRows": 0,
+      "changedIndicatorRows": 0,
+      "changedRankRows": 0,
+      "changedRows": [],
+      "top20": {
+        "before": [
+          {
+            "id": "fts-002525-2025-1",
+            "score": 18,
+            "rank": 1
+          },
+          {
+            "id": "fts-002525-2025-2",
+            "score": 18,
+            "rank": 2
+          },
+          {
+            "id": "fts-003187-2025-1",
+            "score": 18,
+            "rank": 3
+          },
+          {
+            "id": "fts-004593-2025-1",
+            "score": 18,
+            "rank": 4
+          },
+          {
+            "id": "fts-006725-2025-1",
+            "score": 18,
+            "rank": 5
+          },
+          {
+            "id": "fts-018599-2026-1",
+            "score": 18,
+            "rank": 6
+          },
+          {
+            "id": "fts-019817-2025-1",
+            "score": 18,
+            "rank": 7
+          },
+          {
+            "id": "fts-028164-2024-1",
+            "score": 18,
+            "rank": 8
+          },
+          {
+            "id": "fts-030551-2024-1",
+            "score": 18,
+            "rank": 9
+          },
+          {
+            "id": "fts-032799-2024-1",
+            "score": 18,
+            "rank": 10
+          },
+          {
+            "id": "fts-036880-2024-1",
+            "score": 18,
+            "rank": 11
+          },
+          {
+            "id": "fts-041944-2025-1",
+            "score": 18,
+            "rank": 12
+          },
+          {
+            "id": "fts-053824-2025-1",
+            "score": 18,
+            "rank": 13
+          },
+          {
+            "id": "fts-055098-2025-1",
+            "score": 18,
+            "rank": 14
+          },
+          {
+            "id": "fts-056530-2025-1",
+            "score": 18,
+            "rank": 15
+          },
+          {
+            "id": "fts-056531-2025-1",
+            "score": 18,
+            "rank": 16
+          },
+          {
+            "id": "fts-057449-2025-1",
+            "score": 18,
+            "rank": 17
+          },
+          {
+            "id": "fts-058956-2025-1",
+            "score": 18,
+            "rank": 18
+          },
+          {
+            "id": "fts-059180-2025-1",
+            "score": 18,
+            "rank": 19
+          },
+          {
+            "id": "fts-061833-2025-1",
+            "score": 18,
+            "rank": 20
+          }
+        ],
+        "after": [
+          {
+            "id": "fts-002525-2025-1",
+            "score": 18,
+            "rank": 1
+          },
+          {
+            "id": "fts-002525-2025-2",
+            "score": 18,
+            "rank": 2
+          },
+          {
+            "id": "fts-003187-2025-1",
+            "score": 18,
+            "rank": 3
+          },
+          {
+            "id": "fts-004593-2025-1",
+            "score": 18,
+            "rank": 4
+          },
+          {
+            "id": "fts-006725-2025-1",
+            "score": 18,
+            "rank": 5
+          },
+          {
+            "id": "fts-018599-2026-1",
+            "score": 18,
+            "rank": 6
+          },
+          {
+            "id": "fts-019817-2025-1",
+            "score": 18,
+            "rank": 7
+          },
+          {
+            "id": "fts-028164-2024-1",
+            "score": 18,
+            "rank": 8
+          },
+          {
+            "id": "fts-030551-2024-1",
+            "score": 18,
+            "rank": 9
+          },
+          {
+            "id": "fts-032799-2024-1",
+            "score": 18,
+            "rank": 10
+          },
+          {
+            "id": "fts-036880-2024-1",
+            "score": 18,
+            "rank": 11
+          },
+          {
+            "id": "fts-041944-2025-1",
+            "score": 18,
+            "rank": 12
+          },
+          {
+            "id": "fts-053824-2025-1",
+            "score": 18,
+            "rank": 13
+          },
+          {
+            "id": "fts-055098-2025-1",
+            "score": 18,
+            "rank": 14
+          },
+          {
+            "id": "fts-056530-2025-1",
+            "score": 18,
+            "rank": 15
+          },
+          {
+            "id": "fts-056531-2025-1",
+            "score": 18,
+            "rank": 16
+          },
+          {
+            "id": "fts-057449-2025-1",
+            "score": 18,
+            "rank": 17
+          },
+          {
+            "id": "fts-058956-2025-1",
+            "score": 18,
+            "rank": 18
+          },
+          {
+            "id": "fts-059180-2025-1",
+            "score": 18,
+            "rank": 19
+          },
+          {
+            "id": "fts-061833-2025-1",
+            "score": 18,
+            "rank": 20
+          }
+        ],
+        "entered": [],
+        "left": [],
+        "reordered": []
+      }
+    },
+    "data/ted-portugal.json": {
+      "inputSha256": "7ccde53938d25459a5126a7f50650af9ccaf65428a2d885d41009fffd3dfbb37",
+      "before": {
+        "rows": 493,
+        "positive": 137,
+        "zero": 356,
+        "null": 0
+      },
+      "after": {
+        "rows": 493,
+        "positive": 138,
+        "zero": 355,
+        "null": 0
+      },
+      "changedScoreRows": 4,
+      "changedIndicatorRows": 1,
+      "changedRankRows": 1,
+      "changedRows": [
+        {
+          "id": "ted-226852-2025-lot-0003",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.1,
+          "afterScore": 8.2,
+          "oldRank": 135,
+          "newRank": 135,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "ted-226852-2025-lot-0004",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.1,
+          "afterScore": 8.2,
+          "oldRank": 136,
+          "newRank": 136,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "ted-226852-2025-lot-0005",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 8.1,
+          "afterScore": 8.2,
+          "oldRank": 137,
+          "newRank": 137,
+          "indicatorsAdded": [],
+          "indicatorsRemoved": []
+        },
+        {
+          "id": "ted-226852-2025-lot-0006",
+          "beforePresent": true,
+          "afterPresent": true,
+          "beforeScore": 0,
+          "afterScore": 8,
+          "oldRank": null,
+          "newRank": 138,
+          "indicatorsAdded": [
+            "late-publication"
+          ],
+          "indicatorsRemoved": []
+        }
+      ],
+      "top20": {
+        "before": [
+          {
+            "id": "ted-546956-2025-lot-0000",
+            "score": 51.2,
+            "rank": 1
+          },
+          {
+            "id": "ted-46530-2025-lot-0001",
+            "score": 48,
+            "rank": 2
+          },
+          {
+            "id": "ted-47414-2026-lot-0001",
+            "score": 48,
+            "rank": 3
+          },
+          {
+            "id": "ted-119938-2025-lot-0001",
+            "score": 48,
+            "rank": 4
+          },
+          {
+            "id": "ted-120160-2025-lot-0001",
+            "score": 48,
+            "rank": 5
+          },
+          {
+            "id": "ted-121177-2025-lot-0001",
+            "score": 48,
+            "rank": 6
+          },
+          {
+            "id": "ted-122841-2025-lot-0001",
+            "score": 48,
+            "rank": 7
+          },
+          {
+            "id": "ted-125816-2026-lot-0001",
+            "score": 48,
+            "rank": 8
+          },
+          {
+            "id": "ted-141801-2026-lot-0001",
+            "score": 48,
+            "rank": 9
+          },
+          {
+            "id": "ted-144113-2026-lot-0001",
+            "score": 48,
+            "rank": 10
+          },
+          {
+            "id": "ted-157227-2026-lot-0001",
+            "score": 48,
+            "rank": 11
+          },
+          {
+            "id": "ted-158057-2026-lot-0001",
+            "score": 48,
+            "rank": 12
+          },
+          {
+            "id": "ted-346802-2026-lot-0001",
+            "score": 48,
+            "rank": 13
+          },
+          {
+            "id": "ted-440185-2026-lot-0001",
+            "score": 48,
+            "rank": 14
+          },
+          {
+            "id": "ted-521745-2026-lot-0001",
+            "score": 48,
+            "rank": 15
+          },
+          {
+            "id": "ted-613909-2025-lot-0001",
+            "score": 48,
+            "rank": 16
+          },
+          {
+            "id": "ted-700733-2025-lot-0001",
+            "score": 48,
+            "rank": 17
+          },
+          {
+            "id": "ted-246941-2025-lot-0001",
+            "score": 40,
+            "rank": 18
+          },
+          {
+            "id": "ted-359327-2026-lot-0000",
+            "score": 40,
+            "rank": 19
+          },
+          {
+            "id": "ted-367909-2025-lot-0001",
+            "score": 40,
+            "rank": 20
+          }
+        ],
+        "after": [
+          {
+            "id": "ted-546956-2025-lot-0000",
+            "score": 51.2,
+            "rank": 1
+          },
+          {
+            "id": "ted-46530-2025-lot-0001",
+            "score": 48,
+            "rank": 2
+          },
+          {
+            "id": "ted-47414-2026-lot-0001",
+            "score": 48,
+            "rank": 3
+          },
+          {
+            "id": "ted-119938-2025-lot-0001",
+            "score": 48,
+            "rank": 4
+          },
+          {
+            "id": "ted-120160-2025-lot-0001",
+            "score": 48,
+            "rank": 5
+          },
+          {
+            "id": "ted-121177-2025-lot-0001",
+            "score": 48,
+            "rank": 6
+          },
+          {
+            "id": "ted-122841-2025-lot-0001",
+            "score": 48,
+            "rank": 7
+          },
+          {
+            "id": "ted-125816-2026-lot-0001",
+            "score": 48,
+            "rank": 8
+          },
+          {
+            "id": "ted-141801-2026-lot-0001",
+            "score": 48,
+            "rank": 9
+          },
+          {
+            "id": "ted-144113-2026-lot-0001",
+            "score": 48,
+            "rank": 10
+          },
+          {
+            "id": "ted-157227-2026-lot-0001",
+            "score": 48,
+            "rank": 11
+          },
+          {
+            "id": "ted-158057-2026-lot-0001",
+            "score": 48,
+            "rank": 12
+          },
+          {
+            "id": "ted-346802-2026-lot-0001",
+            "score": 48,
+            "rank": 13
+          },
+          {
+            "id": "ted-440185-2026-lot-0001",
+            "score": 48,
+            "rank": 14
+          },
+          {
+            "id": "ted-521745-2026-lot-0001",
+            "score": 48,
+            "rank": 15
+          },
+          {
+            "id": "ted-613909-2025-lot-0001",
+            "score": 48,
+            "rank": 16
+          },
+          {
+            "id": "ted-700733-2025-lot-0001",
+            "score": 48,
+            "rank": 17
+          },
+          {
+            "id": "ted-246941-2025-lot-0001",
+            "score": 40,
+            "rank": 18
+          },
+          {
+            "id": "ted-359327-2026-lot-0000",
+            "score": 40,
+            "rank": 19
+          },
+          {
+            "id": "ted-367909-2025-lot-0001",
+            "score": 40,
+            "rank": 20
+          }
+        ],
+        "entered": [],
+        "left": [],
+        "reordered": []
+      }
+    },
+    "data/ted-czechia.json": {
+      "inputSha256": "c4f15711fbe83fb3fb0ddc7fc8fd6c6c638cc1e66d034b13ccdac71f94e94fcd",
+      "before": {
+        "rows": 674,
+        "positive": 198,
+        "zero": 476,
+        "null": 0
+      },
+      "after": {
+        "rows": 674,
+        "positive": 198,
+        "zero": 476,
+        "null": 0
+      },
+      "changedScoreRows": 0,
+      "changedIndicatorRows": 0,
+      "changedRankRows": 0,
+      "changedRows": [],
+      "top20": {
+        "before": [
+          {
+            "id": "ted-488741-2025-lot-0002",
+            "score": 51,
+            "rank": 1
+          },
+          {
+            "id": "ted-488741-2025-lot-0003",
+            "score": 51,
+            "rank": 2
+          },
+          {
+            "id": "ted-39224-2025-lot-0002",
+            "score": 49.1,
+            "rank": 3
+          },
+          {
+            "id": "ted-39224-2025-lot-0003",
+            "score": 49.1,
+            "rank": 4
+          },
+          {
+            "id": "ted-629417-2024-lot-0002",
+            "score": 47.9,
+            "rank": 5
+          },
+          {
+            "id": "ted-629417-2024-lot-0003",
+            "score": 47.9,
+            "rank": 6
+          },
+          {
+            "id": "ted-511144-2026-lot-0001",
+            "score": 47,
+            "rank": 7
+          },
+          {
+            "id": "ted-511144-2026-lot-0002",
+            "score": 47,
+            "rank": 8
+          },
+          {
+            "id": "ted-506432-2026-lot-0001",
+            "score": 46.7,
+            "rank": 9
+          },
+          {
+            "id": "ted-281693-2025-lot-0001",
+            "score": 45,
+            "rank": 10
+          },
+          {
+            "id": "ted-11901-2026-lot-0001",
+            "score": 44.5,
+            "rank": 11
+          },
+          {
+            "id": "ted-11901-2026-lot-0002",
+            "score": 44.5,
+            "rank": 12
+          },
+          {
+            "id": "ted-74949-2026-lot-0007",
+            "score": 44.3,
+            "rank": 13
+          },
+          {
+            "id": "ted-303976-2026-lot-0007",
+            "score": 44.3,
+            "rank": 14
+          },
+          {
+            "id": "ted-447614-2026-lot-0007",
+            "score": 44.3,
+            "rank": 15
+          },
+          {
+            "id": "ted-18527-2026-lot-0001",
+            "score": 44.2,
+            "rank": 16
+          },
+          {
+            "id": "ted-695154-2025-lot-0007",
+            "score": 43.3,
+            "rank": 17
+          },
+          {
+            "id": "ted-492887-2025-lot-0007",
+            "score": 42.1,
+            "rank": 18
+          },
+          {
+            "id": "ted-226187-2025-lot-0007",
+            "score": 40.7,
+            "rank": 19
+          },
+          {
+            "id": "ted-93392-2025-lot-0007",
+            "score": 40,
+            "rank": 20
+          }
+        ],
+        "after": [
+          {
+            "id": "ted-488741-2025-lot-0002",
+            "score": 51,
+            "rank": 1
+          },
+          {
+            "id": "ted-488741-2025-lot-0003",
+            "score": 51,
+            "rank": 2
+          },
+          {
+            "id": "ted-39224-2025-lot-0002",
+            "score": 49.1,
+            "rank": 3
+          },
+          {
+            "id": "ted-39224-2025-lot-0003",
+            "score": 49.1,
+            "rank": 4
+          },
+          {
+            "id": "ted-629417-2024-lot-0002",
+            "score": 47.9,
+            "rank": 5
+          },
+          {
+            "id": "ted-629417-2024-lot-0003",
+            "score": 47.9,
+            "rank": 6
+          },
+          {
+            "id": "ted-511144-2026-lot-0001",
+            "score": 47,
+            "rank": 7
+          },
+          {
+            "id": "ted-511144-2026-lot-0002",
+            "score": 47,
+            "rank": 8
+          },
+          {
+            "id": "ted-506432-2026-lot-0001",
+            "score": 46.7,
+            "rank": 9
+          },
+          {
+            "id": "ted-281693-2025-lot-0001",
+            "score": 45,
+            "rank": 10
+          },
+          {
+            "id": "ted-11901-2026-lot-0001",
+            "score": 44.5,
+            "rank": 11
+          },
+          {
+            "id": "ted-11901-2026-lot-0002",
+            "score": 44.5,
+            "rank": 12
+          },
+          {
+            "id": "ted-74949-2026-lot-0007",
+            "score": 44.3,
+            "rank": 13
+          },
+          {
+            "id": "ted-303976-2026-lot-0007",
+            "score": 44.3,
+            "rank": 14
+          },
+          {
+            "id": "ted-447614-2026-lot-0007",
+            "score": 44.3,
+            "rank": 15
+          },
+          {
+            "id": "ted-18527-2026-lot-0001",
+            "score": 44.2,
+            "rank": 16
+          },
+          {
+            "id": "ted-695154-2025-lot-0007",
+            "score": 43.3,
+            "rank": 17
+          },
+          {
+            "id": "ted-492887-2025-lot-0007",
+            "score": 42.1,
+            "rank": 18
+          },
+          {
+            "id": "ted-226187-2025-lot-0007",
+            "score": 40.7,
+            "rank": 19
+          },
+          {
+            "id": "ted-93392-2025-lot-0007",
+            "score": 40,
+            "rank": 20
+          }
+        ],
+        "entered": [],
+        "left": [],
+        "reordered": []
+      }
+    },
+    "data/ted-romania.json": {
+      "inputSha256": "7ef10f0b2688a60322fbf58b306ace66de17118303c3254e7be4fb1aecc90888",
+      "before": {
+        "rows": 356,
+        "positive": 158,
+        "zero": 198,
+        "null": 0
+      },
+      "after": {
+        "rows": 356,
+        "positive": 158,
+        "zero": 198,
+        "null": 0
+      },
+      "changedScoreRows": 0,
+      "changedIndicatorRows": 0,
+      "changedRankRows": 0,
+      "changedRows": [],
+      "top20": {
+        "before": [
+          {
+            "id": "ted-52851-2025-lot-0000",
+            "score": 24.5,
+            "rank": 1
+          },
+          {
+            "id": "ted-69312-2026-lot-0003",
+            "score": 20.7,
+            "rank": 2
+          },
+          {
+            "id": "ted-655742-2024-lot-0002",
+            "score": 20.1,
+            "rank": 3
+          },
+          {
+            "id": "ted-146272-2026-lot-0001",
+            "score": 20,
+            "rank": 4
+          },
+          {
+            "id": "ted-146272-2026-lot-0003",
+            "score": 20,
+            "rank": 5
+          },
+          {
+            "id": "ted-146272-2026-lot-0005",
+            "score": 20,
+            "rank": 6
+          },
+          {
+            "id": "ted-146272-2026-lot-0007",
+            "score": 20,
+            "rank": 7
+          },
+          {
+            "id": "ted-146272-2026-lot-0008",
+            "score": 20,
+            "rank": 8
+          },
+          {
+            "id": "ted-146272-2026-lot-0009",
+            "score": 20,
+            "rank": 9
+          },
+          {
+            "id": "ted-146272-2026-lot-0011",
+            "score": 20,
+            "rank": 10
+          },
+          {
+            "id": "ted-146272-2026-lot-0013",
+            "score": 20,
+            "rank": 11
+          },
+          {
+            "id": "ted-146272-2026-lot-0014",
+            "score": 20,
+            "rank": 12
+          },
+          {
+            "id": "ted-146272-2026-lot-0015",
+            "score": 20,
+            "rank": 13
+          },
+          {
+            "id": "ted-146272-2026-lot-0017",
+            "score": 20,
+            "rank": 14
+          },
+          {
+            "id": "ted-146272-2026-lot-0018",
+            "score": 20,
+            "rank": 15
+          },
+          {
+            "id": "ted-146272-2026-lot-0025",
+            "score": 20,
+            "rank": 16
+          },
+          {
+            "id": "ted-251895-2025-lot-0002",
+            "score": 20,
+            "rank": 17
+          },
+          {
+            "id": "ted-416092-2026-lot-0001",
+            "score": 20,
+            "rank": 18
+          },
+          {
+            "id": "ted-416092-2026-lot-0002",
+            "score": 20,
+            "rank": 19
+          },
+          {
+            "id": "ted-416092-2026-lot-0005",
+            "score": 20,
+            "rank": 20
+          }
+        ],
+        "after": [
+          {
+            "id": "ted-52851-2025-lot-0000",
+            "score": 24.5,
+            "rank": 1
+          },
+          {
+            "id": "ted-69312-2026-lot-0003",
+            "score": 20.7,
+            "rank": 2
+          },
+          {
+            "id": "ted-655742-2024-lot-0002",
+            "score": 20.1,
+            "rank": 3
+          },
+          {
+            "id": "ted-146272-2026-lot-0001",
+            "score": 20,
+            "rank": 4
+          },
+          {
+            "id": "ted-146272-2026-lot-0003",
+            "score": 20,
+            "rank": 5
+          },
+          {
+            "id": "ted-146272-2026-lot-0005",
+            "score": 20,
+            "rank": 6
+          },
+          {
+            "id": "ted-146272-2026-lot-0007",
+            "score": 20,
+            "rank": 7
+          },
+          {
+            "id": "ted-146272-2026-lot-0008",
+            "score": 20,
+            "rank": 8
+          },
+          {
+            "id": "ted-146272-2026-lot-0009",
+            "score": 20,
+            "rank": 9
+          },
+          {
+            "id": "ted-146272-2026-lot-0011",
+            "score": 20,
+            "rank": 10
+          },
+          {
+            "id": "ted-146272-2026-lot-0013",
+            "score": 20,
+            "rank": 11
+          },
+          {
+            "id": "ted-146272-2026-lot-0014",
+            "score": 20,
+            "rank": 12
+          },
+          {
+            "id": "ted-146272-2026-lot-0015",
+            "score": 20,
+            "rank": 13
+          },
+          {
+            "id": "ted-146272-2026-lot-0017",
+            "score": 20,
+            "rank": 14
+          },
+          {
+            "id": "ted-146272-2026-lot-0018",
+            "score": 20,
+            "rank": 15
+          },
+          {
+            "id": "ted-146272-2026-lot-0025",
+            "score": 20,
+            "rank": 16
+          },
+          {
+            "id": "ted-251895-2025-lot-0002",
+            "score": 20,
+            "rank": 17
+          },
+          {
+            "id": "ted-416092-2026-lot-0001",
+            "score": 20,
+            "rank": 18
+          },
+          {
+            "id": "ted-416092-2026-lot-0002",
+            "score": 20,
+            "rank": 19
+          },
+          {
+            "id": "ted-416092-2026-lot-0005",
+            "score": 20,
+            "rank": 20
+          }
+        ],
+        "entered": [],
+        "left": [],
+        "reordered": []
+      }
+    }
+  }
+}

@@ -87,6 +87,10 @@ The EU directive caps framework agreements at four years except in justified cas
 
 Reviewed 4 October 2026; no check changed. TED notices are above the EU thresholds by construction, so no amount eligibility applies to `neg-wo-call`; its legal basis is the directive's grounds (Directive 2014/24/EU art. 32), not an amount. Directive minimum periods (35/30/15 days) need the contract-notice chain, which is not imported: follow-up. Counts unchanged.
 
+## Local correctness correction after v3.3
+
+The corrected leave-one-out publication median changes four Portugal scores and adds one late-publication signal: **138 positive / 355 zero / 0 not assessed**, with 11 late-publication signals. Portugal's top 20, Czechia and Romania are unchanged. Earlier release counts above are historical. See [score-audit.md](score-audit.md) for the before/after comparison and reproduction.
+
 ## Reproduction
 
 ```sh
