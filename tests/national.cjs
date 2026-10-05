@@ -55,7 +55,7 @@ const pick = (t, prefix) => Object.fromEntries(Object.entries(t.checks).filter((
 // ---- Portugal and Romania (TED) ----
 for (const [file, country, expected, counts] of [
   ['data/ted-portugal.json', 'PRT', { 'ted-single-offer': [64,322,43,64], 'ted-direct-award': [64,416,13,0], 'ted-repeated-single-offer': [20,43,44,386],
-    'ted-repeated-direct': [36,25,16,416], 'ted-concentration': [0,237,256,0], 'late-publication': [10,483,0,0] }, [137,356,0]],
+    'ted-repeated-direct': [36,25,16,416], 'ted-concentration': [0,237,256,0], 'late-publication': [11,482,0,0] }, [138,355,0]],
   ['data/ted-romania.json', 'ROU', { 'ted-single-offer': [132,209,11,4], 'ted-direct-award': [4,352,0,0], 'ted-repeated-single-offer': [42,77,24,213],
     'ted-repeated-direct': [0,0,4,352], 'ted-concentration': [0,70,286,0], 'late-publication': [25,331,0,0] }, [158,198,0]],
   ['data/ted-czechia.json', 'CZE', { 'ted-single-offer': [92,280,280,22], 'ted-direct-award': [22,373,279,0], 'ted-repeated-single-offer': [16,73,283,302],

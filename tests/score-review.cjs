@@ -1,7 +1,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),crypto=require('node:crypto');
 const hash=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
 const report=JSON.parse(fs.readFileSync('data/score-v3-review.json'));
-assert.equal(report.version,'3.2');
+assert.equal(report.version,'3.3');
 assert.equal(report.sourceCodeHashes.v3,hash('script.js'));
 assert.equal(report.sourceCodeHashes.v21,hash('tools/legacy/scoring-v2.1.js'));
 for(const [name,d] of Object.entries(report.datasets)){
@@ -13,7 +13,7 @@ for(const [name,d] of Object.entries(report.datasets)){
  }
  assert(d.reviewQueue.every(x=>x.reviewStatus==='queued-not-ground-truth'));
 }
-for(const f of ['coverage','decp-coverage','decp-cities-coverage','consultations-coverage','tours-notices-coverage','colombia-secop2-coverage'])assert.equal(JSON.parse(fs.readFileSync(`data/${f}.json`)).currentIndex.version,'3.2');
+for(const f of ['coverage','decp-coverage','decp-cities-coverage','consultations-coverage','tours-notices-coverage','colombia-secop2-coverage'])assert.equal(JSON.parse(fs.readFileSync(`data/${f}.json`)).currentIndex.version,report.version);
 const checks=JSON.parse(fs.readFileSync('data/international-access-checks.json')).checks;
 assert(checks.some(c=>c.url.includes('jbjy-vk9h.json')&&c.http_status===200));
 assert(checks.some(c=>c.url.includes('swagger.json')&&c.global_security));

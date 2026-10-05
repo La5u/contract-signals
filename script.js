@@ -394,13 +394,18 @@ function frenchThresholdBand(series, date) {
   series.forEach(([from], k) => { if (date >= from) i = k; });
   if (i < 0) return null;
   const current = series[i][1];
-  const recent = i > 0 && Date.parse(date) < Date.parse(series[i][0]) + FR_THRESHOLD_TRANSITION_DAYS * 864e5;
-  return { current, previous: recent ? series[i - 1][1] : current };   // below previous: certain; from current: certain
+  // Include every regime intersecting the possible consultation window, not just the
+  // immediately preceding one (works changed twice within 180 days in 2020).
+  let previous = current;
+  for (let k = i; k > 0 && Date.parse(date) < Date.parse(series[k][0]) + FR_THRESHOLD_TRANSITION_DAYS * 864e5; k--) {
+    previous = Math.min(previous, series[k - 1][1]);
+  }
+  return { current, previous };   // below every possible threshold: certain; from current: certain
 }
 function frenchDirectAwardEligibility(c) {
   const euros = n => `€${n.toLocaleString('en-GB')}`;
   if (!(c.amount > 0) || (c.currency && c.currency !== 'EUR')) return { status: 'unknown', reason: 'Declared amount missing: cannot tell whether the contract was below the legal threshold for an award without publicity or competition. Not assessed.' };
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(c.date || '')) return { status: 'unknown', reason: 'Contract date missing: the legal threshold in force cannot be determined. Not assessed.' };
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(c.date || '') || !validIsoDate(c.date)) return { status: 'unknown', reason: 'Contract date missing or invalid: the legal threshold in force cannot be determined. Not assessed.' };
   const works = typeof c.cpv === 'string' && /^\d/.test(c.cpv) ? c.cpv.startsWith('45') : null;
   const bands = [works !== false && frenchThresholdBand(FR_DIRECT_THRESHOLDS.works, c.date), works !== true && frenchThresholdBand(FR_DIRECT_THRESHOLDS.general, c.date)].filter(b => b !== false);
   if (bands.some(b => !b)) return { status: 'unknown', reason: `Contract date ${c.date} precedes the legal regimes encoded (October 2015). Not assessed.` };
@@ -458,7 +463,7 @@ function assignPublicationBaselines(contracts) {
     for (const { c, delay } of rows) {
       const p = sorted.indexOf(delay);   // any position holding this value gives the same remaining multiset
       const at = i => sorted[i < p ? i : i + 1];
-      const median = m % 2 ? (at((m - 1) / 2) + at((m + 1) / 2)) / 2 : at(m / 2);
+      const median = m % 2 ? at((m - 1) / 2) : (at(m / 2 - 1) + at(m / 2)) / 2;
       c.latePublicationBaseline = { median, others: m };
     }
   }

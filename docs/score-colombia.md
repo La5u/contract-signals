@@ -22,7 +22,7 @@ Eight checks are always displayed. Five are jurisdiction-specific; three are the
 | Award declared without supplier plurality or under manifest urgency | `secop2-plurality-award` | Competition | Declared modality in the direct family; published justification is exactly “No existe pluralidad de oferentes en el mercado” or “Urgencia manifiesta” | **18**, flat, all amounts |
 | Repeated awards declared without supplier plurality | `secop2-repeated-plurality` | Competition | This contract is in the avoidance-justified set; same buyer (NIT) and same supplier document (Cédula/NIT) has ≥3 such awards in the cohort | **18 at 3 → 60 at 10**, linear |
 | Concentrated awards within a contract type | `secop2-concentration` | Competition | Single identified holder; same buyer and contract type; group ≥10 identified contracts, coverage ≥80 %, this holder’s share ≥60 % | **12 at 60 % → 40 at 100 %**, linear |
-| Long declared duration | `secop2-long-duration` | Execution/duration | Published `duraci_n_del_contrato` parses to months ≥36 | **8 at 36 months → 40 at 120 months**, linear |
+| Long declared duration | `secop2-long-duration` | Execution/duration | Published `duraci_n_del_contrato` parses to months ≥36 | **8 at 36 months → 16 at 120 months**, linear, cap 16 (v3.3) |
 | Single offer in a competitive procedure | `single-bid` | Competition | **Not applicable**: no offers/proposals table in this extract | — |
 | Short bidding period | `short-bidding-period` | Competition | **Not applicable**: no publication–deadline chronology | — |
 | Declared term more than doubled by extensions | `secop2-term-extension` | Execution/duration | Published `dias_adicionados` divided by the declared term (`duraci_n_del_contrato` in days) strictly above +100 % | **8 at +100 % → 40 at +300 %**, linear |
@@ -91,7 +91,7 @@ The label is **withheld** on a declared interadministrative agreement when publi
 
 ## Legal anchoring (v3.3)
 
-Reviewed 4 October 2026; no check changed. Ley 80/1993 art. 40 parágrafo caps additions at 50 % of the initial value in SMMLV ([text](https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=304)); it concerns value, not term, and the SECOP II extract publishes no addition value (only `dias_adicionados`). Term extension and long duration therefore have no legal anchor and stay editorial. The plurality/urgency check follows Ley 1150/2007 art. 2 num. 4 grounds, which have no amount threshold; the minimum-amount (mínima cuantía) modality is not a signal. Counts unchanged (272 / 7,288 / 0).
+Legal eligibility reviewed 4 October 2026; unchanged. On 5 October 2026 the owner reduced the v3.3 long-duration maximum from 40 to 16 as an editorial decision, not empirical calibration. French DECP single-bid associations do not justify a Colombian execution-risk weight. Ley 80/1993 art. 40 parágrafo caps additions at 50 % of the initial value in SMMLV ([text](https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=304)); it concerns value, not term, and the SECOP II extract publishes no addition value (only `dias_adicionados`). Term extension and long duration therefore have no legal anchor and stay editorial. The plurality/urgency check follows Ley 1150/2007 art. 2 num. 4 grounds, which have no amount threshold; the minimum-amount (mínima cuantía) modality is not a signal. Counts unchanged (272 / 7,288 / 0).
 
 ## Reproduction
 
