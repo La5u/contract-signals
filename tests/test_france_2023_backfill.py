@@ -5,8 +5,11 @@ from pathlib import Path
 import tempfile
 import unittest
 
-import pyarrow as pa
-import pyarrow.parquet as pq
+try:
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+except ImportError:  # optional analysis dependency, absent from CI
+    raise unittest.SkipTest('pyarrow unavailable: France 2023 backfill audit not tested')
 
 SPEC = importlib.util.spec_from_file_location(
     'france_audit', Path(__file__).resolve().parents[1] / 'tools/audit-france-2023-backfill.py')
