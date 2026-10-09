@@ -865,6 +865,7 @@ PATTERNS += [row for row in _CONCISE_PATTERNS if row[0] not in _known_patterns]
 
 # DECP identifier splits, buyer-feed reconciliation and verification (2026-10-08).
 _FEED_EXACT = [
+    ("Sources disagree on the amount: range of the published values", "Las fuentes difieren en el importe: rango de los valores publicados", "Les sources divergent sur le montant : fourchette des valeurs publiées"),
     ("eight buyers — contracts · DECP", "ocho compradores — contratos · DECP", "huit acheteurs — marchés · DECP"),
     ("France · DECP contracts of eight buyers (Ville de Paris, Ardèche, Rennes, Nantes, Bordeaux, Grenoble, Dijon, Tours), notified 2024–2025: 5,286 contracts. Amounts are compared across the Ministry dataset, buyer feeds and open-data lists; disagreements show as ranges. Coverage depends on source publication. Supplier names are current register names.",
      "Francia · contratos DECP de ocho compradores (Ville de Paris, Ardèche, Rennes, Nantes, Burdeos, Grenoble, Dijon, Tours), notificados en 2024–2025: 5.286 contratos. Los importes se comparan entre el conjunto del Ministerio, los flujos de los compradores y las listas de datos abiertos; los desacuerdos se muestran como rangos. La cobertura depende de la publicación en la fuente. Los nombres de proveedores son los actuales del registro.",

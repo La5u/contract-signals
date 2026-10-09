@@ -129,6 +129,8 @@ const server=http.createServer((req,res)=>{
  // Verification: amounts reconciled with the buyer's own feed are filterable and show every source.
  await page.selectOption('#verification','sources-disagree');
  assert.match(await page.locator('#status').textContent(),/^885 \/ 5286/);
+ // A range takes two lines inside its own column, never running into the next one.
+ assert.deepEqual(await page.locator('td.amount-range').first().evaluate(td=>({lines:td.querySelectorAll('span').length,fits:td.scrollWidth<=td.clientWidth+1})),{lines:2,fits:true});
  await openRow(page,page.locator('.row-toggle').first());
  assert.match(await page.locator(panel).textContent(),/Amount sources · Sources disagree/);
  assert.match(await page.locator(panel).textContent(),/Ville de Paris — profil acheteur/);

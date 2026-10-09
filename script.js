@@ -1997,6 +1997,18 @@ function startExplorer() {
   const formatDate = c => c.date ? dateFormat.format(new Date(c.date)) : c.noticeEvidence ? c.publicationDate || '—' : '—';
   // Sources that disagree are shown as the full range of their published amounts, never one pick.
   const formatAmount = c => Array.isArray(c.verification?.amountRange) ? c.verification.amountRange.map(a => moneyFor(c).format(a)).join(' – ') : c.amount == null ? '—' : ({ 'at-least': '≥ ', 'more-than': '> ', approximate: '≈ ' }[c.amountQualifier] || '') + moneyFor(c).format(c.amount);
+  // In the table a range takes two lines (low, then “– high”), so it never runs into the next column.
+  function amountCell(c) {
+    const range = c.verification?.amountRange;
+    if (!Array.isArray(range)) return element('td', formatAmount(c), 'numeric');
+    const cell = element('td', null, 'numeric amount-range');
+    cell.title = 'Sources disagree on the amount: range of the published values';
+    // Whole units keep each line inside narrow columns; the record panel keeps the exact amounts.
+    const options = moneyFor(c).resolvedOptions();
+    const whole = new Intl.NumberFormat(options.locale, { style: 'currency', currency: options.currency, maximumFractionDigits: 0, minimumFractionDigits: 0 });
+    cell.append(element('span', whole.format(range[0])), element('span', `– ${whole.format(range[1])}`));
+    return cell;
+  }
   function scoreChip(c) {
     const breakdown = getScoreBreakdown(c);
     const level = scoreLevel(breakdown.score, hasIncompleteData(c));
@@ -2094,7 +2106,7 @@ function startExplorer() {
       const sector = getSector(c);
       const sectorCell = element('td', sector.label);
       sectorCell.append(element('small', c.cpv || 'unknown CPV', 'provenance'));
-      row.append(objectCell, sectorCell, element('td', formatAmount(c), 'numeric'), element('td', c.offers ?? '—', 'numeric'));
+      row.append(objectCell, sectorCell, amountCell(c), element('td', c.offers ?? '—', 'numeric'));
       const badges = element('td');
       // Every signal is shown, heaviest first. Within a family only the
       // heaviest counts; the others are marked as not added to the index.
