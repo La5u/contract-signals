@@ -110,9 +110,11 @@ check(run('selectContracts',[stronger,twin],{sort:'score'}).map(r=>r.id).join()=
 const unknownRow=tie('0-unknown',{});
 for(const sort of ['score','score-asc'])check(run('selectContracts',[unknownRow,oneFamily,twoFamilies],{sort}).at(-1).id==='0-unknown','unknown scores stay last');
 const datasets=['contracts','decp-history','decp-cities','consultations','tours-notices'];
+// DECP cohorts reconciled with buyer feeds (tools/decp_feeds.py): history was 355/1966/273, cities 0/1678/186.
+// Cities: rows sharing a DECP id split into distinct contracts (was 172/987/111, then 169/1001/110 after the Dijon lot split).
 // v3.2: buyer-relative late publication and French direct-award threshold eligibility reduce flags (v3.1: 9/2466/535, 355/1747/492, 172/835/263).
 // v3.1 adds the transparency family (late publication): counts differ from v3.0 (68/2665/277, 355/1835/404, 172/974/124).
-const expected={contracts:[12,2566,432],'decp-history':[355,1966,273],'decp-cities':[172,987,111],consultations:[10,0,0],'tours-notices':[60,6,0]};
+const expected={contracts:[12,2566,432],'decp-history':[0,2651,346],'decp-cities':[0,2058,231],consultations:[10,0,0],'tours-notices':[60,6,0]};
 for(const file of datasets){
  const rows=run('prepareContracts',JSON.parse(fs.readFileSync(`data/${file}.json`)));
  const values=rows.map(score), exp=expected[file];
@@ -140,7 +142,7 @@ for(const file of datasets){
  }
 }
 // Single-vendor software maintenance: context label only, never read by scoring.
-const softwareCounts={contracts:4,'decp-history':25,'decp-cities':1,consultations:0,'tours-notices':0};
+const softwareCounts={contracts:4,'decp-history':32,'decp-cities':4,consultations:0,'tours-notices':0};
 for(const file of datasets){
  const rows=run('prepareContracts',JSON.parse(fs.readFileSync(`data/${file}.json`)));
  const labelled=run('selectContracts',rows,{legal:'fr-software'});

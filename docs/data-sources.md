@@ -4,8 +4,9 @@ The project's code and documentation are MIT-licensed (see `LICENSE`). Files und
 
 | Dataset in the explorer | Files | Publisher / source | Licence |
 | --- | --- | --- | --- |
-| France · Paris & Ardèche — DECP | `decp-history*.json`, `decp-history-raw.json.gz`, `decp-coverage.json` | Ministère de l’Économie, `decp-2022-marches-valides` on data.economie.gouv.fr | Licence Ouverte v2.0 (Etalab) — stated in the portal metadata |
-| France · six cities — DECP | `decp-cities*.json` | same | Licence Ouverte v2.0 (Etalab) |
+| France · eight buyers — DECP (one explorer dataset loading two import files) | `decp-history*.json`, `decp-history-raw.json.gz`, `decp-coverage.json` (Ville de Paris, Ardèche); `decp-cities*.json` (six municipalities); `decp-france-coverage.json` (index) | Ministère de l’Économie, `decp-2022-marches-valides` on data.economie.gouv.fr | Licence Ouverte v2.0 (Etalab) — stated in the portal metadata |
+| Buyer publication feeds (both DECP cohorts) | `decp-feeds-raw.json.gz`; `amountSources`, `verification` and the records marked “from the buyer’s feed” in the DECP files | National consolidated DECP, [data.gouv.fr dataset 608c055b35eb4e6ee20eb325](https://www.data.gouv.fr/datasets/donnees-essentielles-de-la-commande-publique-consolidees-format-tabulaire) (decp.info / Colmo), aggregating buyer-profile feeds (Atexo/Maximilien, Atexo Nantes, Mégalis, AWS and a scraped copy, PES Marché) | **Licence Ouverte 2.0** (`lov2`, recorded in the snapshot's source block). A third-party consolidation, not the buyers' own files; holder names removed on extraction. Rules: [`../research/france-cross-dataset-check.md`](../research/france-cross-dataset-check.md) |
+| Buyers' own open-data contract lists (six-city cohort) | `city-portals-raw.json.gz`; portal routes in `amountSources` and records marked “from the buyer’s open-data list” | Ville de Nantes, [2024](https://www.data.gouv.fr/datasets/marches-publics-conclus-en-2024-par-la-ville-de-nantes) and [2025](https://www.data.gouv.fr/datasets/marches-publics-conclus-en-2025-par-la-ville-de-nantes) concluded contracts (data.nantesmetropole.fr); [Bordeaux Métropole datahub](https://www.data.gouv.fr/datasets/marches-publics-de-bordeaux-metropole-et-des-communes-mutulalisees-depuis-2024), City of Bordeaux rows | **Licence Ouverte 2.0** (stated on each data.gouv.fr record). Company names dropped on extraction; the Nantes 2024 buyer-SIRET typo correction is documented in `tools/extract-city-portals.py` |
 | Current supplier names (both DECP cohorts) | `supplier-identities*.json`, `supplierProfiles` in the DECP files | API Recherche d’entreprises / Annuaire des entreprises | The official data.gouv.fr dataset [Données des entreprises utilisées dans l'Annuaire des Entreprises](https://www.data.gouv.fr/datasets/donnees-des-entreprises-utilisees-dans-lannuaire-des-entreprises/) is labelled Licence Ouverte 2.0 (`lov2`) and explicitly describes data available in the Annuaire and its API, including displayed full name, administrative status, diffusion status, and identifiers. This supports LO 2.0 for this project's limited name/status/identifier enrichment, not every API field or source. OpenAPI `info.license` is about the service/software, not the business-data licence. The API excludes non-diffusible enterprises and the project selects `statut_diffusion = O`; this does not resolve treatment of independent DECP/BOAMP content or all personal-data questions. Evidence snapshot and response hash: [`source-rights-evidence.json`](source-rights-evidence.json), checked 2026-09-29. See [personal-data inventory](personal-data.md). |
 | France · Tours notices, 3 Feb 2025 consultations, nationwide BOAMP sample | `tours-notices*.json`, `consultations*.json`, `contracts.json`, `boamp-raw.json.gz`, `coverage.json` | BOAMP (DILA), boamp.fr open-data API; TED XML for Tours | **BOAMP: Licence Ouverte 2.0 is stated** in DILA's BOAMP legal notice (“sauf mention contraire, tous les contenus de ce site”) and on the official data.gouv.fr BOAMP and API BOAMP dataset records (`fr-lo`). This supports reuse of the BOAMP-published dataset under LO 2.0, subject to attribution and its terms. The API catalogue's null `license` fields do not undo that dataset-level evidence. It does not resolve whether every incorporated third-party attachment/content is covered, nor privacy/data-protection questions. Evidence snapshot and response hashes: [`source-rights-evidence.json`](source-rights-evidence.json), checked 2026-09-29. TED XML: free reuse, see the TED row below |
 | Eight CRC audit dossiers (inside `contracts.json`) | `contracts.json` | Chambres régionales des comptes reports, quoted with links | Short quotations with source; read the full report |
@@ -17,7 +18,30 @@ The project's code and documentation are MIT-licensed (see `LICENSE`). Files und
 | United Kingdom · Find a Tender | `uk-fts*.json`, `uk-fts/raw/` (compact award index and notices, gzipped) | Find a Tender service (Cabinet Office), OCDS API `find-tender.service.gov.uk/api/1.0/ocdsReleasePackages` | **Open Government Licence v3.0** — declared in every release package; contact points are not imported |
 | Paraguay · supplier sanctions (context only) | `dncp-sanctions.json` (minimised: RUC, entity type, sanction type/status/period; no contacts) | DNCP supplier register, `/search/suppliers` | **CC BY 4.0** |
 
-In the explorer, **Sources and how to verify** (above the table) lists each dataset’s publisher, portal, API, licence, raw snapshot and rebuild command, and every row has a **Verify it yourself** section with the official pages and documents published for it. Each `*-coverage.json` file records the exact queries, retrieval dates, selection rules and known gaps of its dataset. Source PDFs for the Paris 13 November 2025 dossier are in [`sources/paris-13-november-2025/`](sources/paris-13-november-2025/).
+In the explorer, **Sources** (above the table) lists each dataset’s publisher, licence, official portals and extraction details. Each row has a **Verify it yourself** section with its official pages and documents. Each `*-coverage.json` file records exact queries, retrieval dates, selection rules and known gaps. Source PDFs for the Paris 13 November 2025 dossier are in [`sources/paris-13-november-2025/`](sources/paris-13-november-2025/).
+
+## Rebuilding the explorer datasets
+
+Run these commands from the repository root. `--offline` uses the saved source responses rather than fetching new records. The raw snapshots and API/schema links are also recorded in the dataset definitions in [`../script.js`](../script.js).
+
+| Dataset | Saved responses under `data/` | Rebuild command |
+| --- | --- | --- |
+| Paris & Ardèche | `decp-history-raw.json.gz` | `python tools/import-decp-paris-ardeche.py --offline` |
+| Six municipalities | `decp-cities-raw.json` | `python tools/import-decp-cities.py --offline`, then `python tools/build-decp-france-coverage.py` |
+| Buyers' open-data lists (six-city import) | `city-portals-raw.json.gz` | `python tools/extract-city-portals.py` (add `--fetch` to download again), then the six-city import |
+| Buyer feeds (used by both DECP imports) | `decp-feeds-raw.json.gz` | `python tools/extract-decp-feeds.py` (needs the private national parquet from `tools/fetch-decp-national.py`), then both DECP imports |
+| Tours notices | `tours-notices/raw/` | `python tools/import-tours-notices.py --offline` |
+| Consultation notices | `consultations-raw.json` | `python tools/import-consultations.py --offline` |
+| BOAMP sample | `boamp-raw.json.gz` | `python tools/import-boamp-sample.py --offline` |
+| Colombia | `colombia-secop2/raw/` | `python tools/import-colombia-secop2.py --offline` |
+| Paraguay, Fernando de la Mora | `paraguay-dncp/raw/` | `python tools/import-paraguay-dncp.py --cohort fernando --offline` |
+| Paraguay, three buyers | `paraguay-dncp-3buyers/raw/` | `python tools/import-paraguay-dncp.py --cohort 3buyers --offline` |
+| Ukraine | `prozorro/raw/` | `python tools/import-prozorro.py --offline` |
+| Chile | `chile-mp/raw/` | `python tools/import-chilecompra.py --offline` |
+| United Kingdom | `uk-fts/raw/` | `python tools/import-find-a-tender.py --offline` |
+| Portugal, Czechia, Romania (TED) | `ted-{country}/raw/` | `python tools/import-ted-cohorts.py --cohort {country} --offline` |
+
+For the TED command, replace `{country}` with `portugal`, `czechia` or `romania`. Hand-curated audit dossiers and other documented additions are separate from the automated imports; see the coverage files.
 
 ## Portugal BASE research source — not an explorer dataset
 

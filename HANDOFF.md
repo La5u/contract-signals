@@ -1,8 +1,254 @@
 # Project handoff
 
-Updated: 2026-10-03. The newest checkpoint below supersedes older session-status statements; preserve the Portugal evidence and constraints further down. Delivery history is in `docs/project-journal.md` and git.
+Updated: 2026-10-08. **Restart from the checkpoint immediately below. It supersedes older working-tree, deployment, test-count and priority statements.** Older material is preserved as historical context, including Portugal evidence and constraints. Delivery history is in `docs/project-journal.md` and git.
 
-## Restart here — latest checkpoint (2026-10-05)
+## Restart here — latest checkpoint (2026-10-08, accuracy-first laptop session)
+
+### Owner instructions and next action
+
+- Owner transferred the migration ZIP to this laptop and asked to restore/setup it, then continue data work. Owner explicitly prioritizes **accuracy over expansion/scoring changes**, followed by finding authoritative evidence for zero amounts and missing fields. Never claim there is no inaccurate data: tests and source reconciliation do not establish upstream truth.
+- Current requested investigation: **continue the Dijon DECP conflict**, exact municipal buyer `21210231300013`, source ID `2023VDAO1642`. Latest findings are below and in **`research/decp-dijon-conflict-review.md`**. Do not restart from the earlier assumption that this is simply six competing versions of one contract.
+- **(Done 2026-10-08: holder linkage, see the Dijon holder-linkage section; the integration decision awaits the owner.)** Earlier next step: locate the buyer's original lot-level award/notification/DECP publication for this procedure, establish exact holder and contract linkage, and investigate the three offer-count disagreements. The official buyer-profile URL in the notice is only `http://www.marches-publics.info/`; no exact original buyer contract/notification has yet been acquired. Do not assume that a general portal link or supplier-name similarity validates the contract. Keep requests bounded and evidence private.
+- No push, commit, publication, deployment or dataset replacement was performed in this session. **No standing permission to push:** `main` deploys Cloudflare Pages. Older deployment claims below were not reverified this session.
+- All findings here are assistant-assisted source/document review, **not independent expert validation**. Signature authenticity, legal correctness, payments and completeness remain unverified unless specifically stated. Preserve every unresolved/conflicting field; never fill by inference, allocate a ceiling to a lot, sum versions/holders, convert currencies, or turn null into zero.
+- Scoring recommendation given to owner: explainable jurisdiction-specific indicator profiles first, conservative family-max editorial review-priority index second. No corruption probability or learned weights without adequate independently reviewed labels. No weights/thresholds changed in this session. Accuracy/primary-law verification takes precedence.
+
+### Checkout truth — preserve existing work
+
+- Working directory: `/home/lasu/coding/contract-signals`.
+- Git HEAD: **`581fe2c98e64e66ed5fd3964f599115f8e42767f`**, `Retry tests workflow`. Working tree is **dirty**, not clean. No changes committed by this session.
+- **Pre-existing local work was preserved:** modifications to `script.js`, `index.html`, `style.css`, `i18n-es.js`, `i18n-fr.js`, `tests/browser.cjs`, `tools/i18n_table.py`, `docs/data-sources.md`, `data/score-v3-review.json`; untracked `tools/i18n_concise.py`, `tests/test_concise_ui.py`. These include concise UI/translation work and must not be discarded or attributed entirely to the accuracy session.
+- Session additionally changed `script.js` (currency accuracy), `tests/browser.cjs` (unknown-currency regression), `tests/run-all.sh` (currency suite), `tools/import-boamp-sample.py`, `tests/test_import_boamp_sample.py`, and regenerated `data/score-v3-review.json`. Most new research/helpers/tests listed below are **untracked**; do not lose them during reset/cleanup. Run `git status --short` before editing.
+- Original procurement dataset values were not rebuilt or replaced. Regenerating the required score-review artifact changed its timestamp/script hash, not measured scores in its five review datasets. No source weights/cohorts were altered.
+
+### Migration, environment and local server
+
+- ZIP: `contract-signals-migration-20261007-165010.zip` (private, mode 0600). Includes repository/git history and unpublished/raw data with personal/contact fields. **Never upload it.** Locally excluded through `.git/info/exclude` (`/contract-signals-migration-*.zip`); this is local exclusion, not a shared `.gitignore` change.
+- Restored **17,073 private-cache files** to `~/.cache/contract-signals/` (mode 0700). Preserved the full archived checkout separately at `~/.cache/contract-signals/migration-20261007-165010/`; nine differing current files were NOT overwritten. Restored the missing `research/france-2023-backfill.md` into the active checkout. Restore details: private `migration-20261007-165010/restore-report.json`.
+- Laptop architecture **aarch64**, Python **3.14.7**, Node **v22.23.1**. Private venv `~/.cache/contract-signals/venv` has PyArrow, NumPy, SciPy, scikit-learn, plus **pypdf and Pillow** added for document reading. The saved migration `python-environment.txt` predates these last two additions; use `pip freeze` for current truth. No project/site runtime dependency added.
+- Playwright **1.58.2** installed at `/tmp/procurement-browser/node_modules/playwright`; downloaded ARM64 Chromium/headless shell in `~/.cache/ms-playwright/`. Fedora is not officially supported by Playwright, but the Ubuntu ARM64 fallback passed the browser suite. `/tmp` may disappear after reboot; reinstall if required.
+- Server started at owner's request: **http://localhost:8000**, loopback only, background PID **169742** at last check. Command `python3 -m http.server 8000 --bind 127.0.0.1`; log `~/.cache/contract-signals/local-server.log`. HTTP 200 verified before writing this checkpoint. PID may become stale; check before starting another server. Private cache is outside the served repository.
+
+```sh
+cd ~/coding/contract-signals
+source ~/.cache/contract-signals/venv/bin/activate
+sh tests/run-all.sh
+# If /tmp Playwright was lost:
+npm install --prefix /tmp/procurement-browser playwright@1.58.2
+/tmp/procurement-browser/node_modules/.bin/playwright install chromium
+# If the local server is no longer running:
+python3 -m http.server 8000 --bind 127.0.0.1
+```
+
+### Accuracy inventory and amount reconciliation
+
+- **`research/accuracy-priority.md`** is the ranked work queue. Inventory: **14 published datasets / 18,501 normalized rows**, not 18,501 independently validated unique contracts.
+- `tools/audit-data-quality.py` + `tests/test_audit_data_quality.py`; findings **`research/accuracy-inventory.md`**. Counts: **1,383 null amounts, 154 explicit zeros, 16,964 positive amounts**; no negative/non-numeric top-level amounts, malformed top-level dates, duplicate within-dataset row IDs or missing primary source URLs detected. These are narrow structural checks, not factual assurances. 527 rows have initial-conflict markers. Broad private review queue has 15,932 rows, including expected omissions; it is not an error count.
+- 6,979 currencies are absent as explicit fields, mostly legacy French EUR-default rows. Do not describe all of these as demonstrably unknown denominations. Whole international cohorts lack top-level `publicationDate`; this is not proof their publishers supply none. Notice-only records may legitimately lack contract fields.
+- `tools/review-missing-amounts.py` + `tests/test_review_missing_amounts.py`; **`research/missing-amounts-review.md`** reconciles **all 1,537 zero/null rows** against retained evidence:
+  - **154 explicit source zeros**;
+  - **780 amounts absent** from relevant source fields;
+  - **526 unresolved DECP initial amount conflicts**;
+  - **76 notice-only rows**, outside contract-amount scope;
+  - **1 negative BOAMP PayableAmount**, deliberately not imported as positive.
+- **Zero safe replacement amounts found.** Private amount evidence queue has 2,025 entries: the 1,537 gaps plus 488 Ukraine contract provenance checks. Ukraine's contract values are retained; 11 contract/award differences are different bases, not automatic corrections.
+- `tools/recheck-amount-gaps.py` + `tests/test_recheck_amount_gaps.py`; **`research/current-amount-recheck.md`**: three preregistered exact-ID live official API requests (BOAMP missing, BOAMP zero, Colombia zero), all HTTP 200. One missing amount and two zeros persisted; no positive candidates. Not a representative upstream accuracy estimate.
+
+### French mapping review and accuracy fixes
+
+- **`research/accuracy-france-source-review.md`**, read-only helper **`research/accuracy-france-source-review.py`**: six-city DECP 1,865 raw rows → 1,270 groups; Paris/Ardèche 2,949 → 2,594; BOAMP 16,002 eligible occurrences and exact 3,000 sampled lots. Zero regeneration/independently reviewed-field mismatches, with curated overlays explicitly separated. These do not validate signed contracts or publisher declarations.
+- Currency fixes in `script.js`: sorting and profile currency groups use `recordCurrency`, imports with unknown currency are not treated as EUR for French thresholds, zero/nonpositive differs from missing in explanations, history/initial variants use `moneyFor(c)`. Legacy French EUR convention remains. `tests/currency-accuracy.cjs` wired into `tests/run-all.sh`; browser test now expects French-opt-in unknown currency to remain unassessed, then verifies an explicit EUR fixture.
+- BOAMP importer hardening: finite/nonnegative amounts and MONTH durations, validated calendar dates, numeric `#text` statistics, conflicting `tenders` totals become null, holder-reference pairs retained correctly; unresolved holder references conservatively excluded. **14 BOAMP tests**, ten added regressions. Exact saved-snapshot complete build/sample unchanged; no dataset write-path rebuild performed. Independent helper updated to tolerate the fixed synthetic probes.
+- Required after any `script.js` edit: `node tools/review-score-v3.cjs`. This was run after currency changes. Existing review-cohort scores did not change.
+
+### Frozen six-row documentary pass
+
+- Plan: private `~/.cache/contract-signals/document-review/plan.json`, immutable/exclusive freeze; hash **`6533cc7c41384b2e7d33fd6c06e8f0fd5d6409634b236e56901ef481a1609b03`**. Do not overwrite or reselect after seeing outcomes.
+- Tool/tests: `tools/prepare-document-review.py`, `tests/test_prepare_document_review.py`; protocol **`research/document-review-protocol.md`**. Actual cohort-prepared app scores used through Node VM, then lexicographically selected fixed strata.
+- Outcomes: **`research/document-review-results.md`**, helper `tools/review-boamp-documents.py`, `tests/test_review_boamp_documents.py`:
+  - Flagged `boamp-25-11411-lot-0001`: PDF agrees on 138,555 EUR, conclusion 2024-09-09, one offer; tax and underlying contract truth unknown.
+  - Zero-score positive `boamp-25-11426-lot-0001`: no correct PDF acquired within eight-request BOAMP cap; explicitly unverified, not replaced with another row.
+  - Zero `boamp-25-11531-lot-0005`: PDF explicitly says 0 EUR; not evidence of a free service. Conclusion 2024-12-23, two offers.
+  - Missing `boamp-25-11359-lot-0001`: PDF states a **1,000,000 EUR lot framework ceiling**, not a winning-offer amount. Procedure ceiling is 1,240,000 EUR. **Never fill the blank with either.** Conclusion agrees; electronic submissions not total offers.
+  - Dijon DECP conflict: initial pass remained unresolved; newer follow-up below supersedes that limited understanding.
+  - Paraguay `dncp-ocds-03ad3f-452188-1-MN-30173-24-244215`: five-page linked scan states procurement 452188 and total **252,144,563 PYG, IVA incluido**, matching numerically. Handwritten subscription date read as **2024-10-21**: **private candidate only**, awaiting independent review. Existing published date remains period start, not silently signature. Full OCDS contract ID is not printed; linkage is the exact source document/award metadata, handwritten local contract number unresolved. Signatures visible, authenticity not verified. 120 days run from a start order, not necessarily signature.
+- Document acquisition had failures recorded: initial four BOAMP requests used the wrong documented template branch and returned 404; eForms `source_schema=3.2.5` uses `/telechargements/FILES/PDF/{year}/{month}/{idweb}.pdf`. Three PDFs were then acquired within eight requests including prior HTML. No hidden retries/redirects. Paraguay exact frozen PDF acquired in one request; text empty, all embedded scans inspected with pypdf/Pillow. Raw scans contain personal IDs/signatures: **keep private**.
+
+### France DECP merged into one dataset; issues settled (2026-10-08, newest; not committed or deployed)
+
+- The explorer's `decp` entry now loads both DECP import files (5,286 contracts, eight buyers). `cities` links redirect to it.
+  - New: `data/decp-france-coverage.json` (`tools/build-decp-france-coverage.py`).
+  - Dataset metadata rewritten (`cities` entry removed).
+  - `tools/compare-score-revisions.cjs` and `tools/audit-data-quality.py` accept list paths.
+- **Settled:**
+  - Paris price-type "conflicts" were reordered sets: 0 excluded contracts remain.
+  - 50 possible-duplicate records cleared by distinct route references; 10 folded as amount pairs; 25 remain flagged.
+  - A self-contradicting route no longer votes.
+  - Dijon lot 6: the Ministry-only second holder moves to `unconfirmedHolders` (notice and feed agree on the single winner).
+  - Lot 8 is absent everywhere.
+- **Rebuild:** run both DECP imports, then `tools/build-decp-france-coverage.py`, then `node tools/review-score-v3.cjs`.
+- **Tests:** full suite passes.
+
+### Open-data portals, majority tie-break, ranges, co-holders (2026-10-08; not committed or deployed)
+
+- See `research/france-cross-dataset-check.md`, section "More sources, co-holders and ranges".
+- **New sources:** `tools/extract-city-portals.py` → `data/city-portals-raw.json.gz` (Nantes 2024/2025 City lists and the Bordeaux datahub's City rows). A Nantes 2024 buyer-SIRET typo is corrected and documented. No current lists exist for Paris, Grenoble, Dijon, Tours or Ardèche; Rennes ends in 2022 with no amounts.
+- **`tools/decp_feeds.py`:**
+  - matching is two-phase (feeds, then portals);
+  - `majority` tie-break counts routes, with AWS and its scraped copy as one;
+  - co-holders dropped by the Ministry's 3-slot table are restored (67 rows; 4 distinct contracts added).
+- **App:** disagreements are shown and exported as ranges (`amountLow`/`amountHigh`/`amountVerification`); there is a majority note and a portal-only label.
+- **Cities:** 2,299 records (+78 from portals); 1,792 agree, 87 disagree, 64 settled by majority.
+- **Supplier names:** 2,710 identities, refreshed incrementally.
+- **Tests:** full suite passes. Playwright had to be reinstalled in `/tmp` (it had been cleared).
+
+### Non-decision fixes after feed reconciliation (2026-10-08; not committed or deployed)
+
+- **Offer counts:** where the Ministry and the buyer feed give different positive counts, the count is now unknown (`offersConflict.feed`). This affects 8 city contracts; zero counts are already unusable.
+- **Supplier names:** `tools/enrich-suppliers.py --incremental` added 672 new SIRENs, with the 1,960 earlier lookups unchanged; 19 are unavailable. Names now cover 2,151/2,219 city and 2,867/2,997 Paris/Ardèche contracts.
+- **Curated note:** `decp-cities-curated.json` now marks `2024VDAO017006` as `handledAs: joint-contract`.
+- **Docs and attribution:**
+  - `docs/data-sources.md` gains a licence row and a rebuild row for the buyer feeds;
+  - the app's Sources panel links the national consolidation;
+  - research inventories carry snapshot notes.
+- **Flaky test:** the browser check for the filter-sidebar setting now waits for the save.
+- **Full suite passes.**
+- **Decisions still open for the owner:**
+  1. Show large amount disagreements (more than about 2×) as unknown.
+  2. Use BOAMP as a tie-breaker where a notice amount matches one source.
+  3. Investigate or add the 71 feed rows sharing an ID with ours but with another holder.
+  4. Fill CPV check digits from the official CPV list for 128 added contracts, which currently lack them and are left out of sector-based baselines.
+  5. Run a document-review sample for a real accuracy rate.
+
+### Buyer-feed reconciliation — done (2026-10-08; not committed or deployed)
+
+- See `research/france-cross-dataset-check.md` ("Implementation" and "Random-sample accuracy check").
+- **Tools:**
+  - `tools/extract-decp-feeds.py` → `data/decp-feeds-raw.json.gz`;
+  - `tools/decp_feeds.py`, used by both DECP importers;
+  - `tools/accuracy-sample.py`, frozen sample, private results.
+- **Tests:** `tests/test_decp_feeds.py` and `tests/test_accuracy_sample.py`. The full suite passes, including the browser test.
+- **Data:** cities 2,219 records (+355 from feeds), Paris/Ardèche 2,997 (+403); all 355 Paris pairs resolved; 92 placeholders now unknown. Verification filter and amount-sources panel in the app.
+- **Accuracy sample:**
+  - no overall rate is possible: 76 of 90 contracts have no linkable notice, and "sources agree" is unmeasured;
+  - for "sources disagree", the notice supports the shown amount in 2 of 7, and once the Ministry's value over the feed's (`2024S11872`);
+  - treat disagreeing amounts as unreliable.
+- **Next options:** document-review sample restricted to contracts that must have award notices; reconsider the feed-first rule for large disagreements (e.g. leave the shown amount unknown when sources differ by more than 2×).
+
+### French cross-dataset check — read-only (2026-10-08)
+
+- See `research/france-cross-dataset-check.md`. The owner asked for no changes yet.
+- **Paris/Ardèche:** 433 of 2,230 comparable Paris contracts differ in amount from Paris's own feed (national `atexo_maximilien`). About 90 are 10 EUR placeholders. The rest are ×2/×4/×10 basis differences or single-digit differences. BOAMP maxima agree with Paris's feed in the cases checked.
+- **The 355 Paris "conflict" pairs** look like two amount versions of one contract (Paris's feed keeps one). Do not split them like the cities.
+- **Nantes:** 51 amount differences.
+- **Coverage:** about 227 city and 387 Paris contracts are in the national feeds but absent from our Ministry "valid" snapshots.
+- **BOAMP vs DECP:** 649 lots linkable; 202 amount differences in both directions; 15 offer differences.
+- **Awaiting owner decision** on an amount-resolution rule.
+
+### All six-city contracts included (2026-10-08; not committed or deployed)
+
+- The owner chose to include every contract. Rows sharing a DECP `id` are split into distinct contracts by their declared fields and linked (`procedureGroup`). One joint contract was merged. 95 possible duplicates are flagged (`possibleDuplicateOf`); they are scored, and each cluster counts once in buyer baselines.
+- **Cities cohort:** 1,864 rows, 0 excluded, 186 flagged, single-bid 82. All datasets: 19,095 rows. See `research/decp-identifier-collisions.md` ("Decision and implementation").
+- **Tests:** full suite passes (322 Python tests, all JS suites, browser). The document-review tests are pinned to the frozen-time city file.
+- **UI strings:** new English UI strings (duplicate and offer-conflict notes, sibling list) have no FR/ES translation entries yet.
+- `data/decp-cities-curated.json` still lists `2024VDAO017006` under `unresolvedGroups` (no notice linkage); the importer now merges it as a joint contract per DECP.
+
+### Remaining six-city conflicts: identifier problem, research only (2026-10-08)
+
+- See `research/decp-identifier-collisions.md`. Of the 169 remaining conflict groups, **135 are unrelated contracts sharing one `id`**; only about 6 resemble the Dijon lot pattern.
+- **Dijon, Bordeaux and Grenoble (AWS):** the export appears to truncate `id`s. The national `scrap_marches-publics.info` copy has longer `id`s with the short one as prefix, but it fully separates only 2 of 63 groups.
+- **Nantes and Rennes:** `id` is not the contract number. Rennes award 24-24339 prints `Marché n° 2410046` for DECP `2024S00004`.
+- No data changed. Next steps await the owner: publish distinct-object/CPV rows as linked "shared identifier" groups; contact the AWS/DECP maintainers; check Nantes notices.
+
+### Dijon project reconciliation and split — implemented 2026-10-08 (newest; not committed or deployed)
+
+- The owner approved splitting with linking. Details are in `research/decp-dijon-conflict-review.md` under "project-wide reconciliation and integration".
+- New tools: `tools/reconcile-dijon-project.py` (`--fetch` is frozen and already used; `--write-curated` regenerates `data/decp-cities-curated.json`) and `tools/fetch-dijon-project-notices.py` (used). Tests: `tests/test_reconcile_dijon_project.py` (8) and `tests/test_link_dijon_holders.py`.
+- **Published data changed:** `data/decp-cities.json` and its coverage file were regenerated with `python tools/import-decp-cities.py --offline`.
+  - 3 groups split into 13 linked rows (`procedureGroup`); 7 disputed offer counts nulled (`offersConflict`); 26 rows attached to project `dijon-maison-des-associations`.
+  - `script.js`: the identifier-ambiguity rule exempts only exact procedure-group members; the record panel shows sibling lots, disputed offers and a link to the project.
+  - Cities cohort: 1,280 rows, 169 excluded, 110 flagged, single-bid 51. Totals across all datasets: 18,511 rows. Test expectations were updated to match.
+  - `node tools/review-score-v3.cjs` was rerun. The full suite passes: 320 Python tests, all JS suites, and the browser suite.
+- **Still open:**
+  - Seven offer-count disagreements. These need the buyer's *rapports d'analyse des offres*; a records request to the Ville de Dijon would be the next step.
+  - Lot 8 (2024vdao017008) has no DECP row at all.
+  - `2024VDAO017006` has a joint-holder / notice mismatch and stays excluded.
+  - Five unlinked holders, and lots 17/22, with no relaunch found.
+- **Accidents in this session — check `git status` before committing:**
+  - A stray `git stash` (`stash@{0}`) holds an older generated `data/score-v3-review.json`. Safe to drop once confirmed.
+  - `i18n-fr.js` and `i18n-es.js` were reset by mistake and rebuilt with `python3 tools/i18n-strings.py` from `tools/i18n_table.py`. The generator-consistency test passes.
+- Other research docs (`accuracy-inventory.md`, `missing-amounts-review.md`) still quote pre-split counts (18,501 rows / 1,537 gaps). Treat those as snapshots.
+
+### Dijon holder linkage — resolved 2026-10-08
+
+- `tools/link-dijon-holders.py` + `tests/test_link_dijon_holders.py` (10 tests). Six bounded exact-SIRET lookups in the official DINUM register (`recherche-entreprises.api.gouv.fr`), all HTTP 200, frozen in private `decp-conflict-dijon/holder-registry-20261008/`. **All six DECP rows are holder-linked** to their candidate lot's notice winner: exact SIRET, consistent SIREN, name tokens and postcode all agree, and the six winners are distinct. The conflict is fully explained as six lot contracts sharing one procedure ID.
+- The establishment for printed lot 20 is **closed in the current register**. That is current state only.
+- **Offer counts for printed lots 7, 12 and 20 remain unresolved.** DECP and the notice are two declarations by the same buyer through the same AWS platform. All offers were electronic, so that is not the explanation. Integrate those three counts as null.
+- **Next / awaiting owner:** approve or decline the narrow integration proposed in `research/decp-dijon-conflict-review.md` ("Decision and next gate"): six lot rows, provenance contract references, three null offer counts, LOT-0014 excluded, an exact-pair rule only. Not yet implemented. No dataset, score, commit or push changes were made. Full Python suite: 312 tests OK.
+
+### Latest Dijon conflict finding — earlier pass (superseded by the section above)
+
+- Detailed report **`research/decp-dijon-conflict-review.md`**. New helpers/tests: `tools/fetch-decp-conflict-evidence.py`, `tools/reconcile-dijon-conflict.py`, `tests/test_fetch_decp_conflict_evidence.py`, `tests/test_reconcile_dijon_conflict.py`.
+- Four bounded official requests: exact Ministry buyer/ID (no year filter), BOAMP exact reference search, limited title/buyer discovery, exact **24-79759** PDF. Raw responses and 39-page PDF remain private. PDF SHA-256 **`54ecaae5649ff9ede84f576442fd1c40935b01916728c4b939e184d740b0af36`**. Notice UUID **`abf0a548-7c69-44e0-a066-402d0b1aa048`**, version 01; procedure UUID **`682e7482-e0b9-440b-9031-d9438725cea9`**. Exact buyer SIRET and procedure's internal ID **2023VDAO1642** match.
+- Live Ministry still has six rows, each different holder/amount, no modification IDs. Award notice has distinct lot contracts; amount/date/contract-reference relationships and PDF values support six **candidate** pairings:
+
+| Technical lot | Printed lot | Contract reference | EUR value | DECP / notice offers |
+| --- | ---: | --- | ---: | --- |
+| LOT-0001 | 1 | 2023vdao164201 | 456,516.27 | 10 / 10 |
+| LOT-0007 | 7 | 2023vdao164207 | 668,893.00 | **2 / 4** |
+| LOT-0012 | 12 | 2023vdao164212 | 168,127.96 | **2 / 5** |
+| LOT-0013 | 13 | 2023vdao164213 | 580,470.95 | 4 / 4 |
+| LOT-0019 | 20 | 2023vdao164220 | 155,995.41 | **2 / 3** |
+| LOT-0022 | 23 | 2023vdao164223 | 105,055.00 | 2 / 2 |
+
+- **Root-cause explanation: procedure-ID / lot-contract granularity collision.** Do not treat buyer + supplied ID as one verified unique contract. Do not take the lone 456,516.27 national row as authoritative: it represents only one corresponding lot-value alternative, not complete procedure coverage.
+- Technical lot IDs **are not printed lot numbers** (LOT-0019 → 20, LOT-0022 → 23). Never derive printed lot number/contract suffix from the technical ID.
+- Notice's seventh awarded result: LOT-0014, 57,000 EUR, reference **2024vdao164214**, different year prefix; not forced into target group or used in a sum.
+- **Three offer-count disagreements** (printed lots 7, 12, 20) persist between sources. PDF corroborates BOAMP `tenders` totals, not independent precedence over DECP. `t-esubm` was not substituted.
+- BOAMP winning-holder registration fields are placeholders, **zero exact holder identities confirmed**. This prevents claiming fully verified DECP-row-to-lot matches. Matching amount/date within an exact buyer/procedure is candidate support, not enough for a published repair. Tax/scope also unresolved; notification and conclusion share dates but remain different meanings.
+- **Decision:** published grouped row remains amount-null and excluded; six minimized private lot candidates retained, no score calculated, no published split. To integrate: first establish authoritative lot/holder linkage, or explicitly create a separate BOAMP notice-lot cohort with its own source/basis rather than inventing DECP lot IDs. Owner has not yet approved a dataset integration/deployment.
+
+```sh
+# No-network plan; do NOT rerun --fetch against the existing exclusive freeze.
+python tools/fetch-decp-conflict-evidence.py
+# Offline reconciliation with PDF, requires private cache/pypdf:
+~/.cache/contract-signals/venv/bin/python tools/reconcile-dijon-conflict.py
+```
+
+### UK full-cohort audit and remaining accuracy risks
+
+- `tools/audit-uk-contract-values.py`, `tests/test_audit_uk_contract_values.py`, **`research/uk-contract-multiplicity-review.md`**: 1,081 published rows, 516 saved releases, 1,233 awards, 1,086 raw contracts. Every published row has exactly one linked contract; no current multi-contract overwrite or observed award-value fallback. All amount/currency/date pairs match the importer rule. Nine lack amount+currency, **three dates use notice-date fallback**. Award value objects absent: zero differences means no comparable pairs, not demonstrated agreement.
+- Open risks in `research/accuracy-priority.md`: independent documentary review; primary legal texts/eligibility; UK latent last-wins and fallback basis; Paris/Ardèche history omits 2,563 known initial holder IDs and lacks city-style modification conflicts (none observed in saved snapshot); mixed-currency minimum-amount filter still applies one numeric cutoff and was deliberately not redesigned; other importer numeric/temporal guards; missing offers/dates/durations and privacy-safe historical names.
+- No blanket `dataStatus: verified` factual assurance. This is provenance metadata, not independent document validation or completeness. Null score is not zero; zero score can coexist with missing amount if other checks evaluate.
+
+### France 2023 backfill — research only
+
+- `research/france-2023-backfill.md`, `tools/audit-france-2023-backfill.py`, `tests/test_france_2023_backfill.py`.
+- Six exact preregistered municipal buyers; cached national snapshot yields **612 rows / 491 candidate buyer-contract groups** in 2023, not 491 verified contracts. Offline all-year state audit: **76 conflicting initial groups**, **385 single initial-state groups dated 2023**, **61 groups have initial dates outside 2023**. No candidate cohort imported/published/scored.
+- Tours exact municipality has zero 2023 matches, but **383 source rows dated 2025 and 471 dated 2026**: coverage gap, not zero purchasing. Three official metadata checks found no suitable historical procurement source; similarly named Tours “Les marchés” dataset is market locations/hours, not contracts, and concerns the metropolis. Do not substitute metropolitan buyer.
+- Dijon conflict investigation shows why buyer/contract grouping itself must be reviewed before any historical cohort or year comparison.
+
+### Private evidence and reproducible research index
+
+**Never copy these directories into Git or the static server root:**
+
+- `~/.cache/contract-signals/migration-20261007-165010/`: archived repository, restore report, migration instructions.
+- `~/.cache/contract-signals/decp-national/`: parquet, manifest, national draft, 2023 audit, Tours metadata responses.
+- `~/.cache/contract-signals/accuracy-review/`: broad review.jsonl, minimized UK full-cohort findings (`uk-contract-multiplicity-20261007/`), French reconciliation JSON and test logs. UK directory date is inherited; actual review context is in report.
+- `~/.cache/contract-signals/missing-amounts-review/review.jsonl`: exact amount evidence/candidates, 2,025 entries.
+- `~/.cache/contract-signals/current-amount-recheck/`: frozen three-request plan/live responses and provenance.
+- `~/.cache/contract-signals/document-review/`: immutable plan, BOAMP PDF/HTML/text/manifests, `boamp-document-results.json`, Paraguay PDF/scans/private date candidate, `paraguay-document-result.json`, earlier `decp-conflict-evidence.json`.
+- `~/.cache/contract-signals/decp-conflict-dijon/`: new `official-discovery-20261008/` frozen API plan/raw responses/manifest; `boamp-24-79759.pdf`, text and PDF manifest; `lot-candidate-reconciliation.json`. Cached 25-33856 is a later lot-12 relaunch, not the original target award.
+- Existing BASE archives/candidates and labels remain private with their older rights/coverage constraints. Read source rights/privacy docs before attachments; reuse rights do not clear personal-data publication.
+
+### Tests and refresh instructions
+
+- **Latest full suite passes: 302 Python tests, all JavaScript suites, browser suite.** Run used venv on PATH so research-dependency tests did not silently skip for missing PyArrow/etc.
+- Latest log: `~/.cache/contract-signals/accuracy-review/dijon-conflict-tests.log`; prior full logs retained nearby. Eleven tests added in latest Dijon phase (seven reconciliation, four bounded fetcher); complete count incorporates preceding migration/backfill/currency/amount/document/UK work.
+- Latest reconciliation prints: six source rows, six unique candidate lot matches, three offer-count disagreements, zero holder identities confirmed, zero published changes. PDF corroborates all six candidate notice values/references/dates/offer counts, but this is not independent truth validation.
+- After refresh: read this checkpoint, then **`research/decp-dijon-conflict-review.md`** and **`research/accuracy-priority.md`**, inspect `git status`, check cache/server availability, and continue exact buyer-profile lot/holder evidence. Do not repeat frozen network collection, discard dirty files, regenerate datasets for convenience, or push without approval.
+
+## Historical checkpoint (2026-10-05; superseded where inconsistent above)
 
 ### Production and working-tree truth
 

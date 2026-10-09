@@ -39,13 +39,37 @@ class ImporterRegression(unittest.TestCase):
         self.assertEqual(rows[0]["amount"], 100)
         self.assertEqual(rows[0]["history"][1]["amount"], 130)
 
-    def test_initial_conflict_nulls_field_and_preserves_variants(self):
+    def test_differing_initial_fields_become_linked_possible_duplicates(self):
+        # Same holder, object and date but a different initial amount: kept as two
+        # linked records, flagged as possibly one contract; no value chosen or summed.
         records = [row("C2", amount=100), row("C2", "1", amount=200, mod_amount=250, mod_date="2024-04-02")]
-        result = self.normalize(records)[0]
-        self.assertIn("amount", result["initialConflicts"])
-        self.assertIsNone(result["amount"])
-        self.assertEqual(len(result["sourceRowVariants"]), 2)
-        self.assertEqual(len(result["initialAlternatives"]), 2)
+        result = self.normalize(records)
+        self.assertEqual(sorted(r["amount"] for r in result), [100, 200])
+        ids = [r["id"] for r in result]
+        self.assertEqual(len(set(ids)), 2)
+        for r in result:
+            self.assertEqual(r["procedureGroup"]["members"], ids)
+            self.assertEqual(r["possibleDuplicateOf"], [i for i in ids if i != r["id"]])
+            self.assertEqual(r["initialConflicts"], [])
+            self.assertEqual(len(r["sourceRowVariants"]), 1)
+        self.assertEqual([len(r["history"]) for r in sorted(result, key=lambda r: r["amount"])], [1, 2])
+
+    def test_unrelated_contracts_sharing_id_are_not_flagged_duplicates(self):
+        records = [row("C5"), dict(row("C5", amount=300), objet="autre", titulaire_id_1="98765432100011")]
+        result = self.normalize(records)
+        self.assertEqual(len(result), 2)
+        self.assertTrue(all("possibleDuplicateOf" not in r for r in result))
+        self.assertEqual({r["procedureGroup"]["kind"] for r in result}, {"shared-identifier"})
+
+    def test_joint_contract_rows_merge_holders(self):
+        joint = dict(row("C6"), typegroupementoperateurs="Conjoint")
+        other = dict(joint, titulaire_id_1="98765432100011")
+        [result] = self.normalize([joint, other])
+        self.assertEqual([s["id"] for s in result["supplierIds"]], ["12345678900011", "98765432100011"])
+        self.assertEqual(result["initialConflicts"], [])
+        self.assertNotIn("procedureGroup", result)
+        # Without a declared joint grouping the same rows are two contracts.
+        self.assertEqual(len(self.normalize([row("C7"), dict(row("C7"), titulaire_id_1="98765432100011")])), 2)
 
     def test_identical_rows_deduplicated(self):
         result = self.normalize([row("C3"), row("C3")])

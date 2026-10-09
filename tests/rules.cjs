@@ -25,14 +25,14 @@ c=make(); c.consultation.notices.push({...notice,id:'b',version:'02',kind:'corre
 const nullSort=[{...base,id:'unknown'},{...base,id:'known',amount:1,date:'2024-01-01',offers:1,supplier:'A'}];
 for(const sort of ['amount','amount-asc','date','date-asc','offers','supplier'])check(run('selectContracts',nullSort,{sort})[1].id==='unknown');
 const datasets = ['contracts','decp-history','consultations'].map(f=>run('prepareContracts',JSON.parse(fs.readFileSync(`data/${f}.json`))));
-check(datasets[0].length===3010);check(datasets[1].length===2594);check(datasets[2].length===10);
+check(datasets[0].length===3010);check(datasets[1].length===2997); // Paris/Ardèche reconciled with buyer feeds (was 2594)check(datasets[2].length===10);
 check(run('selectContracts',datasets[0],{official:true}).length===8);
-for(const [id,count] of [['amount-increase',13],['repeated-single-bid',9],['supplier-concentration',8]])check(run('selectContracts',datasets[1],{indicator:id}).length===count);
+for(const [id,count] of [['amount-increase',9],['repeated-single-bid',9],['supplier-concentration',10]])check(run('selectContracts',datasets[1],{indicator:id}).length===count);
 check(datasets[2].every(c=>run('getBiddingPeriod',c).status==='unavailable'));
 check(run('selectContracts',datasets[2],{search:'25-22678'}).length===1);
 check(run('selectContracts',datasets[2],{sector:'45'}).length>0);
 for(const sort of ['amount','amount-asc','date','date-asc','offers','supplier','sector','sector-desc','score','score-asc','increase','buyer'])check(run('selectContracts',datasets[0],{sort}).length===3010);
-for(const mode of ['sector','buyer','supplier','project']) {const arranged=run('arrangeGroups',datasets[1],mode);check(arranged.rows.length===2594);check(new Set(arranged.rows.map(c=>c.id)).size===2594);}
+for(const mode of ['sector','buyer','supplier','project']) {const arranged=run('arrangeGroups',datasets[1],mode);check(arranged.rows.length===2997);check(new Set(arranged.rows.map(c=>c.id)).size===2997);}
 assert.throws(()=>run('validateContracts',[base,base]));checks++;
 const raw=JSON.parse(fs.readFileSync('data/consultations-raw.json')).records;
 for(const row of datasets[2])for(const n of [...row.consultation.notices,...row.consultation.matchedAwards]) {const source=raw.find(r=>r.idweb===n.id);check(!!source);check(n.source.includes(n.id));if(n.kind!=='initial')check(n.previousNoticeIds.some(id=>(source.annonce_lie||[]).includes(id)));}
