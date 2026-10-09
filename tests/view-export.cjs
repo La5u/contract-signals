@@ -17,7 +17,8 @@ assert.equal(junk.page,1);assert.equal(junk.pageSize,50);assert.equal(junk.flagg
 // Export: every filtered row, unknown stays empty (never zero), formulas neutralized, currency kept.
 const cities=run('prepareContracts',JSON.parse(fs.readFileSync('data/decp-cities.json')));
 const colombia=run('prepareContracts',JSON.parse(fs.readFileSync('data/colombia-secop2.json')));
-const notAssessed=cities.find(c=>run('getVigilanceScore',c)==null);
+// The DECP cohorts no longer have unassessed rows; take one from the BOAMP sample.
+const notAssessed=run('prepareContracts',JSON.parse(fs.readFileSync('data/contracts.json'))).find(c=>run('getVigilanceScore',c)==null);
 const named=cities.find(c=>c.supplierProfiles?.length);
 const co=colombia.find(c=>c.contractId==='CO1.PCCNTR.6685724');
 const formula={...named,id:'test-formula',description:'=HYPERLINK("http://x","y")',supplier:'+33 1 23',buyer:'@SUM(A1)'};
@@ -28,7 +29,7 @@ assert.equal(lines[0],vm.runInContext('EXPORT_COLUMNS',ctx).join(','));
 // Context labels travel with the export, empty when none applies.
 const decp=vm.runInContext('prepareContracts',ctx)(JSON.parse(fs.readFileSync('data/decp-history.json')));
 const labelled=decp.filter(c=>vm.runInContext('exportRecord',ctx)(c).context==='single-vendor software maintenance');
-assert.equal(labelled.length,25);
+assert.equal(labelled.length,32); // Paris/Ardèche now includes contracts from the buyer feeds (was 25)
 assert.equal(vm.runInContext('exportRecord',ctx)(decp.find(c=>!vm.runInContext('contextLabels',ctx)(c).length)).context,null);
 assert.equal(lines.length,rows.length+1);
 const exported=rows.map(c=>run('exportRecord',c));

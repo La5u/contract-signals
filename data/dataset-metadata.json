@@ -22,29 +22,6 @@
       "BOAMP collected 2026-09-16T08:52:08.735633+00:00; TED retrieval 2026-09-16T09:12:09.130796+00:00 to 2026-09-16T09:16:32.873486+00:00 (last recorded download, not a completion timestamp). Related notices outside the coverage window retained."
     ]
   },
-  "cities": {
-    "coveragePath": "data/decp-cities-coverage.json",
-    "snapshot": {
-      "start": "2026-09-15T22:52:17.880816+00:00",
-      "end": "2026-09-15T22:52:17.880816+00:00"
-    },
-    "coverage": {
-      "start": "2024-01-01",
-      "end": "2026-01-01",
-      "endExclusive": true,
-      "basis": "DECP datenotification (notification date)"
-    },
-    "source_updated": null,
-    "notes": [
-      "DECP valid dataset publication is not proof of legal regularity or payment.",
-      "No names inferred for suppliers; identifiers and their published type are preserved.",
-      "The API may expose only indexed/latest modifications; absence of a published modification does NOT prove absence of a real amendment.",
-      "Absence de modification publiée ne prouve PAS l’absence d’un avenant ou d’une modification réelle.",
-      "Offset pagination is checked against total_count but the API provides no immutable snapshot; tied ordering and subsequent corrections can affect completeness.",
-      "Repeated buyer+contract identifiers with inconsistent objects or holders are ambiguous groups, not proven unique procurements; excluded from all calculations in this new cohort.",
-      "Current public company names are an identity context only, not historical names, establishment status, relationship evidence or scoring inputs."
-    ]
-  },
   "consultations": {
     "coveragePath": "data/consultations-coverage.json",
     "snapshot": {
@@ -67,7 +44,7 @@
     ]
   },
   "decp": {
-    "coveragePath": "data/decp-coverage.json",
+    "coveragePath": "data/decp-france-coverage.json",
     "snapshot": null,
     "coverage": {
       "start": "2024-01-01",
@@ -77,13 +54,15 @@
     },
     "source_updated": null,
     "notes": [
-      "Une entrée par SIRET acheteur + identifiant de marché, qui peut désigner un lot. Les identifiants ne prouvent pas à eux seuls une opération économique distincte.",
-      "Les valeurs initiales divergentes sont mises à null et conservées comme alternatives sans leur inventer un ordre chronologique. Les groupes en conflit sont exclus des deux nouveaux indicateurs.",
-      "Le schéma définit le montant de modification comme nouveau montant, mais la saisie peut être erronée (certains montants ressemblent à des incréments). Aucun incrément n’est additionné.",
-      "L’API ne garantit pas l’historique complet des avenants ; absence de modification publiée ne signifie pas absence de modification réelle.",
-      "Les champs offresrecues sont des déclarations de l’acheteur, non une vérification de recevabilité.",
-      "Les taux de concurrence décrivent les seuls contrats concurrentiels admissibles publiés de la cohorte, pas tout le marché sectoriel ni toute l’activité de la collectivité.",
-      "Pas de fusion automatique avec BOAMP/TED : recoupements possibles, ne pas sommer les deux jeux.",
+      "Huit acheteurs : Ville de Paris, Département de l’Ardèche et six communes (Rennes, Nantes, Bordeaux, Grenoble, Dijon, Tours). Les deux imports restent séparés (data/decp-history.json, data/decp-cities.json) et sont chargés comme un seul jeu.",
+      "Un enregistrement par marché distinct : les lignes partageant un identifiant DECP mais déclarant des champs différents sont des marchés liés entre eux, sans identifiant inventé.",
+      "Montants comparés entre le jeu ministériel, les flux des acheteurs (consolidation nationale) et les listes open data de Nantes et Bordeaux ; un désaccord est affiché comme une fourchette et n’alimente un contrôle que si toutes les sources mènent à la même conclusion.",
+      "Les montants de 10 EUR ou moins sont des valeurs symboliques et ne sont pas utilisés comme montants.",
+      "Le schéma définit le montant de modification comme nouveau montant, mais la saisie peut être erronée. Aucun incrément n’est additionné.",
+      "L’absence de modification publiée ne signifie pas l’absence de modification réelle.",
+      "Les champs offresrecues sont des déclarations de l’acheteur, non une vérification de recevabilité ; deux déclarations divergentes rendent le nombre inconnu.",
+      "Pas de fusion avec BOAMP/TED : recoupements possibles, ne pas sommer les deux jeux.",
+      "Six-city snapshot recorded 2026-09-15T22:52:17Z (Ministry API); buyer feeds 2026-10-04 (national consolidated file); Nantes and Bordeaux lists 2026-10-08.",
       "Original collection recorded 2026-09-13T20:55:09.634227+00:00; current raw snapshot superseded it at rebuild 2026-09-25. Exact retrieval time for the current snapshot is unknown; rebuild date is not collection time."
     ]
   },

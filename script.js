@@ -6,6 +6,13 @@ const HISTORY_COHORTS = new Set([HISTORY_COHORT, CITIES_COHORT]);
 function isAmbiguousCityContract(c) {
   return c.cohortId === CITIES_COHORT && Boolean(c.initialConflicts?.length || c.modificationConflicts?.length);
 }
+// How far a French DECP record's amount is corroborated (tools/decp_feeds.py).
+const VERIFICATION_STATUSES = {
+  'notice-checked': 'Checked against the award notice',
+  'sources-agree': 'Sources agree',
+  'sources-disagree': 'Sources disagree',
+  'single-source': 'Single source',
+};
 const HISTORY_START = '2024-01-01';
 const HISTORY_END = '2025-12-31';
 
@@ -404,7 +411,16 @@ function frenchThresholdBand(series, date) {
 }
 function frenchDirectAwardEligibility(c) {
   const euros = n => `€${n.toLocaleString('en-GB')}`;
-  if (!(c.amount > 0) || (c.currency && c.currency !== 'EUR')) return { status: 'unknown', reason: 'Declared amount missing: cannot tell whether the contract was below the legal threshold for an award without publicity or competition. Not assessed.' };
+  if (c.amount == null && c.verification?.placeholder) return { status: 'unknown', reason: 'The published amount is a placeholder (10 EUR or less) and no source gives a real amount: cannot tell whether the contract was below the legal threshold. Not assessed.' };
+  const range = c.verification?.amountRange;
+  if (c.amount != null && Array.isArray(range)) {
+    // Sources disagree on the amount: only a conclusion that holds at both ends is used.
+    const [low, high] = range.map(amount => frenchDirectAwardEligibility({ ...c, amount, verification: null }).status);
+    if (low !== high) return { status: 'unknown', reason: `Sources disagree on the amount (${euros(range[0])} to ${euros(range[1])} HT), on either side of the legal threshold: not assessed.` };
+  }
+  if (c.amount == null) return { status: 'unknown', reason: 'Declared amount missing: cannot tell whether the contract was below the legal threshold for an award without publicity or competition. Not assessed.' };
+  if (!(c.amount > 0)) return { status: 'unknown', reason: 'Declared amount is nonpositive: cannot tell whether the contract was below the legal threshold for an award without publicity or competition. Not assessed.' };
+  if (recordCurrency(c) !== 'EUR') return { status: 'unknown', reason: 'Declared currency is unknown or not EUR: the French euro threshold cannot be applied. Not assessed.' };
   if (!/^\d{4}-\d{2}-\d{2}$/.test(c.date || '') || !validIsoDate(c.date)) return { status: 'unknown', reason: 'Contract date missing or invalid: the legal threshold in force cannot be determined. Not assessed.' };
   const works = typeof c.cpv === 'string' && /^\d/.test(c.cpv) ? c.cpv.startsWith('45') : null;
   const bands = [works !== false && frenchThresholdBand(FR_DIRECT_THRESHOLDS.works, c.date), works !== true && frenchThresholdBand(FR_DIRECT_THRESHOLDS.general, c.date)].filter(b => b !== false);
@@ -447,13 +463,19 @@ function latePublicationDelay(c) {
   return Number.isFinite(days) && days >= 0 ? days : null;
 }
 // Leave-one-out median delay per buyer, over the whole cohort before any filter.
+// Rows that may be one contract published twice count once in buyer-level baselines:
+// the first of each cluster contributes, the others only receive the buyer's context.
+function duplicateShadow(c) {
+  return Array.isArray(c.possibleDuplicateOf) && c.possibleDuplicateOf.some(id => id < c.id);
+}
 function assignPublicationBaselines(contracts) {
-  const buyers = new Map();
+  const buyers = new Map(), shadows = [];
   for (const c of contracts) {
     c.latePublicationBaseline = null;
     const delay = latePublicationDelay(c), buyer = c.buyerSiret || c.buyerId || c.buyer;
     if (delay == null || !buyer) continue;
     const key = `${c.dataFamily}|${buyer}`;
+    if (duplicateShadow(c)) { shadows.push({ c, key }); continue; }
     if (!buyers.has(key)) buyers.set(key, []);
     buyers.get(key).push({ c, delay });
   }
@@ -466,6 +488,12 @@ function assignPublicationBaselines(contracts) {
       const median = m % 2 ? at((m - 1) / 2) : (at(m / 2 - 1) + at(m / 2)) / 2;
       c.latePublicationBaseline = { median, others: m };
     }
+  }
+  for (const { c, key } of shadows) {
+    const rows = buyers.get(key);
+    if (!rows || rows.length < latePublicationConfig(c).minBuyerRecords) continue;
+    const sorted = rows.map(r => r.delay).sort((x, y) => x - y), n = sorted.length;
+    c.latePublicationBaseline = { median: n % 2 ? sorted[(n - 1) / 2] : (sorted[n / 2 - 1] + sorted[n / 2]) / 2, others: n };
   }
 }
 function latePublicationCheck(c, excludedReason) {
@@ -568,7 +596,7 @@ function getAssessmentLocal(c) {
   const competitive = c.directAward === false;
   const knownOffers = Number.isInteger(c.offers) && c.offers > 0;
   add('single-bid', 'Single offer in a competitive procedure', 'competition', c.directAward === true ? 'no' : competitive ? 'yes' : 'unknown', knownOffers, c.offers === 1, 12,
-    !competitive ? 'An offer expected in a direct award adds nothing; competitive procedure not established if unknown.' : !knownOffers ? 'Positive number of offers unknown or unusable.' : `${c.offers} offer(s) declared, without presuming admissibility. One offer: 12 points, regardless of amount.`);
+    !competitive ? 'An offer expected in a direct award adds nothing; competitive procedure not established if unknown.' : c.offersConflict ? (c.offersConflict.feed ? `Offers unknown: the buyer declared ${c.offersConflict.decp ?? '—'} in the Ministry dataset and ${c.offersConflict.feed.join(' / ')} in its own feed; neither is chosen.` : `Offers unknown: the buyer declared ${c.offersConflict.decp ?? '—'} in DECP and ${c.offersConflict.notice ?? '—'} in notice ${c.offersConflict.noticeId}; neither is chosen.`) : !knownOffers ? 'Positive number of offers unknown or unusable.' : `${c.offers} offer(s) declared, without presuming admissibility. One offer: 12 points, regardless of amount.`);
   const directEligibility = c.directAward === true ? frenchDirectAwardEligibility(c) : null;
   add('direct-award', 'Award without competition', 'competition',
     directEligibility?.status === 'below' ? 'no' : directEligibility?.status === 'unknown' ? 'unknown' : 'yes',
@@ -866,6 +894,7 @@ function getAmountEvolution(contract) {
   if (contract.identityAmbiguous) return unavailable('Duplicate identifier: calculation excluded.');
   if (!Array.isArray(contract.initialConflicts) || contract.initialConflicts.length) return unavailable('Diverging initial values: no increase calculation.');
   if (Array.isArray(contract.modificationConflicts) && contract.modificationConflicts.length) return unavailable('Diverging modification values for the same identifier: no increase calculation.');
+  if (contract.verification?.amountRange || contract.verification?.placeholder) return unavailable('Sources disagree on the initial amount: no increase calculation, which could mix bases.');
   const initial = contract.history.find(event => event.kind === 'initial');
   const changes = contract.history.filter(event => event.kind === 'modification');
   if (!changes.length) return unavailable('No modification published in this extract; this does not prove the absence of an amendment.');
@@ -896,17 +925,25 @@ function prepareContracts(data) {
   for (const c of contracts) {
     if (c.dataFamily !== 'decp' || !c.buyerSiret || !c.contractId) continue;
     const identity = `${c.buyerSiret}:${c.contractId}`;
-    identityCounts.set(identity, (identityCounts.get(identity) || 0) + 1);
+    if (!identityCounts.has(identity)) identityCounts.set(identity, []);
+    identityCounts.get(identity).push(c.id);
   }
-  for (const c of contracts) c.identityAmbiguous = c.dataFamily === 'decp' && Boolean(c.buyerSiret && c.contractId && identityCounts.get(`${c.buyerSiret}:${c.contractId}`) > 1);
+  // An evidenced split shares the identifier on purpose: unambiguous only if the rows sharing it are exactly its members.
+  const exactGroup = (c, ids) => Boolean(c.procedureGroup) && ids.length === c.procedureGroup.members.length && ids.every(id => c.procedureGroup.members.includes(id));
+  for (const c of contracts) {
+    const ids = c.dataFamily === 'decp' && c.buyerSiret && c.contractId ? identityCounts.get(`${c.buyerSiret}:${c.contractId}`) : null;
+    c.identityAmbiguous = Boolean(ids && ids.length > 1 && !exactGroup(c, ids));
+  }
   assignPublicationBaselines(contracts);
+  const competitionShadows = [], supplierShadows = [];
   for (const c of contracts) {
     if (c.dataFamily !== 'decp' || !HISTORY_COHORTS.has(c.cohortId) || c.modificationConflicts?.length ||
-        !c.buyerSiret || !c.contractId || identityCounts.get(`${c.buyerSiret}:${c.contractId}`) !== 1 ||
+        !c.buyerSiret || !c.contractId || c.identityAmbiguous ||
         !/^\d{8}-\d$/.test(c.cpv || '') || c.cpv.startsWith('000') || !c.date ||
         c.date < HISTORY_START || c.date > HISTORY_END || c.directAward !== false ||
         !Array.isArray(c.initialConflicts) || c.initialConflicts.length) continue;
     const key = `${c.cohortId}:${c.buyerSiret}:${c.cpv.slice(0, 3)}`;
+    if (duplicateShadow(c)) { competitionShadows.push([c, key]); continue; }
     if (!groups.has(key)) groups.set(key, []);
     groups.get(key).push(c);
   }
@@ -920,23 +957,26 @@ function prepareContracts(data) {
       sufficient: known.length >= 10 && coverage >= 0.8 };
     group.forEach(c => { c.competitionContext = context; });
   }
+  for (const [c, key] of competitionShadows) c.competitionContext = groups.get(key)?.[0].competitionContext || null;
   for (const c of contracts) {
     if (c.dataFamily !== 'decp' || !HISTORY_COHORTS.has(c.cohortId) || c.modificationConflicts?.length || !c.buyerSiret || !c.contractId ||
-        identityCounts.get(`${c.buyerSiret}:${c.contractId}`) !== 1 || !c.date || c.date < HISTORY_START || c.date > HISTORY_END ||
+        c.identityAmbiguous || !c.date || c.date < HISTORY_START || c.date > HISTORY_END ||
         !/^\d{8}-\d$/.test(c.cpv || '') || c.cpv.startsWith('000') ||
         !Array.isArray(c.initialConflicts) || c.initialConflicts.length) continue;
     const key = `${c.cohortId}:${c.buyerSiret}:${c.cpv.slice(0, 3)}`;
+    if (duplicateShadow(c)) { supplierShadows.push([c, key]); continue; }
     if (!supplierGroups.has(key)) supplierGroups.set(key, []);
     supplierGroups.get(key).push(c);
   }
-  for (const group of supplierGroups.values()) {
+  for (const [key, group] of supplierGroups) {
     const known = group.filter(c => getSupplierIdentity(c) !== null);
     const bySupplier = new Map();
     known.forEach(c => { const id = getSupplierIdentity(c); if (!bySupplier.has(id)) bySupplier.set(id, []); bySupplier.get(id).push(c); });
-    group.forEach(c => {
+    const receivers = [...group, ...supplierShadows.filter(([, k]) => k === key).map(([c]) => c)];
+    receivers.forEach(c => {
       const id = getSupplierIdentity(c);
       if (id === null) return;
-      const supplierRows = bySupplier.get(id);
+      const supplierRows = bySupplier.get(id) || [];
       const context = { cpvGroup: c.cpv.slice(0, 3), total: group.length, known: known.length,
         wins: supplierRows.length, share: supplierRows.length / known.length, coverage: known.length / group.length,
         sufficient: known.length >= 10 && known.length / group.length >= 0.8,
@@ -1214,6 +1254,30 @@ function validateContracts(data) {
       }
     }
     if (c.modificationConflicts != null && (!Array.isArray(c.modificationConflicts) || c.modificationConflicts.some(m => !m || typeof m.id !== 'string' || !Array.isArray(m.fields) || m.fields.some(f => typeof f !== 'string')))) throw new Error(`${c.id} : invalid modification conflicts.`);
+    if (c.procedureGroup != null) {
+      const g = c.procedureGroup;
+      if (!g || typeof g !== 'object' || typeof g.id !== 'string' || !g.id || !['lots', 'shared-identifier'].includes(g.kind) || typeof g.basis !== 'string' || !g.basis.trim() ||
+          !Array.isArray(g.members) || g.members.length < 2 || !g.members.includes(c.id) || g.members.some(m => typeof m !== 'string' || !m) || new Set(g.members).size !== g.members.length ||
+          (g.contractReference != null && typeof g.contractReference !== 'string') || (g.lotTitle != null && typeof g.lotTitle !== 'string')) throw new Error(`${c.id} : invalid procedure group.`);
+    }
+    if (c.verification != null) {
+      const v = c.verification;
+      if (!v || typeof v !== 'object' || !VERIFICATION_STATUSES[v.status] || !Array.isArray(v.sources) || v.sources.some(x => typeof x !== 'string') ||
+          (v.amountRange != null && (!Array.isArray(v.amountRange) || v.amountRange.length !== 2 || v.amountRange.some(x => typeof x !== 'number' || !Number.isFinite(x) || x < 0) || v.amountRange[0] >= v.amountRange[1])) ||
+          ['placeholder', 'resolvedPair', 'addedFromFeed', 'holdersAddedFromFeed', 'offersDisagree'].some(k => v[k] != null && typeof v[k] !== 'boolean') ||
+          (v.majority != null && (typeof v.majority.amount !== 'number' || !(v.majority.amount > 0) || !Number.isInteger(v.majority.routes) || !Number.isInteger(v.majority.of) || v.majority.routes < 2 || v.majority.routes > v.majority.of))) throw new Error(`${c.id} : invalid verification.`);
+    }
+    if (c.amountSources != null && (!Array.isArray(c.amountSources) || c.amountSources.some(x => !x || typeof x.source !== 'string' || typeof x.label !== 'string' ||
+        (x.amount != null && (typeof x.amount !== 'number' || !Number.isFinite(x.amount) || x.amount < 0))))) throw new Error(`${c.id} : invalid amount sources.`);
+    if (c.unconfirmedHolders != null && (!Array.isArray(c.unconfirmedHolders) || c.unconfirmedHolders.some(h => !h || typeof h.id !== 'string' || typeof h.reason !== 'string'))) throw new Error(`${c.id} : invalid unconfirmed holders.`);
+    if (c.possibleDuplicateOf != null && (!Array.isArray(c.possibleDuplicateOf) || !c.possibleDuplicateOf.length || !c.procedureGroup ||
+        c.possibleDuplicateOf.some(id => typeof id !== 'string' || id === c.id || !c.procedureGroup.members.includes(id)))) throw new Error(`${c.id} : invalid possible duplicate.`);
+    if (c.offersConflict != null) {
+      const o = c.offersConflict;
+      const counts = o && (o.feed != null ? o.feed : [o.notice]);
+      if (!o || typeof o !== 'object' || c.offers != null || !Array.isArray(counts) || (o.feed != null ? typeof o.source !== 'string' : typeof o.noticeId !== 'string' || !o.noticeId) ||
+          [o.decp, ...counts].some(v => v != null && (!Number.isInteger(v) || v < 0)) || counts.includes(o.decp)) throw new Error(`${c.id} : invalid offer conflict.`);
+    }
     if (c.initialConflicts != null && (!Array.isArray(c.initialConflicts) || c.initialConflicts.some(key => typeof key !== 'string'))) throw new Error(`${c.id} : invalid version conflicts.`);
     if (c.history != null) {
       if (!Array.isArray(c.history) || c.history.filter(e => e?.kind === 'initial').length !== 1) throw new Error(`${c.id} : a history requires exactly one initial entry.`);
@@ -1268,7 +1332,7 @@ function searchText(c) {
   return text;
 }
 
-function selectContracts(contracts, { search = '', minimum = 0, minScore = 0, flagged = false, official = false, adjudicated = false, investigation = false, indicator = '', legal = '', noticeContext = '', assessment = '', sector = '', project = '', sort = 'score' } = {}) {
+function selectContracts(contracts, { search = '', minimum = 0, minScore = 0, flagged = false, official = false, adjudicated = false, investigation = false, indicator = '', legal = '', noticeContext = '', assessment = '', sector = '', project = '', verification = '', sort = 'score' } = {}) {
   const terms = normalize(search).trim().split(/\s+/).filter(Boolean);
   // Per-render caches only: no stale scores when data or cohort context changes.
   const scores = new Map();
@@ -1290,6 +1354,7 @@ function selectContracts(contracts, { search = '', minimum = 0, minScore = 0, fl
   };
   const filtered = contracts.filter(c => {
     const evidence = c.noticeEvidence;
+    if (verification && c.verification?.status !== verification) return false;
     const noticeMatch = !noticeContext || Boolean(evidence && (noticeContext === 'criteria' ? evidence.awardCriteria.length : noticeContext === 'explanation' ? evidence.procedureDescription || evidence.justifications.some(j => j.text) : noticeContext === 'correction' ? evidence.kind === 'correction' : noticeContext === 'ted' ? evidence.ted.length : false));
     const citations = legal && !['py-complaint', 'co-public', 'fr-software', 'direct'].includes(legal) ? getLegalContext(c) : [];
     const legalMatch = !legal || (legal === 'py-complaint' ? Boolean(c.complaints?.length) : legal === 'co-public' ? Boolean(c.secop2PublicCounterparty?.labelled) : legal === 'fr-software' ? Boolean(softwareMaintenanceContext(c)) : legal === 'direct' ? c.directAward === true : legal === 'cited' ? citations.length > 0 : citations.some(item => item.article === legal));
@@ -1313,7 +1378,10 @@ function selectContracts(contracts, { search = '', minimum = 0, minScore = 0, fl
     const nullOrder = av == null ? (bv == null ? 0 : 1) : bv == null ? -1 : 0;
     if (nullOrder) return nullOrder;
     // Amounts are never compared across currencies: group by currency, then amount.
-    if (field === 'amount' && (a.currency || 'EUR') !== (b.currency || 'EUR')) return collator.compare(a.currency || 'EUR', b.currency || 'EUR');
+    if (field === 'amount') {
+      const ac = recordCurrency(a) || '(currency unknown)', bc = recordCurrency(b) || '(currency unknown)';
+      if (ac !== bc) return collator.compare(ac, bc);
+    }
     if (field === 'sector' && av === 'Sector not specified' && bv !== av) return 1;
     if (field === 'sector' && bv === 'Sector not specified' && av !== bv) return -1;
     const comparison = typeof av === 'string' ? collator.compare(av, bv) : av === bv ? 0 : av > bv ? 1 : -1;
@@ -1349,7 +1417,7 @@ function pageSummaryForCopy(rows, { dataset, page, totalPages, totalResults }) {
 // [fragment key, control id, default value]
 const VIEW_FIELDS = [['q', 'search', ''], ['sort', 'sort', 'score'], ['min', 'minimum', ''], ['sector', 'sector', ''], ['group', 'group-by', ''],
   ['project', 'project', ''], ['assessment', 'assessment', ''], ['index', 'min-score', '0'], ['indicator', 'indicator', ''],
-  ['notice', 'notice-context', ''], ['legal', 'legal', ''], ['open', 'open-record', '']];
+  ['notice', 'notice-context', ''], ['legal', 'legal', ''], ['verif', 'verification', ''], ['open', 'open-record', '']];
 const VIEW_FLAGS = ['flagged', 'official', 'adjudicated', 'investigation'];
 const PAGE_SIZES = [25, 50, 100, 250];
 
@@ -1364,9 +1432,12 @@ function viewStateToHash(state) {
   return text ? '#' + text : '';
 }
 
+// Datasets merged into another keep working in old links.
+const DATASET_ALIASES = { cities: 'decp' };
 function hashToViewState(hash) {
   const params = new URLSearchParams(String(hash || '').replace(/^#/, ''));
-  const state = { dataset: params.get('dataset') || '' };
+  const requested = params.get('dataset') || '';
+  const state = { dataset: DATASET_ALIASES[requested] || requested };
   for (const [key, id, fallback] of VIEW_FIELDS) state[id] = params.get(key) ?? fallback;
   for (const id of VIEW_FLAGS) state[id] = params.get(id) === '1';
   const page = Number(params.get('page'));
@@ -1418,7 +1489,7 @@ function buildProfile(contracts, role, key) {
   }
   const currencies = {};
   for (const c of rows) if (c.amount != null) {
-    const cur = c.currency || 'EUR';
+    const cur = recordCurrency(c) || '(currency unknown)';
     currencies[cur] ??= { contracts: 0, largest: 0 };
     currencies[cur].contracts++;
     currencies[cur].largest = Math.max(currencies[cur].largest, c.amount);
@@ -1434,7 +1505,7 @@ function buildProfile(contracts, role, key) {
 // Export the whole filtered view as flat records. Unknown stays empty, never zero.
 const EXPORT_CAVEAT = 'Published declarations and heuristic signals only. A flag is not proof of wrongdoing; zero or no label is not clearance. Declared amounts are not audited payments; never sum amounts across datasets or currencies. Current supplier names are a register snapshot, not historical names.';
 const EXPORT_COLUMNS = ['id', 'date', 'buyer', 'buyerId', 'supplier', 'supplierCurrentName', 'supplierIds', 'description', 'cpv', 'sector', 'procedure',
-  'amount', 'currency', 'offers', 'durationMonths', 'index', 'indexStatus', 'signals', 'context', 'officialFinding', 'investigationReported', 'dataStatus', 'source', 'verifyUrls'];
+  'amount', 'amountLow', 'amountHigh', 'amountVerification', 'currency', 'offers', 'durationMonths', 'index', 'indexStatus', 'signals', 'context', 'officialFinding', 'investigationReported', 'dataStatus', 'source', 'verifyUrls'];
 
 function exportRecord(c) {
   const score = getVigilanceScore(c);
@@ -1443,7 +1514,8 @@ function exportRecord(c) {
     supplierCurrentName: supplierNames(c).join('; ') || null,
     supplierIds: (c.supplierIds || []).map(s => `${s.identifierType || 'identifier'} ${s.id}`).join('; ') || null,
     description: c.description, cpv: c.cpv ?? null, sector: getSector(c).label, procedure: c.procedure ?? null,
-    amount: c.amount ?? null, currency: c.amount == null ? null : recordCurrency(c), offers: c.offers ?? null, durationMonths: c.durationMonths ?? null,
+    amount: c.amount ?? null, amountLow: c.verification?.amountRange?.[0] ?? c.amount ?? null, amountHigh: c.verification?.amountRange?.[1] ?? c.amount ?? null,
+    amountVerification: c.verification?.status ?? null, currency: c.amount == null ? null : recordCurrency(c), offers: c.offers ?? null, durationMonths: c.durationMonths ?? null,
     index: score, indexStatus: score == null ? 'not assessed' : 'assessed', signals: getIndicators(c).map(i => i.kindLabel).join('; ') || null,
     context: contextLabels(c).map(l => l.short).join('; ') || null,
     officialFinding: c.officialFinding === true, investigationReported: hasReportedInvestigation(c), dataStatus: c.dataStatus,
@@ -1583,24 +1655,23 @@ function startExplorer() {
   const body = document.querySelector('#contracts');
   const status = document.querySelector('#status');
   const fileHelp = document.querySelector('#file-help');
-  const controls = Object.fromEntries(['search', 'minimum', 'flagged', 'official', 'adjudicated', 'investigation', 'indicator', 'legal', 'notice-context', 'assessment', 'sort', 'sector', 'project', 'group-by', 'min-score', 'review'].map(id => [id, document.getElementById(id)]));
+  const controls = Object.fromEntries(['search', 'minimum', 'flagged', 'official', 'adjudicated', 'investigation', 'indicator', 'legal', 'notice-context', 'assessment', 'sort', 'sector', 'project', 'group-by', 'min-score', 'review', 'verification'].map(id => [id, document.getElementById(id)]));
   const datasetSelect = document.querySelector('#dataset');
   const datasets = {
-    tours: { path: 'data/tours-notices.json', coverage: 'data/tours-notices-coverage.json', sources: { publisher: 'DILA — BOAMP; Publications Office of the EU — TED', links: [['BOAMP search', 'https://www.boamp.fr/'], ['BOAMP API used', 'https://www.boamp.fr/api/explore/v2.1/catalog/datasets/boamp/records'], ['TED search', 'https://ted.europa.eu/']], licence: 'BOAMP: Licence Ouverte 2.0 (DILA legal notice and data.gouv.fr); TED legal notice applies. See docs/data-sources.md for scope.', raw: 'data/tours-notices/raw/', reproduce: 'python tools/import-tours-notices.py --offline', collected: 'BOAMP notices matched by the buyer’s exact SIRET, TED XML matched by UUID and version.' }, note: 'Tours · full 2025 notices and out-of-period linked references: 25 buyer-verified notices, 66 version/lot rows, including labelled joint purchases. 25 rows with award criteria; procedure texts and 2 corrections kept. TED XML matched by UUID and version, not by name. These are documents, not 66 contracts or expenses: no bidding-period score without a reliable chain.' },
-    cities: { path: 'data/decp-cities.json', coverage: 'data/decp-cities-coverage.json', sources: { publisher: 'Ministère de l’Économie et des Finances — DECP (données essentielles de la commande publique)', links: [['Dataset page · data.economie.gouv.fr', 'https://data.economie.gouv.fr/explore/dataset/decp-2022-marches-valides/'], ['API used (records endpoint)', 'https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records'], ['DECP schema v2.0.4', 'https://github.com/139bercy/decp-arr2022/blob/main/schemes/schema_decp_v2.0.4.json']], licence: 'Licence Ouverte v2.0 (Etalab)', raw: 'data/decp-cities-raw.json', reproduce: 'python tools/import-decp-cities.py --offline', collected: 'Every DECP row for six pre-selected municipal buyer SIRETs, notified 2024–2025, paged through the source total.' }, note: 'Six pre-selected municipalities: Rennes, Nantes, Bordeaux, Grenoble, Dijon and Tours (not the metro areas). Notifications 2024–2025: 1,865 published rows, 1,270 buyer/identifier groups, of which 172 ambiguous ones excluded from calculations. 355 groups with published modifications. Non-representative cohort, not all spending. Current public register names on 1,116 rows (every typed SIREN looked up; restricted-diffusion companies are not named): current names and status, not verified at the contract date. Separate datasets, no cross-source sums.' },
-    consultations: { path: 'data/consultations.json', coverage: 'data/consultations-coverage.json', sources: { publisher: 'DILA — BOAMP', links: [['BOAMP search', 'https://www.boamp.fr/'], ['BOAMP API used', 'https://www.boamp.fr/api/explore/v2.1/catalog/datasets/boamp/records']], licence: 'Licence Ouverte 2.0 (DILA legal notice and official data.gouv.fr records); incorporated third-party material may have separate rights.', raw: 'data/consultations-raw.json', reproduce: 'python tools/import-consultations.py --offline', collected: 'The first 10 initial BOAMP calls published on 3 February 2025, by identifier order.' }, note: '10 initial BOAMP notices from 3 February 2025, first identifiers among 200, selected before any calculation. One correction and three award notices linked explicitly. Notice-level rows, not attributed contracts or expenses. Chains not certified complete: no bidding-period score in this extract. No independent TED download.' },
-    decp: { path: 'data/decp-history.json', coverage: 'data/decp-coverage.json', sources: { publisher: 'Ministère de l’Économie et des Finances — DECP (données essentielles de la commande publique)', links: [['Dataset page · data.economie.gouv.fr', 'https://data.economie.gouv.fr/explore/dataset/decp-2022-marches-valides/'], ['API used (records endpoint)', 'https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records'], ['DECP schema v2.0.4', 'https://github.com/139bercy/decp-arr2022/blob/main/schemes/schema_decp_v2.0.4.json']], licence: 'Licence Ouverte v2.0 (Etalab)', raw: 'data/decp-history-raw.json.gz', reproduce: 'python tools/import-decp-paris-ardeche.py --offline', collected: 'Every DECP row for the Ville de Paris and Département de l’Ardèche SIRETs, notified 2024–2025. Three rows of the Paris 13 November dossier carry hand-curated fields, kept in data/decp-history-curated.json.' }, note: 'Exploratory 24-month history: 2,594 DECP contracts from Paris and Ardèche, notified in 2024–2025. Every row returned by the source for these two SIRETs was examined; this does not guarantee that all actual purchases were published. Paris was chosen for volume, Ardèche for the availability of modifications: this choice is not representative. Modifications may be later than 2025. Suppliers identified by SIRET; current public register names shown on 2,586 rows (not the names at the contract date; restricted-diffusion companies are not named). The eight official findings are in the other dataset.' },
-    boamp: { path: 'data/contracts.json', coverage: 'data/coverage.json', sources: { publisher: 'DILA — BOAMP; Chambres régionales des comptes (audit dossiers)', links: [['BOAMP search', 'https://www.boamp.fr/'], ['BOAMP API used', 'https://www.boamp.fr/api/explore/v2.1/catalog/datasets/boamp/records'], ['CRC reports · ccomptes.fr', 'https://www.ccomptes.fr/fr/publications']], licence: 'BOAMP: Licence Ouverte 2.0 (DILA legal notice and data.gouv.fr); CRC reports quoted with links.', raw: 'data/boamp-raw.json.gz', reproduce: 'python tools/import-boamp-sample.py --offline', collected: 'All 8,386 BOAMP award notices published February–April 2025; 3,000 unambiguous lots kept by SHA-256 order of their identifier. The two Mauges lots and eight CRC audit dossiers are documented by hand.' }, note: '3,010 records: 3,000 BOAMP lots sampled from February–April 2025 publications, two Mauges lots and eight documented CRC dossiers. Some findings concern sets of orders, not an individual award. A finding does not extend to a municipality’s other purchases. This sample does not allow an exhaustive competition history to be computed.' },
-    colombia: { path: 'data/colombia-secop2.json', coverage: 'data/colombia-secop2-coverage.json', sources: { publisher: 'Colombia Compra Eficiente — SECOP II, via datos.gov.co', links: [['Dataset page · datos.gov.co (jbjy-vk9h)', 'https://www.datos.gov.co/Gastos-Gubernamentales/SECOP-II-Contratos-Electr-nicos/jbjy-vk9h'], ['API used', 'https://www.datos.gov.co/resource/jbjy-vk9h.json'], ['SECOP II public search', 'https://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index']], licence: 'CC BY-SA 4.0', raw: 'data/colombia-secop2/raw/', reproduce: 'python tools/import-colombia-secop2.py --offline', collected: 'Every SECOP II contract of three buyers announced before download, signed 2024-09-01 → 2026-09-01.' }, note: 'SECOP II pilot · Colombia · three buyers announced before download · signatures 2024-09 → 2026-09: 7,560 contracts (Ministerio de Educación Nacional 2,618, national; Gobernación de Caldas 3,696, departmental; Alcaldía Local de Usaquén 1,246, municipal-local). Fields kept verbatim in Spanish; amounts in COP, never converted. Jurisdiction-specific indicators (docs/score-colombia.md): declared absence of supplier plurality or manifest urgency, repetition of such awards, concentration within buyer and contract type, declared duration ≥ 36 months. The bare direct-family modality (≈82 % of the cohort) and ordinary justifications add no points; amounts sort only. Licence CC BY-SA 4.0 (Colombia Compra Eficiente); not exhaustive of each buyer’s procurement; no offers table was imported, so no offer-count indicator exists.' },
-    paraguay: { path: 'data/paraguay-dncp.json', coverage: 'data/paraguay-dncp-coverage.json', sources: { publisher: 'Dirección Nacional de Contrataciones Públicas (DNCP), Paraguay', links: [['Public procurement portal · contrataciones.gov.py', 'https://www.contrataciones.gov.py/'], ['Open data and API documentation', 'https://www.contrataciones.gov.py/datos/api/v3/doc/'], ['Legal notice and licence (the OCDS packages cite /datos/legal, which now returns 404)', 'https://www.contrataciones.gov.py/datos/aviso-legal']], licence: 'CC BY 4.0', raw: 'data/paraguay-dncp/raw/', reproduce: 'python tools/import-paraguay-dncp.py --cohort fernando --offline', collected: 'Every process of the buyer whose call was published 2024-09-01 → 2025-09-01, then each full OCDS record by OCID.' }, note: 'Paraguay · DNCP OCDS pilot · Municipalidad de Fernando de la Mora only. Calls published 2024-09-01 → 2025-09-01: 88 process records, 84 linked contract entries retained; 2 contract entries excluded, 4 other processes without eligible contracts. PYG, no conversion. Source contract.period.startDate is not a signature date; no published dateSigned on retained rows. Raw OCDS records retained, 80 entries link a document typed contractSigned, contents not independently reviewed. Paraguayan checks only (docs/score-paraguay.md), fixed after reading this pilot’s field distributions: single tenderer in a competitive procedure, award by exception (CVE), their repetition per supplier, concentration by category, amount increase > 20 %. The 2 excluded entries are the separate records of 2 amount amendments (+20.0 %, +19.99 %), kept on their parent contracts. No French/Colombian rules applied. Not a national sample or payment audit.' },
-    paraguay3: { path: 'data/paraguay-dncp-3buyers.json', coverage: 'data/paraguay-dncp-3buyers-coverage.json', sources: { publisher: 'Dirección Nacional de Contrataciones Públicas (DNCP), Paraguay', links: [['Public procurement portal · contrataciones.gov.py', 'https://www.contrataciones.gov.py/'], ['Open data and API documentation', 'https://www.contrataciones.gov.py/datos/api/v3/doc/'], ['Legal notice and licence (the OCDS packages cite /datos/legal, which now returns 404)', 'https://www.contrataciones.gov.py/datos/aviso-legal']], licence: 'CC BY 4.0', raw: 'data/paraguay-dncp-3buyers/raw/ (records gzipped, exact response bytes)', reproduce: 'python tools/import-paraguay-dncp.py --cohort 3buyers --offline', collected: 'Every process of three buyers announced before download (one per government level) whose call was published 2024-09-01 → 2026-09-01, then each full OCDS record by OCID.' }, note: 'Paraguay · DNCP OCDS · three buyers announced before download, one per level: Ministerio de Obras Públicas y Comunicaciones (national, 168 contracts), Gobierno Departamental de Central (departmental, 88), Municipalidad de Asunción (municipal, 37). Calls published 2024-09-01 → 2026-09-01: 339 processes, 293 linked contract entries retained; excluded: 12 amendment entries (kept on their parent contract), 21 budget-only entries, 1 multi-buyer process. PYG, no conversion. Paraguayan checks only (docs/score-paraguay.md), fixed before this cohort was downloaded: single tenderer in a competitive procedure, award by exception (CVE), their repetition per supplier, concentration by category, amount increase > 20 %. 92 multi-lot awards cannot be checked for a single tenderer (no per-lot count published). Not a national sample or payment audit.' },
-    ukraine: { path: 'data/prozorro.json', coverage: 'data/prozorro-coverage.json', sources: { publisher: 'Prozorro (State enterprise Prozorro, Ministry of Economy of Ukraine)', links: [['Prozorro public portal', 'https://prozorro.gov.ua/'], ['Open-data reuse terms', 'https://prozorro.gov.ua/openprocurement'], ['Public API documentation', 'https://prozorro-api-docs.readthedocs.io/'], ['Public API used (official records)', 'https://public-api.prozorro.gov.ua/api/2.5/tenders']], licence: 'Prozorro open-data reuse terms: redistribution, including commercial reuse, permitted with source attribution; no named licence for API records', raw: 'data/prozorro/raw/ (official records gzipped, exact response bytes)', reproduce: 'python tools/import-prozorro.py --offline', collected: 'Search-discovered tenders for three preselected buyers, created 2024-09-01 → 2026-09-01, checked against the official API buyer field. Search completeness is not established; see docs/ukraine-audit.md.' }, note: 'Ukraine · Prozorro · 526 tenders and 488 signed contracts (2024–2026), three buyers. Amounts remain in UAH, EUR or USD. Reporting records skip offer/direct-award checks; concentration is still assessed. Wartime rules allow exceptions and withheld publications. Open-data reuse requires source attribution.' },
-    chile: { path: 'data/chile-mp.json', coverage: 'data/chile-mp-coverage.json', sources: { publisher: 'Dirección de Compras y Contratación Pública (ChileCompra) — Mercado Público', links: [['Mercado Público · buscador de licitaciones', 'https://www.mercadopublico.cl/Home/BusquedaLicitacion'], ['OCDS API used (tender and award releases)', 'https://api.mercadopublico.cl/APISOCDS/OCDS/listaOCDSAgnoMes/2025/03/0/10'], ['CC0 1.0 public-domain dedication', 'https://creativecommons.org/publicdomain/zero/1.0/']], licence: 'CC0 1.0 (declared in every release package)', raw: 'data/chile-mp/raw/ (monthly listings, prefix map, tender and award releases gzipped, exact response bytes)', reproduce: 'python tools/import-chilecompra.py --offline', collected: 'Every licitación of three purchasing units announced before download (one per level), listed 2024-09 → 2026-08, chosen from a map of all 4,582 purchasing-unit prefixes.' }, note: 'Chile · Mercado Público · three purchasing units announced before download: Ministerio de Obras Públicas (Dirección General de Aguas unit, national), Gobierno Regional del Maule (regional), I. Municipalidad de Puente Alto (municipal). Licitaciones listed 2024-09 → 2026-08: 844 tenders, 522 single-supplier awards. Licitaciones only: direct deals (trato directo) are purchase orders, not in this source. Amounts in CLP, never converted. Chilean checks (docs/score-chile.md): single tenderer, its repetition per supplier (RUT), concentration by UNSPSC segment. Tenderers counted per tender, not per line item. CC0 1.0.' },
-    uk: { path: 'data/uk-fts.json', coverage: 'data/uk-fts-coverage.json', sources: { publisher: 'Find a Tender service (Cabinet Office, United Kingdom)', links: [['Find a Tender · search notices', 'https://www.find-tender.service.gov.uk/Search'], ['OCDS API used (release packages)', 'https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages'], ['Open Government Licence v3.0', 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/']], licence: 'Open Government Licence v3.0', raw: 'data/uk-fts/raw/ (compact award index and full notices, gzipped exact response bytes)', reproduce: 'python tools/import-find-a-tender.py --offline', collected: 'Every award notice of three buyer accounts announced before download (one per level), released 2024-09-01 → 2026-09-01, chosen from a compact index of all 33,457 award releases in the window.' }, note: 'United Kingdom · Find a Tender · three buyer accounts announced before download: Foreign, Commonwealth and Development Office (national), Lincolnshire County Council (regional), Milton Keynes Council (municipal). Award releases 2024-09-01 → 2026-09-01: 516 notices, 1,081 single-supplier awards. Above-threshold and Procurement Act notices only. Amounts as published (mostly GBP), never converted. UK checks (docs/score-uk.md): single offer per lot, awards without prior publication, their repetition per supplier, concentration by category. Supplier identity is the Find a Tender party id, which can split one company across ids: repetition can only be undercounted. Open Government Licence v3.0.' },
-    portugal: { path: 'data/ted-portugal.json', coverage: 'data/ted-portugal-coverage.json', sources: { publisher: 'Publications Office of the European Union — TED', links: [['TED search · ted.europa.eu', 'https://ted.europa.eu/'], ['TED Search API documentation', 'https://docs.ted.europa.eu/api/latest/search.html'], ['TED legal notice (reuse authorised)', 'https://ted.europa.eu/en/legal-notice']], licence: 'Free reuse, commercial or not (Commission Decision 2011/833/EU)', raw: 'data/ted-portugal/raw/ (official eForms XML gzipped)', reproduce: 'python tools/import-ted-cohorts.py --cohort portugal --offline', collected: 'Every TED award notice (can-standard) of three buyers announced before download, published 2024-09-01 → 2026-09-01, matched by identifier and its spelling variants.' }, note: 'Portugal · TED award notices (above EU thresholds only) · Infraestruturas de Portugal (national), Comunidade Intermunicipal do Cávado (regional), Município de Lisboa (municipal). Published 2024-09-01 → 2026-09-01: 442 notices, 493 awarded lots; 137 multi-winner framework results excluded (no single holder). The Cávado notices link no winning tender, so the regional level contributes almost nothing. EUR. EU eForms checks (docs/score-ted.md). Not a picture of Portuguese procurement: national below-threshold purchases are not in TED.' },
-    czechia: { path: 'data/ted-czechia.json', coverage: 'data/ted-czechia-coverage.json', sources: { publisher: 'Publications Office of the European Union — TED', links: [['TED search · ted.europa.eu', 'https://ted.europa.eu/'], ['TED Search API documentation', 'https://docs.ted.europa.eu/api/latest/search.html'], ['TED legal notice (reuse authorised)', 'https://ted.europa.eu/en/legal-notice']], licence: 'Free reuse, commercial or not (Commission Decision 2011/833/EU)', raw: 'data/ted-czechia/raw/ (official eForms XML gzipped)', reproduce: 'python tools/import-ted-cohorts.py --cohort czechia --offline', collected: 'Every TED award notice (can-standard) of three buyers announced before download, published 2024-09-01 → 2026-09-01, matched by IČO and its spelling variants.' }, note: 'Czechia · TED award notices (above EU thresholds only) · Ministry of Finance (national), Moravian-Silesian Region (regional), City of Ostrava with its districts, which share its IČO (municipal). Published 2024-09-01 → 2026-09-01: 661 notices, 674 awarded lots; 122 results with several or no winning references excluded. CZK and EUR as published. EU eForms checks (docs/score-ted.md). Not a picture of Czech procurement: below-threshold purchases are published nationally, not in TED.' },
-    romania: { path: 'data/ted-romania.json', coverage: 'data/ted-romania-coverage.json', sources: { publisher: 'Publications Office of the European Union — TED', links: [['TED search · ted.europa.eu', 'https://ted.europa.eu/'], ['TED Search API documentation', 'https://docs.ted.europa.eu/api/latest/search.html'], ['TED legal notice (reuse authorised)', 'https://ted.europa.eu/en/legal-notice']], licence: 'Free reuse, commercial or not (Commission Decision 2011/833/EU)', raw: 'data/ted-romania/raw/ (official eForms XML gzipped)', reproduce: 'python tools/import-ted-cohorts.py --cohort romania --offline', collected: 'Every TED award notice (can-standard) of three buyers announced before download, published 2024-09-01 → 2026-09-01, matched by identifier and its spelling variants.' }, note: 'Romania · TED award notices (above EU thresholds only) · Ministerul Finanțelor (national), Județul Cluj (regional), Municipiul Cluj-Napoca (municipal). Published 2024-09-01 → 2026-09-01: 299 notices, 356 awarded lots; 289 multi-winner framework results excluded. RON and EUR as published, never converted. EU eForms checks (docs/score-ted.md). Not a picture of Romanian procurement: SEAP/SICAP below-threshold purchases are not in TED.' },
-    all: { combined: true, path: null, coverage: null, note: 'All countries · every dataset listed together. Each dataset is prepared on its own (repetition and concentration never cross cohorts), then its rows are shown side by side with their country. Amounts stay in their own currency: never converted or summed, and the amount sort groups by currency. Dates have each source\u2019s meaning (signature, award or publication). Checks share one catalogue (docs/indicators.md) but eligibility and thresholds follow each jurisdiction\u2019s law and data. Open a row for its sources.' },
+    tours: { path: 'data/tours-notices.json', coverage: 'data/tours-notices-coverage.json', sources: { publisher: 'DILA — BOAMP; Publications Office of the EU — TED', links: [['BOAMP search', 'https://www.boamp.fr/'], ['BOAMP API used', 'https://www.boamp.fr/api/explore/v2.1/catalog/datasets/boamp/records'], ['TED search', 'https://ted.europa.eu/']], licence: 'BOAMP: Licence Ouverte 2.0 (DILA legal notice and data.gouv.fr); TED legal notice applies. See docs/data-sources.md for scope.', raw: 'data/tours-notices/raw/', reproduce: 'python tools/import-tours-notices.py --offline', collected: 'BOAMP notices matched by the buyer’s exact SIRET, TED XML matched by UUID and version.' }, note: 'Tours · 2025 BOAMP/TED notices and linked references: 25 notices, 66 version/lot rows, including joint purchases. Rows represent documents, not individual contracts. Bidding periods require a complete notice chain.' },
+    consultations: { path: 'data/consultations.json', coverage: 'data/consultations-coverage.json', sources: { publisher: 'DILA — BOAMP', links: [['BOAMP search', 'https://www.boamp.fr/'], ['BOAMP API used', 'https://www.boamp.fr/api/explore/v2.1/catalog/datasets/boamp/records']], licence: 'Licence Ouverte 2.0 (DILA legal notice and official data.gouv.fr records); incorporated third-party material may have separate rights.', raw: 'data/consultations-raw.json', reproduce: 'python tools/import-consultations.py --offline', collected: 'The first 10 initial BOAMP calls published on 3 February 2025, by identifier order.' }, note: '10 BOAMP consultation notices published on 3 February 2025, with one linked correction and three award notices. Rows represent notices, not awarded contracts. Incomplete notice chains prevent bidding-period calculations.' },
+    decp: { path: ['data/decp-history.json', 'data/decp-cities.json'], coverage: 'data/decp-france-coverage.json', sources: { publisher: 'Ministère de l’Économie et des Finances — DECP (données essentielles de la commande publique); buyers’ own publication feeds and open-data lists', links: [['Dataset page · data.economie.gouv.fr', 'https://data.economie.gouv.fr/explore/dataset/decp-2022-marches-valides/'], ['API used (records endpoint)', 'https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records'], ['DECP schema v2.0.4', 'https://github.com/139bercy/decp-arr2022/blob/main/schemes/schema_decp_v2.0.4.json'], ['Buyer feeds · national consolidated DECP (decp.info, Licence Ouverte 2.0)', 'https://www.data.gouv.fr/datasets/donnees-essentielles-de-la-commande-publique-consolidees-format-tabulaire'], ['Ville de Nantes · concluded contracts 2025', 'https://www.data.gouv.fr/datasets/marches-publics-conclus-en-2025-par-la-ville-de-nantes'], ['Bordeaux Métropole datahub · contracts since 2024', 'https://www.data.gouv.fr/datasets/marches-publics-de-bordeaux-metropole-et-des-communes-mutulalisees-depuis-2024']], licence: 'Licence Ouverte v2.0 (Etalab) for every source', raw: 'data/decp-history-raw.json.gz, data/decp-cities-raw.json, data/decp-feeds-raw.json.gz, data/city-portals-raw.json.gz', reproduce: 'python tools/import-decp-paris-ardeche.py --offline && python tools/import-decp-cities.py --offline && python tools/build-decp-france-coverage.py', collected: 'Every DECP row for eight pre-selected buyer SIRETs (Ville de Paris, Département de l’Ardèche and six municipalities), notified 2024–2025, reconciled with the buyers’ own feeds and open-data lists. Three rows of the Paris 13 November dossier carry hand-curated fields.' }, note: 'France · DECP contracts of eight buyers (Ville de Paris, Ardèche, Rennes, Nantes, Bordeaux, Grenoble, Dijon, Tours), notified 2024–2025: 5,286 contracts. Amounts are compared across the Ministry dataset, buyer feeds and open-data lists; disagreements show as ranges. Coverage depends on source publication. Supplier names are current register names.' },
+    boamp: { path: 'data/contracts.json', coverage: 'data/coverage.json', sources: { publisher: 'DILA — BOAMP; Chambres régionales des comptes (audit dossiers)', links: [['BOAMP search', 'https://www.boamp.fr/'], ['BOAMP API used', 'https://www.boamp.fr/api/explore/v2.1/catalog/datasets/boamp/records'], ['CRC reports · ccomptes.fr', 'https://www.ccomptes.fr/fr/publications']], licence: 'BOAMP: Licence Ouverte 2.0 (DILA legal notice and data.gouv.fr); CRC reports quoted with links.', raw: 'data/boamp-raw.json.gz', reproduce: 'python tools/import-boamp-sample.py --offline', collected: 'All 8,386 BOAMP award notices published February–April 2025; 3,000 unambiguous lots kept by SHA-256 order of their identifier. The two Mauges lots and eight CRC audit dossiers are documented by hand.' }, note: '3,010 records: 3,000 BOAMP lots sampled from February–April 2025 publications, two Mauges lots and eight CRC audit dossiers. Audit dossiers may cover several orders rather than an individual contract. This sample does not provide a complete purchasing history.' },
+    colombia: { path: 'data/colombia-secop2.json', coverage: 'data/colombia-secop2-coverage.json', sources: { publisher: 'Colombia Compra Eficiente — SECOP II, via datos.gov.co', links: [['Dataset page · datos.gov.co (jbjy-vk9h)', 'https://www.datos.gov.co/Gastos-Gubernamentales/SECOP-II-Contratos-Electr-nicos/jbjy-vk9h'], ['API used', 'https://www.datos.gov.co/resource/jbjy-vk9h.json'], ['SECOP II public search', 'https://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index']], licence: 'CC BY-SA 4.0', raw: 'data/colombia-secop2/raw/', reproduce: 'python tools/import-colombia-secop2.py --offline', collected: 'Every SECOP II contract of three buyers announced before download, signed 2024-09-01 → 2026-09-01.' }, note: 'Colombia · SECOP II · MEN, Caldas and Usaquén. Signed September 2024–August 2026: 7,560 contracts, amounts in COP. Coverage depends on source publication; offer counts are unavailable.' },
+    paraguay: { path: 'data/paraguay-dncp.json', coverage: 'data/paraguay-dncp-coverage.json', sources: { publisher: 'Dirección Nacional de Contrataciones Públicas (DNCP), Paraguay', links: [['Public procurement portal · contrataciones.gov.py', 'https://www.contrataciones.gov.py/'], ['Open data and API documentation', 'https://www.contrataciones.gov.py/datos/api/v3/doc/'], ['Legal notice and licence (the OCDS packages cite /datos/legal, which now returns 404)', 'https://www.contrataciones.gov.py/datos/aviso-legal']], licence: 'CC BY 4.0', raw: 'data/paraguay-dncp/raw/', reproduce: 'python tools/import-paraguay-dncp.py --cohort fernando --offline', collected: 'Every process of the buyer whose call was published 2024-09-01 → 2025-09-01, then each full OCDS record by OCID.' }, note: 'Paraguay · DNCP · Fernando de la Mora. Calls published September 2024–August 2025: 88 processes, 84 retained contract entries, amounts in PYG. Displayed contract dates are period start dates, not signature dates. Amendments remain on their parent contracts.' },
+    paraguay3: { path: 'data/paraguay-dncp-3buyers.json', coverage: 'data/paraguay-dncp-3buyers-coverage.json', sources: { publisher: 'Dirección Nacional de Contrataciones Públicas (DNCP), Paraguay', links: [['Public procurement portal · contrataciones.gov.py', 'https://www.contrataciones.gov.py/'], ['Open data and API documentation', 'https://www.contrataciones.gov.py/datos/api/v3/doc/'], ['Legal notice and licence (the OCDS packages cite /datos/legal, which now returns 404)', 'https://www.contrataciones.gov.py/datos/aviso-legal']], licence: 'CC BY 4.0', raw: 'data/paraguay-dncp-3buyers/raw/ (records gzipped, exact response bytes)', reproduce: 'python tools/import-paraguay-dncp.py --cohort 3buyers --offline', collected: 'Every process of three buyers announced before download (one per government level) whose call was published 2024-09-01 → 2026-09-01, then each full OCDS record by OCID.' }, note: 'Paraguay · DNCP · MOPC, Central and Asunción. Calls published September 2024–August 2026: 339 processes, 293 retained contract entries, amounts in PYG. Amendments remain on their parent contracts; 92 multi-lot awards lack per-lot tenderer counts.' },
+    ukraine: { path: 'data/prozorro.json', coverage: 'data/prozorro-coverage.json', sources: { publisher: 'Prozorro (State enterprise Prozorro, Ministry of Economy of Ukraine)', links: [['Prozorro public portal', 'https://prozorro.gov.ua/'], ['Open-data reuse terms', 'https://prozorro.gov.ua/openprocurement'], ['Public API documentation', 'https://prozorro-api-docs.readthedocs.io/'], ['Public API used (official records)', 'https://public-api.prozorro.gov.ua/api/2.5/tenders']], licence: 'Prozorro open-data reuse terms: redistribution, including commercial reuse, permitted with source attribution; no named licence for API records', raw: 'data/prozorro/raw/ (official records gzipped, exact response bytes)', reproduce: 'python tools/import-prozorro.py --offline', collected: 'Search-discovered tenders for three preselected buyers, created 2024-09-01 → 2026-09-01, checked against the official API buyer field. Search completeness is not established; see docs/ukraine-audit.md.' }, note: 'Ukraine · Prozorro · Health, Vinnytsia and Dnipro. Tenders created September 2024–August 2026: 526 tenders, 488 signed contracts. Amounts in UAH, EUR or USD. Search coverage is unverified; wartime rules permit withheld publications.' },
+    chile: { path: 'data/chile-mp.json', coverage: 'data/chile-mp-coverage.json', sources: { publisher: 'Dirección de Compras y Contratación Pública (ChileCompra) — Mercado Público', links: [['Mercado Público · buscador de licitaciones', 'https://www.mercadopublico.cl/Home/BusquedaLicitacion'], ['OCDS API used (tender and award releases)', 'https://api.mercadopublico.cl/APISOCDS/OCDS/listaOCDSAgnoMes/2025/03/0/10'], ['CC0 1.0 public-domain dedication', 'https://creativecommons.org/publicdomain/zero/1.0/']], licence: 'CC0 1.0 (declared in every release package)', raw: 'data/chile-mp/raw/ (monthly listings, prefix map, tender and award releases gzipped, exact response bytes)', reproduce: 'python tools/import-chilecompra.py --offline', collected: 'Every licitación of three purchasing units announced before download (one per level), listed 2024-09 → 2026-08, chosen from a map of all 4,582 purchasing-unit prefixes.' }, note: 'Chile · Mercado Público · MOP (Dirección General de Aguas), Maule and Puente Alto. Listed September 2024–August 2026: 844 tenders, 522 single-supplier awards, amounts in CLP. Direct purchase orders (trato directo) are not included.' },
+    uk: { path: 'data/uk-fts.json', coverage: 'data/uk-fts-coverage.json', sources: { publisher: 'Find a Tender service (Cabinet Office, United Kingdom)', links: [['Find a Tender · search notices', 'https://www.find-tender.service.gov.uk/Search'], ['OCDS API used (release packages)', 'https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages'], ['Open Government Licence v3.0', 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/']], licence: 'Open Government Licence v3.0', raw: 'data/uk-fts/raw/ (compact award index and full notices, gzipped exact response bytes)', reproduce: 'python tools/import-find-a-tender.py --offline', collected: 'Every award notice of three buyer accounts announced before download (one per level), released 2024-09-01 → 2026-09-01, chosen from a compact index of all 33,457 award releases in the window.' }, note: 'United Kingdom · Find a Tender · FCDO, Lincolnshire and Milton Keynes. Published September 2024–August 2026: 516 notices, 1,081 single-supplier awards, mostly GBP. Above-threshold and Procurement Act notices only; separate party IDs may split one supplier.' },
+    portugal: { path: 'data/ted-portugal.json', coverage: 'data/ted-portugal-coverage.json', sources: { publisher: 'Publications Office of the European Union — TED', links: [['TED search · ted.europa.eu', 'https://ted.europa.eu/'], ['TED Search API documentation', 'https://docs.ted.europa.eu/api/latest/search.html'], ['TED legal notice (reuse authorised)', 'https://ted.europa.eu/en/legal-notice']], licence: 'Free reuse, commercial or not (Commission Decision 2011/833/EU)', raw: 'data/ted-portugal/raw/ (official eForms XML gzipped)', reproduce: 'python tools/import-ted-cohorts.py --cohort portugal --offline', collected: 'Every TED award notice (can-standard) of three buyers announced before download, published 2024-09-01 → 2026-09-01, matched by identifier and its spelling variants.' }, note: 'Portugal · TED · Infraestruturas de Portugal, Cávado and Lisboa. Published September 2024–August 2026: 442 notices, 493 awarded lots, amounts in EUR. Below-threshold purchases are absent; 137 multi-winner results excluded. Cávado notices lack winning-tender links.' },
+    czechia: { path: 'data/ted-czechia.json', coverage: 'data/ted-czechia-coverage.json', sources: { publisher: 'Publications Office of the European Union — TED', links: [['TED search · ted.europa.eu', 'https://ted.europa.eu/'], ['TED Search API documentation', 'https://docs.ted.europa.eu/api/latest/search.html'], ['TED legal notice (reuse authorised)', 'https://ted.europa.eu/en/legal-notice']], licence: 'Free reuse, commercial or not (Commission Decision 2011/833/EU)', raw: 'data/ted-czechia/raw/ (official eForms XML gzipped)', reproduce: 'python tools/import-ted-cohorts.py --cohort czechia --offline', collected: 'Every TED award notice (can-standard) of three buyers announced before download, published 2024-09-01 → 2026-09-01, matched by IČO and its spelling variants.' }, note: 'Czechia · TED · Finance, Moravian-Silesian Region and Ostrava (including districts sharing its IČO). Published September 2024–August 2026: 661 notices, 674 awarded lots, CZK or EUR. Below-threshold purchases are absent; 122 results with multiple or missing winning references excluded.' },
+    romania: { path: 'data/ted-romania.json', coverage: 'data/ted-romania-coverage.json', sources: { publisher: 'Publications Office of the European Union — TED', links: [['TED search · ted.europa.eu', 'https://ted.europa.eu/'], ['TED Search API documentation', 'https://docs.ted.europa.eu/api/latest/search.html'], ['TED legal notice (reuse authorised)', 'https://ted.europa.eu/en/legal-notice']], licence: 'Free reuse, commercial or not (Commission Decision 2011/833/EU)', raw: 'data/ted-romania/raw/ (official eForms XML gzipped)', reproduce: 'python tools/import-ted-cohorts.py --cohort romania --offline', collected: 'Every TED award notice (can-standard) of three buyers announced before download, published 2024-09-01 → 2026-09-01, matched by identifier and its spelling variants.' }, note: 'Romania · TED · Finance, Cluj county and Cluj-Napoca. Published September 2024–August 2026: 299 notices, 356 awarded lots, RON or EUR. Below-threshold purchases are absent; 289 multi-winner results excluded.' },
+    all: { combined: true, path: null, coverage: null, note: 'All datasets side by side, not merged. Amounts retain their currencies; amount sorting groups by currency. Dates follow each source (signature, award or publication). Indicators are calculated within each dataset using jurisdiction-specific rules.' },
   };
   let datasetMetadata = {};
   function renderDatasetDates(key) {
@@ -1622,13 +1693,15 @@ function startExplorer() {
     panel.hidden = !selected.sources;
     if (!selected.sources) return;
     const s = selected.sources;
-    body.append(element('p', `Publisher: ${s.publisher}. Licence: ${s.licence}.`), element('p', `What was collected: ${s.collected}`));
+    body.append(element('p', `Publisher: ${s.publisher}. Licence: ${s.licence}.`));
     const list = element('ul');
-    for (const [label, url] of s.links) { const item = element('li'); item.append(sourceLink(url, label)); list.append(item); }
-    const coverage = element('li'); const coverageLink = element('a', 'Exact queries, retrieval times, counts and exclusions (coverage JSON)'); coverageLink.href = selected.coverage; coverage.append(coverageLink); list.append(coverage);
+    for (const [label, url] of s.links) {
+      if (/API|schema|licence|legal notice|reuse terms|dedication/i.test(label)) continue;
+      const item = element('li'); item.append(sourceLink(url, label)); list.append(item);
+    }
+    const coverage = element('li'); const coverageLink = element('a', 'Extraction details (JSON)'); coverageLink.href = selected.coverage; coverage.append(coverageLink); list.append(coverage);
+    const documentation = element('li'); const documentationLink = element('a', 'Source documentation'); documentationLink.href = 'docs/data-sources.md'; documentation.append(documentationLink); list.append(documentation);
     body.append(list);
-    body.append(element('p', s.raw ? `Raw source responses are kept unmodified in ${s.raw} in the project repository. To rebuild this dataset from them: ${s.reproduce}` : 'Raw source responses for this older cohort are not kept in the repository; use the queries in the coverage file to fetch them again.'));
-    body.append(element('p', 'To check one contract: open its row and follow “Verify it yourself”. Official pages come first; if a link has moved, search the portal for the identifiers listed there.'));
   }
   const provenance = { verified: 'Documented · public source', unverified: 'To verify · research lead', synthetic: 'Fictional · pedagogical comparison' };
   const uiLocale = typeof i18nLocale === 'function' ? i18nLocale() : 'en-IE';
@@ -1739,6 +1812,7 @@ function startExplorer() {
     const entry = { ...(reviews[key] || {}), ...patch, updatedAt: new Date().toISOString() };
     if (!entry.status && !entry.note?.trim()) delete reviews[key]; else reviews[key] = entry;
     saveReviews();
+    renderReviewSummary();
   }
   function reviewMatch(c) {
     const wanted = controls.review.value;
@@ -1754,6 +1828,7 @@ function startExplorer() {
   }
   function renderReviewSummary() {
     const counts = reviewCounts();
+    document.querySelector('#review-filters').hidden = !counts.total && !controls.review.value;
     document.querySelector('#review-summary').textContent = !reviewStorageWorks ? 'This browser blocks storage: marks last until the page is closed.' :
       counts.total ? `In this dataset: ${Object.entries(REVIEW_STATUSES).map(([id, label]) => `${counts[id] || 0} ${label.toLowerCase()}`).join(' · ')}.` : 'None in this dataset yet.';
   }
@@ -1766,6 +1841,9 @@ function startExplorer() {
   function applyView(view) {
     for (const [, id, fallback] of VIEW_FIELDS) {
       if (id === 'open-record') { pendingOpen = view[id]; continue; }
+      if (id === 'indicator' && view[id] && indicatorLabels.has(view[id]) && ![...controls[id].options].some(o => o.value === view[id])) {
+        const option = element('option', indicatorLabels.get(view[id])); option.value = view[id]; controls[id].append(option);
+      }
       controls[id].value = view[id];
       if (controls[id].tagName === 'SELECT' && controls[id].selectedIndex === -1) controls[id].value = fallback;
     }
@@ -1786,7 +1864,7 @@ function startExplorer() {
     if (hash === location.hash) return;
     try { history.replaceState(null, '', hash || location.pathname + location.search); } catch { /* Some file:// contexts refuse history updates. */ }
   }
-  const FILTER_VALUES = ['minimum', 'sector', 'group-by', 'project', 'assessment', 'min-score', 'indicator', 'notice-context', 'legal', 'review'];
+  const FILTER_VALUES = ['minimum', 'sector', 'group-by', 'project', 'assessment', 'min-score', 'indicator', 'notice-context', 'legal', 'review', 'verification'];
   function clearFilters() {
     for (const id of FILTER_VALUES) controls[id].value = '';
     controls['min-score'].value = '0';
@@ -1873,12 +1951,39 @@ function startExplorer() {
       for (const r of getAssessment(c).checks) {
         const kind = indicatorKind(r.id);
         if (!kind) continue;
-        present.add(kind);
+        if (r.status !== 'not-applicable') present.add(kind);
         if (r.status === 'signal') kinds.add(kind);
       }
       for (const kind of kinds) signalCounts.set(kind, (signalCounts.get(kind) || 0) + 1);
     }
     if (officialCount) { present.add('official-finding'); signalCounts.set('official-finding', officialCount); }
+    // Only offer context filters supported by the full loaded dataset, not the current results.
+    const availableNotices = new Set();
+    const availableLegal = new Set();
+    const availableVerification = new Set(contracts.map(c => c.verification?.status).filter(Boolean));
+    for (const c of contracts) {
+      const e = c.noticeEvidence;
+      if (e) {
+        if (e.procedureDescription || e.justifications.some(j => j.text)) availableNotices.add('explanation');
+        if (e.awardCriteria.length) availableNotices.add('criteria');
+        if (e.kind === 'correction') availableNotices.add('correction');
+        if (e.ted.length) availableNotices.add('ted');
+      }
+      if (c.directAward === true) availableLegal.add('direct');
+      for (const citation of getLegalContext(c)) { availableLegal.add('cited'); availableLegal.add(citation.article); }
+      if (c.complaints?.length) availableLegal.add('py-complaint');
+      if (c.secop2PublicCounterparty?.labelled) availableLegal.add('co-public');
+      if (softwareMaintenanceContext(c)) availableLegal.add('fr-software');
+    }
+    for (const [id, available] of [['notice-context', availableNotices], ['legal', availableLegal], ['verification', availableVerification]]) {
+      for (const option of controls[id].options) option.hidden = Boolean(option.value && !available.has(option.value));
+      controls[id].closest('label').dataset.available = String(available.size > 0);
+    }
+    for (const [id, available] of [['official', officialCount > 0], ['adjudicated', contracts.some(hasAdjudicatedCorruption)], ['investigation', contracts.some(hasReportedInvestigation)]]) {
+      controls[id].closest('label').dataset.available = String(available);
+    }
+    const activeIndicator = pendingView?.indicator || controls.indicator.value;
+    if (activeIndicator && indicatorLabels.has(activeIndicator)) present.add(activeIndicator);
     const options = [...indicatorLabels].filter(([id]) => id && present.has(id)).sort((a, b) => (signalCounts.get(b[0]) || 0) - (signalCounts.get(a[0]) || 0));
     const tr = typeof i18nTranslate === 'function' ? i18nTranslate : text => text;
     fillSelect(controls.indicator, [['', 'All indicators'], ...options.map(([id, label]) => [id, `${tr(label)} · ${signalCounts.get(id) || 0}`])]);
@@ -1890,7 +1995,8 @@ function startExplorer() {
   }
   matchMedia('(max-width: 760px)').addEventListener('change', () => { if (loaded) render(); });
   const formatDate = c => c.date ? dateFormat.format(new Date(c.date)) : c.noticeEvidence ? c.publicationDate || '—' : '—';
-  const formatAmount = c => c.amount == null ? '—' : ({ 'at-least': '≥ ', 'more-than': '> ', approximate: '≈ ' }[c.amountQualifier] || '') + moneyFor(c).format(c.amount);
+  // Sources that disagree are shown as the full range of their published amounts, never one pick.
+  const formatAmount = c => Array.isArray(c.verification?.amountRange) ? c.verification.amountRange.map(a => moneyFor(c).format(a)).join(' – ') : c.amount == null ? '—' : ({ 'at-least': '≥ ', 'more-than': '> ', approximate: '≈ ' }[c.amountQualifier] || '') + moneyFor(c).format(c.amount);
   function scoreChip(c) {
     const breakdown = getScoreBreakdown(c);
     const level = scoreLevel(breakdown.score, hasIncompleteData(c));
@@ -1901,9 +2007,19 @@ function startExplorer() {
   function render() {
     syncSortHeaders();
     if (!loaded) return;
+    // An active filter from a shared URL remains visible even when it matches no records.
+    for (const id of ['notice-context', 'legal', 'verification', 'official', 'adjudicated', 'investigation']) {
+      const control = controls[id];
+      const active = control.type === 'checkbox' ? control.checked : Boolean(control.value);
+      control.closest('label').hidden = control.closest('label').dataset.available !== 'true' && !active;
+      if (active) {
+        if (control.selectedOptions) control.selectedOptions[0].hidden = false;
+      }
+    }
+    document.querySelector('.context-filters').hidden = [...document.querySelectorAll('.context-filters > label')].every(label => label.hidden);
     const minimum = Math.max(0, Number(controls.minimum.value) || 0);
     const pool = activeProfile ? contracts.filter(c => activeProfile.ids.has(c.id)) : contracts;
-    const filtered = selectContracts(controls.review.value ? pool.filter(reviewMatch) : pool, { search: controls.search.value, minimum, minScore: Number(controls['min-score'].value) || 0, flagged: controls.flagged.checked, official: controls.official.checked, adjudicated: controls.adjudicated.checked, investigation: controls.investigation.checked, indicator: controls.indicator.value, legal: controls.legal.value, noticeContext: controls['notice-context'].value, assessment: controls.assessment.value, sector: controls.sector.value, project: controls.project.value, sort: controls.sort.value });
+    const filtered = selectContracts(controls.review.value ? pool.filter(reviewMatch) : pool, { search: controls.search.value, minimum, minScore: Number(controls['min-score'].value) || 0, flagged: controls.flagged.checked, official: controls.official.checked, adjudicated: controls.adjudicated.checked, investigation: controls.investigation.checked, indicator: controls.indicator.value, legal: controls.legal.value, noticeContext: controls['notice-context'].value, assessment: controls.assessment.value, sector: controls.sector.value, project: controls.project.value, verification: controls.verification.value, sort: controls.sort.value });
     const arrangement = arrangeGroups(filtered, controls['group-by'].value);
     const visible = arrangement.rows;
     visibleRows = visible;
@@ -1963,8 +2079,13 @@ function startExplorer() {
         objectCell.append(element('br'), projectLink);
       }
       if (c.noticeEvidence) objectCell.append(element('small', `Notice ${c.noticeId} · ${c.lotId || 'unknown lot'} · local ref. ${c.noticeEvidence.lotReference || '—'}`, 'provenance'));
+      if (c.procedureGroup) objectCell.append(element('small', `${c.procedureGroup.kind === 'lots' ? `Lot ${c.lotId || '—'} of` : 'Shares identifier'} ${c.procedureGroup.contractId || c.contractId} · ${c.procedureGroup.members.length} contracts`, 'provenance'));
+      if (c.offersConflict) objectCell.append(element('small', 'Offer counts disagree between buyer declarations', 'provenance'));
+      if (c.possibleDuplicateOf?.length) objectCell.append(element('small', 'May be the same contract as another record', 'provenance'));
+      if (c.verification?.status === 'sources-disagree') objectCell.append(element('small', 'Sources disagree on the amount', 'provenance'));
+      else if (c.verification?.addedFromFeed) objectCell.append(element('small', c.feedSource?.startsWith('portal_') ? 'From the buyer’s open-data list only · not in DECP' : 'From the buyer’s feed only · not in the Ministry dataset', 'provenance'));
       const legalContext = getLegalContext(c);
-      if (legalContext.length) objectCell.append(element('small', `Context · ${[...new Set(legalContext.map(item => item.article))].join(', ')} cited · no points added`, 'provenance'));
+      if (legalContext.length) objectCell.append(element('small', `Context · ${[...new Set(legalContext.map(item => item.article))].join(', ')} cited`, 'provenance'));
       if (c.initialConflicts?.length || c.identityAmbiguous) objectCell.append(element('small', 'Ambiguous identifier / versions · calculations excluded', 'provenance'));
       if (c.modificationConflicts?.length) objectCell.append(element('small', 'Conflicting modification versions', 'provenance'));
       if (c.officialFinding === true) objectCell.append(element('small', 'Official audit finding · not a conviction', 'provenance tone-official'));
@@ -1989,11 +2110,11 @@ function startExplorer() {
       }
       for (const label of contextLabels(c)) {
         const badge = element('span', `Context: ${label.short}`, 'badge context');
-        badge.title = `${label.long} Context outside the index: no points added or removed.`;
+        badge.title = label.long;
         badges.append(badge);
       }
       if (ordered.length) objectCell.append(element('small', `Signals: ${ordered.map(i => i.kindLabel).join(' · ')}`, 'mobile-signals'));
-      for (const label of contextLabels(c)) objectCell.append(element('small', `Context: ${label.short} · no points`, 'mobile-signals context'));
+      for (const label of contextLabels(c)) objectCell.append(element('small', `Context: ${label.short}`, 'mobile-signals context'));
       const breakdown = getScoreBreakdown(c);
       const assessment = breakdown.assessment;
       const scoreValue = breakdown.score;
@@ -2111,7 +2232,8 @@ function startExplorer() {
     fact(c.dataFamily === 'dncp' ? 'Period start' : c.noticeEvidence ? 'Published' : 'Date', formatDate(c));
     if (!c.noticeEvidence || c.amount != null) fact('Amount', formatAmount(c));
     const offers = c.offers ?? (c.dataFamily === 'dncp' ? c.numberOfTenderers : null);
-    if (!c.noticeEvidence || offers != null) fact('Offers', offers == null ? '—' : String(offers));
+    if (c.offersConflict) fact('Offers', c.offersConflict.feed ? `unknown — DECP ${c.offersConflict.decp ?? '—'}, buyer feed ${c.offersConflict.feed.join(' / ')}` : `unknown — DECP ${c.offersConflict.decp ?? '—'}, notice ${c.offersConflict.notice ?? '—'}`);
+    else if (!c.noticeEvidence || offers != null) fact('Offers', offers == null ? '—' : String(offers));
     const procedureKind = NATIONAL_FAMILIES[c.dataFamily] ? (c.procedureDirect === true ? 'without competition' : c.procedureDirect === false ? 'competitive' : 'not classified') : null;
     fact('Procedure', [c.procedure || '—', c.procedureCode].filter(Boolean).join(' · '), ...(procedureKind ? [' · ', element('span', procedureKind)] : []));
     if (c.durationMonths != null || c.durationOriginal) fact('Duration', ...(c.durationMonths != null ? [`${c.durationMonths} `, element('span', 'months')] : [c.durationOriginal]));
@@ -2145,6 +2267,11 @@ function startExplorer() {
     });
     review.append(statusSelect, note, saved);
     head.append(review);
+    const manageNotes = element('button', 'Manage notes', 'link-button');
+    manageNotes.type = 'button';
+    manageNotes.id = 'manage-notes';
+    manageNotes.addEventListener('click', () => document.querySelector('#notes-dialog').showModal());
+    head.append(manageNotes);
 
     const sections = [];
     const line = (parent, text, ...nodes) => { const p = element('p', text); p.append(...nodes); parent.append(p); return p; };
@@ -2217,9 +2344,51 @@ function startExplorer() {
       if (c.initialConflicts?.length) {
         line(record, `Conflicting initial versions (${c.initialConflicts.join(', ')}): no chronology inferred.`);
         const list = element('ul');
-        (c.initialAlternatives || []).forEach((a, n) => list.append(element('li', `Variant ${n + 1}: ${a.amount == null ? 'amount unknown' : money.format(a.amount)}${c.cohortId === CITIES_COHORT ? ` · notified ${a.date || '—'} · ${a.procedure || '—'} · offers ${a.offers ?? '—'}` : ''}`)));
+        (c.initialAlternatives || []).forEach((a, n) => list.append(element('li', `Variant ${n + 1}: ${a.amount == null ? 'amount unknown' : moneyFor(c).format(a.amount)}${c.cohortId === CITIES_COHORT ? ` · notified ${a.date || '—'} · ${a.procedure || '—'} · offers ${a.offers ?? '—'}` : ''}`)));
         record.append(list);
       }
+      if (c.procedureGroup) {
+        const g = c.procedureGroup;
+        record.append(element('h4', g.kind === 'lots' ? `Lots of procedure ${g.contractId || c.contractId} (${g.members.length})` : `Contracts sharing identifier ${g.contractId || c.contractId} (${g.members.length})`));
+        const reference = [g.lotTitle, g.contractReference ? `contract ref. ${g.contractReference}` : null].filter(Boolean).join(' · ');
+        if (reference) line(record, reference);
+        line(record, g.basis);
+        const list = element('ul', null, 'sibling-list');
+        for (const id of g.members) {
+          const sibling = contracts.find(x => x.id === id);
+          const subject = sibling && !sibling.lotId && sibling.description.length > 70 ? `${sibling.description.slice(0, 69)}…` : sibling?.description;
+          const label = sibling ? `${sibling.lotId ? `Lot ${sibling.lotId}` : subject} · ${sibling.date || '—'} · ${sibling.amount == null ? 'amount unknown' : moneyFor(sibling).format(sibling.amount)} · offers ${sibling.offers ?? (sibling.offersConflict ? 'disputed' : '—')}${c.possibleDuplicateOf?.includes(id) ? ' · possibly the same contract' : ''}` : id;
+          const item = element('li');
+          if (id === c.id || !sibling) item.append(element('span', `${label}${id === c.id ? ' (this record)' : ''}`));
+          else { const open = element('button', label, 'group-link'); open.type = 'button'; open.addEventListener('click', () => openDetail(id)); item.append(open); }
+          list.append(item);
+        }
+        record.append(list);
+        if (c.project) { const all = element('button', `Show the whole project (${c.project.title})`, 'group-link'); all.type = 'button'; all.addEventListener('click', () => showProject(c.project.id)); record.append(all); }
+      }
+      if (c.verification) {
+        const v = c.verification;
+        record.append(element('h4', `Amount sources · ${VERIFICATION_STATUSES[v.status]}`));
+        const list = element('ul');
+        for (const src of c.amountSources || []) {
+          const value = src.amount == null ? 'no amount' : moneyFor(c).format(src.amount);
+          list.append(element('li', `${src.label}: ${value}${src.amount != null && src.amount > 0 && src.amount <= 10 ? ' (placeholder, not used)' : ''}${src.id && src.id !== c.contractId ? ` · id ${src.id}` : ''}${src.consolidatorFlag ? ` · flagged “${src.consolidatorFlag}” by the consolidator` : ''}`));
+        }
+        record.append(list);
+        [
+          v.status === 'sources-disagree' ? `The sources disagree, so the full range is shown. For sorting, ${c.amount == null ? 'no single amount is used' : `${moneyFor(c).format(c.amount)} is used`}, by a fixed rule (the buyer’s own feed first, positive amounts over zero); it is not a resolution. Amount-based checks only count when every source leads to the same conclusion.` : null,
+          v.holdersAddedFromFeed ? 'Some co-holders come from the buyer’s feed: the Ministry table lists at most three holders per contract.' : null,
+          ...(c.unconfirmedHolders || []).map(h => `Holder ${h.id} is listed only by the Ministry dataset and is not counted: the award notice and the buyer’s feed name only the confirmed holder.`),
+          v.majority ? `${v.majority.routes} of ${v.majority.of} publication routes give ${moneyFor(c).format(v.majority.amount)}. Every route is the buyer’s own declaration, so this is corroboration, not proof.` : null,
+          v.status === 'single-source' ? (c.feedSource?.startsWith('portal_') ? 'Listed in the buyer’s open-data list of concluded contracts but absent from the DECP publications: not confirmed by a second source.' : v.addedFromFeed ? 'Published in the buyer’s own feed but absent from the Ministry dataset: not confirmed by a second source.' : 'Only the Ministry dataset publishes this contract: not confirmed by a second source.') : null,
+          v.status === 'sources-agree' ? 'The Ministry dataset and the buyer’s own feed publish the same amount. Agreement between publications is not proof the amount is right.' : null,
+          v.status === 'notice-checked' ? 'Amount, date and holder matched against the award notice (see the lots above).' : null,
+          v.resolvedPair ? 'The Ministry dataset published two amounts for this contract; the buyer’s feed confirms one of them.' : null,
+        ].filter(Boolean).forEach(text => line(record, text));
+      }
+      if (c.possibleDuplicateOf?.length) line(record, `May be the same contract as ${c.possibleDuplicateOf.length} other record(s) above: same holder, subject, notification date and framework, but a different declared amount or detail. Scored on its own; counted once in this buyer’s baselines (usual publication delay, repeated single offers, supplier concentration).`);
+      if (c.offersConflict && !c.offersConflict.feed) line(record, `Offer count disputed: DECP ${c.offersConflict.decp ?? '—'}, notice ${c.offersConflict.noticeId} ${c.offersConflict.notice ?? '—'}${c.offersConflict.contractReference ? ` (contract ref. ${c.offersConflict.contractReference})` : ''}. Both are declarations by the same buyer; the count is treated as unknown.`);
+      if (c.offersConflict?.feed) line(record, `Offer count disputed: Ministry dataset ${c.offersConflict.decp ?? '—'}, buyer feed ${c.offersConflict.feed.join(' / ')}. Both are declarations by the same buyer; the count is treated as unknown.`);
       if (c.modificationConflicts?.length) line(record, `Conflicting modifications: ${c.modificationConflicts.map(m => `${m.id} (${m.fields.join(', ')})`).join('; ')}.`);
       if (c.history?.length > 1) {
         const table = element('table', null, 'history-table');
@@ -2229,7 +2398,7 @@ function startExplorer() {
         const rows = element('tbody');
         for (const event of c.history) {
           const tr = element('tr');
-          tr.append(element('td', event.kind === 'initial' ? 'Initial' : `Change ${event.id || '—'}`), element('td', event.date || '—'), element('td', event.publicationDate || '—'), element('td', event.amount == null ? '—' : money.format(event.amount)));
+          tr.append(element('td', event.kind === 'initial' ? 'Initial' : `Change ${event.id || '—'}`), element('td', event.date || '—'), element('td', event.publicationDate || '—'), element('td', event.amount == null ? '—' : moneyFor(c).format(event.amount)));
           rows.append(tr);
         }
         table.append(thead, rows);
@@ -2264,7 +2433,7 @@ function startExplorer() {
     if (record.children.length > 1) sections.push(record);
 
     // 3. Context that adds no points, one line each.
-    const outside = detailSection('context', 'Context · no points');
+    const outside = detailSection('context', 'Context');
     const software = softwareMaintenanceContext(c);
     if (software) line(outside, 'Single-vendor software maintenance: often routine; exclusivity not verified.');
     const publicContext = c.secop2PublicCounterparty;
@@ -2385,7 +2554,7 @@ function startExplorer() {
 
   // Keyboard: / focuses search, j/k step through records, Escape closes the panel.
   document.addEventListener('keydown', event => {
-    if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey || helpDialog.open) return;
+    if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey || document.querySelector('dialog[open]')) return;
     const typing = event.target.closest?.('input, select, textarea, [contenteditable="true"]');
     if (event.key === 'Escape' && openId && (!typing || detailPanel.contains(event.target))) { closeDetail(); return; }
     if (typing) return;
@@ -2416,10 +2585,7 @@ function startExplorer() {
     pendingOpen = '';
     if (pendingView) { applyView(pendingView); pendingView = null; }
     const missing = key => contracts.filter(c => c[key] == null).length;
-    const conflictCount = contracts.filter(c => c.initialConflicts?.length).length;
-    const withMods = contracts.filter(c => c.history?.some(event => event.kind === 'modification')).length;
-    const enrichedCount = contracts.filter(c => c.supplierProfiles?.length).length;
-    document.querySelector('#completeness').textContent = `In the loaded file: ${missing('amount')} amounts, ${missing('offers')} offer counts and ${contracts.filter(c => c.durationMonths == null && !c.durationOriginal).length} durations not provided out of ${contracts.length} records. ${conflictCount} groups with diverging initial values; ${withMods} histories containing a published modification. ${enrichedCount ? `${enrichedCount} records with an enriched current public name (not historical). ` : ''}Official findings are not subject to an exhaustive automatic search.`;
+    document.querySelector('#completeness').textContent = `Missing values: ${missing('amount')} amounts, ${missing('offers')} offer counts, ${contracts.filter(c => c.durationMonths == null && !c.durationOriginal).length} durations (${contracts.length} records).`;
     render();
     if (pendingOpen) openDetail(pendingOpen, { focus: false });
     pendingOpen = '';
@@ -2441,9 +2607,33 @@ function startExplorer() {
   Object.values(controls).forEach(control => control.addEventListener('input', refresh));
   // Column headers sort too: first click descending (newest, largest, most), second ascending.
   // They drive the Sort control, so the link, page reset and export stay in step.
-  const SORT_PAIRS = { date: ['date', 'date-asc'], amount: ['amount', 'amount-asc'], indicators: ['indicators', 'indicators-asc'], score: ['score', 'score-asc'], buyer: ['buyer', 'buyer-desc'], supplier: ['supplier', 'supplier-desc'], sector: ['sector', 'sector-desc'], offers: ['offers-desc', 'offers'] };
+  const SORT_PAIRS = { date: ['date', 'date-asc'], publication: ['publication', 'publication-asc'], amount: ['amount', 'amount-asc'], indicators: ['indicators', 'indicators-asc'], score: ['score', 'score-asc'], buyer: ['buyer', 'buyer-desc'], supplier: ['supplier', 'supplier-desc'], sector: ['sector', 'sector-desc'], offers: ['offers-desc', 'offers'], increase: ['increase'], official: ['official'], 'recent-signal': ['recent-signal'] };
+  const sortField = document.querySelector('#sort-field');
+  const sortDirection = document.querySelector('#sort-direction');
+  function syncSortControl() {
+    const field = Object.keys(SORT_PAIRS).find(key => SORT_PAIRS[key].includes(controls.sort.value)) || 'score';
+    sortField.value = field;
+    sortField.querySelector('[value="recent-signal"]').hidden = field !== 'recent-signal';
+    const pair = SORT_PAIRS[field];
+    const ascending = ['buyer', 'supplier', 'sector'].includes(field) ? controls.sort.value === pair[0] : controls.sort.value === pair[1];
+    sortDirection.disabled = pair.length === 1;
+    sortDirection.textContent = ascending ? '↑' : '↓';
+    sortDirection.setAttribute('aria-label', ascending ? 'Sort ascending' : 'Sort descending');
+    sortDirection.title = pair.length === 1 ? 'Fixed sort direction' : ascending ? 'Sort ascending · click for descending' : 'Sort descending · click for ascending';
+  }
+  sortField.addEventListener('change', () => {
+    controls.sort.value = SORT_PAIRS[sortField.value][0];
+    controls.sort.dispatchEvent(new Event('input'));
+  });
+  sortDirection.addEventListener('click', () => {
+    const pair = SORT_PAIRS[sortField.value];
+    if (pair.length < 2) return;
+    controls.sort.value = controls.sort.value === pair[0] ? pair[1] : pair[0];
+    controls.sort.dispatchEvent(new Event('input'));
+  });
   const sortHeaders = [...document.querySelectorAll('th[data-sort-key]')];
   function syncSortHeaders() {
+    syncSortControl();
     for (const th of sortHeaders) {
       const [desc, asc] = SORT_PAIRS[th.dataset.sortKey];
       const alphabetical = ['buyer', 'supplier', 'sector'].includes(th.dataset.sortKey);
@@ -2490,8 +2680,8 @@ function startExplorer() {
     const copiedCount = pageRowsForCopy.length;
     const text = pageSummaryForCopy(pageRowsForCopy, { dataset: currentDatasetLabel,
       page: page + 1, totalPages: Math.max(1, Math.ceil(totalResultsForCopy / pageSize)), totalResults: totalResultsForCopy });
-    copyStatus.textContent = await copyText(text) ? `${copiedCount} sourced page summaries copied. Public-record context is explained in the personal-data inventory.` : 'Unable to copy. Serve over localhost or select the rows manually.';
-    const original = 'Copy page summary';
+    copyStatus.textContent = await copyText(text) ? `${copiedCount} record summaries copied with source links.` : 'Unable to copy. Serve over localhost or select the rows manually.';
+    const original = 'Copy page';
     copyPage.textContent = copyStatus.textContent.startsWith('Unable') ? 'Copy failed' : 'Copied!';
     setTimeout(() => { copyPage.textContent = original; }, 2500);
   });
@@ -2572,11 +2762,11 @@ function startExplorer() {
     importPreview.replaceChildren();
   }
   importMethod.addEventListener('change', invalidateImport);
-  document.querySelector('#open-import').addEventListener('click', () => {
-    filterPanel.open = true;
-    document.querySelector('.local-file').open = true;
-    importMethod.focus();
-  });
+  const importDialog = document.querySelector('#import-dialog');
+  const notesDialog = document.querySelector('#notes-dialog');
+  document.querySelector('#open-import').addEventListener('click', () => importDialog.showModal());
+  document.querySelector('#import-close').addEventListener('click', () => importDialog.close());
+  document.querySelector('#notes-close').addEventListener('click', () => notesDialog.close());
   document.querySelector('#file').addEventListener('change', async event => {
     invalidateImport();
     stagedFile = null;
@@ -2650,7 +2840,8 @@ function startExplorer() {
       document.querySelector('#coverage-link').hidden = true;
       document.querySelector('#dataset-sources').hidden = true;
       renderDatasetDates('local');
-      importStatus.textContent = `${preview.records.length} records loaded locally. Review marks are scoped to this file’s SHA-256 fingerprint and import settings.`;
+      importStatus.textContent = `${preview.records.length} records loaded locally.`;
+      importDialog.close();
     } catch (error) { importStatus.textContent = `Unable to load: ${error.message}`; }
     if (version === importVersion) confirmImport.disabled = false;
   });
@@ -2664,7 +2855,7 @@ function startExplorer() {
     usingLocalFile = false;
     currentDatasetLabel = datasetLabel();
     copyStatus.textContent = '';
-    copyPage.textContent = 'Copy page summary';
+    copyPage.textContent = 'Copy page';
     contracts = [];
     body.replaceChildren();
     pagination.hidden = true;
@@ -2675,7 +2866,7 @@ function startExplorer() {
     renderSources(selected);
     renderDatasetDates(datasetSelect.value);
     document.querySelector('#coverage-link').hidden = false;
-    document.querySelector('#file-path').textContent = selected.path;
+    document.querySelector('#file-path').textContent = [].concat(selected.path).join(' + ');
     document.querySelector('#file').value = '';
     fileHelp.hidden = location.protocol !== 'file:';
     controls.search.value = '';
@@ -2690,22 +2881,27 @@ function startExplorer() {
       try {
         const keys = Object.keys(datasets).filter(key => !datasets[key].combined);
         const parts = await Promise.all(keys.map(async key => {
-          const response = await fetch(datasets[key].path);
-          if (!response.ok) throw new Error(`${datasets[key].path}: HTTP ${response.status}`);
           const option = [...datasetSelect.options].find(o => o.value === key);
           const country = option?.parentElement?.label || '';
-          return prepareContracts(await response.json()).map(c => ({ ...c, datasetKey: key, datasetCountry: country }));
+          return prepareContracts(await fetchRecords(datasets[key].path)).map(c => ({ ...c, datasetKey: key, datasetCountry: country }));
         }));
         if (version === loadVersion) accept(null, parts.flat());
       } catch (error) { if (version === loadVersion) fail(error); }
       return;
     }
     try {
-      const response = await fetch(selected.path);
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const data = await response.json();
+      const data = await fetchRecords(selected.path);
       if (version === loadVersion) accept(data);
     } catch (error) { if (version === loadVersion) fail(error); }
+  }
+  // A dataset may span several files (one per import); they are loaded as one list of records.
+  async function fetchRecords(path) {
+    const parts = await Promise.all([].concat(path).map(async file => {
+      const response = await fetch(file);
+      if (!response.ok) throw new Error(`${file}: HTTP ${response.status}`);
+      return response.json();
+    }));
+    return parts.flat();
   }
   datasetSelect.addEventListener('change', loadDataset);
   // A pasted link or back/forward: reload only when the dataset differs.

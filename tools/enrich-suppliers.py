@@ -151,6 +151,7 @@ def cohort_rows(data):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--offline", action="store_true", help="validate existing sanitized outputs; never network")
+    parser.add_argument("--incremental", action="store_true", help="keep existing lookups unchanged; query only SIRENs not yet in the snapshot")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     data = root / "data"
@@ -168,6 +169,14 @@ def main():
     # Checkpoint: an interrupted run resumes from the lookups already made.
     checkpoint = data / ".supplier-identities.partial.json"
     done = json.loads(checkpoint.read_text()) if checkpoint.exists() else {"retrievedAt": now(), "lookups": {}}
+    if args.incremental and out.exists():
+        # Earlier lookups are kept exactly as retrieved (with their own query times), never refreshed.
+        previous, previous_cov = json.loads(out.read_text()), json.loads(cov.read_text())
+        asked = {q["siren"]: q["queriedAt"] for q in previous_cov["queries"]["log"]}
+        for record in previous["identities"]:
+            kept = {k: v for k, v in record.items() if k != "associatedSirets"}
+            done["lookups"].setdefault(record["siren"], {"queriedAt": asked.get(record["siren"], previous["retrievedAt"]), "record": kept})
+        done["retrievedAt"] = previous["retrievedAt"]
     retrieved = done["retrievedAt"]
     records = []
     query_log = []

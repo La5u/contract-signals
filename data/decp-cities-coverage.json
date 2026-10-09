@@ -206,35 +206,20 @@
   "downloadedAt": "2026-09-15T22:52:17.880816+00:00",
   "counts": {
     "rawRows": 1865,
-    "contracts": 1270,
-    "groupsWithInitialConflicts": 172,
-    "initialConflictFields": {
-      "amount": 171,
-      "offers": 132,
-      "date": 142,
-      "supplierIds": 151,
-      "description": 139,
-      "publicationDate": 127,
-      "durationMonths": 134,
-      "cpv": 137,
-      "procedure": 85,
-      "priceType": 85,
-      "frameworkId": 42,
-      "executionModalities": 78,
-      "techniques": 61,
-      "priceForm": 79
-    },
-    "groupsWithModificationConflicts": 7,
-    "modificationConflictFields": {
-      "amount": 7,
-      "date": 7,
-      "publicationDate": 7
-    },
+    "contracts": 2289,
+    "groupsWithInitialConflicts": 0,
+    "initialConflictFields": {},
+    "groupsWithModificationConflicts": 0,
+    "modificationConflictFields": {},
     "duplicateRowsDeduplicated": 0,
+    "identifierGroupsSplit": 168,
+    "jointContractsMerged": 1,
+    "possibleDuplicateRows": 95,
     "publishedModificationEvents": 365,
-    "contractsWithPublishedModifications": 355,
-    "ambiguousGroupsExcluded": 172,
-    "normalizedRows": 1270,
+    "contractsAddedFromFeeds": 435,
+    "contractsWithPublishedModifications": 460,
+    "ambiguousGroupsExcluded": 0,
+    "normalizedRows": 2289,
     "rawRowsByBuyer": {
       "21350238800019": 335,
       "21440109300015": 699,
@@ -244,12 +229,12 @@
       "21370261600011": 156
     },
     "contractsByBuyer": {
-      "21350238800019": 303,
-      "21440109300015": 541,
-      "21330063500017": 88,
-      "21380185500015": 22,
-      "21210231300013": 160,
-      "21370261600011": 156
+      "21350238800019": 449,
+      "21440109300015": 917,
+      "21330063500017": 362,
+      "21380185500015": 119,
+      "21210231300013": 284,
+      "21370261600011": 158
     }
   },
   "fields": {
@@ -270,8 +255,8 @@
     "pagination": "each city paged through total_count; raw records include all pages"
   },
   "mapping": {
-    "unit": "one normalized row per buyer SIRET + DECP contract id; no amount sums",
-    "conflicts": "All differing initial values become null (description displayed as unknown). All ambiguous city groups are excluded from scoring and retrospective denominators. Raw variants and conflicting modification events remain available.",
+    "unit": "one normalized row per distinct contract: buyer SIRET + DECP id + declared initial fields (see mapping.conflicts); no amount sums. Groups in decp-cities-curated.json use notice-linked lot rows",
+    "conflicts": "Rows of one buyer+id are one contract only when all declared initial fields agree (modification rows repeat them); otherwise each distinct set is its own contract, linked by procedureGroup. A group differing only in holders with a declared joint grouping is one joint contract. Any remaining differing initial values would become null and the contract excluded. Raw rows remain available.",
     "duplicates": "identical raw rows deduplicated only; distinct modification versions preserved",
     "sources": "each normalized source URL filters exact buyer SIRET and exact contract id"
   },
@@ -281,7 +266,8 @@
     "The API may expose only indexed/latest modifications; absence of a published modification does NOT prove absence of a real amendment.",
     "Absence de modification publiée ne prouve PAS l’absence d’un avenant ou d’une modification réelle.",
     "Offset pagination is checked against total_count but the API provides no immutable snapshot; tied ordering and subsequent corrections can affect completeness.",
-    "Repeated buyer+contract identifiers with inconsistent objects or holders are ambiguous groups, not proven unique procurements; excluded from all calculations in this new cohort.",
+    "The DECP id is often not a contract identifier for these buyers (truncated by the AWS export, or a platform counter): rows sharing buyer+id whose declared fields differ are published as separate contracts linked by procedureGroup; no identifier is invented (research/decp-identifier-collisions.md).",
+    "Rows with the same holder, object, notification date and framework but a different amount may be one contract published twice: flagged possibleDuplicateOf, scored individually and counted once in buyer-level baselines.",
     "Current public company names are an identity context only, not historical names, establishment status, relationship evidence or scoring inputs."
   ],
   "buyerVerification": [],
@@ -306,21 +292,117 @@
     ],
     "unknown": "Any other label maps to null; exact labels only."
   },
+  "feedReconciliation": {
+    "file": "decp-feeds-raw.json.gz",
+    "tool": "tools/decp_feeds.py",
+    "feedSource": {
+      "dataset_id": "608c055b35eb4e6ee20eb325",
+      "dataset_title": "Données essentielles de la commande publique consolidées (format tabulaire)",
+      "dataset_page": "https://www.data.gouv.fr/datasets/donnees-essentielles-de-la-commande-publique-consolidees-format-tabulaire",
+      "publisher": "Colmo",
+      "licence": "lov2",
+      "resource_url": "https://static.data.gouv.fr/resources/donnees-essentielles-de-la-commande-publique-consolidees-format-tabulaire/20261004-051839/decp.parquet",
+      "resource_last_modified": "2026-10-04T05:18:55.397000+00:00",
+      "sha256": "cf74340145074271320e8bc92de37711d4df0974844e635d87184217555784ee",
+      "retrieved_at": "2026-10-04T12:23:23+00:00"
+    },
+    "portals": [
+      {
+        "label": "nantes-2024",
+        "url": "https://data.nantesmetropole.fr/api/explore/v2.1/catalog/datasets/244400404_marches-publics-conclus-2024-nantes/exports/json",
+        "retrievedAt": "2026-10-08T20:26:06.545874+00:00",
+        "bytes": 312080,
+        "sha256": "3ae40229f4bcdb1f26c3eb58099385a5f4d615b62534358d79c856a94a846435",
+        "records": 387,
+        "dataset_page": "https://www.data.gouv.fr/datasets/marches-publics-conclus-en-2024-par-la-ville-de-nantes",
+        "licence": "Licence Ouverte 2.0"
+      },
+      {
+        "label": "nantes-2025",
+        "url": "https://data.nantesmetropole.fr/api/explore/v2.1/catalog/datasets/244400404_marches-publics-conclus-2025-nantes/exports/json",
+        "retrievedAt": "2026-10-08T20:26:08.260030+00:00",
+        "bytes": 378194,
+        "sha256": "f041948d28257ba337e67bab12dce388dcb0a90c644e5081c3cea20b420380d8",
+        "records": 442,
+        "dataset_page": "https://www.data.gouv.fr/datasets/marches-publics-conclus-en-2025-par-la-ville-de-nantes",
+        "licence": "Licence Ouverte 2.0"
+      },
+      {
+        "label": "bordeaux-ville",
+        "url": "https://datahub.bordeaux-metropole.fr/api/explore/v2.1/catalog/datasets/met_marches_publics_2024/exports/json?where=acheteur_id%3D%2221330063500017%22",
+        "retrievedAt": "2026-10-08T20:26:10.007368+00:00",
+        "bytes": 493706,
+        "sha256": "8dc916aa884e8a817c309e02ccdc043147de5774000a74cfd0ab08363a78e744",
+        "records": 362,
+        "dataset_page": "https://www.data.gouv.fr/datasets/marches-publics-de-bordeaux-metropole-et-des-communes-mutulalisees-depuis-2024",
+        "licence": "Licence Ouverte 2.0"
+      }
+    ],
+    "statistics": {
+      "duplicates.cleared": 50,
+      "duplicates.folded": 10,
+      "feed.absent": 371,
+      "feed.ambiguous": 21,
+      "feed.amount-date-no-holder": 323,
+      "feed.co-holder": 59,
+      "feed.duplicateAcrossSources": 14,
+      "feed.holder-amount-date": 192,
+      "feed.id-date-holder": 1681,
+      "holders.addedFromFeed": 59,
+      "majority": 62,
+      "placeholder": 3,
+      "portal.absent": 78,
+      "portal.ambiguous": 79,
+      "portal.amount-date-no-holder": 139,
+      "portal.holder-amount-date": 803,
+      "portal.holder-date-object": 69,
+      "records.added": 435,
+      "records.addedFromFeed": 357,
+      "records.addedFromPortal": 78,
+      "resolvedPair": 10,
+      "status.notice-checked": 10,
+      "status.single-source": 400,
+      "status.sources-agree": 1782,
+      "status.sources-disagree": 97
+    },
+    "rules": "Reconcile DECP cohort records with the buyers' own feeds (data/decp-feeds-raw.json.gz).\n\nShared by tools/import-decp-cities.py and tools/import-decp-paris-ardeche.py, applied after\ntheir own normalisation. Rules (research/france-cross-dataset-check.md):\n\n- Every source's initial amount is kept in `amountSources`; nothing is summed.\n- Amounts from 0.01 to 10 EUR are placeholders: kept as published, never used as money.\n- When strictly more publication routes give one positive amount than any other (at least two;\n  an AWS profile and its scraped copy are one route), that amount is shown, noted as `majority`.\n  Routes are all the buyer's own declarations, so a majority is corroboration, not proof.\n- Otherwise the amount shown is the buyer feed's when it gives exactly one positive value, otherwise the\n  Ministry's positive value; a declared zero is shown only when no source gives a positive amount;\n  several disagreeing feed values without the Ministry's leave it unknown.\n- `verification.status`: notice-checked (curated award-notice linkage), sources-agree,\n  sources-disagree, or single-source. Disagreement keeps `amountRange` for threshold checks.\n- Positive offer counts that differ between the Ministry row and the buyer feed make the count\n  unknown, both values kept in `offersConflict` (a zero count is already unusable, not a conflict).\n- A feed row with the same identifier, date, amount and object as a record but another holder is a\n  co-holder the Ministry table dropped (three holder slots): it is added to `supplierIds` with its source.\n- \"Possibly the same contract\" clusters are settled with route evidence (resolve_duplicate_clusters).\n- A feed contract that matches no record by id+date+holder, holder+amount+date,\n  holder+date+object, or (holderless) amount+date is added as a single-source record."
+  },
+  "holderEvidence": [
+    {
+      "id": "decp-21210231300013-2024VDAO017006",
+      "confirmed": [
+        "31543485200234"
+      ],
+      "unconfirmed": [
+        "30082035400029"
+      ],
+      "noticeId": "24-77579"
+    }
+  ],
   "identityEnrichment": {
     "snapshot": "supplier-identities.json",
     "coverage": "supplier-identities-coverage.json",
-    "contractsWithCurrentNames": 1116,
-    "availableSirens": 1949,
+    "contractsWithCurrentNames": 2209,
+    "availableSirens": 2691,
     "historicalNamesVerified": false,
     "matching": "SIREN derived only from typed French SIRET/SIREN; names do not replace published contract identifiers."
   },
+  "curation": {
+    "file": "decp-cities-curated.json",
+    "tool": "tools/reconcile-dijon-project.py",
+    "splitGroups": 3,
+    "rowsFromSplits": 992,
+    "offerConflicts": 12,
+    "projectRows": 26,
+    "rule": "Only exact buyer+identifier groups whose every source row is linked to one award-notice lot (amount, date, contract reference, register-verified holder) or is an evidently distinct contract are split. Disagreeing offer counts become null with both values retained."
+  },
   "fieldAvailability": {
-    "amount": 1099,
-    "offers": 1138,
-    "date": 1128,
-    "durationMonths": 1136,
-    "cpv": 1133,
-    "directAward": 366
+    "amount": 2271,
+    "offers": 2197,
+    "date": 2289,
+    "durationMonths": 2286,
+    "cpv": 2289,
+    "directAward": 838
   },
   "rules": {
     "version": "2.1",

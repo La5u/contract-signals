@@ -21,7 +21,9 @@ function datasetPaths(code) {
   const start = code.indexOf('const datasets = {');
   const end = code.indexOf('\n  };', start);
   if (start < 0 || end < 0) throw new Error('Dataset config not found');
-  const paths = [...code.slice(start, end).matchAll(/\bpath:\s*['"](data\/[^'"]+\.json)['"]/g)].map(match => match[1]);
+  // A dataset's path is one file or a list of files (the merged France DECP dataset): every file is compared.
+  const paths = [...code.slice(start, end).matchAll(/\bpath:\s*(\[[^\]]*\]|['"]data\/[^'"]+\.json['"])/g)]
+    .flatMap(match => [...match[1].matchAll(/['"](data\/[^'"]+\.json)['"]/g)].map(m => m[1]));
   if (!paths.length || new Set(paths).size !== paths.length) throw new Error('Invalid dataset paths');
   return paths;
 }

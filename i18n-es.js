@@ -3,6 +3,21 @@ window.I18N_DICTS = window.I18N_DICTS || {};
 window.I18N_DICTS.es = {
  "title": "Marchés ouverts — explorar la contratación pública",
  "exact": {
+  "Help": "Ayuda",
+  "Signals highlight published characteristics for review, not established irregularities.": "Las señales destacan características publicadas para su revisión, no irregularidades comprobadas.",
+  "The index orders records using the available indicators. “Not assessed” means no applicable check could be evaluated; 0 means no threshold crossed in the evaluated checks. Missing values are shown as unknown.": "El índice ordena los registros según los indicadores disponibles. «No evaluado» significa que no se pudo evaluar ninguna comprobación aplicable; 0 significa que no se superó ningún umbral en las comprobaciones evaluadas. Los valores ausentes se muestran como desconocidos.",
+  "Open a record to see its indicators and sources.": "Abra un registro para ver sus indicadores y fuentes.",
+  "CSV/JSON exports include all filtered results. Copy page includes only the current page.": "Las exportaciones CSV/JSON incluyen todos los resultados filtrados. Copiar página incluye solo la página actual.",
+  "Review marks and notes are saved in this browser, not in shared links. Export notes to keep or share them.": "Las marcas de revisión y notas se guardan en este navegador, no en los enlaces compartidos. Exporte las notas para conservarlas o compartirlas.",
+  "Keyboard: / search · j/k next/previous record · Esc close.": "Teclado: / buscar · j/k registro siguiente/anterior · Esc cerrar.",
+  "No account or analytics. Imported files stay in your browser.": "Sin cuenta ni analítica. Los archivos importados permanecen en su navegador.",
+  "Full methodology": "Metodología completa",
+  "Indicator catalogue": "Catálogo de indicadores",
+  "Extraction details (JSON)": "Detalles de extracción (JSON)",
+  "Source documentation": "Documentación de las fuentes",
+  "Rennes, Nantes, Bordeaux, Grenoble, Dijon and Tours: municipalities, not metropolitan authorities. Notifications 2024–2025: 1,865 published rows, 2,299 contracts (435 only in buyer feeds or open-data lists); rows sharing an identifier become linked contracts, 95 possible duplicates count once. Coverage depends on source publication. Supplier names are current register names, not historical names.": "Rennes, Nantes, Bordeaux, Grenoble, Dijon y Tours: municipios, no autoridades metropolitanas. Notificaciones 2024–2025: 1.865 filas publicadas, 2.299 contratos (435 solo en flujos o listas abiertas de compradores); las filas que comparten identificador pasan a contratos vinculados, 95 posibles duplicados cuentan una vez. La cobertura depende de la publicación en la fuente. Los nombres de proveedores son los actuales del registro, no nombres históricos.",
+  "2,997 DECP contracts from the Ville de Paris and Département de l’Ardèche, notified in 2024–2025; 403 only in the buyers’ own feeds. Modifications may be later than 2025. Coverage depends on source publication. Supplier names are current register names, not historical names.": "2.997 contratos DECP de la Ville de Paris y el Département de l’Ardèche, notificados en 2024–2025; 403 solo en los flujos propios de los compradores. Las modificaciones pueden ser posteriores a 2025. La cobertura depende de la publicación en la fuente. Los nombres de proveedores son los actuales del registro, no nombres históricos.",
+  "3,010 records: 3,000 BOAMP lots sampled from February–April 2025 publications, two Mauges lots and eight CRC audit dossiers. Audit dossiers may cover several orders rather than an individual contract. This sample does not provide a complete purchasing history.": "3.010 registros: 3.000 lotes BOAMP seleccionados de publicaciones de febrero–abril de 2025, dos lotes de Mauges y ocho expedientes de auditoría CRC. Los expedientes pueden abarcar varios pedidos en lugar de un contrato individual. Esta muestra no ofrece un historial completo de compras.",
   "Language": "Idioma",
   "Interface language": "Idioma de la interfaz",
   "Marchés ouverts": "Marchés ouverts",
@@ -677,7 +692,72 @@ window.I18N_DICTS.es = {
   "Working…": "Procesando…",
   "Name unavailable": "Nombre no disponible",
   "Published by the source register. Shown one record at a time; not in lists, search or exports.": "Publicado por el registro de origen. Se muestra un registro a la vez; no aparece en listas, búsquedas ni exportaciones.",
-  "Late notice change without deadline extension": "Cambio tardío del anuncio sin prórroga del plazo"
+  "Late notice change without deadline extension": "Cambio tardío del anuncio sin prórroga del plazo",
+  "Context": "Contexto",
+  "Publication date": "Fecha de publicación",
+  "Amount increase (%)": "Aumento del importe (%)",
+  "Official findings first": "Hallazgos oficiales primero",
+  "Official finding": "Hallazgo oficial",
+  "No threshold crossed": "Ningún umbral superado",
+  "Notice content": "Contenido del aviso",
+  "Legal context": "Contexto jurídico",
+  "Official audit findings": "Observaciones oficiales de auditoría",
+  "Final corruption judgments": "Sentencias firmes por corrupción",
+  "Reported investigations": "Investigaciones publicadas",
+  "Sort ascending": "Orden ascendente",
+  "Sort descending": "Orden descendente",
+  "Sort ascending · click for descending": "Orden ascendente · pulse para descendente",
+  "Sort descending · click for ascending": "Orden descendente · pulse para ascendente",
+  "Fixed sort direction": "Dirección de orden fija",
+  "Sort state": "Estado del orden",
+  "Export": "Exportar",
+  "Export all filtered results as CSV.": "Exportar todos los resultados filtrados en CSV.",
+  "Export all filtered results as JSON.": "Exportar todos los resultados filtrados en JSON.",
+  "Copy page": "Copiar página",
+  "Copy this page with source URLs.": "Copiar esta página con los enlaces a las fuentes.",
+  "Browse only": "Solo consultar",
+  "Apply French indicators": "Aplicar indicadores franceses",
+  "Dataset file": "Archivo de datos",
+  "JSON, CSV or OCDS. Files stay in your browser.": "JSON, CSV u OCDS. Los archivos permanecen en su navegador.",
+  "Format guide": "Guía de formato",
+  "Review notes": "Notas de revisión",
+  "Manage notes": "Gestionar notas",
+  "Notes stay in this browser. Shared links do not include them. Exported notes are plain text.": "Las notas permanecen en este navegador. Los enlaces compartidos no las incluyen. Las notas exportadas son texto sin cifrar.",
+  "Tours · 2025 BOAMP/TED notices and linked references: 25 notices, 66 version/lot rows, including joint purchases. Rows represent documents, not individual contracts. Bidding periods require a complete notice chain.": "Tours · avisos BOAMP/TED de 2025 y referencias vinculadas: 25 avisos, 66 filas de versión/lote, incluidas compras conjuntas. Las filas representan documentos, no contratos individuales. Los plazos de presentación requieren una cadena completa de avisos.",
+  "10 BOAMP consultation notices published on 3 February 2025, with one linked correction and three award notices. Rows represent notices, not awarded contracts. Incomplete notice chains prevent bidding-period calculations.": "10 avisos de consulta BOAMP publicados el 3 de febrero de 2025, con una corrección y tres avisos de adjudicación vinculados. Las filas representan avisos, no contratos adjudicados. Las cadenas incompletas impiden calcular los plazos de presentación.",
+  "Colombia · SECOP II · MEN, Caldas and Usaquén. Signed September 2024–August 2026: 7,560 contracts, amounts in COP. Coverage depends on source publication; offer counts are unavailable.": "Colombia · SECOP II · MEN, Caldas y Usaquén. Firmados de septiembre de 2024 a agosto de 2026: 7.560 contratos, importes en COP. La cobertura depende de la publicación en la fuente; no hay recuentos de ofertas.",
+  "Paraguay · DNCP · Fernando de la Mora. Calls published September 2024–August 2025: 88 processes, 84 retained contract entries, amounts in PYG. Displayed contract dates are period start dates, not signature dates. Amendments remain on their parent contracts.": "Paraguay · DNCP · Fernando de la Mora. Convocatorias publicadas de septiembre de 2024 a agosto de 2025: 88 procesos, 84 entradas de contrato retenidas, importes en PYG. Las fechas mostradas son de inicio del período, no de firma. Las modificaciones permanecen en sus contratos de origen.",
+  "Paraguay · DNCP · MOPC, Central and Asunción. Calls published September 2024–August 2026: 339 processes, 293 retained contract entries, amounts in PYG. Amendments remain on their parent contracts; 92 multi-lot awards lack per-lot tenderer counts.": "Paraguay · DNCP · MOPC, Central y Asunción. Convocatorias publicadas de septiembre de 2024 a agosto de 2026: 339 procesos, 293 entradas de contrato retenidas, importes en PYG. Las modificaciones permanecen en sus contratos de origen; 92 adjudicaciones multilote no tienen recuentos de licitadores por lote.",
+  "Ukraine · Prozorro · Health, Vinnytsia and Dnipro. Tenders created September 2024–August 2026: 526 tenders, 488 signed contracts. Amounts in UAH, EUR or USD. Search coverage is unverified; wartime rules permit withheld publications.": "Ucrania · Prozorro · Salud, Vinnytsia y Dnipro. Licitaciones creadas de septiembre de 2024 a agosto de 2026: 526 licitaciones, 488 contratos firmados. Importes en UAH, EUR o USD. La cobertura de búsqueda no está verificada; las reglas de guerra permiten no publicar ciertos datos.",
+  "Chile · Mercado Público · MOP (Dirección General de Aguas), Maule and Puente Alto. Listed September 2024–August 2026: 844 tenders, 522 single-supplier awards, amounts in CLP. Direct purchase orders (trato directo) are not included.": "Chile · Mercado Público · MOP (Dirección General de Aguas), Maule y Puente Alto. Publicados de septiembre de 2024 a agosto de 2026: 844 licitaciones, 522 adjudicaciones a un proveedor, importes en CLP. No incluye órdenes de compra por trato directo.",
+  "United Kingdom · Find a Tender · FCDO, Lincolnshire and Milton Keynes. Published September 2024–August 2026: 516 notices, 1,081 single-supplier awards, mostly GBP. Above-threshold and Procurement Act notices only; separate party IDs may split one supplier.": "Reino Unido · Find a Tender · FCDO, Lincolnshire y Milton Keynes. Publicados de septiembre de 2024 a agosto de 2026: 516 avisos, 1.081 adjudicaciones a un proveedor, principalmente GBP. Solo avisos sobre umbral y de la Procurement Act; distintos identificadores pueden dividir un proveedor.",
+  "Portugal · TED · Infraestruturas de Portugal, Cávado and Lisboa. Published September 2024–August 2026: 442 notices, 493 awarded lots, amounts in EUR. Below-threshold purchases are absent; 137 multi-winner results excluded. Cávado notices lack winning-tender links.": "Portugal · TED · Infraestruturas de Portugal, Cávado y Lisboa. Publicados de septiembre de 2024 a agosto de 2026: 442 avisos, 493 lotes adjudicados, importes en EUR. No incluye compras bajo umbral; 137 resultados con varios adjudicatarios excluidos. Los avisos de Cávado no enlazan ofertas ganadoras.",
+  "Czechia · TED · Finance, Moravian-Silesian Region and Ostrava (including districts sharing its IČO). Published September 2024–August 2026: 661 notices, 674 awarded lots, CZK or EUR. Below-threshold purchases are absent; 122 results with multiple or missing winning references excluded.": "Chequia · TED · Finanzas, Región de Moravia-Silesia y Ostrava (incluidos distritos con el mismo IČO). Publicados de septiembre de 2024 a agosto de 2026: 661 avisos, 674 lotes adjudicados, CZK o EUR. No incluye compras bajo umbral; 122 resultados con referencias ganadoras múltiples o ausentes excluidos.",
+  "Romania · TED · Finance, Cluj county and Cluj-Napoca. Published September 2024–August 2026: 299 notices, 356 awarded lots, RON or EUR. Below-threshold purchases are absent; 289 multi-winner results excluded.": "Rumanía · TED · Finanzas, condado de Cluj y Cluj-Napoca. Publicados de septiembre de 2024 a agosto de 2026: 299 avisos, 356 lotes adjudicados, RON o EUR. No incluye compras bajo umbral; 289 resultados con varios adjudicatarios excluidos.",
+  "All datasets side by side, not merged. Amounts retain their currencies; amount sorting groups by currency. Dates follow each source (signature, award or publication). Indicators are calculated within each dataset using jurisdiction-specific rules.": "Todos los conjuntos uno junto a otro, sin fusionar. Los importes conservan sus monedas y se ordenan por moneda. Las fechas siguen cada fuente (firma, adjudicación o publicación). Los indicadores se calculan dentro de cada conjunto con reglas de su jurisdicción.",
+  "eight buyers — contracts · DECP": "ocho compradores — contratos · DECP",
+  "France · DECP contracts of eight buyers (Ville de Paris, Ardèche, Rennes, Nantes, Bordeaux, Grenoble, Dijon, Tours), notified 2024–2025: 5,286 contracts. Amounts are compared across the Ministry dataset, buyer feeds and open-data lists; disagreements show as ranges. Coverage depends on source publication. Supplier names are current register names.": "Francia · contratos DECP de ocho compradores (Ville de Paris, Ardèche, Rennes, Nantes, Burdeos, Grenoble, Dijon, Tours), notificados en 2024–2025: 5.286 contratos. Los importes se comparan entre el conjunto del Ministerio, los flujos de los compradores y las listas de datos abiertos; los desacuerdos se muestran como rangos. La cobertura depende de la publicación en la fuente. Los nombres de proveedores son los actuales del registro.",
+  "From the buyer’s open-data list only · not in DECP": "Solo en la lista de datos abiertos del comprador · ausente de DECP",
+  "Listed in the buyer’s open-data list of concluded contracts but absent from the DECP publications: not confirmed by a second source.": "Figura en la lista de datos abiertos de contratos celebrados del comprador pero no en las publicaciones DECP: no confirmado por una segunda fuente.",
+  "The sources disagree, so the full range is shown. For sorting, no single amount is used, by a fixed rule (the buyer’s own feed first, positive amounts over zero); it is not a resolution. Amount-based checks only count when every source leads to the same conclusion.": "Las fuentes difieren, por lo que se muestra el rango completo. Para ordenar no se usa ningún importe único, según una regla fija (primero el flujo propio del comprador, importes positivos antes que cero); no es una resolución. Los controles basados en el importe solo cuentan si todas las fuentes llevan a la misma conclusión.",
+  "Some co-holders come from the buyer’s feed: the Ministry table lists at most three holders per contract.": "Algunos cotitulares proceden del flujo del comprador: la tabla del Ministerio enumera como máximo tres titulares por contrato.",
+  "Buyer feeds · national consolidated DECP (decp.info, Licence Ouverte 2.0)": "Flujos de los compradores · DECP nacional consolidado (decp.info, Licence Ouverte 2.0)",
+  "Verification": "Verificación",
+  "Sources agree": "Las fuentes coinciden",
+  "Checked against the award notice": "Cotejado con el anuncio de adjudicación",
+  "Sources disagree": "Las fuentes difieren",
+  "Single source": "Fuente única",
+  "Sources disagree on the amount": "Las fuentes difieren en el importe",
+  "From the buyer’s feed only · not in the Ministry dataset": "Solo en el flujo del comprador · ausente del conjunto del Ministerio",
+  "May be the same contract as another record": "Puede ser el mismo contrato que otro registro",
+  "Offer counts disagree between buyer declarations": "Los números de ofertas difieren entre declaraciones del comprador",
+  "Published in the buyer’s own feed but absent from the Ministry dataset: not confirmed by a second source.": "Publicado en el flujo propio del comprador pero ausente del conjunto del Ministerio: no confirmado por una segunda fuente.",
+  "Only the Ministry dataset publishes this contract: not confirmed by a second source.": "Solo el conjunto del Ministerio publica este contrato: no confirmado por una segunda fuente.",
+  "The Ministry dataset and the buyer’s own feed publish the same amount. Agreement between publications is not proof the amount is right.": "El conjunto del Ministerio y el flujo propio del comprador publican el mismo importe. La coincidencia entre publicaciones no prueba que el importe sea correcto.",
+  "Amount, date and holder matched against the award notice (see the lots above).": "Importe, fecha y titular cotejados con el anuncio de adjudicación (ver los lotes arriba).",
+  "The Ministry dataset published two amounts for this contract; the buyer’s feed confirms one of them.": "El conjunto del Ministerio publicó dos importes para este contrato; el flujo del comprador confirma uno de ellos.",
+  "Sources disagree on the initial amount: no increase calculation, which could mix bases.": "Las fuentes difieren en el importe inicial: sin cálculo de aumento, que podría mezclar bases.",
+  "The published amount is a placeholder (10 EUR or less) and no source gives a real amount: cannot tell whether the contract was below the legal threshold. Not assessed.": "El importe publicado es un valor simbólico (10 EUR o menos) y ninguna fuente da un importe real: no se puede saber si el contrato estaba por debajo del umbral legal. No evaluado."
  },
  "patterns": [
   [
@@ -1107,6 +1187,82 @@ window.I18N_DICTS.es = {
   [
    "Also known as {a}",
    "También conocido como {a}"
+  ],
+  [
+   "{a} records loaded locally.",
+   "{a} registros cargados localmente."
+  ],
+  [
+   "Missing values: {a} amounts, {b} offer counts, {c} durations ({d} records).",
+   "Valores ausentes: {a} importes, {b} recuentos de ofertas, {c} duraciones ({d} registros)."
+  ],
+  [
+   "{a} record summaries copied with source links.",
+   "{a} resúmenes de registros copiados con enlaces a las fuentes."
+  ],
+  [
+   "Context · {a} cited",
+   "Contexto · {a} citado"
+  ],
+  [
+   "Holder {a} is listed only by the Ministry dataset and is not counted: the award notice and the buyer’s feed name only the confirmed holder.",
+   "El titular {a} solo figura en el conjunto del Ministerio y no se cuenta: el anuncio de adjudicación y el flujo del comprador solo nombran al titular confirmado."
+  ],
+  [
+   "{a} of {b} publication routes give {c}. Every route is the buyer’s own declaration, so this is corroboration, not proof.",
+   "{a} de {b} vías de publicación dan {c}. Todas son declaraciones del propio comprador: es una corroboración, no una prueba."
+  ],
+  [
+   "unknown — DECP {a}, buyer feed {b}",
+   "desconocido — DECP {a}, flujo del comprador {b}"
+  ],
+  [
+   "Offers unknown: the buyer declared {a} in the Ministry dataset and {b} in its own feed; neither is chosen.",
+   "Ofertas desconocidas: el comprador declaró {a} en el conjunto del Ministerio y {b} en su propio flujo; no se elige ninguna."
+  ],
+  [
+   "Offer count disputed: Ministry dataset {a}, buyer feed {b}. Both are declarations by the same buyer; the count is treated as unknown.",
+   "Número de ofertas discutido: conjunto del Ministerio {a}, flujo del comprador {b}. Ambas son declaraciones del mismo comprador; el número se trata como desconocido."
+  ],
+  [
+   "Amount sources · {a}",
+   "Fuentes del importe · {a}"
+  ],
+  [
+   "The sources disagree, so the full range is shown. For sorting, {a} is used, by a fixed rule (the buyer’s own feed first, positive amounts over zero); it is not a resolution. Amount-based checks only count when every source leads to the same conclusion.",
+   "Las fuentes difieren, por lo que se muestra el rango completo. Para ordenar se usa {a}, según una regla fija (primero el flujo propio del comprador, importes positivos antes que cero); no es una resolución. Los controles basados en el importe solo cuentan si todas las fuentes llevan a la misma conclusión."
+  ],
+  [
+   "Lots of procedure {a} ({b})",
+   "Lotes del procedimiento {a} ({b})"
+  ],
+  [
+   "Contracts sharing identifier {a} ({b})",
+   "Contratos que comparten el identificador {a} ({b})"
+  ],
+  [
+   "Lot {a} of {b} · {c} contracts",
+   "Lote {a} de {b} · {c} contratos"
+  ],
+  [
+   "Shares identifier {a} · {b} contracts",
+   "Comparte el identificador {a} · {b} contratos"
+  ],
+  [
+   "Show the whole project ({a})",
+   "Ver todo el proyecto ({a})"
+  ],
+  [
+   "unknown — DECP {a}, notice {b}",
+   "desconocido — DECP {a}, anuncio {b}"
+  ],
+  [
+   "Offers unknown: the buyer declared {a} in DECP and {b} in notice {c}; neither is chosen.",
+   "Ofertas desconocidas: el comprador declaró {a} en DECP y {b} en el anuncio {c}; no se elige ninguna."
+  ],
+  [
+   "Sources disagree on the amount ({a} to {b} HT), on either side of the legal threshold: not assessed.",
+   "Las fuentes difieren en el importe ({a} a {b} sin IVA), a ambos lados del umbral legal: no evaluado."
   ]
  ]
 };

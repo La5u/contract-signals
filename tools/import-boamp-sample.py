@@ -14,11 +14,12 @@ import argparse
 import gzip
 import hashlib
 import json
+import math
 import re
 import time
 import urllib.parse
 import urllib.request
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -65,6 +66,46 @@ def path(node, *keys):
             return None
         node = node.get(key)
     return node[0] if isinstance(node, list) and node else node
+
+
+def nonnegative_number(v):
+    """Unknown stays unknown; zero is valid, but NaN/infinity/negatives are not."""
+    try:
+        value = float(text(v))
+        return value if math.isfinite(value) and value >= 0 else None
+    except (TypeError, ValueError, OverflowError):
+        return None
+
+
+def calendar_date(v):
+    """Validate calendar dates, including eForms XML dates with timezone suffixes."""
+    value = text(v)
+    if not isinstance(value, str) or not re.match(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}(?:$|[T Z+-])", value):
+        return None
+    try:
+        parsed = date.fromisoformat(value[:10])
+        if len(value) > 10:
+            suffix = value[10:]
+            if re.fullmatch(r"Z|[+-](?:0[0-9]|1[0-3]):[0-5][0-9]|[+-]14:00", suffix):
+                pass  # XML Schema date permits a timezone without a time.
+            elif suffix.startswith(("T", " ")):
+                datetime.fromisoformat(value.replace("Z", "+00:00"))
+            else:
+                return None
+        return parsed.isoformat()
+    except ValueError:
+        return None
+
+
+def tender_total(statistics):
+    """Only total tenders count; conflicting alternatives remain unknown."""
+    totals = set()
+    for stat in as_list(statistics):
+        if first_text(stat.get("efbc:StatisticsCode")) != "tenders":
+            continue
+        value = text(stat.get("efbc:StatisticsNumeric"))
+        totals.add(int(str(value)) if re.fullmatch(r"[0-9]+", str(value)) else None)
+    return next(iter(totals)) if len(totals) == 1 else None
 
 
 def download():
@@ -130,34 +171,31 @@ def lot_rows(record):
             continue
         tender = tenders.get(tender_ids[0]) or {}
         party = parties.get(text(path(tender, "efac:TenderingParty", "cbc:ID"))) or {}
-        members = [orgs.get(t) for t in ids(party.get("efac:Tenderer")) if orgs.get(t)]
-        members = [m | {"org": t} for t, m in zip(ids(party.get("efac:Tenderer")), members)]
+        member_refs = ids(party.get("efac:Tenderer"))
+        # Never pair a filtered organization list with unfiltered references.
+        # An unresolved member makes the winning holder group ambiguous.
+        if any(not ref or ref not in orgs for ref in member_refs):
+            rows.append({"excluded": "unresolved holder organization reference"})
+            continue
+        members = [orgs[ref] | {"org": ref} for ref in member_refs]
         if not members or not any(m["name"] for m in members):
             rows.append({"excluded": "no identified holder"})
             continue
         amount_node = path(tender, "cac:LegalMonetaryTotal", "cbc:PayableAmount")
         amount = None
         if isinstance(amount_node, dict) and amount_node.get("@currencyID") == "EUR":
-            try:
-                value = float(amount_node["#text"])
-                amount = (int(value) if value.is_integer() else value) if value >= 0 else None
-            except (TypeError, ValueError):
-                amount = None
-        offers = None
-        for stat in as_list(res.get("efac:ReceivedSubmissionsStatistics")):
-            if first_text(stat.get("efbc:StatisticsCode")) == "tenders" and str(stat.get("efbc:StatisticsNumeric", "")).isdigit():
-                offers = int(stat["efbc:StatisticsNumeric"])
+            value = nonnegative_number(amount_node)
+            if value is not None:
+                amount = int(value) if value.is_integer() else value
+        offers = tender_total(res.get("efac:ReceivedSubmissionsStatistics"))
         contract = contracts.get(contract_ids[0]) if contract_ids else {}
-        issue = text(path(contract, "cbc:IssueDate"))
+        issue = calendar_date(path(contract, "cbc:IssueDate"))
         lot = lots.get(lot_id) or {}
         project = path(lot, "cac:ProcurementProject") or {}
         duration_node = path(project, "cac:PlannedPeriod", "cbc:DurationMeasure")
         duration = None
         if isinstance(duration_node, dict) and duration_node.get("@unitCode") == "MONTH":
-            try:
-                duration = float(duration_node["#text"])  # months, kept as a float like the original
-            except (TypeError, ValueError):
-                duration = None
+            duration = nonnegative_number(duration_node)  # months, kept as a float like the original
         cpv = text(path(project, "cac:MainCommodityClassification", "cbc:ItemClassificationCode"))
         supplier_ids = []
         for m in members:
@@ -179,7 +217,7 @@ def lot_rows(record):
         lot_title = text(path(project, "cbc:Name"))
         rows.append({
             "id": f"boamp-{record['idweb']}-{lot_id.lower()}",
-            "date": issue[:10] if issue else None, "buyer": record.get("nomacheteur"),
+            "date": issue, "buyer": record.get("nomacheteur"),
             "supplier": " / ".join(m["name"] for m in members if m["name"]),
             "description": " — ".join(x for x in [record.get("objet"), lot_title] if x) or None,
             "amount": amount, "procedure": record.get("procedure_libelle"), "offers": offers, "durationMonths": duration,
@@ -192,7 +230,7 @@ def lot_rows(record):
             "buyerSiret": buyer_id if re.fullmatch(r"\d{14}", buyer_id) else None,
             "supplierIds": supplier_ids, "contractId": contract_ids[0] if contract_ids else None,
             "contractFolderId": text(notice.get("cbc:ContractFolderID")) or record.get("contractfolderid"),
-            "lotId": lot_id, "cpv": cpv, "noticeId": record["idweb"], "publicationDate": record.get("dateparution"),
+            "lotId": lot_id, "cpv": cpv, "noticeId": record["idweb"], "publicationDate": calendar_date(record.get("dateparution")),
             "identifierNote": TEXT["identifierNote"],
         })
     return rows
