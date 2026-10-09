@@ -36,22 +36,23 @@ So weighting from confirmed cases would go beyond current practice. The realisti
 
 The register page header shows "Дата набрання законної сили" (date of entry into legal force) when the court has recorded it; for example verdict 137630272 shows 17.08.2026. This can confirm finality without the presumed rule. **The register rate-limits hard:** about 28 parallel page fetches got HTTP 429, a captcha, then refused connections. Fetch one page at a time, with pauses, and stop at the first 429.
 
-## First results (2026-10-09, preliminary)
+## Results (2026-10-09, preliminary)
 
-Cohort: 20 positive tenders (12 corruption, 8 procurement fraud; 4 with confirmed finality, the rest presumed) and 58 same-buyer, same-year comparison tenders from the Prozorro buyer search (`tools/build-ukraine-verdict-cohort.py --download --budget 350 --scan-pages 3 --k 3`; 350 requests, cap reached with 2 positives at 1 comparison). Full output: [ukraine-verdict-pilot-results.txt](ukraine-verdict-pilot-results.txt).
+Cohort: 21 positive tenders that count (13 corruption, 8 procurement fraud; 4 with confirmed finality, the rest presumed; one more corruption case waits on a re-heard appeal) and 65 same-buyer, same-year comparison tenders from the Prozorro buyer search (`tools/build-ukraine-verdict-cohort.py --download --scan-pages 3 --k 3`). Amendments come from each contract's record in the contracting API (`tools/fetch-verdict-contract-changes.py --download`); 458 requests in all, no blocks. Full output: [current checks](ukraine-verdict-pilot-results.txt), [amendment candidates](ukraine-verdict-amendment-results.txt).
 
-| Check | Hit rate, positives | Rate, comparisons | LR+ combined [95 % CI] |
-| --- | --- | --- | --- |
-| Better bid disqualified | 5/15 (33 %) | 7/58 (12 %) | 2.7 [1.04, 7.0] |
-| Award without competition | 2/17 (12 %) | 0/58 | 16 [0.8, 326] (smoothed; too few events) |
-| Single offer | 3/15 (20 %) | 25/58 (43 %) | 0.51 [0.19, 1.34] |
-| Repeated single offer / repeated direct | 0/3, 0/2 | 0/25, none | not estimable |
-| Concentration | all unknown (needs buyer history this cohort lacks) | | |
-| Amount increase, long duration, late publication | not applicable in the Ukrainian engine | | |
+| Check | Hit rate, corruption | Hit rate, all positives | Rate, comparisons | LR+ all positives [95 % CI] |
+| --- | --- | --- | --- | --- |
+| **3+ amendments** (candidate, StateWatch ARI 1-1) | 4/13 (31 %) | 4/21 (19 %) | 4/65 (6 %) | about 3 (small counts) |
+| Better bid disqualified | | 5/15 (33 %) | 9/65 (14 %) | 2.4 [0.97, 5.9] |
+| Award without competition | | 3/18 (17 %) | 0/65 | 24 [1.3, 450] (smoothed; few events) |
+| Price-variation amendment (candidate) | 2/13 | 3/21 (14 %) | 9/65 (14 %) | about 1 |
+| Single offer | | 3/15 (20 %) | 28/65 (43 %) | 0.51 [0.19, 1.33] |
+| Contract value raised after signing (candidate) | 0/13 | 0/21 | 3/65 | below 1 |
+| Concentration, repeated checks | unknown: need each buyer's full history | | | |
 
 Reading:
-- **Hit rates are low for every current check.** The most frequent, better bid disqualified, fires on a third of positives. Most convictions are payment-stage fraud or price-raising amendments, which no Ukrainian check measures.
-- **Single offer fires *less* often on convicted tenders than on their buyers' other tenders.** Corrupt schemes here often ran through competitive tenders.
-- Better bid disqualified is the only check whose interval lies above 1.
-- Next indicator to build: **contract amendments that raise the price** (Prozorro publishes them; StateWatch's ARI 1-1 flags 3+ amendments). Several verdicts are about exactly this.
-- Caveats: 20 positives; positives were found by web search of verdicts quoting a tender ID (selection bias); intervals ignore buyer matching; comparisons are unlabelled, not clean.
+- **No current check reaches a high hit rate.** The best, better bid disqualified, fires on a third of positives.
+- **3+ amendments is the most promising new check:** it fires on 31 % of corruption tenders against 6 % of comparisons, and on none of the contractor-only fraud tenders. Price-variation amendments alone do not separate the groups; nor does the final contract value (Ukrainian price amendments usually raise the unit price and cut the quantity, so the total stays).
+- **Single offer fires *less* often on convicted tenders** than on their buyers' other tenders: these schemes mostly ran through competitive tenders and took the money at payment.
+- Most convictions are payment-stage fraud (work paid but not done), which no tender or contract field shows directly.
+- Caveats: 21 positives; 17 rest on presumed finality; positives were found by web search for verdicts quoting a tender ID (selection bias); intervals ignore buyer matching; comparisons are unlabelled, not clean. The register (reyestr.court.gov.ua) is still refusing connections, so finality dates were not read.
