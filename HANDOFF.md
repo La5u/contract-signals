@@ -74,6 +74,18 @@ python3 -m http.server 8000 --bind 127.0.0.1
   - Paraguay `dncp-ocds-03ad3f-452188-1-MN-30173-24-244215`: five-page linked scan states procurement 452188 and total **252,144,563 PYG, IVA incluido**, matching numerically. Handwritten subscription date read as **2024-10-21**: **private candidate only**, awaiting independent review. Existing published date remains period start, not silently signature. Full OCDS contract ID is not printed; linkage is the exact source document/award metadata, handwritten local contract number unresolved. Signatures visible, authenticity not verified. 120 days run from a start order, not necessarily signature.
 - Document acquisition had failures recorded: initial four BOAMP requests used the wrong documented template branch and returned 404; eForms `source_schema=3.2.5` uses `/telechargements/FILES/PDF/{year}/{month}/{idweb}.pdf`. Three PDFs were then acquired within eight requests including prior HTML. No hidden retries/redirects. Paraguay exact frozen PDF acquired in one request; text empty, all embedded scans inspected with pypdf/Pillow. Raw scans contain personal IDs/signatures: **keep private**.
 
+### Current open items (2026-10-09) — supersedes every "open", "left" or "decisions" list below
+
+Work is committed on branch `france-decp-reconciliation` (`9367b7c` plus the doc fix after it). Nothing is pushed or deployed.
+
+1. **No measured accuracy rate.** The preregistered sample (`tools/accuracy-sample.py`) found no linkable notice for 76 of 90 contracts. A real rate needs a document-review sample restricted to contracts that must have award notices (open procedures above EU thresholds), or buyer documents.
+2. **885 French amount disagreements** (788 Paris, 97 cities). They are shown as ranges and amount checks use the whole range. They are mostly basis differences (annual vs full term, maximum vs estimate). Settling them needs notices or buyer documents. Option to consider: leave the sorting value empty when sources differ by more than 2×.
+3. **Offer-count disagreements:** 7 Dijon notice-vs-DECP and 5 feed-vs-Ministry. Only the buyers' offer-analysis reports (rapports d'analyse des offres, communicable on request) can settle them.
+4. **25 possible-duplicate records** with no evidence either way. Dijon lot 8 (`2024vdao017008`, 559,742.62 EUR) is absent from every source.
+5. **Not built:** cross-links between BOAMP sample lots and DECP contracts (agreed in principle). Missing CPV check digits for about 128 feed/portal-added contracts, which keep them out of CPV-based baselines.
+6. **Housekeeping:** the stray `stash@{0}` (old generated score review) can be dropped. Git has no global identity on this laptop. Review marks saved in browsers under the old `cities|` key no longer show.
+7. **Deployment** is the owner's call: merging into `main` and pushing deploys Cloudflare Pages.
+
 ### France DECP merged into one dataset; issues settled (2026-10-08, newest; not committed or deployed)
 
 - The explorer's `decp` entry now loads both DECP import files (5,286 contracts, eight buyers). `cities` links redirect to it.
