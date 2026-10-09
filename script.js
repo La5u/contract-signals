@@ -16,7 +16,7 @@ const VERIFICATION_STATUSES = {
 const HISTORY_START = '2024-01-01';
 const HISTORY_END = '2025-12-31';
 
-const SCORE_VERSION = '3.3';
+const SCORE_VERSION = '3.4';
 
 // Conservative calendar-day upper bound: publication time is not supplied by BOAMP.
 function getBiddingPeriod(contract) {
@@ -280,6 +280,7 @@ const INDICATOR_KINDS = {
   'low-competition-rate': 'Buyer with repeated low competition',
   'concentration': 'Concentrated awards',
   'disqualified-better-bid': 'Better-ranked bidder disqualified',
+  'contract-amendments': 'Three or more contract amendments',
   'short-bidding-period': 'Short bidding period',
   'late-notice-change': 'Late notice change without deadline extension',
   'long-duration': 'Long declared duration',
@@ -298,12 +299,14 @@ const KIND_SHORT = {
   'repeated-direct': 'Repeated no competition', 'low-competition-rate': 'Low competition rate', 'concentration': 'Concentration',
   'disqualified-better-bid': 'Better bid disqualified', 'short-bidding-period': 'Short bidding period',
   'late-notice-change': 'Late notice change', 'long-duration': 'Long duration', 'amount-increase': 'Amount increase',
+  'contract-amendments': 'Contract amendments',
   'term-extension': 'Term extended', 'late-publication': 'Late publication',
   'cap': 'Near applicable cap', 'execution': 'Payment / execution',
   'legalGround': 'Legal ground mismatch', 'unitPrice': 'Unit-price increase', 'exclusivity': 'Exclusivity context',
 };
 // Where a kind matches a red flag in a framework auditors already use (docs/indicators.md).
 const KIND_REFERENCES = {
+  'contract-amendments': 'StateWatch/Prozorro risk indicator ARI 1-1 (three or more contract amendments)',
   'single-offer': 'OCP Cardinal R018 “Single bid received”; single bidding in the Fazekas Corruption Risk Index',
   'direct-award': 'non-open procedure / no call for tender published in the Fazekas Corruption Risk Index',
   'short-bidding-period': 'OCP Cardinal R003 “Short submission period”; advertisement period in the Fazekas Corruption Risk Index',
@@ -320,6 +323,7 @@ const KIND_OF_CHECK = {
   'supplier-concentration': 'concentration', 'secop2-concentration': 'concentration', 'dncp-concentration': 'concentration',
   'long-contract': 'long-duration', 'secop2-long-duration': 'long-duration',
   'amount-increase': 'amount-increase', 'dncp-amount-increase': 'amount-increase',
+  'ua-contract-amendments': 'contract-amendments',
   'secop2-term-extension': 'term-extension', 'ua-better-bid-disqualified': 'disqualified-better-bid',
   'short-bidding-period': 'short-bidding-period', 'late-publication': 'late-publication', 'notice-late-change': 'late-notice-change',
 };
@@ -856,6 +860,10 @@ function getAssessmentNational(c) {
   if (c.dataFamily === 'prozorro') {
     // Prozorro creates awards in ranking order: an unsuccessful award before the
     // winning one means a better-ranked bid was set aside (docs/score-ukraine.md).
+    const amendments = c.contractChanges;
+    add('ua-contract-amendments', 'Three or more contract amendments', 'execution', 'yes', Number.isInteger(amendments), amendments >= 3, 8,
+      !Number.isInteger(amendments) ? 'Contract record not retrieved: amendments not assessable.' :
+      `${amendments} active contract amendment(s). Rationale types: ${(c.contractChangeTypes || []).join(', ') || 'none published'}. Amendments are often lawful (Law on Public Procurement art. 41 permits listed changes). The threshold of three follows StateWatch/Prozorro risk indicator ARI 1-1. 8 points when the threshold is met.`);
     const dq = c.disqualifiedBefore;
     add('ua-better-bid-disqualified', 'Better-ranked bidder disqualified before the award', 'competition', competitive ? 'yes' : direct ? 'no' : unknownKind, Number.isInteger(dq), dq > 0, 12,
       !competitive ? (direct ? 'Procedure without competition: no ranking of bids.' : spec.outOfScope.directKind) :

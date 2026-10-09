@@ -75,6 +75,8 @@
    "contract not signed (pending)": 5
   },
   "withOffers": 64,
+  "withContractChanges": 488,
+  "withoutContractChanges": 0,
   "currencies": [
    "EUR",
    "UAH",
@@ -84,11 +86,13 @@
  "limitations": [
   "Three buyers, not a country sample; wartime rules allow exceptions and withheld publications.",
   "Direct-contract reports (reporting): offer/direct-award checks are out of scope; concentration remains assessable.",
+  "Amendment counts come only from retrieved contracting-module records; missing records remain unknown. The count does not assess legality or comparable amount/duration changes.",
   "Three exact contract API links checked in a separate dated sample; published change counts are context only, not a comparable amount/duration history.",
   "Amounts are in the published currency, never converted or summed across currencies."
  ],
  "reproduce": [
   "python tools/import-prozorro.py --offline",
-  "python tools/import-prozorro.py --download"
+  "python tools/import-prozorro.py --download",
+  "python tools/import-prozorro.py --contract-changes"
  ]
 }

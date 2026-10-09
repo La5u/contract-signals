@@ -758,7 +758,12 @@ window.I18N_DICTS.es = {
   "Amount, date and holder matched against the award notice (see the lots above).": "Importe, fecha y titular cotejados con el anuncio de adjudicación (ver los lotes arriba).",
   "The Ministry dataset published two amounts for this contract; the buyer’s feed confirms one of them.": "El conjunto del Ministerio publicó dos importes para este contrato; el flujo del comprador confirma uno de ellos.",
   "Sources disagree on the initial amount: no increase calculation, which could mix bases.": "Las fuentes difieren en el importe inicial: sin cálculo de aumento, que podría mezclar bases.",
-  "The published amount is a placeholder (10 EUR or less) and no source gives a real amount: cannot tell whether the contract was below the legal threshold. Not assessed.": "El importe publicado es un valor simbólico (10 EUR o menos) y ninguna fuente da un importe real: no se puede saber si el contrato estaba por debajo del umbral legal. No evaluado."
+  "The published amount is a placeholder (10 EUR or less) and no source gives a real amount: cannot tell whether the contract was below the legal threshold. Not assessed.": "El importe publicado es un valor simbólico (10 EUR o menos) y ninguna fuente da un importe real: no se puede saber si el contrato estaba por debajo del umbral legal. No evaluado.",
+  "Three or more contract amendments": "Tres o más modificaciones del contrato",
+  "Contract amendments": "Modificaciones del contrato",
+  "Contract record not retrieved: amendments not assessable.": "Registro del contrato no recuperado: modificaciones no evaluables.",
+  "none published": "ninguno publicado",
+  "StateWatch/Prozorro risk indicator ARI 1-1 (three or more contract amendments)": "Indicador de riesgo StateWatch/Prozorro ARI 1-1 (tres o más modificaciones del contrato)"
  },
  "patterns": [
   [
@@ -1264,6 +1269,10 @@ window.I18N_DICTS.es = {
   [
    "Sources disagree on the amount ({a} to {b} HT), on either side of the legal threshold: not assessed.",
    "Las fuentes difieren en el importe ({a} a {b} sin IVA), a ambos lados del umbral legal: no evaluado."
+  ],
+  [
+   "{a} active contract amendment(s). Rationale types: {b}. Amendments are often lawful (Law on Public Procurement art. 41 permits listed changes). The threshold of three follows StateWatch/Prozorro risk indicator ARI 1-1. 8 points when the threshold is met.",
+   "{a} modificación(es) activa(s) del contrato. Tipos de justificación: {b}. Las modificaciones suelen ser legales (el art. 41 de la Ley de Contratación Pública permite los cambios enumerados). El umbral de tres sigue el indicador de riesgo StateWatch/Prozorro ARI 1-1. 8 puntos al alcanzar el umbral."
   ]
  ]
 };

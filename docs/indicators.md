@@ -16,6 +16,7 @@ What stays local, and why: **eligibility and thresholds follow each jurisdiction
 | Short bidding period | competition | `short-bidding-period` (reliable chronology only) | out of scope | out of scope | — | out of scope | out of scope | out of scope |
 | Long declared duration | execution | `long-contract` (≥ 120 months) | `secop2-long-duration` (≥ 36 months) | out of scope | out of scope | out of scope | out of scope | out of scope |
 | Amount increase after award | execution | `amount-increase` (> 20 %, firm price) | out of scope | `dncp-amount-increase` (from 19 % to the provisional 20 % reference ceiling: 8; beyond it: 16 → 40) | out of scope | out of scope | out of scope | out of scope |
+| Three or more contract amendments | execution | — | — | — | `ua-contract-amendments` (≥3 active changes; 8 points) | — | — | — |
 | Term extended after award | execution | — | `secop2-term-extension` (> +100 % of the declared term) | — | — | — | — | — |
 | Published long after the contract | transparency | `late-publication` (delay > 120 days; DECP excess > 240 days with an established buyer baseline, otherwise whole delay > 120 days; BOAMP excess > 120 days) | out of scope | out of scope | out of scope | `late-publication` (delay > 120 days and excess > 120 days; whole delay > 120 days without a buyer baseline) | out of scope (contract dates not comparable) | out of scope |
 
@@ -41,6 +42,7 @@ Anchored means the eligibility or threshold follows a legal text, subject to the
 | Colombia | plurality / urgency awards | Ley 1150/2007 art. 2 num. 4 causales (grounds, no amount threshold) | no amount anchor |
 | Chile | direct deal, short period, increase | Ley 19.886: trato directo is outside this source; no tender-period or modification data | out of scope |
 | Chile, Ukraine, TED, UK | single offer, repetition, concentration | none | editorial, no legal anchor |
+| Ukraine | contract amendments | Law on Public Procurement art. 41 permits listed changes; StateWatch/Prozorro ARI 1-1 sets the three-amendment review threshold | risk-indicator threshold, not a legal cap; 8-point placeholder supported cautiously by the small verdict pilot ([score-ukraine.md](score-ukraine.md)) |
 | Ukraine | short bidding period | Law 922-VIII art. 21 and martial-law Resolution 1178 minimums: not verified; raw `tenderPeriod` shows most open tenders near 7 days | follow-up (primary text needed) |
 | TED countries | direct award | eForms `neg-wo-call`; notices are above EU thresholds by construction, so no amount eligibility applies | no amount anchor |
 | UK | direct award | Procurement Act 2023 direct-award grounds; notices are above threshold by construction | no amount anchor |
@@ -56,6 +58,7 @@ So that a flag can be cited by the name an auditor knows. “Equivalent” means
 | Single offer in a competitive procedure | Fazekas Corruption Risk Index: single bidding | equivalent |
 | Short bidding period | OCP Cardinal **R003** Short submission period | equivalent (our threshold is local, see score-v3.md) |
 | Award without competition | Fazekas Corruption Risk Index: non-open procedure / no call for tender published | related (our eligibility follows each country's law) |
+| Three or more contract amendments | StateWatch/Prozorro **ARI 1-1** | same count threshold (active published contract changes); not a finding of unlawful amendment |
 | Better-ranked bidder disqualified | OCP Cardinal **R036** Lowest bid disqualified | related: R036 requires price-only award criteria; ours reads Prozorro's award sequence |
 | Better-ranked bidder disqualified | OCP Cardinal **R035** All except winning bid disqualified; Ukraine State Audit Service **sas-3-2** (same), **sas-3-5** (at least two bidders rejected) | related: ours fires from one better-ranked bidder set aside |
 | Repeated awards without competition / Concentrated awards | Ukraine State Audit Service **sas-3-3** (one supplier across four or more purchase codes of a buyer) | related |

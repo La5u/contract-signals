@@ -913,3 +913,18 @@ _known = {en for en, *_ in EXACT}
 EXACT += [row for row in _FEED_EXACT if row[0] not in _known]
 _known_patterns = {en for en, *_ in PATTERNS}
 PATTERNS += [row for row in _FEED_PATTERNS if row[0] not in _known_patterns]
+
+
+# Ukrainian contract-amendment check (v3.4).
+EXACT += [
+    ('Three or more contract amendments', 'Tres o más modificaciones del contrato', 'Trois avenants au contrat ou plus'),
+    ('Contract amendments', 'Modificaciones del contrato', 'Avenants au contrat'),
+    ('Contract record not retrieved: amendments not assessable.', 'Registro del contrato no recuperado: modificaciones no evaluables.', 'Fiche du contrat non récupérée : avenants non évaluables.'),
+    ('none published', 'ninguno publicado', 'aucun publié'),
+    ('StateWatch/Prozorro risk indicator ARI 1-1 (three or more contract amendments)', 'Indicador de riesgo StateWatch/Prozorro ARI 1-1 (tres o más modificaciones del contrato)', 'Indicateur de risque StateWatch/Prozorro ARI 1-1 (trois avenants au contrat ou plus)'),
+]
+PATTERNS += [
+    ('{a} active contract amendment(s). Rationale types: {b}. Amendments are often lawful (Law on Public Procurement art. 41 permits listed changes). The threshold of three follows StateWatch/Prozorro risk indicator ARI 1-1. 8 points when the threshold is met.',
+     '{a} modificación(es) activa(s) del contrato. Tipos de justificación: {b}. Las modificaciones suelen ser legales (el art. 41 de la Ley de Contratación Pública permite los cambios enumerados). El umbral de tres sigue el indicador de riesgo StateWatch/Prozorro ARI 1-1. 8 puntos al alcanzar el umbral.',
+     '{a} avenant(s) actif(s) au contrat. Types de justification : {b}. Les avenants sont souvent licites (l’art. 41 de la loi sur les marchés publics permet les modifications énumérées). Le seuil de trois suit l’indicateur de risque StateWatch/Prozorro ARI 1-1. 8 points lorsque le seuil est atteint.'),
+]

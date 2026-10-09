@@ -1,4 +1,4 @@
-# Ukraine method — Prozorro checks (v3.0 framework)
+# Ukraine method — Prozorro checks (v3.4 framework)
 
 **Checks for the Prozorro cohort** (three buyers, tenders created 2024-09-01 → 2026-09-01). Same vigilance-index framework as [score-v3.md](score-v3.md): two families, family maxima, cap at 100, `null` = “Not assessed”, unknowns never counted as zero. Different checks and eligibility; French, Colombian and Paraguayan rules are not applied. Amounts stay in the published currency (UAH, sometimes EUR or USD) and are never converted.
 
@@ -16,7 +16,7 @@ Written on 25 September 2026, before any record of this cohort was read. Procedu
 - **Without competition:** negotiation, negotiation.quick.
 - **Offer/direct-award checks excluded:** reporting — a direct-contract report recorded without a procedure. Reporting alone adds no points; the concentration check still applies.
 
-## The checks (nine with the universal late-publication check)
+## The checks (ten with the universal late-publication check)
 
 | Check | ID | Family | Eligibility / trigger | Weight |
 | --- | --- | --- | --- | --- |
@@ -26,8 +26,8 @@ Written on 25 September 2026, before any record of this cohort was read. Procedu
 | Repeated awards without competition | `ua-repeated-direct` | Competition | This award is negotiated; same buyer and supplier in ≥3 distinct tenders | **18 at 3 → 60 at 10** |
 | Concentrated awards | `ua-concentration` | Competition | Same buyer and main category (goods, works, services); ≥10 distinct procedures with identified suppliers, ≥80 % identification coverage, share ≥60 % | **12 at 60 % → 40 at 100 %** |
 | Amount increase | `amount-increase` | Execution | **Out of scope**: three contract links checked, but no comparable dated amendment history | — |
-| Short bidding period | `short-bidding-period` | Competition | **Out of scope** | — |
 | Better-ranked bidder disqualified | `ua-better-bid-disqualified` | Competition | Competitive type; on the awarded lot, at least one award to another bidder was declared unsuccessful before this award (added 2026-09-26) | **12**, flat |
+| Three or more contract amendments | `ua-contract-amendments` | Execution | Signed contract; retrieved integer count of active amendments ≥3 | **8**, flat |
 | Long declared duration | `long-contract` | Execution | **Out of scope** | — |
 
 Offers are counted per lot, which Prozorro publishes (unlike the Paraguayan data). When a record publishes no bids, offers are unknown, never zero. Complaints are shown as context outside the index.
@@ -59,6 +59,16 @@ Prozorro opens awards one at a time in ranking order (after the e-auction, or by
 
 On 2026-09-28 a stricter bid-attrition rule (every other bid explicitly rejected as unqualified) and a three-record contract-link sample were added on a separate branch. When the branches were merged on 2026-10-01, the disqualification check above was kept as the scored rule. The per-bid decisions (`bidAttrition`) and linked contract records are shown as context only, with no points. See [linked evidence](linked-evidence.md).
 
+## Three or more contract amendments (v3.4, approved 2026-10-09)
+
+`ua-contract-amendments` applies to every retained signed contract, including reporting and terminated contracts. A retrieved integer `contractChanges` count of **at least 3 active changes** gives **8 points** in the execution family, combined by the family maximum rather than summed with other execution signals. Two or fewer evaluates clear. An absent contract record stays unknown: “Contract record not retrieved: amendments not assessable.” Rationale types are shown as published; this check does not assess the legality, value or duration of any amendment.
+
+Source: the official contracting-module API, `https://public-api.prozorro.gov.ua/api/2.5/contracts/{id}`. The importer matches the row's published `contractID` to exactly one internal `contracts[].id` in its cached tender. It counts only changes with `status=active`, keeping sorted unique rationale types and sorted published `dateSigned` values. The threshold follows **StateWatch/Prozorro risk indicator ARI 1-1**. Amendments are often lawful: Law on Public Procurement art. 41 permits listed changes. Three amendments is a review threshold, not a statutory limit or evidence of an offence.
+
+Evidence: the [2026-10-09 verdict pilot](../research/calibration/label-calibration-plan.md#results-2026-10-09-preliminary), computed by [fetch-verdict-contract-changes.py](../tools/fetch-verdict-contract-changes.py), found **4/13 corruption tenders**, **0/8 procurement-fraud tenders**, and **4/65 same-buyer, same-year comparisons** at the threshold. All-positive LR+ is about 3 with a confidence interval reaching 1. These are tender-level pilot rates, whereas the engine assesses each signed contract. The 8 points remain a uniform entry placeholder: small counts, verdict-search selection bias, 17/21 positives with presumed finality, intervals ignoring buyer matching, and unlabelled comparisons prevent stronger calibration. Payment-stage fraud may leave no amendment signal.
+
+Collection is serial at no more than one request per second, retries 429/503 with backoff, stops on 403, and skips already retrieved ids. Only `data/prozorro-contract-changes.json` is saved: retrieval metadata, counts, rationale types, dates, status and failed ids; no names, contact points or documents. Offline rebuild merges this snapshot and records retrieved/missing row coverage. **Result (snapshot of 9 October 2026):** all 488 contract records retrieved. 469 contracts have no active amendment, 13 one, 5 two and **1 three** (an above-threshold purchase whose amendments cite fiscal-year extension and quality improvement), so **one contract is newly flagged** (0 → 8); flagged rows 47 → 48, no other score changes. The three buyers' contracts are mostly direct-contract reports, which are rarely amended.
+
 ## Licence
 
 [Prozorro’s developer page](https://prozorro.gov.ua/openprocurement) expressly permits copying, publishing, distributing and commercial reuse of its public procurement open data, with a required reference to the source. It does not name a standard licence for the API records. A separate procurement dataset on data.gov.ua is labelled Creative Commons Attribution; we do **not** assume that catalogue label applies to this API snapshot. Source attribution and tender links are retained here; see [data-sources.md](data-sources.md).
@@ -74,6 +84,8 @@ Reviewed 4 October 2026; no check changed. The raw tender records carry `tenderP
 ## Reproduction
 
 ```sh
+# Owner: collect once (requires network); rerun to resume
+python tools/import-prozorro.py --contract-changes
 python tools/import-prozorro.py --offline
 node tests/national.cjs
 ```
