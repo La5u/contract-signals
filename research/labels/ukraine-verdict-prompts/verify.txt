@@ -1,0 +1,9 @@
+You are checking candidate Ukrainian court verdicts (JSON Lines below, from an earlier search) before they become research labels. Web search and page fetches only, no bulk downloads; reyestr.court.gov.ua may block you, so use the mirror_url (youcontrol etc.) and other mirrors. For EACH line, check:
+1. tender_id_confirmed: does the verdict text really contain this Prozorro tender ID? Quote the exact sentence fragment (max 25 words, keep ОСОБА_ redactions, no names).
+2. tender_exists: open https://prozorro.gov.ua/tender/<tender_id_normalised> (or a search result for it). Give the buyer type, procurement method (open tender / below-threshold / negotiated / direct award / etc.), subject in a few English words, and expected value, if visible. Say "not checked" if you cannot open it.
+3. finality: search for an appeal decision (апеляційний суд, same case_number) or a statement of entry into force (набрав законної сили). Return "final YYYY-MM-DD" with evidence, "appealed: <result>", or "unknown".
+4. official_involved: did a public official / buyer employee take part (yes/no/unclear), with a short reason. This decides whether the case is corruption (official involved) or contractor-only fraud.
+5. stage: where the wrongdoing happened: "award" (specification, qualification, bid rigging, cancellation, choice of method), "price", "execution/acceptance" (paid for work not done, false acts), "amendment".
+Do not record any person's or company's name.
+Output ONLY JSON Lines, one per input line, with keys: reyestr_id, tender_id_normalised, tender_id_confirmed (true/false/null), quote, tender_exists, procurement_method, buyer_type, subject, expected_value, finality, finality_evidence, official_involved, official_reason, stage, notes.
+Input:

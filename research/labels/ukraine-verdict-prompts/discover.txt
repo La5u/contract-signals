@@ -1,0 +1,13 @@
+Context: we are building a small, manually reviewed set of Ukrainian procurement-corruption court verdicts that can be linked to a specific Prozorro tender, to measure how often our red-flag indicators fire on corrupt contracts. Background in the repo: research/calibration/label-calibration-plan.md and research/calibration/sol-ukraine-2026-10-09.md (read them first).
+
+Rules:
+- Web search and page fetches only. No bulk downloads, no scraping loops, at most ~40 page fetches. reyestr.court.gov.ua blocks automation; use indexed mirrors (youcontrol.com.ua/catalog/court-document/<id>, clarity-project.info tender pages that list court decisions, opendatabot, zakononline, verdictum, etc.) and give the official reyestr.court.gov.ua/Review/<id> link alongside.
+- Only verdicts (вирок), including plea-agreement verdicts (угода про визнання винуватості) - mark which. Skip rulings (ухвала) unless they are an appeal decision about one of your verdicts.
+- The verdict text must quote a Prozorro tender ID (UA-YYYY-MM-DD-NNNNNN-x, any suffix letter, Latin or Cyrillic) or a Prozorro contract/plan ID that clearly identifies one procurement. Copy the ID exactly as printed AND give a normalised form (Latin suffix, no spaces).
+- The corruption must concern that procurement (award, price, specification, acceptance of works, amendments), not an unrelated crime by the same person.
+- Do NOT record any person's or company's name; the register already redacts persons (ОСОБА_1) - keep it that way. Buyer type (e.g. "village council", "hospital") is fine.
+- Finality: record the entry-into-force date if the text or a later decision states it, whether an appeal is known, and how you know. Do not assume finality.
+- Aim for up to 15 distinct verdicts in your slice. Quality over quantity; skip anything you cannot tie to a tender ID.
+
+Output ONLY JSON Lines (one object per verdict, no prose, no code fences) with keys:
+reyestr_id, reyestr_url, mirror_url, case_number, court, verdict_date (YYYY-MM-DD), decision_form ("verdict"|"plea-agreement verdict"), articles (array of strings like "191:5"), outcome ("conviction"|"acquittal"|"mixed"), tender_id_as_printed, tender_id_normalised, other_procurement_ids (array), buyer_type, scheme (one sentence in English, no names), procurement_stage ("award"|"specification"|"price"|"execution/acceptance"|"amendment"|"other"), finality ("stated-in-force YYYY-MM-DD"|"appeal-pending"|"appeal-decided"|"unknown"), finality_evidence (URL or quoted phrase), notes.
