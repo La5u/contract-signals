@@ -131,16 +131,48 @@ def normalize(raw):
     return rows
 
 
-def offline():
-    raw = json.loads(gzip.decompress(RAW.read_bytes()))
-    for siret, _ in BUYERS:
-        if sum(r.get("acheteur_id") == siret for r in raw["records"]) != raw["totals"][siret]:
-            raise ValueError("Raw snapshot incomplete for " + siret)
+def apply_feeds(rows, snapshot):
+    """Buyer-feed amounts, verification status and contracts missing from the Ministry snapshot."""
+    import sys
+    sys.path.insert(0, str(ROOT / "tools"))
+    import decp_feeds
+    feed = decp_feeds.load()
+    cpv = decp_feeds.cpv_lookup(rows)
+    text = decp_feeds.source_text(feed)
+
+    def build(contract, in_use):
+        r = contract["initial"]
+        buyer = r["acheteur_id"]
+        rec = decp_feeds.feed_fields(contract, cpv, direct)
+        for key in ["executionModalities", "techniques"]:
+            rec.pop(key)  # not carried by this cohort
+        rec.pop("modificationConflicts")
+        rec.update({"id": decp_feeds.new_id(buyer, r["id"], in_use), "buyer": dict(BUYERS)[buyer], "buyerSiret": buyer, "cohortId": COHORT, **text,
+                    "sourceReference": f"SIRET acheteur {buyer} ; identifiant {r['id']} ; flux {r['sourceDataset']} (uid {r['uid']}). Absent du jeu ministériel au {snapshot}.",
+                    "amountBasis": TEXT["amountBasis"], "dateNote": TEXT["dateNote"],
+                    "notes": "Marché présent dans le flux de publication de l’acheteur mais absent du jeu ministériel : source unique, non vérifiée par une seconde source.",
+                    "rawVariantCount": 0})
+        return rec
+    added, stats = decp_feeds.apply(rows, feed, dict(BUYERS), build, COHORT)
+    return rows + added, stats
+
+
+def build(raw):
+    """Ministry rows, hand-curated dossier fields, then buyer-feed reconciliation."""
     rows = normalize(raw)
     curated = json.loads(CURATED.read_text(encoding="utf-8"))
     by_id = {r["id"]: r for r in rows}
     for row_id, fields in curated["rows"].items():
         by_id[row_id].update(fields)
+    return apply_feeds(rows, (raw.get("retrievedAt") or "")[:10])
+
+
+def offline():
+    raw = json.loads(gzip.decompress(RAW.read_bytes()))
+    for siret, _ in BUYERS:
+        if sum(r.get("acheteur_id") == siret for r in raw["records"]) != raw["totals"][siret]:
+            raise ValueError("Raw snapshot incomplete for " + siret)
+    rows, stats = build(raw)
     profiles = {}
     identity_file = DATA / "supplier-identities.json"
     if identity_file.exists():
@@ -150,8 +182,13 @@ def offline():
     for row in rows:
         sirens = {s.get("siren") for s in row["supplierIds"] or []} - {None}
         row["supplierProfiles"] = [profiles[s] for s in sorted(sirens) if s in profiles]
-    rows.sort(key=lambda r: (r["buyerSiret"] != BUYERS[0][0], r["contractId"]))
+    rows.sort(key=lambda r: (r["buyerSiret"] != BUYERS[0][0], r["contractId"], r["id"]))
     (DATA / "decp-history.json").write_text(json.dumps(rows, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    coverage_file = DATA / "decp-coverage.json"
+    coverage = json.loads(coverage_file.read_text(encoding="utf-8"))
+    coverage["feedReconciliation"] = {"file": "decp-feeds-raw.json.gz", "tool": "tools/decp_feeds.py", "statistics": stats,
+                                      "contracts": len(rows), "addedFromFeeds": sum(bool(r["verification"].get("addedFromFeed")) for r in rows)}
+    coverage_file.write_text(json.dumps(coverage, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"{len(rows)} contracts; {sum(bool(r['initialConflicts']) for r in rows)} with initial conflicts; "
           f"{sum(len(r['history']) > 1 for r in rows)} with published modifications; raw retrieved {raw['retrievedAt']}")
 

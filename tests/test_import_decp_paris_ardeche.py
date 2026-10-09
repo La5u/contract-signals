@@ -13,12 +13,12 @@ spec.loader.exec_module(mod)
 class ParisArdecheRebuildTests(unittest.TestCase):
     def test_published_file_is_what_the_importer_produces(self):
         raw = json.loads(gzip.decompress(mod.RAW.read_bytes()))
-        rows = {r["id"]: r for r in mod.normalize(raw)}
+        rows = {r["id"]: r for r in mod.build(raw)[0]}
         published = json.loads((ROOT / "data/decp-history.json").read_text(encoding="utf-8"))
         curated = json.loads(mod.CURATED.read_text(encoding="utf-8"))["rows"]
         self.assertEqual(len(rows), len(published))
         for row in published:
-            expected = {k: v for k, v in row.items() if k != "supplierProfiles" and k not in curated.get(row["id"], {})}
+            expected = {k: v for k, v in row.items() if k != "supplierProfiles"}
             self.assertEqual({k: rows[row["id"]][k] for k in expected}, expected, row["id"])
 
     def test_raw_snapshot_is_complete(self):

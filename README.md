@@ -36,8 +36,7 @@ You can also open `index.html` directly. If the browser blocks loading built-in 
 
 | Dataset | Records | Scoring |
 | --- | ---: | --- |
-| France · Paris & Ardèche — DECP contracts 2024–2025 | 2,594 | French v3 checks |
-| France · six cities (Rennes, Nantes, Bordeaux, Grenoble, Dijon, Tours) — DECP 2024–2025 | 1,270 | French v3 checks |
+| France · eight buyers (Ville de Paris, Ardèche, Rennes, Nantes, Bordeaux, Grenoble, Dijon, Tours) — DECP contracts 2024–2025, reconciled with buyer feeds and open-data lists | 5,286 | French v3 checks |
 | France · Tours — BOAMP/TED notices | 66 | linked correction checks; 6 evaluated, 60 not assessed |
 | France · 3 Feb 2025 — BOAMP consultation notices | 10 | documents, not assessed |
 | France · nationwide BOAMP award sample + 8 CRC audit dossiers | 3,010 | French v3 checks; audit findings outside the index |

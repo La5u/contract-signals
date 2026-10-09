@@ -155,8 +155,8 @@
   "identityEnrichment": {
     "snapshot": "supplier-identities.json",
     "coverage": "supplier-identities-coverage.json",
-    "contractsWithCurrentNames": 2586,
-    "availableSirens": 1949,
+    "contractsWithCurrentNames": 2867,
+    "availableSirens": 2691,
     "historicalNamesVerified": false,
     "matching": "SIREN derived only from typed French SIRET/SIREN; names do not replace published contract identifiers."
   },
@@ -181,5 +181,27 @@
       "python tools/import-decp-paris-ardeche.py --offline",
       "python tools/import-decp-paris-ardeche.py --download  # new snapshot; not a fixed archive"
     ]
+  },
+  "feedReconciliation": {
+    "file": "decp-feeds-raw.json.gz",
+    "tool": "tools/decp_feeds.py",
+    "statistics": {
+      "feed.absent": 404,
+      "feed.co-holder": 8,
+      "feed.duplicateAcrossSources": 1,
+      "feed.holder-amount-date": 1,
+      "feed.id-date-holder": 2621,
+      "holders.addedFromFeed": 8,
+      "majority": 0,
+      "placeholder": 92,
+      "records.added": 403,
+      "records.addedFromFeed": 403,
+      "resolvedPair": 355,
+      "status.single-source": 412,
+      "status.sources-agree": 1797,
+      "status.sources-disagree": 788
+    },
+    "contracts": 2997,
+    "addedFromFeeds": 403
   }
 }

@@ -28,7 +28,7 @@
   </div>
   <div class="topbar-actions">
     <label class="lang-selector">Language <select id="lang" aria-label="Interface language"></select></label>
-    <button id="help-button" type="button" class="ghost" aria-haspopup="dialog">How to read · Method</button>
+    <button id="help-button" type="button" class="ghost" aria-haspopup="dialog">Help</button>
     <button id="theme-toggle" type="button" class="ghost" aria-label="Colour theme: automatic" title="Colour theme: automatic">Theme: <span id="theme-label">Auto</span></button>
   </div>
 </header>
@@ -37,8 +37,7 @@
     <label class="dataset-selector">Dataset
       <select id="dataset">
         <optgroup label="France">
-          <option value="decp">Paris &amp; Ardèche — contracts · DECP</option>
-          <option value="cities">six cities — contracts · DECP</option>
+          <option value="decp">eight buyers — contracts · DECP</option>
           <option value="tours">Tours — procurement notices · BOAMP/TED</option>
           <option value="consultations">3 Feb 2025 — consultation notices · BOAMP</option>
           <option value="boamp">nationwide sample — award lots + audit dossiers · BOAMP/CRC</option>
@@ -85,17 +84,16 @@
   <section class="overview" aria-label="Dataset overview">
     <div class="dataset-links">
     <details class="dataset-details">
-      <summary>Scope and limits</summary>
-      <p class="dataset-note">A signal is a reason to look at a record, not evidence of wrongdoing. Missing data is shown as unknown, never as zero.</p>
+      <summary>Dataset</summary>
       <dl id="dataset-dates" class="dataset-note"></dl>
       <ul id="dataset-date-notes" class="dataset-note" hidden></ul>
-      <p id="dataset-note" class="dataset-note">Exploratory 24-month history: 2,594 DECP contracts from Paris and Ardèche, notified in 2024–2025. Modifications published may be later than 2025. This is not a guarantee of exhaustiveness of actual purchases.</p>
+      <p id="dataset-note" class="dataset-note">2,594 DECP contracts from the Ville de Paris and Département de l’Ardèche, notified in 2024–2025. Modifications may be later than 2025. Coverage depends on source publication. Supplier names are current register names, not historical names.</p>
       <p class="dataset-note">Datasets are not merged; they may describe the same purchases. Do not add their amounts. “—” means unknown, not safe. <a id="coverage-link" href="data/decp-coverage.json">Coverage and provenance (JSON)</a>.</p>
       <p id="completeness" class="dataset-note" aria-live="polite"></p>
       <ul id="field-notes" class="dataset-note field-notes" hidden></ul>
     </details>
     <details class="dataset-details" id="dataset-sources">
-      <summary>Sources and how to verify</summary>
+      <summary>Sources</summary>
       <div id="sources-body" class="dataset-note"></div>
     </details>
     </div>
@@ -107,9 +105,10 @@
       <section class="controls" aria-label="Filters">
         <fieldset>
           <legend>Signals</legend>
-          <label>Indicator<select id="indicator"><option value="">All indicators</option><option value="single-offer">Single offer in a competitive procedure</option><option value="direct-award">Award without competition</option><option value="repeated-single-offer">Repeated single-offer wins by the same supplier</option><option value="repeated-direct">Repeated awards without competition to the same supplier</option><option value="low-competition-rate">Buyer with repeated low competition (France)</option><option value="concentration">Concentrated awards</option><option value="disqualified-better-bid">Better-ranked bidder disqualified (Ukraine)</option><option value="short-bidding-period">Short bidding period (if assessable)</option><option value="late-notice-change">Late notice change without deadline extension</option><option value="long-duration">Long declared duration</option><option value="amount-increase">Amount increase after award</option><option value="term-extension">Term extended after award (Colombia)</option><option value="late-publication">Published long after the contract (transparency)</option><option value="official-finding">Official finding · outside the index</option></select></label>
+          <label>Indicator<select id="indicator"><option value="">All indicators</option><option value="single-offer">Single offer in a competitive procedure</option><option value="direct-award">Award without competition</option><option value="repeated-single-offer">Repeated single-offer wins by the same supplier</option><option value="repeated-direct">Repeated awards without competition to the same supplier</option><option value="low-competition-rate">Buyer with repeated low competition</option><option value="concentration">Concentrated awards</option><option value="disqualified-better-bid">Better-ranked bidder disqualified</option><option value="short-bidding-period">Short bidding period</option><option value="late-notice-change">Late notice change without deadline extension</option><option value="long-duration">Long declared duration</option><option value="amount-increase">Amount increase after award</option><option value="term-extension">Term extended after award</option><option value="late-publication">Published long after the contract</option><option value="official-finding">Official finding</option></select></label>
           <label>Minimum index<select id="min-score"><option value="0">Any index</option><option value="20">20+</option><option value="40">40+</option><option value="70">70+</option></select></label>
-          <label>Assessment<select id="assessment"><option value="">All records</option><option value="unevaluated">Not assessed / excluded</option><option value="partial">Partial coverage</option><option value="zero">Zero after at least one evaluated check</option></select></label>
+          <label>Assessment<select id="assessment"><option value="">All records</option><option value="unevaluated">Not assessed / excluded</option><option value="partial">Partial coverage</option><option value="zero">No threshold crossed</option></select></label>
+          <label>Verification<select id="verification"><option value="">All records</option><option value="sources-agree">Sources agree</option><option value="notice-checked">Checked against the award notice</option><option value="sources-disagree">Sources disagree</option><option value="single-source">Single source</option></select></label>
         </fieldset>
         <fieldset>
           <legend>Contract</legend>
@@ -117,37 +116,20 @@
           <label>CPV sector<select id="sector"><option value="">All sectors</option></select></label>
           <label>Project<select id="project"><option value="">All records</option></select></label>
         </fieldset>
-        <fieldset>
+        <fieldset id="review-filters" hidden>
           <legend>Your review</legend>
           <label>Review status<select id="review"><option value="">All records</option><option value="@none">Not yet marked</option><option value="@any">Any mark</option><option value="follow-up">Follow up</option><option value="referred">Referred</option><option value="reviewed">Reviewed</option></select></label>
-          <p class="field-help">Stored in this browser only. <span id="review-summary"></span></p>
-          <p class="field-help button-row"><button id="export-review" type="button" class="link-button">Export notes</button> <label class="link-like">Import notes<input id="import-review" type="file" accept=".json,application/json" class="visually-hidden"></label></p>
-          <span id="review-status" class="field-help" role="status" aria-live="polite"></span>
+          <p id="review-summary" class="field-help"></p>
         </fieldset>
         <details class="context-filters">
-          <summary>Context outside the index</summary>
-          <label>Notice content · no points<select id="notice-context"><option value="">All records</option><option value="explanation">Procedure text / published reason</option><option value="criteria">Award criteria present</option><option value="correction">Correction identified</option><option value="ted">Matched TED XML</option></select></label>
-          <label>Legal context · no points<select id="legal"><option value="">All contexts</option><option value="direct">Declared without competition · all amounts</option><option value="cited">Article R2122 cited</option><option value="R2122-1">R2122-1 cited · imperative urgency</option><option value="R2122-3">R2122-3 cited · artistic, technical or exclusive-rights reasons</option><option value="py-complaint">Paraguay · complaint or investigation before the DNCP</option><option value="fr-software">France · single-vendor software maintenance</option><option value="co-public">Colombia · public-to-public agreement</option></select></label>
-          <label class="checkbox"><input id="official" type="checkbox">Show only official audit findings</label>
-          <label class="checkbox"><input id="adjudicated" type="checkbox">Show contract-linked final corruption judgments (if documented)</label>
-          <label class="checkbox"><input id="investigation" type="checkbox">Show investigations reported at the time (current status unknown)</label>
+          <summary>Context</summary>
+          <label>Notice content<select id="notice-context"><option value="">All records</option><option value="explanation">Procedure text / published reason</option><option value="criteria">Award criteria present</option><option value="correction">Correction identified</option><option value="ted">Matched TED XML</option></select></label>
+          <label>Legal context<select id="legal"><option value="">All contexts</option><option value="direct">Declared without competition · all amounts</option><option value="cited">Article R2122 cited</option><option value="R2122-1">R2122-1 cited · imperative urgency</option><option value="R2122-3">R2122-3 cited · artistic, technical or exclusive-rights reasons</option><option value="py-complaint">Paraguay · complaint or investigation before the DNCP</option><option value="fr-software">France · single-vendor software maintenance</option><option value="co-public">Colombia · public-to-public agreement</option></select></label>
+          <label class="checkbox"><input id="official" type="checkbox">Official audit findings</label>
+          <label class="checkbox"><input id="adjudicated" type="checkbox">Final corruption judgments</label>
+          <label class="checkbox"><input id="investigation" type="checkbox">Reported investigations</label>
         </details>
         <button id="clear-filters" type="button" class="reset-button">Reset filters</button>
-        <details class="local-file">
-          <summary>Import a dataset</summary>
-          <label for="import-method">Import method
-            <select id="import-method"><option value="browse" selected>Browse only · no scoring</option><option value="french">French v3 checks · explicit opt-in</option></select>
-          </label>
-          <label for="file">Dataset file (JSON, CSV or OCDS JSON)
-            <input id="file" type="file" accept=".json,.csv,application/json,text/csv">
-          </label>
-          <p class="field-help">CSV works best with canonical headers such as <code>id</code>, <code>date</code>, <code>buyer</code>, <code>supplier</code>, <code>description</code>, <code>amount</code>, and <code>currency</code>. OCDS JSON is also accepted. Files are read in this browser only, never uploaded. <a href="docs/data-format.md">Format details</a>.</p>
-          <fieldset id="import-mapping" hidden><legend>Map CSV columns</legend><div id="import-columns"></div></fieldset>
-          <button id="preview-import" type="button" disabled>Preview import</button>
-          <div id="import-preview" class="field-help"></div>
-          <button id="confirm-import" type="button" disabled>Load previewed records</button>
-          <p id="import-status" class="field-help" role="status" aria-live="polite"></p>
-        </details>
       </section>
     </details>
 
@@ -157,13 +139,15 @@
       <div class="results-bar">
         <p id="status" role="status" aria-live="polite">Loading data…</p>
         <div class="toolbar">
-          <label class="inline-label">Sort<select id="sort"><option value="score">Index · descending</option><option value="score-asc">Index · ascending</option><option value="official">Official findings first · outside the index</option><option value="amount">Amount · descending</option><option value="amount-asc">Amount · ascending</option><option value="recent-signal">Signals · newest first</option><option value="date">Date · newest first</option><option value="date-asc">Date · oldest first</option><option value="publication">Notice publication · newest first</option><option value="publication-asc">Notice publication · oldest first</option><option value="sector">CPV sector · A–Z</option><option value="sector-desc">CPV sector · Z–A</option><option value="buyer">Buyer · A–Z</option><option value="buyer-desc">Buyer · Z–A</option><option value="supplier">Supplier · A–Z</option><option value="supplier-desc">Supplier · Z–A</option><option value="offers">Offers · ascending</option><option value="offers-desc">Offers · descending</option><option value="increase">Amount increase (%) · descending</option><option value="indicators">Indicators · most signals first</option><option value="indicators-asc">Indicators · fewest signals first</option></select></label>
+          <label class="inline-label">Sort<select id="sort-field"><option value="score">Index</option><option value="amount">Amount</option><option value="date">Date</option><option value="publication">Publication date</option><option value="sector">CPV sector</option><option value="buyer">Buyer</option><option value="supplier">Supplier</option><option value="offers">Offers</option><option value="indicators">Signals</option><option value="increase">Amount increase (%)</option><option value="official">Official findings first</option><option value="recent-signal" hidden>Signals · newest first</option></select></label>
+          <button id="sort-direction" type="button" class="ghost small" aria-label="Sort descending">↓</button>
+          <select id="sort" hidden aria-label="Sort state"><option value="score">Index · descending</option><option value="score-asc">Index · ascending</option><option value="official">Official findings first · outside the index</option><option value="amount">Amount · descending</option><option value="amount-asc">Amount · ascending</option><option value="recent-signal">Signals · newest first</option><option value="date">Date · newest first</option><option value="date-asc">Date · oldest first</option><option value="publication">Notice publication · newest first</option><option value="publication-asc">Notice publication · oldest first</option><option value="sector">CPV sector · A–Z</option><option value="sector-desc">CPV sector · Z–A</option><option value="buyer">Buyer · A–Z</option><option value="buyer-desc">Buyer · Z–A</option><option value="supplier">Supplier · A–Z</option><option value="supplier-desc">Supplier · Z–A</option><option value="offers">Offers · ascending</option><option value="offers-desc">Offers · descending</option><option value="increase">Amount increase (%) · descending</option><option value="indicators">Indicators · most signals first</option><option value="indicators-asc">Indicators · fewest signals first</option></select>
           <label class="inline-label">Group<select id="group-by"><option value="">No grouping</option><option value="project">Documented project</option><option value="sector">CPV sector</option><option value="buyer">Buyer</option><option value="supplier">Supplier (SIREN)</option></select></label>
           <p class="export-actions" role="group" aria-label="Export all filtered records">
-            <span class="export-label">Export all results:</span>
-            <button id="export-csv" type="button" disabled title="Download every filtered record (all pages) as CSV. Built in your browser; nothing is uploaded.">CSV</button>
-            <button id="export-json" type="button" disabled title="Download every filtered record (all pages) as JSON, with the current view and caveats. Built in your browser; nothing is uploaded.">JSON</button>
-            <button id="copy-page" type="button" title="Copy a short summary of this page with source URLs. Consider context before sharing.">Copy page summary</button>
+            <span class="export-label">Export</span>
+            <button id="export-csv" type="button" disabled title="Export all filtered results as CSV.">CSV</button>
+            <button id="export-json" type="button" disabled title="Export all filtered results as JSON.">JSON</button>
+            <button id="copy-page" type="button" title="Copy this page with source URLs.">Copy page</button>
           </p>
         </div>
       </div>
@@ -183,11 +167,10 @@
           <select id="page-size"><option value="25">25</option><option value="50" selected>50</option><option value="100">100</option><option value="250">250</option></select>
         </label>
       </nav>
-      <p class="reading-hint">Review notes stay in this browser; do not enter protected casework. <a href="docs/personal-data.md">Personal data in these records</a>.</p>
     </section>
   </div>
 
-  <footer>Runs in your browser: no account, cookies, analytics or uploads. Always read the source document before drawing a conclusion.</footer>
+  <footer>No account or analytics. Imported files stay in your browser.</footer>
   <noscript><p>Enable JavaScript to load and explore the data.</p></noscript>
 </main>
 
@@ -202,39 +185,55 @@
   <div id="detail-body" class="detail-body"></div>
 </aside>
 
+<dialog id="import-dialog" class="help-dialog" aria-labelledby="import-title">
+  <div class="dialog-head">
+    <h2 id="import-title">Import a dataset</h2>
+    <button id="import-close" type="button" class="ghost small icon-only" aria-label="Close">✕</button>
+  </div>
+  <section class="local-file dialog-content">
+    <label for="import-method">Import method
+      <select id="import-method"><option value="browse" selected>Browse only</option><option value="french">Apply French indicators</option></select>
+    </label>
+    <label for="file">Dataset file<input id="file" type="file" accept=".json,.csv,application/json,text/csv"></label>
+    <p class="field-help">JSON, CSV or OCDS. Files stay in your browser. <a href="docs/data-format.md">Format guide</a></p>
+    <fieldset id="import-mapping" hidden><legend>Map CSV columns</legend><div id="import-columns"></div></fieldset>
+    <button id="preview-import" type="button" disabled>Preview import</button>
+    <div id="import-preview" class="field-help"></div>
+    <button id="confirm-import" type="button" disabled>Load previewed records</button>
+    <p id="import-status" class="field-help" role="status" aria-live="polite"></p>
+  </section>
+</dialog>
+
+<dialog id="notes-dialog" class="help-dialog" aria-labelledby="notes-title">
+  <div class="dialog-head">
+    <h2 id="notes-title">Review notes</h2>
+    <button id="notes-close" type="button" class="ghost small icon-only" aria-label="Close">✕</button>
+  </div>
+  <section class="dialog-content">
+    <p>Notes stay in this browser. Shared links do not include them. Exported notes are plain text.</p>
+    <p><a href="docs/personal-data.md">Personal data in these records</a></p>
+    <p class="button-row"><button id="export-review" type="button" class="link-button">Export notes</button> <label class="link-like">Import notes<input id="import-review" type="file" accept=".json,application/json" class="visually-hidden"></label></p>
+    <p id="review-status" class="field-help" role="status" aria-live="polite"></p>
+  </section>
+</dialog>
+
 <dialog id="help-dialog" class="help-dialog" aria-labelledby="help-title">
   <div class="dialog-head">
-    <h2 id="help-title">How to read the results</h2>
+    <h2 id="help-title">Help</h2>
     <button id="help-close" type="button" class="ghost small icon-only" aria-label="Close">✕</button>
   </div>
   <section class="reading-notes" id="about-results" aria-label="How to read the results">
-    <p><strong>A signal prompts a review. It is not an accusation.</strong> A zero or missing label does not mean a contract is clean, and “Not assessed” is never zero.</p>
+    <p>Signals highlight published characteristics for review, not established irregularities.</p>
+    <p>The index orders records using the available indicators. “Not assessed” means no applicable check could be evaluated; 0 means no threshold crossed in the evaluated checks. Missing values are shown as unknown.</p>
+    <p>Open a record to see its indicators and sources.</p>
     <div class="score-legend" aria-label="Vigilance scale, not a regularity measure">
       <span class="score-chip level-none">0 · no threshold crossed in evaluated checks</span><span class="score-chip level-low">1–19 · low</span><span class="score-chip level-moderate">20–39 · moderate</span><span class="score-chip level-high">40–69 · high</span><span class="score-chip level-extreme">70–100 · very high</span><span class="score-chip level-unknown">Not assessed ≠ zero</span><span class="badge official">Official finding · outside the index</span>
     </div>
-    <p>Index v3.2 is an editorial sorting aid, not a probability; zero requires an evaluated check and certifies nothing. Unknowns are shown separately. Amounts and official findings never add points.</p>
-    <p>One French dossier has a dated news report of an investigative step; its current status is unknown. No comparable report is linked in the Colombian or Paraguayan pilots. No contract-specific final corruption judgment is documented in these datasets. French CRC audit observations are not convictions. No match means <strong>not established here, not cleared</strong>.</p>
-    <p>Exports: CSV/JSON download every filtered record; <em>Copy page summary</em> copies only the current page, and large pages may exceed chat limits. Keyboard: <kbd>/</kbd> search · <kbd>j</kbd>/<kbd>k</kbd> next/previous record in the open panel · <kbd>Esc</kbd> close.</p>
-    <p>Review marks (<em>Follow up</em>, <em>Referred</em>, <em>Reviewed</em>) and notes are your own working notes. They are stored only in this browser, never change the index, and are not included in the shareable link. Use <em>Export notes</em> to keep or share them.</p>
+    <p>CSV/JSON exports include all filtered results. Copy page includes only the current page.</p>
+    <p>Review marks and notes are saved in this browser, not in shared links. Export notes to keep or share them.</p>
+    <p>Keyboard: / search · j/k next/previous record · Esc close.</p>
   </section>
-  <details class="method" open>
-    <summary>Method: vigilance index</summary>
-    <p><strong>Version 3.2.</strong> Score = competition maximum (up to 60) + execution/duration maximum (up to 40) + transparency maximum (up to 16), capped at 100, with no renormalization by coverage, dataset or filter. Every check belongs to one indicator catalogue shared by all countries (<a href="docs/indicators.md">docs/indicators.md</a>); eligibility and thresholds follow each jurisdiction. Official findings are separate documentary elements, never points. No amount-based uplift. No target proportion of flagged contracts.</p>
-    <p><strong>Coverage:</strong> 9 checks per record, 10 for Tours full notices (the jurisdiction’s own eight and the shared late-publication check; the five evidence-based checks are listed only on records that carry evidence for them), each flagged, evaluated without a threshold crossed, not assessable, or out of scope. The evaluated/established-applicable ratio does not count unknown applicabilities: those are reported in addition, not as negative cases. All conflicting groups, duplicated identifiers and unverified records are excluded. Aggregate audit dossiers receive no individual index. No evaluated check = “Not assessed”, never zero.</p>
-    <p><strong>Weights:</strong> a single offer in an explicitly competitive procedure: 12; direct award: 18 for a French award at or above the legal threshold for awards without publicity or competition (€40,000 excl. tax; €100,000 for works; €60,000 for supplies and services from 1 April 2026), not applicable below it, not assessed when the amount is missing. Bounded linear progressions rounded to the tenth: single-offer repetition and concentration, 12 at 60 % up to 40 at 100 %; direct repetition, 18 at 3 contracts up to 60 at 10; duration, 8 at 120 months up to 16 at 360 months; relative increase strictly &gt; 20 %, 8 near the threshold up to 40 at +100 %; period &lt; 15 days, 8 near the threshold up to 40 at 3 days. Entry/reliability thresholds remain: a graduated progression does not erase them. No points for an offer expected in a direct award. The five evidence-based checks (cap proximity, full payment against incomplete execution, legal-ground mismatch, comparable unit-price rise, exclusivity claim against comparable wins) carry 8 points each, an uncalibrated placeholder; they appear only on records that carry evidence for them.</p>
-    <p>Editorial choices, not calibrated to predict irregularity. <a href="data/score-v3-review.json">Comparison v2.1/v3 and ranking sensitivity (JSON)</a>. Software verification is not legal or statistical validation. Flagged and unflagged cases must be reviewed. <a href="docs/score-v3.md">Full method and excerpt review</a> · <a href="docs/score-colombia.md">Colombia pilot method</a> · <a href="docs/international-pilots.md">Countries proposed for upcoming pilots</a>.</p>
-    <p><strong>SECOP II · Colombia pilot:</strong> same v3.2 framework (families, family maxima, “Not assessed” semantics; <a href="docs/score-colombia.md">full method</a>), jurisdiction-specific check set. Five checks: award declared without supplier plurality or under manifest urgency (18); repeated such awards to the same buyer and supplier document (18 at 3 contracts up to 60 at 10); concentration within buyer and contract type (12 at 60 % up to 40 at 100 %, minimum 10 identified contracts and 80 % coverage); declared duration ≥ 36 months (8 at 36 up to 40 at 120, parsed read-only from the published free text); term more than doubled by published extensions (8 at +100 % up to 40 at +300 %). The three offer/timetable checks of the French method are out of scope here: no offers table, no publication–deadline chronology. The bare direct-family modality (≈82 % of this cohort) and ordinary justifications — professional services, interadministrative agreements, minimum-amount rules, regime statutes — add no points. Amounts in COP stay visible and sort only. Thresholds are editorial, not Colombian legal ones; no CPI, no country coefficient.</p>
-    <p><strong>Tours full notices:</strong> the declared explanations have procedure-wide scope, possibly on other lots. The criteria displayed come only from the indicated lot; candidate-selection criteria and award criteria are distinct. Weighting codes and values are kept without converting an unknown unit into a percentage. No points for a legal reason or a price weight. Six linked corrections extend the deadline and evaluate zero on the late-change check; other notice rows remain “Not assessed”. Full bidding periods are still unknown. Publications and dispatches are distinguished; no merging with DECP.</p>
-    <p><strong>Six additional municipalities:</strong> Rennes, Nantes, Bordeaux, Grenoble, Dijon and Tours, chosen before the scores. Groups with ambiguous versions or identifiers are excluded from all calculations and remain visible. The enriched names are a current snapshot of the legal unit via the Annuaire des entreprises, not a historical verification: SIREN/SIRET and source are kept, with no effect on the score. Every typed SIREN of the six cities and of Paris &amp; Ardèche is looked up; a name is kept only for an exact, fully public register entry, and none is inferred for the others.</p>
-    <p><strong>Linked evidence:</strong> a late title/criteria change without deadline extension (Tours) contributes 5 competition points; correlated signals still use the maximum, not a sum. For Ukraine, explicit per-bid decisions and three linked contract records are shown as context only. <a href="docs/linked-evidence.md">Rules and bounded collection</a>.</p>
-    <p><strong>Short bidding period:</strong> fewer than 15 calendar days, upper bound from midnight UTC on the day of the initial publication to the last explicit deadline, after extensions. Only explicitly open non-accelerated procedure, identified lot and procedure, verified chain without conflict. Reduction, reopening or unknown information: no calculation. Graduated weight from 8 to 40, competition family (maximum, not a sum). Editorial threshold, not legal nor statistically calibrated. Among the 10 imported notices, no period is assessable: corrections may be missing. Result dates are never used as the start.</p>
-    <p><strong>Concentrated awards:</strong> same buyer/CPV to three digits, DECP cohorts 2024–2025 computed separately, at least 10 contracts to the single identified holder, coverage ≥ 80 %, same SIREN receiving ≥ 60 % of the known contracts. <strong>Repeated direct awards:</strong> at least three distinct contracts explicitly without competition, all amounts, same buyer/CPV/SIREN, same period. Groups in conflict, ambiguous identifiers and unmatched co-holders are excluded. A repetition may have a legal justification; the results describe only the published data of this cohort.</p>
-    <p><strong>Groupings:</strong> CPV = purchase sector, not the company’s activity. Projects are linked only by an explicit documentary match; neither the scores nor the amounts of contracts are summed. The other groupings are navigation tools, not proof of a common project. Groups are ordered by their first contract in the chosen sort, then their contracts follow that sort. The block without a documented project comes after the documented projects. Unknown values come last in the sorts.</p>
-    <p><strong>Published long after the contract (transparency):</strong> the award notice or contract data published more than 120 days after the contract date, above every legal deadline of the regimes covered (EU award notices 30 days, or per quarter plus 30 days for framework and dynamic-purchasing call-offs; French essential data two months), and also more than 120 days later than this buyer’s usual delay (median of its other dated records in the same dataset, buyers with at least 10 dated records only; without that history the whole delay counts). A delay within the buyer’s habit is a buyer-level practice and scores nothing. 8 points just above the threshold up to 16 at two years later than usual. Out of scope where the source publishes no comparable dates (SECOP II, DNCP, Prozorro, Mercado Público, Find a Tender).</p>
-    <p><strong>Declared amount increase:</strong> last newly published amount greater than the initial one by more than 20 %, with no euro threshold, price exclusively declared final and firm, with no conflicts of initial versions and no identified change of holder. A decrease or an ambiguous chronology triggers nothing. Modified amounts are never summed. An increase may fund additional services; it is not a measure of excess cost nor of final spending. The published history may be incomplete.</p>
-    <p><strong>Repeated low competition:</strong> only for single-offer contracts of the DECP cohort. Same buyer, three-digit CPV group, notifications 2024–2025, explicitly competitive procedures: at least 10 contracts with a known number of offers, at least 80 % coverage and at least 60 % at a single offer. Undetermined adapted procedures and groups in conflict are excluded. The statistics are computed over the whole file before filtering; they describe the published purchases retrospectively, not the regularity of a supplier. No repetition computation on the BOAMP sample.</p>
-    <p>The former thresholds of €100k (direct award) and €50k (absolute increase) no longer enter the score; the legal threshold only decides whether the French direct-award check applies. Unknown values trigger no indicator. Amounts: “≥” indicates a lower bound, “&gt;” a strict bound and “≈” a rounded value; the sort and the filter use the cited numeric value, not an assumed exact amount. These rules do not take account of legal exceptions or the context of each purchase.</p>
-  </details>
+  <p><a href="docs/score-v3.md">Full methodology</a> · <a href="docs/indicators.md">Indicator catalogue</a></p>
 </dialog>
 </body>
 </html>

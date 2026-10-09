@@ -30,12 +30,12 @@ const server=http.createServer((req,res)=>{
  assert.equal(await page.title(),'Marchés ouverts');
  assert.equal(await page.locator('.brand img, .brand svg').count(),0,'branding icon is favicon-only');
  assert.equal(await page.locator('link[rel="icon"]').getAttribute('href'),'favicon.svg');
- await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2594'));
+ await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 5286'));
  for (const id of ['cap','execution','legalGround','unitPrice','exclusivity']) assert.equal(await page.locator(`#indicator option[value="${id}"]`).count(),0,'evidence-only indicators are absent when no record carries evidence');
  await page.waitForFunction(()=>document.querySelector('#dataset-dates').textContent.includes('Coverage period'));
  assert.equal(await page.locator('#dataset-dates dt').count(),3);
  assert.match(await page.locator('#dataset-dates').textContent(),/Snapshot collectedUnknown/,'current DECP snapshot is not invented');
- assert.match(await page.locator('#dataset option:checked').textContent(),/^Paris.*contracts.*DECP$/);
+ assert.match(await page.locator('#dataset option:checked').textContent(),/^eight buyers.*contracts.*DECP$/);
  assert.equal(await page.locator('#dataset option:checked').evaluate(o=>o.parentElement.label),'France','the country is the option group, not repeated in the option');
  const multiSignalRow=page.locator('.contract-row').filter({has:page.locator('.badge:not(.context):nth-of-type(2)')}).first();
  const badgeLabels=(await multiSignalRow.locator('.badge:not(.context)').allTextContents()).map(t=>t.split(' · ')[0]);
@@ -43,7 +43,7 @@ const server=http.createServer((req,res)=>{
  await openRow(page,multiSignalRow.locator('.row-toggle'));
  const triggeredLabels=await page.locator('#detail-panel .triggered-indicators li').allTextContents();
  assert.equal(triggeredLabels.length,badgeLabels.length,'the panel lists every signal shown as a chip');
- assert.match(await page.locator('#detail-panel .detail-position').textContent(),/^Record \d+ of 2594$/);
+ assert.match(await page.locator('#detail-panel .detail-position').textContent(),/^Record \d+ of 5286$/);
  assert.match(await page.evaluate(()=>location.hash),/open=/,'an open record is kept in the link');
  await page.keyboard.press('Escape');
  assert.equal(await page.locator(panel).isVisible(),false,'Escape closes the record panel');
@@ -53,9 +53,13 @@ const server=http.createServer((req,res)=>{
  assert.equal(await page.locator('#advanced-filters').getAttribute('open'),null);
  assert.equal(await page.locator('#flagged').isVisible(),true);
  assert.equal(await page.locator('#indicator').isVisible(),false);
+ assert.equal(await page.locator('#review-filters').isHidden(),true,'review filters appear after a saved mark');
+ for (const id of ['official','adjudicated','investigation','notice-context']) assert.equal(await page.locator(`#${id}`).isHidden(),true,`${id} has no matching records in DECP`);
+ assert.equal(await page.locator('#indicator option[value="disqualified-better-bid"]').count(),0,'Ukraine-only indicator is absent from French data');
+ assert.equal(await page.locator('#sort').isHidden(),true,'legacy URL sort state is not a second UI control');
  await page.click('#advanced-filters > summary');
  assert.equal(await page.locator('#advanced-filters').getAttribute('open'),'');
- for(const id of ['#flagged','#indicator','#assessment','#sort','#group-by','#page-size'])assert.equal(await page.locator(id).isVisible(),true,id+' visible on desktop');
+ for(const id of ['#flagged','#indicator','#assessment','#sort-field','#sort-direction','#group-by','#page-size'])assert.equal(await page.locator(id).isVisible(),true,id+' visible on desktop');
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'desktop layout must not overflow the page');
  // The sidebar collapses on desktop, the table takes the width, and the choice is remembered.
  const tableWidth=async()=>page.locator('.table-wrap').evaluate(el=>el.getBoundingClientRect().width);
@@ -63,13 +67,14 @@ const server=http.createServer((req,res)=>{
  await page.click('#advanced-filters > summary');
  assert.equal(await page.locator('#advanced-filters').getAttribute('open'),null);
  assert.ok(await tableWidth()>sidebarTableWidth+150,'collapsed filters give the table the width');
- assert.equal(await page.evaluate(()=>localStorage.getItem('contract-signals-filters')),'closed');
+ // The toggle event saves the choice asynchronously: wait for it rather than racing it.
+ await page.waitForFunction(()=>localStorage.getItem('contract-signals-filters')==='closed');
  await page.click('#advanced-filters > summary');
  assert.equal(await page.locator('#advanced-filters').getAttribute('open'),'');
  // Only the checks this dataset runs are offered, each with its count.
  const indicatorOptions=await page.locator('#indicator option').evaluateAll(o=>o.map(x=>x.value));
  assert.ok(indicatorOptions.includes('single-offer')&&!indicatorOptions.includes('term-extension')&&!indicatorOptions.includes('disqualified-better-bid'),'indicator list is scoped to the kinds this dataset runs');
- assert.match(await page.locator('#indicator option[value="direct-award"]').textContent(),/ · 86$/);
+ assert.match(await page.locator('#indicator option[value="direct-award"]').textContent(),/ · 175$/);
  await page.evaluate(()=>{const sort=document.querySelector('#sort');sort.value='offers';sort.dispatchEvent(new Event('input',{bubbles:true}));});
  let offerCounts=await page.locator('.contract-row').evaluateAll(rows=>rows.map(row=>Number(row.children[6].textContent.trim())).filter(Number.isFinite));
  assert.ok(offerCounts.length>1&&offerCounts.every((n,i)=>!i||offerCounts[i-1]<=n),'historical sort=offers URL semantics remain ascending');
@@ -77,10 +82,21 @@ const server=http.createServer((req,res)=>{
  offerCounts=await page.locator('.contract-row').evaluateAll(rows=>rows.map(row=>Number(row.children[6].textContent.trim())).filter(Number.isFinite));
  assert.ok(offerCounts.length>1&&offerCounts.every((n,i)=>!i||offerCounts[i-1]>=n),'offers-desc sorts actual offer counts descending');
  await page.evaluate(()=>{const sort=document.querySelector('#sort');sort.value='score';sort.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.selectOption('#sort-field','amount');
+ assert.equal(await page.locator('#sort').inputValue(),'amount');
+ assert.equal(await page.locator('#sort-direction').getAttribute('aria-label'),'Sort descending');
+ await page.click('#sort-direction');
+ assert.equal(await page.locator('#sort').inputValue(),'amount-asc');
+ assert.equal(await page.locator('th[data-sort-key="amount"]').getAttribute('aria-sort'),'ascending');
+ assert.match(await page.evaluate(()=>location.hash),/sort=amount-asc/);
+ await page.selectOption('#sort-field','score');
  // Method and reading notes live in a dialog.
  await page.click('#help-button');
  assert.equal(await page.locator('#help-dialog').isVisible(),true);
- assert.match(await page.locator('#help-dialog').textContent(),/Version 3\.2/);
+ assert.match(await page.locator('#help-dialog').textContent(),/Signals highlight published characteristics/);
+ assert.equal(await page.locator('#help-dialog .method').count(),0,'detailed methodology lives in documentation');
+ assert.equal(await page.locator('#help-dialog a[href="docs/score-v3.md"]').textContent(),'Full methodology');
+ assert.ok((await page.locator('#help-dialog').textContent()).length<1800,'help stays concise');
  await page.keyboard.press('Escape');
  assert.equal(await page.locator('#help-dialog').isVisible(),false,'Escape closes the help dialog');
  await page.click('#help-button');await page.click('#help-close');
@@ -88,7 +104,7 @@ const server=http.createServer((req,res)=>{
  for(const key of ['buyer','supplier','sector','offers']) assert.equal(await page.locator(`th[data-sort-key="${key}"] button`).count(),1);
  assert.equal(await page.locator('button.badge').count(),0,'badges describe; filtering is done with the Indicator filter');
  await page.selectOption('#indicator','direct-award');
- assert.match(await page.locator('#status').textContent(),/^86 \/ 2594/);
+ assert.match(await page.locator('#status').textContent(),/^175 \/ 5286/);
  assert.match(await page.locator('#advanced-count').textContent(),/1 active/);
  await page.click('#clear-filters');
  assert.equal(await page.locator('#indicator').inputValue(),'');
@@ -109,12 +125,20 @@ const server=http.createServer((req,res)=>{
  await page.selectOption('#assessment','unevaluated');
  assert.match(await page.locator('#advanced-count').textContent(),/1 active/);
  await page.click('#clear-filters');
- assert.match(await page.locator('#status').textContent(),/2594 \/ 2594/);
+ assert.match(await page.locator('#status').textContent(),/5286 \/ 5286/);
+ // Verification: amounts reconciled with the buyer's own feed are filterable and show every source.
+ await page.selectOption('#verification','sources-disagree');
+ assert.match(await page.locator('#status').textContent(),/^885 \/ 5286/);
+ await openRow(page,page.locator('.row-toggle').first());
+ assert.match(await page.locator(panel).textContent(),/Amount sources · Sources disagree/);
+ assert.match(await page.locator(panel).textContent(),/Ville de Paris — profil acheteur/);
+ await closePanel(page);
+ await page.selectOption('#verification','');
  await page.selectOption('#assessment','unevaluated');
- assert.match(await page.locator('#status').textContent(),/355 \/ 2594/);
- assert.match(await page.locator('.contract-row').first().textContent(),/Not assessed/);
+ // Reconciliation left no DECP contract unassessed: the filter shows none.
+ assert.match(await page.locator('#status').textContent(),/^0 \/ 5286/);
  await page.selectOption('#assessment','zero');
- assert.match(await page.locator('#status').textContent(),/1966 \/ 2594/);
+ assert.match(await page.locator('#status').textContent(),/4709 \/ 5286/);
  assert.match(await page.locator('.contract-row').first().textContent(),/0 \/ 100/);
  await openRow(page,page.locator('.row-toggle').first());
  assert.equal(await page.locator('#detail-panel .assessment-checks li').count(),9);
@@ -124,10 +148,10 @@ const server=http.createServer((req,res)=>{
  assert.equal(await page.locator('.contract-row').count(),1);
  await openRow(page,page.locator('.row-toggle'));
  assert.match(await page.locator(panel).textContent(),/R-2122-1/);
- assert.match(await page.locator(panel).textContent(),/Context · no points/);
+ assert.equal(await page.locator('#detail-context h3').textContent(),'Context');
  await page.evaluate(()=>{const el=document.querySelector('#legal');el.value='R2122-3';el.dispatchEvent(new Event('input',{bubbles:true}));});assert.equal(await page.locator('.contract-row').count(),4);
  await closePanel(page);
- await page.evaluate(()=>{const el=document.querySelector('#legal');el.value='fr-software';el.dispatchEvent(new Event('input',{bubbles:true}));});assert.equal(await page.locator('.contract-row').count(),25);
+ await page.evaluate(()=>{const el=document.querySelector('#legal');el.value='fr-software';el.dispatchEvent(new Event('input',{bubbles:true}));});assert.equal(await page.locator('.contract-row').count(),36);
  assert.match(await page.locator('.contract-row').first().textContent(),/Context: single-vendor software maintenance/);
  await openRow(page,page.locator('.row-toggle').first());
  assert.match(await page.locator(panel).textContent(),/Single-vendor software maintenance: often routine; exclusivity not verified/);
@@ -141,9 +165,12 @@ const server=http.createServer((req,res)=>{
  assert.deepEqual(after,before);
  await page.evaluate(()=>{for(const [id,value] of [['group-by','buyer'],['sort','date-asc']]){const el=document.querySelector('#'+id);el.value=value;el.dispatchEvent(new Event('input',{bubbles:true}));}});
  assert(await page.locator('.group-row').count()>0);
- await page.selectOption('#dataset','cities');
- await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 1270'));
- assert.match(await page.locator('#dataset-note').textContent(),/172 ambiguous/);
+ // The two DECP imports are one dataset: reload it from another dataset to start from a clean view.
+ await page.selectOption('#dataset','boamp');
+ await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 3010'));
+ await page.selectOption('#dataset','decp');
+ await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 5286'));
+ assert.match(await page.locator('#dataset-note').textContent(),/eight buyers.*5,286 contracts/);
  await page.evaluate(()=>{const el=document.querySelector('#group-by');el.value='buyer';el.dispatchEvent(new Event('input',{bubbles:true}));});
  assert(await page.locator('.group-row').count()>0);
  await page.locator('#pagination').scrollIntoViewIfNeeded();
@@ -151,6 +178,18 @@ const server=http.createServer((req,res)=>{
  await page.click('#next');
  assert.equal(await page.evaluate(()=>scrollY),cityPosition);
  const cityData=require('../data/decp-cities.json');
+ // Split procedure: each lot opens its siblings; disputed offer counts are shown, never chosen.
+ await page.fill('#search','2023VDAO1642');
+ assert.equal(await page.locator('.contract-row',{hasText:/Lot \d+ of 2023VDAO1642/}).count(),6);
+ await openRow(page,page.locator('.contract-row',{hasText:'Lot 7 of 2023VDAO1642'}).locator('.row-toggle'));
+ assert.match(await page.locator(panel).textContent(),/Lots of procedure 2023VDAO1642 \(6\)/);
+ assert.match(await page.locator(panel).textContent(),/unknown — DECP 2, notice 4/);
+ await page.locator(panel).locator('.sibling-list button',{hasText:'Lot 13'}).click();
+ assert.match(await page.evaluate(()=>location.hash),/open=decp-21210231300013-2023VDAO1642-lot-13/);
+ await page.locator(panel).locator('button',{hasText:'Show the whole project'}).click();
+ assert.equal(await page.locator('#project').inputValue(),'dijon-maison-des-associations');
+ await closePanel(page);
+ await page.evaluate(()=>{for(const id of ['project','group-by']){const el=document.querySelector('#'+id);el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));}});
  const profile=cityData.find(c=>c.supplierProfiles?.length).supplierProfiles[0];
  await page.fill('#search',profile.name);
  assert(await page.locator('.contract-row').count()>0);
@@ -164,13 +203,18 @@ const server=http.createServer((req,res)=>{
  assert.equal(await page.locator('.contract-row.is-open .review-tag').textContent(),'Follow up');
  assert.doesNotMatch(await page.evaluate(()=>location.hash),/review|follow/);
  const savedReview=await page.evaluate(()=>JSON.parse(localStorage.getItem('contract-signals-review-v1')));
- const reviewEntry=Object.entries(savedReview).find(([k])=>k.startsWith('cities|'));
+ const reviewEntry=Object.entries(savedReview).find(([k])=>k.startsWith('decp|'));
  assert.equal(reviewEntry[1].status,'follow-up');assert.equal(reviewEntry[1].note,'Ask the buyer for the award report.');
  await closePanel(page);
  await page.fill('#search','');
  await page.selectOption('#review','follow-up');
- assert.match(await page.locator('#status').textContent(),/^1 \/ 1270/);
+ assert.match(await page.locator('#status').textContent(),/^1 \/ 5286/);
+ await openRow(page,page.locator('.row-toggle').first());
+ assert.equal(await page.locator('#review-filters').isVisible(),true);
+ await page.click('#manage-notes');
+ assert.equal(await page.locator('#notes-dialog').isVisible(),true);
  const [reviewDownload]=await Promise.all([page.waitForEvent('download'),page.click('#export-review')]);
+ await page.click('#notes-close');
  const reviewFile=JSON.parse(fs.readFileSync(await reviewDownload.path(),'utf8'));
  assert.equal(reviewFile.kind,'review-notes');assert.equal(reviewFile.items[0].status,'follow-up');
  await openRow(page,page.locator('.row-toggle').first());
@@ -180,8 +224,12 @@ const server=http.createServer((req,res)=>{
  await closePanel(page);
  await page.selectOption('#review','');
  assert.equal(await page.evaluate(()=>Object.keys(JSON.parse(localStorage.getItem('contract-signals-review-v1'))).length),0,'an empty mark is removed');
+ await openRow(page,page.locator('.row-toggle').first());
+ await page.click('#manage-notes');
  await page.setInputFiles('#import-review',{name:'notes.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(reviewFile))});
  await page.waitForFunction(()=>document.querySelector('#review-status').textContent.includes('1 review note(s) imported'));
+ await page.click('#notes-close');
+ await closePanel(page);
  assert.equal(await page.locator('.review-tag').count()>0||await page.evaluate(()=>Object.keys(JSON.parse(localStorage.getItem('contract-signals-review-v1'))).length===1),true);
  await page.evaluate(()=>localStorage.removeItem('contract-signals-review-v1'));
  await page.selectOption('#dataset','tours');
@@ -211,14 +259,14 @@ const server=http.createServer((req,res)=>{
  await page.fill('#search','25-22678');assert.equal(await page.locator('.contract-row').count(),1);
  await openRow(page,page.locator('.row-toggle'));assert.match(await page.locator(panel).textContent(),/14 mars 2025/);
  assert.match(await page.locator(panel).textContent(),/not assessable/);
- await page.selectOption('#indicator','short-bidding-period');assert.equal(await page.locator('.contract-row').count(),0);
+ assert.equal(await page.locator('#indicator option[value="short-bidding-period"]').count(),0,'out-of-scope indicators are omitted');
  // Colombia SECOP II pilot: jurisdiction-specific indicators, Spanish source text, COP amounts
  await page.selectOption('#dataset','colombia');
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 7560'));
  await page.evaluate(()=>{const el=document.querySelector('#adjudicated');el.checked=true;el.dispatchEvent(new Event('input',{bubbles:true}));});
  assert.match(await page.locator('#status').textContent(),/0 \/ 7560/);
  await page.evaluate(()=>{const el=document.querySelector('#adjudicated');el.checked=false;el.dispatchEvent(new Event('input',{bubbles:true}));});
- assert.match(await page.locator('#dataset-note').textContent(),/SECOP II pilot · Colombia/);
+ assert.match(await page.locator('#dataset-note').textContent(),/Colombia · SECOP II/);
  assert.equal(await page.locator('.contract-row').count(),50);
  assert.match(await page.locator('#status').textContent(),/272 with a heuristic signal/);
  assert.match(await page.locator('#status').textContent(),/0 not assessed/);
@@ -258,8 +306,10 @@ const server=http.createServer((req,res)=>{
  const pySources=await page.locator('#sources-body').textContent();
  assert.match(pySources,/Dirección Nacional de Contrataciones Públicas/);
  assert.match(pySources,/CC BY 4\.0/);
- assert.match(pySources,/data\/paraguay-dncp\/raw\//);
- assert.match(pySources,/import-paraguay-dncp\.py --cohort fernando --offline/);
+ assert.doesNotMatch(pySources,/data\/paraguay-dncp\/raw\//);
+ assert.doesNotMatch(pySources,/import-paraguay-dncp\.py/);
+ assert.equal(await page.locator('#sources-body a[href="docs/data-sources.md"]').textContent(),'Source documentation');
+ assert.match(pySources,/Extraction details/);
  await page.selectOption('#page-size','250');
  assert.equal(await page.locator('.contract-row').count(),84);
  assert.equal(await page.locator('#pagination').isVisible(),true);
@@ -290,13 +340,13 @@ const server=http.createServer((req,res)=>{
  await page.selectOption('#dataset','paraguay3');
  await page.waitForFunction(()=>/\/ \d+ results/.test(document.querySelector('#status').textContent)&&document.querySelector('#dataset-note').textContent.includes('Asunción'));
  assert.match(await page.locator('#dataset option:checked').textContent(),/^MOPC.*Central.*Asunción/);
- assert.match(await page.locator('#sources-body').textContent(),/--cohort 3buyers --offline/);
+ assert.equal(await page.locator('#sources-body a[href="data/paraguay-dncp-3buyers-coverage.json"]').count(),1);
  await page.selectOption('#dataset','decp');
- await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2594'));
+ await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 5286'));
  await page.selectOption('#dataset','ukraine');
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 488'));
  const ukraineNote=await page.locator('#dataset-note').textContent();
- assert.match(ukraineNote,/526 tenders and 488 signed contracts/);
+ assert.match(ukraineNote,/526 tenders, 488 signed contracts/);
  assert.doesNotMatch(ukraineNote,/424 direct-contract reports|out of scope, not scored/);
  await page.fill('#search','prozorro-UA-2024-09-09-001521-a-9c1f5788');
  assert.equal(await page.locator('.contract-row').count(),1);
@@ -306,18 +356,19 @@ const server=http.createServer((req,res)=>{
  assert.match(reportingDetail,/Concentrated awards within a category/);
  assert.doesNotMatch(reportingDetail,/reporting.*not scored/i);
  await page.selectOption('#dataset','decp');
- await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2594'));
+ await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 5286'));
  // Shareable links: a fresh load restores dataset, filters, sort, page and page size.
  const linked=await browser.newPage({locale:'en-GB',viewport:{width:1280,height:900}});
  linked.on('pageerror',e=>errors.push(e.message));
  await linked.goto(base+'/#dataset=cities&sort=amount&flagged=1&page=2&size=25');
- await linked.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 1270'));
- assert.equal(await linked.locator('#dataset').inputValue(),'cities');
+ // An old link to the six-city dataset opens the merged DECP dataset.
+ await linked.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 5286'));
+ assert.equal(await linked.locator('#dataset').inputValue(),'decp');
  assert.equal(await linked.locator('#sort').inputValue(),'amount');
  assert.equal(await linked.locator('#flagged').isChecked(),true);
  assert.match(await linked.locator('#page-status').textContent(),/Page 2 \/ \d+ · 25 rows per page/);
  assert.equal(await linked.locator('.contract-row').count(),25);
- assert.equal(await linked.evaluate(()=>location.hash),'#dataset=cities&sort=amount&flagged=1&page=2&size=25');
+ assert.equal(await linked.evaluate(()=>location.hash),'#sort=amount&flagged=1&page=2&size=25');
  // A restored sort shows on its column header; clicking headers drives the same Sort control and link.
  assert.equal(await linked.locator('th[data-sort-key="amount"]').getAttribute('aria-sort'),'descending');
  await linked.locator('th[data-sort-key="amount"] button').click();
@@ -341,22 +392,22 @@ const server=http.createServer((req,res)=>{
  assert.equal(await linked.locator('#sort').inputValue(),'offers');
  await linked.evaluate(()=>{const el=document.querySelector('#sort');el.value='amount';el.dispatchEvent(new Event('input',{bubbles:true}));});
  await linked.evaluate(()=>{const el=document.querySelector('#sort');el.value='date';el.dispatchEvent(new Event('input',{bubbles:true}));});
- assert.equal(await linked.evaluate(()=>location.hash),'#dataset=cities&sort=date&flagged=1&size=25');
+ assert.equal(await linked.evaluate(()=>location.hash),'#sort=date&flagged=1&size=25');
  // Export covers every filtered record, not only the visible page.
  const flaggedTotal=Number((await linked.locator('#status').textContent()).split(' / ')[0]);
  const [csvDownload]=await Promise.all([linked.waitForEvent('download'),linked.click('#export-csv')]);
- assert.match(csvDownload.suggestedFilename(),/^contract-signals-cities-\d{4}-\d{2}-\d{2}\.csv$/);
+ assert.match(csvDownload.suggestedFilename(),/^contract-signals-decp-\d{4}-\d{2}-\d{2}\.csv$/);
  const csv=fs.readFileSync(await csvDownload.path(),'utf8');
  assert.ok(csv.startsWith('\ufeffid,date,buyer,'));
  assert.equal(csv.split('\r\n').filter(line=>line.startsWith('decp-')).length,flaggedTotal);
  const [jsonDownload]=await Promise.all([linked.waitForEvent('download'),linked.click('#export-json')]);
  const exported=JSON.parse(fs.readFileSync(await jsonDownload.path(),'utf8'));
- assert.equal(exported.count,flaggedTotal);assert.equal(exported.view,'#dataset=cities&sort=date&flagged=1&size=25');
+ assert.equal(exported.count,flaggedTotal);assert.equal(exported.view,'#sort=date&flagged=1&size=25');
  // A pasted link on an open page switches dataset through hashchange; names are shown before identifiers.
  await linked.evaluate(siren=>{location.hash='#dataset=decp&q='+siren;},profile.siren);
- await linked.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2594'));
+ await linked.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 5286'));
  await linked.evaluate(siren=>{location.hash='#dataset=cities&q='+siren;},profile.siren);
- await linked.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 1270'));
+ await linked.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 5286'));
  assert.equal(await linked.locator('#search').inputValue(),profile.siren);
  const supplierCell=await linked.locator('.contract-row td:nth-child(3)').first().textContent();
  assert.ok(supplierCell.startsWith(profile.name),supplierCell);
@@ -379,16 +430,30 @@ const server=http.createServer((req,res)=>{
  // Theme toggle cycles auto → light → dark and is remembered.
  await fresh.click('#theme-toggle');assert.equal(await fresh.evaluate(()=>document.documentElement.dataset.theme),'light');
  await fresh.click('#theme-toggle');assert.equal(await fresh.evaluate(()=>document.documentElement.dataset.theme),'dark');
- await fresh.reload();await fresh.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 1270'));
+ await fresh.reload();await fresh.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 5286'));
  assert.equal(await fresh.evaluate(()=>document.documentElement.dataset.theme),'dark');
  await fresh.click('#theme-toggle');assert.equal(await fresh.evaluate(()=>document.documentElement.dataset.theme),undefined);
  await fresh.close();
+ const emptyFilter=await browser.newPage({locale:'en-GB'});
+ await emptyFilter.goto(base+'/#adjudicated=1&indicator=disqualified-better-bid');
+ await emptyFilter.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 5286'));
+ await emptyFilter.click('#advanced-filters > summary');
+ await emptyFilter.locator('.context-filters > summary').click();
+ assert.equal(await emptyFilter.locator('#adjudicated').isVisible(),true,'an empty active shared-link filter remains visible');
+ assert.equal(await emptyFilter.locator('#indicator').inputValue(),'disqualified-better-bid','shared indicator filters are preserved even if out of scope');
+ await emptyFilter.click('#clear-filters');
+ assert.equal(await emptyFilter.locator('#adjudicated').isHidden(),true);
+ assert.match(await emptyFilter.locator('#status').textContent(),/^5286 \/ 5286/);
+ await emptyFilter.close();
  await linked.close();
  await page.goto('file://'+path.resolve('index.html'));
  await page.waitForSelector('#file-help',{state:'visible'});
- await page.locator('#advanced-filters > summary').click();
- await page.locator('.local-file > summary').click();
+ await page.click('#open-import');
+ assert.equal(await page.locator('#import-dialog').isVisible(),true);
+ await page.keyboard.press('Escape');
+ assert.equal(await page.locator('#import-dialog').isVisible(),false);
  const importFile=async file=>{
+   await page.click('#open-import');
    await page.setInputFiles('#file',file);
    await page.waitForFunction(()=>!document.querySelector('#preview-import').disabled);
    await page.click('#preview-import');
@@ -403,7 +468,7 @@ const server=http.createServer((req,res)=>{
  await page.evaluate(()=>{const el=document.querySelector('#notice-context');el.value='criteria';el.dispatchEvent(new Event('input',{bubbles:true}));});assert.equal(await page.locator('.contract-row').count(),25);
  await page.evaluate(()=>{const el=document.querySelector('#notice-context');el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
  await importFile(path.resolve('data/decp-cities.json'));
- await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 1270'));
+ await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2289'));
  await page.fill('#search',profile.name);
  assert(await page.locator('.contract-row').count()>0);
  await page.fill('#search','');
@@ -424,6 +489,7 @@ const server=http.createServer((req,res)=>{
  for(let i=0;i<8;i++)assert.match(await page.locator('.contract-row').nth(i).textContent(),/Official audit finding/);
  assert(!((await page.locator('body').textContent()).includes('null / 100')));
  // Mapped CSV preview is non-destructive, text is escaped, and currency stays unknown.
+ await page.click('#open-import');
  await page.setInputFiles('#file',{name:'mapped.csv',mimeType:'text/csv',buffer:Buffer.from('key,owner,title,amount,directAward,dataStatus,date\nx,Council,<img src=x onerror=alert(1)>,150000,true,verified,2024-06-01')});
  await page.waitForFunction(()=>!document.querySelector('#preview-import').disabled);
  await page.selectOption('#import-columns select[data-field="id"]','key');
@@ -437,12 +503,25 @@ const server=http.createServer((req,res)=>{
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 1'));
  assert.match(await page.locator('.contract-row').textContent(),/currency unknown/);
  assert.match(await page.locator('.contract-row').textContent(),/Not assessed/);
+ await page.click('#open-import');
  await page.selectOption('#import-method','french');
  assert.equal(await page.locator('#confirm-import').isDisabled(),true,'method changes invalidate preview');
  await page.click('#preview-import');
  await page.click('#confirm-import');
+ await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 1'));
+ assert.match(await page.locator('.contract-row').textContent(),/currency unknown/);
+ assert.match(await page.locator('.contract-row').textContent(),/Not assessed/,'French opt-in cannot assume an unknown amount denomination is EUR');
+ await page.click('.row-toggle');
+ assert.match(await page.locator('#detail-panel').textContent(),/currency is unknown or not EUR/);
+ await page.keyboard.press('Escape');
+ await page.click('#open-import');
+ await page.setInputFiles('#file',{name:'euros.csv',mimeType:'text/csv',buffer:Buffer.from('id,buyer,description,amount,currency,directAward,dataStatus,date\nx,Council,Declared euro contract,150000,EUR,true,verified,2024-06-01')});
+ await page.waitForFunction(()=>!document.querySelector('#preview-import').disabled);
+ await page.click('#preview-import');
+ await page.click('#confirm-import');
  await page.waitForFunction(()=>document.querySelector('.contract-row').textContent.includes('18'));
  assert.doesNotMatch(await page.locator('.contract-row').textContent(),/Not assessed/);
+ await page.click('#open-import');
  await page.setInputFiles('#file',{name:'bad.csv',mimeType:'text/csv',buffer:Buffer.from('id,buyer,description,amount\nx,B,D,broken')});
  await page.waitForFunction(()=>!document.querySelector('#preview-import').disabled);
  await page.click('#preview-import');
@@ -455,10 +534,10 @@ const server=http.createServer((req,res)=>{
   const pn=await browser.newPage({locale:'en-GB',viewport:{width:1280,height:900}});
   pn.on('pageerror',e=>errors.push(e.message));
   await pn.goto(base);
-  await pn.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2594'));
+  await pn.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 5286'));
   const record={id:'base-1',buyer:'Public buyer',supplier:'Individual or foreign holder · 0a1b2c3d / Company Lda',supplierNamesPublished:['Individual or foreign holder · 0a1b2c3d','Company Lda'],
    supplierProtectedNames:[{code:'0a1b2c3d',data:'gOAHCKdifNZHQSdVLA=='},null],description:'Synthetic service contract',amount:1000,date:'2025-01-02'};
-  await pn.click('#advanced-filters > summary');await pn.locator('details.local-file > summary').click();
+  await pn.click('#open-import');
   await pn.setInputFiles('#file',{name:'protected.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify([record]))});
   await pn.waitForFunction(()=>!document.querySelector('#preview-import').disabled);
   await pn.click('#preview-import');await pn.click('#confirm-import');
@@ -478,24 +557,24 @@ const server=http.createServer((req,res)=>{
   const prof=await browser.newPage({locale:'en-GB',viewport:{width:1280,height:900}});
   prof.on('pageerror',e=>errors.push(e.message));
   await prof.goto(base);
-  await prof.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2594'));
+  await prof.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 5286'));
   await openRow(prof,prof.locator('.row-toggle').first());
   await prof.locator('#detail-panel .profile-link').first().click();
   assert.equal(await prof.locator(panel).isVisible(),false,'opening a profile closes the record panel');
   assert.match(await prof.locator('#profile-panel h2').textContent(),/^Buyer profile · /);
   assert.match(await prof.locator('#profile-panel').textContent(),/Whole dataset/);
-  assert.doesNotMatch(await prof.locator('#status').textContent(),/2594 \/ 2594/);
+  assert.doesNotMatch(await prof.locator('#status').textContent(),/5286 \/ 5286/);
   await prof.locator('#profile-panel button',{hasText:'Close profile'}).click();
-  assert.match(await prof.locator('#status').textContent(),/2594 \/ 2594/);
+  assert.match(await prof.locator('#status').textContent(),/5286 \/ 5286/);
   await prof.close();
  }
  // All countries side by side (over HTTP): each dataset prepared on its own, country shown per row, newest signals first.
  const allPage=await browser.newPage({locale:'en-GB',viewport:{width:1280,height:900}});
  allPage.on('pageerror',e=>errors.push(e.message));
  await allPage.goto(base+'/#dataset=all');
- await allPage.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 18501'),null,{timeout:60000});
+ await allPage.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 19923'),null,{timeout:60000});
  assert.equal(await allPage.locator('#coverage-link').isHidden(),true);
- await allPage.selectOption('#sort','recent-signal');
+ await allPage.evaluate(()=>{const sort=document.querySelector('#sort');sort.value='recent-signal';sort.dispatchEvent(new Event('input'));});
  const firstAll=allPage.locator('.contract-row').first();
  assert.match(await firstAll.locator('td').first().locator('.country').textContent(),/\S/);
  assert.doesNotMatch(await firstAll.locator('td').last().textContent(),/Not assessed|^\s*0 \/ 100/);
@@ -506,10 +585,10 @@ const server=http.createServer((req,res)=>{
   const lp=await browser.newPage({locale:'en-GB',viewport:{width:1280,height:900}});
   lp.on('pageerror',e=>errors.push(e.message));
   await lp.goto(base+'/?lang='+lang);
-  await lp.waitForFunction(()=>/2594 \/ 2594/.test(document.querySelector('#status').textContent));
+  await lp.waitForFunction(()=>/5286 \/ 5286/.test(document.querySelector('#status').textContent));
   assert.equal(await lp.evaluate(()=>document.documentElement.lang),lang);
   assert.equal(await lp.locator('#lang').inputValue(),lang);
-  assert.match(await lp.locator('label:has(#sort)').textContent(),new RegExp('^'+sort));
+  assert.match(await lp.locator('label:has(#sort-field)').textContent(),new RegExp('^'+sort));
   const row=lp.locator('.contract-row').first();
   assert.equal(await row.locator('.row-toggle').textContent(),sourceObject);
   assert.match(await row.locator('td').nth(4).textContent(),new RegExp('^'+sector));
@@ -517,23 +596,23 @@ const server=http.createServer((req,res)=>{
   assert.match(await row.locator('.mobile-signals').first().textContent(),signals);
   await openRow(lp,row.locator('.row-toggle'));
   assert.doesNotMatch(await lp.locator(panel).textContent(),/Buyer: |Declared increase of /);
-  assert.match(await lp.locator('#detail-position').textContent(),lang==='fr' ? /^Fiche \d+ sur 2594$/ : /^Registro \d+ de 2594$/);
+  assert.match(await lp.locator('#detail-position').textContent(),lang==='fr' ? /^Fiche \d+ sur 5286$/ : /^Registro \d+ de 5286$/);
   await lp.close();
  }
  // The selector remembers the choice in this browser only, and English drops the parameter.
  const switcher=await browser.newPage({locale:'en-GB',viewport:{width:1280,height:900}});
  switcher.on('pageerror',e=>errors.push(e.message));
  await switcher.goto(base+'/?lang=fr');
- await switcher.waitForFunction(()=>/2594/.test(document.querySelector('#status').textContent));
+ await switcher.waitForFunction(()=>/5286/.test(document.querySelector('#status').textContent));
  await Promise.all([switcher.waitForNavigation(),switcher.selectOption('#lang','en')]);
  assert.equal(new URL(switcher.url()).searchParams.get('lang'),null);
- await switcher.waitForFunction(()=>/2594 \/ 2594 results/.test(document.querySelector('#status').textContent));
+ await switcher.waitForFunction(()=>/5286 \/ 5286 results/.test(document.querySelector('#status').textContent));
  assert.equal(await switcher.evaluate(()=>localStorage.getItem('contract-signals-lang')),'en');
  await switcher.close();
  const mobile=await browser.newPage({locale:'en-GB',viewport:{width:390,height:844}});
  mobile.on('pageerror',e=>errors.push(e.message));
  await mobile.goto(base);
- await mobile.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 2594'));
+ await mobile.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 5286'));
  assert.equal(await mobile.locator('#advanced-filters').getAttribute('open'),null);
  assert.equal(await mobile.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
  await mobile.locator('#advanced-filters > summary').click();
