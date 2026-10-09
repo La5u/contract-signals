@@ -22,6 +22,12 @@ FROZEN_CITIES = ('581fe2c98e64e66ed5fd3964f599115f8e42767f', 'data/decp-cities.j
                  'd5126b0742d27858d68acc4b63c7a967db9653fd7cfbd96e1bfef6c98cfd1184')
 
 
+def frozen_available():
+    """The frozen-time city file lives in git history; shallow CI checkouts do not have it."""
+    commit, relative, _ = FROZEN_CITIES
+    return subprocess.run(['git', 'cat-file', '-e', f'{commit}:{relative}'], cwd=ROOT, capture_output=True).returncode == 0
+
+
 def frozen_root(tmp):
     root = Path(tmp)
     for relative in ['script.js', *m.DATASETS.values()]:
@@ -35,6 +41,7 @@ def frozen_root(tmp):
     return root
 
 
+@unittest.skipUnless(frozen_available(), 'frozen-time city snapshot not in this checkout (shallow clone)')
 class DocumentReviewTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
