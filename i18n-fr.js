@@ -758,7 +758,12 @@ window.I18N_DICTS.fr = {
   "Amount, date and holder matched against the award notice (see the lots above).": "Montant, date et titulaire rapprochés de l’avis d’attribution (voir les lots ci-dessus).",
   "The Ministry dataset published two amounts for this contract; the buyer’s feed confirms one of them.": "Le jeu du ministère a publié deux montants pour ce marché ; le flux de l’acheteur confirme l’un d’eux.",
   "Sources disagree on the initial amount: no increase calculation, which could mix bases.": "Les sources divergent sur le montant initial : pas de calcul de hausse, qui pourrait mélanger des bases.",
-  "The published amount is a placeholder (10 EUR or less) and no source gives a real amount: cannot tell whether the contract was below the legal threshold. Not assessed.": "Le montant publié est une valeur symbolique (10 EUR ou moins) et aucune source ne donne de montant réel : impossible de savoir si le marché était sous le seuil légal. Non évalué."
+  "The published amount is a placeholder (10 EUR or less) and no source gives a real amount: cannot tell whether the contract was below the legal threshold. Not assessed.": "Le montant publié est une valeur symbolique (10 EUR ou moins) et aucune source ne donne de montant réel : impossible de savoir si le marché était sous le seuil légal. Non évalué.",
+  "Three or more contract amendments": "Trois avenants au contrat ou plus",
+  "Contract amendments": "Avenants au contrat",
+  "Contract record not retrieved: amendments not assessable.": "Fiche du contrat non récupérée : avenants non évaluables.",
+  "none published": "aucun publié",
+  "StateWatch/Prozorro risk indicator ARI 1-1 (three or more contract amendments)": "Indicateur de risque StateWatch/Prozorro ARI 1-1 (trois avenants au contrat ou plus)"
  },
  "patterns": [
   [
@@ -1264,6 +1269,10 @@ window.I18N_DICTS.fr = {
   [
    "Sources disagree on the amount ({a} to {b} HT), on either side of the legal threshold: not assessed.",
    "Les sources divergent sur le montant ({a} à {b} HT), de part et d’autre du seuil légal : non évalué."
+  ],
+  [
+   "{a} active contract amendment(s). Rationale types: {b}. Amendments are often lawful (Law on Public Procurement art. 41 permits listed changes). The threshold of three follows StateWatch/Prozorro risk indicator ARI 1-1. 8 points when the threshold is met.",
+   "{a} avenant(s) actif(s) au contrat. Types de justification : {b}. Les avenants sont souvent licites (l’art. 41 de la loi sur les marchés publics permet les modifications énumérées). Le seuil de trois suit l’indicateur de risque StateWatch/Prozorro ARI 1-1. 8 points lorsque le seuil est atteint."
   ]
  ]
 };

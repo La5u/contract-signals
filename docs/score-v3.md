@@ -1,6 +1,12 @@
-# Vigilance index 3.3 — active method
+# Vigilance index 3.4 — active method
 
 **An editorial sorting tool, not a probability, a measure of legal gravity or a certificate of regularity.** The existing data and PDFs are unchanged; the meaning of the score and some eligibility criteria deliberately change. A v2.1 30 must not be compared to a v3 30 as a real evolution of a contract.
+
+## v3.4 (9 October 2026): Ukrainian contract amendments
+
+Approved by the owner on 2026-10-09. Only Ukrainian (Prozorro) rows gain `ua-contract-amendments`: three or more active amendments in the contracting API give a flat **8 points** in the execution family. Missing contract records remain unknown. The threshold follows StateWatch/Prozorro ARI 1-1; amendments are often lawful under Law on Public Procurement art. 41.
+
+The [preliminary verdict pilot](../research/calibration/label-calibration-plan.md#results-2026-10-09-preliminary) found hits in **4/13 corruption tenders, 0/8 fraud tenders and 4/65 comparisons**. LR+ for all positives is about 3, with a confidence interval reaching 1. Small counts, selection bias, mostly presumed finality and unlabelled comparisons justify only the uniform 8-point entry placeholder, not a calibrated probability or a higher weight. Other countries' scores are unchanged. In the bundled Ukrainian cohort (488 contracts, all contract records retrieved) one contract reaches three amendments: flagged rows 47 → 48, no other score changes. See [the Ukrainian method](score-ukraine.md).
 
 ## Three distinct pieces of information
 
@@ -12,7 +18,7 @@ The citation of an R2122 article, the buyer’s explanations, the current names/
 
 ## Unknown, zero and coverage
 
-`getAssessment` describes **eight local checks and the universal late-publication check, plus five evidence-based checks when present** (9 per record; the five evidence-based checks are described in [experimental-indicators.md](experimental-indicators.md) and are listed only on records carrying `indicatorEvidence`, otherwise omitted), plus a linked-notice check for Tours (10), with:
+`getAssessment` describes **eight local checks and the universal late-publication check, plus five evidence-based checks when present** (9 per record; the five evidence-based checks are described in [experimental-indicators.md](experimental-indicators.md) and are listed only on records carrying `indicatorEvidence`, otherwise omitted), plus a linked-notice check for Tours (10) and, since v3.4, the Ukrainian contract-amendment check on Prozorro rows (10), with:
 
 - `signal`: evaluable check and threshold crossed;
 - `clear`: evaluable check, threshold not crossed — not a conclusion of regularity;
