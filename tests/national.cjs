@@ -8,7 +8,7 @@ function tally(rows) {
   const checks = {}; let flagged = 0, zero = 0, notAssessed = 0;
   for (const row of rows) {
     const a = run('getAssessment', row);
-    assert.equal(a.checks.length, 9);
+    assert.equal(a.checks.length, row.dataFamily === 'prozorro' ? 10 : 9);
     for (const c of a.checks) { checks[c.id] ??= {signal:0,clear:0,unknown:0,'not-applicable':0}; checks[c.id][c.status]++; }
     const s = run('getVigilanceScore', row);
     if (s == null) notAssessed++; else if (s > 0) flagged++; else zero++;
@@ -35,15 +35,25 @@ const pick = (t, prefix) => Object.fromEntries(Object.entries(t.checks).filter((
   }
   const t = tally(rows);
   assert.deepEqual(pick(t, 'ua-'), {
-    'ua-single-offer': [38,26,0,424], 'ua-direct-award': [0,64,0,424], 'ua-repeated-single-offer': [10,28,0,450],
+    'ua-contract-amendments': [1,487,0,0], 'ua-single-offer': [38,26,0,424], 'ua-direct-award': [0,64,0,424], 'ua-repeated-single-offer': [10,28,0,450],
     'ua-repeated-direct': [0,0,0,488], 'ua-concentration': [0,483,5,0], 'ua-better-bid-disqualified': [9,55,0,424] });
-  assert.deepEqual(t.counts, [47,441,0]);
+  assert.deepEqual(t.counts, [48,440,0]);
   // Disqualification before the award: counted per lot, only on competitive procedures, never on reporting.
   for (const r of rows) {
     if (r.procedureDirect !== false) assert.equal(r.disqualifiedBefore, null);
     const ids = run('getAssessment', r).checks.map(c => c.id);
-    assert.equal(ids.length, 9); assert.ok(!ids.includes('short-bidding-period'));
+    assert.equal(ids.length, 10); assert.ok(!ids.includes('short-bidding-period'));
   }
+  const amendments = (fields) => run('getAssessment', { ...rows[0], contractChanges: undefined, contractChangeTypes: undefined, ...fields }).checks.find(c => c.id === 'ua-contract-amendments');
+  assert.equal(amendments({contractChanges: 3, contractChangeTypes: ['priceReduction']}).status, 'signal');
+  assert.equal(amendments({contractChanges: 3}).weight, 8);
+  assert.equal(amendments({contractChanges: 2}).status, 'clear');
+  assert.equal(amendments({}).status, 'unknown');
+  assert.equal(amendments({}).reason, 'Contract record not retrieved: amendments not assessable.');
+  assert.equal(amendments({}).applicability, 'yes');
+  assert.equal(amendments({contractChanges: 3}).family, 'execution');
+  assert.equal(run('indicatorKind', 'ua-contract-amendments'), 'contract-amendments');
+  assert.equal(run('selectContracts', [{...rows[0], contractChanges: 3}, {...rows[1], contractChanges: 2}], {indicator: 'contract-amendments'}).length, 1);
   const dq = (n) => run('getAssessment', { ...rows.find(r => r.procedureDirect === false), disqualifiedBefore: n }).checks.find(c => c.id === 'ua-better-bid-disqualified');
   assert.equal(dq(0).status, 'clear'); assert.equal(dq(2).weight, 12); assert.equal(dq(null).status, 'unknown');
   assert.equal(rows.filter(r=>r.linkedContract).length,3);

@@ -5,7 +5,7 @@ const ctx = vm.createContext({URL});
 vm.runInContext(fs.readFileSync('script.js','utf8'), ctx);
 const run = (fn,...args) => {ctx.args=args;return vm.runInContext(`${fn}(...args)`,ctx);};
 const kinds = vm.runInContext('INDICATOR_KINDS', ctx);
-assert.equal(Object.keys(kinds).length, 18);
+assert.equal(Object.keys(kinds).length, 19);
 const files = ['decp-history','tours-notices','decp-cities','contracts','colombia-secop2','paraguay-dncp','paraguay-dncp-3buyers','prozorro','ted-portugal','ted-romania','ted-czechia','uk-fts','chile-mp'];
 const seen = new Set();
 for (const f of files) {

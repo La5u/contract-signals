@@ -1,8 +1,12 @@
 import gzip
 import importlib.util
 import json
+import tempfile
 import unittest
+import urllib.error
+from io import StringIO
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).parents[1]
 
@@ -46,6 +50,78 @@ class TedTests(unittest.TestCase):
 
 
 class ProzorroTests(unittest.TestCase):
+    def fixture(self, directory):
+        raw = directory / "raw"
+        raw.mkdir()
+        tender = {"id": "tender-internal", "tenderID": "UA-2025-01-01-test",
+                  "dateCreated": "2025-01-01", "procurementMethodType": "reporting",
+                  "procuringEntity": {"identifier": {"id": ua.BUYERS[0]["code"]}},
+                  "awards": [{"id": "award", "status": "active", "suppliers": [{"name": "Fixture"}]}],
+                  "contracts": [{"id": "a", "contractID": "published-a", "status": "active", "awardID": "award"},
+                                {"id": "b", "contractID": "published-b", "status": "terminated", "awardID": "award"},
+                                {"id": "c", "contractID": "published-c", "status": "active", "awardID": "award"}]}
+        manifest = {"buyers": [dict(b, tenderIDs=[tender["tenderID"]] if i == 0 else [],
+                                    searchUrl="fixture", searchTotal=1 if i == 0 else 0,
+                                    listedTenderIDs=1 if i == 0 else 0) for i, b in enumerate(ua.BUYERS)],
+                    "window": {}, "retrievalStartedAt": "fixture"}
+        (raw / "manifest.json").write_text(json.dumps(manifest))
+        ua.save_gz(raw / "records" / f"{tender['tenderID']}.json.gz", {"data": tender})
+        return patch.multiple(ua, RAW=raw, EXTRACT=directory / "extract.json",
+                              COVERAGE=directory / "coverage.json", CHANGES=directory / "changes.json")
+
+    def test_offline_merges_minimized_changes_and_preserves_unknown(self):
+        with tempfile.TemporaryDirectory() as temp, self.fixture(Path(temp)):
+            ua.CHANGES.write_text(json.dumps({"contracts": {
+                "a": {"changes": 3, "rationaleTypes": ["priceReduction"]},
+                "b": {"changes": 0, "rationaleTypes": []}}}))
+            with patch.object(ua.urllib.request, "urlopen", side_effect=AssertionError("offline network call")):
+                ua.offline()
+            rows = {r["contractInternalId"]: r for r in json.loads(ua.EXTRACT.read_text())}
+            self.assertEqual(rows["a"]["contractChanges"], 3)
+            self.assertEqual(rows["a"]["contractChangeTypes"], ["priceReduction"])
+            self.assertEqual(rows["b"]["contractChanges"], 0)
+            self.assertNotIn("contractChanges", rows["c"])
+            self.assertNotIn("contractChangeTypes", rows["c"])
+            counts = json.loads(ua.COVERAGE.read_text())["counts"]
+            self.assertEqual(counts["withContractChanges"], 2)
+            self.assertEqual(counts["withoutContractChanges"], 1)
+            ua.CHANGES.unlink()
+            ua.offline()
+            self.assertTrue(all("contractChanges" not in r for r in json.loads(ua.EXTRACT.read_text())))
+
+    def test_fetch_minimizes_retries_and_resumes(self):
+        with tempfile.TemporaryDirectory() as temp, self.fixture(Path(temp)):
+            ua.CHANGES.write_text(json.dumps({"contracts": {"a": {"changes": 0, "rationaleTypes": [],
+                                                                    "changeDates": [], "status": "active"}}}))
+            body = {"data": {"id": "b", "status": "terminated", "name": "omit", "contactPoint": {}, "documents": [],
+                             "changes": [{"status": "active", "dateSigned": "2025-03-01", "rationaleTypes": ["taxRate", "priceReduction"]},
+                                         {"status": "pending", "rationaleTypes": ["omit"]},
+                                         {"status": "active", "dateSigned": "2025-02-01", "rationaleTypes": ["taxRate"]}]}}
+            responses = [urllib.error.HTTPError("fixture", 429, "throttled", {}, None),
+                         urllib.error.HTTPError("fixture", 503, "unavailable", {}, None), StringIO(json.dumps(body)),
+                         urllib.error.HTTPError("fixture", 404, "missing", {}, None)]
+            with patch.object(ua.urllib.request, "urlopen", side_effect=responses) as fetch, patch.object(ua.time, "sleep") as sleep:
+                ua.fetch_contract_changes()
+            self.assertEqual([call.args[0].full_url for call in fetch.call_args_list],
+                             [f"{ua.API}/contracts/b"] * 3 + [f"{ua.API}/contracts/c"])
+            self.assertEqual([call.args[0] for call in sleep.call_args_list], [1, 1, 1, 2, 1, 1])
+            snapshot = json.loads(ua.CHANGES.read_text())
+            self.assertEqual(snapshot["contracts"]["b"], {"changes": 2, "rationaleTypes": ["priceReduction", "taxRate"],
+                                                         "changeDates": ["2025-02-01", "2025-03-01"], "status": "terminated"})
+            self.assertEqual(snapshot["failedIds"], ["c"])
+            with patch.object(ua.urllib.request, "urlopen", return_value=StringIO(json.dumps({"data": {"id": "c", "status": "active"}}))) as fetch, patch.object(ua.time, "sleep"):
+                ua.fetch_contract_changes()
+            self.assertEqual(fetch.call_count, 1)
+            self.assertEqual(json.loads(ua.CHANGES.read_text())["failedIds"], [])
+
+    def test_fetch_stops_and_checkpoints_on_403(self):
+        with tempfile.TemporaryDirectory() as temp, self.fixture(Path(temp)):
+            with patch.object(ua.urllib.request, "urlopen", side_effect=urllib.error.HTTPError("fixture", 403, "blocked", {}, None)) as fetch, patch.object(ua.time, "sleep"):
+                with self.assertRaises(SystemExit):
+                    ua.fetch_contract_changes()
+            self.assertEqual(fetch.call_count, 1)
+            self.assertEqual(json.loads(ua.CHANGES.read_text())["failedIds"], ["a"])
+
     def test_offers_are_counted_per_lot_and_unknown_without_bids(self):
         tender = {"bids": [{"status": "active", "lotValues": [{"relatedLot": "a"}, {"relatedLot": "b"}]},
                            {"status": "active", "lotValues": [{"relatedLot": "b"}]},
@@ -66,6 +142,7 @@ class ProzorroTests(unittest.TestCase):
                 tender = ua.load_gz(ua.RAW / "records" / f"{tender_id}.json.gz")["data"]
                 if tender["procuringEntity"]["identifier"].get("id") == buyer["code"]:
                     built.update({r["id"]: r for r in ua.contract_rows(tender)[0]})
+        ua.merge_contract_changes(list(built.values()))
         for row in json.loads(ua.EXTRACT.read_text(encoding="utf-8")):
             self.assertEqual(row, built[row["id"]], row["id"])
 

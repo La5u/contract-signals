@@ -4,6 +4,7 @@
   --download  list each buyer's tenders (prozorro.gov.ua search, discovery only), resolve
               each tenderID to its internal id, and save the official record from the
               public API (public-api.prozorro.gov.ua/api/2.5) gzipped under data/prozorro/raw/
+  --contract-changes  fetch only minimized active-amendment features, resumably
   --offline   rebuild data/prozorro.json and its coverage file from the raw records
 
 Only official public-API records are used as data; the website search and details
@@ -16,6 +17,7 @@ import json
 import time
 import urllib.parse
 import urllib.request
+import urllib.error
 from datetime import datetime, timezone
 from pathlib import Path
 import os
@@ -28,6 +30,7 @@ ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data/prozorro/raw"
 EXTRACT = ROOT / "data/prozorro.json"
 COVERAGE = ROOT / "data/prozorro-coverage.json"
+CHANGES = ROOT / "data/prozorro-contract-changes.json"
 SEARCH = "https://prozorro.gov.ua/api/search/tenders"
 DETAILS = "https://prozorro.gov.ua/api/tenders/{tender_id}/details"
 API = "https://public-api.prozorro.gov.ua/api/2.5"
@@ -212,6 +215,90 @@ def contract_rows(tender):
     return rows, excluded
 
 
+def merge_contract_changes(rows, path=None):
+    """Absent records stay unknown; a retrieved empty changes list is a known zero."""
+    path = CHANGES if path is None else path
+    records = json.loads(path.read_text(encoding="utf-8"))["contracts"] if path.exists() else {}
+    for row in rows:
+        record = records.get(row["contractInternalId"])
+        if record is not None:
+            row["contractChanges"] = record["changes"]
+            row["contractChangeTypes"] = record["rationaleTypes"]
+    return {"withContractChanges": sum("contractChanges" in r for r in rows),
+            "withoutContractChanges": sum("contractChanges" not in r for r in rows)}
+
+
+def minimized_changes(contract):
+    active = [c for c in contract.get("changes", []) if c.get("status") == "active"]
+    return {"changes": len(active),
+            "rationaleTypes": sorted({t for c in active for t in c.get("rationaleTypes", [])}),
+            "changeDates": sorted(c["dateSigned"] for c in active if c.get("dateSigned")),
+            "status": contract.get("status")}
+
+
+def fetch_contract_changes():
+    """Serial, resumable enrichment of retained rows, without saving API bodies."""
+    manifest = json.loads((RAW / "manifest.json").read_text(encoding="utf-8"))
+    if [b["code"] for b in manifest["buyers"]] != [b["code"] for b in BUYERS]:
+        raise ValueError("Raw manifest does not describe the announced cohort")
+    ids = set()
+    for buyer in manifest["buyers"]:
+        for tender_id in buyer["tenderIDs"]:
+            tender = load_gz(RAW / "records" / f"{tender_id}.json.gz")["data"]
+            if not START <= (tender.get("dateCreated") or "")[:10] < END:
+                continue
+            if tender["procuringEntity"]["identifier"].get("id") != buyer["code"]:
+                continue
+            for row in contract_rows(tender)[0]:
+                matches = [c["id"] for c in tender.get("contracts", [])
+                           if row["contractId"] and c.get("contractID") == row["contractId"]]
+                if len(matches) != 1 or matches[0] != row["contractInternalId"]:
+                    raise ValueError(f"Contract ID mapping ambiguous or missing: {row['id']}")
+                ids.add(matches[0])
+    snapshot = json.loads(CHANGES.read_text(encoding="utf-8")) if CHANGES.exists() else {
+        "retrievedAt": None, "source": f"{API}/contracts/{{id}}", "contracts": {}, "failedIds": []}
+    snapshot["source"] = f"{API}/contracts/{{id}}"
+    failed = set(snapshot.get("failedIds", [])) - snapshot["contracts"].keys()
+
+    def checkpoint():
+        snapshot["retrievedAt"] = datetime.now(timezone.utc).isoformat()
+        snapshot["failedIds"] = sorted(failed)
+        temp = CHANGES.with_suffix(".json.tmp")
+        temp.write_text(json.dumps(snapshot, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        temp.replace(CHANGES)
+
+    for internal_id in sorted(ids - snapshot["contracts"].keys()):
+        for attempt in range(6):
+            # Includes retries: starts are always at least a second apart.
+            time.sleep(1)
+            try:
+                request = urllib.request.Request(f"{API}/contracts/{internal_id}", headers=UA)
+                with urllib.request.urlopen(request, timeout=90) as response:
+                    contract = json.load(response)["data"]
+                if contract.get("id") != internal_id:
+                    raise ValueError("contract id mismatch")
+                snapshot["contracts"][internal_id] = minimized_changes(contract)
+                failed.discard(internal_id)
+                break
+            except urllib.error.HTTPError as e:
+                e.close()
+                if e.code == 403:
+                    failed.add(internal_id)
+                    checkpoint()
+                    raise SystemExit("HTTP 403: stopped contract amendment retrieval") from e
+                if e.code in (429, 503) and attempt < 5:
+                    time.sleep(2 ** attempt)
+                    continue
+                failed.add(internal_id)
+                break
+            except (urllib.error.URLError, TimeoutError, ValueError, KeyError):
+                failed.add(internal_id)
+                break
+        checkpoint()
+    checkpoint()
+    print(f"{len(snapshot['contracts'])} contract records fetched; {len(failed)} failed ids")
+
+
 def offline():
     manifest = json.loads((RAW / "manifest.json").read_text(encoding="utf-8"))
     if [b["code"] for b in manifest["buyers"]] != [b["code"] for b in BUYERS]:
@@ -234,6 +321,7 @@ def offline():
     if len({r["id"] for r in rows}) != len(rows):
         raise ValueError("duplicate row ids")
     rows.sort(key=lambda r: (r["tenderCreated"] or "", r["id"]))
+    changes_coverage = merge_contract_changes(rows)
     EXTRACT.write_text(json.dumps(rows, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     coverage = {"source": API, "discovery": SEARCH + " (prozorro.gov.ua site search, used only to list tender IDs)",
                 "license": "Prozorro open-data reuse terms: copying, publishing, distribution and commercial reuse permitted with source attribution (https://prozorro.gov.ua/openprocurement). No named licence is stated there; do not infer CC BY for API records from a separate data.gov.ua catalogue entry.",
@@ -246,12 +334,14 @@ def offline():
                 "counts": {"tendersInWindow": sum(kinds.values()), "tendersOutsideWindowByDateCreated": outside, "tendersWithAnotherBuyer": other_buyer,
                            "procedureTypes": dict(sorted(kinds.items(), key=lambda kv: -kv[1])), "retainedContracts": len(rows),
                            "excludedContracts": excluded, "withOffers": sum(r["offers"] is not None for r in rows),
+                           **changes_coverage,
                            "currencies": sorted({r["currency"] for r in rows if r["currency"]})},
                 "limitations": ["Three buyers, not a country sample; wartime rules allow exceptions and withheld publications.",
                                 "Direct-contract reports (reporting): offer/direct-award checks are out of scope; concentration remains assessable.",
+                                "Amendment counts come only from retrieved contracting-module records; missing records remain unknown. The count does not assess legality or comparable amount/duration changes.",
                                 "Three exact contract API links checked in a separate dated sample; published change counts are context only, not a comparable amount/duration history.",
                                 "Amounts are in the published currency, never converted or summed across currencies."],
-                "reproduce": ["python tools/import-prozorro.py --offline", "python tools/import-prozorro.py --download"]}
+                "reproduce": ["python tools/import-prozorro.py --offline", "python tools/import-prozorro.py --download", "python tools/import-prozorro.py --contract-changes"]}
     COVERAGE.write_text(json.dumps(coverage, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     print(json.dumps(coverage["counts"], ensure_ascii=False))
 
@@ -260,8 +350,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--download", action="store_true")
     parser.add_argument("--offline", action="store_true")
+    parser.add_argument("--contract-changes", action="store_true", help="Fetch minimized amendments for retained signed contracts; resumable")
     args = parser.parse_args()
     if args.download:
         download()
+    if args.contract_changes:
+        fetch_contract_changes()
     if args.offline or args.download:
         offline()
