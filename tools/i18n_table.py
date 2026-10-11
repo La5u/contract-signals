@@ -1,7 +1,7 @@
 # Interface strings: (English, Spanish, French). Edit here, then run python tools/i18n-strings.py.
 # English keys must match the rendered text exactly (whitespace is normalised).
 
-TITLES = {"es": "Marchés ouverts — explorar la contratación pública", "fr": "Marchés ouverts — explorer la commande publique"}
+TITLES = {"es": "Contract Signals: explorar la contratación pública", "fr": "Contract Signals : explorer la commande publique"}
 
 EXACT = [
     # ---- Concise help and provenance ----
@@ -23,7 +23,7 @@ EXACT = [
     # ---- Header and main controls ----
     ("Language", "Idioma", "Langue"),
     ("Interface language", "Idioma de la interfaz", "Langue de l’interface"),
-    ("Marchés ouverts", "Marchés ouverts", "Marchés ouverts"),
+    ("Contract Signals", "Contract Signals", "Contract Signals"),
     ("Explore published procurement records from France, Chile, Colombia, Czechia, Paraguay, Portugal, Romania, Ukraine and the United Kingdom.",
      "Explore registros publicados de contratación pública de Francia, Chile, Colombia, Chequia, Paraguay, Portugal, Rumanía, Ucrania y el Reino Unido.",
      "Explorez les données publiées de commande publique de France, du Chili, de Colombie, de Tchéquie, du Paraguay, du Portugal, de Roumanie, d’Ukraine et du Royaume-Uni."),
@@ -33,6 +33,11 @@ EXACT = [
     (", which browsers never send to a server; a chosen language is remembered in this browser only.",
      ", que los navegadores nunca envían a un servidor; el idioma elegido solo se recuerda en este navegador.",
      ", que les navigateurs n’envoient jamais à un serveur ; la langue choisie n’est mémorisée que dans ce navigateur."),
+    ("Explore published public procurement records from several countries and see risk signals, all in your browser.",
+     "Explore registros publicados de contratación pública de varios países y vea señales de riesgo, todo en su navegador.",
+     "Explorez les données publiées de commande publique de plusieurs pays et consultez les signaux de risque, le tout dans votre navigateur."),
+    ("A signal is a reason to look, not proof.", "Una señal es un motivo para examinar, no una prueba.", "Un signal est une raison d’examiner, pas une preuve."),
+    ("declared 0 (likely undisclosed)", "0 declarado (probablemente no divulgado)", "0 déclaré (probablement non divulgué)"),
     ("Explore contracts", "Explorar contratos", "Explorer les contrats"),
     ("Dataset", "Conjunto de datos", "Jeu de données"),
     ("All countries", "Todos los países", "Tous les pays"),

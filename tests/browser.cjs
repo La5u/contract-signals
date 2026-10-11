@@ -26,8 +26,8 @@ const server=http.createServer((req,res)=>{
  const closePanel=async p=>{if(await p.locator(panel).isVisible())await p.click('#detail-close');};
  const openRow=async(p,toggle)=>{await closePanel(p);await toggle.click();await p.locator(panel).waitFor();};
  await page.goto(base);
- assert.equal(await page.locator('h1').textContent(),'Marchés ouverts');
- assert.equal(await page.title(),'Marchés ouverts');
+ assert.equal(await page.locator('h1').textContent(),'Contract Signals');
+ assert.equal(await page.title(),'Contract Signals: explore public procurement records');
  assert.equal(await page.locator('.brand img, .brand svg').count(),0,'branding icon is favicon-only');
  assert.equal(await page.locator('link[rel="icon"]').getAttribute('href'),'favicon.svg');
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 5286'));
