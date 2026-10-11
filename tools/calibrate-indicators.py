@@ -15,10 +15,10 @@ except ImportError as exc:
 KINDS = ['single-offer', 'direct-award', 'repeated-single-offer', 'repeated-direct',
          'low-competition-rate', 'concentration', 'disqualified-better-bid',
          'short-bidding-period', 'late-notice-change', 'long-duration', 'amount-increase',
-         'term-extension', 'late-publication', 'cap', 'execution', 'legalGround', 'unitPrice', 'exclusivity']
-FAMILIES = ['competition'] * 9 + ['execution'] * 3 + ['transparency'] + ['execution'] * 2 + ['competition', 'execution', 'competition']
+         'term-extension', 'late-publication', 'cap', 'execution', 'legalGround', 'unitPrice', 'exclusivity', 'contract-amendments']
+FAMILIES = ['competition'] * 9 + ['execution'] * 3 + ['transparency'] + ['execution'] * 2 + ['competition', 'execution', 'competition'] + ['execution']
 # Representative site constants / graduated maxima; proxy, not actual data scores.
-POINTS = np.array([12, 18, 40, 60, 40, 40, 12, 40, 5, 40, 40, 40, 16, 20, 10, 5, 3, 1.])
+POINTS = np.array([12, 18, 40, 60, 40, 40, 12, 40, 5, 40, 40, 40, 16, 20, 10, 5, 3, 1, 8.])
 CAPS = np.array([60., 40., 16.])
 FAMILY_NAMES = ['competition', 'execution', 'transparency']
 SCENARIOS = ['independent', 'correlated', 'nonlinear-family-max', 'nonlinear-pair-interaction', 'missingness', 'population-sector-drift', 'biased-discovery']
@@ -66,8 +66,8 @@ def generate(scenario, seed):
     groups = np.repeat(np.arange(100), 40)
     train, val, test = split_groups(groups, seed + 1000)
     n = len(groups)
-    p0 = np.linspace(.04, .22, 18)
-    p1 = np.clip(p0 + rng.uniform(.02, .3, 18), 0, .85)
+    p0 = np.linspace(.04, .22, 19)
+    p1 = np.clip(p0 + rng.uniform(.02, .3, 19), 0, .85)
     buyer_effect = rng.normal(0, .65, 100)[groups]
     latent = rng.binomial(1, expit(np.log(.16 / .84) + buyer_effect))
     prob = np.where(latent[:, None], p1, p0)
@@ -80,17 +80,17 @@ def generate(scenario, seed):
         sector = (groups % 3)[:, None]
         prob = np.clip(prob + .05 * sector, .01, .95)
         prob[test] = np.clip(.1 + .65 * prob[test, ::-1], .01, .95)
-    x = (rng.random((n, 18)) < prob).astype(float)
+    x = (rng.random((n, 19)) < prob).astype(float)
     if scenario == 'nonlinear-family-max':
-        x = (rng.random((n, 18)) < p0).astype(float)
+        x = (rng.random((n, 19)) < p0).astype(float)
         latent = rng.binomial(1, expit(-3 + family_score(x, POINTS) / 25 + buyer_effect))
     if scenario == 'nonlinear-pair-interaction':
-        x = (rng.random((n, 18)) < np.clip(p0 * 2, 0, .8)).astype(float)
+        x = (rng.random((n, 19)) < np.clip(p0 * 2, 0, .8)).astype(float)
         interaction = (x[:, :9] * x[:, 9:]).sum(axis=1)
         latent = rng.binomial(1, expit(-2.5 + 2.5 * interaction + buyer_effect))
-    known = rng.random((n, 18)) > .08
+    known = rng.random((n, 19)) > .08
     if scenario == 'missingness':
-        known = rng.random((n, 18)) > (.15 + .45 * latent[:, None])
+        known = rng.random((n, 19)) > (.15 + .45 * latent[:, None])
     observed = x * known
     discovery = latent.copy()
     if scenario == 'biased-discovery':
@@ -112,7 +112,7 @@ def fit_models(x, known, labels, validation_x, validation_labels, validation_kno
                 np.r_[residual.mean(), imputed.T @ residual / len(labels) + 2 * regularization * theta[1:]])
     regularizations = (.005, .025, .1)
     results = [minimize(loss, np.zeros(19), args=(reg,), jac=True, method='L-BFGS-B',
-                        bounds=[(None, None)] + [(0, 8)] * 18, options={'maxiter': 100})
+                        bounds=[(None, None)] + [(0, 8)] * 19, options={'maxiter': 100})
                for reg in regularizations]
     # Caller supplies assessed masks separately for validation imputation.
     vx = np.where(validation_known, validation_x, means)
@@ -126,7 +126,7 @@ def fit_models(x, known, labels, validation_x, validation_labels, validation_kno
         weights = start.copy()
         # Two passes, four values; TRAIN AP tunes, validation only selects start.
         for _ in range(2):
-            for j in range(18):
+            for j in range(19):
                 best = objective(labels, family_score(x, weights))
                 chosen = weights[j]
                 for value in (0, upper[j] / 4, upper[j] / 2, upper[j]):

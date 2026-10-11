@@ -1371,13 +1371,13 @@ function selectContracts(contracts, { search = '', minimum = 0, minScore = 0, fl
     const sectorMatch = !sector || getSector(c).code === sector;
     const projectMatch = !project || (project === '@documented' ? Boolean(c.project) : c.project?.id === project);
     return (!terms.length || terms.every(term => searchText(c).includes(term))) && assessmentMatch && noticeMatch && legalMatch && sectorMatch && projectMatch &&
-      (minimum <= 0 || (c.amount != null && c.amount >= minimum)) && (minScore <= 0 || (scoreFor(c) != null && scoreFor(c) >= minScore)) &&
+      (minimum <= 0 || (c.amount > 0 && c.amount >= minimum)) && (minScore <= 0 || (scoreFor(c) != null && scoreFor(c) >= minScore)) &&
       (!flagged || getIndicators(c).length > 0) && (!official || c.officialFinding === true) && (!adjudicated || hasAdjudicatedCorruption(c)) && (!investigation || hasReportedInvestigation(c)) &&
       (!indicator || (indicator === 'official-finding' ? c.officialFinding === true : getIndicators(c).some(i => i.kind === indicatorKind(indicator))));
   });
   const direction = ['score-asc', 'amount-asc', 'date-asc', 'publication-asc', 'indicators-asc', 'offers'].includes(sort) ? 1 : ['sector', 'sector-desc', 'buyer', 'buyer-desc', 'supplier', 'supplier-desc'].includes(sort) ? (sort.endsWith('-desc') ? -1 : 1) : -1;
   const field = sort === 'recent-signal' ? 'recent-signal' : sort.startsWith('score') ? 'score' : sort.startsWith('amount') ? 'amount' : sort.startsWith('date') ? 'date' : sort.startsWith('indicators') ? 'indicators' : sort.startsWith('publication') ? 'publication' : sort.startsWith('sector') ? 'sector' : sort.startsWith('buyer') ? 'buyer' : sort.startsWith('supplier') ? 'supplier' : sort.startsWith('offers') ? 'offers' : sort;
-  const raw = c => field === 'recent-signal' ? (scoreFor(c) > 0 && c.date ? Date.parse(c.date) : null) : field === 'score' ? scoreFor(c) : field === 'amount' ? c.amount : field === 'date' ? (c.date ? Date.parse(c.date) : null) :
+  const raw = c => field === 'recent-signal' ? (scoreFor(c) > 0 && c.date ? Date.parse(c.date) : null) : field === 'score' ? scoreFor(c) : field === 'amount' ? (c.amount > 0 ? c.amount : null) : field === 'date' ? (c.date ? Date.parse(c.date) : null) :
     field === 'publication' ? (c.publicationDate ? Date.parse(c.publicationDate) : null) : field === 'sector' ? getSector(c).label : field === 'buyer' ? c.buyer : field === 'supplier' ? c.supplier :
     field === 'indicators' ? (scoreFor(c) == null ? null : getIndicators(c).length) :
     field === 'official' ? (c.officialFinding === true ? 1 : null) : field === 'offers' ? c.offers : field === 'increase' ? increaseFor(c) : null;
@@ -1409,7 +1409,7 @@ function pageSummaryForCopy(rows, { dataset, page, totalPages, totalResults }) {
     const names = supplierNames(c);
     lines.push(`[${index + 1}] ${c.id}`, `Buyer: ${c.buyer}`, `Supplier: ${c.supplier || 'not specified'}${names.length ? ` (current register name: ${names.join('; ')})` : ''}`,
       `Subject: ${c.description}`, `Date (source field; see record for meaning): ${c.date || 'unknown'}`,
-      `Declared amount: ${c.amount == null ? 'unknown' : `${c.amount} ${recordCurrency(c) || '(currency unknown)'}`} (not an audited payment)`,
+      `Declared amount: ${c.amount == null ? 'unknown' : c.amount === 0 ? 'declared 0 (likely undisclosed)' : `${c.amount} ${recordCurrency(c) || '(currency unknown)'}`} (not an audited payment)`,
       `Index: ${score == null ? 'Not assessed' : `${score}/100`} · Heuristic signals: ${signals.length ? signals.map(i => i.kindLabel).join('; ') : score == null ? 'not assessed' : 'none among assessed checks'}`,
       `Audit finding: ${c.officialFinding === true ? 'documented, separate from index' : 'not linked in this extract'} · Reported investigation: ${hasReportedInvestigation(c) ? 'reported at the time; current status unknown' : 'not linked in this extract'}`,
       `Record source: ${source || 'not available'}`);
@@ -1496,7 +1496,7 @@ function buildProfile(contracts, role, key) {
     counterparts.set(name, entry);
   }
   const currencies = {};
-  for (const c of rows) if (c.amount != null) {
+  for (const c of rows) if (c.amount > 0) {
     const cur = recordCurrency(c) || '(currency unknown)';
     currencies[cur] ??= { contracts: 0, largest: 0 };
     currencies[cur].contracts++;
@@ -2004,7 +2004,7 @@ function startExplorer() {
   matchMedia('(max-width: 760px)').addEventListener('change', () => { if (loaded) render(); });
   const formatDate = c => c.date ? dateFormat.format(new Date(c.date)) : c.noticeEvidence ? c.publicationDate || '—' : '—';
   // Sources that disagree are shown as the full range of their published amounts, never one pick.
-  const formatAmount = c => Array.isArray(c.verification?.amountRange) ? c.verification.amountRange.map(a => moneyFor(c).format(a)).join(' – ') : c.amount == null ? '—' : ({ 'at-least': '≥ ', 'more-than': '> ', approximate: '≈ ' }[c.amountQualifier] || '') + moneyFor(c).format(c.amount);
+  const formatAmount = c => Array.isArray(c.verification?.amountRange) ? c.verification.amountRange.map(a => moneyFor(c).format(a)).join(' – ') : c.amount == null ? '—' : c.amount === 0 ? 'declared 0 (likely undisclosed)' : ({ 'at-least': '≥ ', 'more-than': '> ', approximate: '≈ ' }[c.amountQualifier] || '') + moneyFor(c).format(c.amount);
   // In the table a range takes two lines (low, then “– high”), so it never runs into the next column.
   function amountCell(c) {
     const range = c.verification?.amountRange;
@@ -2605,7 +2605,7 @@ function startExplorer() {
     pendingOpen = '';
     if (pendingView) { applyView(pendingView); pendingView = null; }
     const missing = key => contracts.filter(c => c[key] == null).length;
-    document.querySelector('#completeness').textContent = `Missing values: ${missing('amount')} amounts, ${missing('offers')} offer counts, ${contracts.filter(c => c.durationMonths == null && !c.durationOriginal).length} durations (${contracts.length} records).`;
+    document.querySelector('#completeness').textContent = `Missing values: ${contracts.filter(c => !(c.amount > 0)).length} amounts, ${missing('offers')} offer counts, ${contracts.filter(c => c.durationMonths == null && !c.durationOriginal).length} durations (${contracts.length} records).`;
     render();
     if (pendingOpen) openDetail(pendingOpen, { focus: false });
     pendingOpen = '';
