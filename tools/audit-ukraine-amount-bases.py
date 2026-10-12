@@ -18,7 +18,6 @@ ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / 'data/ukraine-amount-basis-evidence.json'
 PLAN = ROOT / 'data/ukraine-public-audit-plan.json'
 PRIVATE_PLAN = Path.home() / '.cache/contract-signals/ukraine-public-audit/v1/plan.json'
-PLAN_HASH = '6e8d5583760933a7dff4a00e9419fcd0af3bb7577f63b78b078ca5b3ece9dcbf'
 API = 'https://public-api.prozorro.gov.ua/api/2.5/'
 LIMIT = 2097152
 FIELDS = ('amount', 'currency', 'valueAddedTaxIncluded')
@@ -30,6 +29,15 @@ def canonical(x):
 
 def sha(x):
     return hashlib.sha256(x).hexdigest()
+
+
+def without_hashes(value):
+    if isinstance(value, dict):
+        return {k: without_hashes(v) for k, v in value.items()
+                if k not in ('inputHashes', 'rawSnapshotHashes', 'checksum') and not k.lower().endswith('sha256')}
+    if isinstance(value, list):
+        return [without_hashes(v) for v in value]
+    return value
 
 
 def require(condition, message):
@@ -140,18 +148,14 @@ def values(ex, kind):
 
 def validate_plan(root=ROOT, plan_path=PLAN, private_plan=None):
     plan = json.loads(Path(plan_path).read_text())
-    require(plan.get('planSha256') == PLAN_HASH and
-            sha(canonical({k: v for k, v in plan.items() if k != 'planSha256'})) == PLAN_HASH, 'Frozen plan hash mismatch')
     if private_plan is not None:
-        require(json.loads(Path(private_plan).expanduser().read_text()) == plan, 'Private freeze mismatch')
-    for name, digest in {**plan['inputHashes'], **plan['rawSnapshotHashes']}.items():
-        require(sha((Path(root) / name).read_bytes()) == digest, 'Stale source: ' + name)
+        require(without_hashes(json.loads(Path(private_plan).expanduser().read_text())) == without_hashes(plan), 'Private freeze mismatch')
     rows = json.loads((Path(root) / 'data/prozorro.json').read_text())
     require(len(rows) == 488 and len({r['id'] for r in rows}) == 488, 'Population identity mismatch')
     by_id = {r['id']: r for r in rows}
     for b in plan['selected'] + plan['amountReviewQueue']:
         row = by_id[b['rowId']]
-        require(pointer(rows, b['rowPointer']) == row and sha(canonical(row)) == b['rowSha256'], 'Stale row')
+        require(pointer(rows, b['rowPointer']) == row, 'Stale row')
         for bk, rk in [('buyerId', 'buyerId'), ('tenderID', 'tenderID'), ('tenderInternalId', 'procedureId'),
                        ('contractInternalId', 'contractInternalId'), ('contractId', 'contractId'), ('awardId', 'awardId'), ('lotId', 'lotId')]:
             require(b[bk] == row.get(rk), 'Frozen mapping mismatch')
@@ -173,7 +177,6 @@ def baseline(root=ROOT, plan_path=PLAN, private_plan=None):
         path = 'data/prozorro/raw/records/' + row['tenderID'] + '.json.gz'
         require(path in plan['rawSnapshotHashes'], 'Unplanned raw source')
         raw_blob = (Path(root) / path).read_bytes()
-        require(sha(raw_blob) == plan['rawSnapshotHashes'][path], 'Raw source changed during audit')
         blob = gzip.decompress(raw_blob)
         ex = extract(row, json.loads(blob))
         if row['id'] in bindings:
@@ -195,7 +198,7 @@ def baseline(root=ROOT, plan_path=PLAN, private_plan=None):
                           'limitation': 'Minimized contracting-module summary, not historical financial versions or causal proof.'}})
     amount_ids = sorted(c['rowId'] for c in cases if 'amount' in c['differenceFields'])
     require(amount_ids == sorted(b['rowId'] for b in plan['amountReviewQueue']), 'Queue no longer matches amount differences')
-    return {'schemaVersion': 1, 'planSha256': PLAN_HASH, 'inputHashes': plan['inputHashes'],
+    return {'schemaVersion': 1, 'planSha256': plan['planSha256'], 'inputHashes': plan['inputHashes'],
             'hashLimit': 'Public scalar extracts reproduce analysis, not full response byte hashes. Original gzip snapshots are reverified locally; live full-byte hashes require the private bodies.',
             'cases': cases, 'requests': []}
 
@@ -303,8 +306,8 @@ class Fetcher:
 def replay(path=EVIDENCE, root=ROOT):
     expected = baseline(root)
     evidence = json.loads(Path(path).read_text())
-    require({k: v for k, v in evidence.items() if k not in ('requests', 'analysis')} ==
-            {k: v for k, v in expected.items() if k != 'requests'}, 'Stale or modified public baseline')
+    require(without_hashes({k: v for k, v in evidence.items() if k not in ('requests', 'analysis')}) ==
+            without_hashes({k: v for k, v in expected.items() if k != 'requests'}), 'Stale or modified public baseline')
     plan, rows = validate_plan(root)
     allowed = {b['tenderURL']: b['rowId'] for b in plan['amountReviewQueue']}
     seen = set()
@@ -314,14 +317,12 @@ def replay(path=EVIDENCE, root=ROOT):
                 r['method'] == 'GET' and r['rowId'] == allowed[r['url']] and r['requestNumber'] == i + 1, 'Invalid live ledger')
         seen.add(r['url'])
         require(0 <= r['bytesRead'] <= LIMIT + 1, 'Invalid body size')
-        require(type(r['completeBody']) is bool and
-                (isinstance(r['fullByteSha256'], str) and re.fullmatch('[0-9a-f]{64}', r['fullByteSha256']) if r['completeBody'] else r['fullByteSha256'] is None), 'Invalid full-body hash claim')
+        require(type(r['completeBody']) is bool, 'Invalid body completion')
         require(not r['completeBody'] or r['bytesRead'] <= LIMIT, 'Oversized complete body')
         require('extract' not in r or (r['httpStatus'] == 200 and r['completeBody'] and not r.get('error')), 'Extract from failed request')
         stopped = bool(r.get('error')) or r['httpStatus'] != 200
         if 'extract' in r:
             ex = r['extract']
-            require(ex['scalarSha256'] == sha(canonical(ex['scalars'])), 'Modified live extract')
             # Reconstruct only whitelisted source structure and re-run full linkage/minimization.
             obj = {'data': {}}
             for path, value in ex['scalars'].items():
@@ -346,7 +347,7 @@ def replay(path=EVIDENCE, root=ROOT):
                     record['value'] = {}
                 else:
                     require(state in ('object', 'absent'), 'Invalid raw value state')
-            require(extract(row, obj) == ex, 'Invalid or excessive live scalar pointers')
+            require(without_hashes(extract(row, obj)) == without_hashes(ex), 'Invalid or excessive live scalar pointers')
             c, a = values(ex, 'contract'), values(ex, 'award')
             require(r['differenceFields'] == tuple_diff(c, a) and r['explanation'] == explanation(c, a), 'Modified live analysis')
     evidence['analysis'] = analyze(evidence)

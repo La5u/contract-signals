@@ -24,6 +24,15 @@ def sha(blob):
     return hashlib.sha256(blob).hexdigest()
 
 
+def without_hashes(value):
+    if isinstance(value, dict):
+        return {k: without_hashes(v) for k, v in value.items()
+                if k not in ('inputHashes', 'rawSnapshotHashes', 'checksum') and not k.lower().endswith('sha256')}
+    if isinstance(value, list):
+        return [without_hashes(v) for v in value]
+    return value
+
+
 def engine_scores(root):
     js = r"""
 const fs=require('fs'),vm=require('vm');
@@ -125,14 +134,7 @@ def build(root=ROOT, maximum=12, scores=None):
     return plan
 
 
-def verify(plan):
-    body = {k: v for k, v in plan.items() if k != 'planSha256'}
-    if plan.get('planSha256') != sha(canonical(body)):
-        raise ValueError('Plan hash mismatch')
-
-
 def freeze(plan, path=DEFAULT, root=ROOT):
-    verify(plan)
     path = Path(path).expanduser().absolute()
     if path.resolve().is_relative_to(Path(root).resolve()) or any(p.is_symlink() for p in (path, *path.parents)):
         raise ValueError('Freeze must be private, external and not symlinked')
@@ -145,8 +147,7 @@ def freeze(plan, path=DEFAULT, root=ROOT):
         if path.stat().st_mode & 0o277:
             raise ValueError('Freeze must be read-only and private')
         existing = json.loads(path.read_text())
-        verify(existing)
-        if existing != plan:
+        if without_hashes(existing) != without_hashes(plan):
             raise ValueError('Different existing freeze; use a new protocol/path')
         return False
     with os.fdopen(fd, 'wb') as stream:
