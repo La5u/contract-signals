@@ -21,6 +21,28 @@ The recorded live sample ran on **2026-09-28**: all seven requests returned HTTP
 
 This is a contract-oriented snapshot of three buyers, not a tender census or nationally representative sample. Tenders without contracts do not produce rows; only active awards with one supplier and signed/terminated contracts are retained. Search pagination was not independently re-queried; the recorded Vinnytsia search total is 500. Published bids can omit unfinished-stage bids. Contract changes and supplier identity beyond the published identifier are not validated. The 16 search-association mismatches remain excluded under the official buyer-field rule and should be resolved or documented before any expansion. No additional cohort downloads were made.
 
-## Next: expand Ukraine
+## Accuracy follow-up — 11 October 2026
 
-Expansion is agreed, but the buyer list is not yet fixed. First test discovery pagination, especially the 500-result Vinnytsia listing, and retain page counts/IDs so truncation is detectable. Then publish the additional buyer identifiers and a fixed date window before fetching their tender records. Select by administrative level and manageable volume, not by scores. Keep the current snapshot separate, use the official buyer-field inclusion rule, and record no-contract tenders and all exclusions. Re-run this audit plus a flagged/unflagged live sample before publishing the new cohort.
+The owner subsequently prioritized accuracy of the existing cohort before expansion. The earlier findings/limitations above describe the original snapshot audit, not the following additional review.
+
+A [public-only audit](../research/ukraine-public-audit.md) freezes twelve contracts (five flagged/seven zero-score) and the eleven known amount-difference tenders. **29 requests total:** five discovery, twelve module, eleven tender and one attachment. The first 28 returned HTTP 200; the attachment returned 302 and was not followed. No cohort, source field or score was changed.
+
+- All 488 cached exact mappings and financial provenance checked. Seven amount differences have explicit matching contract-net/award-excluding-VAT evidence; four amount differences and fourteen VAT-only differences remain unresolved. Fresh tender financial fields match the cached snapshot.
+- Twelve module identities verified. Six nonempty arrays corroborate ten active changes, including the sole three-change threshold case. Six omitted `changes` fields mean **zero changes**: Prozorro's API serializer drops empty lists and creates `changes` only on the first posted change ([source check](../research/ukraine-corrections-log.md)).
+- Current Vinnytsia search total 506, boundary pages 25/26/27 return 20/6/0. No current 500 cap observed, but historical completeness remains unknown. The portal date-filter probe returned six results, not the historical creation-window 134; its semantics are not certified.
+- No attachment body was inspected. Amendment rationale categories do not certify legality or financial effect. All 16 buyer-association mismatches remain excluded.
+
+Offline replay (no private cache/freeze or network):
+
+```sh
+python tools/audit-ukraine-discovery.py
+python tools/audit-ukraine-amendments.py
+python tools/audit-ukraine-amount-bases.py
+python tools/review-ukraine-amendment-documents.py
+```
+
+[Correction history](../research/ukraine-corrections-log.md) records the unsupported omitted-list-as-zero interpretation, overbroad financial-basis wording, and corrected overly narrow document-host policy. Source rights, privacy, raw-body/hash limits, exact selection and acquisition accounting are in the overall review.
+
+## Gates before any future expansion
+
+Omitted-list semantics are now verified (omission = no changes). Verify document redirect policy and discovery date/pagination completeness first. Only then publish any additional buyer identifiers and a fixed date window before fetching their tender records. Select by administrative level and manageable volume, not by scores. Keep the current snapshot separate, use the official buyer-field inclusion rule, and record no-contract tenders and all exclusions. No expansion was performed or authorized by this accuracy follow-up.

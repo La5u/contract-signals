@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "evidence": "data/ukraine-amendment-evidence.json",
+  "evidenceFileSha256": "7bdd174b1d38e86f39c1d96a4ccd8a7a8210a1d7c53e57e467c14b2aa1c0f258",
+  "evidenceSha256": "403ad9cece995f19c8f1d6bee8722177c5a554205ec19c030d1ce50681bc49e2",
+  "publisherRule": {
+    "statement": "An omitted `changes` field means the contract has no changes: the list is created only when the first change is posted, and the API serializer never outputs empty lists or nulls.",
+    "repository": "https://github.com/ProzorroUKR/openprocurement.api",
+    "commit": "4dfb3a4d9e81f430dae2f22add9751159840e26f",
+    "verifiedOn": "2026-10-11",
+    "sources": [
+      {
+        "path": "src/openprocurement/contracting/core/procedure/models/contract.py",
+        "lines": "156",
+        "quote": "changes = ListType(ModelType(Change, required=True))"
+      },
+      {
+        "path": "src/openprocurement/contracting/core/procedure/views/change.py",
+        "lines": "43-44",
+        "quote": "if not contract.get(\"changes\"):\n    contract[\"changes\"] = []"
+      },
+      {
+        "path": "src/openprocurement/api/procedure/serializers/base.py",
+        "lines": "75-78",
+        "quote": "if serialized_value is None:  # we don't show null in our outputs\n    continue\nelif isinstance(serialized_value, list) and len(serialized_value) == 0:  # and empty lists\n    continue"
+      }
+    ],
+    "corroboration": "No empty list appears anywhere in the 542 cached tender records; sampled modules also omit `documents`/`milestones` when empty.",
+    "log": "research/ukraine-corrections-log.md#1-omitted-amendment-list-was-silently-counted-as-zero"
+  },
+  "rows": [
+    {
+      "rowId": "prozorro-UA-2025-03-20-006107-a-8a55577b",
+      "observedState": "unavailable",
+      "activeChangeCount": 0,
+      "basis": "omitted-field-publisher-omits-empty-lists",
+      "snapshotCount": 0,
+      "agreesWithSnapshot": true
+    },
+    {
+      "rowId": "prozorro-UA-2024-11-06-016205-a-c2dbeae5",
+      "observedState": "unavailable",
+      "activeChangeCount": 0,
+      "basis": "omitted-field-publisher-omits-empty-lists",
+      "snapshotCount": 0,
+      "agreesWithSnapshot": true
+    },
+    {
+      "rowId": "prozorro-UA-2024-10-24-016315-a-2e4b0726",
+      "observedState": "retrieved-array",
+      "activeChangeCount": 1,
+      "basis": "published-array",
+      "snapshotCount": 1,
+      "agreesWithSnapshot": true
+    },
+    {
+      "rowId": "prozorro-UA-2025-06-06-005967-a-87a85a6a",
+      "observedState": "retrieved-array",
+      "activeChangeCount": 2,
+      "basis": "published-array",
+      "snapshotCount": 2,
+      "agreesWithSnapshot": true
+    },
+    {
+      "rowId": "prozorro-UA-2025-01-14-015633-a-3c4d872c",
+      "observedState": "retrieved-array",
+      "activeChangeCount": 3,
+      "basis": "published-array",
+      "snapshotCount": 3,
+      "agreesWithSnapshot": true
+    },
+    {
+      "rowId": "prozorro-UA-2024-09-17-013954-a-9e43a93d",
+      "observedState": "unavailable",
+      "activeChangeCount": 0,
+      "basis": "omitted-field-publisher-omits-empty-lists",
+      "snapshotCount": 0,
+      "agreesWithSnapshot": true
+    },
+    {
+      "rowId": "prozorro-UA-2025-04-08-002179-a-39c07eef",
+      "observedState": "retrieved-array",
+      "activeChangeCount": 1,
+      "basis": "published-array",
+      "snapshotCount": 1,
+      "agreesWithSnapshot": true
+    },
+    {
+      "rowId": "prozorro-UA-2025-06-17-013344-a-e2340c5c",
+      "observedState": "unavailable",
+      "activeChangeCount": 0,
+      "basis": "omitted-field-publisher-omits-empty-lists",
+      "snapshotCount": 0,
+      "agreesWithSnapshot": true
+    },
+    {
+      "rowId": "prozorro-UA-2026-02-10-016241-a-b9d9944f",
+      "observedState": "unavailable",
+      "activeChangeCount": 0,
+      "basis": "omitted-field-publisher-omits-empty-lists",
+      "snapshotCount": 0,
+      "agreesWithSnapshot": true
+    },
+    {
+      "rowId": "prozorro-UA-2026-02-11-014878-a-43d97d0c",
+      "observedState": "retrieved-array",
+      "activeChangeCount": 1,
+      "basis": "published-array",
+      "snapshotCount": 1,
+      "agreesWithSnapshot": true
+    },
+    {
+      "rowId": "prozorro-UA-2025-06-11-013329-a-1649817b",
+      "observedState": "retrieved-array",
+      "activeChangeCount": 2,
+      "basis": "published-array",
+      "snapshotCount": 2,
+      "agreesWithSnapshot": true
+    },
+    {
+      "rowId": "prozorro-UA-2025-12-23-021689-a-04e0f9f5",
+      "observedState": "unavailable",
+      "activeChangeCount": 0,
+      "basis": "omitted-field-publisher-omits-empty-lists",
+      "snapshotCount": 0,
+      "agreesWithSnapshot": true
+    }
+  ],
+  "counts": {
+    "rows": 12,
+    "byBasis": {
+      "omitted-field-publisher-omits-empty-lists": 6,
+      "published-array": 6
+    },
+    "agreeWithSnapshot": 12
+  }
+}
