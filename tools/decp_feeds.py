@@ -408,9 +408,23 @@ def link_shared_identifiers(records):
             r['procedureGroup'] = group
 
 
-def cpv_lookup(records):
-    """8-digit CPV -> published full code with check digit, from codes already in the cohort."""
+def cpv_lookup(records, vocabulary=None):
+    """Exact published prefix lookup; disagreement never invents a check digit.
+
+    The pinned official main vocabulary makes feed/portal rebuilds reproducible.
+    An explicit iterable can be supplied for isolated tests; raw codes stay intact.
+    """
+    if vocabulary is None:
+        path = Path(__file__).resolve().parents[1] / 'data/decp-cpv-vocabulary.json'
+        payload = json.loads(path.read_text())
+        if payload.get('schemaVersion') != 1:
+            raise ValueError('Unsupported CPV vocabulary version')
+        vocabulary = payload['codes']
     seen = defaultdict(set)
+    for code in vocabulary:
+        if not isinstance(code, str) or not re.fullmatch(r'[0-9]{8}-[0-9]', code):
+            raise ValueError('Invalid full CPV vocabulary code')
+        seen[code[:8]].add(code)
     for r in records:
         for a in [r, *(r.get('initialAlternatives') or [])]:
             code = a.get('cpv')
