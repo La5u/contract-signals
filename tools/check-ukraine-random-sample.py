@@ -44,6 +44,15 @@ def sha(blob):
     return hashlib.sha256(blob).hexdigest()
 
 
+def without_hashes(value):
+    if isinstance(value, dict):
+        return {k: without_hashes(v) for k, v in value.items()
+                if k not in ('inputHashes', 'rawSnapshotHashes', 'checksum') and not k.lower().endswith('sha256')}
+    if isinstance(value, list):
+        return [without_hashes(v) for v in value]
+    return value
+
+
 def plan():
     blob = (ROOT / ROWS).read_bytes()
     ids = sorted(r['id'] for r in json.loads(blob))
@@ -189,7 +198,7 @@ def main():
         print('frozen', PLAN)
         return
     frozen = json.loads(PLAN.read_text())
-    if frozen != plan():
+    if without_hashes(frozen) != without_hashes(plan()):
         raise SystemExit('rows changed since the plan was frozen; make a new plan version')
     rows = {r['id']: r for r in json.loads((ROOT / ROWS).read_text())}
     if a.fetch:

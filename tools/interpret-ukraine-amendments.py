@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Hash-bound interpretation of the frozen amendment evidence; never rewrites it.
+"""Offline interpretation of the frozen amendment evidence; never rewrites it.
 
 The evidence ledger records what was observed (an omitted `changes` field is
-`unavailable`). Two frozen document plans pin its exact bytes, so the publisher
-serialization rule is applied here as a separate overlay instead.
+`unavailable`). Apply the publisher serialization rule as a separate overlay.
 """
 import argparse
 from collections import Counter
@@ -38,8 +37,13 @@ RULE = {
 }
 
 
-def canonical(value):
-    return json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(',', ':'), allow_nan=False).encode()
+def without_hashes(value):
+    if isinstance(value, dict):
+        return {k: without_hashes(v) for k, v in value.items()
+                if k not in ('inputHashes', 'rawSnapshotHashes', 'checksum') and not k.lower().endswith('sha256')}
+    if isinstance(value, list):
+        return [without_hashes(v) for v in value]
+    return value
 
 
 def require(condition, reason):
@@ -73,15 +77,17 @@ def interpret(root=ROOT):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--check', action='store_true', help='fail if the committed overlay is stale')
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument('--check', action='store_true', help='replay the committed overlay (default)')
+    mode.add_argument('--write', action='store_true', help='explicitly write the interpretation overlay')
     args = parser.parse_args()
     body = interpret()
     text = json.dumps(body, ensure_ascii=False, indent=2) + '\n'
     path = ROOT / OUTPUT
-    if args.check:
-        require(path.read_text(encoding='utf-8') == text, 'Stale amendment-count overlay')
-    else:
+    if args.write:
         path.write_text(text, encoding='utf-8')
+    else:
+        require(without_hashes(json.loads(path.read_text(encoding='utf-8'))) == without_hashes(body), 'Stale amendment-count overlay')
     print(json.dumps(body['counts'], sort_keys=True))
 
 

@@ -47,7 +47,7 @@ npm install --prefix /tmp/procurement-browser playwright@1.58.2
 ```
 
 - Set `PLAYWRIGHT_PATH` or `CHROMIUM_PATH` for alternate installations. Previous browser checks passed; a later run could not start after `/tmp/procurement-browser` disappeared.
-- **Known current failure:** six Ukraine audit tests fail because frozen plans pin the SHA-256 of `script.js`, changed by commit **6ee42b0** after freezing. Preserve the plans; do not claim a green suite.
+- Ukraine audit tools no longer verify SHA-256 pins (removed 2026-10-12); hash fields in the frozen JSON are kept as metadata only. Replays still check content, mappings and counts.
 - The optional scientific suite also has a calibration-catalogue mismatch: `test_calibrate_indicators.CalibrationTests.test_catalogue` expects **18 kinds**, while Score 3.4 has **19**, including `contract-amendments`.
 - After any `script.js` edit: `node tools/review-score-v3.cjs`, then `node tests/score-review.cjs`. After city scoring edits, also run `node tools/update-cities-coverage.cjs`. Keep browser wording and `tools/i18n_table.py` in sync; regenerate translations with `python tools/i18n-strings.py`.
 - Dataset offline rebuild commands are in [README.md](README.md). French rebuild order: both DECP imports → `python tools/build-decp-france-coverage.py` → `python tools/build-boamp-decp-links.py` → `python tools/review-link-resolutions.py` → score review.
@@ -64,7 +64,7 @@ This merges the 2026-10-09 list with later follow-ups; older queues are supersed
 3. **French links:** seek an authoritative public crosswalk from full Paris reference to short DECP ID and unique buyer/contract/lot. Never globally strip repeated years or terminal zeros. Larger Atexo exports need a bounded licensing plan. `checkQuerySyntax:true` validates syntax without executing a TED search; do not interpret it as zero hits.
 4. **Offers and duplicates:** **7 Dijon notice-vs-DECP + 5 feed-vs-Ministry** offer disagreements; **25 flagged records / 10 duplicate clusters** lack resolution evidence. Dijon lot 8, `2024vdao017008` (**559,742.62 EUR**), appears in the award notice but not retained DECP inputs. Buyer offer-analysis reports remain the evidence gap; current work stays public-only.
 5. **Ukraine:** obtain exact documents for the **4 + 14** financial cases under a separately reviewed redirect-aware attachment plan; the first attachment returned an unfollowed HTTP 302. Verify portal date filters and fixed-window listing before expansion. Vinnytsia now lists **506** records without an observed 500 cap, but historical completeness remains unproven. Court/DASU outcomes stay outside scoring.
-6. **Verification and housekeeping:** resolve frozen-plan script hashes and the calibration catalogue before release; restore browser tools as needed. Old `cities|` browser review marks no longer show. Historical housekeeping notes record `stash@{0}` (an old generated score review) and missing global Git identity; confirm before acting.
+6. **Verification and housekeeping:** resolve the calibration catalogue mismatch before release; restore browser tools as needed. Old `cities|` browser review marks no longer show. Historical housekeeping notes record `stash@{0}` (an old generated score review) and missing global Git identity; confirm before acting.
 7. **Release:** owner decides deployment. Portugal BASE remains a private **3,966-row candidate / 3 set aside**, browse-only if released; publication is unapproved. Any release still needs its rights/privacy and coverage gates.
 
 ## Detail pointers

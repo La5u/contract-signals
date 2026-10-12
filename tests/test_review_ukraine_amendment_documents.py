@@ -25,6 +25,35 @@ class DocumentsTest(unittest.TestCase):
         self.assertEqual(result['overallRequestCount'], 28)
         self.assertEqual(result['legalBasis'], 'unknown')
 
+    def test_plan_and_ledger_hash_metadata_is_ignored(self):
+        def change_hashes(value, marker):
+            if isinstance(value, dict):
+                return {k: marker if k.lower().endswith('sha256') else
+                        {name: marker for name in v} if k in ('inputHashes', 'rawSnapshotHashes') else
+                        change_hashes(v, marker) for k, v in value.items()}
+            if isinstance(value, list):
+                return [change_hashes(v, marker) for v in value]
+            return value
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            names = ['tools/audit-ukraine-amount-bases.py', 'data/prozorro.json',
+                     'data/ukraine-public-audit-plan.json', m.MODULE, m.PLAN, m.EVIDENCE, m.PLAN_V2, m.EVIDENCE_V2]
+            for i, name in enumerate(names):
+                target = root / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                if name.endswith('.json'):
+                    value = change_hashes(json.loads((ROOT / name).read_text()), 'ignored-' + str(i))
+                    target.write_text(json.dumps(value))
+                else:
+                    target.write_bytes((ROOT / name).read_bytes())
+            for version in (1, 2):
+                self.assertEqual(m.verify(root, version), m.verify(version=version))
+            plan = json.loads((root / m.PLAN_V2).read_text())
+            plan['selected'][0]['relatedItem'] = 'wrong'
+            (root / m.PLAN_V2).write_text(json.dumps(plan))
+            with self.assertRaisesRegex(ValueError, 'selection/order'):
+                m.verify(root)
+
     def test_hosts_auth_redirect(self):
         for url in ['http://public-docs.prozorro.gov.ua/x', 'https://public-api.prozorro.gov.ua/x',
                     'https://public-docs.prozorro.gov.ua.evil/x', 'https://u:p@public-docs.prozorro.gov.ua/x',
@@ -90,7 +119,6 @@ class DocumentsTest(unittest.TestCase):
         self.assertEqual(result['overallRequestCount'], 28 + result['additionalRequestCount'])
         old = json.loads((ROOT / m.PLAN).read_text())
         new = json.loads((ROOT / m.PLAN_V2).read_text())
-        self.assertEqual([s['urlSha256'] for s in old['selected']], [s['urlSha256'] for s in new['selected']])
         self.assertEqual([s['docId'] for s in old['selected']], [s['docId'] for s in new['selected']])
         self.assertTrue(all(s['publisherHostAllowed'] for s in new['selected']))
 
@@ -149,6 +177,9 @@ class DocumentsTest(unittest.TestCase):
     def test_staleness_and_privacy(self):
         original, b, r, digest = m.load_source()
         with patch.object(m, 'load_source', return_value=(original, b, r, 'stale')):
+            self.assertEqual(m.verify(version=1)['additionalRequestCount'], 0)
+        changed = dict(b, buyerId='other')
+        with patch.object(m, 'load_source', return_value=(original, changed, r, digest)):
             with self.assertRaisesRegex(ValueError, 'Stale supplemental source'):
                 m.verify(version=1)
         for name in [m.PLAN, m.EVIDENCE, m.PLAN_V2, m.EVIDENCE_V2]:

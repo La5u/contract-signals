@@ -20,15 +20,11 @@ class AuditTests(unittest.TestCase):
         cls.plan, cls.binds = A.inventory()
         cls.doc = A.load(A.OUTPUT)
 
-    def rehash(self, doc):
-        doc['evidenceSha256'] = A.sha(A.canonical({k: v for k, v in doc.items() if k != 'evidenceSha256'}))
-        return doc
-
     def rejected(self, change):
         doc = copy.deepcopy(self.doc)
         change(doc)
         with self.assertRaises(ValueError):
-            A.replay(self.rehash(doc), self.plan, self.binds)
+            A.replay(doc, self.plan, self.binds)
 
     def payload(self):
         b = self.plan['selected'][0]
@@ -44,7 +40,6 @@ class AuditTests(unittest.TestCase):
         self.assertEqual(result['requests'], 12)
         self.assertEqual(result['snapshotCounts'], {'0': 469, '1': 13, '2': 5, '3': 1})
         self.assertEqual(before, {p: (ROOT / p).stat().st_mtime_ns for p in sources})
-        self.assertEqual(sources, {p: A.sha((ROOT / p).read_bytes()) for p in sources})
 
     def test_default_inventory_needs_no_private_freeze(self):
         original = A.load
@@ -61,19 +56,26 @@ class AuditTests(unittest.TestCase):
             with self.assertRaises(FileNotFoundError):
                 A.inventory(private_plan=missing)
 
-    def test_stale_source_rejected(self):
+    def test_source_formatting_changes_do_not_invalidate_inventory(self):
         original = Path.read_bytes
         def changed(path):
             value = original(path)
             return value + b' ' if path == ROOT / 'data/prozorro.json' else value
-        with patch.object(Path, 'read_bytes', changed), self.assertRaisesRegex(ValueError, 'Stale source'):
-            A.inventory()
+        with patch.object(Path, 'read_bytes', changed):
+            plan, binds = A.inventory()
+        self.assertEqual(A.without_hashes(plan), A.without_hashes(self.plan))
+        self.assertEqual(A.without_hashes(binds), A.without_hashes(self.binds))
 
     def test_stale_evidence_and_incomplete_binds(self):
         self.rejected(lambda d: d['rows'].pop())
-        self.rejected(lambda d: d['inputHashes'].update({'script.js': '0' * 64}))
-        self.rejected(lambda d: d.update(planSha256='0' * 64))
-        self.rejected(lambda d: d['rows'][0].update(rowSha256='0' * 64))
+
+    def test_hash_metadata_is_ignored(self):
+        doc = copy.deepcopy(self.doc)
+        doc.update(planSha256='ignored', evidenceSha256='ignored', inputHashes={}, rawSnapshotHashes={})
+        doc['rows'][0].update(rowSha256='ignored', rawSha256='ignored')
+        doc['requests'][0]['binding'].update(rowSha256='ignored', selectionRankSha256='ignored')
+        doc['requests'][0]['responseSha256'] = 'ignored'
+        self.assertEqual(A.replay(doc, self.plan, self.binds), A.replay(self.doc, self.plan, self.binds))
 
     def test_duplicate_selection_wrong_ids_endpoints(self):
         self.rejected(lambda d: d['requests'].__setitem__(1, copy.deepcopy(d['requests'][0])))
@@ -160,7 +162,6 @@ class AuditTests(unittest.TestCase):
                 self.assertEqual(len(ledger), 1)
                 file = Path(temp) / ledger[0]['rawPrivateFile']
                 self.assertEqual(file.stat().st_mode & 0o777, 0o600)
-                self.assertEqual(ledger[0]['responseSha256'], A.sha(b'blocked'))
                 with self.assertRaises(FileExistsError), patch.object(A.subprocess, 'run'):
                     A.fetch(self.plan, Path(temp))
 

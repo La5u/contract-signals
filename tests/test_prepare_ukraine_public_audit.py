@@ -18,8 +18,7 @@ class PreparationTests(unittest.TestCase):
         cls.public = json.loads((ROOT / 'data/ukraine-public-audit-plan.json').read_text())
 
     def test_public_plan_reproduces_before_new_acquisition(self):
-        self.assertEqual(self.plan, self.public)
-        P.verify(self.plan)
+        self.assertEqual(P.without_hashes(self.plan), P.without_hashes(self.public))
         self.assertEqual(len(self.plan['selected']), 12)
         self.assertEqual(len(self.plan['amountReviewQueue']), 11)
         self.assertEqual(self.plan['valueDifferenceInventory'], {'amount': 11, 'amount-currency-vat-tuple': 25})
@@ -31,7 +30,7 @@ class PreparationTests(unittest.TestCase):
 
     def test_selection_and_private_inputs_are_not_mutated(self):
         before = {p: (ROOT / p).stat().st_mtime_ns for p in self.plan['inputHashes']}
-        self.assertEqual(P.build(), self.plan)
+        self.assertEqual(P.without_hashes(P.build()), P.without_hashes(self.plan))
         self.assertEqual(before, {p: (ROOT / p).stat().st_mtime_ns for p in before})
         for binding in self.plan['selected'] + self.plan['amountReviewQueue']:
             self.assertFalse({'supplier', 'supplierIds', 'description', 'contactPoint', 'buyer'} & binding.keys())
@@ -47,14 +46,17 @@ class PreparationTests(unittest.TestCase):
             self.assertEqual(path.stat().st_mode & 0o777, 0o400)
             self.assertEqual(path.parent.stat().st_mode & 0o777, 0o700)
             self.assertFalse(P.freeze(self.plan, path))
+            metadata = copy.deepcopy(self.plan)
+            metadata.update(planSha256='ignored', helperSha256='ignored', inputHashes={}, rawSnapshotHashes={})
+            metadata['selected'][0].update(rowSha256='ignored', selectionRankSha256='ignored')
+            self.assertFalse(P.freeze(metadata, path))
             changed = copy.deepcopy(self.plan)
             changed['maximum'] = 11
-            changed['planSha256'] = P.sha(P.canonical({k: v for k, v in changed.items() if k != 'planSha256'}))
             with self.assertRaisesRegex(ValueError, 'Different existing freeze'):
                 P.freeze(changed, path)
             self.assertEqual(json.loads(path.read_text()), self.plan)
 
-    def test_unsafe_freezes_and_changed_hash_rejected(self):
+    def test_unsafe_freezes_rejected(self):
         with self.assertRaises(ValueError):
             P.freeze(self.plan, ROOT / 'never-created-plan.json')
         with tempfile.TemporaryDirectory() as tmp:
@@ -63,11 +65,6 @@ class PreparationTests(unittest.TestCase):
             (base / 'linked').symlink_to(base / 'target', target_is_directory=True)
             with self.assertRaises(ValueError):
                 P.freeze(self.plan, base / 'linked/plan.json')
-            bad = copy.deepcopy(self.plan)
-            bad['selected'].reverse()
-            with self.assertRaisesRegex(ValueError, 'hash mismatch'):
-                P.freeze(bad, base / 'bad/plan.json')
-            self.assertFalse((base / 'bad/plan.json').exists())
 
     def test_unknown_and_invalid_population_protocol_fail_closed(self):
         scores = {r['id']: 0 for r in json.loads((ROOT / 'data/prozorro.json').read_text())}

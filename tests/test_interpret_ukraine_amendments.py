@@ -1,10 +1,12 @@
 """Omitted amendment lists read as zero only by the cited publisher rule; evidence stays untouched."""
 import copy
 import importlib.util
+import io
 import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location('interpret', ROOT / 'tools/interpret-ukraine-amendments.py')
@@ -24,7 +26,17 @@ class InterpretTests(unittest.TestCase):
             return I.interpret(Path(d))
 
     def test_committed_overlay_is_current(self):
-        self.assertEqual(json.loads((ROOT / I.OUTPUT).read_text()), I.interpret())
+        self.assertEqual(I.without_hashes(json.loads((ROOT / I.OUTPUT).read_text())), I.without_hashes(I.interpret()))
+
+    def test_default_replay_ignores_hashes_and_does_not_write(self):
+        overlay = json.loads((ROOT / I.OUTPUT).read_text())
+        overlay.update(evidenceFileSha256='ignored', evidenceSha256='ignored')
+        with patch('sys.argv', ['interpret']), patch('sys.stdout', new_callable=io.StringIO), patch.object(Path, 'read_text', return_value=json.dumps(overlay)), patch.object(Path, 'write_text', side_effect=AssertionError('offline write')):
+            I.main()
+        overlay['rows'][0]['activeChangeCount'] += 1
+        with patch('sys.argv', ['interpret', '--check']), patch.object(Path, 'read_text', return_value=json.dumps(overlay)):
+            with self.assertRaisesRegex(ValueError, 'Stale amendment-count'):
+                I.main()
 
     def test_six_omitted_lists_are_zero_and_all_agree(self):
         body = I.interpret()

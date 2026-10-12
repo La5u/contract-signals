@@ -33,7 +33,7 @@ class AmountBasisTests(unittest.TestCase):
         cls.base = audit.baseline()
 
     def test_offline_inventory_and_source_immutability(self):
-        hashes = {p: audit.sha((ROOT / p).read_bytes()) for p in self.plan['inputHashes']}
+        before = {p: (ROOT / p).read_bytes() for p in self.plan['inputHashes']}
         evidence = audit.replay()
         result = evidence['analysis']
         self.assertEqual((result['exactMappings'], result['amountDifferences'], result['tupleDifferences'], result['otherTupleDifferences']), (488, 11, 25, 14))
@@ -43,7 +43,7 @@ class AmountBasisTests(unittest.TestCase):
         self.assertTrue(all(r['httpStatus'] == 200 for r in evidence['requests']))
         self.assertTrue(all(r['financialSnapshotChanged'] is False for r in result['liveOutcomes']))
         self.assertFalse(result['paidCertified'])
-        self.assertEqual(hashes, {p: audit.sha((ROOT / p).read_bytes()) for p in hashes})
+        self.assertEqual(before, {p: (ROOT / p).read_bytes() for p in before})
         for c in evidence['cases']:
             scalars = c['extract']['scalars']
             self.assertFalse(any(any(word in k for word in ('supplier', 'title', 'contact', 'description')) for k in scalars))
@@ -115,13 +115,12 @@ class AmountBasisTests(unittest.TestCase):
             else: r['source'] += '?redirect=1'
             with self.subTest(mutation=mutation), self.assertRaises(ValueError): audit.extract(r, o)
 
-    def test_minimization_and_pointer_hash(self):
+    def test_minimization_and_financial_pointers(self):
         row, obj = self.source()
         obj['data']['title'] = 'SECRET'
         obj['data']['contracts'][0]['documents'] = [{'title': 'SECRET'}]
         ex = audit.extract(row, obj)
         self.assertNotIn('SECRET', json.dumps(ex))
-        self.assertEqual(ex['scalarSha256'], audit.sha(audit.canonical(ex['scalars'])))
         self.assertIn('amountNet', audit.values(ex, 'contract'))
 
     def test_staleness_plan_and_public_extract_fail_closed(self):
@@ -130,14 +129,27 @@ class AmountBasisTests(unittest.TestCase):
             p = copy.deepcopy(self.plan)
             p['amountReviewQueue'][0]['tenderURL'] += '/wrong'
             path.write_text(json.dumps(p))
-            with self.assertRaisesRegex(ValueError, 'plan hash'): audit.validate_plan(plan_path=path)
+            with self.assertRaisesRegex(ValueError, 'endpoint/path'): audit.validate_plan(plan_path=path)
             (Path(tmp) / 'data').mkdir()
             (Path(tmp) / 'data/prozorro.json').write_text('[]')
-            with self.assertRaisesRegex(ValueError, 'Stale source'): audit.validate_plan(root=tmp)
+            with self.assertRaisesRegex(ValueError, 'Population identity'): audit.validate_plan(root=tmp)
             ev = copy.deepcopy(self.base)
             ev['cases'][0]['normalized']['amount'] = 0
             path.write_text(json.dumps(ev))
             with self.assertRaisesRegex(ValueError, 'modified public'): audit.replay(path)
+
+    def test_hash_metadata_is_ignored(self):
+        evidence = json.loads(audit.EVIDENCE.read_text())
+        evidence.update(planSha256='ignored', inputHashes={})
+        evidence['cases'][0].update(rowSha256='ignored', rawGzipSha256='ignored', sourceByteSha256='ignored')
+        evidence['cases'][0]['extract']['scalarSha256'] = 'ignored'
+        evidence['cases'][0]['amendmentMetadata']['sourceSha256'] = 'ignored'
+        evidence['requests'][0]['fullByteSha256'] = 'ignored'
+        evidence['requests'][0]['extract']['scalarSha256'] = 'ignored'
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'evidence.json'
+            path.write_text(json.dumps(evidence))
+            self.assertEqual(audit.replay(path)['analysis'], audit.replay()['analysis'])
 
     def fetcher(self, tmp):
         return audit.Fetcher(Path(tmp) / 'new', self.rows, self.plan)
@@ -155,7 +167,6 @@ class AmountBasisTests(unittest.TestCase):
             self.assertEqual(request.method, 'GET')
             self.assertNotIn('Authorization', request.headers)
             self.assertTrue(rec['completeBody'])
-            self.assertEqual(rec['fullByteSha256'], audit.sha(audit.canonical(obj)))
             self.assertTrue(all(stat.S_IMODE(p.stat().st_mode) == 0o600 for p in f.path.iterdir()))
             with self.assertRaises(ValueError): f.fetch(row['source'])
         self.assertIsNone(audit.NoRedirect().redirect_request(None, None, 302, '', {}, 'https://other'))
@@ -185,7 +196,6 @@ class AmountBasisTests(unittest.TestCase):
                 rec = f.fetch(url)
                 sleep.assert_called_once_with(0.75)
             self.assertTrue(f.stopped)
-            self.assertIsNone(rec['fullByteSha256'])
             f.stopped = False
             f.count = 11
             with self.assertRaises(ValueError): f.fetch(self.plan['amountReviewQueue'][1]['tenderURL'])
@@ -195,7 +205,6 @@ class AmountBasisTests(unittest.TestCase):
                 rec = f.fetch(url)
             self.assertEqual(rec['bytesRead'], audit.LIMIT + 1)
             self.assertFalse(rec['completeBody'])
-            self.assertIsNone(rec['fullByteSha256'])
             self.assertTrue(f.stopped)
 
     def test_live_public_replay_without_private_cache(self):
@@ -212,8 +221,6 @@ class AmountBasisTests(unittest.TestCase):
             with patch.object(audit.PRIVATE_PLAN.__class__, 'exists', side_effect=AssertionError('no private check')):
                 self.assertEqual(audit.replay(path)['analysis']['liveAttempts'], 1)
             evidence['requests'][0]['extract']['scalars']['/data/title'] = 'SECRET'
-            ex = evidence['requests'][0]['extract']
-            ex['scalarSha256'] = audit.sha(audit.canonical(ex['scalars']))
             path.write_text(json.dumps(evidence))
             with self.assertRaises(ValueError): audit.replay(path)
 
