@@ -1,6 +1,6 @@
 # Contract signals
 
-**[Open the explorer](https://contracts.lasu.dev)** · [Methods](docs/score-v3.md) · [Data licences](docs/data-sources.md)
+**[Open the explorer](https://contracts.lasu.dev)** · [Methods](docs/score-v3.md) · [Data licences](docs/data-sources.md) · [Public evidence](docs/public-evidence.md)
 
 A static explorer for published public-procurement records from France, Chile, Colombia, Czechia, Paraguay, Portugal, Romania, Ukraine and the United Kingdom. It flags contract characteristics that may deserve a closer look, such as awards without competition, single offers, repeated awards to the same supplier, or long durations. Every row links to its source and shows which checks could or could not be evaluated.
 
@@ -59,6 +59,13 @@ Each dataset is a bounded cohort chosen before scoring. None of them is exhausti
 **Personal data.** Suppliers who are private individuals are shown by name, as the publishers release them, but their national ID numbers (Colombian cédulas, Ukrainian individual tax numbers, Chilean RUNs, Paraguayan cédula-based RUCs) are replaced by a stable pseudonym (`tools/personal_ids.py`). Publishers release these numbers lawfully; this site does not need to repeat them. Contact details are never imported.
 
 **Check it yourself.** *Sources and how to verify*, above the table, gives each dataset's publisher, portal, API, licence, raw snapshot and rebuild command. Every row has a *Verify it yourself* section with the official pages and documents published for that contract (for Paraguay: the award page with tenderers and evaluation report, the call page, and the signed-contract PDFs), plus the identifiers to search on the portal if a link moves. Copied summaries and CSV/JSON exports carry the same links (`verifyUrls`).
+
+## Accuracy reviews
+
+- **BOAMP↔DECP links:** of nine candidate pairs, seven remain unconfirmed candidates and two were dismissed, with reasons in the [correction log](research/link-corrections-log.md). Three BOAMP↔TED notice versions are verified; no DECP link or amount is confirmed. Sources and reproduction: [docs/public-evidence.md](docs/public-evidence.md) (`python tools/build-public-link-evidence.py` rebuilds the ledger offline).
+- **Ukraine:** a [public-only audit](research/ukraine-public-audit.md) of the 488-contract cohort found seven of eleven amount differences explained by net/VAT basis; four remain unresolved. An omitted amendment list means zero changes, so the importer's zero default is correct. No scores changed.
+
+These are targeted checks, not a measured accuracy rate.
 
 ## The vigilance index
 

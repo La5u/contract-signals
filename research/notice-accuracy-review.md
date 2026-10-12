@@ -2,61 +2,23 @@
 
 ## Finding and boundary
 
-Implemented **preparation**, not a measured accuracy study. Task 1 of the current
-HANDOFF open items needs a new denominator: the earlier 90-row sample's 76
-unlinked records cannot be treated as accurate, inaccurate, or exempt from notice
-duties. This helper does not reuse those outcomes or infer obligations from price.
+Preparation only; no accuracy outcomes or rate. The earlier 90-row sample's **76 unlinked rows** cannot be classified as accurate, inaccurate or notice-exempt.
 
-Current checkout inspected: the two French DECP snapshots contain **5,286 rows**
-(2,289 cities; 2,997 Paris/Ardèche). **1,571** have the exact published procedure
-`Appel d'offres ouvert`. They do not establish, by themselves, the applicable
-regime, buyer category, procurement-start date, contract classification,
-Article 5 estimate/aggregation, exclusions, lot derogations or individual notice
-duty. A declared contract amount, CPV prefix, municipal-looking name/SIRET,
-notification date, or BOAMP/TED presence is not a substitute for those facts.
-`nature: Marché` is not a works/supplies/services classification.
+French snapshots contain **5,286 rows (2,289 cities; 2,997 history)**. **1,571** have exact procedure `Appel d'offres ouvert`. Labels, declared amounts, CPV, buyer names/SIRETs, notification dates and notice presence do not establish legal scope, estimates, start dates or notice duties. `nature: Marché` does not classify works/supplies/services.
 
-The initial **no-manifest freeze** records:
+No-manifest freeze:
 
-- **0 eligible / 0 selected**;
-- **1,726 unknown**: 1,571 exact-open rows lacking reviewed eligibility evidence,
-  plus 155 missing published procedure labels;
-- **3,560 ineligible for this narrow study scope**: other published procedure
-  labels. This does **not** establish that they lack notice obligations.
+- **0 eligible/selected**;
+- **1,726 unknown**: 1,571 open rows without eligibility evidence plus 155 missing procedure labels;
+- **3,560 outside narrow scope**: other labels, without determining their notice obligations.
 
-Plan: `~/.cache/contract-signals/notice-accuracy-review/v1/plan.json`.
-Canonical plan SHA-256:
-`5a0337fc8f22564c9d7ccd3651bfaeafbb31d1a4b8aac6335e1f8730f03dbf08`.
-This is an immutable empty-sample checkpoint of insufficient evidence, not a
-claim that the population contains no qualifying contracts. A reviewed manifest
-requires a **new freeze path**, not an edit of this plan.
+Original checkpoint: `~/.cache/contract-signals/notice-accuracy-review/v1/plan.json`. Later CPV-only corrections leave counts unchanged; current checkpoint: `~/.cache/contract-signals/notice-accuracy-review/v2-cpv/plan.json`. Use `--plan` with that path for current rows. Reviewed evidence requires a new freeze path; do not overwrite v1. Plans retain canonical hashes and input/evidence bindings for local tamper detection, not an external timestamp.
 
-The preparation worker changed no published datasets, scores or common files. A subsequent integration corrected CPV check digits only; the original v1 freeze above remains untouched. A new empty freeze binds the corrected snapshots at `~/.cache/contract-signals/notice-accuracy-review/v2-cpv/plan.json`, hash `e726eaa2fe8474419f13935ff398e151d29a6b43b4321f528a13266bb7bd9e5a`. Counts and eligibility outcomes are unchanged. To reproduce preparation against current rows, pass `--plan ~/.cache/contract-signals/notice-accuracy-review/v2-cpv/plan.json`; do not overwrite or rerun the original default v1 path against changed inputs.
+## Legal evidence still missing
 
-## Primary legal sources: bounded attempted review, not successful verification
+The attempted official sources were [Directive 2014/24/EU](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32014L0024), [Delegated Regulation 2019/1828](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32019R1828), [Delegated Regulation 2021/1952](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32021R1952), [Delegated Regulation 2023/2495](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32023R2495). All returned **HTTP 202 WAF challenges**, not legislation. No primary provisions were verified; do not bypass or attest challenge pages as law. Private responses: `~/.cache/contract-signals/notice-accuracy-legal/20261010T234020Z/`.
 
-Four official EUR-Lex requests were made with no retries, redirects, scripts or
-secondary-resource fetching: 20-second limit/request and 2 MiB body cap. **All
-returned HTTP 202 AWS WAF challenge pages (2,035 bytes each), not legislation.**
-The bodies were inspected; **no primary legislative provisions were acquired or
-verified in this run**. Stop rather than bypass the challenge or silently use a
-secondary summary. Raw bodies, headers, UTC retrieval metadata and hashes are
-private under:
-`~/.cache/contract-signals/notice-accuracy-legal/20261010T234020Z/`.
-
-| Instrument / attempted official URL | Raw response SHA-256 (challenge, not law) |
-| --- | --- |
-| [Directive 2014/24/EU](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32014L0024) | `75a048a53401637fabc59ddacf27b4fdb71748abbebbd0a2db232adce7155cde` |
-| [Delegated Regulation 2019/1828](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32019R1828) | `13b12596b2ecbb24a8166ab8a34fa7e4afca06c1d06c850db235607285e5f7d7` |
-| [Delegated Regulation 2021/1952](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32021R1952) | `fcf1bb7884821676aa0e5bcafc6e719cf8476cd2f3500da7d46afaa358831167` |
-| [Delegated Regulation 2023/2495](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32023R2495) | `f8d74a93bc66e7accf5633c250205adf0c12f906cef4889974a7ffd9912ba273` |
-
-**Candidate mapping only, pending actual primary-text and French applicability
-review:** Directive Articles 1–4 (scope), 5 (valuation), 26–27 (open procedures),
-50–52 (award notices/dispatch/publication), 74–76 and Annex XIV (specific
-services); Articles 1–2 of the threshold regulations. Confirm the relevant dated
-French transposition/publication rules as well; the tool does not supply legal
-advice or decide precedence between EU and national texts.
+Pending primary/French applicability review: Directive **Articles 1–4** scope, **5** valuation, **26–27** open procedure, **50–52** notices, **74–76/Annex XIV** specific services; threshold regulations **Articles 1–2**.
 
 | Start-date period | Works | Central supplies/ordinary services | Subcentral supplies/ordinary services |
 | --- | ---: | ---: | ---: |
@@ -64,67 +26,15 @@ advice or decide precedence between EU and national texts.
 | 2022–2023 | EUR 5,382,000 | EUR 140,000 | EUR 215,000 |
 | 2024–2025 | EUR 5,538,000 | EUR 143,000 | EUR 221,000 |
 
-These provisional constants are consistency checks, **not proof of the law**.
-Admission additionally requires explicit reviewer-attested primary-law evidence
-for the exact threshold/date/application and individual award-notice duty. A
-challenge-page checksum must never be attested as reviewed legislation.
-Unsupported years, utilities, concessions, defence, mixed classifications,
-Annex XIV services, framework call-offs and DPS are outside v1. Extend only with
-a separately reviewed/versioned protocol.
+These constants are provisional consistency checks. Admission requires reviewed primary-law evidence for threshold/date/application and individual notice duty. Unsupported years, utilities, concessions, defence, mixed classifications, Annex XIV services, framework call-offs and DPS are outside v1; extensions need a reviewed/versioned protocol.
 
-Legal review must establish the estimate at call dispatch or procurement
-commencement, not award/notification year. It must establish the applicable
-Article 5 valuation method: options, renewals, relevant aggregate lots and any
-special valuation rules. Do not simply multiply an annual price by duration or
-use a procedure/framework ceiling as a contract correction. Review the small-lot
-derogation and exclusions explicitly. The ordinary notice rule concerns dispatch,
-not merely the displayed publication date; framework call-offs, DPS and specific
-services have special regimes. None is automatically admitted here.
+Use call dispatch/procurement commencement, not award year. Review Article 5 estimates, options, renewals, aggregate lots, special valuation, small-lot derogation and exclusions. Notice duty concerns dispatch, not just publication. Do not infer estimates by multiplying annual prices or using ceilings. The study requires **strictly above** threshold; legal scope generally includes equality, so excluding equality is a study boundary, not exemption.
 
-Legal threshold scope is generally **at or above**; this study intentionally
-requires **strictly above** the reviewed threshold. Equality is conservatively
-excluded from this particular sampling frame, not declared legally exempt.
+## Helper and manifest
 
-## Helper and manifest contract
+`tools/prepare-notice-accuracy-review.py` reads both snapshots and an optional private manifest offline. It does not search notices, match suppliers/prices or repair amounts.
 
-`tools/prepare-notice-accuracy-review.py` is standard-library-only, offline and
-read-only with respect to the checkout. It reads both complete snapshots and
-optionally a private JSON manifest. No Node scores, URLs fetched, notice search,
-import, supplier-name matching, price-based matching or amount repairs occur.
-
-Manifest shape (`schemaVersion` is exactly `notice-accuracy-review-v1`):
-
-```json
-{
-  "schemaVersion": "notice-accuracy-review-v1",
-  "records": [
-    {
-      "dataset": "data/decp-cities.json",
-      "rowId": "EXACT-PUBLISHED-ID",
-      "rowSha256": "SHA256-OF-CANONICAL-COMPLETE-PUBLISHED-ROW",
-      "reviewedBy": "PRIVATE-REVIEWER-ID",
-      "reviewedOn": "2026-10-10",
-      "facts": {
-        "regime": {
-          "value": "2014/24/EU-ordinary",
-          "evidence": [
-            {
-              "path": "relative/private-evidence.pdf",
-              "sha256": "SHA256-OF-ACTUAL-EVIDENCE-BYTES",
-              "url": "https://www.legifrance.gouv.fr/EXACT-OFFICIAL-SOURCE",
-              "locator": "dated article/page/field and exact applicability passage"
-            }
-          ]
-        }
-      }
-    }
-  ]
-}
-```
-
-This abbreviated example is **not eligible**. Every following fact requires its
-own nonempty evidence array with a real private file, byte hash, official HTTPS
-source URL and precise locator (one file may support several facts):
+Manifest: exact `schemaVersion: notice-accuracy-review-v1`, `records` array. Each record binds `dataset` (e.g. `data/decp-cities.json`), `rowId`, canonical complete `rowSha256`, `reviewedBy`, `reviewedOn`, and `facts`. Each fact has `value` and nonempty `evidence`: private file `path`, byte `sha256`, official HTTPS `url`, precise `locator`. One file may support several facts.
 
 | Fact | Required reviewed value |
 | --- | --- |
@@ -144,7 +54,7 @@ source URL and precise locator (one file may support several facts):
 | `identityLink` | object with exact published `buyerSiret`, `contractId`, and nonempty reviewed `procedureId`, `documentVersion` |
 | `thresholdRule` | object described below, with reviewed primary text and date/type/buyer applicability |
 
-For example, a reviewed 2023 ordinary subcentral service rule would have:
+`thresholdRule` example for 2023 ordinary subcentral services:
 
 ```json
 {
@@ -156,53 +66,19 @@ For example, a reviewed 2023 ordinary subcentral service rule would have:
 }
 ```
 
-That object is only a reviewer assertion; it is not proof on its own. Neither the
-helper nor booleans authenticate documents, qualifications or the legal reading.
-Only EUR-Lex/Legifrance references are accepted for legal-duty/threshold facts.
-Other references allow those hosts, BOAMP, TED, the Ministry data host and French
-`.gouv.fr` hosts. An authentic buyer profile on another domain needs an explicitly
-reviewed future allowlist revision; do not disguise it under a government URL.
+Assertions/booleans do not authenticate documents or expertise. Legal facts accept only EUR-Lex/Legifrance; other facts also accept BOAMP, TED, Ministry data and French `.gouv.fr`. Other buyer-profile domains need a reviewed allowlist revision.
 
-Missing manifest/facts/reviewer/evidence, unknown buyer/type, unsupported date,
-unreviewed threshold or unmatched identity stays **unknown**, never sampled.
-Known incompatible scope or valuation basis stays **ineligible**, not a legal
-exemption finding. Wrong hashes, stale row bindings, invalid numeric/date data,
-duplicate JSON keys/identities, nonofficial references and manifests containing
-absent identities cause a hard error. No implicit fallbacks or automatic joins.
+- Missing facts/reviewer/evidence, unknown buyer/type, unsupported dates, unreviewed thresholds or unmatched identity → **unknown**, unsampled.
+- Known incompatible scope/basis → **ineligible**, not legally exempt.
+- Wrong/stale hashes, invalid dates/numbers, duplicate JSON keys/identities, nonofficial URLs or absent identities → hard error. No automatic joins/fallbacks.
 
-## Reproducible selection and immutable private freeze
+## Selection and private freeze
 
-Fixed strata: `sources-agree`, `sources-disagree`, `single-source`,
-`notice-checked`, `unknown`, taken only from published verification metadata.
-They describe provenance, **not truth labels**. All eligible rows within a
-stratum are ranked by SHA-256 of canonical JSON
-`[protocolVersion, seed, dataset, rowId]`, with exact identity tie-breaks. Default
-seed `notice-review-v1`; select at most ten per stratum. Record population and
-selected counts for each stratum, including empty strata. No substitution between
-strata, cherry-picking, score ranking, or replacements after reading outcomes.
-Input row order does not change selection; byte changes still change the freeze.
+Fixed published-provenance strata: `sources-agree`, `sources-disagree`, `single-source`, `notice-checked`, `unknown`. They are not truth labels. Rank eligible rows by SHA-256 of canonical `[protocolVersion, seed, dataset, rowId]`, exact-identity tie-break; default seed **notice-review-v1**, at most **ten per stratum**. Record empty strata too. No substitutions, score ranking or post-outcome replacements; input order does not affect selection.
 
-Review unit is the **published dataset row**, not an independently established
-unique contract. Shared procedures/holders and possible duplicates require
-cluster-aware interpretation. Do not present an unweighted stratified percentage
-as population accuracy. Any later estimate needs a separate analysis plan with
-stratum weights, uncertainty, clustering, and an explicitly bounded denominator.
+Review unit is a published row, not a proven unique contract. Any accuracy estimate needs stratum weights, uncertainty, clustering and a bounded denominator; an unweighted percentage is unsuitable. Prior exposure, especially notice-checked cases, must be reported separately from independent blinded validation.
 
-The canonical plan hash excludes only `planSha256`. It covers complete source
-byte hashes, complete per-row canonical hashes, helper hash, manifest byte hash,
-reviewed evidence hashes/references, classifications, seed, strata and selection.
-No wall-clock timestamp, outcome data or score-dependent selection enters it.
-
-Evidence, manifests and plans must be outside the repository/static server root.
-Private evidence files/manifest must have no group/other permissions; evidence
-directories are private. Symlinks and path traversal are rejected. Freeze directory
-must be 0700 or stricter; exclusive `O_EXCL` creation produces a 0400 regular file.
-An identical rerun verifies the hash and leaves bytes/mtime untouched. A differing,
-writable or tampered existing freeze is refused. No ancestor permissions are
-changed. Permission/hash controls are local immutability and tamper detection,
-not an external timestamp or protection from the file owner/root replacing it.
-A failed partial write is deliberately not silently overwritten; investigate and
-use a new path if necessary.
+Evidence/manifests/plans stay outside repository/server roots. Directories **0700**, evidence/manifest without group/other permissions, exclusive freeze **0400**. Reject symlinks/traversal; identical reruns leave bytes/mtime unchanged, differing/writable/tampered freezes fail. Do not silently overwrite partial writes; investigate and use a new path.
 
 ```sh
 # Initial no-evidence checkpoint; no network and no selected rows:
@@ -217,60 +93,20 @@ python3 tools/prepare-notice-accuracy-review.py \
 python3 -m unittest discover -s tests -p 'test_prepare_notice_accuracy_review.py' -v
 ```
 
-Do not change seed, frame or evidence after seeing accuracy outcomes to obtain a
-more convenient sample. Record prospective amendments and use a new version/path.
-The existing reviewed/sampled cases, especially `notice-checked`, have potential
-prior-outcome contamination. Flag this and report separately; they cannot become
-an independent blinded validation merely through a new freeze.
+Freeze the complete eligibility frame before field outcomes. A qualified reviewer should assess scope without selecting on apparent accuracy. Prospective changes to seed/frame/evidence need a recorded amendment and new version/path.
 
-## Subsequent document-review and outcome protocol (not performed here)
+## Later acquisition and outcomes
 
-Separate eligibility review from field-accuracy review. A qualified eligibility
-reviewer should review scope without selecting on apparent field correctness.
-Freeze the complete eligibility frame and manifest before opening selected field
-outcomes. Keep prior exposure and reviewer independence explicit. Assistant-led
-preparation and assertions are not independent expert validation.
+Not performed here. Preregister exact endpoints/documents, at most **two requests per selected row/100 total**, **20-second timeout**, **12 MiB cap**, no retries/redirects. Stop on refusal/rate limit; retain failures without replacement. Additional discovery needs prospective amendment. This helper has no fetcher.
 
-For later acquisition, preregister exact endpoints/documents and a budget of at
-most **two requests per selected row, at most 100 requests total**, no retries or
-redirect following, 20-second timeout/request, 12 MiB response cap/request. Stop
-on refusal/rate limits; keep failures, no replacement. This helper implements no
-fetcher. Preserve URL, UTC access time, HTTP status, byte checksum, version and
-response limits privately. Any additional discovery needs a prospective amendment.
+Separate outcomes from the immutable plan, linked by `planSha256`. Record reviewer, document/hash/URL/UTC/status/version, page/field, exact buyer/procedure/contract/lot linkage, prior exposure, access and comparability. Amount/title/name or notice-local lot ID alone is insufficient.
 
-Keep outcomes in a separate private artifact linked to `planSha256`, never mutate
-the plan. For each row and each field record reviewer, source/document hash,
-page/field locator, precise buyer/procedure/contract/lot/version matching, prior
-exposure, access result and comparability. Exact identifiers must be corroborated;
-a matching amount/title/name or a notice-local lot ID alone is insufficient.
+Compare tax/currency, annual/total/lot/procedure scope, tender/estimate/ceiling, initial/amended totals, and conclusion/signature/notification/publication dates. Retain conflicting variants; no conversions, holder/version sums, null-to-zero or ceiling allocation. Buyer contracts/offer-analysis documents may be needed beyond notice declarations.
 
-Compare like with like: tax, currency, total/annual/lot/procedure scope, winning
-price versus estimate/framework maximum, initial amount versus new amended total,
-and conclusion/signature versus notification/publication dates. No currency
-conversion, summing holders/versions, null-to-zero, ceiling allocation or priority
-by plausibility. Where sources disagree, retain all variants and basis evidence.
-A notice is another official declaration, not proof of signed contractual truth.
-Buyer contracts and offer-analysis documents may be necessary.
+Per-field outcomes: `corroborated`, `contradicted`, `unresolved-basis`, `ambiguous-link`, `unavailable`, `nonmatching`, `not-applicable`, plus actual private values/bases and qualified second-review status. Unavailable/unresolved rows stay in denominator with coverage, neither success nor error. Corrections preserve frozen versions; rejected eligibility requires recorded deviation, not replacement.
 
-Per-field outcomes: `corroborated`, `contradicted`, `unresolved-basis`,
-`ambiguous-link`, `unavailable`, `nonmatching`, `not-applicable`; include the actual
-values/bases privately and a separate qualified second-review status. Unavailable
-or unresolved cases remain in the frozen denominator with coverage reported;
-they are neither successes nor errors. A later correction does not silently
-replace the frozen version. Rejected eligibility evidence warrants a recorded
-protocol deviation, not an unrecorded sample replacement.
+**Publish no measured accuracy until outcomes and analysis/denominator are independently reviewed.** Assistant preparation is not expert validation.
 
-**Do not publish measured accuracy until outcomes have been reviewed and the
-analysis/denominator independently checked.** This task produced zero accuracy
-outcomes, no factual corrections, no corruption labels, and no accuracy rate.
+## Validation
 
-## Focused tests
-
-14 tests passed via the command above. Synthetic proof files test mechanics only:
-all supported date/type/buyer threshold combinations and strict boundary;
-no amount/date inference; missing fact/evidence; exact-open scope; unknown
-buyer/type/identity; framework/derogation/basis exclusions; primary-rule checks;
-invalid/stale/hash-invalid input; deterministic order-independent selection;
-source hashes; duplicate identities/keys; exclusive read-only idempotent freeze;
-tamper, public-path, insecure-directory and symlink rejection. These tests do not
-verify the provisional threshold constants against legislative text.
+**14 tests passed**: thresholds/strict boundaries, no inference, missing evidence, exact-open scope, exclusions, primary-rule checks, invalid/stale/hash/duplicate input, deterministic selection and private immutable freezes. Synthetic files test mechanics, not provisional legal constants.

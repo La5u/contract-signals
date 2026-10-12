@@ -2,146 +2,74 @@
 
 ## Scope and status
 
-Reviewer: **assistant-assisted**. Offline review of the current repository snapshot, including `data/public-link-evidence.json`, `research/public-link-observations.json`, retained raw BOAMP, normalized datasets, Paris reference-convention evidence and exact TED-version evidence. No new network requests were made.
+Assistant-assisted offline review dismissed **exactly two investigation leads** in [`../data/boamp-decp-link-decisions.json`](../data/boamp-decp-link-decisions.json). The explorer overlay shows **seven active candidates, two dismissed leads, three verified TED notice versions and two unresolved HTTP-429 cases**. Dismissed sources remain under **Dismissed investigation leads**.
 
-**Exactly two investigation leads are dismissed**, in [`../data/boamp-decp-link-decisions.json`](../data/boamp-decp-link-decisions.json). This resolves the supported notice-lot candidate errors, not the underlying legal-contract identity question. Neither dismissal proves that the BOAMP and DECP records are different legal contracts. **No replacement link is confirmed**, no other candidate is promoted, and no amount/date is corrected. The raw nine-pair heuristic artifact is preserved for audit. A separately generated review overlay now exposes **seven active candidates and two dismissed leads** in the explorer, plus three verified TED notice versions and two unresolved HTTP-429 cases. Dismissed sources remain accessible under **Dismissed investigation leads**, not presented as active recommendations.
+The nine-pair heuristic artifact is preserved. Neither dismissal proves different legal contracts or confirms a replacement. No other candidate, amount or date was changed.
 
-## Decision format and replay
+## Evidence and replay
 
-The additive artifact uses `schemaVersion: 1`, `inputHashes` and a `decisions` array. Each decision records `boampId`, `decpId`, `disposition: "dismissed-notice-lot-candidate"`, `reason`, `boampRowSha256`, `decpRowSha256`, reviewer, source URLs, `replacementLinkConfirmed: false`, and scalar `evidence` entries.
+The decision artifact records exact pair IDs, disposition `dismissed-notice-lot-candidate`, reasons, source URLs, reviewer, complete expected scalars and hashes bound to `data/contracts.json`, `data/decp-history.json`, `data/decp-cities.json` and `data/boamp-raw.json.gz`; base links and observations are excluded to avoid circularity.
 
-Each evidence entry has `source` (repository file), `path` (exact JSON Pointer), optional `decode`, and `expected` (complete source scalar, not an excerpt). Indices are zero-based. For `data/boamp-raw.json.gz`, gunzip and parse JSON; if `decode` is present, resolve its `path`, parse that JSON-encoded string, then resolve the evidence `path` in that decoded object. Colons and `#text` are literal keys. This explicit decoded context avoids treating `/donnees` as an already parsed object. Public ledger `recordedFields` entries retain both the original response pointer and value; a pointer into that ledger is not a claim to retain the full live response.
+Pointers are zero-based. Gunzip raw BOAMP, then decode the specified `/donnees` JSON string before resolving evidence pointers; colons and `#text` are literal keys. Public observation pointers refer to retained extracts, not full live responses.
 
-Hashes are SHA-256. Input hashes cover exact file bytes, including compressed bytes for raw BOAMP, and **only**:
-
-| Input | SHA-256 |
-|---|---|
-| `data/contracts.json` | `a02b90a427d9310ec57b6b2a7b18c21d9c999f8ebba0542835c7161a6cdf6400` |
-| `data/decp-history.json` | `80543b398f8d590157972eb52c0812ff483f13124e2fdf3d3c59120cbddee89e` |
-| `data/decp-cities.json` | `6fad886084537beacf0be219c612a5ad704869a08ff7fc36d87abfc14fc66e04` |
-| `data/boamp-raw.json.gz` | `e6839c41712d0001c33d200efc9fd31042b280a7dc5f1ac0601ca6acd1f66f9d` |
-
-Base links and observations are intentionally **not** input-hash dependencies, avoiding circularity. Replayable decision evidence is restricted to those four hash-bound inputs. Context in this report may cite other public artifacts, but it is not silently used as unbound decision evidence. Row hashes cover the **complete normalized row**, serialized as UTF-8 `json.dumps(row, sort_keys=True, separators=(",", ":"), ensure_ascii=False)`, with no trailing newline. They are not raw-notice hashes. Only minimal nonpersonal identity/scope scalars are exposed; no supplier/contact personal names are copied.
+For the tables below, B = `/EFORMS/ContractAwardNotice`; N = `B/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult`. The artifact expands every pointer.
 
 ## 1. Paris: wrong notice-local lot lead
 
-Dismissed pair: `boamp-25-21317-lot-0001` ↔ `decp-21750001600019-2024S05079`.
+Dismissed: `boamp-25-21317-lot-0001` ↔ `decp-21750001600019-2024S05079`.
 
-- Normalized rows: `data/contracts.json#/1679`, `data/decp-history.json#/583`. Buyer SIRET `21750001600019`; DECP contract ID `2024S05079`.
-- BOAMP row: `data/boamp-raw.json.gz#/records/2322`; decode `/records/2322/donnees`.
-- Public notice: <https://www.boamp.fr/pages/avis/?q=idweb:25-21317>.
-- Exact Ministry URL and its retained acquisition status/time/body hash: `research/public-link-observations.json#/liveRequests/1`; ID and amount extracts are under `/recordedFields`. The same URL is retained in the decision's `sourceUrls.decp`.
-- Existing public assessment: `data/public-link-evidence.json#/pairs/1`, checked against raw and normalized rows rather than treated as independent ground truth.
+- Rows: `data/contracts.json#/1679`, `data/decp-history.json#/583`; buyer `21750001600019`, DECP ID `2024S05079`.
+- Raw notice: `data/boamp-raw.json.gz#/records/2322`, decode `/records/2322/donnees`; <https://www.boamp.fr/pages/avis/?q=idweb:25-21317>.
+- Ministry acquisition: `research/public-link-observations.json#/liveRequests/1`, extracts under `/recordedFields`; previous assessment: `data/public-link-evidence.json#/pairs/1`.
 
-Let **N** denote the decoded prefix `/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult`. The decision artifact expands this prefix in every pointer.
+| Explicit result chain | Published reference | Scope |
+|---|---|---|
+| LOT-0001 → CON-0001 → TEN-0001 | `20242024S05075` | Production-environment systems, including watering |
+| LOT-0003 → CON-0003 → TEN-0003 | `20242024S05079` | Climate-management installations in horticultural greenhouses |
 
-| Decoded pointer suffix after N | Expected scalar |
-|---|---|
-| `/efac:SettledContract/0/efac:ContractReference/cbc:ID` | `20242024S05075` |
-| `/efac:LotResult/0/efac:TenderLot/cbc:ID` | `LOT-0001` |
-| `/efac:LotResult/0/efac:SettledContract/cbc:ID` | `CON-0001` |
-| `/efac:LotResult/0/efac:LotTender/cbc:ID` | `TEN-0001` |
-| `/efac:SettledContract/1/efac:ContractReference/cbc:ID` | `20242024S05079` |
-| `/efac:SettledContract/1/cbc:ID/#text` | `CON-0003` |
-| `/efac:SettledContract/1/efac:LotTender/cbc:ID` | `TEN-0003` |
-| `/efac:LotResult/1/efac:TenderLot/cbc:ID` | `LOT-0003` |
-| `/efac:LotResult/1/efac:SettledContract/cbc:ID` | `CON-0003` |
-| `/efac:LotTender/1/efac:TenderLot/cbc:ID` | `LOT-0003` |
+The sibling is printed **Lot 3**, at `B/cac:ProcurementProjectLot/2`. Its scope agrees with the DECP description. The explicit result/contract/tender IDs establish the notice-local relationship, rather than array adjacency, holder or date agreement.
 
-Decoded `/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/2/cbc:ID/#text` is `LOT-0003`; its `/cac:ProcurementProject/cbc:ID` is `Lot 3`. The title describes climate-management installations in horticultural greenhouses, also the scope of the normalized DECP description. LOT-0001 instead describes production-environment systems including watering. These explicit relationship fields, not neighboring array positions or equal dates/holders, identify the sibling reference.
-
-**Incorrect/why:** the heuristic LOT-0001 lead ignored that the `…S05079` pattern is attached to a distinct notice-local LOT-0003/CON-0003/TEN-0003 chain. `20242024S05079` is nevertheless not literally `2024S05079`. This supports dismissing the LOT-0001 lead, **not** automatically assigning DECP to LOT-0003 or declaring legal-contract nonidentity. Removing the repeated year remains an unapproved transform.
-
-Canonical row hashes:
-
-- BOAMP normalized row: `c7c1b8560648a6bfd541af9bcd913a2c1dbec0ed1ac92d5b0f22d7875addf216`.
-- DECP normalized row: `1ac797a8b732650df4154d0a8107e698206c3356b27f817536a6d0ecd49e20f8`.
+**Reason:** the LOT-0001 lead ignored the distinct LOT-0003 chain carrying the `…S05079` pattern. But `20242024S05079` is not literally `2024S05079`. Dismiss LOT-0001 without moving DECP to LOT-0003 or stripping the repeated year.
 
 ## 2. Nantes: technical lot confused with printed lot/scope
 
-Dismissed pair: `boamp-25-34782-lot-0003` ↔ `decp-21440109300015-2025F00012`.
+Dismissed: `boamp-25-34782-lot-0003` ↔ `decp-21440109300015-2025F00012`.
 
-- Normalized rows: `data/contracts.json#/151`, `data/decp-cities.json#/1512`. Buyer SIRET `21440109300015`; DECP contract ID `2025F00012`.
-- BOAMP row: `data/boamp-raw.json.gz#/records/5331`; decode `/records/5331/donnees`.
-- Public notice: <https://www.boamp.fr/pages/avis/?q=idweb:25-34782>.
-- Exact Ministry URL/acquisition metadata: `research/public-link-observations.json#/liveRequests/3`.
-- Buyer export URL/acquisition metadata: `research/public-link-observations.json#/liveRequests/10`, the official Nantes 2025 export at <https://data.nantesmetropole.fr/api/explore/v2.1/catalog/datasets/244400404_marches-publics-conclus-2025-nantes/exports/json>.
-- Existing public assessment: `data/public-link-evidence.json#/pairs/3`.
+- Rows: `data/contracts.json#/151`, `data/decp-cities.json#/1512`; buyer `21440109300015`, DECP ID `2025F00012`.
+- Raw notice: `data/boamp-raw.json.gz#/records/5331`, decode `/records/5331/donnees`; <https://www.boamp.fr/pages/avis/?q=idweb:25-34782>.
+- Ministry acquisition: `research/public-link-observations.json#/liveRequests/3`; buyer export: `/liveRequests/10`, <https://data.nantesmetropole.fr/api/explore/v2.1/catalog/datasets/244400404_marches-publics-conclus-2025-nantes/exports/json>; assessment: `data/public-link-evidence.json#/pairs/3`.
 
-In the decoded notice, **B** is `/EFORMS/ContractAwardNotice` and N is the same extension prefix as above. Full expanded pointers and expected title scalars are in the artifact.
-
-| Decoded pointer | Expected scalar |
-|---|---|
-| B + `/cac:ProcurementProjectLot/1/cbc:ID/#text` | `LOT-0003` (technical lot) |
-| B + `/cac:ProcurementProjectLot/1/cac:ProcurementProject/cbc:ID` | `Lot 2` (printed lot) |
-| B + `/cac:ProcurementProjectLot/1/cac:ProcurementProject/cbc:Name/#text` | `Matériel de cuisine " LAVERIE "` |
-| N + `/efac:LotResult/1/efac:TenderLot/cbc:ID` | `LOT-0003` |
-| N + `/efac:LotResult/1/efac:SettledContract/cbc:ID` | `CON-0002` |
-| N + `/efac:LotResult/1/efac:LotTender/cbc:ID` | `TEN-0002` |
-| N + `/efac:SettledContract/1/efac:ContractReference/cbc:ID` | `2024-88480` |
-| B + `/cac:ProcurementProjectLot/0/cbc:ID/#text` | `LOT-0002` |
-| B + `/cac:ProcurementProjectLot/0/cac:ProcurementProject/cbc:ID` | `Lot 1` |
-| B + `/cac:ProcurementProjectLot/0/cac:ProcurementProject/cbc:Name/#text` | `Matériel de cuisine " CUISSON"` |
-| N + `/efac:SettledContract/0/efac:ContractReference/cbc:ID` | `2024-88470` |
-
-The exact normalized `data/decp-cities.json#/1512/description` is `AC_Cuisine_blanchisserie - Matériel de cuisine « CUISSON»`. It has no personal names. Technical LOT-0003 is **not printed Lot 3**: it is printed Lot 2, LAVERIE. CUISSON belongs to technical LOT-0002, printed Lot 1. The buyer-export retained extract of original response `/321/reference_interne_du_contrat` is `2024_88478`; replacing underscore with hyphen would still not produce either `2024-88470` or `2024-88480`.
-
-**Incorrect/why:** notice-local title, technical/printed lot mapping and reference chains oppose the CUISSON DECP candidate for LAVERIE. There is no authoritative public bridge from `2025F00012` or `2024_88478` to either BOAMP reference. Description compatibility is contextual evidence, not legal-contract identity proof. Do not automatically move this record to CUISSON, or promote the more lot-compatible `2025F00013` candidate.
-
-Canonical row hashes:
-
-- BOAMP normalized row: `c8366073b8199fb2cd4140e20a6f16a1715280425c2725b68336ab139ae5cfdc`.
-- DECP normalized row: `0213e11210f095f1b4c023889532508b459d398e071f12fafdfa0845aae9de68`.
-
-## Other findings retained without promotion
-
-### TED: three exact notice versions, zero verified DECP links
-
-`data/paris-ted-version-evidence.json` retains the bounded historical acquisition, not new requests from this task:
-
-| BOAMP | TED award XML | Ledger pointer | Outcome |
+| Technical lot / printed lot | Title | Contract / tender | Reference |
 |---|---|---|---|
-| 25-21317 | <https://ted.europa.eu/en/notice/126421-2025/xml> | `/requests/12` | HTTP `200`, exact version `01` verified |
-| 25-21329 | <https://ted.europa.eu/en/notice/129139-2025/xml> | `/requests/13` | HTTP `200`, exact version `01` verified |
-| 25-37616 | <https://ted.europa.eu/en/notice/218409-2025/xml> | `/requests/14` | HTTP `429`, unresolved version |
-| 25-45958 | <https://ted.europa.eu/en/notice/264382-2025/xml> | `/requests/15` | HTTP `429`, unresolved version |
-| 25-47556 | <https://ted.europa.eu/en/notice/277338-2025/xml> | `/requests/16` | HTTP `200`, exact version `01` verified |
+| LOT-0003 / Lot 2 | `Matériel de cuisine " LAVERIE "` | CON-0002 / TEN-0002 | `2024-88480` |
+| LOT-0002 / Lot 1 | `Matériel de cuisine " CUISSON"` | — | `2024-88470` |
 
-`/discoveries/5`, `/discoveries/6`, `/discoveries/9` each have `/tedVersionVerified: true`, `/expectedBOAMPVersion: "01"`, and `/exactCrosswalkForReview: false`. Their request `/evidence/exactAwardVersion` values are true. Notice UUID, procedure UUID and version were verified, not just a similar title or predecessor publication number. For Paris 25-21317 the exact notice UUID is `e1636ae4-00b5-4953-bb91-1326562ab9b2` and procedure UUID `7db0640e-05cd-480c-9b82-27190ec82767`. The three XMLs repeat long/compound references but furnish no long-to-short DECP crosswalk. **Three verified BOAMP–TED notice versions therefore yield zero verified BOAMP–DECP links.** The two 429 bodies are not notice evidence and remain unresolved; no retries or bypass are claimed.
+The DECP description is `AC_Cuisine_blanchisserie - Matériel de cuisine « CUISSON»`. Technical LOT-0003 is printed Lot 2, LAVERIE, not printed Lot 3. The buyer export's `/321/reference_interne_du_contrat` is `2024_88478`; replacing its underscore would produce neither BOAMP reference.
 
-### Corrected historical TED search interpretation
+**Reason:** titles, printed/technical lot mapping and reference chains oppose the CUISSON candidate for LAVERIE. No authoritative bridge joins `2025F00012` or `2024_88478` to either BOAMP reference. Do not move the record to CUISSON or promote the more compatible `2025F00013` candidate.
 
-The original three FT requests in `research/public-link-observations.json#/liveRequests/11`, `/12`, `/13` used `/requestBody/checkQuerySyntax: true`. They were **syntax-only checks, not executed searches**. `/searchExecuted: false` and `/syntaxOnly: true` preserve that correction. Empty `/notices` cannot be interpreted as zero search results or evidence of TED absence. The official OpenAPI evidence is `data/paris-ted-version-evidence.json#/requests/10`, source <https://api.ted.europa.eu/api-v3.yaml>; its semantic locator is `/components/schemas/PublicExpertSearchRequestV1/properties/checkQuerySyntax/description`. Subsequent exact discovery used `checkQuerySyntax: false` at `/requests/11/requestBody/checkQuerySyntax`. The earlier five follow-up syntax queries also did not execute searches.
+## Other findings
 
-### Paris long references: temporary possible leads, not normalization
+- **TED:** `data/paris-ted-version-evidence.json` verifies notice UUID, procedure UUID and version `01` for 25-21317, 25-21329 and 25-47556 (`/discoveries/5`, `/6`, `/9`). XMLs: <https://ted.europa.eu/en/notice/126421-2025/xml>, <https://ted.europa.eu/en/notice/129139-2025/xml>, <https://ted.europa.eu/en/notice/277338-2025/xml>. 25-37616 and 25-45958 remain unresolved after HTTP 429: <https://ted.europa.eu/en/notice/218409-2025/xml>, <https://ted.europa.eu/en/notice/264382-2025/xml>. Three verified notice versions yield **zero verified DECP links**; failure bodies are not notice evidence.
+- **Search correction:** `research/public-link-observations.json#/liveRequests/11`, `/12`, `/13` and five early follow-up queries used `checkQuerySyntax:true`: syntax-only, not zero-result searches. Official evidence: `data/paris-ted-version-evidence.json#/requests/10`, <https://api.ted.europa.eu/api-v3.yaml>, `/components/schemas/PublicExpertSearchRequestV1/properties/checkQuerySyntax/description`. Executed discovery uses false at `/requests/11/requestBody/checkQuerySyntax`.
+- **Paris references:** `data/paris-reference-convention-evidence.json` and `research/paris-identifier-convention.md` corroborate six long references in the buyer's list. `num_marche` means national-recensement number. Ministry 2.0.2 allows buyer-internal IDs of 1–16 characters but defines no stripping/splitting rule: <https://raw.githubusercontent.com/139bercy/format-commande-publique/2.0.2/schema_decp_v2.0.2.json>, `/definitions/marche/definitions/IdentifiantMarche`. Retain `20242024S05075`, `20242024S05079`, `2025F026500000`, `2025S029150000`, `2025F026480000` and `2025S015900000 / 2025HA0001GR` verbatim as unconfirmed leads. Direct Atexo exports exceeded the 2 MiB limit and remain uninspected.
+- **Paris amounts:** rejected DECP row 150,000; Ministry alternatives 86,636 and 150,000; LOT-0001 has no PayableAmount and a 200,000 ceiling, sibling LOT-0003 a 150,000 ceiling. These establish neither supersession nor identity.
+- **Nantes amounts:** LOT-0003 has no PayableAmount and a 565,000 ceiling; normalized DECP and buyer export are 370,000, Ministry 466,339. Dismissal supplies no replacement value.
+- Other unresolved bases remain: 3.3M annual maximum versus 13.2M four-ceiling comparison; compound Paris/CASVP perimeter; 10/12.6M/13.22M; duplicated 2M result maximum. Keep maxima, PayableAmount, fixed components, declared amounts and paid expenditure separate.
 
-`data/paris-reference-convention-evidence.json` and `research/paris-identifier-convention.md` document buyer-list corroboration of six long references, with no authoritative DECP equivalence rule. The published Paris field `num_marche` means national-recensement number; it is not an explicit DECP ID. The Ministry 2.0.2 identifier schema describes a buyer-internal identifier of 1–16 characters but does not define repeated-year removal, terminal-zero removal or compound-reference splitting. Source schema: <https://raw.githubusercontent.com/139bercy/format-commande-publique/2.0.2/schema_decp_v2.0.2.json>, `/definitions/marche/definitions/IdentifiantMarche`.
+## Future safeguards and validation
 
-Retain long identifiers verbatim as **temporary possible / unconfirmed** investigation leads: `20242024S05075`, `20242024S05079`, `2025F026500000`, `2025S029150000`, `2025F026480000`, and compound `2025S015900000 / 2025HA0001GR`. Do not auto-normalize their padding, strip the repeated year, collapse two buyer scopes, or silently reassign the rejected Paris pair. Direct Atexo resources remain unfetched because they exceeded the existing 2 MiB ceiling; their absence from inspection is not negative evidence.
+1. Replay unique IDs, input/row checks and all expected scalars before applying decisions; changed evidence requires review.
+2. Follow explicit result→contract→tender→technical-lot IDs. Preserve singleton/list distinctions and printed lot labels.
+3. Keep notice/version identity separate from contract identity. Replacement needs an authoritative buyer+full-reference+DECP-ID+unique-lot bridge; check reused IDs and nonunique portal references.
+4. Keep syntax-only checks, 429 failures and oversized unfetched files explicit. Preserve monetary basis, currency/tax, buyer perimeter and date-event meaning.
+5. Bind the consumer overlay separately to heuristic links, decisions and TED evidence. Recompute ambiguity among active leads; retain historical warnings. Missing/stale overlays must warn that fallback leads may include dismissed candidates.
 
-### Amount semantics not corrected
-
-The Paris rejected pair's normalized DECP amount is 150,000, while retained Ministry rows declare 86,636 and 150,000. LOT-0001 has no PayableAmount and a 200,000 framework ceiling; sibling LOT-0003 has a 150,000 ceiling. That does not establish DECP supersession or identity. Nantes LOT-0003 has no PayableAmount and a 565,000 ceiling; normalized DECP is 370,000, Ministry 466,339, and buyer export 370,000. No replacement value follows from the dismissal.
-
-Elsewhere, the 3.3M annual maximum versus 13.2M four-ceiling comparison, the compound Paris/CASVP amount perimeter, 10/12.6M/13.22M unresolved bases and duplicated 2M result maximum remain explanations or discrepancies, not corrected amounts or proven spend. Framework maxima, winning-tender PayableAmount, fixed components, declared contract amounts and paid expenditure must remain separate.
-
-## Future safeguards
-
-1. Replay exact input hashes, unique normalized IDs, complete-row hashes and every expected scalar before using these decisions. If anything changes, require review; do not silently apply stale dismissals.
-2. Follow explicit result→contract→tender→technical-lot IDs, not array positions or numeric similarity. Preserve singleton/list distinctions and technical versus printed lot labels.
-3. Keep notice identity/version verification separate from legal-contract identity and DECP crosswalk verification. Reject predecessor substitution, fuzzy references, padding rules and amount/date/holder agreement as identity proof.
-4. Require an authoritative public buyer+full-reference+DECP-ID+unique-lot bridge before any replacement or promotion. Check reused DECP IDs and nonunique buyer-portal references; do not aggregate alternatives or arbitrarily select the first returned row.
-5. Record syntax-only checks separately from executed searches. Keep 429, unfetched oversized resources and other acquisition gaps unresolved rather than inferring absence or bypassing limits.
-6. Preserve amount basis, tax/currency scope, buyer perimeter and date-event meaning. Identity review never authorizes changing amounts, dates or spend claims.
-7. Keep the dismissal decision ledger independent of base-link/observation hashes. Its consumer overlay separately binds the raw heuristic artifact, the decision file and TED version evidence. Recompute ambiguity only among active leads; preserve the original warnings in the historical heuristic artifact. If a review overlay is missing/stale, the explorer warns that fallback heuristic leads may include dismissed candidates.
-
-## Offline validation
-
-The two decisions contain **62 primary scalar evidence pointers**, replayable against the four hash-bound public files. Input hashes and complete canonical row hashes are checked before dismissal; stale values fail closed. No network, commit or push was performed.
+The two decisions contain **62 primary scalar evidence pointers**. Replay fails closed on stale inputs. `data/public-link-resolutions.json` deterministically partitions all nine pairs and rechecks TED headers against BOAMP without a private cache.
 
 ```sh
 python tools/review-link-resolutions.py
 python -m unittest discover -s tests -p test_review_link_resolutions.py
 ```
 
-The generated `data/public-link-resolutions.json` is deterministic and requires no private cache. It keeps all nine original pair identities partitioned into active/dismissed sets, and revalidates TED header identities against the public BOAMP snapshot. UI regression tests ensure the dismissed leads are not reintroduced into the active display, verified TED notices are not presented as DECP confirmation, and unavailable/stale review artifacts do not silently hide leads.
+UI regressions cover dismissed-lead exclusion, TED/DECP distinction and missing/stale overlays.

@@ -1,140 +1,55 @@
 # Small document-review freeze (v1)
 
-## Purpose and boundary
+## Purpose and reproduction
 
-This is the next accuracy **preparation** step: a deterministic reading queue from
-actual published application datasets. It is not completed document verification,
-a corruption label set, or an estimate of precision/recall. The preparation script
-reads local published JSON and `script.js` only. It neither fetches URLs nor edits,
-reimports, enriches, or corrects published data.
-
-Run:
+This prepares a deterministic reading queue from published app datasets. It does not verify documents, estimate precision/recall or label corruption. The script reads local JSON and `script.js` without fetching or changing data.
 
 ```sh
 python tools/prepare-document-review.py
 python -m unittest discover -s tests -p 'test_prepare_document_review.py'
 ```
 
-The default output is private:
-`~/.cache/contract-signals/document-review/plan.json`. Do not commit it or acquired
-documents. The destination directory is mode 0700 and a newly created plan is
-0400. The script creates the file exclusively; an identical rerun leaves it
-untouched. A different or hash-invalid existing freeze causes an error, not an
-overwrite. An explicitly different `--plan` path is required for another freeze.
-File permissions and SHA-256 provide local protection/tamper detection, not an
-external timestamp, signature, or protection against the file owner replacing it.
+Private default: `~/.cache/contract-signals/document-review/plan.json`; do not commit the plan or documents. Directory 0700, new plan 0400, exclusive creation. Identical reruns leave it intact; different/hash-invalid freezes fail. Use another `--plan` path for a new freeze. Hashes and permissions give local tamper detection, not an external timestamp or protection against owner replacement.
 
 ## Selection fixed before reading
 
-Exactly these strata, in this order, at most one row each:
+Select at most one row per stratum, in this order:
 
-| Stratum | Fixed candidate scope (application dataset keys) | Eligibility |
-| --- | --- | --- |
-| scored-flagged-positive | `boamp` (`contracts.json`) | Published amount > 0 and actual app score > 0 |
-| scored-zero-positive | `boamp` | Published amount > 0, actual score = 0, not excluded |
-| declared-zero | `boamp`, `colombia` | Numeric published amount = 0 and published official verification URL |
-| missing-amount | `boamp`, `uk` | Missing/null amount, BOAMP or Find a Tender family (not numeric zero) |
-| initial-conflict | `cities` | Nonempty published `initialConflicts` |
-| published-contractSigned | `paraguay`, `paraguay3` | Published `signedDocumentUrls` entry on the DNCP official host |
+| Stratum | Dataset scope | Eligibility |
+|---|---|---|
+| scored-flagged-positive | `boamp` (`contracts.json`) | Published amount > 0, actual app score > 0 |
+| scored-zero-positive | `boamp` | Amount > 0, score = 0, not excluded |
+| declared-zero | `boamp`, `colombia` | Numeric amount = 0, published official verification URL |
+| missing-amount | `boamp`, `uk` | Missing/null amount in BOAMP or Find a Tender, not numeric zero |
+| initial-conflict | `cities` | Nonempty `initialConflicts` |
+| published-contractSigned | `paraguay`, `paraguay3` | Published `signedDocumentUrls` entry on the official DNCP host |
 
-Within each scope choose the lexicographically smallest **(dataset key, exact row
-ID)**, using ordinary string ordering, not locale ordering or numeric ID parsing.
-Skip already selected exact dataset/row identities. Empty strata are recorded,
-not filled from another scope. This deliberately gives BOAMP and the first
-Paraguay cohort precedence over later dataset keys. There is no severity ranking,
-manual cherry-picking, document-readability selection, or replacement after
-opening documents. A document that is unavailable or fails matching remains a
-review result for the frozen row. This small purposive sample is not representative.
+Choose the lexicographically smallest **(dataset key, exact row ID)** by ordinary string ordering. Skip already selected identities; record empty strata without filling from another scope. BOAMP and the first Paraguay cohort therefore take precedence. No severity/readability selection or replacement after opening documents; access or matching failures remain outcomes. This sample is purposive, not representative.
 
-The six candidate datasets are prepared **independently and in full** through
-`prepareContracts` in a Node `vm`, as the app does when loading individual datasets
-(and before combining them). Selection happens afterwards. The script calls the
-actual `getVigilanceScore` and `getAssessment` from `script.js`; it does not
-reimplement thresholds or prepare only the selected rows. Thus supplier context
-and buyer publication baselines stay in their original cohorts. Score null means
-unevaluated/excluded, not zero. A zero score can coexist with a missing amount if
-other checks are evaluated; a declared zero is not proof of a free contract.
+Prepare all six datasets independently and in full through `prepareContracts` in a Node `vm` before selection. Call the app's `getVigilanceScore` and `getAssessment` from `script.js`, preserving supplier context and buyer baselines. Null score means excluded/unevaluated, not zero. A zero score may coexist with a missing amount; a declared zero does not establish a free contract.
 
-## Freeze contents and privacy
+## Freeze and matching data
 
-The canonical hash is SHA-256 of UTF-8, sorted-key, compact JSON with
-`planSha256` removed. It covers the fixed protocol/scopes, all six published-file
-byte hashes, script/helper hashes, score version, exact selections, minimized
-matching IDs, published values, verification URLs and assessment states. There
-is no wall-clock timestamp or machine-specific path in the hashed payload.
-Whitespace changes in source snapshots still produce a new source hash.
+The hash binds protocol/scopes, all six file bytes, script/helper, score version, selections, matching IDs, published values, URLs and assessment states; it excludes `planSha256`, time and machine paths.
 
-Only allowlisted notice/lot/contract/folder/process/procedure/award/OCID and buyer
-identifiers are retained, together with dataset and row IDs. BOAMP lot and contract
-IDs are local to the notice: never match `LOT-0001` or `CON-0001` alone, and never
-assume they equal DECP identifiers. DECP requires exact buyer SIRET + contract ID;
-DNCP requires OCID + contract ID + linked award ID. SECOP requires exact contract
-and process IDs (the generic API URL alone is not an exact match).
+- Retain allowlisted notice/lot/contract/folder/process/procedure/award/OCID/buyer IDs plus dataset/row IDs. BOAMP `LOT-0001`/`CON-0001` need the notice root and are not DECP IDs.
+- DECP needs buyer SIRET + contract ID; DNCP needs OCID + contract ID + linked award; SECOP needs contract + process IDs, not its generic API URL.
+- Retain published amount, currency, basis, date/note and selected chronology; absent currency stays null. Include conflict field names and assessment counts/check IDs/states, without raw alternatives or explanations.
+- Exclude names, supplier IDs, descriptions, raw records, document filenames, profiles and histories. URLs must be published schema fields on official hosts; no guessed or search-derived links.
+- Paraguay's `signedDocumentUrls` comes from OCDS `contractSigned` metadata; that category does not verify the file or signatures.
 
-The plan retains published amount, currency, amount basis, date/date note and
-selected published chronology fields; absent currency remains null, not an
-invented EUR assumption. It includes initial-conflict **field names**, not raw
-alternative records, and assessment counts/check IDs/states, not free-text
-assessment explanations. No supplier names or identifiers, buyer names,
-descriptions, source-reference prose, raw records, document filenames, supplier
-profiles or source histories are copied. URLs come only from published schema
-fields and are restricted to official source hosts. No guessed document URLs,
-search-generated matches, third-party links or newly fetched evidence are added.
-The Paraguay importer publishes `signedDocumentUrls` from OCDS `contractSigned`
-documents; the presence of that metadata does not verify the file or signatures.
+## Document verification criteria
 
-## Subsequent document verification criteria
+Keep outcomes in separate private review records with access status, checksum/version, exact matching evidence and page/section locators. Preserve the freeze and keep personal information out of published evidence.
 
-For each frozen row, keep a separate private review record. Record access outcome,
-document checksum/version, exact matching evidence and page/section references.
-Do not modify the freeze to record outcomes. Do not publish personal information
-from documents. A review must establish all of the following before declaring a
-field corroborated:
+1. **Identity/version:** establish composite IDs, buyer, lot, root/version, correction history, contract/award links and annex scope. Titles, suppliers and amounts do not establish identity. Record frozen and reviewed versions; do not silently substitute a later correction.
+2. **Amount/currency:** distinguish contract, winning-tender PayableAmount, award, framework ceiling, lot, budget, unit price, amendment/new total and payments. Check separators and units. Do not sum versions/amendments/currencies or substitute award/procedure amounts. Missing/zero may reflect omission, genuine zero/free use or source error; exact evidence must distinguish them.
+3. **Tax:** establish HT/excluding versus TTC/including tax, applicable rate and comparable basis. Do not infer tax treatment from eForms fields or unspecified currency. Unresolved tax/basis means unresolved comparability.
+4. **Date/chronology:** distinguish signature/conclusion, notification, award, period start, publication, correction and amendment. Paraguay's displayed period start is not signature proof. Preserve notes/timezone uncertainty; investigate unexpected ordering against the matched version. Missing chronology stays unknown.
+5. **Conflicts/outcomes:** retain incompatible DECP initial values until a uniquely matched authoritative version establishes precedence. Do not pick the highest/lowest or score the conflict. Classify each field as corroborated, contradicted, ambiguous/unresolved, unavailable or nonmatching. Access failure is neither corroboration nor an adverse finding.
 
-1. **Identity and version:** match the full composite identifiers, buyer and lot,
-   including notice root/version, correction history, contract/award linkage and
-   annex scope. Similar titles, suppliers or amounts do not establish a match.
-   Record both the snapshot version and the version available at review time.
-   A later corrected notice is not silently substituted for the frozen version.
-2. **Amount basis and currency:** distinguish contract value, winning tender
-   payable amount, award value, framework ceiling, lot value, estimated budget,
-   unit price, amendment/new total and actual payments. Do not sum versions,
-   amendments or currencies; do not replace a contract amount with an award or
-   procedure-wide amount. Check decimals, thousands separators and units. A
-   missing/zero amount may reflect an omitted field, genuine zero/free-use
-   arrangement or a source problem; do not infer which without exact evidence.
-3. **Tax:** explicitly establish HT/excluding tax versus TTC/including tax,
-   applicable tax rate and whether the compared figures have the same basis.
-   Do not assume that an eForms payable field or an unspecified currency implies
-   the same tax treatment. If tax/basis is unresolved, classify comparability as
-   unresolved rather than manufacture a discrepancy or correction.
-4. **Date and chronology:** distinguish signature/conclusion, notification,
-   award, period start, publication, correction and amendment dates. Paraguay's
-   displayed period start is not signature proof; inspect the signed document
-   instead. Preserve stated date notes and timezone ambiguities. Check ordering
-   against the matched version; unexpected ordering prompts investigation, not
-   an automatic finding. Missing chronology stays unknown.
-5. **Conflicts and outcomes:** for the DECP city conflict, retain all incompatible
-   initial values as unresolved unless a uniquely matched authoritative version
-   establishes precedence. Do not pick the highest/lowest amount or score a
-   conflicting row. Classify outcomes as corroborated, contradicted,
-   ambiguous/unresolved, unavailable, or nonmatching, separately for each field.
-   Failure to access a document is not corroboration and not an adverse finding.
-
-A `contractSigned` document requires checking the actual contract, parties,
-lot/award scope, signature pages, dates and monetary clauses. Metadata category,
-filename or download URL alone cannot establish signing, authenticity or payment.
-Document corroboration of imported fields also does not establish that the
-heuristic score identifies wrongdoing. Any score change needs a separate,
-versioned investigation and must never feed back into this sample selection.
+For `contractSigned`, inspect the actual contract, parties, lot/award scope, signature pages, dates and monetary clauses. Category, filename or URL cannot establish signing, authenticity or payment. Score changes require a separate versioned investigation and must not affect selection.
 
 ## Independence limits
 
-Assistant preparation and assistant-assisted reading are **not independent human
-review**. The same assistant/toolchain can repeat importer assumptions, miss
-source defects, or misread language and legal context. Official documents may
-share the very source errors under review. Keep access/matching evidence and
-uncertainty explicit, and require a separate qualified reviewer blinded to scores
-where feasible before claiming independent validation. No document inspection
-has been performed by this preparation step. Six rows cannot support country
-comparisons, calibrated probabilities, population accuracy or corruption claims.
+Assistant preparation/reading is not independent human review. The toolchain can repeat importer assumptions or misread source/legal context; official documents can share source errors. Seek a separate qualified reviewer blinded to scores where feasible. Preparation itself inspects no documents, and six rows cannot support country comparisons, calibrated probabilities, population accuracy or corruption claims.
