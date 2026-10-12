@@ -229,6 +229,8 @@ def merge_contract_changes(rows, path=None):
 
 
 def minimized_changes(contract):
+    # The API omits empty lists and creates `changes` on the first change, so absent = none
+    # (research/ukraine-corrections-log.md §1). Pending changes are listed too; count active only.
     active = [c for c in contract.get("changes", []) if c.get("status") == "active"]
     return {"changes": len(active),
             "rationaleTypes": sorted({t for c in active for t in c.get("rationaleTypes", [])}),
