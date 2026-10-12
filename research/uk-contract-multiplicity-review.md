@@ -1,197 +1,84 @@
 # UK FTS contract multiplicity and value accuracy gate
 
-## Scope and verdict
+## Verdict
 
-Read-only audit of **all 1,081 published rows** in `data/uk-fts.json` against
-**all 516 saved release packages** in `data/uk-fts/raw/notices/`, performed on
-2026-10-07. No sampling, network requests, importer execution, data rebuilds or
-published-data changes. Existing user changes were left untouched.
+Offline audit on **2026-10-07** covered **all 1,081 published rows** in `data/uk-fts.json` and **all 516 saved packages** in `data/uk-fts/raw/notices/`.
 
-**No concretely wrong amount/currency or date mapping was found within this
-saved snapshot.** Every published row has exactly one linked contract, and all
-1,081 amount/currency pairs and dates reproduce the existing importer rule.
-There are **zero observed last-of-multiple selections**, **zero award-value
-fallbacks**, and **zero identity-ambiguous rows**. These are measured results,
-not evidence that the importer is safe on other releases.
+**No wrong amount/currency or date mapping was found in this snapshot.** Each row has exactly one linked contract; all 1,081 pairs and dates reproduce the importer rule. Observed multiple-contract selections, award-value fallbacks and identity-ambiguous rows: **zero**.
 
-The importer has two real **latent risks**: it silently retains the last
-contract for a repeated `awardID`, and its award-value fallback is labelled as
-contract value. Neither branch produced an observed wrong value here. Nine
-rows have no amount/currency in either the linked contract or award; three
-published dates are notice dates, not signature dates. These limitations must
-not be turned into assurances of complete signed-contract-value/date accuracy.
+Two latent importer risks remain: last-wins selection for repeated `awardID`, and award values labelled as contract values. Neither occurred here. **Nine** rows lack amount/currency; **three** dates come from notices, not signatures. The audit establishes saved-source mapping, not legal contract truth, payment or accuracy on future releases.
 
 ## Exact identity method
 
-`tools/audit-uk-contract-values.py` reads the manifest, published rows and every
-saved `*.json.gz` notice package. It does not import or invoke the importer.
+`tools/audit-uk-contract-values.py` reads the manifest, published rows and every saved `*.json.gz` package without invoking the importer.
 
-1. Index **every raw award** by `(release.id, award.id)`. Match each published
-   row using its **full** `(noticeId, awardId)` pair. Require one raw candidate,
-   one published row for that pair and one occurrence of the published row ID.
-   Never select by a name, amount, array position, award suffix alone or date.
-2. Check exact `procedureId == release.ocid`, the unique buyer-party ID,
-   the single award supplier's ID against the row's `GB-FTS` supplier ID, and
-   `lotId` against the award's sole related lot (or both absent). Check that the
-   row ID equals the importer's full notice-plus-award-suffix construction;
-   that construction is a consistency check, **not the join key**.
-3. Recheck active status, exactly one supplier and at most one related lot.
-   Check manifest/file completeness, release ID versus filename, duplicate
-   award/contract IDs within releases, and contracts whose `awardID` is absent
-   from that release's awards. Count eligible raw awards missing a published row.
-4. Enumerate **all** contracts in the same release for which
-   `contract.awardID == award.id`. This is a list, not a last-wins dictionary.
-   Multiple linked contracts or ambiguous identity are gate exclusions—even
-   if amounts/dates happen to agree. No sum, inferred allocation, "latest"
-   contract selection or other resolution is attempted.
-5. Separately reproduce the existing importer's selection rule for diagnosis:
-   last linked contract, then `contract.value or award.value or {}` as a whole
-   object; `dateSigned or award.date or release.date`, truncated to ten
-   characters. Compare amount **and currency together**, and compare the date
-   and publication date. Reproducing last-wins does not accept it as truth when
-   multiple contracts exist. The helper records that case as excluded.
+1. Join by full **(release.id, award.id)** = **(noticeId, awardId)**. Require one raw candidate, one published pair and one occurrence of the row ID.
+2. Check `procedureId == release.ocid`, unique buyer-party ID, the single award supplier's ID against the row's `GB-FTS` supplier ID, and sole related lot (or both absent). Importer's notice-plus-award-suffix row ID is a consistency check, not the join key.
+3. Check active status, one supplier, at most one lot, manifest/file completeness, filename/release IDs, duplicate award/contract IDs, orphan contracts and eligible awards without published rows.
+4. Enumerate **all** contracts with `contract.awardID == award.id` in the release. Multiple contracts or ambiguous identity exclude the row, even when fields agree; do not sum, allocate or choose “latest”.
+5. Diagnose by reproducing last linked contract, then whole-object `contract.value or award.value or {}` and `dateSigned or award.date or release.date` truncated to ten characters. Compare amount **with currency**, date and publication date; reproducing last-wins does not approve it.
 
-Names and contacts are neither matching evidence nor report output. Company
-identifiers are not used to merge supplier accounts. This tests the published
-FTS identity, not legal-entity identity or the factual accuracy of the notice.
+Names/contacts are not matching evidence or output. Supplier IDs do not merge accounts or establish legal-entity identity.
 
-## Full saved-source inventory
+## Saved-source inventory
 
 | Measure | Count |
-| --- | ---: |
-| Manifest notices / files present / raw releases | 516 / 516 / 516 |
-| Missing manifest files / extra files / filename-ID mismatches | 0 / 0 / 0 |
-| Raw awards / raw contracts | 1,233 / 1,086 |
-| Raw awards with zero linked contracts | 147 |
-| Raw awards with exactly one linked contract | 1,086 |
-| Raw awards with two or more linked contracts | 0 |
+|---|---:|
+| Manifest notices / files / releases | 516 / 516 / 516 |
+| Missing / extra files / filename-ID mismatches | 0 / 0 / 0 |
+| Raw awards / contracts | 1,233 / 1,086 |
+| Awards with zero / one / multiple linked contracts | 147 / 1,086 / 0 |
 | Orphan contracts / duplicate award IDs / duplicate contract IDs | 0 / 0 / 0 |
-| Excluded inactive awards (first applicable reason) | 147 |
-| Excluded multi-supplier awards (first applicable reason) | 5 |
-| Excluded multi-lot awards after preceding checks | 0 |
-| Eligible raw awards / published rows | 1,081 / 1,081 |
-| Other-buyer releases / eligible awards without a published row | 0 / 0 |
-| Duplicate published IDs / ambiguous or failed identity matches | 0 / 0 |
+| Excluded inactive / multi-supplier / multi-lot awards | 147 / 5 / 0 |
+| Eligible awards / published rows | 1,081 / 1,081 |
+| Other-buyer releases / eligible awards missing published rows | 0 / 0 |
+| Duplicate published IDs / ambiguous or failed matches | 0 / 0 |
 
-The five other singly linked contracts belong to excluded multi-supplier awards;
-all 147 contract-less awards are inactive. Exclusions are ordered like the
-importer, not overlapping counts of every condition.
+Exclusions use the importer's first applicable reason. All 147 contract-less awards are inactive; five singly linked contracts belong to excluded multi-supplier awards.
 
-## Published-row results
+## Published results
 
 | Measure | Count |
-| --- | ---: |
-| Rows with exactly one linked contract | 1,081 |
-| Rows with multiple linked contracts / excluded for ambiguity | 0 / 0 |
-| Published amount/currency equals importer rule | 1,081 |
-| Published date equals importer rule | 1,081 |
-| Publication-date mismatches | 0 |
-| Positive amounts from contract value | 1,072 |
-| Missing amounts and currencies in both contract and award | 9 |
-| Zero amounts / negative or other amount categories | 0 / 0 |
-| Rows with nonempty award value objects | 0 |
-| Amounts using award-value fallback | 0 |
-| Signature-date source / award-date source / notice-date source | 1,078 / 0 / 3 |
-| Rows with no published date | 0 |
-| Contract-vs-award amount differences / currency conflicts | 0 / 0 |
-| Partial contract value blocking an available award amount | 0 |
-| Selected amount without currency / currency without amount | 0 / 0 |
-| Award value incorrectly labelled contract basis | 0 |
+|---|---:|
+| Unique linked contract / amount-currency matches / date matches | 1,081 / 1,081 / 1,081 |
+| Multiple linked contracts / ambiguity exclusions / publication-date mismatches | 0 / 0 / 0 |
+| Positive contract values / missing amount and currency | 1,072 / 9 |
+| Zero / negative or other amounts | 0 / 0 |
+| Nonempty award value objects / award-value fallbacks | 0 / 0 |
+| Signature / award / notice date source | 1,078 / 0 / 3 |
+| Rows without date | 0 |
+| Contract-award amount differences / currency conflicts | 0 / 0 |
+| Partial contract value blocking award amount | 0 |
+| Amount without currency / currency without amount | 0 / 0 |
+| Award value labelled contract basis | 0 |
 
-**Important denominator:** no retained award has a nonempty value object, so
-there are **zero comparable contract/award value pairs**. The zero conflict
-counts do not establish agreement between those two bases; there is nothing to
-compare. The 9 missing cases are absence, not declared zero and not importer
-loss from an available award amount. They are not numeric-value-verified rows.
+**There are zero comparable contract/award value pairs:** no award has a nonempty value object. Zero conflicts therefore do not establish agreement. The nine missing cases are absence, not zero or importer loss of an available award amount, and are excluded from numeric verification.
 
-Published currencies are **GBP 1,064; EUR 3; USD 2; BGN 1; CHF 1; JPY 1;
-missing 9**. Thus eight positive values are explicitly non-GBP. The helper
-compares each against its own saved source currency; it does not convert, sum
-across currencies or substitute GBP for absence. No currency mapping conflict
-was observed.
+Currencies: **GBP 1,064; EUR 3; USD 2; BGN 1; CHF 1; JPY 1; missing 9**. Eight positive values are non-GBP. Each was compared with its saved currency, without conversion or substituting GBP.
 
-All 1,081 rows carry the label:
+All rows carry “Contract value as published in the notice (GBP unless stated); not a payment, never converted.” The 1,072 populated values use contract value; for nine missing rows this is generic metadata. Existing date notes allow fallback, but the three notice dates are not verified signature dates.
 
-> Contract value as published in the notice (GBP unless stated); not a payment,
-> never converted.
+## Importer risks and decision
 
-For the 1,072 populated values the saved basis is indeed the linked contract's
-value object. For nine rows the label is generic metadata with no value, not
-proof that a contract value was published. The existing date note explicitly
-allows award/notice-date fallback; the three notice dates are not mismatches,
-but must not be represented as independently verified signature dates.
+In `tools/import-find-a-tender.py::notice_rows`:
+- `{c.get("awardID"): c for c in contracts}` discards earlier linked contracts before amount/date selection. Multi-contract awards could publish arbitrary fields. Observed affected rows: **0** across all raw awards.
+- `contract.get("value") or award.get("value") or {}` could label award value as contract value. Observed affected rows: **0**.
+- Whole-object fallback means a truthy partial contract value blocks an available award amount; a nonempty zero-value object does not trigger fallback. Observed affected rows: **0**; synthetic tests establish behavior, not wider frequency.
 
-## Concrete errors versus latent importer risks
+**Decision:** no current multiplicity/identity exclusion or mapping repair is demonstrated. Keep nine missing values outside numeric claims and preserve currency/date-source distinctions. No importer change was made. Gate future inputs on unique identity and linked contract, with explicit basis metadata if award fallback is allowed.
 
-The relevant existing code is `tools/import-find-a-tender.py::notice_rows`:
-
-- **Last-wins contract mapping:** `{c.get("awardID"): c for c in contracts}`
-  discards earlier linked contracts before both amount and signature-date
-  selection. A multi-contract award can silently publish one arbitrary
-  contract's fields as the award row. **Observed affected rows: 0**, including
-  across all raw awards. The audit helper excludes such rows instead of
-  resolving them, even if the last contract reproduces the published values.
-- **Basis mislabelling on fallback:** `contract.get("value") or
-  award.get("value") or {}` can publish an award value under a fixed contract
-  basis label. **Observed affected rows: 0**. No award fallback was exercised.
-- **Whole-object, not fieldwise, fallback:** a truthy partial contract value
-  (e.g. currency only) blocks an available award amount. A zero amount in a
-  nonempty value object does not trigger fallback. **Observed affected rows:
-  0**. Tests establish the behavior, not its frequency beyond this snapshot.
-- **Real present limitations:** 9 missing values and 3 notice-date fallbacks.
-  These are supported by the saved-source rule and are not demonstrated wrong
-  mappings. No substitute amount/date was invented and no correction queue of
-  positive recovery candidates is warranted by this audit.
-
-**Gate decision:** no multiplicity/identity exclusion or source-mapping repair
-is demonstrated for the current 1,081 rows. Keep the nine missing values out of
-any numeric verification claim; retain currencies and date-source distinctions.
-This is a narrow saved-source mapping pass, **not an overall data-quality,
-legal-contract-value, payment, supplier-identity or procurement-truth pass**.
-No importer change was made. Future inputs should be gated for unique exact
-identity and unique linked contract before accepting a mapping, with explicit
-amount-basis metadata if an award fallback is ever permitted.
-
-## Reproduction, private evidence and validation
-
-Aggregate-only run (reads inputs and prints JSON; writes no output files):
+## Reproduction and limits
 
 ```sh
 python tools/audit-uk-contract-values.py
 python -m unittest discover -s tests -p 'test_audit_uk_contract_values.py' -v
-```
-
-Optional minimized private evidence, in a **new** directory:
-
-```sh
+# Optional minimized evidence in a new private directory
 python tools/audit-uk-contract-values.py \
   --private-dir "$HOME/.cache/contract-signals/accuracy-review/uk-contract-multiplicity-NEW"
 ```
 
-The actual audit evidence is stored privately under
-`~/.cache/contract-signals/accuracy-review/uk-contract-multiplicity-20261007/uk-contract-values.json`.
-It enumerates all 1,086 raw contract-to-award links and all 1,081 matched rows'
-linked contracts, source amount/currency and date fields, identity checks and
-flags. It contains exact IDs but no names, contacts or narrative descriptions.
-Directory/file modes are **0700/0600**; the helper exclusively creates the file
-and refuses overwrite or repository output. This is evidence, not an automatic
-correction queue. Public stdout/report contain no individual IDs or amounts.
+Actual private evidence: `~/.cache/contract-signals/accuracy-review/uk-contract-multiplicity-20261007/uk-contract-values.json`. It lists **1,086** contract-award links and **1,081** matched rows' source fields/checks, without names, contacts or descriptions. Modes 0700/0600; exclusive creation refuses overwrite/repository output. Public output is aggregate-only. Snapshot fingerprints bind the reviewed files, not the live service.
 
-**11 tests passed**, including the full saved-snapshot regression and synthetic
-multiple-contract value/date conflicts, identical duplicate contracts (still
-excluded), award fallback and label mismatch, no-contract fallback, partial
-value blocking, empty object versus zero behavior, currency conflict, incorrect
-published values, identity failures and missing-value/notice-date fallback.
-Synthetic failures are not counted as observed published-data errors.
+**11 tests passed**, including saved-snapshot regression, multiple/duplicate contracts, fallback/basis mismatch, partial/empty/zero values, currency conflicts, wrong fields, identity failures and missing/notice-date cases. Synthetic errors are not observed dataset errors.
 
-Input SHA-256 fingerprints:
-
-- Published JSON: `edf5433d2e92685e4d07857e7f88f1e9c0bc11bce1d97e91bf4bfacc1a7b3ecf`
-- Raw manifest: `1d5d13434031c765c1aa796ff7de42619d8d1497d0c19c035be62bf97b499b28`
-- Raw notice files: `6132b17ad9987565dae64f37f1427dd673638ffcad769992b63dafd462848bf6`
-
-The last fingerprint hashes, in sorted filename order, each UTF-8 filename,
-a NUL byte and the binary SHA-256 digest of its saved compressed bytes. These
-fingerprints pin the reviewed snapshot, not the current live service. No live
-release, amendment, attachment, linked notice or independent contract evidence
-was checked; historical release mappings need not describe current contracts.
+No live releases, amendments, attachments, linked notices or independent contracts were checked; historical mappings may not describe current contracts.
