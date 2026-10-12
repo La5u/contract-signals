@@ -1659,6 +1659,131 @@ function briefReason(text) {
   return m ? m[1] : s;
 }
 
+// Optional cross-source evidence: kept outside contract records and scoring.
+function validateBoampDecpLinks(data) {
+  const paths = ['data/contracts.json', 'data/decp-history.json', 'data/decp-cities.json', 'data/boamp-raw.json.gz'];
+  const official = value => {
+    if (typeof value !== 'string') return false;
+    try {
+      const u = new URL(value);
+      return u.protocol === 'https:' && !u.username && !u.password && (!u.port || u.port === '443') &&
+        ['www.boamp.fr', 'boamp.fr', 'data.economie.gouv.fr', 'www.data.gouv.fr', 'data.gouv.fr', 'data.nantesmetropole.fr', 'opendata.bordeaux-metropole.fr'].includes(u.hostname);
+    } catch (_) { return false; }
+  };
+  const invalid = () => { throw new Error('Invalid BOAMP/DECP link artifact'); };
+  if (!data || data.schemaVersion !== 1 || !Array.isArray(data.sources) || data.sources.length !== paths.length ||
+      !Array.isArray(data.links) || !data.counts) invalid();
+  for (const path of paths) {
+    const sources = data.sources.filter(s => s && s.path === path);
+    if (sources.length !== 1 || !/^[a-f0-9]{64}$/.test(sources[0].sha256) ||
+        !Number.isInteger(sources[0].count) || sources[0].count < 0) invalid();
+  }
+  const seen = new Set();
+  const basis = ['buyer-published-contract-reference', 'buyer-exact-notice-lot', 'buyer-holder-siret-same-date'];
+  const warnings = ['unconfirmed-no-exact-reference', 'different-cpv', 'multiple-decp-matches', 'multiple-boamp-matches'];
+  for (const l of data.links) {
+    if (!l || typeof l.boampId !== 'string' || !l.boampId.startsWith('boamp-') ||
+        typeof l.decpId !== 'string' || !l.decpId.startsWith('decp-') ||
+        !['confirmed', 'candidate'].includes(l.status) || !official(l.boampUrl) || !official(l.decpUrl) ||
+        !Array.isArray(l.basis) || !l.basis.length || l.basis.some(b => !basis.includes(b)) ||
+        !Array.isArray(l.warnings) || l.warnings.some(w => !warnings.includes(w))) invalid();
+    if (l.status === 'candidate' ? (l.basis.length !== 1 || l.basis[0] !== 'buyer-holder-siret-same-date' ||
+        !l.warnings.includes('unconfirmed-no-exact-reference')) :
+        (l.basis.includes('buyer-holder-siret-same-date') || l.warnings.includes('unconfirmed-no-exact-reference'))) invalid();
+    const key = JSON.stringify([l.boampId, l.decpId]);
+    if (seen.has(key)) invalid();
+    seen.add(key);
+  }
+  const counts = {
+    confirmed: data.links.filter(l => l.status === 'confirmed').length,
+    candidate: data.links.filter(l => l.status === 'candidate').length,
+    ambiguous: data.links.filter(l => l.warnings.some(w => w.startsWith('multiple-'))).length,
+    differentCpv: data.links.filter(l => l.warnings.includes('different-cpv')).length,
+  };
+  for (const [key, count] of Object.entries(counts)) if (data.counts[key] !== count) invalid();
+  if (!Number.isInteger(data.counts.rawNoticeLotReferences) || data.counts.rawNoticeLotReferences < 0) invalid();
+  return data.links;
+}
+
+// Reviewed findings remain annotations, never contract fields or scoring inputs.
+function validatePublicLinkEvidence(data, linkArtifact) {
+  const links = validateBoampDecpLinks(linkArtifact);
+  const conclusions = ['reference-pattern-supported-unconfirmed', 'lot-compatible-unconfirmed',
+    'disfavored-notice-lot-mapping-not-proven-different-legal-contract'];
+  const invalid = () => { throw new Error('Invalid public link evidence ledger'); };
+  if (!data || data.schemaVersion !== 1 || data.confirmed !== 0 || data.resolved !== 0 ||
+      !data.sourceHashes || !Array.isArray(data.pairs) || data.pairs.length !== links.length) invalid();
+  for (const s of linkArtifact.sources) if (data.sourceHashes[s.path] !== s.sha256) invalid();
+  const seen = new Set();
+  return data.pairs.map(p => {
+    if (!p || !conclusions.includes(p.conclusion) || p.confirmed !== false || p.linkStatus !== 'candidate' ||
+        p.resolution !== null || typeof p.notes !== 'string' || p.notes.length > 2000 ||
+        typeof p.publishedReference !== 'string' || !p.publishedReference || p.publishedReference.length > 200 ||
+        typeof p.decpContractId !== 'string' || !p.decpContractId || p.decpContractId.length > 200) invalid();
+    const link = links.find(l => l.boampId === p.boampId && l.decpId === p.decpId &&
+      l.boampUrl === p.boampUrl && l.decpUrl === p.decpUrl && l.status === 'candidate');
+    const key = JSON.stringify([p.boampId, p.decpId]);
+    if (!link || seen.has(key)) invalid();
+    seen.add(key);
+    return { boampId: p.boampId, decpId: p.decpId, conclusion: p.conclusion, notes: p.notes,
+      publishedReference: p.publishedReference, decpContractId: p.decpContractId };
+  });
+}
+
+function validatePublicLinkResolutions(data, linkArtifact) {
+  const links = validateBoampDecpLinks(linkArtifact);
+  const invalid = () => { throw new Error('Invalid public link resolutions'); };
+  if (!data || data.schemaVersion !== 1 || !data.sourceHashes || !data.counts ||
+      !Array.isArray(data.activePairs) || !Array.isArray(data.dismissedPairs) || !Array.isArray(data.tedNotices)) invalid();
+  for (const s of linkArtifact.sources) if (data.sourceHashes[s.path] !== s.sha256) invalid();
+  const seen = new Set();
+  for (const [rows, dismissed] of [[data.activePairs, false], [data.dismissedPairs, true]]) {
+    for (const p of rows) {
+      const key = JSON.stringify([p.boampId, p.decpId]);
+      const original = links.find(l => l.boampId === p.boampId && l.decpId === p.decpId &&
+        l.boampUrl === p.boampUrl && l.decpUrl === p.decpUrl && l.status === p.status);
+      if (!original || seen.has(key)) invalid();
+      seen.add(key);
+      if (dismissed) {
+        if (p.disposition !== 'dismissed-notice-lot-candidate' || p.status !== 'candidate' ||
+            p.replacementLinkConfirmed !== false || typeof p.reason !== 'string' || !p.reason || p.reason.length > 2000) invalid();
+      } else if (p.disposition !== p.status || !Array.isArray(p.activeWarnings) ||
+          p.activeWarnings.some(w => !['unconfirmed-no-exact-reference', 'different-cpv', 'multiple-decp-matches', 'multiple-boamp-matches'].includes(w))) invalid();
+    }
+  }
+  if (seen.size !== links.length || data.counts.heuristicPairs !== links.length ||
+      data.counts.activePairs !== data.activePairs.length || data.counts.dismissedPairs !== data.dismissedPairs.length ||
+      data.counts.confirmedDecpLinks !== data.activePairs.filter(p => p.status === 'confirmed').length ||
+      data.counts.ambiguousActivePairs !== data.activePairs.filter(p => p.activeWarnings.some(w => w.startsWith('multiple-'))).length) invalid();
+  for (const p of data.activePairs) {
+    const original = links.find(l => l.boampId === p.boampId && l.decpId === p.decpId);
+    if (p.activeWarnings.includes('multiple-decp-matches') !== (data.activePairs.filter(l => l.boampId === p.boampId).length > 1) ||
+        p.activeWarnings.includes('multiple-boamp-matches') !== (data.activePairs.filter(l => l.decpId === p.decpId).length > 1) ||
+        p.activeWarnings.includes('different-cpv') !== original.warnings.includes('different-cpv') ||
+        p.activeWarnings.includes('unconfirmed-no-exact-reference') !== original.warnings.includes('unconfirmed-no-exact-reference')) invalid();
+  }
+  const notices = new Set();
+  for (const n of data.tedNotices) {
+    if (!n || !/^\d{2}-\d+$/.test(n.boampNoticeId) || notices.has(n.boampNoticeId) ||
+        !links.some(l => l.boampId.startsWith(`boamp-${n.boampNoticeId}-`)) ||
+        !/^[1-9]\d{0,5}-20\d{2}$/.test(n.publicationNumber) ||
+        n.url !== `https://ted.europa.eu/en/notice/-/detail/${n.publicationNumber}` ||
+        !['verified-notice-version', 'unverified-notice-version'].includes(n.status) ||
+        !/^\d{2}$/.test(n.version) || n.decpCrosswalkConfirmed !== false ||
+        (n.status === 'verified-notice-version' && n.httpStatus !== '200')) invalid();
+    notices.add(n.boampNoticeId);
+  }
+  if (data.counts.verifiedTedNoticeVersions !== data.tedNotices.filter(n => n.status === 'verified-notice-version').length ||
+      data.counts.unverifiedTedNoticeVersions !== data.tedNotices.filter(n => n.status === 'unverified-notice-version').length) invalid();
+  return data;
+}
+
+function publicLinkEvidenceLabel(p) {
+  return p.conclusion === 'reference-pattern-supported-unconfirmed' ? 'Reference-pattern evidence; still unconfirmed.' :
+    p.conclusion === 'lot-compatible-unconfirmed' ? 'Lot-compatible candidate; no identifier bridge.' :
+    'Disfavored notice-lot mapping; not proof of a different legal contract.';
+}
+
 function startExplorer() {
   const body = document.querySelector('#contracts');
   const status = document.querySelector('#status');
@@ -1728,6 +1853,9 @@ function startExplorer() {
   };
   const dateFormat = new Intl.DateTimeFormat(uiLocale === 'en-IE' ? 'en-GB' : uiLocale, { timeZone: 'UTC', day: 'numeric', month: 'short', year: 'numeric' });
   let contracts = [];
+  let boampDecpLinks = [];
+  let publicLinkEvidence = [];
+  let publicLinkResolutions = null;
   // Notes repeated on many rows describe the dataset, not a record: shown once under “Scope and limits”.
   let sharedNotes = new Set();
   const fieldNotes = document.querySelector('#field-notes');
@@ -2502,6 +2630,72 @@ function startExplorer() {
       for (const l of links) { const item = element('li'); item.append(sourceLink(l.url, l.label)); list.append(item); }
       verify.append(list);
     } else line(verify, c.dataStatus === 'synthetic' ? 'None: fictional example.' : 'No source link published.');
+    if (!usingLocalFile && ['boamp', 'decp'].includes(c.dataFamily)) {
+      const belongs = l => c.dataFamily === 'boamp' ? l.boampId === c.id && l.boampUrl === c.source : l.decpId === c.id && l.decpUrl === c.source;
+      const crossLinks = (publicLinkResolutions?.activePairs || boampDecpLinks).filter(belongs);
+      const dismissed = (publicLinkResolutions?.dismissedPairs || []).filter(belongs);
+      if (crossLinks.length || dismissed.length) {
+        verify.append(element('h3', 'Cross-source evidence · BOAMP ↔ DECP'));
+        if (!publicLinkResolutions) {
+          const pending = element('p', 'Heuristic candidates only: reviewed dispositions are unavailable or still loading. Some leads may have been dismissed. ', 'muted');
+          const history = element('a', 'Review decision log'); history.href = 'research/link-corrections-log.md';
+          pending.append(history); verify.append(pending);
+        }
+        const list = element('ul', null, 'verify-links');
+        for (const l of crossLinks) {
+          const isBoamp = c.dataFamily === 'boamp';
+          const target = isBoamp ? 'DECP' : 'BOAMP';
+          const item = element('li');
+          const label = l.status === 'candidate' ? `Unconfirmed candidate only — ${target} official source` : `Confirmed exact identifiers — ${target} official source`;
+          item.append(sourceLink(isBoamp ? l.decpUrl : l.boampUrl, label), ` · ${isBoamp ? l.decpId : l.boampId}`);
+          if (l.status === 'candidate') item.append(' · Same buyer, holder SIRET and date; not proof of the same contract.');
+          else item.append(` · ${l.basis.includes('buyer-published-contract-reference') ? 'Exact buyer + published contract reference.' : 'Exact buyer + notice + lot.'}`);
+          const warnings = l.activeWarnings || l.warnings;
+          if (warnings.some(w => w.startsWith('multiple-'))) item.append(' · Ambiguous: multiple possible records; none selected.');
+          if (warnings.includes('different-cpv')) item.append(' · Warning: differing CPVs.');
+          const review = publicLinkEvidence.find(p => p.boampId === l.boampId && p.decpId === l.decpId);
+          if (review) {
+            item.append(element('p', publicLinkEvidenceLabel(review)),
+              element('p', `Published notice reference: ${review.publishedReference} · DECP contract ID: ${review.decpContractId}`, 'muted'),
+              element('p', review.notes, 'muted'));
+          }
+          const noticeId = l.boampId.match(/^boamp-(\d{2}-\d+)-/)?.[1];
+          const ted = publicLinkResolutions?.tedNotices.find(n => n.boampNoticeId === noticeId);
+          if (ted) {
+            const p = element('p');
+            p.append(sourceLink(ted.url, ted.status === 'verified-notice-version' ? `TED — same notice/version ${ted.version} verified` : 'TED award locator — XML version unverified'),
+              ' · Notice verification only; DECP contract linkage remains unconfirmed.');
+            if (ted.httpStatus === '429') p.append(' XML returned HTTP 429; not retried.');
+            item.append(p);
+          }
+          list.append(item);
+        }
+        verify.append(list, element('p', 'External official source links only. No dataset switch, field replacement or scoring effect.', 'muted'));
+        if (dismissed.length) {
+          verify.append(element('h4', 'Dismissed investigation leads'));
+          const history = element('ul', null, 'verify-links');
+          for (const l of dismissed) {
+            const item = element('li');
+            item.append(sourceLink(c.dataFamily === 'boamp' ? l.decpUrl : l.boampUrl, 'Dismissed pairing — audit source'),
+              element('p', l.reason, 'muted'));
+            history.append(item);
+          }
+          verify.append(history, element('p', 'Dismissal corrects a candidate mapping, not proof of a different legal contract. No replacement link is confirmed.', 'muted'));
+        }
+        if (publicLinkResolutions) {
+          const audit = element('p');
+          const log = element('a', 'Correction history'); log.href = 'research/link-corrections-log.md';
+          const resolutions = element('a', 'Link resolutions (JSON)'); resolutions.href = 'data/public-link-resolutions.json';
+          audit.append(log, ' · ', resolutions); verify.append(audit);
+        }
+        if (publicLinkEvidence.length) {
+          const audit = element('p');
+          const ledger = element('a', 'Public evidence ledger (JSON)'); ledger.href = 'data/public-link-evidence.json';
+          const method = element('a', 'Reproduce this review'); method.href = 'docs/public-evidence.md';
+          audit.append(ledger, ' · ', method); verify.append(audit);
+        }
+      }
+    }
     const searchIds = verificationIdentifiers(c);
     if (searchIds.length) { const p = element('p', null, 'muted'); p.append(element('span', 'Search the portal for'), ` ${searchIds.map(([k, v]) => `${k} ${v}`).join(' · ')}`); verify.append(p); }
     sections.push(verify);
@@ -2947,6 +3141,33 @@ function startExplorer() {
     datasetMetadata = metadata;
     renderDatasetDates(usingLocalFile ? 'local' : datasetSelect.value);
   }).catch(() => { /* Dates remain unknown; record loading is independent. */ });
+  fetch('data/boamp-decp-links.json').then(response => {
+    if (!response.ok) throw new Error('Optional cross-source evidence unavailable');
+    return response.json();
+  }).then(data => {
+    boampDecpLinks = validateBoampDecpLinks(data);
+    const refresh = () => {
+      if (openId && !usingLocalFile) {
+        const record = contracts.find(c => c.id === openId);
+        if (record) renderDetail(record);
+      }
+    };
+    refresh();
+    fetch('data/public-link-evidence.json').then(response => {
+      if (!response.ok) throw new Error('Optional public evidence unavailable');
+      return response.json();
+    }).then(ledger => {
+      publicLinkEvidence = validatePublicLinkEvidence(ledger, data);
+      refresh();
+    }).catch(() => { /* Missing, stale or invalid review does not suppress base candidate links. */ });
+    fetch('data/public-link-resolutions.json').then(response => {
+      if (!response.ok) throw new Error('Optional reviewed resolutions unavailable');
+      return response.json();
+    }).then(resolutions => {
+      publicLinkResolutions = validatePublicLinkResolutions(resolutions, data);
+      refresh();
+    }).catch(() => { /* Stale or invalid dispositions cannot silently dismiss a lead. */ });
+  }).catch(() => { /* Missing or invalid optional evidence must not block the explorer. */ });
   loadDataset();
 }
 

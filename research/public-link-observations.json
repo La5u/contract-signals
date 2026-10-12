@@ -1,0 +1,2657 @@
+{
+  "schemaVersion": 1,
+  "reviewBasis": "Manual-reviewed assertions from research/public-boamp-decp-investigation.md; private summary used only as locators, refs and normalized IDs verified against repository snapshots. No raw live response is required or republished.",
+  "sourceHashes": {
+    "data/boamp-decp-links.json": "a950c17bc95f368731aa1eea8cdb3d4dac8cf4a9ed5c33a0a2bb62e42ff4e8a4",
+    "data/contracts.json": "a02b90a427d9310ec57b6b2a7b18c21d9c999f8ebba0542835c7161a6cdf6400",
+    "data/decp-history.json": "80543b398f8d590157972eb52c0812ff483f13124e2fdf3d3c59120cbddee89e",
+    "data/decp-cities.json": "6fad886084537beacf0be219c612a5ad704869a08ff7fc36d87abfc14fc66e04",
+    "data/boamp-raw.json.gz": "e6839c41712d0001c33d200efc9fd31042b280a7dc5f1ac0601ca6acd1f66f9d",
+    "research/public-boamp-decp-investigation.md": "5b419399443d4dd935011678c5fb71123e0f8a0f6b306eb29950ed2944584e80"
+  },
+  "snapshotTimes": {
+    "data/boamp-raw.json.gz": {
+      "retrievedAt": "2026-09-25T12:05:56.859285+00:00",
+      "basis": "snapshot /retrievedAt"
+    },
+    "normalizedSnapshots": {
+      "retrievedAt": null,
+      "basis": "No retrieval timestamp inferred from normalized files or file modification times; publication and contract dates are separate scalar fields."
+    }
+  },
+  "liveRequests": [
+    {
+      "method": "GET",
+      "url": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272024S05075%27&limit=100",
+      "requestBody": null,
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T09:27:33.105761+00:00",
+      "bodyBytes": 4418,
+      "bodySha256": "cbd67466262fb1a2fd5bc5194e52ba9f342931842712b920adfd4f7e0be13510",
+      "recordedSummary": {
+        "resultCount": 2,
+        "totalCount": 2
+      },
+      "recordedFields": [
+        {
+          "pointer": "/results/0/id",
+          "value": "2024S05075",
+          "scalarSha256": "b9da8962d85ee952e062a410ab24b21d136ec46b3d4f4574e2b9fcd195dc6956"
+        },
+        {
+          "pointer": "/results/0/codecpv",
+          "value": "50530000-9",
+          "scalarSha256": "fbd4e0c6fa200bd2aa2ac3bc58663f10452e2e8bcb7a369074c8182bcee3c49f"
+        },
+        {
+          "pointer": "/results/0/datenotification",
+          "value": "2024-07-10",
+          "scalarSha256": "e5a71635523aae7d37dea4839fc1cf93f0662894e60c262c9dfcf153a1f8ec23"
+        },
+        {
+          "pointer": "/results/0/datepublicationdonnees",
+          "value": "2024-11-24",
+          "scalarSha256": "0630c4c6c97879d771f2789ce0df700019c8188ad9f70a8dc7f96947d49cc418"
+        },
+        {
+          "pointer": "/results/0/montant",
+          "value": 65029.0,
+          "scalarSha256": "2f70746dd9b3506cfd72f9605bd9a35e860da4ab81b97c453fb076324961f2f3"
+        },
+        {
+          "pointer": "/results/0/dureemois",
+          "value": 48,
+          "scalarSha256": "98010bd9270f9b100b6214a21754fd33bdc8d41b2bc9f9dd16ff54d3c34ffd71"
+        },
+        {
+          "pointer": "/results/0/formeprix",
+          "value": "Unitaire",
+          "scalarSha256": "90454de33ef889ac019d775c7bed2e2065334a567990c75d296af6ab533876a3"
+        },
+        {
+          "pointer": "/results/1/id",
+          "value": "2024S05075",
+          "scalarSha256": "b9da8962d85ee952e062a410ab24b21d136ec46b3d4f4574e2b9fcd195dc6956"
+        },
+        {
+          "pointer": "/results/1/codecpv",
+          "value": "50530000-9",
+          "scalarSha256": "fbd4e0c6fa200bd2aa2ac3bc58663f10452e2e8bcb7a369074c8182bcee3c49f"
+        },
+        {
+          "pointer": "/results/1/datenotification",
+          "value": "2024-07-10",
+          "scalarSha256": "e5a71635523aae7d37dea4839fc1cf93f0662894e60c262c9dfcf153a1f8ec23"
+        },
+        {
+          "pointer": "/results/1/datepublicationdonnees",
+          "value": "2024-11-24",
+          "scalarSha256": "0630c4c6c97879d771f2789ce0df700019c8188ad9f70a8dc7f96947d49cc418"
+        },
+        {
+          "pointer": "/results/1/montant",
+          "value": 200000.0,
+          "scalarSha256": "adaac0ba7cba1042a51f816a67bb540c73757a62fc3c98f19c1775876d06cd37"
+        },
+        {
+          "pointer": "/results/1/dureemois",
+          "value": 48,
+          "scalarSha256": "98010bd9270f9b100b6214a21754fd33bdc8d41b2bc9f9dd16ff54d3c34ffd71"
+        },
+        {
+          "pointer": "/results/1/formeprix",
+          "value": "Unitaire",
+          "scalarSha256": "90454de33ef889ac019d775c7bed2e2065334a567990c75d296af6ab533876a3"
+        }
+      ],
+      "recordedEvidenceBasis": "Privacy-minimized scalar extraction, verified against the acquired body hash during review. Historical source assertion; current endpoint may differ."
+    },
+    {
+      "method": "GET",
+      "url": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272024S05079%27&limit=100",
+      "requestBody": null,
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T09:27:33.329420+00:00",
+      "bodyBytes": 4438,
+      "bodySha256": "39ff10364cf0718a83b65fc5634ca4b7bc6ab0b63a84131a95d9b68877334249",
+      "recordedSummary": {
+        "resultCount": 2,
+        "totalCount": 2
+      },
+      "recordedFields": [
+        {
+          "pointer": "/results/0/id",
+          "value": "2024S05079",
+          "scalarSha256": "c915109fea67da9b06e31dc3943d05a021beafc79348b40eea2491b2e4bd241f"
+        },
+        {
+          "pointer": "/results/0/codecpv",
+          "value": "50530000-9",
+          "scalarSha256": "fbd4e0c6fa200bd2aa2ac3bc58663f10452e2e8bcb7a369074c8182bcee3c49f"
+        },
+        {
+          "pointer": "/results/0/datenotification",
+          "value": "2024-07-10",
+          "scalarSha256": "e5a71635523aae7d37dea4839fc1cf93f0662894e60c262c9dfcf153a1f8ec23"
+        },
+        {
+          "pointer": "/results/0/datepublicationdonnees",
+          "value": "2024-11-24",
+          "scalarSha256": "0630c4c6c97879d771f2789ce0df700019c8188ad9f70a8dc7f96947d49cc418"
+        },
+        {
+          "pointer": "/results/0/montant",
+          "value": 86636.0,
+          "scalarSha256": "26c961738050117565bdd0cd4c37bacecaff3c64d4e8d5caeb13e5cda8d78f4b"
+        },
+        {
+          "pointer": "/results/0/dureemois",
+          "value": 48,
+          "scalarSha256": "98010bd9270f9b100b6214a21754fd33bdc8d41b2bc9f9dd16ff54d3c34ffd71"
+        },
+        {
+          "pointer": "/results/0/formeprix",
+          "value": "Unitaire",
+          "scalarSha256": "90454de33ef889ac019d775c7bed2e2065334a567990c75d296af6ab533876a3"
+        },
+        {
+          "pointer": "/results/1/id",
+          "value": "2024S05079",
+          "scalarSha256": "c915109fea67da9b06e31dc3943d05a021beafc79348b40eea2491b2e4bd241f"
+        },
+        {
+          "pointer": "/results/1/codecpv",
+          "value": "50530000-9",
+          "scalarSha256": "fbd4e0c6fa200bd2aa2ac3bc58663f10452e2e8bcb7a369074c8182bcee3c49f"
+        },
+        {
+          "pointer": "/results/1/datenotification",
+          "value": "2024-07-10",
+          "scalarSha256": "e5a71635523aae7d37dea4839fc1cf93f0662894e60c262c9dfcf153a1f8ec23"
+        },
+        {
+          "pointer": "/results/1/datepublicationdonnees",
+          "value": "2024-11-24",
+          "scalarSha256": "0630c4c6c97879d771f2789ce0df700019c8188ad9f70a8dc7f96947d49cc418"
+        },
+        {
+          "pointer": "/results/1/montant",
+          "value": 150000.0,
+          "scalarSha256": "1a83e1a9ee3d63d9c699d470dab04e4eea81868f40acbd5b08b998678cff3250"
+        },
+        {
+          "pointer": "/results/1/dureemois",
+          "value": 48,
+          "scalarSha256": "98010bd9270f9b100b6214a21754fd33bdc8d41b2bc9f9dd16ff54d3c34ffd71"
+        },
+        {
+          "pointer": "/results/1/formeprix",
+          "value": "Unitaire",
+          "scalarSha256": "90454de33ef889ac019d775c7bed2e2065334a567990c75d296af6ab533876a3"
+        }
+      ],
+      "recordedEvidenceBasis": "Privacy-minimized scalar extraction, verified against the acquired body hash during review. Historical source assertion; current endpoint may differ."
+    },
+    {
+      "method": "GET",
+      "url": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272025S01590%27&limit=100",
+      "requestBody": null,
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T09:27:33.440633+00:00",
+      "bodyBytes": 2175,
+      "bodySha256": "cd9b41991cdf3a1c5de3f9d6f88bb634192d7e0c0bb204be1eff22a63c686171",
+      "recordedSummary": {
+        "resultCount": 1,
+        "totalCount": 1
+      },
+      "recordedFields": [
+        {
+          "pointer": "/results/0/id",
+          "value": "2025S01590",
+          "scalarSha256": "d45dd97a8eba8db001876f8a2e0f3a1b0f668d6fd1e45f21e11147cce808f822"
+        },
+        {
+          "pointer": "/results/0/codecpv",
+          "value": "72267000-4",
+          "scalarSha256": "dc20f0102ae6c3dbc7970201de6f211bc257b40c8b43bbb8ef4ce9d89240c355"
+        },
+        {
+          "pointer": "/results/0/datenotification",
+          "value": "2025-02-14",
+          "scalarSha256": "32be8249c148b17dea5989b9a96e9a70caccfac650ef69865234b04b2dc67a77"
+        },
+        {
+          "pointer": "/results/0/datepublicationdonnees",
+          "value": "2025-03-02",
+          "scalarSha256": "e3f3cf279bcfdc6189b4120a35f9bb2b4289188555d789a638d07ae5f051ac82"
+        },
+        {
+          "pointer": "/results/0/montant",
+          "value": 155200.0,
+          "scalarSha256": "b38be7b2a784c009e67a203a33e81f4866903659f9b3972d4334573694ace0be"
+        },
+        {
+          "pointer": "/results/0/dureemois",
+          "value": 48,
+          "scalarSha256": "98010bd9270f9b100b6214a21754fd33bdc8d41b2bc9f9dd16ff54d3c34ffd71"
+        },
+        {
+          "pointer": "/results/0/formeprix",
+          "value": "Mixte",
+          "scalarSha256": "e0c43b4a83159d21b7b228a056eb72d3dac490595b843b96ad07b3deff2ef00e"
+        }
+      ],
+      "recordedEvidenceBasis": "Privacy-minimized scalar extraction, verified against the acquired body hash during review. Historical source assertion; current endpoint may differ."
+    },
+    {
+      "method": "GET",
+      "url": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721440109300015%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27+AND+id%3D%272025F00012%27&limit=100&order_by=datenotification+asc%2Cid+asc",
+      "requestBody": null,
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T09:27:33.539514+00:00",
+      "bodyBytes": 2109,
+      "bodySha256": "2d18435784470b09f1b7d8170dbd2dcbcca87d702f32628bcbbf9c659f8d40c7",
+      "recordedSummary": {
+        "resultCount": 1,
+        "totalCount": 1
+      },
+      "recordedFields": [
+        {
+          "pointer": "/results/0/id",
+          "value": "2025F00012",
+          "scalarSha256": "3082436b1657c94e69f0bc4aa447475ca702ca0905ceb71cfdcbc270c41c676a"
+        },
+        {
+          "pointer": "/results/0/codecpv",
+          "value": "39141000-2",
+          "scalarSha256": "04b3ed7f110c9cf8b870d7a46c3c38ced7ff7449a2c36f9b602a429085bcf869"
+        },
+        {
+          "pointer": "/results/0/datenotification",
+          "value": "2025-02-06",
+          "scalarSha256": "9654f8177c00cc04e673a97a12d899b4c08a7d4d44d07a501f169ad6c27e19a5"
+        },
+        {
+          "pointer": "/results/0/datepublicationdonnees",
+          "value": "2025-02-23",
+          "scalarSha256": "620c78e5b5691e38621ab86f4f6ef479226a7253ccb01b04aa7bf1090684ac53"
+        },
+        {
+          "pointer": "/results/0/montant",
+          "value": 466339.0,
+          "scalarSha256": "9fbb15625ebd4fef04a35082a0be42433c5659d4f5300100de833c38d1639e4c"
+        },
+        {
+          "pointer": "/results/0/dureemois",
+          "value": 48,
+          "scalarSha256": "98010bd9270f9b100b6214a21754fd33bdc8d41b2bc9f9dd16ff54d3c34ffd71"
+        },
+        {
+          "pointer": "/results/0/formeprix",
+          "value": "Unitaire",
+          "scalarSha256": "90454de33ef889ac019d775c7bed2e2065334a567990c75d296af6ab533876a3"
+        }
+      ],
+      "recordedEvidenceBasis": "Privacy-minimized scalar extraction, verified against the acquired body hash during review. Historical source assertion; current endpoint may differ."
+    },
+    {
+      "method": "GET",
+      "url": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721440109300015%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27+AND+id%3D%272025F00013%27&limit=100&order_by=datenotification+asc%2Cid+asc",
+      "requestBody": null,
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T09:27:33.674210+00:00",
+      "bodyBytes": 2110,
+      "bodySha256": "a0f4a59e993e20b89807e3b7bdf23400108eab9fc0ec1740409d1869789d7b98",
+      "recordedSummary": {
+        "resultCount": 1,
+        "totalCount": 1
+      },
+      "recordedFields": [
+        {
+          "pointer": "/results/0/id",
+          "value": "2025F00013",
+          "scalarSha256": "9df704036e00ade8e76aebcbde06e2163f507a687ffa0b413d3e333de471df77"
+        },
+        {
+          "pointer": "/results/0/codecpv",
+          "value": "39713200-5",
+          "scalarSha256": "d3ee9d50793c4a6f12f1cc235a2ab0571d1cd2554da2fd38cab82a2dcd471410"
+        },
+        {
+          "pointer": "/results/0/datenotification",
+          "value": "2025-02-06",
+          "scalarSha256": "9654f8177c00cc04e673a97a12d899b4c08a7d4d44d07a501f169ad6c27e19a5"
+        },
+        {
+          "pointer": "/results/0/datepublicationdonnees",
+          "value": "2025-02-23",
+          "scalarSha256": "620c78e5b5691e38621ab86f4f6ef479226a7253ccb01b04aa7bf1090684ac53"
+        },
+        {
+          "pointer": "/results/0/montant",
+          "value": 479757.4,
+          "scalarSha256": "d4dbc512bd82d48ace20d24ce66d74b74a8219500c0b7612479af683aa2a4c52"
+        },
+        {
+          "pointer": "/results/0/dureemois",
+          "value": 48,
+          "scalarSha256": "98010bd9270f9b100b6214a21754fd33bdc8d41b2bc9f9dd16ff54d3c34ffd71"
+        },
+        {
+          "pointer": "/results/0/formeprix",
+          "value": "Unitaire",
+          "scalarSha256": "90454de33ef889ac019d775c7bed2e2065334a567990c75d296af6ab533876a3"
+        }
+      ],
+      "recordedEvidenceBasis": "Privacy-minimized scalar extraction, verified against the acquired body hash during review. Historical source assertion; current endpoint may differ."
+    },
+    {
+      "method": "GET",
+      "url": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721440109300015%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27+AND+id%3D%272025F00016%27&limit=100&order_by=datenotification+asc%2Cid+asc",
+      "requestBody": null,
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T09:27:33.792800+00:00",
+      "bodyBytes": 4180,
+      "bodySha256": "f35bda60091bc67930189db88bab976e068fb5d9227d600b3215db461d961cd7",
+      "recordedSummary": {
+        "resultCount": 2,
+        "totalCount": 2
+      },
+      "recordedFields": [
+        {
+          "pointer": "/results/0/id",
+          "value": "2025F00016",
+          "scalarSha256": "9570d9271b4aa54ca6546f96b897adb6374ad34752143888f0121baf5fe55c54"
+        },
+        {
+          "pointer": "/results/0/codecpv",
+          "value": "39713200-5",
+          "scalarSha256": "d3ee9d50793c4a6f12f1cc235a2ab0571d1cd2554da2fd38cab82a2dcd471410"
+        },
+        {
+          "pointer": "/results/0/datenotification",
+          "value": "2025-02-05",
+          "scalarSha256": "e0a48ef1c61bce59323b0c8acc0758df1bbd69442785658f17de0be5c83c8dd8"
+        },
+        {
+          "pointer": "/results/0/datepublicationdonnees",
+          "value": "2025-02-23",
+          "scalarSha256": "620c78e5b5691e38621ab86f4f6ef479226a7253ccb01b04aa7bf1090684ac53"
+        },
+        {
+          "pointer": "/results/0/montant",
+          "value": 670560.0,
+          "scalarSha256": "75873680f844dae1a99f0881f7e36e11ede44adfb69c47c46ca74004128a2c6e"
+        },
+        {
+          "pointer": "/results/0/dureemois",
+          "value": 48,
+          "scalarSha256": "98010bd9270f9b100b6214a21754fd33bdc8d41b2bc9f9dd16ff54d3c34ffd71"
+        },
+        {
+          "pointer": "/results/0/formeprix",
+          "value": "Unitaire",
+          "scalarSha256": "90454de33ef889ac019d775c7bed2e2065334a567990c75d296af6ab533876a3"
+        },
+        {
+          "pointer": "/results/1/id",
+          "value": "2025F00016",
+          "scalarSha256": "9570d9271b4aa54ca6546f96b897adb6374ad34752143888f0121baf5fe55c54"
+        },
+        {
+          "pointer": "/results/1/codecpv",
+          "value": "79810000-5",
+          "scalarSha256": "6b1187f429963f0ccded8eba8a1e1c7ac52083ce5a8328d5621b2b75874c8793"
+        },
+        {
+          "pointer": "/results/1/datenotification",
+          "value": "2025-05-20",
+          "scalarSha256": "3278dd541e44b9f913ddd63fc4fe710bc280acdd6b317c57ce4106353cfab92b"
+        },
+        {
+          "pointer": "/results/1/datepublicationdonnees",
+          "value": "2025-05-25",
+          "scalarSha256": "7f79ef7003f2acb4b1430fdd2fd0a7029f295e3f55df04505fa9d8a9e7846fea"
+        },
+        {
+          "pointer": "/results/1/montant",
+          "value": 2724.0,
+          "scalarSha256": "8c2440c8182d54546b148b53e2340f1e19b000386add5421d14ced4f495a8b28"
+        },
+        {
+          "pointer": "/results/1/dureemois",
+          "value": 1,
+          "scalarSha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+        },
+        {
+          "pointer": "/results/1/formeprix",
+          "value": "Forfaitaire",
+          "scalarSha256": "cf32f3c2aca8cce867f0992c22b0ec2cdeac3280989fde7c4ae55a1e60fa511a"
+        }
+      ],
+      "recordedEvidenceBasis": "Privacy-minimized scalar extraction, verified against the acquired body hash during review. Historical source assertion; current endpoint may differ."
+    },
+    {
+      "method": "GET",
+      "url": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272025F02650%27&limit=100",
+      "requestBody": null,
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T09:27:33.910723+00:00",
+      "bodyBytes": 2160,
+      "bodySha256": "607bb14ace318d6a733a1d0f68a865dc259c40eaed1baae7c17cf53a9ca651d6",
+      "recordedSummary": {
+        "resultCount": 1,
+        "totalCount": 1
+      },
+      "recordedFields": [
+        {
+          "pointer": "/results/0/id",
+          "value": "2025F02650",
+          "scalarSha256": "1924bef420ea74da20fd90cecf85e9a7f9ae4ade86c4dba5e161d5d85c20e35c"
+        },
+        {
+          "pointer": "/results/0/codecpv",
+          "value": "22200000-2",
+          "scalarSha256": "7cc3295884696de0319b8847710459458f3c4ab0e1a59b30c227135fe307974d"
+        },
+        {
+          "pointer": "/results/0/datenotification",
+          "value": "2025-03-31",
+          "scalarSha256": "959730ef6de7efa06a9c8da20df669f2db3b4a4dd8edc0b872ae1b23f89b036f"
+        },
+        {
+          "pointer": "/results/0/datepublicationdonnees",
+          "value": "2025-04-06",
+          "scalarSha256": "18bf427b2fdf1c521604b82519129bd7465aa0f96760b39e518de72823e58de1"
+        },
+        {
+          "pointer": "/results/0/montant",
+          "value": 10.0,
+          "scalarSha256": "f1e42019aecc858ffbcca7fddec511b761b474916fde37b1a6ff321a9b459330"
+        },
+        {
+          "pointer": "/results/0/dureemois",
+          "value": 48,
+          "scalarSha256": "98010bd9270f9b100b6214a21754fd33bdc8d41b2bc9f9dd16ff54d3c34ffd71"
+        },
+        {
+          "pointer": "/results/0/formeprix",
+          "value": "Unitaire",
+          "scalarSha256": "90454de33ef889ac019d775c7bed2e2065334a567990c75d296af6ab533876a3"
+        }
+      ],
+      "recordedEvidenceBasis": "Privacy-minimized scalar extraction, verified against the acquired body hash during review. Historical source assertion; current endpoint may differ."
+    },
+    {
+      "method": "GET",
+      "url": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272025S02915%27&limit=100",
+      "requestBody": null,
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T09:27:34.015145+00:00",
+      "bodyBytes": 2388,
+      "bodySha256": "2fd1aa9882141e03712ac071e365dd62f6bddf120c320f37595ce939f1629fdb",
+      "recordedSummary": {
+        "resultCount": 1,
+        "totalCount": 1
+      },
+      "recordedFields": [
+        {
+          "pointer": "/results/0/id",
+          "value": "2025S02915",
+          "scalarSha256": "c02f239eb0815948efcb78a7242a1c79b0c80a1c4b0f4e6d873f1c3799d5ed63"
+        },
+        {
+          "pointer": "/results/0/codecpv",
+          "value": "90911200-8",
+          "scalarSha256": "db36ce96f6fb31be36d864e856b67911318d1eea63367311d6880b08d6a66857"
+        },
+        {
+          "pointer": "/results/0/datenotification",
+          "value": "2025-04-09",
+          "scalarSha256": "261d8c2cb59081b56fa3bb09e4214df06782c714166f4cb49533c78857174f92"
+        },
+        {
+          "pointer": "/results/0/datepublicationdonnees",
+          "value": "2025-04-20",
+          "scalarSha256": "e4d11caafb51c5322b7c0558104a45359cd15f85744534774160a753b4f7f384"
+        },
+        {
+          "pointer": "/results/0/montant",
+          "value": 3300000.0,
+          "scalarSha256": "b4069f0c97f145d01fa562717ab7a3cdd7327596497de02cfdb5412293619db9"
+        },
+        {
+          "pointer": "/results/0/dureemois",
+          "value": 48,
+          "scalarSha256": "98010bd9270f9b100b6214a21754fd33bdc8d41b2bc9f9dd16ff54d3c34ffd71"
+        },
+        {
+          "pointer": "/results/0/formeprix",
+          "value": "Unitaire",
+          "scalarSha256": "90454de33ef889ac019d775c7bed2e2065334a567990c75d296af6ab533876a3"
+        }
+      ],
+      "recordedEvidenceBasis": "Privacy-minimized scalar extraction, verified against the acquired body hash during review. Historical source assertion; current endpoint may differ."
+    },
+    {
+      "method": "GET",
+      "url": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272025F02648%27&limit=100",
+      "requestBody": null,
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T09:27:34.109346+00:00",
+      "bodyBytes": 2429,
+      "bodySha256": "7587b9020c01c4f50336ca2663a7fe5747127e9053ca088af90edfa33c8b6f46",
+      "recordedSummary": {
+        "resultCount": 1,
+        "totalCount": 1
+      },
+      "recordedFields": [
+        {
+          "pointer": "/results/0/id",
+          "value": "2025F02648",
+          "scalarSha256": "fb3a4508ce351d36b8f511471f83429f5753921cd3637dd38d85163b1c228ae5"
+        },
+        {
+          "pointer": "/results/0/codecpv",
+          "value": "39370000-6",
+          "scalarSha256": "c537aad2646b7089936e33efbd02bb70afc5a1bb408b40e150e8c379b368b394"
+        },
+        {
+          "pointer": "/results/0/datenotification",
+          "value": "2025-04-24",
+          "scalarSha256": "1007f3868527c1fc8b378185cd85d1e40bf85c40c9443858663f7d4542f98c3e"
+        },
+        {
+          "pointer": "/results/0/datepublicationdonnees",
+          "value": "2025-05-04",
+          "scalarSha256": "6b663c27aea509cb7ed619867592987a44197ab566ec5ac735366642f8a64283"
+        },
+        {
+          "pointer": "/results/0/montant",
+          "value": 1500000.0,
+          "scalarSha256": "6370c6b5e4136c66f782e1cfafd33e18a63e002db33cb4810ffb030792437d04"
+        },
+        {
+          "pointer": "/results/0/dureemois",
+          "value": 48,
+          "scalarSha256": "98010bd9270f9b100b6214a21754fd33bdc8d41b2bc9f9dd16ff54d3c34ffd71"
+        },
+        {
+          "pointer": "/results/0/formeprix",
+          "value": "Unitaire",
+          "scalarSha256": "90454de33ef889ac019d775c7bed2e2065334a567990c75d296af6ab533876a3"
+        }
+      ],
+      "recordedEvidenceBasis": "Privacy-minimized scalar extraction, verified against the acquired body hash during review. Historical source assertion; current endpoint may differ."
+    },
+    {
+      "method": "GET",
+      "url": "https://data.nantesmetropole.fr/api/explore/v2.1/catalog/datasets/244400404_marches-publics-conclus-2024-nantes/exports/json",
+      "requestBody": null,
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T09:27:34.228422+00:00",
+      "bodyBytes": 312080,
+      "bodySha256": "3ae40229f4bcdb1f26c3eb58099385a5f4d615b62534358d79c856a94a846435",
+      "recordedSummary": {
+        "rowCount": 387,
+        "selection": "Only the four publicly reviewed 2025 row pointers; no fields selected from 2024."
+      },
+      "recordedFields": [],
+      "recordedEvidenceBasis": "Privacy-minimized scalar extraction, verified against the acquired body hash during review. Historical source assertion; current endpoint may differ."
+    },
+    {
+      "method": "GET",
+      "url": "https://data.nantesmetropole.fr/api/explore/v2.1/catalog/datasets/244400404_marches-publics-conclus-2025-nantes/exports/json",
+      "requestBody": null,
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T09:27:34.538695+00:00",
+      "bodyBytes": 378194,
+      "bodySha256": "f041948d28257ba337e67bab12dce388dcb0a90c644e5081c3cea20b420380d8",
+      "recordedSummary": {
+        "rowCount": 442,
+        "selection": "Only the four publicly reviewed 2025 row pointers; no fields selected from 2024."
+      },
+      "recordedFields": [
+        {
+          "pointer": "/100/reference_interne_du_contrat",
+          "value": "2024_8846",
+          "scalarSha256": "0fc9df7fb253ce7e400b199d74eaaf57988bce7f1eb45240fc561512a5c51cf9"
+        },
+        {
+          "pointer": "/100/montant_du_contrat_attribue",
+          "value": 250000.0,
+          "scalarSha256": "b4b5d7b83aabdb9ed588dca7b7806d0565e79a9900a120dad65b284ba226dccb"
+        },
+        {
+          "pointer": "/100/date_de_notification",
+          "value": "2025-02-05",
+          "scalarSha256": "e0a48ef1c61bce59323b0c8acc0758df1bbd69442785658f17de0be5c83c8dd8"
+        },
+        {
+          "pointer": "/100/cpv_principal",
+          "value": "39713200",
+          "scalarSha256": "a492d902a53df50a713a62ab17deab3ba02287bf26383f59808adad5ad51ed3f"
+        },
+        {
+          "pointer": "/100/duree_maximale_du_marche",
+          "value": 48,
+          "scalarSha256": "98010bd9270f9b100b6214a21754fd33bdc8d41b2bc9f9dd16ff54d3c34ffd71"
+        },
+        {
+          "pointer": "/321/reference_interne_du_contrat",
+          "value": "2024_88478",
+          "scalarSha256": "8e0fb40ed316639aa97428ce39ea9f91e275eadf6b31fe133ed090b25931a2ce"
+        },
+        {
+          "pointer": "/321/montant_du_contrat_attribue",
+          "value": 370000.0,
+          "scalarSha256": "9b824f1833167c92d261389e2e90d62ed9faeed16bb9e04ab0ae0e44e7a51324"
+        },
+        {
+          "pointer": "/321/date_de_notification",
+          "value": "2025-02-06",
+          "scalarSha256": "9654f8177c00cc04e673a97a12d899b4c08a7d4d44d07a501f169ad6c27e19a5"
+        },
+        {
+          "pointer": "/321/cpv_principal",
+          "value": "39710000,39713200,39141000",
+          "scalarSha256": "69fe63aa345c83b0545d71212186ab72eb9c1b6ef522c0045951edf18b73d2e4"
+        },
+        {
+          "pointer": "/321/duree_maximale_du_marche",
+          "value": 48,
+          "scalarSha256": "98010bd9270f9b100b6214a21754fd33bdc8d41b2bc9f9dd16ff54d3c34ffd71"
+        },
+        {
+          "pointer": "/323/reference_interne_du_contrat",
+          "value": "20245012AC_CUISINE_BLANCHISSERIE",
+          "scalarSha256": "31c34c7929105037246aff9d4557cf35843dbf514cad7af73dc9eaad273e7153"
+        },
+        {
+          "pointer": "/323/montant_du_contrat_attribue",
+          "value": 190000.0,
+          "scalarSha256": "cce710e67c1f9bcda49aae0f75fcf627aab3231e5e50710aebb3ad2248f12193"
+        },
+        {
+          "pointer": "/323/date_de_notification",
+          "value": "2025-02-05",
+          "scalarSha256": "e0a48ef1c61bce59323b0c8acc0758df1bbd69442785658f17de0be5c83c8dd8"
+        },
+        {
+          "pointer": "/323/cpv_principal",
+          "value": "39710000,39713200,39141000",
+          "scalarSha256": "69fe63aa345c83b0545d71212186ab72eb9c1b6ef522c0045951edf18b73d2e4"
+        },
+        {
+          "pointer": "/323/duree_maximale_du_marche",
+          "value": 48,
+          "scalarSha256": "98010bd9270f9b100b6214a21754fd33bdc8d41b2bc9f9dd16ff54d3c34ffd71"
+        },
+        {
+          "pointer": "/434/reference_interne_du_contrat",
+          "value": "20245012AC_CUISINE_BLANCHISSERIE",
+          "scalarSha256": "31c34c7929105037246aff9d4557cf35843dbf514cad7af73dc9eaad273e7153"
+        },
+        {
+          "pointer": "/434/montant_du_contrat_attribue",
+          "value": 415000.0,
+          "scalarSha256": "3ae82bc12eac7198f4b28f218b2aba45ed877bcf33a422bc76b276f41350fed2"
+        },
+        {
+          "pointer": "/434/date_de_notification",
+          "value": "2025-02-06",
+          "scalarSha256": "9654f8177c00cc04e673a97a12d899b4c08a7d4d44d07a501f169ad6c27e19a5"
+        },
+        {
+          "pointer": "/434/cpv_principal",
+          "value": "39710000,39713200,39141000",
+          "scalarSha256": "69fe63aa345c83b0545d71212186ab72eb9c1b6ef522c0045951edf18b73d2e4"
+        },
+        {
+          "pointer": "/434/duree_maximale_du_marche",
+          "value": 48,
+          "scalarSha256": "98010bd9270f9b100b6214a21754fd33bdc8d41b2bc9f9dd16ff54d3c34ffd71"
+        }
+      ],
+      "recordedEvidenceBasis": "Privacy-minimized scalar extraction, verified against the acquired body hash during review. Historical source assertion; current endpoint may differ."
+    },
+    {
+      "method": "POST",
+      "url": "https://api.ted.europa.eu/v3/notices/search",
+      "requestBody": {
+        "query": "FT ~ \"2024-88480\"",
+        "limit": 10,
+        "fields": [
+          "publication-number",
+          "notice-title",
+          "notice-identifier"
+        ],
+        "scope": "ALL",
+        "checkQuerySyntax": true
+      },
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T09:28:04.786558+00:00",
+      "bodyBytes": 81,
+      "bodySha256": "c006a89557974a508c38b48894ad3a389f763747cb4b56f73410d8d9dca02c76",
+      "recordedSummary": {
+        "noticeCount": 0,
+        "totalNoticeCount": null,
+        "timedOut": false,
+        "interpretation": "Syntax validation only; the query was not executed. Empty notices do not measure search coverage."
+      },
+      "recordedFields": [],
+      "recordedEvidenceBasis": "Privacy-minimized scalar extraction, verified against the acquired body hash during review. Historical source assertion; current endpoint may differ.",
+      "searchExecuted": false,
+      "syntaxOnly": true
+    },
+    {
+      "method": "POST",
+      "url": "https://api.ted.europa.eu/v3/notices/search",
+      "requestBody": {
+        "query": "FT ~ \"20242024S05075\"",
+        "limit": 10,
+        "fields": [
+          "publication-number",
+          "notice-title",
+          "notice-identifier"
+        ],
+        "scope": "ALL",
+        "checkQuerySyntax": true
+      },
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T09:28:04.916090+00:00",
+      "bodyBytes": 81,
+      "bodySha256": "c006a89557974a508c38b48894ad3a389f763747cb4b56f73410d8d9dca02c76",
+      "recordedSummary": {
+        "noticeCount": 0,
+        "totalNoticeCount": null,
+        "timedOut": false,
+        "interpretation": "Syntax validation only; the query was not executed. Empty notices do not measure search coverage."
+      },
+      "recordedFields": [],
+      "recordedEvidenceBasis": "Privacy-minimized scalar extraction, verified against the acquired body hash during review. Historical source assertion; current endpoint may differ.",
+      "searchExecuted": false,
+      "syntaxOnly": true
+    },
+    {
+      "method": "POST",
+      "url": "https://api.ted.europa.eu/v3/notices/search",
+      "requestBody": {
+        "query": "FT ~ \"2025F026500000\"",
+        "limit": 10,
+        "fields": [
+          "publication-number",
+          "notice-title",
+          "notice-identifier"
+        ],
+        "scope": "ALL",
+        "checkQuerySyntax": true
+      },
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T09:28:05.010744+00:00",
+      "bodyBytes": 81,
+      "bodySha256": "c006a89557974a508c38b48894ad3a389f763747cb4b56f73410d8d9dca02c76",
+      "recordedSummary": {
+        "noticeCount": 0,
+        "totalNoticeCount": null,
+        "timedOut": false,
+        "interpretation": "Syntax validation only; the query was not executed. Empty notices do not measure search coverage."
+      },
+      "recordedFields": [],
+      "recordedEvidenceBasis": "Privacy-minimized scalar extraction, verified against the acquired body hash during review. Historical source assertion; current endpoint may differ.",
+      "searchExecuted": false,
+      "syntaxOnly": true
+    }
+  ],
+  "pairs": [
+    {
+      "pair": 1,
+      "boampId": "boamp-25-21317-lot-0001",
+      "decpId": "decp-21750001600019-2024S05075",
+      "boampUrl": "https://www.boamp.fr/pages/avis/?q=idweb:25-21317",
+      "decpUrl": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272024S05075%27&limit=100",
+      "conclusion": "reference-pattern-supported-unconfirmed",
+      "normalizedBoampPointer": "data/contracts.json#/1679",
+      "normalizedDecpPointer": "data/decp-history.json#/581",
+      "rawNoticePointer": "data/boamp-raw.json.gz#/records/2322",
+      "decodedReferencePointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/efac:ContractReference/cbc:ID",
+      "publishedReference": "20242024S05075",
+      "decpContractId": "2024S05075",
+      "notes": "One repeated leading year would recover the DECP ID, but no authoritative formatting crosswalk was found. No tender payable amount exists; the 200000 EUR field is a framework ceiling.",
+      "fields": [
+        {
+          "scope": "boamp",
+          "pointer": "/amount",
+          "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/contractId",
+          "scalarSha256": "1dd8cdfa51b9d669258029caaef1547235138c50b566c04077729449b76e45a0"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/cpv",
+          "scalarSha256": "2450982ca62b436b9605be6676cba55bbb4247dbfc88533d10abdc84dc9308b0"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/date",
+          "scalarSha256": "e5a71635523aae7d37dea4839fc1cf93f0662894e60c262c9dfcf153a1f8ec23"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/durationMonths",
+          "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/id",
+          "scalarSha256": "39c00369d8a771ad72b3cf3528af98c9d37d44bb0d01b3353f44c0729f79f83a"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/lotId",
+          "scalarSha256": "937557a4b8fb4814cca4cb68a917448b8608fb913226f6cad3ed6576c0989234"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/publicationDate",
+          "scalarSha256": "97217caa68958b6ee515842b41872508b1c674e51260bf4088819d83f317cbc6"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/amount",
+          "scalarSha256": "adaac0ba7cba1042a51f816a67bb540c73757a62fc3c98f19c1775876d06cd37"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/contractId",
+          "scalarSha256": "b9da8962d85ee952e062a410ab24b21d136ec46b3d4f4574e2b9fcd195dc6956"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/cpv",
+          "scalarSha256": "fbd4e0c6fa200bd2aa2ac3bc58663f10452e2e8bcb7a369074c8182bcee3c49f"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/date",
+          "scalarSha256": "e5a71635523aae7d37dea4839fc1cf93f0662894e60c262c9dfcf153a1f8ec23"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/durationMonths",
+          "scalarSha256": "de64346f732f769b937330885f1e58df7680789de7866df41100090c61111941"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/id",
+          "scalarSha256": "4e430755afbe92eafcab83dea57e7afe09ff13d8a2ba0ade132d378609698d4b"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/lotId",
+          "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/publicationDate",
+          "scalarSha256": "0630c4c6c97879d771f2789ce0df700019c8188ad9f70a8dc7f96947d49cc418"
+        },
+        {
+          "scope": "raw",
+          "pointer": "/dateparution",
+          "scalarSha256": "97217caa68958b6ee515842b41872508b1c674e51260bf4088819d83f317cbc6"
+        },
+        {
+          "scope": "raw",
+          "pointer": "/idweb",
+          "scalarSha256": "51bd6d105e08f22393037b7792c3f2fb41a7bac41579b903aac49be317541650"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cbc:IssueDate",
+          "scalarSha256": "fb3561f38fd3fcc036da22ce48848905e751620c31044d92c019f90ba313cbcf"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cbc:ContractFolderID",
+          "scalarSha256": "fc45f762742d60f6b536e6a286b21b614718f0759807ef1e79634b8e37e49f08"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/efac:ContractReference/cbc:ID",
+          "scalarSha256": "f0b05825def36b9208fc173490538e37db6494ebf1859dcc37768513c447caac"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/cbc:ID/#text",
+          "scalarSha256": "1dd8cdfa51b9d669258029caaef1547235138c50b566c04077729449b76e45a0"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/cbc:IssueDate",
+          "scalarSha256": "683bdc1785b3045531ae506aea75f1f931f68344721d92d3b177abf176bf70a7"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/cbc:AwardDate",
+          "scalarSha256": "b327d92b2732e783bf5b3858ca0daeb41beb84d11d85accec75da8b364ffaa87"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/efac:LotTender/cbc:ID",
+          "scalarSha256": "0199eaaa37964f8eadca91e614b1304cc1a919021842ce216c03bf60e0ab75af"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/0/cbc:ID/#text",
+          "scalarSha256": "85d3ce7b245b1eb5045fc7be9909091d880051cf4061dc603883653d637a26d3"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/0/efac:TenderLot/cbc:ID",
+          "scalarSha256": "937557a4b8fb4814cca4cb68a917448b8608fb913226f6cad3ed6576c0989234"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/0/efac:SettledContract/cbc:ID",
+          "scalarSha256": "1dd8cdfa51b9d669258029caaef1547235138c50b566c04077729449b76e45a0"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/0/efac:LotTender/cbc:ID",
+          "scalarSha256": "0199eaaa37964f8eadca91e614b1304cc1a919021842ce216c03bf60e0ab75af"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/0/efac:FrameworkAgreementValues/cbc:MaximumValueAmount/#text",
+          "scalarSha256": "34b007c2eee047fec39a5cc9f077d3715b6425e779aae03c441a1cedf8e977d3"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/0/cbc:ID/#text",
+          "scalarSha256": "0199eaaa37964f8eadca91e614b1304cc1a919021842ce216c03bf60e0ab75af"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/0/efac:TenderLot/cbc:ID",
+          "scalarSha256": "937557a4b8fb4814cca4cb68a917448b8608fb913226f6cad3ed6576c0989234"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/0/cbc:ID/#text",
+          "scalarSha256": "937557a4b8fb4814cca4cb68a917448b8608fb913226f6cad3ed6576c0989234"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/0/cac:ProcurementProject/cbc:ID",
+          "scalarSha256": "0e552356aab8f957995e7987b28f2d62613e526f6e38f7d28e08d4a9eb725b41"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/0/cac:ProcurementProject/cac:MainCommodityClassification/cbc:ItemClassificationCode/#text",
+          "scalarSha256": "2450982ca62b436b9605be6676cba55bbb4247dbfc88533d10abdc84dc9308b0"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/0/cac:ProcurementProject/cbc:Note/#text",
+          "scalarSha256": "e8fcfa5ad4a3b8df1b5622d38f6a13616c4d76afea7fc07d9c59073f38a8679e",
+          "excerpt": "Montants du marché sur sa durée ferme de 48 mois : 20 000 euros HT au minimum et 200 000 euros HT au maximum."
+        }
+      ]
+    },
+    {
+      "pair": 2,
+      "boampId": "boamp-25-21317-lot-0001",
+      "decpId": "decp-21750001600019-2024S05079",
+      "boampUrl": "https://www.boamp.fr/pages/avis/?q=idweb:25-21317",
+      "decpUrl": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272024S05079%27&limit=100",
+      "conclusion": "disfavored-notice-lot-mapping-not-proven-different-legal-contract",
+      "normalizedBoampPointer": "data/contracts.json#/1679",
+      "normalizedDecpPointer": "data/decp-history.json#/583",
+      "rawNoticePointer": "data/boamp-raw.json.gz#/records/2322",
+      "decodedReferencePointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/efac:ContractReference/cbc:ID",
+      "publishedReference": "20242024S05075",
+      "decpContractId": "2024S05079",
+      "notes": "The candidate LOT-0001 declares …S05075. The …S05079 reference is explicitly related to LOT-0003/CON-0003/TEN-0003; this disfavors the mapping without proving different DECP legal contracts.",
+      "fields": [
+        {
+          "scope": "boamp",
+          "pointer": "/amount",
+          "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/contractId",
+          "scalarSha256": "1dd8cdfa51b9d669258029caaef1547235138c50b566c04077729449b76e45a0"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/cpv",
+          "scalarSha256": "2450982ca62b436b9605be6676cba55bbb4247dbfc88533d10abdc84dc9308b0"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/date",
+          "scalarSha256": "e5a71635523aae7d37dea4839fc1cf93f0662894e60c262c9dfcf153a1f8ec23"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/durationMonths",
+          "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/id",
+          "scalarSha256": "39c00369d8a771ad72b3cf3528af98c9d37d44bb0d01b3353f44c0729f79f83a"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/lotId",
+          "scalarSha256": "937557a4b8fb4814cca4cb68a917448b8608fb913226f6cad3ed6576c0989234"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/publicationDate",
+          "scalarSha256": "97217caa68958b6ee515842b41872508b1c674e51260bf4088819d83f317cbc6"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/amount",
+          "scalarSha256": "1a83e1a9ee3d63d9c699d470dab04e4eea81868f40acbd5b08b998678cff3250"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/contractId",
+          "scalarSha256": "c915109fea67da9b06e31dc3943d05a021beafc79348b40eea2491b2e4bd241f"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/cpv",
+          "scalarSha256": "fbd4e0c6fa200bd2aa2ac3bc58663f10452e2e8bcb7a369074c8182bcee3c49f"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/date",
+          "scalarSha256": "e5a71635523aae7d37dea4839fc1cf93f0662894e60c262c9dfcf153a1f8ec23"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/durationMonths",
+          "scalarSha256": "de64346f732f769b937330885f1e58df7680789de7866df41100090c61111941"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/id",
+          "scalarSha256": "7e50077abe3066884832162724cacdaa8247ec650d41d4b2ba76dfd3dc64a116"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/lotId",
+          "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/publicationDate",
+          "scalarSha256": "0630c4c6c97879d771f2789ce0df700019c8188ad9f70a8dc7f96947d49cc418"
+        },
+        {
+          "scope": "raw",
+          "pointer": "/dateparution",
+          "scalarSha256": "97217caa68958b6ee515842b41872508b1c674e51260bf4088819d83f317cbc6"
+        },
+        {
+          "scope": "raw",
+          "pointer": "/idweb",
+          "scalarSha256": "51bd6d105e08f22393037b7792c3f2fb41a7bac41579b903aac49be317541650"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cbc:IssueDate",
+          "scalarSha256": "fb3561f38fd3fcc036da22ce48848905e751620c31044d92c019f90ba313cbcf"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cbc:ContractFolderID",
+          "scalarSha256": "fc45f762742d60f6b536e6a286b21b614718f0759807ef1e79634b8e37e49f08"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/efac:ContractReference/cbc:ID",
+          "scalarSha256": "f0b05825def36b9208fc173490538e37db6494ebf1859dcc37768513c447caac"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/cbc:ID/#text",
+          "scalarSha256": "1dd8cdfa51b9d669258029caaef1547235138c50b566c04077729449b76e45a0"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/cbc:IssueDate",
+          "scalarSha256": "683bdc1785b3045531ae506aea75f1f931f68344721d92d3b177abf176bf70a7"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/cbc:AwardDate",
+          "scalarSha256": "b327d92b2732e783bf5b3858ca0daeb41beb84d11d85accec75da8b364ffaa87"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/efac:LotTender/cbc:ID",
+          "scalarSha256": "0199eaaa37964f8eadca91e614b1304cc1a919021842ce216c03bf60e0ab75af"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/0/cbc:ID/#text",
+          "scalarSha256": "85d3ce7b245b1eb5045fc7be9909091d880051cf4061dc603883653d637a26d3"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/0/efac:TenderLot/cbc:ID",
+          "scalarSha256": "937557a4b8fb4814cca4cb68a917448b8608fb913226f6cad3ed6576c0989234"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/0/efac:SettledContract/cbc:ID",
+          "scalarSha256": "1dd8cdfa51b9d669258029caaef1547235138c50b566c04077729449b76e45a0"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/0/efac:LotTender/cbc:ID",
+          "scalarSha256": "0199eaaa37964f8eadca91e614b1304cc1a919021842ce216c03bf60e0ab75af"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/0/efac:FrameworkAgreementValues/cbc:MaximumValueAmount/#text",
+          "scalarSha256": "34b007c2eee047fec39a5cc9f077d3715b6425e779aae03c441a1cedf8e977d3"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/0/cbc:ID/#text",
+          "scalarSha256": "0199eaaa37964f8eadca91e614b1304cc1a919021842ce216c03bf60e0ab75af"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/0/efac:TenderLot/cbc:ID",
+          "scalarSha256": "937557a4b8fb4814cca4cb68a917448b8608fb913226f6cad3ed6576c0989234"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/0/cbc:ID/#text",
+          "scalarSha256": "937557a4b8fb4814cca4cb68a917448b8608fb913226f6cad3ed6576c0989234"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/0/cac:ProcurementProject/cbc:ID",
+          "scalarSha256": "0e552356aab8f957995e7987b28f2d62613e526f6e38f7d28e08d4a9eb725b41"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/0/cac:ProcurementProject/cac:MainCommodityClassification/cbc:ItemClassificationCode/#text",
+          "scalarSha256": "2450982ca62b436b9605be6676cba55bbb4247dbfc88533d10abdc84dc9308b0"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/0/cac:ProcurementProject/cbc:Note/#text",
+          "scalarSha256": "e8fcfa5ad4a3b8df1b5622d38f6a13616c4d76afea7fc07d9c59073f38a8679e",
+          "excerpt": "Montants du marché sur sa durée ferme de 48 mois : 20 000 euros HT au minimum et 200 000 euros HT au maximum."
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/1/efac:ContractReference/cbc:ID",
+          "scalarSha256": "092fc7e99a4e8260e7a1ba75dab9e92bd2e39cb92e73794ec9f7c8ee67ee69c5"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/1/efac:LotTender/cbc:ID",
+          "scalarSha256": "4d7c5d94870179676ee1bd02b61d5cf426aa0b0d23eb93487492951e53653922"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/1/efac:TenderLot/cbc:ID",
+          "scalarSha256": "80a0b67fc356593b801fe318cb2096f10f2fa91e64310af704aa13a77ba9c1ee"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/1/efac:SettledContract/cbc:ID",
+          "scalarSha256": "e71bf96e74fb443f978a74e4c5a58fb240836360820936531a6f12684acfdedb"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/2/cac:ProcurementProject/cbc:ID",
+          "scalarSha256": "3bd329fdabdcc082bd93afc5adcdd57ec16f1bbd6c01c94c3e3bf07fe6bbf637"
+        }
+      ]
+    },
+    {
+      "pair": 3,
+      "boampId": "boamp-25-21329-lot-0001",
+      "decpId": "decp-21750001600019-2025S01590",
+      "boampUrl": "https://www.boamp.fr/pages/avis/?q=idweb:25-21329",
+      "decpUrl": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272025S01590%27&limit=100",
+      "conclusion": "reference-pattern-supported-unconfirmed",
+      "normalizedBoampPointer": "data/contracts.json#/1091",
+      "normalizedDecpPointer": "data/decp-history.json#/1567",
+      "rawNoticePointer": "data/boamp-raw.json.gz#/records/2325",
+      "decodedReferencePointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/efac:ContractReference/cbc:ID",
+      "publishedReference": "2025S015900000 / 2025HA0001GR",
+      "decpContractId": "2025S01590",
+      "notes": "The published reference has a Paris component with four terminal zeros and a separate CASVP component. The note explains fixed and purchase-order scopes; exact equality and an authoritative crosswalk remain absent.",
+      "fields": [
+        {
+          "scope": "boamp",
+          "pointer": "/amount",
+          "scalarSha256": "f7d280a3ad219add259f5abf9d027b84a412ff123bb65f2c100fb5c605ffb9af"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/contractId",
+          "scalarSha256": "1dd8cdfa51b9d669258029caaef1547235138c50b566c04077729449b76e45a0"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/cpv",
+          "scalarSha256": "6a43780ce6c56cffeec093328d7ed9aa415ef4b3db4a27724796586dc17a56b6"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/date",
+          "scalarSha256": "32be8249c148b17dea5989b9a96e9a70caccfac650ef69865234b04b2dc67a77"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/durationMonths",
+          "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/id",
+          "scalarSha256": "346a7559ae3f2867e56b9cfb453b56be8a5d3d96e65d2e48e5ca1cca1a4f1750"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/lotId",
+          "scalarSha256": "937557a4b8fb4814cca4cb68a917448b8608fb913226f6cad3ed6576c0989234"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/publicationDate",
+          "scalarSha256": "97217caa68958b6ee515842b41872508b1c674e51260bf4088819d83f317cbc6"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/amount",
+          "scalarSha256": "3432be1807fc007c39efe55f1afa8674484bbe029632c45c0ada2aded88cb44c"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/contractId",
+          "scalarSha256": "d45dd97a8eba8db001876f8a2e0f3a1b0f668d6fd1e45f21e11147cce808f822"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/cpv",
+          "scalarSha256": "dc20f0102ae6c3dbc7970201de6f211bc257b40c8b43bbb8ef4ce9d89240c355"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/date",
+          "scalarSha256": "32be8249c148b17dea5989b9a96e9a70caccfac650ef69865234b04b2dc67a77"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/durationMonths",
+          "scalarSha256": "de64346f732f769b937330885f1e58df7680789de7866df41100090c61111941"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/id",
+          "scalarSha256": "357b19e95d8349bfcfd314b467fdea30f7841c84e95adcc4a1dba4e58099d801"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/lotId",
+          "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/publicationDate",
+          "scalarSha256": "e3f3cf279bcfdc6189b4120a35f9bb2b4289188555d789a638d07ae5f051ac82"
+        },
+        {
+          "scope": "raw",
+          "pointer": "/dateparution",
+          "scalarSha256": "97217caa68958b6ee515842b41872508b1c674e51260bf4088819d83f317cbc6"
+        },
+        {
+          "scope": "raw",
+          "pointer": "/idweb",
+          "scalarSha256": "26393a5f39485cd87ef18d243e60dff3a1f33ca8ab78afa52b2dc9f95cbd2f76"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cbc:IssueDate",
+          "scalarSha256": "fb3561f38fd3fcc036da22ce48848905e751620c31044d92c019f90ba313cbcf"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cbc:ContractFolderID",
+          "scalarSha256": "8e63f2fa846267f6323d72b65f63a292dd161ff4d7f8bf88fa037b755cf131ca"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/efac:ContractReference/cbc:ID",
+          "scalarSha256": "c4469d043b72f01573f07653dcdff7b42102170841b4aab9458dc412342e8866"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/cbc:ID/#text",
+          "scalarSha256": "1dd8cdfa51b9d669258029caaef1547235138c50b566c04077729449b76e45a0"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/cbc:IssueDate",
+          "scalarSha256": "c9a46f31180e33873a8a40a1853d6340dde6029dd2d66325905190e14d77ac1c"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/cbc:AwardDate",
+          "scalarSha256": "fd5eb66e4ae341126b7027e95af10921c265e364b834e2259bf3c2e3963c49f9"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/efac:LotTender/cbc:ID",
+          "scalarSha256": "0199eaaa37964f8eadca91e614b1304cc1a919021842ce216c03bf60e0ab75af"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/cac:NoticeDocumentReference/cbc:ID",
+          "scalarSha256": "3ee45a6f27f09619cada17666c0bfc94cdd1f5e480fd8ffdaf919151d50d6c94"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/cbc:ID/#text",
+          "scalarSha256": "85d3ce7b245b1eb5045fc7be9909091d880051cf4061dc603883653d637a26d3"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/efac:TenderLot/cbc:ID",
+          "scalarSha256": "937557a4b8fb4814cca4cb68a917448b8608fb913226f6cad3ed6576c0989234"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/efac:SettledContract/cbc:ID",
+          "scalarSha256": "1dd8cdfa51b9d669258029caaef1547235138c50b566c04077729449b76e45a0"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/efac:LotTender/cbc:ID",
+          "scalarSha256": "0199eaaa37964f8eadca91e614b1304cc1a919021842ce216c03bf60e0ab75af"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/efac:FrameworkAgreementValues/cbc:MaximumValueAmount/#text",
+          "scalarSha256": "c12ce0277a55f021768cd2cc1b1dc10082d12e51ebf271025012b4f8e34818b8"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/cbc:ID/#text",
+          "scalarSha256": "0199eaaa37964f8eadca91e614b1304cc1a919021842ce216c03bf60e0ab75af"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/efac:TenderLot/cbc:ID",
+          "scalarSha256": "937557a4b8fb4814cca4cb68a917448b8608fb913226f6cad3ed6576c0989234"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/cac:LegalMonetaryTotal/cbc:PayableAmount/#text",
+          "scalarSha256": "c12ce0277a55f021768cd2cc1b1dc10082d12e51ebf271025012b4f8e34818b8"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/cac:LegalMonetaryTotal/cbc:PayableAmount/@currencyID",
+          "scalarSha256": "87ef325635aa32dd785d818665ee8fe141d7fae0566c7ea09701c82a524452ba"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/cbc:ID/#text",
+          "scalarSha256": "937557a4b8fb4814cca4cb68a917448b8608fb913226f6cad3ed6576c0989234"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/cac:ProcurementProject/cac:MainCommodityClassification/cbc:ItemClassificationCode/#text",
+          "scalarSha256": "6a43780ce6c56cffeec093328d7ed9aa415ef4b3db4a27724796586dc17a56b6"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/cac:ProcurementProject/cbc:Note/#text",
+          "scalarSha256": "097afd2a78fe9045783551d7064f6c3a711dea56ee48df783ddb20fdc347098b",
+          "excerpt": "Montants des marchés pour la Ville de paris : Partie forfaitaire de 155 200 Euros HT; Partie à bons de commande sans montant minimum et avec un montant maximum de 2 000 000 Euros HT. Pour le CASVP : Partie forfaitaire d'un montant de 27 311 Euros HT; Partie à bons de commande sans minimum et avec un montant maximum de 200 000 Euros HT."
+        }
+      ]
+    },
+    {
+      "pair": 4,
+      "boampId": "boamp-25-34782-lot-0003",
+      "decpId": "decp-21440109300015-2025F00012",
+      "boampUrl": "https://www.boamp.fr/pages/avis/?q=idweb:25-34782",
+      "decpUrl": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721440109300015%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27+AND+id%3D%272025F00012%27&limit=100&order_by=datenotification+asc%2Cid+asc",
+      "conclusion": "disfavored-notice-lot-mapping-not-proven-different-legal-contract",
+      "normalizedBoampPointer": "data/contracts.json#/151",
+      "normalizedDecpPointer": "data/decp-cities.json#/1512",
+      "rawNoticePointer": "data/boamp-raw.json.gz#/records/5331",
+      "decodedReferencePointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/1/efac:ContractReference/cbc:ID",
+      "publishedReference": "2024-88480",
+      "decpContractId": "2025F00012",
+      "notes": "Technical LOT-0003 is printed Lot 2 (LAVERIE), not the CUISSON lot compatible with the DECP description. Published lot references differ; no public ID bridge proves the legal-contract distinction.",
+      "fields": [
+        {
+          "scope": "boamp",
+          "pointer": "/amount",
+          "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/contractId",
+          "scalarSha256": "c3912285ef363ba195733a63ca4d050fc528d92f5337bbba9a0209cdc80f5e95"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/cpv",
+          "scalarSha256": "393e435495b49263a1344b8d72c4bbfb8a3b7a7743a52a6e995753ca3aa0166c"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/date",
+          "scalarSha256": "9654f8177c00cc04e673a97a12d899b4c08a7d4d44d07a501f169ad6c27e19a5"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/durationMonths",
+          "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/id",
+          "scalarSha256": "6cc6d03bdae66c3dd2c3fd337cb6f22e59e589cc7b4ad6319caf263b2c267f17"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/lotId",
+          "scalarSha256": "80a0b67fc356593b801fe318cb2096f10f2fa91e64310af704aa13a77ba9c1ee"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/publicationDate",
+          "scalarSha256": "06e9bb457c152420c5b1072dfa69d7ffa430665f83fef9cd3df06d5839019074"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/amount",
+          "scalarSha256": "9b824f1833167c92d261389e2e90d62ed9faeed16bb9e04ab0ae0e44e7a51324"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/contractId",
+          "scalarSha256": "3082436b1657c94e69f0bc4aa447475ca702ca0905ceb71cfdcbc270c41c676a"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/cpv",
+          "scalarSha256": "04b3ed7f110c9cf8b870d7a46c3c38ced7ff7449a2c36f9b602a429085bcf869"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/date",
+          "scalarSha256": "9654f8177c00cc04e673a97a12d899b4c08a7d4d44d07a501f169ad6c27e19a5"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/durationMonths",
+          "scalarSha256": "de64346f732f769b937330885f1e58df7680789de7866df41100090c61111941"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/id",
+          "scalarSha256": "c7e082955f6eb8823400cddeaaf9e80d88d2b34f6ad848bb0a8579be316c5ce6"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/lotId",
+          "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/publicationDate",
+          "scalarSha256": "620c78e5b5691e38621ab86f4f6ef479226a7253ccb01b04aa7bf1090684ac53"
+        },
+        {
+          "scope": "raw",
+          "pointer": "/dateparution",
+          "scalarSha256": "06e9bb457c152420c5b1072dfa69d7ffa430665f83fef9cd3df06d5839019074"
+        },
+        {
+          "scope": "raw",
+          "pointer": "/idweb",
+          "scalarSha256": "33981e8ff52b84412c8bd5b52f34504b327d0ee2c5857b70adb7777bdbfddcf6"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cbc:IssueDate",
+          "scalarSha256": "4ab9db61745567f6e5d55c09234aef6c67990d3eda6b74a9c032f3bc4c1f5a9b"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cbc:ContractFolderID",
+          "scalarSha256": "6188526e62619ed3d89e14513265a8d6197407d50fff0ea9d8fb3b45f5bae140"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/1/efac:ContractReference/cbc:ID",
+          "scalarSha256": "3e5589f30d66a41fed0245571c8e92957ed5d478b154ec0ca13730d02564daff"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/1/cbc:ID/#text",
+          "scalarSha256": "c3912285ef363ba195733a63ca4d050fc528d92f5337bbba9a0209cdc80f5e95"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/1/cbc:IssueDate",
+          "scalarSha256": "c091836c0826af184a6f57aa281068e08afdedc018e8a5837a2134efdb8a37f1"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/1/efac:LotTender/cbc:ID",
+          "scalarSha256": "b552e96df75be6c1a81ac4674a6693e8f9111ba8edd03c8f4aa193eb2a023a2b"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/1/cbc:ID/#text",
+          "scalarSha256": "1b88035915ce90399f838eeb3b6121d479615498c0a4fe78d40567e9395e5e8a"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/1/efac:TenderLot/cbc:ID",
+          "scalarSha256": "80a0b67fc356593b801fe318cb2096f10f2fa91e64310af704aa13a77ba9c1ee"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/1/efac:SettledContract/cbc:ID",
+          "scalarSha256": "c3912285ef363ba195733a63ca4d050fc528d92f5337bbba9a0209cdc80f5e95"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/1/efac:LotTender/cbc:ID",
+          "scalarSha256": "b552e96df75be6c1a81ac4674a6693e8f9111ba8edd03c8f4aa193eb2a023a2b"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/1/efac:FrameworkAgreementValues/cbc:MaximumValueAmount/#text",
+          "scalarSha256": "08ad58400f1a4eab6c3edf23e6c6fcc6593ec04a80d04c35628e2d4eec784727"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/1/cbc:ID/#text",
+          "scalarSha256": "b552e96df75be6c1a81ac4674a6693e8f9111ba8edd03c8f4aa193eb2a023a2b"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/1/efac:TenderLot/cbc:ID",
+          "scalarSha256": "80a0b67fc356593b801fe318cb2096f10f2fa91e64310af704aa13a77ba9c1ee"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/1/cbc:ID/#text",
+          "scalarSha256": "80a0b67fc356593b801fe318cb2096f10f2fa91e64310af704aa13a77ba9c1ee"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/1/cac:ProcurementProject/cbc:ID",
+          "scalarSha256": "e5d14d6d66f6e78592734dd65de258d8e1adb4526249525cb8a9551e0154a8a8"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/1/cac:ProcurementProject/cac:MainCommodityClassification/cbc:ItemClassificationCode/#text",
+          "scalarSha256": "393e435495b49263a1344b8d72c4bbfb8a3b7a7743a52a6e995753ca3aa0166c"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/efac:ContractReference/cbc:ID",
+          "scalarSha256": "8b9b9fc3d6d35a60cdaa2c1279dccdf2d99e8909db953f6646737fca27177a28"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/0/cac:ProcurementProject/cbc:ID",
+          "scalarSha256": "0e552356aab8f957995e7987b28f2d62613e526f6e38f7d28e08d4a9eb725b41"
+        }
+      ]
+    },
+    {
+      "pair": 5,
+      "boampId": "boamp-25-34782-lot-0003",
+      "decpId": "decp-21440109300015-2025F00013",
+      "boampUrl": "https://www.boamp.fr/pages/avis/?q=idweb:25-34782",
+      "decpUrl": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721440109300015%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27+AND+id%3D%272025F00013%27&limit=100&order_by=datenotification+asc%2Cid+asc",
+      "conclusion": "lot-compatible-unconfirmed",
+      "normalizedBoampPointer": "data/contracts.json#/151",
+      "normalizedDecpPointer": "data/decp-cities.json#/1513",
+      "rawNoticePointer": "data/boamp-raw.json.gz#/records/5331",
+      "decodedReferencePointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/1/efac:ContractReference/cbc:ID",
+      "publishedReference": "2024-88480",
+      "decpContractId": "2025F00013",
+      "notes": "Technical LOT-0003 is printed Lot 2 (LAVERIE), compatible with the reviewed DECP description. Reference 2024-88480 does not bridge to 2025F00013; compatible scope is not identity proof.",
+      "fields": [
+        {
+          "scope": "boamp",
+          "pointer": "/amount",
+          "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/contractId",
+          "scalarSha256": "c3912285ef363ba195733a63ca4d050fc528d92f5337bbba9a0209cdc80f5e95"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/cpv",
+          "scalarSha256": "393e435495b49263a1344b8d72c4bbfb8a3b7a7743a52a6e995753ca3aa0166c"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/date",
+          "scalarSha256": "9654f8177c00cc04e673a97a12d899b4c08a7d4d44d07a501f169ad6c27e19a5"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/durationMonths",
+          "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/id",
+          "scalarSha256": "6cc6d03bdae66c3dd2c3fd337cb6f22e59e589cc7b4ad6319caf263b2c267f17"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/lotId",
+          "scalarSha256": "80a0b67fc356593b801fe318cb2096f10f2fa91e64310af704aa13a77ba9c1ee"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/publicationDate",
+          "scalarSha256": "06e9bb457c152420c5b1072dfa69d7ffa430665f83fef9cd3df06d5839019074"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/amount",
+          "scalarSha256": "3ae82bc12eac7198f4b28f218b2aba45ed877bcf33a422bc76b276f41350fed2"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/contractId",
+          "scalarSha256": "9df704036e00ade8e76aebcbde06e2163f507a687ffa0b413d3e333de471df77"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/cpv",
+          "scalarSha256": "d3ee9d50793c4a6f12f1cc235a2ab0571d1cd2554da2fd38cab82a2dcd471410"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/date",
+          "scalarSha256": "9654f8177c00cc04e673a97a12d899b4c08a7d4d44d07a501f169ad6c27e19a5"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/durationMonths",
+          "scalarSha256": "de64346f732f769b937330885f1e58df7680789de7866df41100090c61111941"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/id",
+          "scalarSha256": "e88f6f1d080a794641c8fca04dae1bba35f0565eea635aca90a81f672689a962"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/lotId",
+          "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/publicationDate",
+          "scalarSha256": "620c78e5b5691e38621ab86f4f6ef479226a7253ccb01b04aa7bf1090684ac53"
+        },
+        {
+          "scope": "raw",
+          "pointer": "/dateparution",
+          "scalarSha256": "06e9bb457c152420c5b1072dfa69d7ffa430665f83fef9cd3df06d5839019074"
+        },
+        {
+          "scope": "raw",
+          "pointer": "/idweb",
+          "scalarSha256": "33981e8ff52b84412c8bd5b52f34504b327d0ee2c5857b70adb7777bdbfddcf6"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cbc:IssueDate",
+          "scalarSha256": "4ab9db61745567f6e5d55c09234aef6c67990d3eda6b74a9c032f3bc4c1f5a9b"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cbc:ContractFolderID",
+          "scalarSha256": "6188526e62619ed3d89e14513265a8d6197407d50fff0ea9d8fb3b45f5bae140"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/1/efac:ContractReference/cbc:ID",
+          "scalarSha256": "3e5589f30d66a41fed0245571c8e92957ed5d478b154ec0ca13730d02564daff"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/1/cbc:ID/#text",
+          "scalarSha256": "c3912285ef363ba195733a63ca4d050fc528d92f5337bbba9a0209cdc80f5e95"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/1/cbc:IssueDate",
+          "scalarSha256": "c091836c0826af184a6f57aa281068e08afdedc018e8a5837a2134efdb8a37f1"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/1/efac:LotTender/cbc:ID",
+          "scalarSha256": "b552e96df75be6c1a81ac4674a6693e8f9111ba8edd03c8f4aa193eb2a023a2b"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/1/cbc:ID/#text",
+          "scalarSha256": "1b88035915ce90399f838eeb3b6121d479615498c0a4fe78d40567e9395e5e8a"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/1/efac:TenderLot/cbc:ID",
+          "scalarSha256": "80a0b67fc356593b801fe318cb2096f10f2fa91e64310af704aa13a77ba9c1ee"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/1/efac:SettledContract/cbc:ID",
+          "scalarSha256": "c3912285ef363ba195733a63ca4d050fc528d92f5337bbba9a0209cdc80f5e95"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/1/efac:LotTender/cbc:ID",
+          "scalarSha256": "b552e96df75be6c1a81ac4674a6693e8f9111ba8edd03c8f4aa193eb2a023a2b"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/1/efac:FrameworkAgreementValues/cbc:MaximumValueAmount/#text",
+          "scalarSha256": "08ad58400f1a4eab6c3edf23e6c6fcc6593ec04a80d04c35628e2d4eec784727"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/1/cbc:ID/#text",
+          "scalarSha256": "b552e96df75be6c1a81ac4674a6693e8f9111ba8edd03c8f4aa193eb2a023a2b"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/1/efac:TenderLot/cbc:ID",
+          "scalarSha256": "80a0b67fc356593b801fe318cb2096f10f2fa91e64310af704aa13a77ba9c1ee"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/1/cbc:ID/#text",
+          "scalarSha256": "80a0b67fc356593b801fe318cb2096f10f2fa91e64310af704aa13a77ba9c1ee"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/1/cac:ProcurementProject/cbc:ID",
+          "scalarSha256": "e5d14d6d66f6e78592734dd65de258d8e1adb4526249525cb8a9551e0154a8a8"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/1/cac:ProcurementProject/cac:MainCommodityClassification/cbc:ItemClassificationCode/#text",
+          "scalarSha256": "393e435495b49263a1344b8d72c4bbfb8a3b7a7743a52a6e995753ca3aa0166c"
+        }
+      ]
+    },
+    {
+      "pair": 6,
+      "boampId": "boamp-25-34782-lot-0006",
+      "decpId": "decp-21440109300015-2025F00016-1",
+      "boampUrl": "https://www.boamp.fr/pages/avis/?q=idweb:25-34782",
+      "decpUrl": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721440109300015%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27+AND+id%3D%272025F00016%27&limit=100&order_by=datenotification+asc%2Cid+asc",
+      "conclusion": "lot-compatible-unconfirmed",
+      "normalizedBoampPointer": "data/contracts.json#/1749",
+      "normalizedDecpPointer": "data/decp-cities.json#/1516",
+      "rawNoticePointer": "data/boamp-raw.json.gz#/records/5331",
+      "decodedReferencePointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/4/efac:ContractReference/cbc:ID",
+      "publishedReference": "2024-88486",
+      "decpContractId": "2025F00016",
+      "notes": "Technical LOT-0006 is printed Lot 5 (BLANCHISSERIE). Notice reference 2024-88486 does not bridge to official ID 2025F00016; -1 is a local row suffix. The live endpoint returned another unrelated row with the same ID.",
+      "fields": [
+        {
+          "scope": "boamp",
+          "pointer": "/amount",
+          "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/contractId",
+          "scalarSha256": "d33ae4d25c922d3c29b5afcf488edd6f7d4217e493180e2d493048911216ab4b"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/cpv",
+          "scalarSha256": "393e435495b49263a1344b8d72c4bbfb8a3b7a7743a52a6e995753ca3aa0166c"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/date",
+          "scalarSha256": "e0a48ef1c61bce59323b0c8acc0758df1bbd69442785658f17de0be5c83c8dd8"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/durationMonths",
+          "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/id",
+          "scalarSha256": "5a8130fcc2dd5a8c63d9bad27c3264002b296c011cab08bb2ad9f58acc5a12be"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/lotId",
+          "scalarSha256": "ff5c2fb9b7db6baec90f53d3edd007bac5ef2bf616ae1d07f4a291d767de7293"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/publicationDate",
+          "scalarSha256": "06e9bb457c152420c5b1072dfa69d7ffa430665f83fef9cd3df06d5839019074"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/amount",
+          "scalarSha256": "b4b5d7b83aabdb9ed588dca7b7806d0565e79a9900a120dad65b284ba226dccb"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/contractId",
+          "scalarSha256": "9570d9271b4aa54ca6546f96b897adb6374ad34752143888f0121baf5fe55c54"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/cpv",
+          "scalarSha256": "d3ee9d50793c4a6f12f1cc235a2ab0571d1cd2554da2fd38cab82a2dcd471410"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/date",
+          "scalarSha256": "e0a48ef1c61bce59323b0c8acc0758df1bbd69442785658f17de0be5c83c8dd8"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/durationMonths",
+          "scalarSha256": "de64346f732f769b937330885f1e58df7680789de7866df41100090c61111941"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/id",
+          "scalarSha256": "fc0c458f81307dfd741ebe3d6dd1005bf7dd857f8b1fb8d18fd9fe4258742b33"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/lotId",
+          "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/publicationDate",
+          "scalarSha256": "620c78e5b5691e38621ab86f4f6ef479226a7253ccb01b04aa7bf1090684ac53"
+        },
+        {
+          "scope": "raw",
+          "pointer": "/dateparution",
+          "scalarSha256": "06e9bb457c152420c5b1072dfa69d7ffa430665f83fef9cd3df06d5839019074"
+        },
+        {
+          "scope": "raw",
+          "pointer": "/idweb",
+          "scalarSha256": "33981e8ff52b84412c8bd5b52f34504b327d0ee2c5857b70adb7777bdbfddcf6"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cbc:IssueDate",
+          "scalarSha256": "4ab9db61745567f6e5d55c09234aef6c67990d3eda6b74a9c032f3bc4c1f5a9b"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cbc:ContractFolderID",
+          "scalarSha256": "6188526e62619ed3d89e14513265a8d6197407d50fff0ea9d8fb3b45f5bae140"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/4/efac:ContractReference/cbc:ID",
+          "scalarSha256": "257da8e3b9577c9882366a9c43dfefa17dac7e781bbfa7f42a0dc88cd0d34d2e"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/4/cbc:ID/#text",
+          "scalarSha256": "d33ae4d25c922d3c29b5afcf488edd6f7d4217e493180e2d493048911216ab4b"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/4/cbc:IssueDate",
+          "scalarSha256": "80c51e3e772ed306b43d928e2c6c8ff026a48501d04d200f98c8236486821d2b"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/4/efac:LotTender/cbc:ID",
+          "scalarSha256": "aba3313efd38c1ca861987ab74411a589e0d0f1c65f6239b20d0c88fb3260060"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/4/cbc:ID/#text",
+          "scalarSha256": "5b2e2e061df0d8cd669971dd19a204246a2ea9d3a544919908fe507221dcb4f3"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/4/efac:TenderLot/cbc:ID",
+          "scalarSha256": "ff5c2fb9b7db6baec90f53d3edd007bac5ef2bf616ae1d07f4a291d767de7293"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/4/efac:SettledContract/cbc:ID",
+          "scalarSha256": "d33ae4d25c922d3c29b5afcf488edd6f7d4217e493180e2d493048911216ab4b"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/4/efac:LotTender/cbc:ID",
+          "scalarSha256": "aba3313efd38c1ca861987ab74411a589e0d0f1c65f6239b20d0c88fb3260060"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/4/efac:FrameworkAgreementValues/cbc:MaximumValueAmount/#text",
+          "scalarSha256": "39013ff919933cc2ba21f9773c697b884ff5085062400a4919017bbb31db533f"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/4/cbc:ID/#text",
+          "scalarSha256": "aba3313efd38c1ca861987ab74411a589e0d0f1c65f6239b20d0c88fb3260060"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/4/efac:TenderLot/cbc:ID",
+          "scalarSha256": "ff5c2fb9b7db6baec90f53d3edd007bac5ef2bf616ae1d07f4a291d767de7293"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/4/cbc:ID/#text",
+          "scalarSha256": "ff5c2fb9b7db6baec90f53d3edd007bac5ef2bf616ae1d07f4a291d767de7293"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/4/cac:ProcurementProject/cbc:ID",
+          "scalarSha256": "514aaecaad7eb55318ad447c2775b4907b564842e88b0fbbef8bfb46c779398e"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/4/cac:ProcurementProject/cac:MainCommodityClassification/cbc:ItemClassificationCode/#text",
+          "scalarSha256": "393e435495b49263a1344b8d72c4bbfb8a3b7a7743a52a6e995753ca3aa0166c"
+        }
+      ]
+    },
+    {
+      "pair": 7,
+      "boampId": "boamp-25-37616-lot-0001",
+      "decpId": "decp-21750001600019-2025F02650",
+      "boampUrl": "https://www.boamp.fr/pages/avis/?q=idweb:25-37616",
+      "decpUrl": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272025F02650%27&limit=100",
+      "conclusion": "reference-pattern-supported-unconfirmed",
+      "normalizedBoampPointer": "data/contracts.json#/2626",
+      "normalizedDecpPointer": "data/decp-history.json#/1337",
+      "rawNoticePointer": "data/boamp-raw.json.gz#/records/5981",
+      "decodedReferencePointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/efac:ContractReference/cbc:ID",
+      "publishedReference": "2025F026500000",
+      "decpContractId": "2025F02650",
+      "notes": "Four terminal zeros support only a reference-pattern candidate. Notice Paris ceiling 13220000 differs from normalized 12600000; live 10 has no documentary placeholder proof. Buyer perimeters remain distinct.",
+      "fields": [
+        {
+          "scope": "boamp",
+          "pointer": "/amount",
+          "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/contractId",
+          "scalarSha256": "1dd8cdfa51b9d669258029caaef1547235138c50b566c04077729449b76e45a0"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/cpv",
+          "scalarSha256": "e8acb47d07f7800cd45f63644abbb8123a696bab9cd7b9e4f9cf6efa59ef14af"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/date",
+          "scalarSha256": "959730ef6de7efa06a9c8da20df669f2db3b4a4dd8edc0b872ae1b23f89b036f"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/durationMonths",
+          "scalarSha256": "de64346f732f769b937330885f1e58df7680789de7866df41100090c61111941"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/id",
+          "scalarSha256": "fd3736be6bc898359b07ee318df6ec4504acaff4b0a9dd00b9ad0ddb96b2f913"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/lotId",
+          "scalarSha256": "937557a4b8fb4814cca4cb68a917448b8608fb913226f6cad3ed6576c0989234"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/publicationDate",
+          "scalarSha256": "523d11878c71fcce04d0a630062954a48cee6f8b280c94030ddefbc65e52e930"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/amount",
+          "scalarSha256": "55888645cef06ace081abbcda5d6b0bf28962421ecbcfcb3eb8fbf971d258b25"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/contractId",
+          "scalarSha256": "1924bef420ea74da20fd90cecf85e9a7f9ae4ade86c4dba5e161d5d85c20e35c"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/cpv",
+          "scalarSha256": "7cc3295884696de0319b8847710459458f3c4ab0e1a59b30c227135fe307974d"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/date",
+          "scalarSha256": "959730ef6de7efa06a9c8da20df669f2db3b4a4dd8edc0b872ae1b23f89b036f"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/durationMonths",
+          "scalarSha256": "de64346f732f769b937330885f1e58df7680789de7866df41100090c61111941"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/id",
+          "scalarSha256": "f3d319c0eaf6a44eb491a1efea598d110d25d93b26524f00aae7ac1fdbf5b57e"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/lotId",
+          "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/publicationDate",
+          "scalarSha256": "18bf427b2fdf1c521604b82519129bd7465aa0f96760b39e518de72823e58de1"
+        },
+        {
+          "scope": "raw",
+          "pointer": "/dateparution",
+          "scalarSha256": "523d11878c71fcce04d0a630062954a48cee6f8b280c94030ddefbc65e52e930"
+        },
+        {
+          "scope": "raw",
+          "pointer": "/idweb",
+          "scalarSha256": "e8141ad5007d3c16e4e0684f522c468f5d35873f67dd8997783f3e96fb5f7882"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cbc:IssueDate",
+          "scalarSha256": "437c64fbae4d31de9ca7efa9e4655c66200943f013d855933565d00fda754316"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cbc:ContractFolderID",
+          "scalarSha256": "f02f75cf8737ca6441b856b608af60e90670abc8c95a142a9044651ee1fe1c7c"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/efac:ContractReference/cbc:ID",
+          "scalarSha256": "859b7cc5a372f643f27b8edfd84412d22e7b134807339aeb600a641335deecfd"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/cbc:ID/#text",
+          "scalarSha256": "1dd8cdfa51b9d669258029caaef1547235138c50b566c04077729449b76e45a0"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/cbc:IssueDate",
+          "scalarSha256": "f961f10fed15669c2cf2be5bf8b9b0b1a1be9b6d9dc70680dd6b1d98b71bb9da"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/cbc:AwardDate",
+          "scalarSha256": "c8a6d5d587190d334275446e33b70112db2ad012bdff5887f00cf779386ad402"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/efac:LotTender/cbc:ID",
+          "scalarSha256": "0199eaaa37964f8eadca91e614b1304cc1a919021842ce216c03bf60e0ab75af"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/cbc:ID/#text",
+          "scalarSha256": "85d3ce7b245b1eb5045fc7be9909091d880051cf4061dc603883653d637a26d3"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/efac:TenderLot/cbc:ID",
+          "scalarSha256": "937557a4b8fb4814cca4cb68a917448b8608fb913226f6cad3ed6576c0989234"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/efac:SettledContract/cbc:ID",
+          "scalarSha256": "1dd8cdfa51b9d669258029caaef1547235138c50b566c04077729449b76e45a0"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/efac:LotTender/cbc:ID",
+          "scalarSha256": "0199eaaa37964f8eadca91e614b1304cc1a919021842ce216c03bf60e0ab75af"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/efac:FrameworkAgreementValues/cbc:MaximumValueAmount/#text",
+          "scalarSha256": "53da6a7fa7671f6e8f0271819dbda5862b2377cc29613fcbb11330a960898e72"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/cbc:ID/#text",
+          "scalarSha256": "0199eaaa37964f8eadca91e614b1304cc1a919021842ce216c03bf60e0ab75af"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/efac:TenderLot/cbc:ID",
+          "scalarSha256": "937557a4b8fb4814cca4cb68a917448b8608fb913226f6cad3ed6576c0989234"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/cbc:ID/#text",
+          "scalarSha256": "937557a4b8fb4814cca4cb68a917448b8608fb913226f6cad3ed6576c0989234"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/cac:ProcurementProject/cbc:ID",
+          "scalarSha256": "391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/cac:ProcurementProject/cac:MainCommodityClassification/cbc:ItemClassificationCode/#text",
+          "scalarSha256": "e8acb47d07f7800cd45f63644abbb8123a696bab9cd7b9e4f9cf6efa59ef14af"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/cac:ProcurementProject/cac:PlannedPeriod/cbc:DurationMeasure/#text",
+          "scalarSha256": "a23718b18c82a0035f7525ca0f782a2ba8d33f36fb80b51b15f9050f9afc6e65"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/cac:ProcurementProject/cac:PlannedPeriod/cbc:DurationMeasure/@unitCode",
+          "scalarSha256": "d87f57459e38968b0bcde9cb59ba1befb2d519f8b2119d55ea4e3da097317df3"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/cac:ProcurementProject/cbc:Note/#text",
+          "scalarSha256": "5c35aa063ac93e167c5e1535aaf4e4179891982e8415a57fa22d4e4586e9395b",
+          "excerpt": "- Accord-cadre mono-attributaire traité à prix unitaires à bons de commandes, d'un montant minimum de 2 900 000 euros HT et d'un montant maximum de 13 220 000 euros HT pour la partie Ville, d'un montant minimum de 30 000 euros HT et d'un montant maximum de 250 000 euros HT pour la partie EPPM d'un montant minimum de 60 000 euros HT et d'un montant maximum de 370 000 euros HT pour le CASVP et pour une durée de 48 mois fermes."
+        }
+      ]
+    },
+    {
+      "pair": 8,
+      "boampId": "boamp-25-45958-lot-0005",
+      "decpId": "decp-21750001600019-2025S02915",
+      "boampUrl": "https://www.boamp.fr/pages/avis/?q=idweb:25-45958",
+      "decpUrl": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272025S02915%27&limit=100",
+      "conclusion": "reference-pattern-supported-unconfirmed",
+      "normalizedBoampPointer": "data/contracts.json#/528",
+      "normalizedDecpPointer": "data/decp-history.json#/1625",
+      "rawNoticePointer": "data/boamp-raw.json.gz#/records/7653",
+      "decodedReferencePointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/4/efac:ContractReference/cbc:ID",
+      "publishedReference": "2025S029150000",
+      "decpContractId": "2025S02915",
+      "notes": "Four terminal zeros support only a reference-pattern candidate. The note explicitly supports a 3300000 HT annual ceiling and 12-month initial term; 13200000 is four such ceilings, not proof of renewal or spend. Prior TED citation is not fetched evidence.",
+      "fields": [
+        {
+          "scope": "boamp",
+          "pointer": "/amount",
+          "scalarSha256": "1d927a5bdd80a6548fe4ed65dac4acb55547103bd82267866de2d47b27c5f9f1"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/contractId",
+          "scalarSha256": "d33ae4d25c922d3c29b5afcf488edd6f7d4217e493180e2d493048911216ab4b"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/cpv",
+          "scalarSha256": "5b35fbb332321c9d09ffa4a3437252f14ef1901f9c455e6536564f7afd832498"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/date",
+          "scalarSha256": "261d8c2cb59081b56fa3bb09e4214df06782c714166f4cb49533c78857174f92"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/durationMonths",
+          "scalarSha256": "77c52f3feed5acdd119b1f8449d5ccc2d39be94bd0314d5b7302f36e20b6cea9"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/id",
+          "scalarSha256": "6db2b77fc63861f996fa7e6a0aefe8aee90929135fc4b7165066dde34962ba54"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/lotId",
+          "scalarSha256": "0d3c7cf9701c105ddbeccc626c336091f0d8c2ac7414a80a14f4373d14f2f7c3"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/publicationDate",
+          "scalarSha256": "1007f3868527c1fc8b378185cd85d1e40bf85c40c9443858663f7d4542f98c3e"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/amount",
+          "scalarSha256": "dc3ca21f7f452d27cbc7458f023750449d55dd0bbb354f04b80381dddc191e7d"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/contractId",
+          "scalarSha256": "c02f239eb0815948efcb78a7242a1c79b0c80a1c4b0f4e6d873f1c3799d5ed63"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/cpv",
+          "scalarSha256": "db36ce96f6fb31be36d864e856b67911318d1eea63367311d6880b08d6a66857"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/date",
+          "scalarSha256": "261d8c2cb59081b56fa3bb09e4214df06782c714166f4cb49533c78857174f92"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/durationMonths",
+          "scalarSha256": "de64346f732f769b937330885f1e58df7680789de7866df41100090c61111941"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/id",
+          "scalarSha256": "68cd3526b9e0d9eb8a3c18e32bbb04f3fa2a9cee65ba944ecf0a6235014fe5ab"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/lotId",
+          "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/publicationDate",
+          "scalarSha256": "e4d11caafb51c5322b7c0558104a45359cd15f85744534774160a753b4f7f384"
+        },
+        {
+          "scope": "raw",
+          "pointer": "/dateparution",
+          "scalarSha256": "1007f3868527c1fc8b378185cd85d1e40bf85c40c9443858663f7d4542f98c3e"
+        },
+        {
+          "scope": "raw",
+          "pointer": "/idweb",
+          "scalarSha256": "abcc5d8c318e9f59e9bb8e48852ce0948baf923b407b9f7a5220923f01533761"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cbc:IssueDate",
+          "scalarSha256": "557ae05e09b5376f10c394c10d1a7f56d9ae24e9873128908169cd7ac8d77da7"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cbc:ContractFolderID",
+          "scalarSha256": "25cd10e850889b0a772571204978bb4e36edc8fc9c1ee1f6ca07c8ecb25b83bd"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/4/efac:ContractReference/cbc:ID",
+          "scalarSha256": "3fa559d149c8cc753a1323acd4abc292b8dd31cffae338019d37581de533a4a0"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/4/cbc:ID/#text",
+          "scalarSha256": "d33ae4d25c922d3c29b5afcf488edd6f7d4217e493180e2d493048911216ab4b"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/4/cbc:IssueDate",
+          "scalarSha256": "2dfcab80b05ab7602654a20aaaf861ff2b1ddbce7d3a49f6129423c686e65cbb"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/4/cbc:AwardDate",
+          "scalarSha256": "c8a6d5d587190d334275446e33b70112db2ad012bdff5887f00cf779386ad402"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/4/efac:LotTender/cbc:ID",
+          "scalarSha256": "a1e7549dbe1f16dfc84af05d661024011d545ec0da6a12087d7011eb378e01b0"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/4/cac:NoticeDocumentReference/cbc:ID",
+          "scalarSha256": "fcbbbc6ea2d03a675bca63832962c5182b1e4acd74402bcbfc66ca2684fc187b"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/4/cbc:ID/#text",
+          "scalarSha256": "5b2e2e061df0d8cd669971dd19a204246a2ea9d3a544919908fe507221dcb4f3"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/4/efac:TenderLot/cbc:ID",
+          "scalarSha256": "0d3c7cf9701c105ddbeccc626c336091f0d8c2ac7414a80a14f4373d14f2f7c3"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/4/efac:SettledContract/cbc:ID",
+          "scalarSha256": "d33ae4d25c922d3c29b5afcf488edd6f7d4217e493180e2d493048911216ab4b"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/4/efac:LotTender/cbc:ID",
+          "scalarSha256": "a1e7549dbe1f16dfc84af05d661024011d545ec0da6a12087d7011eb378e01b0"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/4/cbc:ID/#text",
+          "scalarSha256": "a1e7549dbe1f16dfc84af05d661024011d545ec0da6a12087d7011eb378e01b0"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/4/efac:TenderLot/cbc:ID",
+          "scalarSha256": "0d3c7cf9701c105ddbeccc626c336091f0d8c2ac7414a80a14f4373d14f2f7c3"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/4/cac:LegalMonetaryTotal/cbc:PayableAmount/#text",
+          "scalarSha256": "afa60cb4badddcd8b224008f22bf0113cff6f12979f899f13f69e643f7385b51"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/4/cac:LegalMonetaryTotal/cbc:PayableAmount/@currencyID",
+          "scalarSha256": "87ef325635aa32dd785d818665ee8fe141d7fae0566c7ea09701c82a524452ba"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/4/cbc:ID/#text",
+          "scalarSha256": "0d3c7cf9701c105ddbeccc626c336091f0d8c2ac7414a80a14f4373d14f2f7c3"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/4/cac:ProcurementProject/cbc:ID",
+          "scalarSha256": "d10a4bc9e0c1fa4e8f3d7ce2512b8756e47ca5fa451f373c39a1431bb88db49f"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/4/cac:ProcurementProject/cac:MainCommodityClassification/cbc:ItemClassificationCode/#text",
+          "scalarSha256": "5b35fbb332321c9d09ffa4a3437252f14ef1901f9c455e6536564f7afd832498"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/4/cac:ProcurementProject/cac:PlannedPeriod/cbc:DurationMeasure/#text",
+          "scalarSha256": "f9cacf3cb91a12e03bc4546834f95a50a4c5fe02276ac260148ea9296c442d39"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/4/cac:ProcurementProject/cac:PlannedPeriod/cbc:DurationMeasure/@unitCode",
+          "scalarSha256": "d87f57459e38968b0bcde9cb59ba1befb2d519f8b2119d55ea4e3da097317df3"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/4/cac:ProcurementProject/cbc:Note/#text",
+          "scalarSha256": "15775331502e92c1bcd1c954b18608568f91709bd50f949335b825ae380e9a9c",
+          "excerpt": "Le montant minimum de ce marché est de 600 000 Euros HT et le montant maximum est de\n 3 300 000 Euros HT. Ces montants sont établis pour une durée de 12 mois."
+        }
+      ]
+    },
+    {
+      "pair": 9,
+      "boampId": "boamp-25-47556-lot-0001",
+      "decpId": "decp-21750001600019-2025F02648",
+      "boampUrl": "https://www.boamp.fr/pages/avis/?q=idweb:25-47556",
+      "decpUrl": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272025F02648%27&limit=100",
+      "conclusion": "reference-pattern-supported-unconfirmed",
+      "normalizedBoampPointer": "data/contracts.json#/1418",
+      "normalizedDecpPointer": "data/decp-history.json#/1335",
+      "rawNoticePointer": "data/boamp-raw.json.gz#/records/8022",
+      "decodedReferencePointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/efac:ContractReference/cbc:ID",
+      "publishedReference": "2025F026480000",
+      "decpContractId": "2025F02648",
+      "notes": "Four terminal zeros support only a reference-pattern candidate. The lot note and payable field support a 1500000 HT firm-term maximum, not spend. Result field 2000000 repeats the notice-wide maximum and must not replace the lot-specific basis.",
+      "fields": [
+        {
+          "scope": "boamp",
+          "pointer": "/amount",
+          "scalarSha256": "490d7c887c8033c20d2788eb073ad763d46ea740497158ab9b0fb2aa313b2f98"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/contractId",
+          "scalarSha256": "1dd8cdfa51b9d669258029caaef1547235138c50b566c04077729449b76e45a0"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/cpv",
+          "scalarSha256": "c86a17b02d22bc9ad272b8da27e6bef87d117235b72e0fb829b13c529a93cf53"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/date",
+          "scalarSha256": "1007f3868527c1fc8b378185cd85d1e40bf85c40c9443858663f7d4542f98c3e"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/durationMonths",
+          "scalarSha256": "de64346f732f769b937330885f1e58df7680789de7866df41100090c61111941"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/id",
+          "scalarSha256": "53cfdf4eca1be23238f408952890f467e18f7b46ec51592eac281b44f108d093"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/lotId",
+          "scalarSha256": "937557a4b8fb4814cca4cb68a917448b8608fb913226f6cad3ed6576c0989234"
+        },
+        {
+          "scope": "boamp",
+          "pointer": "/publicationDate",
+          "scalarSha256": "af8ff9cbe7d39eb48d4cf8a33385b652cb2224979ce8b71001190df6ba84ce2f"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/amount",
+          "scalarSha256": "6370c6b5e4136c66f782e1cfafd33e18a63e002db33cb4810ffb030792437d04"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/contractId",
+          "scalarSha256": "fb3a4508ce351d36b8f511471f83429f5753921cd3637dd38d85163b1c228ae5"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/cpv",
+          "scalarSha256": "c537aad2646b7089936e33efbd02bb70afc5a1bb408b40e150e8c379b368b394"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/date",
+          "scalarSha256": "1007f3868527c1fc8b378185cd85d1e40bf85c40c9443858663f7d4542f98c3e"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/durationMonths",
+          "scalarSha256": "de64346f732f769b937330885f1e58df7680789de7866df41100090c61111941"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/id",
+          "scalarSha256": "134e2beb0c998eb3a601a18dce2fb1c51705fe050f64da7a5b66ea94bb900a80"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/lotId",
+          "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+        },
+        {
+          "scope": "decp",
+          "pointer": "/publicationDate",
+          "scalarSha256": "6b663c27aea509cb7ed619867592987a44197ab566ec5ac735366642f8a64283"
+        },
+        {
+          "scope": "raw",
+          "pointer": "/dateparution",
+          "scalarSha256": "af8ff9cbe7d39eb48d4cf8a33385b652cb2224979ce8b71001190df6ba84ce2f"
+        },
+        {
+          "scope": "raw",
+          "pointer": "/idweb",
+          "scalarSha256": "8f5effb481fca8be1bf24df5614cc3db185cf45cc55a14732d28ed2d47d061bf"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cbc:IssueDate",
+          "scalarSha256": "914912a080002c87afb14b27827cfeb81e10f8dc47ca059f6e25ee63eee4e8a5"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cbc:ContractFolderID",
+          "scalarSha256": "1fd2bc8060bc1c8298d7c26277ac7476fd9c7a0093a1f9e2215f1cef32946190"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/efac:ContractReference/cbc:ID",
+          "scalarSha256": "ff36c23735a8c42c9267b9ead3e6f39e3ce20b5d5640d62f679659e27b15053f"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/cbc:ID/#text",
+          "scalarSha256": "1dd8cdfa51b9d669258029caaef1547235138c50b566c04077729449b76e45a0"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/cbc:IssueDate",
+          "scalarSha256": "352ac1be04994a24c5e0c73608c6cdfb6b839ee3ca67c2a71310529ec0575c94"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/cbc:AwardDate",
+          "scalarSha256": "e2f176be8155c9c8739756eadf93f6bf605693ebf2d358a25d45ce610fbd8e0c"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/efac:LotTender/cbc:ID",
+          "scalarSha256": "0199eaaa37964f8eadca91e614b1304cc1a919021842ce216c03bf60e0ab75af"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/cac:NoticeDocumentReference/cbc:ID",
+          "scalarSha256": "c76ebe1825da08a6d71dfaf1a3a3855b1d803c82efbf383de7d55e91da93ce8c"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/0/cbc:ID/#text",
+          "scalarSha256": "85d3ce7b245b1eb5045fc7be9909091d880051cf4061dc603883653d637a26d3"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/0/efac:TenderLot/cbc:ID",
+          "scalarSha256": "937557a4b8fb4814cca4cb68a917448b8608fb913226f6cad3ed6576c0989234"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/0/efac:SettledContract/cbc:ID",
+          "scalarSha256": "1dd8cdfa51b9d669258029caaef1547235138c50b566c04077729449b76e45a0"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/0/efac:LotTender/cbc:ID",
+          "scalarSha256": "0199eaaa37964f8eadca91e614b1304cc1a919021842ce216c03bf60e0ab75af"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/0/efac:FrameworkAgreementValues/cbc:MaximumValueAmount/#text",
+          "scalarSha256": "f762be355e76d3f9cb6a45b68243dc94912e643c9caf527208ac7430aacebc3d"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/0/cbc:ID/#text",
+          "scalarSha256": "0199eaaa37964f8eadca91e614b1304cc1a919021842ce216c03bf60e0ab75af"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/0/efac:TenderLot/cbc:ID",
+          "scalarSha256": "937557a4b8fb4814cca4cb68a917448b8608fb913226f6cad3ed6576c0989234"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/0/cac:LegalMonetaryTotal/cbc:PayableAmount/#text",
+          "scalarSha256": "ea7c0fac7167150febdc174cbfa28480927d30acb4035a6052e7cbc3fcd406b7"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/0/cac:LegalMonetaryTotal/cbc:PayableAmount/@currencyID",
+          "scalarSha256": "87ef325635aa32dd785d818665ee8fe141d7fae0566c7ea09701c82a524452ba"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/0/cbc:ID/#text",
+          "scalarSha256": "937557a4b8fb4814cca4cb68a917448b8608fb913226f6cad3ed6576c0989234"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/0/cac:ProcurementProject/cbc:ID",
+          "scalarSha256": "391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/0/cac:ProcurementProject/cac:MainCommodityClassification/cbc:ItemClassificationCode/#text",
+          "scalarSha256": "c86a17b02d22bc9ad272b8da27e6bef87d117235b72e0fb829b13c529a93cf53"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/0/cac:ProcurementProject/cac:PlannedPeriod/cbc:DurationMeasure/#text",
+          "scalarSha256": "a23718b18c82a0035f7525ca0f782a2ba8d33f36fb80b51b15f9050f9afc6e65"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/0/cac:ProcurementProject/cac:PlannedPeriod/cbc:DurationMeasure/@unitCode",
+          "scalarSha256": "d87f57459e38968b0bcde9cb59ba1befb2d519f8b2119d55ea4e3da097317df3"
+        },
+        {
+          "scope": "decoded",
+          "pointer": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/0/cac:ProcurementProject/cbc:Note/#text",
+          "scalarSha256": "4a2ef0a58d84047984a3c50bddc76b3df86fb4c02d58833597798bb40ecc3fa6",
+          "excerpt": "Montant du marché sur une durée ferme de 48 mois : 100 000 euros HT au minimum et 1 500 000 euros HT au maximum."
+        }
+      ]
+    }
+  ]
+}
