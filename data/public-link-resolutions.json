@@ -1,0 +1,249 @@
+{
+  "schemaVersion": 1,
+  "sourceHashes": {
+    "data/contracts.json": "a02b90a427d9310ec57b6b2a7b18c21d9c999f8ebba0542835c7161a6cdf6400",
+    "data/decp-history.json": "80543b398f8d590157972eb52c0812ff483f13124e2fdf3d3c59120cbddee89e",
+    "data/decp-cities.json": "6fad886084537beacf0be219c612a5ad704869a08ff7fc36d87abfc14fc66e04",
+    "data/boamp-raw.json.gz": "e6839c41712d0001c33d200efc9fd31042b280a7dc5f1ac0601ca6acd1f66f9d",
+    "data/boamp-decp-links.json": "a950c17bc95f368731aa1eea8cdb3d4dac8cf4a9ed5c33a0a2bb62e42ff4e8a4",
+    "data/boamp-decp-link-decisions.json": "215ac0c50cb8e9b9b972996afabcac97371ee7074a5fd9954ae49ebe5d42f65e",
+    "data/paris-ted-version-evidence.json": "a6ddcf63b8506f5488f79145f4a0dcf2f9bcb507096d6fac0b34467c1afbde6b"
+  },
+  "reviewer": "assistant-assisted",
+  "scope": "Candidate-lead dispositions and exact BOAMP/TED notice versions only. No DECP contract identity, amount, offer count or scoring correction.",
+  "counts": {
+    "heuristicPairs": 9,
+    "activePairs": 7,
+    "dismissedPairs": 2,
+    "confirmedDecpLinks": 0,
+    "ambiguousActivePairs": 0,
+    "verifiedTedNoticeVersions": 3,
+    "unverifiedTedNoticeVersions": 2
+  },
+  "activePairs": [
+    {
+      "boampId": "boamp-25-21317-lot-0001",
+      "decpId": "decp-21750001600019-2024S05075",
+      "status": "candidate",
+      "basis": [
+        "buyer-holder-siret-same-date"
+      ],
+      "warnings": [
+        "unconfirmed-no-exact-reference",
+        "multiple-decp-matches"
+      ],
+      "boampUrl": "https://www.boamp.fr/pages/avis/?q=idweb:25-21317",
+      "decpUrl": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272024S05075%27&limit=100",
+      "disposition": "candidate",
+      "activeWarnings": [
+        "unconfirmed-no-exact-reference"
+      ]
+    },
+    {
+      "boampId": "boamp-25-21329-lot-0001",
+      "decpId": "decp-21750001600019-2025S01590",
+      "status": "candidate",
+      "basis": [
+        "buyer-holder-siret-same-date"
+      ],
+      "warnings": [
+        "unconfirmed-no-exact-reference",
+        "different-cpv"
+      ],
+      "boampUrl": "https://www.boamp.fr/pages/avis/?q=idweb:25-21329",
+      "decpUrl": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272025S01590%27&limit=100",
+      "disposition": "candidate",
+      "activeWarnings": [
+        "unconfirmed-no-exact-reference",
+        "different-cpv"
+      ]
+    },
+    {
+      "boampId": "boamp-25-34782-lot-0003",
+      "decpId": "decp-21440109300015-2025F00013",
+      "status": "candidate",
+      "basis": [
+        "buyer-holder-siret-same-date"
+      ],
+      "warnings": [
+        "unconfirmed-no-exact-reference",
+        "different-cpv",
+        "multiple-decp-matches"
+      ],
+      "boampUrl": "https://www.boamp.fr/pages/avis/?q=idweb:25-34782",
+      "decpUrl": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721440109300015%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27+AND+id%3D%272025F00013%27&limit=100&order_by=datenotification+asc%2Cid+asc",
+      "disposition": "candidate",
+      "activeWarnings": [
+        "unconfirmed-no-exact-reference",
+        "different-cpv"
+      ]
+    },
+    {
+      "boampId": "boamp-25-34782-lot-0006",
+      "decpId": "decp-21440109300015-2025F00016-1",
+      "status": "candidate",
+      "basis": [
+        "buyer-holder-siret-same-date"
+      ],
+      "warnings": [
+        "unconfirmed-no-exact-reference",
+        "different-cpv"
+      ],
+      "boampUrl": "https://www.boamp.fr/pages/avis/?q=idweb:25-34782",
+      "decpUrl": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721440109300015%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27+AND+id%3D%272025F00016%27&limit=100&order_by=datenotification+asc%2Cid+asc",
+      "disposition": "candidate",
+      "activeWarnings": [
+        "unconfirmed-no-exact-reference",
+        "different-cpv"
+      ]
+    },
+    {
+      "boampId": "boamp-25-37616-lot-0001",
+      "decpId": "decp-21750001600019-2025F02650",
+      "status": "candidate",
+      "basis": [
+        "buyer-holder-siret-same-date"
+      ],
+      "warnings": [
+        "unconfirmed-no-exact-reference"
+      ],
+      "boampUrl": "https://www.boamp.fr/pages/avis/?q=idweb:25-37616",
+      "decpUrl": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272025F02650%27&limit=100",
+      "disposition": "candidate",
+      "activeWarnings": [
+        "unconfirmed-no-exact-reference"
+      ]
+    },
+    {
+      "boampId": "boamp-25-45958-lot-0005",
+      "decpId": "decp-21750001600019-2025S02915",
+      "status": "candidate",
+      "basis": [
+        "buyer-holder-siret-same-date"
+      ],
+      "warnings": [
+        "unconfirmed-no-exact-reference"
+      ],
+      "boampUrl": "https://www.boamp.fr/pages/avis/?q=idweb:25-45958",
+      "decpUrl": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272025S02915%27&limit=100",
+      "disposition": "candidate",
+      "activeWarnings": [
+        "unconfirmed-no-exact-reference"
+      ]
+    },
+    {
+      "boampId": "boamp-25-47556-lot-0001",
+      "decpId": "decp-21750001600019-2025F02648",
+      "status": "candidate",
+      "basis": [
+        "buyer-holder-siret-same-date"
+      ],
+      "warnings": [
+        "unconfirmed-no-exact-reference"
+      ],
+      "boampUrl": "https://www.boamp.fr/pages/avis/?q=idweb:25-47556",
+      "decpUrl": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272025F02648%27&limit=100",
+      "disposition": "candidate",
+      "activeWarnings": [
+        "unconfirmed-no-exact-reference"
+      ]
+    }
+  ],
+  "dismissedPairs": [
+    {
+      "boampId": "boamp-25-21317-lot-0001",
+      "decpId": "decp-21750001600019-2024S05079",
+      "status": "candidate",
+      "basis": [
+        "buyer-holder-siret-same-date"
+      ],
+      "warnings": [
+        "unconfirmed-no-exact-reference",
+        "multiple-decp-matches"
+      ],
+      "boampUrl": "https://www.boamp.fr/pages/avis/?q=idweb:25-21317",
+      "decpUrl": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272024S05079%27&limit=100",
+      "disposition": "dismissed-notice-lot-candidate",
+      "reason": "Reject this investigation lead for LOT-0001: its explicit result/contract/tender chain declares 20242024S05075; the sibling 20242024S05079 belongs to LOT-0003 / CON-0003 / TEN-0003. DECP 2024S05079 is not literally either long reference. This corrects an unsupported notice-lot candidate mapping, not an exact DECP crosswalk or proof of different legal contracts. No authoritative schema transformation permits repeated-year removal; no replacement link is confirmed.",
+      "decisionPointer": "/decisions/0",
+      "replacementLinkConfirmed": false
+    },
+    {
+      "boampId": "boamp-25-34782-lot-0003",
+      "decpId": "decp-21440109300015-2025F00012",
+      "status": "candidate",
+      "basis": [
+        "buyer-holder-siret-same-date"
+      ],
+      "warnings": [
+        "unconfirmed-no-exact-reference",
+        "different-cpv",
+        "multiple-decp-matches"
+      ],
+      "boampUrl": "https://www.boamp.fr/pages/avis/?q=idweb:25-34782",
+      "decpUrl": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721440109300015%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27+AND+id%3D%272025F00012%27&limit=100&order_by=datenotification+asc%2Cid+asc",
+      "disposition": "dismissed-notice-lot-candidate",
+      "reason": "Reject this investigation lead for technical LOT-0003: it is printed Lot 2, LAVERIE, with reference 2024-88480; DECP 2025F00012 describes CUISSON, the scope of technical LOT-0002 / printed Lot 1 with reference 2024-88470. The buyer export's 2024_88478 is neither notice reference. These explicit notice-lot/scope distinctions oppose the candidate mapping but do not supply an exact DECP crosswalk or prove different legal contracts. No authoritative identifier transformation or replacement link is confirmed.",
+      "decisionPointer": "/decisions/1",
+      "replacementLinkConfirmed": false
+    }
+  ],
+  "tedNotices": [
+    {
+      "boampNoticeId": "25-21317",
+      "publicationNumber": "126421-2025",
+      "noticeUUID": "e1636ae4-00b5-4953-bb91-1326562ab9b2",
+      "procedureUUID": "7db0640e-05cd-480c-9b82-27190ec82767",
+      "version": "01",
+      "status": "verified-notice-version",
+      "url": "https://ted.europa.eu/en/notice/-/detail/126421-2025",
+      "httpStatus": "200",
+      "decpCrosswalkConfirmed": false
+    },
+    {
+      "boampNoticeId": "25-21329",
+      "publicationNumber": "129139-2025",
+      "noticeUUID": "b5a7b16d-0dac-4247-b831-c3d8ef3e59aa",
+      "procedureUUID": "79654cbe-7023-4199-beea-a64ff8594489",
+      "version": "01",
+      "status": "verified-notice-version",
+      "url": "https://ted.europa.eu/en/notice/-/detail/129139-2025",
+      "httpStatus": "200",
+      "decpCrosswalkConfirmed": false
+    },
+    {
+      "boampNoticeId": "25-37616",
+      "publicationNumber": "218409-2025",
+      "noticeUUID": "b59a2ac5-a516-4b3a-bae1-9dee55ce7a83",
+      "procedureUUID": "a0d77ee6-f0c5-4f69-93a2-0afd86106544",
+      "version": "01",
+      "status": "unverified-notice-version",
+      "url": "https://ted.europa.eu/en/notice/-/detail/218409-2025",
+      "httpStatus": "429",
+      "decpCrosswalkConfirmed": false
+    },
+    {
+      "boampNoticeId": "25-45958",
+      "publicationNumber": "264382-2025",
+      "noticeUUID": "601ad136-b7b9-41cb-a8c5-d54d6c7181cc",
+      "procedureUUID": "dd41474e-9d84-46d0-8c01-e1a5983c4030",
+      "version": "01",
+      "status": "unverified-notice-version",
+      "url": "https://ted.europa.eu/en/notice/-/detail/264382-2025",
+      "httpStatus": "429",
+      "decpCrosswalkConfirmed": false
+    },
+    {
+      "boampNoticeId": "25-47556",
+      "publicationNumber": "277338-2025",
+      "noticeUUID": "53ccebfe-965a-4586-9094-7fdc4a3e79d0",
+      "procedureUUID": "e20da72a-516f-4d5c-8c3c-16d548250107",
+      "version": "01",
+      "status": "verified-notice-version",
+      "url": "https://ted.europa.eu/en/notice/-/detail/277338-2025",
+      "httpStatus": "200",
+      "decpCrosswalkConfirmed": false
+    }
+  ],
+  "correctionsLog": "research/link-corrections-log.md"
+}
