@@ -66,3 +66,21 @@ Pre-registered addition in the [plan](ukraine-candidate-indicators-plan.md#part-
 | D4 negotiated procedure (`ua-direct-award`) | 8 % (15/320) | 4 % | 1.94 [1.05, 3.13] | 1.27 [0.35, 2.74] | 2.29 | 9.6 [0.8, 16.5] | fails (learn interval) |
 
 With the linked convictions, a direct contract of at least UAH 200,000 (the open-tender threshold for goods and services) passes the holdout rule: it is twice as frequent on convicted tenders as among the same buyers' other completed tenders. D4 is the first measurement of `ua-direct-award`: the direction supports the check, but its indicated points (about 10, interval 1–17) are below the editorial 18 and the learn half does not exclude 1. Fifteen convicted negotiated tenders are still few. **Nothing adopted**; both are for the owner to decide. Caveats: listings are the site search's completed tenders only, and the size gate may still partly measure size (prosecutions favour large amounts).
+
+## Part 4: relative size and closeness to legal ceilings (2026-10-14)
+
+Rules fixed beforehand ([plan, part 4](ukraine-candidate-indicators-plan.md#part-4-relative-size-and-closeness-to-legal-ceilings-fixed-2026-10-14-before-any-was-computed), commit `90929fd`). `tools/ukraine-relative-candidates.py`, offline on the downloaded census and contract records; results [`ukraine-relative-candidates-results.json`](ukraine-relative-candidates-results.json). Buyer kind known for 179 of 185 buyers.
+
+| Candidate | Hit rate, convicted | Comparisons | LR+ all [95 %] | Learn half [95 %] | Check half | Points (all) [95 %] | Decision |
+| --- | ---: | ---: | --- | --- | --- | --- | --- |
+| R1 tender ≥ 5 % of the buyer's year | 40 % (86/320) | 6 % (733/58,154) | 6.50 [4.79, 9.14] | 5.59 [3.90, 8.24] | 6.46 | 27.0 [22.6, 31.9] | **passes** |
+| R2 increase ≥ 90 % of the 10 % ceiling | 1 % (5/322) | 2 % (22/874) | 0.51 [0.05, 1.45] | 0.40 | 0.70 | 0 | fails |
+| R3 direct report at 80–100 % of the threshold | 4 % (10/319) | 0.7 % (114/15,378) | 7.75 [2.63, 19.29] | 4.93 [1.11, 13.45] | 5.06 | 29.5 [14.0, 42.7] | passes the rule, **not valid** (below) |
+
+Sensitivity (not decisions): R1 at ≥ 1 % LR 4.8, at ≥ 10 % LR 9.0, so the evidence grows with the share; R2 any increase LR 1.05, increase ≥ 10 % LR 0.46; R3 before 2022 LR 6.2, from 2022 LR 3.1 (2 hits).
+
+Post-hoc checks (decided after seeing the table above, so not decisions):
+- **R1 is not a small-buyer artefact:** on buyer-years with at least 20 completed tenders it is stronger (LR 11.1 [8.8, 14.3]; learn 8.3, check 11.7).
+- **R3 is not valid as measured.** Category (works or not) comes from the cohort's CPV for convicted tenders but only from a CPV code at the start of the listed title for the census, and 42,904 of 58,282 census tenders have none. With the title rule for both groups, all 10 convicted hits become unknown (0 of 270 known). The pre-registered result is therefore driven by asymmetric missingness. A fair test needs each census tender's category (`mainProcurementCategory` from the tender records: a download, about 45,000 requests for reporting procedures, not done).
+
+Reading: relative size is the strongest candidate seen in Ukraine so far, and it generalises: any country with buyer-level contract values can compute it. It also overlaps with what prosecutors pursue (large amounts), so its LR partly measures prosecution choice; a separate size-only check (D2, D3) shows the same direction more weakly. R2 does not separate convicted tenders: Ukrainian law forbids raising the total at all, and convicted schemes rarely show it in the contract record. **Nothing adopted**; owner decision.
