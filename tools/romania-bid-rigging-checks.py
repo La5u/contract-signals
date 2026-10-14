@@ -167,6 +167,19 @@ def main():
     procs = [o for o in lines if o.get('type') != 'decision' and o.get('role') == 'rigged']
     cases = [json.loads(l) for l in (CC / 'court-cases.jsonl').read_text().splitlines() if l.strip()]
     chal = challenged(sorted({o['decision'] for o in procs}), cases)
+    # Reviewed outcomes (court-outcomes.jsonl, press and portal): final upheld counts; pending or annulled excludes.
+    outcomes = {}
+    if (CC / 'court-outcomes.jsonl').exists():
+        for line in (CC / 'court-outcomes.jsonl').read_text().splitlines():
+            if line.strip():
+                x = json.loads(line)
+                outcomes[x['decision']] = x
+    for d in list(chal):
+        x = outcomes.get(d) or {}
+        if x.get('final') is True and 'annul' not in str(x.get('first_instance')) + str(x.get('high_court')):
+            chal[d] = []
+        elif x.get('first_instance') in ('pending', 'admitted (annulled)', 'partially admitted') or x.get('high_court') == 'pending':
+            chal[d] = chal[d] or ['reviewed: ' + str(x.get('first_instance')) + ' / ' + str(x.get('high_court'))]
     years = sorted({y for o in procs for y in proc_years(o)} | {y + 1 for o in procs for y in proc_years(o)})
     years = [y for y in years if (SEAP / str(y)).exists()]
     notices = {n for o in procs for n in notice_numbers(o)}

@@ -34,3 +34,26 @@ Other checks (all findings, all procedures): single offer 32 % vs 38 % (LR 0.89)
 ## Summary
 
 Buyer share (a contract of ≥ 5 % of its buyer's yearly procurement) points the same way in all three countries: Ukraine LR 8.0 (adopted in 3.6), Romania 1.8 on all Council findings (passes the holdout, but the strict unchallenged set is too small), Colombia 1.9 on 7 cases (direction only). Direct award is *less* frequent among labelled contracts everywhere. **Nothing adopted for Romania or Colombia**; owner decision. Next data that would help: the 9 missing Romanian blacklist decisions, disambiguating the 54 ambiguous Romanian procedures (lot and value from the decision texts), High Court outcomes for the 7 challenged decisions, and SECOP II for Colombian 2016+ contracts.
+
+## Update 2026-10-15: more links, court outcomes, untested and new checks
+
+Plan for the new checks: [untested-checks-plan.md](untested-checks-plan.md) (fixed before computing).
+
+- **Romania, links:** 35 of 54 ambiguous procedures resolved by a model review of the decision texts on specific evidence (notice number, exact value, contract number or date; one value sum, Botoşani notice 170327 = 1,185,267.60 RON, checked by hand): **73 of 136 rigged procedures linked**.
+- **Romania, court outcomes** (model web review, partly from search summaries; `research/labels/romania-cc-court-outcomes.jsonl`): final and upheld 71/2012, 72/2012, 77/2015, 83/2016, 33/2017 (the last three for one firm each); annulled for one firm 80/2023; pending 134/2024, 148/2025, 77/2017, 99/2021, 43/2020; others unknown. Pending and annulled decisions are left out of the decision rule.
+- **Colombia:** SECOP II and the 2018+ SECOP I table added; **10 cases at 10 buyers**, all 10 links checked by hand.
+
+| Check | Romania, all findings (60 / 28 buyers) | Romania, strict set (10 / 9 buyers) | Colombia, one per case (10 / 10) | Ukraine |
+| --- | --- | --- | --- | --- |
+| Buyer share ≥ 5 % | 37 % vs 17 %, LR 1.76 [1.19, 2.98], **passes** | 1.54 [0.76, 2.69] | 60 % vs 12 %, LR 2.64 [1.31, 6.31], **passes** | adopted (3.6) |
+| N4 supplier dependence ≥ 25 % | 31 % vs 11 %, LR 2.08 [1.29, 3.91], **passes** | 2.18 [1.03, 4.42], too few buyers | 0 % vs 6 % | — |
+| U1 repeated single offer (scored, never measured) | 15 % vs 6 %, 1.67 [0.59, 3.02] | 1.25 | — | — |
+| U2 repeated award without competition (scored) | 0.32, lower | lower | 0 % vs 6 %, lower | — |
+| N1 December signature | 1.40 | 1.98 | 1.21 | C7 tested earlier |
+| N2 weekend signature | never on labels | — | lower | 1 % vs 2 % |
+| N3 long duration ≥ 36 months | — | — | 1.14 | never fires |
+| N5 first-time supplier | 0.97 | — | — | — |
+| Single offer | 1.03 | 0.87 | — | 0 points (3.5) |
+| Direct award | 0.28, lower | lower | 0.59, lower | measured D4 |
+
+**Reading.** Size relative to the buyer (buyer share, supplier dependence) is the one family that points the same way in all three countries and passes the holdout in two label sources besides Ukraine. Repeated awards without competition, concentration and direct award are *rarer* among labelled contracts everywhere, so their editorial points are not supported by these labels (prosecutions and Council cases concentrate on large competitive tenders, which biases against them). Nothing adopted; owner decision.
