@@ -95,17 +95,22 @@ def shrunk_lr(h1, n1, h0, n0):
 
 def bootstrap(rows, check, group, test=lambda c: c['status'] == 'signal'):
     buyers = sorted({r['buyer'] for r in rows})
-    by_buyer = defaultdict(list)
-    for r in rows:
-        by_buyer[r['buyer']].append(r)
+    # Each resampled copy is a distinct buyer, so the weighted() sums reduce to per-buyer summaries:
+    # (hit fraction, evaluable) for the group and for the comparisons. Same draws, same result.
+    summary = {}
+    for g in (group, 'comparison'):
+        per_buyer = defaultdict(list)
+        for r in rows:
+            c = r['checks'].get(check)
+            if g in r['groups'] and c and c['status'] in ('signal', 'clear'):
+                per_buyer[r['buyer']].append(bool(test(c)))
+        summary[g] = {b: sum(v) / len(v) for b, v in per_buyer.items()}
     rng = random.Random(f'{SEED}-{check}-{group}')
     values = []
     for _ in range(BOOT):
-        sample = []
-        for i, b in enumerate(rng.choices(buyers, k=len(buyers))):
-            sample += [{**r, 'buyer': f'{b}#{i}'} for r in by_buyer[b]]
-        h1, n1, _ = weighted(sample, check, group, test)
-        h0, n0, _ = weighted(sample, check, 'comparison', test)
+        drawn = rng.choices(buyers, k=len(buyers))
+        (h1, n1), (h0, n0) = ((sum(summary[g][b] for b in drawn if b in summary[g]), sum(b in summary[g] for b in drawn))
+                              for g in (group, 'comparison'))
         lr = shrunk_lr(h1, n1, h0, n0)
         if lr:
             values.append(lr)
