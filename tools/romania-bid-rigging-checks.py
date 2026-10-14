@@ -74,11 +74,19 @@ def proc_years(proc):
 
 
 def stream_seap(years):
+    """Contracts of the loaded years, each once: quarterly exports repeat contracts published in an earlier quarter."""
+    seen = set()
     for y in years:
         for p in sorted((SEAP / str(y)).glob('*.jsonl.gz')) if (SEAP / str(y)).exists() else []:
             with gzip.open(p, 'rt', encoding='utf-8') as fh:
                 for line in fh:
-                    yield json.loads(line)
+                    r = json.loads(line)
+                    k = hash((cui(r.get('buyer_cui')), r.get('contract_no'), digits(r.get('notice_award')), cui(r.get('winner_cui')),
+                              r.get('value_ron_num'), str(r.get('contract_date') or '')[:10]))
+                    if k in seen:
+                        continue
+                    seen.add(k)
+                    yield r
 
 
 KEEP = ('buyer', 'title', 'buyer_cui', 'procedure', 'concluded_by', 'notice_init', 'notice_award', 'offers_num', 'contract_no',

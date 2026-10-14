@@ -8,6 +8,7 @@ contract_date, title, cpv, value_ron, winner, winner_cui. Raw value strings are 
 Resumable per file. Winner and buyer identities are organisations; no personal data is added.
 """
 import csv
+from collections import Counter
 import gzip
 import io
 import json
@@ -102,12 +103,73 @@ def rows(path):
         if text is None:   # 2012-2016 exports: Windows-1250 with a few stray bytes
             text = raw.decode('cp1250', errors='replace')
         first = text[:text.find('\n')]
-        delim = max('^,;\t', key=first.count)
+        delim = max('^,;\t|', key=first.count)
         quote = '|' if first.startswith('|') else '"'
-        yield from csv.reader(io.StringIO(text, newline=''), delimiter=delim, quotechar=quote)
+        header = None
+        if delim == '^':
+            # Unquoted ^-separated exports (2017-2018) carry line breaks inside fields: join lines until a record
+            # has the header's field count.
+            lines = iter(text.splitlines())
+            header = next(lines).split('^')
+            yield header
+            buf = ''
+            for line in lines:
+                buf = f'{buf}\n{line}' if buf else line
+                if buf.count('^') >= len(header) - 1:
+                    yield buf.split('^')
+                    buf = ''
+            return
+        for row in csv.reader(io.StringIO(text, newline=''), delimiter=delim, quotechar=quote):
+            if header is None:
+                header = row
+                yield row
+            elif len(row) == len(header) or delim != ',' or quote != '"':
+                yield row
+            else:
+                fixed = repair(row, header)
+                STATS['repaired' if fixed else 'dropped'] += 1
+                if fixed:
+                    yield fixed
 
 
-EXCLUDE = {'2023/Contracte-publicate-T-IV-2023-xls.xls'}   # same quarter as the CSV of that name
+STATS = {'repaired': 0, 'dropped': 0}
+CUI_RE = re.compile(r'^\s*(?:RO\s?)?\d{1,10}\s*$', re.I)
+DATE_RE = re.compile(r'^\s*20\d\d-\d\d-\d\d')
+
+
+def repair(tokens, header):
+    """Rebuild a row of an unquoted comma export (2016) whose free-text fields contain commas.
+
+    Anchors, left to right: the winner CUI ends the winner name; a field starting 'Anunt de atribuire' ends the
+    address; the buyer CUI ends the buyer name; the first date after it is the award-notice date (the token
+    before it is the notice number); the next date at least five fields on is the contract date; the contract
+    value is the first number after it followed by a three-letter currency. Fields after the value are read in
+    order and trailing free text is joined into the last column. None when an anchor is missing."""
+    names = [key(h) for h in header]
+    t = [x.strip() for x in tokens]
+    try:
+        k = next(i for i in range(1, len(t)) if CUI_RE.match(t[i]))
+        j = next(i for i in range(k + 3, len(t)) if t[i].lower().startswith('anunt de atribuire'))
+        m = next(i for i in range(j + 3, len(t)) if CUI_RE.match(t[i]))
+        da = next(i for i in range(m + 2, len(t)) if DATE_RE.match(t[i]))
+        dc = next(i for i in range(da + 6, len(t)) if DATE_RE.match(t[i]))
+        v = next(i for i in range(dc + 1, len(t) - 1) if number(t[i]) is not None and re.fullmatch(r'[A-Z]{3}', t[i + 1]))
+    except StopIteration:
+        return None
+    head = [','.join(t[:k]), t[k], t[k + 1], t[k + 2], ','.join(t[k + 3:j]), t[j], t[j + 1], t[j + 2], ','.join(t[j + 3:m]),
+            t[m], ','.join(t[m + 1:da - 1]), '', t[da - 1], t[da]]
+    middle = t[da + 1:da + 6]                                   # TipIncheiere .. Subcontractat
+    row = head + middle + [','.join(t[da + 6:dc]), t[dc], ','.join(t[dc + 1:v])]
+    rest = len(names) - len(row)
+    tail = t[v:v + rest - 1] + [','.join(t[v + rest - 1:])]
+    row += tail
+    if len(row) != len(names):
+        return None
+    return row
+
+
+EXCLUDE = {'2023/Contracte-publicate-T-IV-2023-xls.xls',   # same quarter as the CSV of that name
+           '2019/Contracte-2019-T3.xlsx'}               # a copy of the Q2 file (17,504 of 17,560 rows identical); real Q3 2019 not published
 
 
 def normalise(path, out):
@@ -134,6 +196,25 @@ def normalise(path, out):
     return n, sorted(m)
 
 
+CAPS = {65000, 65001, 64999, 65535, 65536, 1048575, 1048576, 50000, 100000}
+KEY_FIELDS = ('buyer_cui', 'value_ron_num', 'contract_date', 'winner_cui', 'procedure')
+
+
+def audit(out, n):
+    """Warn about silent data loss: a row count at a known export cap, or key fields mostly empty."""
+    if n in CAPS:
+        yield f'row count {n} equals a known export cap (more sheets or pages?)'
+    empty = Counter()
+    with gzip.open(out, 'rt', encoding='utf-8') as fh:
+        for line in fh:
+            r = json.loads(line)
+            for k in KEY_FIELDS:
+                empty[k] += r.get(k) in (None, '', 'NULL')
+    for k, v in empty.items():
+        if n and v / n > 0.2:
+            yield f'{k} empty in {v / n:.0%} of rows (unmapped header or misaligned rows?)'
+
+
 def main():
     for path in sorted(p for p in BASE.glob('20*/*') if p.is_file() and p.stat().st_size > 1000):
         out = BASE / 'normalized' / path.parent.name / (path.name + '.jsonl.gz')
@@ -146,7 +227,10 @@ def main():
         try:
             n, fields = normalise(path, out)
             missing = sorted(set(FIELDS) - set(fields))
-            print(f'{path.parent.name}/{path.name}: {n} rows; missing {missing}', flush=True)
+            extra = f"; repaired {STATS['repaired']}, dropped {STATS['dropped']}" if STATS['repaired'] or STATS['dropped'] else ''
+            extra += ''.join(f'; WARNING {w}' for w in audit(out, n))
+            print(f'{path.parent.name}/{path.name}: {n} rows; missing {missing}{extra}', flush=True)
+            STATS.update(repaired=0, dropped=0)
         except Exception as e:
             print(f'{path.parent.name}/{path.name}: ERROR {e}', flush=True)
 
