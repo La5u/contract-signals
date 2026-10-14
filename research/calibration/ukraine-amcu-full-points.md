@@ -3,11 +3,11 @@ Competitive procedures only; left out (direct-award reports and negotiated proce
 
 | Check | Hit rate, all convicted | Corruption | Fraud | Comparisons | LR+ raw | LR+ shrunk [95 %] | Proposed points [95 %] | Current points |
 |---|---|---|---|---|---|---|---|---|
-| ua-better-bid-disqualified | 32% (890/2714 tenders, 1144 buyers) | NA | NA | 21% (1831/8675 tenders, 1201 buyers) | 1.539 | 1.534 [1.386, 1.69] | 6.2 [4.7, 7.6] | 5 |
-| amendments-3plus (from contract records) | 20% (541/2713 tenders, 1144 buyers) | NA | NA | 16% (1258/8675 tenders, 1201 buyers) | 1.295 | 1.292 [1.143, 1.454] | 3.7 [1.9, 5.4] | 6–11 |
+| ua-better-bid-disqualified | 32% (890/2714 tenders, 1144 buyers) | NA | NA | 21% (1831/8675 tenders, 1201 buyers) | 1.539 | 1.534 [1.386, 1.69] | 6.2 [4.7, 7.6] | 4 |
+| amendments-3plus (from contract records) | 20% (541/2713 tenders, 1144 buyers) | NA | NA | 16% (1258/8675 tenders, 1201 buyers) | 1.295 | 1.292 [1.143, 1.454] | 3.7 [1.9, 5.4] | 6–10 |
 | ua-repeated-single-offer | 12% (4/19 tenders, 16 buyers) | NA | NA | 3% (219/1796 tenders, 669 buyers) | 3.964 | 2.824 [0.37, 6.209] | 15.0 [0.0, 26.3] | 12–40 |
 | ua-concentration | 4% (48/489 tenders, 84 buyers) | NA | NA | 4% (169/1480 tenders, 86 buyers) | 0.887 | 0.899 [0.492, 1.167] | 0.0 [0.0, 2.2] | 18.1–40 |
-| ua-single-offer | 1% (19/2714 tenders, 1144 buyers) | NA | NA | 24% (1797/8675 tenders, 1201 buyers) | 0.05 | 0.058 [0.034, 0.085] | 0.0 [0.0, 0.0] | 3 |
+| ua-single-offer | 1% (19/2714 tenders, 1144 buyers) | NA | NA | 24% (1797/8675 tenders, 1201 buyers) | 0.05 | 0.058 [0.034, 0.085] | 0.0 [0.0, 0.0] | 1 |
 | ua-direct-award | 0% (0/2714 tenders, 1144 buyers) | NA | NA | 0% (0/8675 tenders, 1201 buyers) | NA: comparisons contain no direct awards | None | NA |  |
 
 Strength bands

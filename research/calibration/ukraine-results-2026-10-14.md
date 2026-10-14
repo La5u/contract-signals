@@ -52,3 +52,5 @@ The owner asked to add term extension (separately or as extra points on amendmen
 | Term extension within 3+ amendments (bonus) | 7.9 | 4.5 | 3.2 | +6 |
 
 Bundled cohort: 48 → 50 contracts with a positive score.
+
+The *Current points* column of the `ukraine-verdict-sweep`, `ukraine-verdict-plus-linked` and `ukraine-amcu-full` points tables shows the adopted points; other tables were generated before adoption and show the earlier 3.5 points (3 / 5 / 6–11). Evidence columns are unaffected.
