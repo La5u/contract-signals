@@ -115,6 +115,26 @@ class OfflineTests(unittest.TestCase):
             self.assertEqual(len(data['tenders']), 2)
             self.assertFalse(next(t for t in data['tenders'] if t['tenderID'] == 'UA-recent')['positive'])
 
+    def test_id_printed_without_check_letter_is_one_tender(self):
+        with tempfile.TemporaryDirectory() as d:
+            cache, source, out = Path(d) / 'cache', Path(d) / 'input.json', Path(d) / 'cohort.json.gz'
+            full, bare = 'UA-2025-03-01-000001-a', 'UA-2025-03-01-000001'
+            source.write_text(json.dumps({'verdicts': [verdict(tid=full), verdict(tid=bare, rid='2')]}))
+            t = {**fixtures.tender(), 'tenderID': full}
+            replies = {bc.imp.DETAILS.format(tender_id=full): {'id': 't1'}, bc.bc.tender_url('t1'): {'data': t}}
+            f = bc.bc.Fetcher(cache, network=True, budget=150, prior=0, min_interval=0,
+                              opener=lambda u: (200, json.dumps(replies[u]).encode(), {}) if u in replies else (404, b'{}', {}))
+            for url in replies:
+                f.fetch(url)
+            with patch('urllib.request.urlopen', side_effect=AssertionError('network forbidden')):
+                bc.main(['--input', str(source), '--output', str(out), '--cache', str(cache), '--from-cache',
+                         '--run-date', '2026-10-09', '--k', '0'])
+            data = json.loads(gzip.decompress(out.read_bytes()))
+            self.assertEqual(len(data['rows']), 1)
+            notes = sorted(t.get('unavailable', '') for t in data['tenders'] if t['tenderID'] in (full, bare))
+            self.assertEqual(notes[0], '')
+            self.assertTrue(notes[1].startswith('duplicate of UA-2025-03-01-000001'))
+
     def test_analysis_fixture_unknowns_and_rates(self):
         rows = []
         for tid, label, bids, finality in [('corruption', 'corruption', 1, 'confirmed'),

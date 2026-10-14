@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// Research only. Usage: node tools/analyze-ukraine-verdict-cohort.cjs [cohort.json[.gz]]
+// Research only. Usage: node tools/analyze-ukraine-verdict-cohort.cjs [cohort.json[.gz]] [per-row-checks.json]
+// The optional second file receives each row's check statuses and points, for tools/propose-indicator-points.py.
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm'), zlib = require('node:zlib');
 const root = path.join(__dirname, '..');
 const file = process.argv[2] || path.join(root, 'research/labels/ukraine-verdict-cohort.json.gz');
@@ -12,10 +13,13 @@ const rows = call('prepareContracts', Array.isArray(cohort) ? cohort : cohort.ro
 const groups = ['corruption', 'fraud', 'combined', 'comparison'];
 const table = new Map();
 let flagged = 0;
+const perRow = [];
 const empty = () => ({ signal: 0, clear: 0, unknown: 0, 'not-applicable': 0 });
 for (const row of rows) {
   // Assess every row, but never let unconfirmed/recent/pending verdicts enter the positive denominator.
   const checks = call('getAssessment', row).checks;
+  perRow.push({ id: row.id, procedureId: row.procedureId, procedure: row.procedure, group: row.group, label: row.label, finality: row.finality, buyerId: row.buyerId,
+    verdict_ids: row.verdict_ids, checks: Object.fromEntries(checks.map(c => [c.id, { status: c.status, points: c.weight }])) });
   const positive = ['corruption', 'fraud'].includes(row.label) && ['confirmed', 'presumed'].includes(row.finality);
   const strata = positive ? [row.label, 'combined'] : row.label === 'comparison' ? ['comparison'] : [];
   if (!strata.length) flagged++;
@@ -57,3 +61,4 @@ for (const [id, counts] of [...table.entries()].sort(([a], [b]) => a.localeCompa
   for (const group of groups) console.log(`  ${group}: ${rate(counts[group])}`);
   for (const group of groups.slice(0, 3)) console.log(`  LR+ ${group}/comparison: ${likelihood(counts[group], counts.comparison)}`);
 }
+if (process.argv[3]) fs.writeFileSync(process.argv[3], JSON.stringify(perRow));

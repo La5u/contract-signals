@@ -1,0 +1,476 @@
+{
+ "prior_buyers": 10,
+ "pdo": 10,
+ "bootstrap": 2000,
+ "seed": 20261012,
+ "left_out_non_competitive": {
+  "corruption": 35,
+  "fraud": 39
+ },
+ "results": [
+  {
+   "check": "amendments-3plus (from contract records)",
+   "corruption": {
+    "buyer_hits": 13.52,
+    "buyers": 56,
+    "tender_hits": 23,
+    "tenders": 145,
+    "rate": 0.241
+   },
+   "fraud": {
+    "buyer_hits": 15.5,
+    "buyers": 86,
+    "tender_hits": 17,
+    "tenders": 103,
+    "rate": 0.18
+   },
+   "combined": {
+    "buyer_hits": 29.02,
+    "buyers": 141,
+    "tender_hits": 40,
+    "tenders": 248,
+    "rate": 0.206
+   },
+   "comparison": {
+    "buyer_hits": 23.71,
+    "buyers": 184,
+    "tender_hits": 96,
+    "tenders": 874,
+    "rate": 0.129
+   },
+   "lr_raw": 1.573,
+   "lr_shrunk": 1.535,
+   "lr_ci": [
+    1.046,
+    2.169
+   ],
+   "proposed_points": 6.2,
+   "proposed_points_ci": [
+    0.6,
+    11.2
+   ],
+   "current": "6\u201311"
+  },
+  {
+   "check": "ua-better-bid-disqualified",
+   "corruption": {
+    "buyer_hits": 15.48,
+    "buyers": 56,
+    "tender_hits": 33,
+    "tenders": 145,
+    "rate": 0.276
+   },
+   "fraud": {
+    "buyer_hits": 17.75,
+    "buyers": 86,
+    "tender_hits": 24,
+    "tenders": 103,
+    "rate": 0.206
+   },
+   "combined": {
+    "buyer_hits": 33.06,
+    "buyers": 141,
+    "tender_hits": 57,
+    "tenders": 248,
+    "rate": 0.234
+   },
+   "comparison": {
+    "buyer_hits": 35.91,
+    "buyers": 184,
+    "tender_hits": 158,
+    "tenders": 874,
+    "rate": 0.195
+   },
+   "lr_raw": 1.191,
+   "lr_shrunk": 1.179,
+   "lr_ci": [
+    0.837,
+    1.575
+   ],
+   "proposed_points": 2.4,
+   "proposed_points_ci": [
+    0.0,
+    6.6
+   ],
+   "current": "5"
+  },
+  {
+   "check": "ua-concentration",
+   "corruption": {
+    "buyer_hits": 0.0,
+    "buyers": 6,
+    "tender_hits": 0,
+    "tenders": 24,
+    "rate": 0.0
+   },
+   "fraud": {
+    "buyer_hits": 0.0,
+    "buyers": 2,
+    "tender_hits": 0,
+    "tenders": 9,
+    "rate": 0.0
+   },
+   "combined": {
+    "buyer_hits": 0.0,
+    "buyers": 8,
+    "tender_hits": 0,
+    "tenders": 33,
+    "rate": 0.0
+   },
+   "comparison": {
+    "buyer_hits": 0.0,
+    "buyers": 9,
+    "tender_hits": 0,
+    "tenders": 165,
+    "rate": 0.0
+   },
+   "lr_raw": 0.0,
+   "lr_shrunk": 0.556,
+   "lr_ci": [
+    0.417,
+    0.769
+   ],
+   "proposed_points": "too few (8 buyers)",
+   "proposed_points_ci": null,
+   "current": ""
+  },
+  {
+   "check": "ua-direct-award",
+   "corruption": {
+    "buyer_hits": 0.0,
+    "buyers": 56,
+    "tender_hits": 0,
+    "tenders": 145,
+    "rate": 0.0
+   },
+   "fraud": {
+    "buyer_hits": 0.0,
+    "buyers": 86,
+    "tender_hits": 0,
+    "tenders": 103,
+    "rate": 0.0
+   },
+   "combined": {
+    "buyer_hits": 0.0,
+    "buyers": 141,
+    "tender_hits": 0,
+    "tenders": 248,
+    "rate": 0.0
+   },
+   "comparison": {
+    "buyer_hits": 0.0,
+    "buyers": 184,
+    "tender_hits": 0,
+    "tenders": 874,
+    "rate": 0.0
+   },
+   "lr_raw": "NA: comparisons contain no direct awards",
+   "lr_shrunk": null,
+   "lr_ci": null,
+   "proposed_points": "NA",
+   "proposed_points_ci": null,
+   "current": ""
+  },
+  {
+   "check": "ua-repeated-single-offer",
+   "corruption": {
+    "buyer_hits": 1.42,
+    "buyers": 16,
+    "tender_hits": 7,
+    "tenders": 27,
+    "rate": 0.089
+   },
+   "fraud": {
+    "buyer_hits": 1.0,
+    "buyers": 44,
+    "tender_hits": 2,
+    "tenders": 48,
+    "rate": 0.023
+   },
+   "combined": {
+    "buyer_hits": 2.42,
+    "buyers": 60,
+    "tender_hits": 9,
+    "tenders": 75,
+    "rate": 0.04
+   },
+   "comparison": {
+    "buyer_hits": 2.94,
+    "buyers": 115,
+    "tender_hits": 15,
+    "tenders": 260,
+    "rate": 0.026
+   },
+   "lr_raw": 1.36,
+   "lr_shrunk": 1.309,
+   "lr_ci": [
+    0.149,
+    3.587
+   ],
+   "proposed_points": 3.9,
+   "proposed_points_ci": [
+    0.0,
+    18.4
+   ],
+   "current": "12\u201320"
+  },
+  {
+   "check": "ua-repeated-single-offer",
+   "corruption": {
+    "buyer_hits": 0.0,
+    "buyers": 16,
+    "tender_hits": 0,
+    "tenders": 27,
+    "rate": 0.0
+   },
+   "fraud": {
+    "buyer_hits": 0.0,
+    "buyers": 44,
+    "tender_hits": 0,
+    "tenders": 48,
+    "rate": 0.0
+   },
+   "combined": {
+    "buyer_hits": 0.0,
+    "buyers": 60,
+    "tender_hits": 0,
+    "tenders": 75,
+    "rate": 0.0
+   },
+   "comparison": {
+    "buyer_hits": 0.0,
+    "buyers": 115,
+    "tender_hits": 0,
+    "tenders": 260,
+    "rate": 0.0
+   },
+   "lr_raw": 0.0,
+   "lr_shrunk": 0.143,
+   "lr_ci": [
+    0.12,
+    0.172
+   ],
+   "proposed_points": 0.0,
+   "proposed_points_ci": [
+    0.0,
+    0.0
+   ],
+   "band": "points < 12"
+  },
+  {
+   "check": "ua-repeated-single-offer",
+   "corruption": {
+    "buyer_hits": 1.42,
+    "buyers": 16,
+    "tender_hits": 7,
+    "tenders": 27,
+    "rate": 0.089
+   },
+   "fraud": {
+    "buyer_hits": 1.0,
+    "buyers": 44,
+    "tender_hits": 2,
+    "tenders": 48,
+    "rate": 0.023
+   },
+   "combined": {
+    "buyer_hits": 2.42,
+    "buyers": 60,
+    "tender_hits": 9,
+    "tenders": 75,
+    "rate": 0.04
+   },
+   "comparison": {
+    "buyer_hits": 2.94,
+    "buyers": 115,
+    "tender_hits": 15,
+    "tenders": 260,
+    "rate": 0.026
+   },
+   "lr_raw": 1.36,
+   "lr_shrunk": 1.309,
+   "lr_ci": [
+    0.149,
+    3.587
+   ],
+   "proposed_points": 3.9,
+   "proposed_points_ci": [
+    0.0,
+    18.4
+   ],
+   "band": "points >= 12"
+  },
+  {
+   "check": "ua-single-offer",
+   "corruption": {
+    "buyer_hits": 14.74,
+    "buyers": 56,
+    "tender_hits": 29,
+    "tenders": 145,
+    "rate": 0.263
+   },
+   "fraud": {
+    "buyer_hits": 43.5,
+    "buyers": 86,
+    "tender_hits": 48,
+    "tenders": 103,
+    "rate": 0.506
+   },
+   "combined": {
+    "buyer_hits": 57.57,
+    "buyers": 141,
+    "tender_hits": 77,
+    "tenders": 248,
+    "rate": 0.408
+   },
+   "comparison": {
+    "buyer_hits": 58.81,
+    "buyers": 184,
+    "tender_hits": 260,
+    "tenders": 874,
+    "rate": 0.32
+   },
+   "lr_raw": 1.274,
+   "lr_shrunk": 1.255,
+   "lr_ci": [
+    0.999,
+    1.543
+   ],
+   "proposed_points": 3.3,
+   "proposed_points_ci": [
+    0.0,
+    6.3
+   ],
+   "current": "3"
+  },
+  {
+   "check": "amendments-3plus (from contract records)",
+   "corruption": {
+    "buyer_hits": 14.76,
+    "buyers": 56,
+    "tender_hits": 35,
+    "tenders": 145,
+    "rate": 0.264
+   },
+   "fraud": {
+    "buyer_hits": 27.33,
+    "buyers": 86,
+    "tender_hits": 33,
+    "tenders": 103,
+    "rate": 0.318
+   },
+   "combined": {
+    "buyer_hits": 42.1,
+    "buyers": 141,
+    "tender_hits": 68,
+    "tenders": 248,
+    "rate": 0.299
+   },
+   "comparison": {
+    "buyer_hits": 51.45,
+    "buyers": 184,
+    "tender_hits": 245,
+    "tenders": 874,
+    "rate": 0.28
+   },
+   "lr_raw": 1.063,
+   "lr_shrunk": 1.059,
+   "lr_ci": [
+    0.791,
+    1.35
+   ],
+   "proposed_points": 0.8,
+   "proposed_points_ci": [
+    0.0,
+    4.3
+   ],
+   "band": "1\u20132 amendments"
+  },
+  {
+   "check": "amendments-3plus (from contract records)",
+   "corruption": {
+    "buyer_hits": 5.52,
+    "buyers": 56,
+    "tender_hits": 13,
+    "tenders": 145,
+    "rate": 0.099
+   },
+   "fraud": {
+    "buyer_hits": 6.0,
+    "buyers": 86,
+    "tender_hits": 6,
+    "tenders": 103,
+    "rate": 0.07
+   },
+   "combined": {
+    "buyer_hits": 11.52,
+    "buyers": 141,
+    "tender_hits": 19,
+    "tenders": 248,
+    "rate": 0.082
+   },
+   "comparison": {
+    "buyer_hits": 11.12,
+    "buyers": 184,
+    "tender_hits": 46,
+    "tenders": 874,
+    "rate": 0.06
+   },
+   "lr_raw": 1.301,
+   "lr_shrunk": 1.281,
+   "lr_ci": [
+    0.645,
+    2.224
+   ],
+   "proposed_points": 3.6,
+   "proposed_points_ci": [
+    0.0,
+    11.5
+   ],
+   "band": "3\u20134 amendments"
+  },
+  {
+   "check": "amendments-3plus (from contract records)",
+   "corruption": {
+    "buyer_hits": 8.0,
+    "buyers": 56,
+    "tender_hits": 10,
+    "tenders": 145,
+    "rate": 0.143
+   },
+   "fraud": {
+    "buyer_hits": 9.5,
+    "buyers": 86,
+    "tender_hits": 11,
+    "tenders": 103,
+    "rate": 0.11
+   },
+   "combined": {
+    "buyer_hits": 17.5,
+    "buyers": 141,
+    "tender_hits": 21,
+    "tenders": 248,
+    "rate": 0.124
+   },
+   "comparison": {
+    "buyer_hits": 12.59,
+    "buyers": 184,
+    "tender_hits": 50,
+    "tenders": 874,
+    "rate": 0.068
+   },
+   "lr_raw": 1.754,
+   "lr_shrunk": 1.704,
+   "lr_ci": [
+    0.954,
+    2.89
+   ],
+   "proposed_points": 7.7,
+   "proposed_points_ci": [
+    0.0,
+    15.3
+   ],
+   "band": "5\u2013 amendments"
+  }
+ ]
+}

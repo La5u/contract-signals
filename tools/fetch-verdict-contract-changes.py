@@ -37,10 +37,18 @@ def internal_contract_id(f, row):
     return ids[0] if len(ids) == 1 else None
 
 
+def number(value):
+    """An amount; some records give it as text."""
+    try:
+        return float(value) if value is not None else None
+    except (TypeError, ValueError):
+        return None
+
+
 def features(contract, signed_amount):
     changes = [c for c in contract.get('changes', []) if c.get('status') == 'active']
     rationales = sorted({t for c in changes for t in c.get('rationaleTypes', [])})
-    final = (contract.get('value') or {}).get('amount')
+    final = number((contract.get('value') or {}).get('amount'))
     increase = (final - signed_amount) / signed_amount if final is not None and signed_amount else None
     return {'changes': len(changes), 'rationaleTypes': rationales, 'signedAmount': signed_amount, 'finalAmount': final,
             'increase': round(increase, 4) if increase is not None else None}
@@ -80,8 +88,11 @@ def main(argv=None):
     p.add_argument('--download', action='store_true', help='fetch uncached contract records (default: cache only)')
     p.add_argument('--budget', type=int, default=450, help='hard request cap shared with the cohort builder cache')
     p.add_argument('--cache', default=str(vc.CACHE))
+    p.add_argument('--cohort', default=str(COHORT))
+    p.add_argument('--output', default=str(OUT))
     args = p.parse_args(argv)
-    cohort = json.loads(gzip.decompress(COHORT.read_bytes()))
+    cohort_path, out_path = Path(args.cohort).resolve(), Path(args.output).resolve()
+    cohort = json.loads(gzip.decompress(cohort_path.read_bytes()))
     f = bc.Fetcher(Path(args.cache).expanduser(), budget=args.budget, network=args.download, prior=0, opener=vc.opener)
     out, note = [], None
     try:
@@ -100,7 +111,7 @@ def main(argv=None):
             rec['features'] = features(json.loads(r['body'])['data'], row.get('amount'))
     except (bc.BudgetExceeded, bc.Blocked, bc.Throttled) as e:
         note = str(e)
-    OUT.write_text(json.dumps({'source': str(COHORT.relative_to(ROOT)), 'requests_total': f.requests, 'note': note,
+    out_path.write_text(json.dumps({'source': str(cohort_path.relative_to(ROOT)), 'requests_total': f.requests, 'note': note,
                                'priceRationales': sorted(PRICE_RATIONALES), 'rows': out}, ensure_ascii=False, indent=1) + '\n')
     print(f'{sum(1 for r in out if r["features"])}/{len(out)} rows with a contract record; {f.requests} requests total' + (f'; {note}' if note else ''))
     report([r for r in out if r['label'] == 'comparison' or r['finality'] in ('confirmed', 'presumed')])
