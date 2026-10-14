@@ -81,12 +81,15 @@ def rows(path):
         yield from ws.iter_rows(values_only=True)
     else:
         raw = path.read_bytes()
+        text = None
         for enc in ('utf-8-sig', 'cp1250'):
             try:
                 text = raw.decode(enc)
                 break
             except UnicodeDecodeError:
                 continue
+        if text is None:   # 2012-2016 exports: Windows-1250 with a few stray bytes
+            text = raw.decode('cp1250', errors='replace')
         first = text[:text.find('\n')]
         delim = max('^,;\t', key=first.count)
         quote = '|' if first.startswith('|') else '"'
