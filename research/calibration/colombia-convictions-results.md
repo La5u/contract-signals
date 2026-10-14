@@ -1,21 +1,31 @@
-71 conviction records; 45 entity-years; contracts: {'ambiguous': 7, 'resolved': 30, 'not found': 98}; labelled by label: {'first-instance': 29, 'final': 1}; cases: 7
+71 conviction records; 30 entity-years; contracts: {'ambiguous': 9, 'resolved': 30, 'entity-year not downloaded': 41, 'not found': 55}; labelled by label: {'first-instance': 29, 'final': 1}; cases: 10
 
 ### One contract per case (points basis)
 
 | Check | Final | First instance | Combined (buyers) | Comparisons | LR+ [95 %] | Learn / check | Points [95 %] | Decision |
 |---|---|---|---|---|---|---|---|---|
-| CO1 direct award | 0% (0/1) | 17% (1/6) | 14% (1/7) (7) | 58% (18076/22292) | 0.691 [0.52, 0.95] | 0.909 / 0.714 | too few (7 buyers) | fails rule |
-| CO2 amount increase > 20 % | 0% (0/1) | 17% (1/6) | 14% (1/7) (7) | 4% (3789/22100) | 1.478 [0.53, 3.92] | 1.705 / 0.714 | too few (7 buyers) | fails rule |
-| CO3 term extension | 0% (0/1) | 17% (1/6) | 14% (1/7) (7) | 11% (4625/22292) | 1.043 [0.53, 2.36] | 1.286 / 0.714 | too few (7 buyers) | fails rule |
-| CO4 buyer share >= 5 % | 100% (1/1) | 33% (2/6) | 43% (3/7) (7) | 11% (109/22100) | 1.934 [0.77, 5.58] | 2.242 / 1.086 | too few (7 buyers) | fails rule |
-| CO5 concentration | 0% (0/1) | 0% (0/6) | 0% (0/7) (7) | 0% (0/22252) | 0.588 [0.48, 0.77] | 0.769 / 0.714 | too few (7 buyers) | fails rule |
+| CO1 direct award | 0% (0/1) | 11% (1/9) | 10% (1/10) (10) | 57% (19821/24402) | 0.587 [0.43, 0.80] | 0.838 / 0.625 | 0.0 [0.0, 0.0] | fails rule |
+| CO2 amount increase > 20 % | 0% (0/1) | 12% (1/8) | 11% (1/9) (9) | 4% (3800/24200) | 1.346 [0.46, 3.57] | 1.63 / 0.667 | too few (9 buyers) | fails rule |
+| CO3 term extension | 0% (0/1) | 22% (2/9) | 20% (2/10) (10) | 7% (4615/24402) | 1.575 [0.48, 3.67] | 1.429 / 1.131 | 6.6 [0.0, 18.8] | fails rule |
+| CO4 buyer share >= 5 % | 100% (1/1) | 56% (5/9) | 60% (6/10) (10) | 12% (115/24211) | 2.635 [1.31, 6.31] | 3.177 / 1.467 | 14.0 [3.9, 26.6] | proposal |
+| CO5 concentration | 0% (0/1) | 0% (0/9) | 0% (0/10) (10) | 0% (0/24383) | 0.5 [0.42, 0.62] | 0.714 / 0.625 | 0.0 [0.0, 0.0] | fails rule |
+| U2 repeated direct award | 0% (0/1) | 0% (0/9) | 0% (0/10) (10) | 6% (2138/24400) | 0.5 [0.42, 0.62] | 0.714 / 0.625 | 0.0 [0.0, 0.0] | fails rule |
+| N1 December signature | 0% (0/1) | 22% (2/9) | 20% (2/10) (10) | 12% (1536/24402) | 1.214 [0.48, 2.15] | 1.474 / 0.916 | 2.8 [0.0, 11.0] | fails rule |
+| N2 weekend signature | 0% (0/1) | 0% (0/9) | 0% (0/10) (10) | 3% (350/24402) | 0.5 [0.42, 0.62] | 0.714 / 0.625 | 0.0 [0.0, 0.0] | fails rule |
+| N3 long duration >= 36 months | 0% (0/1) | 12% (1/8) | 11% (1/9) (9) | 6% (277/24333) | 1.14 [0.46, 4.46] | 2.013 / 0.667 | too few (9 buyers) | fails rule |
+| N4 supplier dependence >= 25 % | 0% (0/1) | 0% (0/9) | 0% (0/10) (10) | 6% (20/24400) | 0.5 [0.42, 0.62] | 0.714 / 0.625 | 0.0 [0.0, 0.0] | fails rule |
 
 ### All labelled contracts
 
 | Check | Final | First instance | Combined (buyers) | Comparisons | LR+ [95 %] | Learn / check | Points [95 %] | Decision |
 |---|---|---|---|---|---|---|---|---|
-| CO1 direct award | 0% (0/1) | 20% (8/29) | 17% (8/30) (7) | 58% (18076/22292) | 0.71 [0.53, 0.96] | 0.936 / 0.714 | too few (7 buyers) | fails rule |
-| CO2 amount increase > 20 % | 0% (0/1) | 17% (1/29) | 14% (1/30) (7) | 4% (3789/22100) | 1.478 [0.53, 3.92] | 1.705 / 0.714 | too few (7 buyers) | fails rule |
-| CO3 term extension | 0% (0/1) | 17% (1/29) | 14% (1/30) (7) | 11% (4625/22292) | 1.043 [0.53, 2.36] | 1.286 / 0.714 | too few (7 buyers) | fails rule |
-| CO4 buyer share >= 5 % | 100% (1/1) | 24% (6/29) | 35% (7/30) (7) | 11% (109/22100) | 1.683 [0.78, 4.61] | 1.83 / 1.086 | too few (7 buyers) | proposal |
-| CO5 concentration | 0% (0/1) | 0% (0/29) | 0% (0/30) (7) | 0% (0/22252) | 0.588 [0.48, 0.77] | 0.769 / 0.714 | too few (7 buyers) | fails rule |
+| CO1 direct award | 0% (0/1) | 14% (8/29) | 12% (8/30) (10) | 57% (19821/24402) | 0.607 [0.46, 0.81] | 0.865 / 0.625 | 0.0 [0.0, 0.0] | fails rule |
+| CO2 amount increase > 20 % | 0% (0/1) | 12% (1/28) | 11% (1/29) (9) | 4% (3800/24200) | 1.346 [0.46, 3.57] | 1.63 / 0.667 | too few (9 buyers) | fails rule |
+| CO3 term extension | 0% (0/1) | 22% (2/29) | 20% (2/30) (10) | 7% (4615/24402) | 1.575 [0.48, 3.67] | 1.429 / 1.131 | 6.6 [0.0, 18.8] | fails rule |
+| CO4 buyer share >= 5 % | 100% (1/1) | 49% (8/29) | 54% (9/30) (10) | 12% (115/24211) | 2.429 [1.27, 5.87] | 2.701 / 1.467 | 12.8 [3.4, 25.5] | proposal |
+| CO5 concentration | 0% (0/1) | 0% (0/29) | 0% (0/30) (10) | 0% (0/24383) | 0.5 [0.42, 0.62] | 0.714 / 0.625 | 0.0 [0.0, 0.0] | fails rule |
+| U2 repeated direct award | 0% (0/1) | 3% (1/29) | 2% (1/30) (10) | 6% (2138/24400) | 0.649 [0.43, 1.07] | 0.872 / 0.625 | 0.0 [0.0, 1.0] | fails rule |
+| N1 December signature | 0% (0/1) | 22% (5/29) | 20% (5/30) (10) | 12% (1536/24402) | 1.214 [0.48, 2.15] | 1.474 / 0.916 | 2.8 [0.0, 11.0] | fails rule |
+| N2 weekend signature | 0% (0/1) | 0% (0/29) | 0% (0/30) (10) | 3% (350/24402) | 0.5 [0.42, 0.62] | 0.714 / 0.625 | 0.0 [0.0, 0.0] | fails rule |
+| N3 long duration >= 36 months | 0% (0/1) | 12% (4/28) | 11% (4/29) (9) | 6% (277/24333) | 1.14 [0.46, 4.46] | 2.013 / 0.667 | too few (9 buyers) | fails rule |
+| N4 supplier dependence >= 25 % | 0% (0/1) | 1% (1/29) | 1% (1/30) (10) | 6% (20/24400) | 0.537 [0.43, 0.71] | 0.78 / 0.625 | 0.0 [0.0, 0.0] | fails rule |
