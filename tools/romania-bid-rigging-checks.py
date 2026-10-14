@@ -82,6 +82,10 @@ def row_key(r):
     return (r.get('source'), r.get('contract_no'), r.get('notice_init'), r.get('notice_award'), r.get('winner_cui'), r.get('value_ron_num'))
 
 
+def procedure_key(o):
+    return '|'.join(str(o.get(k) or '') for k in ('decision', 'buyer', 'subject', 'lot')) + '|' + ','.join(o.get('dates') or [])
+
+
 def candidate_rows(years, notices, cuis, winners):
     """Pass 1: rows that can link a procedure (notice number, buyer CUI or winner CUI)."""
     out = []
@@ -157,11 +161,22 @@ def main():
             if digits(r.get(f)):
                 by_notice[digits(r.get(f))].append(i)
         by_winner_year[(cui(r.get('winner_cui')), year_of(r))].append(i)
-    resolved, report = [], Counter()
+    resolved, report, ambiguous = [], Counter(), []
+    review = {}
+    if (CC / 'ambiguous-resolved.jsonl').exists():   # reviewed choices: procedure key -> chosen SEAP row key
+        for line in (CC / 'ambiguous-resolved.jsonl').read_text().splitlines():
+            if line.strip():
+                x = json.loads(line)
+                review[x['procedure_key']] = x
     for o in procs:
         ys = set(proc_years(o)) | {y + 1 for y in proc_years(o)}
         idx = sorted({i for n in notice_numbers(o) for i in by_notice.get(n, []) if year_of(cands_all[i]) in ys})
         how = 'notice'
+        pk = procedure_key(o)
+        if not idx and pk in review and review[pk].get('chosen'):
+            chosen = {tuple(c) for c in review[pk]['chosen']}
+            idx = [i for i, r in enumerate(cands_all) if row_key(r) in chosen]
+            how = 'reviewed choice' if idx else how
         if not idx and win(o):
             pool = [i for w in win(o) for y in ys for i in by_winner_year.get((w, y), [])]
             if o.get('buyer_cui'):
@@ -182,11 +197,15 @@ def main():
             idx = pool if len(groups) == 1 else []
             if not idx:
                 how = 'ambiguous' if pool else 'none'
+                if pool:
+                    ambiguous.append({'procedure': o, 'candidates': [cands_all[i] for i in pool[:60]]})
         if not idx:
             report['unresolved: ' + ('no notice match' if notice_numbers(o) and how == 'notice' else how)] += 1
             continue
         report[f'resolved by {how}'] += 1
         resolved.append((o, [cands_all[i] for i in idx]))
+    (CC / 'ambiguous.jsonl').write_text(''.join(json.dumps({'procedure_key': procedure_key(a['procedure']), **a,
+                                                    'candidate_keys': [row_key(c) for c in a['candidates']]}, ensure_ascii=False) + '\n' for a in ambiguous))
     buyers_set = {cui(r.get('buyer_cui')) for _, rs in resolved for r in rs} - {''}
     seap = buyer_rows(years, buyers_set)
     print(f'{len(procs)} rigged procedures in {len({o["decision"] for o in procs})} decisions; SEAP years {years[0]}-{years[-1]}; '
