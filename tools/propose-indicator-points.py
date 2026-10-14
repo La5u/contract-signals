@@ -74,15 +74,29 @@ def load_rows(rows_path, changes_path, positive=POSITIVE):
 
 
 def weighted(rows, check, group, test=lambda c: c['status'] == 'signal'):
-    """Buyer-weighted (hits, n) and plain (hits, n) among evaluable rows of a group."""
+    """Buyer-weighted (hits, n) and plain (hits, n) among evaluable rows of a group.
+
+    A row may carry `weight` (default 1): the probability that its label holds (e.g. a decision still under
+    appeal). A buyer counts with the largest weight of its rows in the group; plain counts are weighted sums.
+    With every weight 1 this is the unweighted rate."""
     per_buyer = defaultdict(list)
     for r in rows:
         c = r['checks'].get(check)
         if group in r['groups'] and c and c['status'] in ('signal', 'clear'):
-            per_buyer[r['buyer']].append(bool(test(c)))
-    hits = sum(sum(v) / len(v) for v in per_buyer.values())
-    plain = sum(sum(v) for v in per_buyer.values()), sum(len(v) for v in per_buyer.values())
-    return hits, len(per_buyer), plain
+            per_buyer[r['buyer']].append((bool(test(c)), r.get('weight', 1)))
+    if all(w == 1 for v in per_buyer.values() for _, w in v):
+        hits = sum(sum(h for h, _ in v) / len(v) for v in per_buyer.values())
+        plain = sum(sum(h for h, _ in v) for v in per_buyer.values()), sum(len(v) for v in per_buyer.values())
+        return hits, len(per_buyer), plain
+    hits = n = 0.0
+    for v in per_buyer.values():
+        total = sum(w for _, w in v)
+        if total:
+            bw = max(w for _, w in v)
+            hits += bw * sum(w * h for h, w in v) / total
+            n += bw
+    plain = round(sum(w * h for v in per_buyer.values() for h, w in v), 2), round(sum(w for v in per_buyer.values() for _, w in v), 2)
+    return hits, n, plain
 
 
 def shrunk_lr(h1, n1, h0, n0):
@@ -103,13 +117,15 @@ def bootstrap(rows, check, group, test=lambda c: c['status'] == 'signal'):
         for r in rows:
             c = r['checks'].get(check)
             if g in r['groups'] and c and c['status'] in ('signal', 'clear'):
-                per_buyer[r['buyer']].append(bool(test(c)))
-        summary[g] = {b: sum(v) / len(v) for b, v in per_buyer.items()}
+                per_buyer[r['buyer']].append((bool(test(c)), r.get('weight', 1)))
+        # (buyer weight, buyer weight x hit fraction): (1, fraction) when unweighted, as before.
+        summary[g] = {b: (max(w for _, w in v), max(w for _, w in v) * sum(w * h for h, w in v) / sum(w for _, w in v))
+                      for b, v in per_buyer.items() if sum(w for _, w in v)}
     rng = random.Random(f'{SEED}-{check}-{group}')
     values = []
     for _ in range(BOOT):
         drawn = rng.choices(buyers, k=len(buyers))
-        (h1, n1), (h0, n0) = ((sum(summary[g][b] for b in drawn if b in summary[g]), sum(b in summary[g] for b in drawn))
+        (h1, n1), (h0, n0) = ((sum(summary[g][b][1] for b in drawn if b in summary[g]), sum(summary[g][b][0] for b in drawn if b in summary[g]))
                               for g in (group, 'comparison'))
         lr = shrunk_lr(h1, n1, h0, n0)
         if lr:
