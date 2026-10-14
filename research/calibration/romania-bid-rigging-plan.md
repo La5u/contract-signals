@@ -30,3 +30,16 @@ Amendment (2026-10-14, still before any rate was computed): the 2017 and 2021 ex
 Same as Ukraine: buyer-weighted hit rates (reported first), LR shrunk toward 1 by a prior worth 10 buyers, 95 % intervals from resampling buyers, points = 10 × log2(LR) floored at 0, no proposal below 10 labelled buyers. Holdout: buyers split in halves by hash; a check passes when the learn-half interval is above 1 and the check-half LR is above 1. Points basis: **one procedure per decision** (the largest scheme could otherwise dominate); all procedures reported as a robustness set. Points are Romanian only.
 
 Expected biases, stated in advance: the Council builds cases on bid evidence and on complaints, so its cases over-represent detectable cartels in competitive procedures; RO1 (direct award) is therefore expected to be rare among labels, which says little about direct awards as such.
+
+## Amendment (2026-10-15, before any weighted rate was computed): weighting challenged decisions
+
+Owner request: instead of dropping decisions under appeal, weight them by the chance that they are upheld, using only cases verified to be still open. Source of the chance: the Council's annual reports, share of High Court rulings in the Council's favour in competition cases — 89 % (2023), 94 % (2024), 90 % (2025); mean **p = 0.91**. (Court of Appeal first instance: 79 %, 73 %, 81 %.)
+
+| Decision status (court portal and press, `research/labels/romania-cc-court-outcomes.jsonl`) | Weight |
+| --- | --- |
+| No challenge found, or upheld by a final ruling (71/2012, 72/2012, 77/2015, 83/2016, 33/2017) | 1 |
+| Court of Appeal rejected the challenge and no further appeal is recorded (48/2020) | 1 |
+| Still open: hearings scheduled or an appeal filed without a ruling (134/2024, 148/2025, 77/2017, 99/2021, 43/2020, 271/2024, 44/2013) | 0.91 |
+| Annulled at first instance, the Council's appeal pending (80/2023) | 0.5 (sensitivity 0 and 0.91) |
+
+A procedure of weight w counts w in the labelled group and 1 − w in the comparisons (as an ordinary contract of its buyer). Buyer-weighted rates use the largest weight of a buyer's labelled rows. Decision rule as before (one procedure per decision, buyer-half holdout, at least 10 labelled buyers, counted by weight).
