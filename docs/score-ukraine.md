@@ -1,4 +1,4 @@
-# Ukraine method — Prozorro checks (v3.5 framework)
+# Ukraine method — Prozorro checks (v3.6 framework)
 
 **Checks for the Prozorro cohort** (three buyers, tenders created 2024-09-01 → 2026-09-01). Same vigilance-index framework as [score-v3.md](score-v3.md): two families, family maxima, cap at 100, `null` = “Not assessed”, unknowns never counted as zero. Different checks and eligibility; French, Colombian and Paraguayan rules are not applied. Amounts stay in the published currency (UAH, sometimes EUR or USD) and are never converted.
 
@@ -16,7 +16,7 @@ Written on 25 September 2026, before any record of this cohort was read. Procedu
 - **Without competition:** negotiation, negotiation.quick.
 - **Offer/direct-award checks excluded:** reporting — a direct-contract report recorded without a procedure. Reporting alone adds no points; the concentration check still applies.
 
-## The checks (eleven with the universal late-publication check)
+## The checks (twelve with the universal late-publication check)
 
 | Check | ID | Family | Eligibility / trigger | Weight |
 | --- | --- | --- | --- | --- |
@@ -29,6 +29,7 @@ Written on 25 September 2026, before any record of this cohort was read. Procedu
 | Better-ranked bidder disqualified | `ua-better-bid-disqualified` | Competition | Competitive type; on the awarded lot, at least one award to another bidder was declared unsuccessful before this award (added 2026-09-26) | **4**, flat (12 before v3.5) |
 | Three or more contract amendments | `ua-contract-amendments` | Execution | Signed contract; retrieved integer count of active amendments ≥3 | **6** at 3–4, **10** at 5+, **+6** with a term extension (flat 8 in v3.4) |
 | Contract term extended by amendment | `ua-term-extension` | Execution | Signed contract; an active amendment of type durationExtension or fiscalYearExtension | **4** (with 3+ amendments counted as +6 on the amendments check) |
+| Large share of the buyer's yearly procurement | `ua-buyer-share` | Competition | Any procedure, UAH amount; this contract is ≥ 5 % of the buyer's UAH contract total for the tender's creation year, in a year the cohort covers completely (bundled cohort: 2025 only) | **30** since v3.6 |
 | Long declared duration | `long-contract` | Execution | **Out of scope** | — |
 
 Offers are counted per lot, which Prozorro publishes (unlike the Paraguayan data). When a record publishes no bids, offers are unknown, never zero. Complaints are shown as context outside the index.
@@ -45,6 +46,7 @@ Reproduced by `tests/national.cjs`. Ministry of Health (national, EDRPOU 0001292
 | `ua-repeated-direct` | 0 | 0 | 0 | 488 |
 | `ua-concentration` | 0 | 483 | 5 | 0 |
 | `ua-better-bid-disqualified` | 9 | 55 | 0 | 424 |
+| `ua-buyer-share` (v3.6) | 11 | 231 | 246 | 0 |
 
 47 contracts with a signal, 441 zero, 0 not assessed (38 before the disqualification check). 424 of 488 contracts are direct-contract reports (reporting), out of scope; they score zero only through the concentration check. 38 of the 64 competitive contracts had a single offer. Example lead: one company won the Ministry of Health's commemorative award items repeatedly, each time as the only bidder. No negotiated procedure appears in this cohort.
 
@@ -79,6 +81,20 @@ Comparison: other tenders of the same buyers (874 for convictions, 6,878 with 2+
 Robustness ([table](../research/calibration/ukraine-verdict-plus-linked-robustness.txt), `tools/ukraine-points-robustness.py`): 3+ amendments stay at LR 1.5–2.1 (6–10 points) with all linked tenders, confirmed finality only, without the largest split scheme or before 2022. A disqualified better bid ranges from LR 1.1 to 1.5 (1–6 points). A single offer depends on the 47-tender case: counting every linked tender gives LR 1.25–1.5 (3–6 points), one per case or tender IDs only give below 1. Tenders from 2022 on are too few to tell (64 positives, 37 buyers). Term extension was tested per set, not in this table. Other pre-registered candidates were tested and not added ([results](../research/calibration/ukraine-results-2026-10-14.md)); two or more disqualified bidders, a small price drop, early termination and several bid-pattern checks pass in some sets but not all.
 
 Limits: convictions over-represent what gets prosecuted; comparisons are unlabelled, not proven clean; verdicts under appeal are not counted. In the bundled cohort contracts with a positive score go from 48 (v3.4) to 50: 38 single offers score 1, 9 disqualifications 4, the amended contract (3 amendments, one a fiscal-year extension) 12, and 5 contracts are newly flagged by a term extension.
+
+## Large share of the buyer's yearly procurement (v3.6, approved 2026-10-14)
+
+The owner asked for measures relative to the buyer rather than fixed amounts, so that a check can carry over to other countries. Pre-registered as R1 ([plan, part 4](../research/calibration/ukraine-candidate-indicators-plan.md#part-4-relative-size-and-closeness-to-legal-ceilings-fixed-2026-10-14-before-any-was-computed)) and tested against a census of every completed tender of the convicted buyers' years ([results](../research/calibration/ukraine-candidate-indicators.md#part-4-relative-size-and-closeness-to-legal-ceilings-2026-10-14), `tools/ukraine-relative-candidates.py`):
+
+| Set | Hit rate, convictions | Comparisons (census) | LR+ [95 %] | Learn / check half | Indicated points |
+| --- | ---: | ---: | --- | --- | --- |
+| One tender per case (points basis) | 49 % (73/153) | 6 % | 8.01 [5.88, 11.21] | 6.55 / 8.15 | **30.0** [25.6, 34.9] |
+| All convicted tenders | 40 % (86/320) | 6 % | 6.50 [4.79, 9.14] | 5.59 / 6.46 | 27.0 |
+| Buyer-years with ≥ 20 tenders (post hoc) | 36 % | 3 % | 11.1 [8.8, 14.3] | 8.3 / 11.7 | 34.7 |
+
+The share grows with the evidence (LR 4.8 at ≥ 1 %, 9.0 at ≥ 10 %), and the check is not driven by small buyers. It is in the competition family, so it is not added to a single offer or a disqualification on the same contract; it applies to every procedure, direct-contract reports included. **In the explorer:** the share is the contract's UAH amount over the buyer's UAH contract total for the tender's creation year in the same cohort (no currency conversion; other currencies are unknown). It is assessed only where the cohort covers the buyer's whole year: the bundled cohort runs 1 September 2024 → 1 September 2026, so only 2025 counts and the other 246 contracts are not assessed. Local imports are not assessed, because their coverage of a buyer's year is not established. The calibration counted tender values over all completed tenders; the explorer counts signed contracts, the closest measure in this cohort.
+
+Limits: prosecutions favour large amounts, so part of the ratio reflects what gets prosecuted; large purchases are usually lawful. Two related candidates were not adopted: an amount increase close to the legal ceiling (R2) did not separate convicted tenders in Ukraine, where the total may not rise at all, and stays a candidate for countries with a numeric ceiling; a direct contract just under the open-tender threshold (R3) is being retested with complete category data.
 
 ## Better-ranked bidder disqualified (added 2026-09-26)
 

@@ -1,6 +1,10 @@
-# Vigilance index 3.5 — active method
+# Vigilance index 3.6 — active method
 
 **An editorial sorting tool, not a probability, a measure of legal gravity or a certificate of regularity.** The existing data and PDFs are unchanged; the meaning of the score and some eligibility criteria deliberately change. A v2.1 30 must not be compared to a v3 30 as a real evolution of a contract.
+
+## v3.6 (14 October 2026): Ukrainian buyer share
+
+Approved by the owner on 2026-10-14. Ukrainian (Prozorro) rows only gain `ua-buyer-share` (competition family, **30 points**): a contract of at least 5 % of its buyer's UAH contract total for the tender's creation year, assessed only where the cohort covers that buyer's whole year (2025 in the bundled cohort). The points come from court verdicts against a census of the same buyers' tenders (LR 8.0, one tender per case); see [the Ukrainian method](score-ukraine.md#large-share-of-the-buyers-yearly-procurement-v36-approved-2026-10-14). A new universal kind, *Large share of the buyer’s yearly procurement*. Other countries are unchanged. Ukrainian contracts with a positive score: 50 → 55.
 
 ## v3.5 (13–14 October 2026): Ukrainian points from court verdicts and bid-rigging decisions
 

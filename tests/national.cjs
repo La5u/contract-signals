@@ -8,7 +8,7 @@ function tally(rows) {
   const checks = {}; let flagged = 0, zero = 0, notAssessed = 0;
   for (const row of rows) {
     const a = run('getAssessment', row);
-    assert.equal(a.checks.length, row.dataFamily === 'prozorro' ? 11 : 9);
+    assert.equal(a.checks.length, row.dataFamily === 'prozorro' ? 12 : 9);
     for (const c of a.checks) { checks[c.id] ??= {signal:0,clear:0,unknown:0,'not-applicable':0}; checks[c.id][c.status]++; }
     const s = run('getVigilanceScore', row);
     if (s == null) notAssessed++; else if (s > 0) flagged++; else zero++;
@@ -36,13 +36,14 @@ const pick = (t, prefix) => Object.fromEntries(Object.entries(t.checks).filter((
   const t = tally(rows);
   assert.deepEqual(pick(t, 'ua-'), {
     'ua-contract-amendments': [1,487,0,0], 'ua-term-extension': [5,483,0,0], 'ua-single-offer': [38,26,0,424], 'ua-direct-award': [0,64,0,424], 'ua-repeated-single-offer': [10,28,0,450],
-    'ua-repeated-direct': [0,0,0,488], 'ua-concentration': [0,483,5,0], 'ua-better-bid-disqualified': [9,55,0,424] });
-  assert.deepEqual(t.counts, [50,438,0]);
+    'ua-repeated-direct': [0,0,0,488], 'ua-concentration': [0,483,5,0], 'ua-better-bid-disqualified': [9,55,0,424],
+    'ua-buyer-share': [11,231,246,0] });
+  assert.deepEqual(t.counts, [55,433,0]);
   // Disqualification before the award: counted per lot, only on competitive procedures, never on reporting.
   for (const r of rows) {
     if (r.procedureDirect !== false) assert.equal(r.disqualifiedBefore, null);
     const ids = run('getAssessment', r).checks.map(c => c.id);
-    assert.equal(ids.length, 11); assert.ok(!ids.includes('short-bidding-period'));
+    assert.equal(ids.length, 12); assert.ok(!ids.includes('short-bidding-period'));
   }
   const amendments = (fields) => run('getAssessment', { ...rows[0], contractChanges: undefined, contractChangeTypes: undefined, ...fields }).checks.find(c => c.id === 'ua-contract-amendments');
   assert.equal(amendments({contractChanges: 3, contractChangeTypes: ['priceReduction']}).status, 'signal');
@@ -72,7 +73,16 @@ const pick = (t, prefix) => Object.fromEntries(Object.entries(t.checks).filter((
   assert.equal(rows.filter(r=>r.linkedContract).length,3);
   for(const r of rows.filter(r=>r.linkedContract)) assert.ok(run('verificationLinks',r).some(l=>l.url===r.linkedContract.url));
   assert.ok(rows.every(r=>!run('getAssessment',r).checks.some(c=>c.id==='ua-bid-attrition')),'bid-attrition decisions are context, not a check');
-  console.log('Ukraine Prozorro: 488 contracts, 50 flagged (9 by a better-ranked bidder disqualified), reporting out of scope, offers counted per lot.');
+  // v3.6: a contract of 5 % or more of its buyer's UAH total for a completely covered year scores 30 (competition).
+  const share = (fields) => run('getAssessment', { ...rows.find(r => r.uaBuyerShare?.complete), ...fields }).checks.find(c => c.id === 'ua-buyer-share');
+  const big = rows.find(r => r.uaBuyerShare?.share >= 0.05 && r.uaBuyerShare.complete);
+  assert.equal(share(big).status, 'signal'); assert.equal(share(big).weight, 30); assert.equal(share(big).family, 'competition');
+  assert.equal(share({ uaBuyerShare: { ...big.uaBuyerShare, complete: false } }).status, 'unknown');
+  assert.equal(share({ uaBuyerShare: { ...big.uaBuyerShare, share: null } }).status, 'unknown');
+  assert.equal(share({ uaBuyerShare: { ...big.uaBuyerShare, share: 0.049 } }).status, 'clear');
+  assert.ok(rows.filter(r => r.uaBuyerShare?.complete).every(r => r.uaBuyerShare.year === '2025'), 'only 2025 is complete in the bundled cohort');
+  assert.equal(run('indicatorKind', 'ua-buyer-share'), 'buyer-share');
+  console.log('Ukraine Prozorro: 488 contracts, 55 flagged (11 by buyer share) (9 by a better-ranked bidder disqualified), reporting out of scope, offers counted per lot.');
 }
 
 // ---- Portugal and Romania (TED) ----

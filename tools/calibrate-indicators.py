@@ -15,12 +15,14 @@ except ImportError as exc:
 KINDS = ['single-offer', 'direct-award', 'repeated-single-offer', 'repeated-direct',
          'low-competition-rate', 'concentration', 'disqualified-better-bid',
          'short-bidding-period', 'late-notice-change', 'long-duration', 'amount-increase',
-         'term-extension', 'late-publication', 'cap', 'execution', 'legalGround', 'unitPrice', 'exclusivity', 'contract-amendments']
-FAMILIES = ['competition'] * 9 + ['execution'] * 3 + ['transparency'] + ['execution'] * 2 + ['competition', 'execution', 'competition'] + ['execution']
+         'term-extension', 'late-publication', 'cap', 'execution', 'legalGround', 'unitPrice', 'exclusivity', 'contract-amendments',
+         'buyer-share']
+FAMILIES = ['competition'] * 9 + ['execution'] * 3 + ['transparency'] + ['execution'] * 2 + ['competition', 'execution', 'competition'] + ['execution'] + ['competition']
 # Representative site constants / graduated maxima; proxy, not actual data scores.
-POINTS = np.array([12, 18, 40, 60, 40, 40, 12, 40, 5, 40, 40, 40, 16, 20, 10, 5, 3, 1, 8.])
+POINTS = np.array([12, 18, 40, 60, 40, 40, 12, 40, 5, 40, 40, 40, 16, 20, 10, 5, 3, 1, 8, 30.])
 CAPS = np.array([60., 40., 16.])
 FAMILY_NAMES = ['competition', 'execution', 'transparency']
+N = len(KINDS)
 SCENARIOS = ['independent', 'correlated', 'nonlinear-family-max', 'nonlinear-pair-interaction', 'missingness', 'population-sector-drift', 'biased-discovery']
 METHODS = ['signal-count', 'fixed-family-max-proxy', 'nonnegative-LR', 'nonnegative-logistic-ranking', 'learned-family-max']
 
@@ -66,8 +68,8 @@ def generate(scenario, seed):
     groups = np.repeat(np.arange(100), 40)
     train, val, test = split_groups(groups, seed + 1000)
     n = len(groups)
-    p0 = np.linspace(.04, .22, 19)
-    p1 = np.clip(p0 + rng.uniform(.02, .3, 19), 0, .85)
+    p0 = np.linspace(.04, .22, N)
+    p1 = np.clip(p0 + rng.uniform(.02, .3, N), 0, .85)
     buyer_effect = rng.normal(0, .65, 100)[groups]
     latent = rng.binomial(1, expit(np.log(.16 / .84) + buyer_effect))
     prob = np.where(latent[:, None], p1, p0)
@@ -80,17 +82,17 @@ def generate(scenario, seed):
         sector = (groups % 3)[:, None]
         prob = np.clip(prob + .05 * sector, .01, .95)
         prob[test] = np.clip(.1 + .65 * prob[test, ::-1], .01, .95)
-    x = (rng.random((n, 19)) < prob).astype(float)
+    x = (rng.random((n, N)) < prob).astype(float)
     if scenario == 'nonlinear-family-max':
-        x = (rng.random((n, 19)) < p0).astype(float)
+        x = (rng.random((n, N)) < p0).astype(float)
         latent = rng.binomial(1, expit(-3 + family_score(x, POINTS) / 25 + buyer_effect))
     if scenario == 'nonlinear-pair-interaction':
-        x = (rng.random((n, 19)) < np.clip(p0 * 2, 0, .8)).astype(float)
+        x = (rng.random((n, N)) < np.clip(p0 * 2, 0, .8)).astype(float)
         interaction = (x[:, :9] * x[:, 9:]).sum(axis=1)
         latent = rng.binomial(1, expit(-2.5 + 2.5 * interaction + buyer_effect))
-    known = rng.random((n, 19)) > .08
+    known = rng.random((n, N)) > .08
     if scenario == 'missingness':
-        known = rng.random((n, 19)) > (.15 + .45 * latent[:, None])
+        known = rng.random((n, N)) > (.15 + .45 * latent[:, None])
     observed = x * known
     discovery = latent.copy()
     if scenario == 'biased-discovery':
@@ -126,7 +128,7 @@ def fit_models(x, known, labels, validation_x, validation_labels, validation_kno
         weights = start.copy()
         # Two passes, four values; TRAIN AP tunes, validation only selects start.
         for _ in range(2):
-            for j in range(19):
+            for j in range(N):
                 best = objective(labels, family_score(x, weights))
                 chosen = weights[j]
                 for value in (0, upper[j] / 4, upper[j] / 2, upper[j]):
