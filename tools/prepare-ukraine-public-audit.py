@@ -33,16 +33,25 @@ def without_hashes(value):
     return value
 
 
-def engine_scores(root):
+# Scores at selection (index 3.4) for every row: the frozen strata must not move when points change.
+FROZEN_SCORES = 'data/ukraine-public-audit-scores.json'
+
+
+def engine_scores(root, engine='script.js'):
     js = r"""
 const fs=require('fs'),vm=require('vm');
-const ctx=vm.createContext({URL});vm.runInContext(fs.readFileSync('script.js','utf8'),ctx);
+const ctx=vm.createContext({URL});vm.runInContext(fs.readFileSync(process.argv[1],'utf8'),ctx);
 ctx.rows=JSON.parse(fs.readFileSync('data/prozorro.json','utf8'));
 const prepared=vm.runInContext('prepareContracts(rows)',ctx);
 console.log(JSON.stringify(prepared.map(c=>{ctx.c=c;return {id:c.id,score:vm.runInContext('getScoreBreakdown(c).score',ctx)};})));
 """
-    result = subprocess.run(['node', '-e', js], cwd=root, capture_output=True, check=True, timeout=30)
+    result = subprocess.run(['node', '-e', js, str(engine)], cwd=root, capture_output=True, check=True, timeout=30)
     return {row['id']: row['score'] for row in json.loads(result.stdout)}
+
+
+def frozen_scores(root):
+    path = Path(root) / FROZEN_SCORES
+    return json.loads(path.read_text())['scores'] if path.exists() else engine_scores(root)
 
 
 def build(root=ROOT, maximum=12, scores=None):
@@ -51,7 +60,7 @@ def build(root=ROOT, maximum=12, scores=None):
         raise ValueError('Review maximum must be 1..12')
     snapshots = {name: sha((root / name).read_bytes()) for name in INPUTS}
     rows = json.loads((root / INPUTS[0]).read_text())
-    scores = engine_scores(root) if scores is None else scores
+    scores = frozen_scores(root) if scores is None else scores
     if len({r['id'] for r in rows}) != len(rows) or set(scores) != {r['id'] for r in rows}:
         raise ValueError('Nonunique or missing score identities')
     pools = defaultdict(list)

@@ -27,6 +27,10 @@ class FeatureTests(unittest.TestCase):
         self.assertEqual((x['changes'], x['increase']), (0, None))
         self.assertFalse(any(check(x) for check in fc.CHECKS.values()))
 
+    def test_amount_given_as_text(self):
+        self.assertEqual(fc.features({'value': {'amount': '110.0'}}, 100.0)['increase'], 0.1)
+        self.assertIsNone(fc.features({'value': {'amount': 'n/a'}}, 100.0)['increase'])
+
     def test_wilson_bounds(self):
         self.assertIsNone(fc.wilson(0, 0))
         low, high = fc.wilson(4, 13)

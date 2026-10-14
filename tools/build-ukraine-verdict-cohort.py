@@ -12,6 +12,7 @@ import argparse
 import calendar
 import gzip
 import json
+import re
 import sys
 from collections import defaultdict
 from datetime import date, datetime, timezone
@@ -27,7 +28,9 @@ spec.loader.exec_module(bc)
 imp = bc.imp
 CACHE = Path.home() / '.cache/contract-signals/labels/verdict-cohort'
 COHORT_ID = 'ukraine-verdict-cohort'
-LABELS = {'corruption (official involved)': 'corruption', 'procurement fraud (no official established)': 'fraud'}
+LABELS = {'corruption (official involved)': 'corruption', 'procurement fraud (no official established)': 'fraud',
+          'bid rigging (AMCU decision upheld)': 'collusion'}
+LABEL_ORDER = ('corruption', 'fraud', 'collusion')     # a tender with several labels takes the first
 ELIGIBLE = {'confirmed', 'presumed'}
 
 
@@ -70,7 +73,8 @@ def positive_tenders(verdicts, today):
         positives = [v for v in vs if v.get('proposed_label') in LABELS]
         if not positives:
             continue
-        label = 'corruption' if any(LABELS[v['proposed_label']] == 'corruption' for v in positives) else 'fraud'
+        found = {LABELS[v['proposed_label']] for v in positives}
+        label = next(x for x in LABEL_ORDER if x in found)
         finality = classify_finality(vs, today)
         out.append({'tenderID': tid, 'label': label, 'finality': finality, 'positive': finality in ELIGIBLE,
                     'verdict_ids': sorted({str(v['reyestr_id']) for v in vs if v.get('reyestr_id') is not None}), 'group': tid})
@@ -119,7 +123,23 @@ class RequestPlan:
 
 
 def resolve(f, tid):
-    r = f.fetch(imp.DETAILS.format(tender_id=tid))
+    """Tender for a printed tenderID. A missing or non-Latin suffix (verdicts misprint it) is retried as
+    a-f: date and serial number identify the tender, the suffix is a check letter."""
+    base = re.match(r'UA-\d{4}-\d{2}-\d{2}-\d{6}', tid)
+    if base and not re.fullmatch(r'UA-\d{4}-\d{2}-\d{2}-\d{6}-[a-f]', tid):
+        for suffix in 'abcdef':
+            tender = resolve(f, f'{base.group(0)}-{suffix}')
+            if tender:
+                return tender
+        return None
+    try:
+        r = f.fetch(imp.DETAILS.format(tender_id=tid))
+    except RuntimeError as e:
+        # A server error on one tender page (HTTP 5xx) is not cached: skip the tender, a rerun retries it.
+        if not str(e).startswith('HTTP 5'):
+            raise
+        print(f'skipped {tid}: {e}', file=sys.stderr)
+        return None
     if not r or r['status'] != 200:
         return None
     internal = json.loads(r['body']).get('id')
@@ -210,11 +230,12 @@ def run(args):
     today = date.fromisoformat(args.run_date) if args.run_date else date.today()
     positives = positive_tenders(verdicts, today)
     excluded_ids = {v.get('tender_id_normalised') for v in verdicts}
-    f = bc.Fetcher(cache, budget=args.budget, network=args.download, prior=0, opener=opener)
+    f = bc.Fetcher(cache, budget=args.budget, network=args.download, prior=0, opener=opener, min_interval=args.interval)
     if not args.download and not args.from_cache:
         plan(f, positives, args.k, args.scan_pages)
         return 0
     rows, records, notes, metas = [], [], [], []
+    resolved = {}
     scan_pages, scan_complete = [], False
     try:
         for info in positives:
@@ -225,6 +246,12 @@ def run(args):
             if not tender:
                 records[-1]['unavailable'] = 'missing_or_uncached_record'
                 continue
+            # A tender printed with its check letter in one judgment and without it in another is one tender.
+            if tender['tenderID'] in resolved:
+                records[-1]['unavailable'] = 'duplicate of ' + resolved[tender['tenderID']]
+                continue
+            resolved[tender['tenderID']] = info['tenderID']
+            excluded_ids.add(tender['tenderID'])
             meta = bc.tender_meta(tender)
             records[-1]['created'] = meta['created']
             metas.append((info, meta))
@@ -278,6 +305,7 @@ def main(argv=None):
     p.add_argument('--cache', default=str(CACHE))
     p.add_argument('--budget', type=int, default=300, help='hard request cap across resumed runs')
     p.add_argument('--k', type=int, default=3)
+    p.add_argument('--interval', type=float, default=bc.MIN_INTERVAL, help='seconds between requests')
     p.add_argument('--scan-pages', type=int, default=10, help='maximum search pages per buyer (including cached pages)')
     p.add_argument('--run-date', help='override local run date, YYYY-MM-DD')
     mode = p.add_mutually_exclusive_group()
