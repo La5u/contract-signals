@@ -31,7 +31,9 @@ cspec.loader.exec_module(cand)
 CC = Path.home() / '.cache/contract-signals/romania-cc'
 SEAP = Path.home() / '.cache/contract-signals/romania-seap/normalized'
 SHARE, CONC_SHARE, CONC_MIN = 0.05, 0.6, 10
-CHECKS = ['RO0 single offer', 'RO1 direct award', 'RO2 buyer share >= 5 %', 'RO3 concentration', 'RO5 framework / subsequent']
+CHECKS = ['RO0 single offer', 'RO1 direct award', 'RO2 buyer share >= 5 %', 'RO3 concentration', 'RO5 framework / subsequent',
+          'U1 repeated single offer', 'U2 repeated direct award', 'N1 December signature', 'N2 weekend signature',
+          'N4 supplier dependence >= 25 %', 'N5 first-time supplier']   # U/N: research/calibration/untested-checks-plan.md
 
 
 def digits(s):
@@ -116,6 +118,22 @@ def iso_dates(values):
                 out.add(f'{y}-{int(d):02d}-{int(m):02d}')
         out.update(re.findall(r'(20\d\d-\d\d-\d\d)', v))
     return out
+
+
+def signed(r):
+    """Contract date: ISO up to 2018, mm/dd/yyyy from 2019. 1 January is a placeholder in 2017-2018 exports: unknown."""
+    import datetime
+    v = str(r.get('contract_date') or '')
+    m = re.match(r'(20\d\d)-(\d\d)-(\d\d)', v) or None
+    try:
+        if m:
+            d = datetime.date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+        else:
+            m = re.match(r'(\d{1,2})/(\d{1,2})/(20\d\d)', v)
+            d = datetime.date(int(m.group(3)), int(m.group(1)), int(m.group(2))) if m else None
+    except ValueError:
+        d = None
+    return None if d is None or (d.month == 1 and d.day == 1) else d
 
 
 def name_words(s):
@@ -241,6 +259,28 @@ def main():
         n = sum(cnt.values())
         conc[g] = {w: (k / n >= CONC_SHARE) for w, k in cnt.items()} if n >= CONC_MIN else {}
 
+    def kind(r):
+        proc = (r.get('procedure') or '').lower()
+        direct = 'fara publicare' in proc.replace('ă', 'a').replace('ţ', 't') or 'negociere fara' in proc
+        purchase = 'directa' in proc or 'cumparare' in proc
+        return proc, direct, purchase
+
+    pkey = lambda r: r.get('notice_init') or r.get('notice_award') or r.get('contract_no')
+    singles, directs, years_with = defaultdict(set), defaultdict(set), defaultdict(set)
+    value_by = Counter()
+    for r in seap:
+        b, w, y = cui(r.get('buyer_cui')), cui(r.get('winner_cui')), year_of(r)
+        if not (b and w and y):
+            continue
+        proc, direct, purchase = kind(r)
+        years_with[(b, w)].add(y)
+        value_by[(b, y, w)] += r.get('value_ron_num') or 0
+        if proc and not direct and not purchase and r.get('offers_num') == 1:
+            singles[(b, w)].add((pkey(r), y))
+        if direct:
+            directs[(b, w)].add((pkey(r), y))
+    window = lambda pairs, y: len({k for k, yy in pairs if abs(yy - y) <= 1})
+
     def checks(r, key):
         proc = (r.get('procedure') or '').lower()
         direct = 'fara publicare' in proc.replace('ă', 'a').replace('ţ', 't') or 'negociere fara' in proc
@@ -251,7 +291,18 @@ def main():
         g = conc.get(key + (str(r.get('cpv') or '')[:2],), None)
         w = cui(r.get('winner_cui'))
         concluded = (r.get('concluded_by') or '').lower()
-        return {'RO0 single offer': st(None if not proc or direct or purchase or offers is None else offers == 1),
+        b, y = key
+        d = signed(r)
+        single = bool(proc) and not direct and not purchase and offers == 1
+        extra = {
+            'U1 repeated single offer': st(None if not proc or offers is None or not w else (single and window(singles[(b, w)], y) >= 3)),
+            'U2 repeated direct award': st(None if not proc or not w else (direct and window(directs[(b, w)], y) >= 3)),
+            'N1 December signature': st(None if d is None else d.month == 12),
+            'N2 weekend signature': st(None if d is None else d.weekday() >= 5),
+            'N4 supplier dependence >= 25 %': st(None if not w or not total[key] else value_by[(b, y, w)] / total[key] >= 0.25),
+            'N5 first-time supplier': st(None if not w or y < 2010 else not any(y - 3 <= yy < y for yy in years_with[(b, w)])),
+        }
+        return {**extra, 'RO0 single offer': st(None if not proc or direct or purchase or offers is None else offers == 1),
                 'RO1 direct award': st(None if not proc else direct),
                 'RO2 buyer share >= 5 %': st(None if not value or not total[key] else value / total[key] >= SHARE),
                 'RO3 concentration': st(None if g is None or not w else g.get(w, False)),

@@ -27,7 +27,9 @@ cspec.loader.exec_module(cand)
 LEADS = Path.home() / '.cache/contract-signals/colombia-leads/sol/out-1.jsonl'
 CACHE = Path.home() / '.cache/contract-signals/colombia-secop1'
 INCREASE, SHARE, CONC_SHARE, CONC_MIN = 0.20, 0.05, 0.6, 10
-CHECKS = ['CO1 direct award', 'CO2 amount increase > 20 %', 'CO3 term extension', 'CO4 buyer share >= 5 %', 'CO5 concentration']
+CHECKS = ['CO1 direct award', 'CO2 amount increase > 20 %', 'CO3 term extension', 'CO4 buyer share >= 5 %', 'CO5 concentration',
+          'U2 repeated direct award', 'N1 December signature', 'N2 weekend signature', 'N3 long duration >= 36 months',
+          'N4 supplier dependence >= 25 %']   # U/N: research/calibration/untested-checks-plan.md
 STOP = set('de la el los las del y en para por con a al su sus que se un una prestar servicios contrato'.split())
 
 
@@ -98,7 +100,21 @@ def resolve(records, years):
     return labelled, report
 
 
-def checks(x, total, conc):
+def signed_date(x):
+    import datetime
+    m = re.match(r'(20\d\d)-(\d\d)-(\d\d)', str(x.get('fecha_de_firma_del_contrato') or ''))
+    try:
+        return datetime.date(int(m.group(1)), int(m.group(2)), int(m.group(3))) if m else None
+    except ValueError:
+        return None
+
+
+def months(x):
+    n, unit = num(x.get('plazo_de_ejec_del_contrato')), str(x.get('rango_de_ejec_del_contrato') or '').upper()[:1]
+    return None if n is None or unit not in ('M', 'D') else (n if unit == 'M' else n / 30)
+
+
+def checks(x, total, conc, directs=None, value_by=None):
     value, added = num(x.get('cuantia_contrato')), num(x.get('valor_total_de_adiciones'))
     days = (num(x.get('tiempo_adiciones_en_dias')) or 0) + 30 * (num(x.get('tiempo_adiciones_en_meses')) or 0)
     st = lambda v: {'status': 'unknown' if v is None else 'signal' if v else 'clear'}
@@ -110,6 +126,11 @@ def checks(x, total, conc):
         'CO3 term extension': st(days > 0 if x.get('tiempo_adiciones_en_dias') is not None or x.get('tiempo_adiciones_en_meses') is not None else None),
         'CO4 buyer share >= 5 %': st(None if not value or not total else value / total >= SHARE),
         'CO5 concentration': st(None if k is None else k),
+        'U2 repeated direct award': st(None if not proc or not x.get('contractor_hash') else ('directa' in proc and (directs or {}).get(x['contractor_hash'], 0) >= 3)),
+        'N1 December signature': st(None if signed_date(x) is None else signed_date(x).month == 12),
+        'N2 weekend signature': st(None if signed_date(x) is None else signed_date(x).weekday() >= 5),
+        'N3 long duration >= 36 months': st(None if months(x) is None else months(x) >= 36),
+        'N4 supplier dependence >= 25 %': st(None if not x.get('contractor_hash') or not total else (value_by or {}).get(x['contractor_hash'], 0) / total >= 0.25),
     }
 
 
@@ -126,12 +147,16 @@ def analysis_rows(years, labelled, one_per_case):
         known = [x for x in rows if x.get('contractor_hash')]
         counts = Counter(x['contractor_hash'] for x in known)
         conc = {h: (n / len(known) >= CONC_SHARE) for h, n in counts.items()} if len(known) >= CONC_MIN else {}
+        directs = Counter(x['contractor_hash'] for x in known if 'directa' in (x.get('tipo_de_proceso') or '').lower())
+        value_by = Counter()
+        for x in known:
+            value_by[x['contractor_hash']] += num(x.get('cuantia_contrato')) or 0
         for x in rows:
             l = by_uid.get(x['uid'])
             if l and one_per_case and x['uid'] not in keep:
                 continue
             groups = [l['label'], 'combined'] if l else ['comparison']
-            out.append({'id': x['uid'], 'buyer': nit, 'groups': groups, 'checks': checks(x, total, conc)})
+            out.append({'id': x['uid'], 'buyer': nit, 'groups': groups, 'checks': checks(x, total, conc, directs, value_by)})
     return out
 
 
