@@ -39,6 +39,12 @@ class FinalityTests(unittest.TestCase):
         self.assertEqual(classify(verdict(finality='appealed: convictions preserved on 2026-05-07')), 'confirmed')
         self.assertEqual(classify(verdict(finality='appealed: decision issued')), 'pending-appeal')
         self.assertEqual(classify(verdict(finality='appealed: pending'), verdict(finality='final 2026-08-01')), 'confirmed')
+        upheld = 'appeal: conviction upheld by an appellate court on 2026-08-03 (decision 1); in force when pronounced, CPC art. 532'
+        self.assertEqual(classify(verdict(finality=upheld)), 'confirmed')
+        self.assertEqual(classify(verdict(finality='appeal: verdict quashed by an appellate court on 2025-01-09 (decision 2), retrial ordered; not final')), 'quashed')
+        self.assertEqual(classify(verdict(finality='appeal: verdict quashed by an appellate court on 2025-01-09 (decision 2), retrial ordered; not final'),
+                                  verdict(finality=upheld)), 'confirmed')
+        self.assertEqual(classify(verdict(finality='appeal: appellate ruling quashed by the Supreme Court on 2026-06-02 (decision 3), new appellate hearing ordered; not final')), 'pending-appeal')
 
     def test_calendar_month_boundary(self):
         self.assertEqual(bc.three_months_before(date(2026, 5, 31)), date(2026, 2, 28))

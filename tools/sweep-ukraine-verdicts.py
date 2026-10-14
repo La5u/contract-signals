@@ -316,6 +316,18 @@ def scan(args):
     print(json.dumps({k: v for k, v in out.items() if k != 'verdicts'}, ensure_ascii=False, indent=1))
 
 
+def page_state(hit):
+    """Entry-into-force date (YYYY-MM-DD) from a Review page, 'no date shown' when the page has the field
+    but no date, else 'page unreadable'. A captcha page stops the run: no bypass."""
+    body = decode(hit['body']) if hit and hit['body'] else ''
+    if 'modalcaptcha' in body:
+        raise bc.Blocked(f"register answered with a captcha for {hit['url']}: stopping, no bypass")
+    m = FORCE_RE.search(body)
+    if m:
+        return f'{m.group(3)}-{m.group(2)}-{m.group(1)}'
+    return 'no date shown' if 'Дата набрання законної сили' in body else 'page unreadable'
+
+
 def finality(args):
     data = json.loads(OUT.read_text())
     path = BASE / 'finality.json'
@@ -326,9 +338,7 @@ def finality(args):
             if c['doc_id'] in pages:
                 continue
             hit = f.fetch(c['reyestr_url'])
-            body = decode(hit['body']) if hit and hit['body'] else ''
-            m = FORCE_RE.search(body)
-            pages[c['doc_id']] = f'{m.group(3)}-{m.group(2)}-{m.group(1)}' if m else ('no date shown' if 'Review' in body or 'реєстр' in body else 'page unreadable')
+            pages[c['doc_id']] = page_state(hit)
             path.write_text(json.dumps(pages, indent=1))
     except (bc.BudgetExceeded, bc.Blocked, bc.Throttled) as e:
         print(f'stopped: {e}')

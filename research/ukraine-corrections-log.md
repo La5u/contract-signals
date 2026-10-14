@@ -29,3 +29,7 @@ v1 rejected published URLs on `public-api.prozorro.gov.ua` because its allowlist
 Three sampled signatures precede their tender-ID dates. All are reporting procedures, where signing can precede report creation. The ID date is not an established legal procedure-start or signature deadline; do not create an illegality flag or date correction.
 
 The five flagged/seven zero-score rows are not reviewed positive/negative outcomes. Three active changes support the amendment threshold, not three increases or unlawful amendments. Minimized hashes cannot authenticate withheld bodies. Payments, legal applicability and a representative accuracy rate remain unknown.
+
+## 6. Captcha pages were recorded as "no date shown"
+
+14 October 2026. The register Review-page reader (`finality` in `tools/sweep-ukraine-verdicts.py` and `tools/link-ukraine-verdict-tenders.py`) wrote `no date shown` for any page containing the word "реєстр". All **84** such pages in the cache, and all 36 pages of a recheck that day, were captcha pages: no Review page of these verdicts was actually read. The **251** `entry_into_force` values in the published verdict label files now read `not read: the register page answered with a captcha`. **No label or finality class changes**: only an entry-into-force date counts as finality evidence, and these verdicts rest on the presumed rule or the appeal decisions in the export, as before. The reader (`page_state`) now records `no date shown` only when the page carries the field without a date, and stops at a captcha (no bypass).

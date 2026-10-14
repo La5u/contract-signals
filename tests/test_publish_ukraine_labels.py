@@ -54,6 +54,15 @@ class Publish(unittest.TestCase):
         self.assertEqual([r.get('finality_note') for r in out['rows']],
                          ['AMCU decision upheld by a court less than three months before 2026-10-14; an appeal may still be filed, not final', None])
 
+    def test_quashed_conviction_is_noted(self):
+        _, out = self.run_on({'tenders': [{'label': 'corruption', 'finality': 'quashed', 'positive': False}]})
+        self.assertEqual(out['tenders'][0]['finality_note'], 'conviction quashed on appeal, retrial ordered; not final')
+
+    def test_note_dropped_once_final(self):
+        _, out = self.run_on({'tenders': [{'label': 'corruption', 'finality': 'confirmed', 'positive': True,
+                                           'finality_note': 'convicted; under appeal, not final'}]})
+        self.assertNotIn('finality_note', out['tenders'][0])
+
     def test_snippets_and_individual_tax_numbers_removed(self):
         data = {'judgments': [{'tender_ids': {'UA-A': {'as_printed': 'UA-A', 'context': 'text naming a person'}}}],
                 'procurements': [{'supplier_code': '2280412773'}, {'supplier_code': '12345678'}]}
