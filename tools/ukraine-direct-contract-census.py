@@ -32,7 +32,10 @@ bc, imp = vc.bc, vc.imp
 COHORT = ROOT / 'research/labels/ukraine-verdict-sweep-cohort.json.gz'
 OUT = ROOT / 'research/labels/ukraine-direct-contract-census.json.gz'
 DIRECT_TYPES = ('reporting', 'negotiation', 'negotiation.quick')
-CANDIDATES = {'D1 direct-contract': 0, 'D2 direct-contract-200k': 200_000, 'D3 direct-contract-1.5m': 1_500_000}
+NEGOTIATED = ('negotiation', 'negotiation.quick')
+# Candidate: (procedure types that count, minimum UAH value). D4 is the scored ua-direct-award rule.
+CANDIDATES = {'D1 direct-contract': (DIRECT_TYPES, 0), 'D2 direct-contract-200k': (DIRECT_TYPES, 200_000),
+              'D3 direct-contract-1.5m': (DIRECT_TYPES, 1_500_000), 'D4 negotiated-procedure': (NEGOTIATED, 0)}
 MAX_PAGES = 400                 # per buyer and listing; a longer listing is recorded as incomplete
 PLACEHOLDER_BUYERS = {'00000000'}   # a code shared by many entities (e.g. withheld identities), not one buyer
 
@@ -131,15 +134,13 @@ def rows_for_analysis(cohort_rows, tenders):
     for r in positives:
         listed = tenders.get(r['tenderID'])
         value = uah(listed) if listed else (r.get('amount') if r.get('currency') == 'UAH' else None)
-        direct = r.get('procedure') in DIRECT_TYPES
         out.append({'id': r['id'], 'buyer': r['buyerId'], 'groups': [r['label'], 'combined'],
-                    'checks': {k: {'status': status(direct, value, floor)} for k, floor in CANDIDATES.items()}})
+                    'checks': {k: {'status': status(r.get('procedure') in types, value, floor)} for k, (types, floor) in CANDIDATES.items()}})
     for tid, t in tenders.items():
         if tid in positive_ids or t.get('status') != 'complete':
             continue
-        direct = t['kind'] in DIRECT_TYPES
         out.append({'id': tid, 'buyer': t['buyer'], 'groups': ['comparison'],
-                    'checks': {k: {'status': status(direct, uah(t), floor)} for k, floor in CANDIDATES.items()}})
+                    'checks': {k: {'status': status(t['kind'] in types, uah(t), floor)} for k, (types, floor) in CANDIDATES.items()}})
     return out
 
 

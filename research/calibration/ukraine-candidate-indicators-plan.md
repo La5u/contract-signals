@@ -84,6 +84,7 @@ The sampled comparisons contain no direct contracts (the site search's date filt
 
 Same LR, interval, points and holdout rule as part 1. Expected weakness: direct contracts are the large majority of most buyers' tenders and prosecutions favour large amounts, so D1 mostly measures size; D2 and D3 address that.
 - Implementation note (part 2, before results): buyer code 00000000 is a placeholder shared by many entities; its buyer-years have no census and its positives are left out of part 2.
+- Addition (2026-10-14, before the census of the new buyer-years was downloaded): the census is repeated on the conviction cohort with linked tenders (`research/labels/ukraine-verdict-plus-linked-cohort.json.gz`), and one candidate is added: **D4 negotiated-procedure**, a `negotiation` or `negotiation.quick` procedure of any value, which is the scored `ua-direct-award` rule (18 points, editorial). Same LR, holdout and decision rule. Expected weakness: few convicted tenders used a negotiated procedure (about 14 rows), so the interval will be wide; a result that fails the rule leaves the 18 points as they are until the owner decides.
 
 ## Part 3: bid-rigging candidates (fixed 2026-10-13, before any was computed on any cohort)
 
