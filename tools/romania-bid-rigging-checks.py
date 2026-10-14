@@ -31,6 +31,11 @@ cspec.loader.exec_module(cand)
 CC = Path.home() / '.cache/contract-signals/romania-cc'
 SEAP = Path.home() / '.cache/contract-signals/romania-seap/normalized'
 SHARE, CONC_SHARE, CONC_MIN = 0.05, 0.6, 10
+# Plan amendment of 2026-10-15: chance that a decision still open in court is upheld (High Court rulings in the
+# Council's favour, annual reports 2023-2025: 89 %, 94 %, 90 %). Every other decision weighs 1.
+UPHELD_P = 0.91
+OPEN = ('134/2024', '148/2025', '77/2017', '99/2021', '43/2020', '271/2024', '44/2013')
+ANNULLED_UNDER_APPEAL = ('80/2023',)
 CHECKS = ['RO0 single offer', 'RO1 direct award', 'RO2 buyer share >= 5 %', 'RO3 concentration', 'RO5 framework / subsequent',
           'U1 repeated single offer', 'U2 repeated direct award', 'N1 December signature', 'N2 weekend signature',
           'N4 supplier dependence >= 25 %', 'N5 first-time supplier']   # U/N: research/calibration/untested-checks-plan.md
@@ -162,7 +167,9 @@ def challenged(decisions, cases):
 def main():
     p = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     p.add_argument('--json')
+    p.add_argument('--annulled-weight', type=float, default=0.5, help='weight of decisions annulled at first instance with the appeal pending')
     args = p.parse_args()
+    weight_of = lambda d: UPHELD_P if d in OPEN else args.annulled_weight if d in ANNULLED_UNDER_APPEAL else 1.0
     lines = [json.loads(l) for l in (CC / 'procedures-ocr.jsonl').read_text().splitlines() if l.strip()]
     procs = [o for o in lines if o.get('type') != 'decision' and o.get('role') == 'rigged']
     cases = [json.loads(l) for l in (CC / 'court-cases.jsonl').read_text().splitlines() if l.strip()]
@@ -322,7 +329,7 @@ def main():
                 'RO5 framework / subsequent': st(None if not concluded else ('acord' in concluded or 'subsecvent' in concluded)),
                 '_offers': offers}
 
-    def rows(keep):
+    def rows(keep, weighted=False):
         out = []
         for key in buyers:
             for i in by_buyer_year.get(key, []):
@@ -332,8 +339,14 @@ def main():
                 if lab and not keep(lab):
                     continue
                 c = checks(seap[i], key)
-                out.append({'id': str(i), 'buyer': key[0], 'groups': ['collusion', 'combined'] if lab else ['comparison'],
-                            'decision': lab['decision'] if lab else None, 'offers': c.pop('_offers'), 'checks': c})
+                offers = c.pop('_offers')
+                w = weight_of(lab['decision']) if lab and weighted else 1.0
+                if lab and w > 0:
+                    out.append({'id': str(i), 'buyer': key[0], 'groups': ['collusion', 'combined'], 'decision': lab['decision'],
+                                'offers': offers, 'checks': c, **({'weight': w} if w < 1 else {})})
+                if not lab or w < 1:   # an ordinary contract, or the share of a doubtful label that is not one
+                    out.append({'id': str(i), 'buyer': key[0], 'groups': ['comparison'], 'decision': None, 'offers': offers,
+                                'checks': c, **({'weight': 1 - w} if lab else {})})
         return out
 
     def one_per_decision(rs):
@@ -350,6 +363,8 @@ def main():
             'unchallenged, all procedures': rows(lambda l: not l['challenged']),
             'all Council findings, one per decision': one_per_decision(rows(lambda l: True)),
             'all Council findings, all procedures': rows(lambda l: True)}
+    sets['weighted by appeal outcome, one per decision (decision rule, amendment 2026-10-15)'] = one_per_decision(rows(lambda l: True, weighted=True))
+    sets['weighted by appeal outcome, all procedures'] = rows(lambda l: True, weighted=True)
     sets['all findings, 2+ offers (sensitivity)'] = [r for r in sets['all Council findings, all procedures'] if (r['offers'] or 0) >= 2]
     out = {'linking': dict(report), 'challenged': chal, 'sets': {}}
     for name, rs in sets.items():

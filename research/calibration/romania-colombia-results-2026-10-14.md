@@ -57,3 +57,18 @@ Plan for the new checks: [untested-checks-plan.md](untested-checks-plan.md) (fix
 | Direct award | 0.28, lower | lower | 0.59, lower | measured D4 |
 
 **Reading.** Size relative to the buyer (buyer share, supplier dependence) is the one family that points the same way in all three countries and passes the holdout in two label sources besides Ukraine. Repeated awards without competition, concentration and direct award are *rarer* among labelled contracts everywhere, so their editorial points are not supported by these labels (prosecutions and Council cases concentrate on large competitive tenders, which biases against them). Nothing adopted; owner decision.
+
+### Romania weighted by appeal outcome (plan amendment 2026-10-15)
+
+Open cases weigh 0.91 (High Court success rate of the Council, annual reports 2023–2025), upheld or unchallenged decisions 1; the 80/2023 weight (0, 0.5, 0.91) changes nothing because none of its procedures is linked.
+
+| Check | One per decision, weighted (**decision rule**; 16 procedures, 14 buyers) | All procedures, weighted (60, 28 buyers) |
+| --- | --- | --- |
+| Buyer share ≥ 5 % | 31 % vs 17 %, LR 1.39 [0.76, 2.40], fails | 37 % vs 17 %, LR 1.70 [1.17, 2.74], **passes** (≈ 8 points) |
+| N4 supplier dependence ≥ 25 % | 36 % vs 12 %, LR 1.99 [0.96, 3.78], fails narrowly | 32 % vs 12 %, LR 2.00 [1.27, 3.54], **passes** (≈ 10 points) |
+| Framework / subsequent | 1.50 [0.89, 2.46] | 1.38 [0.90, 2.09] |
+| December signature | 2.15 [0.48, 3.85] | 1.43 |
+| Single offer | 0.92 | 1.01 |
+| Direct award | 0.43 | 0.29 |
+
+Weighting keeps 14 buyers in the decision-rule set (9 without it), so the minimum is met; neither check passes there, both pass on all procedures. The difference is the unit: one procedure per decision (16) against every linked procedure (60, of which the largest schemes contribute many).
