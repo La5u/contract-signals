@@ -5,7 +5,7 @@ Plans fixed before computing: [Romania](romania-bid-rigging-plan.md), [Colombia]
 ## Romania: procedures found rigged by the Competition Council
 
 - **Labels:** 30 decisions read (13 blacklist decisions OCR'd plus older text decisions; 9 blacklist decisions not found on the Council site or not yet published), 347 procedures, **136 rigged** in 23 decisions (two schemes dominate: 33 procedures in 77/2017, 32 in 7/2015). Extraction by GPT-6.1-Sol from local texts (recovered from its session log after a write failure; counts match its summary exactly), not hand-checked.
-- **Linking to SEAP contracts** (exports 2007–2024, `tools/normalize-romania-seap.py`, `tools/romania-bid-rigging-checks.py`): **38 of 136 resolved** (15 by notice number, 16 by buyer name + winner + subject, 5 by buyer CUI + winner, 2 more on an exact date); 54 ambiguous (the cartel firms won several procedures from the same buyer), 44 not found. Old procedures (2005–2007) predate SEAP; 2022 Q2–Q4 and 2023 XLS exports stop at 64,999 rows at the source, so some recent contracts and comparisons are missing.
+- **Linking to SEAP contracts** (exports 2007–2024, `tools/normalize-romania-seap.py`, `tools/romania-bid-rigging-checks.py`): **38 of 136 resolved** (15 by notice number, 16 by buyer name + winner + subject, 5 by buyer CUI + winner, 2 more on an exact date); 54 ambiguous (the cartel firms won several procedures from the same buyer), 44 not found. Old procedures (2005–2007) predate SEAP. *Correction (2026-10-15): the 2021–2023 XLS exports were not truncated at the source; they continue on up to four sheets, and the first normaliser read only the first sheet (about 400,000 contracts missed). Fixed in `tools/normalize-romania-seap.py`; results below from 2026-10-15 use the complete exports.*
 - **Challenges** (court portal, `tools/check-romania-cc-court.py`): 7 of the 23 decisions are challenged at the Bucharest Court of Appeal (134/2024, 148/2025, 271/2024, 48/2020, 77/2017, 80/2023, 99/2021); High Court outcomes are not visible in the portal.
 
 | Set | Labelled (buyers) | RO2 buyer share ≥ 5 %: rigged vs comparisons | LR+ [95 %] | Learn / check | Decision |
@@ -72,3 +72,18 @@ Open cases weigh 0.91 (High Court success rate of the Council, annual reports 20
 | Direct award | 0.43 | 0.29 |
 
 Weighting keeps 14 buyers in the decision-rule set (9 without it), so the minimum is met; neither check passes there, both pass on all procedures. The difference is the unit: one procedure per decision (16) against every linked procedure (60, of which the largest schemes contribute many).
+
+### Romania with complete SEAP exports (2026-10-15, later)
+
+All sheets of the 2021–2023 XLS exports read (header aliases for 2022 Q4 and 2023, Excel serial dates converted, the duplicate 2023 Q4 XLS excluded); prefixed SICAP notice numbers (CN, SCN, CAN, DA, ADV) matched up to three years after the procedure, plain numeric numbers in its years only. Linked decisions 16 → 17 (271/2024).
+
+| Check | Weighted, one per decision (**decision rule**; 17 procedures, 15 buyers) | Weighted, all procedures (64, 28 buyers) |
+| --- | --- | --- |
+| Buyer share ≥ 5 % | 36 % vs 17 %, LR 1.58 [0.89, 2.62], learn 1.59 / check 1.08: **passes** (≈ 6.6 points) | see results file |
+| N4 supplier dependence ≥ 25 % | 40 % vs 12 %, LR 2.19 [1.12, 4.44], learn 2.39 / check 1.11: **passes** (≈ 11.3 points) | see results file |
+| Framework / subsequent | 1.40 [0.89, 2.20], fails | |
+| December signature | 1.43, fails | |
+| Single offer | 0.98 | |
+| Direct award | 0.41 | |
+
+Both checks now pass the pre-registered decision rule in Romania, by narrow margins (check halves 1.08 and 1.11). Nothing adopted; owner decision.

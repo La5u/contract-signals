@@ -187,7 +187,7 @@ def main():
             chal[d] = []
         elif x.get('first_instance') in ('pending', 'admitted (annulled)', 'partially admitted') or x.get('high_court') == 'pending':
             chal[d] = chal[d] or ['reviewed: ' + str(x.get('first_instance')) + ' / ' + str(x.get('high_court'))]
-    years = sorted({y for o in procs for y in proc_years(o)} | {y + 1 for o in procs for y in proc_years(o)})
+    years = sorted({y + k for o in procs for y in proc_years(o) for k in (0, 1, 2, 3)})
     years = [y for y in years if (SEAP / str(y)).exists()]
     notices = {n for o in procs for n in notice_numbers(o)}
     win = lambda o: {cui(w) for w in (o['winner_cui'] if isinstance(o.get('winner_cui'), list) else [o.get('winner_cui')]) if w}
@@ -208,7 +208,11 @@ def main():
                 review[x['procedure_key']] = x
     for o in procs:
         ys = set(proc_years(o)) | {y + 1 for y in proc_years(o)}
-        idx = sorted({i for n in notice_numbers(o) for i in by_notice.get(n, []) if year_of(cands_all[i]) in ys})
+        # Prefixed SICAP numbers (CN, SCN, CAN, DA, ADV) are unique across years: a contract may be published
+        # up to three years after the notice. Plain numeric SEAP numbers keep the procedure's years.
+        prefixed = any(re.search(r'\b(?:CN|SCN|CAN|DA|ADV)\s?\d', str(s)) for s in o.get('notice_ids') or [])
+        ny = ys | ({y + k for y in proc_years(o) for k in (2, 3)} if prefixed else set())
+        idx = sorted({i for n in notice_numbers(o) for i in by_notice.get(n, []) if year_of(cands_all[i]) in ny})
         how = 'notice'
         pk = procedure_key(o)
         if not idx and pk in review and review[pk].get('chosen'):
@@ -262,6 +266,7 @@ def main():
         rep = max(idx, key=lambda i: seap[i].get('value_ron_num') or 0)
         labelled.setdefault(rep, {'decision': o['decision'], 'challenged': bool(chal.get(o['decision'])), 'members': set(idx)})
         labelled[rep]['members'] |= set(idx)
+    print('linked decisions:', sorted({v['decision'] for v in labelled.values()}))
     print('linking:', dict(report), '| challenged decisions:', {d: len(v) for d, v in chal.items() if v})
     members = set().union(*(v['members'] for v in labelled.values())) if labelled else set()
     # Buyer-year totals and concentration (CPV division) over all SEAP rows of those buyers.
