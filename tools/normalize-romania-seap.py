@@ -22,10 +22,10 @@ BASE = Path.home() / '.cache/contract-signals/romania-seap'
 csv.field_size_limit(sys.maxsize)
 FIELDS = {
     'buyer': ['autoritatecontractanta', 'denumireac'],
-    'buyer_cui': ['autoritatecontractantacui', 'cuiac', 'cui'],
+    'buyer_cui': ['autoritatecontractantacui', 'cuiac', 'cuiautoritateconractanta', 'cuiautoritatecontractanta', 'cui'],
     'procedure': ['tipprocedura'],
     'concluded_by': ['tipincheierecontract', 'incheiatprin', 'incheiarprin'],
-    'notice_init': ['numaranuntparticipare', 'numaranuntinitiere'],
+    'notice_init': ['numaranuntparticipare', 'numaranuntinitiere', 'numaranuntai'],
     'notice_award': ['numaranuntatribuire'],
     'lot': ['numarlot'],
     'offers': ['numaroferteprimite', 'numaroferte'],
@@ -33,9 +33,9 @@ FIELDS = {
     'contract_date': ['datacontract'],
     'title': ['titlucontract', 'denumirecontract'],
     'cpv': ['cpvcode', 'codcpv', 'cpvcodeid'],
-    'value_ron': ['valoareron', 'valoarecontractron', 'valoarecontract'],
-    'winner': ['castigator', 'ofertant', 'denumirecastigator'],
-    'winner_cui': ['castigatorcui', 'cuiofertant', 'cuicastigator'],
+    'value_ron': ['valoareron', 'valoarecontractron', 'valoarecontract', 'valoareatribuitaron'],
+    'winner': ['castigator', 'catigator', 'ofertant', 'ofertantcastigator', 'denumirecastigator'],
+    'winner_cui': ['castigatorcui', 'cuiofertant', 'cuicastigator', 'cuiof', 'cuiofertantcastigator'],
 }
 
 
@@ -73,9 +73,20 @@ def number(s):
 def rows(path):
     head = path.read_bytes()[:8]
     if head.startswith(b'\xd0\xcf\x11\xe0'):
-        sheet = xlrd.open_workbook(str(path), on_demand=True).sheet_by_index(0)
-        for i in range(sheet.nrows):
-            yield sheet.row_values(i)
+        # Old XLS holds at most 65,536 rows per sheet: large quarters continue on further sheets.
+        book = xlrd.open_workbook(str(path), on_demand=True)
+        header = None
+        for k in range(book.nsheets):
+            sheet = book.sheet_by_index(k)
+            for i in range(sheet.nrows):
+                row = sheet.row_values(i)
+                if header is None:
+                    header = row
+                    yield row
+                elif i == 0 and [str(x).strip() for x in row] == [str(x).strip() for x in header]:
+                    continue
+                else:
+                    yield row
     elif head.startswith(b'PK'):
         ws = openpyxl.load_workbook(path, read_only=True).worksheets[0]
         yield from ws.iter_rows(values_only=True)
@@ -96,16 +107,23 @@ def rows(path):
         yield from csv.reader(io.StringIO(text, newline=''), delimiter=delim, quotechar=quote)
 
 
+EXCLUDE = {'2023/Contracte-publicate-T-IV-2023-xls.xls'}   # same quarter as the CSV of that name
+
+
 def normalise(path, out):
     it = rows(path)
-    header = next(it)
-    m = mapping(header)
+    for header in it:   # some files open with a title row: the header is the first row naming 5+ known fields
+        m = mapping(header)
+        if len(m) >= 5:
+            break
     n = 0
     with gzip.open(out.with_suffix('.tmp'), 'wt', encoding='utf-8') as fh:
         for r in it:
             if not r or all(v in (None, '') for v in r):
                 continue
             rec = {f: (r[i] if i < len(r) else None) for f, i in m.items()}
+            if isinstance(rec.get('contract_date'), float) and 20000 < rec['contract_date'] < 80000:   # Excel serial date
+                rec['contract_date'] = xlrd.xldate.xldate_as_datetime(rec['contract_date'], 0).strftime('%Y-%m-%d')
             rec = {f: (str(v).strip() if v is not None else None) for f, v in rec.items()}
             rec['value_ron_num'] = number(rec.get('value_ron'))
             rec['offers_num'] = number(rec.get('offers'))
@@ -119,6 +137,9 @@ def normalise(path, out):
 def main():
     for path in sorted(p for p in BASE.glob('20*/*') if p.is_file() and p.stat().st_size > 1000):
         out = BASE / 'normalized' / path.parent.name / (path.name + '.jsonl.gz')
+        if f'{path.parent.name}/{path.name}' in EXCLUDE:
+            out.unlink(missing_ok=True)
+            continue
         if out.exists():
             continue
         out.parent.mkdir(parents=True, exist_ok=True)
