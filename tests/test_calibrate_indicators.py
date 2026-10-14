@@ -32,26 +32,26 @@ class CalibrationTests(unittest.TestCase):
 
     def test_ties_label_independent(self):
         y = np.r_[np.ones(5), np.zeros(95)]
-        m = c.metrics(y, np.zeros(100), np.ones((100, 19), bool))
+        m = c.metrics(y, np.zeros(100), np.ones((100, c.N), bool))
         self.assertAlmostEqual(m['precision_top5'], .05)
         self.assertAlmostEqual(m['AP'], .05)
         self.assertAlmostEqual(m['ROC_AUC'], .5)
         self.assertAlmostEqual(m['recall_top5'], .05)
-        self.assertEqual(m, c.metrics(y[::-1], np.zeros(100), np.ones((100, 19), bool)))
+        self.assertEqual(m, c.metrics(y[::-1], np.zeros(100), np.ones((100, c.N), bool)))
 
     def test_boundary_ties(self):
         y = np.r_[1., 1., np.zeros(98)]
         scores = np.r_[2., np.ones(8), np.zeros(91)]
-        m = c.metrics(y, scores, np.ones((100, 19), bool))
+        m = c.metrics(y, scores, np.ones((100, c.N), bool))
         self.assertAlmostEqual(m['precision_top5'], (1 + 4 / 8) / 5)
         self.assertAlmostEqual(m['AP'], (1 + 2 / 9) / 2)
 
     def test_family_bounds(self):
-        x = np.ones((2, 19))
-        self.assertTrue(np.all(c.family_score(x, np.full(19, 1000)) == 100))
+        x = np.ones((2, c.N))
+        self.assertTrue(np.all(c.family_score(x, np.full(c.N, 1000)) == 100))
         for family, cap in zip(c.FAMILY_NAMES, c.CAPS):
             isolated = x * (np.array(c.FAMILIES) == family)
-            np.testing.assert_array_equal(c.family_score(isolated, np.full(19, 1000)), [cap, cap])
+            np.testing.assert_array_equal(c.family_score(isolated, np.full(c.N, 1000)), [cap, cap])
         x, known, _, labels, (train, val, _) = c.generate('independent', 0)
         fitted = c.fit_models(x[train], known[train], labels[train], x[val], labels[val], known[val])
         upper = np.array([c.CAPS[c.FAMILY_NAMES.index(f)] for f in c.FAMILIES])
@@ -61,7 +61,7 @@ class CalibrationTests(unittest.TestCase):
     def test_null_aggregates(self):
         self.assertEqual(c.summarize([None, None])['mean'], None)
         self.assertEqual(c.summarize([None, .5])['mean'], .5)
-        m = c.metrics(np.zeros(10), np.zeros(10), np.ones((10, 19), bool))
+        m = c.metrics(np.zeros(10), np.zeros(10), np.ones((10, c.N), bool))
         self.assertIsNone(m['AP'])
         self.assertIsNone(m['ROC_AUC'])
 
@@ -83,8 +83,8 @@ class CalibrationTests(unittest.TestCase):
         script = (Path(__file__).parents[1] / 'script.js').read_text()
         block = script.split('const INDICATOR_KINDS = {', 1)[1].split('};', 1)[0]
         self.assertEqual(set(c.KINDS), set(re.findall(r"'([^']+)':", block)))
-        self.assertEqual(len(c.KINDS), 19)
-        np.testing.assert_array_equal(c.family_score(np.zeros((2, 19)), c.POINTS), [0, 0])
+        self.assertEqual(len(c.KINDS), 20)
+        np.testing.assert_array_equal(c.family_score(np.zeros((2, c.N)), c.POINTS), [0, 0])
 
 
 if __name__ == '__main__':

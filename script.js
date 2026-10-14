@@ -16,7 +16,7 @@ const VERIFICATION_STATUSES = {
 const HISTORY_START = '2024-01-01';
 const HISTORY_END = '2025-12-31';
 
-const SCORE_VERSION = '3.5';
+const SCORE_VERSION = '3.6';
 
 // Conservative calendar-day upper bound: publication time is not supplied by BOAMP.
 function getBiddingPeriod(contract) {
@@ -292,6 +292,7 @@ const INDICATOR_KINDS = {
   'legalGround': 'Legal ground and purchase mismatch',
   'unitPrice': 'Year-over-year comparable unit-price increase',
   'exclusivity': 'Exclusivity claim and comparable competitive wins',
+  'buyer-share': 'Large share of the buyer’s yearly procurement',
 };
 // Short names for the table chips; the full name is in the tooltip, the filter and the record panel.
 const KIND_SHORT = {
@@ -303,6 +304,7 @@ const KIND_SHORT = {
   'term-extension': 'Term extended', 'late-publication': 'Late publication',
   'cap': 'Near applicable cap', 'execution': 'Payment / execution',
   'legalGround': 'Legal ground mismatch', 'unitPrice': 'Unit-price increase', 'exclusivity': 'Exclusivity context',
+  'buyer-share': 'Buyer share',
 };
 // Where a kind matches a red flag in a framework auditors already use (docs/indicators.md).
 const KIND_REFERENCES = {
@@ -323,7 +325,7 @@ const KIND_OF_CHECK = {
   'supplier-concentration': 'concentration', 'secop2-concentration': 'concentration', 'dncp-concentration': 'concentration',
   'long-contract': 'long-duration', 'secop2-long-duration': 'long-duration',
   'amount-increase': 'amount-increase', 'dncp-amount-increase': 'amount-increase',
-  'ua-contract-amendments': 'contract-amendments', 'ua-term-extension': 'term-extension',
+  'ua-contract-amendments': 'contract-amendments', 'ua-term-extension': 'term-extension', 'ua-buyer-share': 'buyer-share',
   'secop2-term-extension': 'term-extension', 'ua-better-bid-disqualified': 'disqualified-better-bid',
   'short-bidding-period': 'short-bidding-period', 'late-publication': 'late-publication', 'notice-late-change': 'late-notice-change',
 };
@@ -802,7 +804,12 @@ function getAssessmentDncp(c) {
 // labels and scope. Methods: docs/score-ukraine.md, docs/score-ted.md. Checks were
 // fixed before these cohorts were downloaded; French thresholds are not applied.
 // Ukrainian points from labelled cases (docs/score-ukraine.md, research/calibration/ukraine-results-2026-10-14.md).
-const UA_POINTS = { amendments3: 6, amendments5: 10, termExtension: 4, termExtensionBonus: 6, betterBidDisqualified: 4 };
+const UA_POINTS = { amendments3: 6, amendments5: 10, termExtension: 4, termExtensionBonus: 6, betterBidDisqualified: 4, buyerShare: 30 };
+// R1 (v3.6): a contract of at least 5 % of the buyer's UAH contract total for the tender's creation year
+// (research/calibration/ukraine-candidate-indicators.md, part 4). Assessed only for buyer-years the cohort
+// covers completely; the bundled cohort runs 2024-09-01 → 2026-09-01, so only 2025 is complete.
+const UA_BUYER_SHARE = 0.05;
+const UA_COMPLETE_YEARS = { 'prozorro-3buyers-2024-2026': new Set(['2025']) };
 const UA_TERM_EXTENSION_TYPES = ['durationExtension', 'fiscalYearExtension'];
 const NATIONAL_FAMILIES = {
   // Ukraine v3.5: points from court verdicts and bid-rigging decisions (docs/score-ukraine.md). Other
@@ -879,6 +886,13 @@ function getAssessmentNational(c) {
       !Number.isInteger(amendments) ? 'Contract record not retrieved: term extension not assessable.' :
       extended ? `An active amendment extends the contract term (rationale types: ${types.filter(t => UA_TERM_EXTENSION_TYPES.includes(t)).join(', ')}). ${UA_POINTS.termExtension} points with fewer than three amendments; with three or more it adds ${UA_POINTS.termExtensionBonus} points to the amendments check instead. Extensions are often lawful (Law on Public Procurement art. 41 permits some); this check does not assess their grounds.` :
       'No active amendment extends the contract term.');
+    const bs = c.uaBuyerShare;
+    add('ua-buyer-share', 'Large share of the buyer’s yearly procurement', 'competition', 'yes', Boolean(bs?.complete && bs.share != null), bs?.share >= UA_BUYER_SHARE, UA_POINTS.buyerShare,
+      !bs ? 'Buyer share not computed.' :
+      !bs.complete ? `This cohort does not cover the buyer’s whole year ${bs.year || '(unknown)'}: share not assessable.` :
+      bs.share == null ? 'Amount not in UAH: not compared with the buyer’s UAH total (no currency conversion).' :
+      `${(bs.share * 100).toFixed(1)} % of this buyer’s UAH contract total for ${bs.year} (${Math.round(bs.total).toLocaleString('en')} UAH, contracts of tenders created that year). ` +
+      (bs.share >= UA_BUYER_SHARE ? `${UA_POINTS.buyerShare} points at 5 % or more, all procedures: among Ukrainian tenders in criminal verdicts a contract this large relative to its buyer was about 8 times as frequent as among the same buyers’ other tenders. Large purchases are often lawful; this check does not assess need or price.` : 'Below the 5 % threshold.'));
     const dq = c.disqualifiedBefore;
     add('ua-better-bid-disqualified', 'Better-ranked bidder disqualified before the award', 'competition', competitive ? 'yes' : direct ? 'no' : unknownKind, Number.isInteger(dq), dq > 0, UA_POINTS.betterBidDisqualified,
       !competitive ? (direct ? 'Procedure without competition: no ranking of bids.' : spec.outOfScope.directKind) :
@@ -1125,6 +1139,18 @@ function prepareContracts(data) {
       c.nationalConcentration = { category: NATIONAL_FAMILIES[c.dataFamily].category(c), total: all.size, known: known.size,
         wins: wins.get(id).size, share: wins.get(id).size / known.size, coverage, sufficient: known.size >= 10 && coverage >= 0.8 };
     }
+  }
+  // Ukraine: each contract's share of its buyer's UAH contract total for the tender's creation year.
+  const uaYearTotals = new Map(), uaYear = c => `${c.cohortId}|${c.buyerId}|${(c.tenderCreated || '').slice(0, 4)}`;
+  for (const c of contracts) {
+    if (c.dataFamily !== 'prozorro' || c.currency !== 'UAH' || !Number.isFinite(c.amount)) continue;
+    uaYearTotals.set(uaYear(c), (uaYearTotals.get(uaYear(c)) || 0) + c.amount);
+  }
+  for (const c of contracts) {
+    if (c.dataFamily !== 'prozorro') continue;
+    const year = (c.tenderCreated || '').slice(0, 4), complete = Boolean(UA_COMPLETE_YEARS[c.cohortId]?.has(year));
+    const total = uaYearTotals.get(uaYear(c)) || 0;
+    c.uaBuyerShare = { year, complete, total, share: c.currency === 'UAH' && Number.isFinite(c.amount) && total > 0 ? c.amount / total : null };
   }
   for (const c of contracts) {
     if (!NATIONAL_FAMILIES[c.dataFamily] || !nationalSupplierIdentity(c)) continue;

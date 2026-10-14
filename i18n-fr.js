@@ -769,7 +769,11 @@ window.I18N_DICTS.fr = {
   "StateWatch/Prozorro risk indicator ARI 1-1 (three or more contract amendments)": "Indicateur de risque StateWatch/Prozorro ARI 1-1 (trois avenants au contrat ou plus)",
   "Contract term extended by amendment": "Durée du marché prolongée par avenant",
   "Contract record not retrieved: term extension not assessable.": "Fiche du contrat non récupérée : prolongation de durée non évaluable.",
-  "No active amendment extends the contract term.": "Aucun avenant actif ne prolonge la durée du marché."
+  "No active amendment extends the contract term.": "Aucun avenant actif ne prolonge la durée du marché.",
+  "Large share of the buyer’s yearly procurement": "Part importante des achats annuels de l’acheteur",
+  "Buyer share": "Part de l’acheteur",
+  "Buyer share not computed.": "Part de l’acheteur non calculée.",
+  "Amount not in UAH: not compared with the buyer’s UAH total (no currency conversion).": "Montant hors UAH : non comparé au total en UAH de l’acheteur (aucune conversion de devises)."
  },
  "patterns": [
   [
@@ -1287,6 +1291,18 @@ window.I18N_DICTS.fr = {
   [
    "An active amendment extends the contract term (rationale types: {a}). {b} points with fewer than three amendments; with three or more it adds {c} points to the amendments check instead. Extensions are often lawful (Law on Public Procurement art. 41 permits some); this check does not assess their grounds.",
    "Un avenant actif prolonge la durée du marché (types de justification : {a}). {b} points avec moins de trois avenants ; à partir de trois, il ajoute plutôt {c} points au contrôle des avenants. Les prolongations sont souvent licites (l’art. 41 de la loi sur les marchés publics en permet certaines) ; ce contrôle n’en évalue pas les motifs."
+  ],
+  [
+   "This cohort does not cover the buyer’s whole year {a}: share not assessable.",
+   "Cette cohorte ne couvre pas toute l’année {a} de l’acheteur : part non évaluable."
+  ],
+  [
+   "{a} % of this buyer’s UAH contract total for {b} ({c} UAH, contracts of tenders created that year). {d} points at 5 % or more, all procedures: among Ukrainian tenders in criminal verdicts a contract this large relative to its buyer was about 8 times as frequent as among the same buyers’ other tenders. Large purchases are often lawful; this check does not assess need or price.",
+   "{a} % du total des contrats en UAH de cet acheteur pour {b} ({c} UAH, contrats des procédures créées cette année-là). {d} points à partir de 5 %, toutes procédures : parmi les marchés ukrainiens visés par des condamnations pénales, un contrat aussi important pour son acheteur était environ 8 fois plus fréquent que parmi les autres marchés des mêmes acheteurs. Les gros achats sont souvent licites ; ce contrôle n’évalue ni le besoin ni le prix."
+  ],
+  [
+   "{a} % of this buyer’s UAH contract total for {b} ({c} UAH, contracts of tenders created that year). Below the 5 % threshold.",
+   "{a} % du total des contrats en UAH de cet acheteur pour {b} ({c} UAH, contrats des procédures créées cette année-là). Sous le seuil de 5 %."
   ]
  ]
 };

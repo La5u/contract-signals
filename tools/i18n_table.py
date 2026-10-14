@@ -954,3 +954,25 @@ PATTERNS += [
      "Una modificación activa prorroga el plazo del contrato (tipos de justificación: {a}). {b} puntos con menos de tres modificaciones; con tres o más suma en cambio {c} puntos a la comprobación de modificaciones. Las prórrogas suelen ser legales (el art. 41 de la Ley de Contratación Pública permite algunas); esta comprobación no evalúa sus motivos.",
      "Un avenant actif prolonge la durée du marché (types de justification : {a}). {b} points avec moins de trois avenants ; à partir de trois, il ajoute plutôt {c} points au contrôle des avenants. Les prolongations sont souvent licites (l’art. 41 de la loi sur les marchés publics en permet certaines) ; ce contrôle n’en évalue pas les motifs."),
 ]
+
+
+# Ukrainian buyer share (v3.6).
+EXACT += [
+    ("Large share of the buyer’s yearly procurement", "Gran parte de la contratación anual del comprador", "Part importante des achats annuels de l’acheteur"),
+    ("Buyer share", "Parte del comprador", "Part de l’acheteur"),
+    ("Buyer share not computed.", "Parte del comprador no calculada.", "Part de l’acheteur non calculée."),
+    ("Amount not in UAH: not compared with the buyer’s UAH total (no currency conversion).",
+     "Importe no expresado en UAH: no se compara con el total en UAH del comprador (sin conversión de divisas).",
+     "Montant hors UAH : non comparé au total en UAH de l’acheteur (aucune conversion de devises)."),
+]
+PATTERNS += [
+    ("This cohort does not cover the buyer’s whole year {a}: share not assessable.",
+     "Esta cohorte no cubre el año completo {a} del comprador: parte no evaluable.",
+     "Cette cohorte ne couvre pas toute l’année {a} de l’acheteur : part non évaluable."),
+    ("{a} % of this buyer’s UAH contract total for {b} ({c} UAH, contracts of tenders created that year). {d} points at 5 % or more, all procedures: among Ukrainian tenders in criminal verdicts a contract this large relative to its buyer was about 8 times as frequent as among the same buyers’ other tenders. Large purchases are often lawful; this check does not assess need or price.",
+     "{a} % del total de contratos en UAH de este comprador en {b} ({c} UAH, contratos de licitaciones creadas ese año). {d} puntos desde el 5 %, todos los procedimientos: entre las licitaciones ucranianas de sentencias penales, un contrato tan grande respecto de su comprador era unas 8 veces más frecuente que entre las demás licitaciones de los mismos compradores. Las compras grandes suelen ser legales; esta comprobación no evalúa la necesidad ni el precio.",
+     "{a} % du total des contrats en UAH de cet acheteur pour {b} ({c} UAH, contrats des procédures créées cette année-là). {d} points à partir de 5 %, toutes procédures : parmi les marchés ukrainiens visés par des condamnations pénales, un contrat aussi important pour son acheteur était environ 8 fois plus fréquent que parmi les autres marchés des mêmes acheteurs. Les gros achats sont souvent licites ; ce contrôle n’évalue ni le besoin ni le prix."),
+    ("{a} % of this buyer’s UAH contract total for {b} ({c} UAH, contracts of tenders created that year). Below the 5 % threshold.",
+     "{a} % del total de contratos en UAH de este comprador en {b} ({c} UAH, contratos de licitaciones creadas ese año). Por debajo del umbral del 5 %.",
+     "{a} % du total des contrats en UAH de cet acheteur pour {b} ({c} UAH, contrats des procédures créées cette année-là). Sous le seuil de 5 %."),
+]
