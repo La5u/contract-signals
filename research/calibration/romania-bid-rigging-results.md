@@ -65,6 +65,38 @@ linking: {'unresolved: none': 15, 'resolved by notice': 15, 'unresolved: notice'
 | N4 supplier dependence >= 25 % | 31% (12/60) | 11% (213/6908) | 2.079 [1.29, 3.91] | 1.628 / 2.118 | 10.6 [3.7, 19.7] | proposal |
 | N5 first-time supplier | 38% (12/53) | 40% (1251/5371) | 0.968 [0.68, 1.33] | 1.005 / 0.922 | 0.0 [0.0, 4.2] | fails rule |
 
+### weighted by appeal outcome, one per decision (decision rule, amendment 2026-10-15): 16 labelled (14 buyers), 6953 comparisons
+
+| Check | Hit rate, rigged | Comparisons | LR+ [95 %] | Learn / check | Points [95 %] | Decision |
+|---|---|---|---|---|---|---|
+| RO0 single offer | 30% (3.82/14.46) | 35% (1505.99/5207.69) | 0.918 [0.56, 1.34] | 0.824 / 1.095 | 0.0 [0.0, 4.2] | fails rule |
+| RO1 direct award | 0% (0.0/15.46) | 14% (593.09/6914.78) | 0.425 [0.35, 0.54] | 0.531 / 0.679 | 0.0 [0.0, 0.0] | fails rule |
+| RO2 buyer share >= 5 % | 31% (4.91/15.46) | 17% (124.08/6409.78) | 1.392 [0.76, 2.40] | 1.293 / 1.143 | 4.8 [0.0, 12.7] | fails rule |
+| RO3 concentration | 7% (0.91/15.46) | 2% (237.09/6911.78) | 1.362 [0.38, 2.60] | 1.352 / 0.679 | 4.5 [0.0, 13.8] | fails rule |
+| RO5 framework / subsequent | 43% (5.82/15.46) | 22% (2709.63/6913.78) | 1.501 [0.89, 2.46] | 1.004 / 1.66 | 5.9 [0.0, 13.0] | fails rule |
+| U1 repeated single offer | 8% (1.0/14.46) | 6% (657.27/5799.78) | 1.001 [0.39, 1.89] | 1.078 / 0.728 | 0.0 [0.0, 9.2] | fails rule |
+| U2 repeated direct award | 0% (0.0/15.46) | 3% (238.09/6911.78) | 0.425 [0.35, 0.54] | 0.531 / 0.679 | 0.0 [0.0, 0.0] | fails rule |
+| N1 December signature | 22% (2.91/15.46) | 6% (339.18/6912.78) | 2.147 [0.48, 3.85] | 1.315 / 1.752 | 11.0 [0.0, 19.4] | fails rule |
+| N2 weekend signature | 0% (0.0/15.46) | 0% (17.0/6912.78) | 0.425 [0.35, 0.53] | 0.531 / 0.679 | 0.0 [0.0, 0.0] | fails rule |
+| N4 supplier dependence >= 25 % | 36% (4.91/15.46) | 12% (213.54/6911.78) | 1.994 [0.96, 3.78] | 1.749 / 1.337 | 10.0 [0.0, 19.2] | fails rule |
+| N5 first-time supplier | 31% (3.0/10.64) | 40% (1251.63/5374.51) | 0.88 [0.56, 1.26] | 1.023 / 0.78 | too few (9.73 buyers)  | fails rule |
+
+### weighted by appeal outcome, all procedures: 60 labelled (28 buyers), 6953 comparisons
+
+| Check | Hit rate, rigged | Comparisons | LR+ [95 %] | Learn / check | Points [95 %] | Decision |
+|---|---|---|---|---|---|---|
+| RO0 single offer | 36% (14.01/53.31) | 35% (1505.99/5207.69) | 1.012 [0.67, 1.40] | 0.964 / 1.049 | 0.2 [0.0, 4.8] | fails rule |
+| RO1 direct award | 0% (0.91/56.22) | 14% (593.09/6914.78) | 0.291 [0.27, 0.34] | 0.4 / 0.491 | 0.0 [0.0, 0.0] | fails rule |
+| RO2 buyer share >= 5 % | 37% (16.92/55.22) | 17% (124.08/6409.78) | 1.703 [1.17, 2.74] | 1.554 / 1.437 | 7.7 [2.3, 14.6] | proposal |
+| RO3 concentration | 0% (0.91/56.22) | 2% (237.09/6911.78) | 0.358 [0.27, 0.46] | 0.463 / 0.491 | 0.0 [0.0, 0.0] | fails rule |
+| RO5 framework / subsequent | 35% (12.37/56.22) | 22% (2709.63/6913.78) | 1.377 [0.90, 2.09] | 1.138 / 1.386 | 4.6 [0.0, 10.7] | fails rule |
+| U1 repeated single offer | 15% (5.73/54.22) | 6% (657.27/5799.78) | 1.672 [0.61, 2.99] | 1.537 / 1.094 | 7.4 [0.0, 15.8] | fails rule |
+| U2 repeated direct award | 0% (0.91/56.22) | 3% (238.09/6911.78) | 0.335 [0.27, 0.47] | 0.455 / 0.491 | 0.0 [0.0, 0.0] | fails rule |
+| N1 December signature | 11% (3.82/56.22) | 6% (339.18/6912.78) | 1.426 [0.36, 2.61] | 1.011 / 1.267 | 5.1 [0.0, 13.9] | fails rule |
+| N2 weekend signature | 0% (0.0/56.22) | 0% (17.0/6912.78) | 0.272 [0.27, 0.28] | 0.379 / 0.491 | 0.0 [0.0, 0.0] | fails rule |
+| N4 supplier dependence >= 25 % | 32% (11.46/56.22) | 12% (213.54/6911.78) | 2.004 [1.27, 3.54] | 1.629 / 1.833 | 10.0 [3.4, 18.3] | proposal |
+| N5 first-time supplier | 38% (11.37/49.49) | 40% (1251.63/5374.51) | 0.96 [0.68, 1.31] | 1.012 / 0.901 | 0.0 [0.0, 3.9] | fails rule |
+
 ### all findings, 2+ offers (sensitivity): 42 labelled (17 buyers), 3778 comparisons
 
 | Check | Hit rate, rigged | Comparisons | LR+ [95 %] | Learn / check | Points [95 %] | Decision |
