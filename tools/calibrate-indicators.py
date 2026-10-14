@@ -111,8 +111,8 @@ def fit_models(x, known, labels, validation_x, validation_labels, validation_kno
         return (np.logaddexp(0, z).mean() - (labels * z).mean() + regularization * (theta[1:] ** 2).sum(),
                 np.r_[residual.mean(), imputed.T @ residual / len(labels) + 2 * regularization * theta[1:]])
     regularizations = (.005, .025, .1)
-    results = [minimize(loss, np.zeros(19), args=(reg,), jac=True, method='L-BFGS-B',
-                        bounds=[(None, None)] + [(0, 8)] * 19, options={'maxiter': 100})
+    results = [minimize(loss, np.zeros(len(KINDS) + 1), args=(reg,), jac=True, method='L-BFGS-B',
+                        bounds=[(None, None)] + [(0, 8)] * len(KINDS), options={'maxiter': 100})
                for reg in regularizations]
     # Caller supplies assessed masks separately for validation imputation.
     vx = np.where(validation_known, validation_x, means)
