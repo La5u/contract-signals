@@ -22,7 +22,9 @@ Contracts of the same buyer (CUI) awarded in the same year, from the SEAP contra
 | RO4 amendments | Three or more published contract modifications, where the modification files can be linked to the contract. |
 | RO5 framework / subsequent | Contract awarded as a subsequent contract under a framework agreement (descriptive; tested, no prior expectation). |
 
-Single offer cannot be tested: SEAP exports carry no offer counts (TED has them for above-threshold notices only; reported separately if at least 10 labelled procedures match a TED notice).
+| RO0 single offer | A competitive procedure (not negotiated without publication, not a direct purchase) whose contract record publishes 1 offer received. Unknown where the year's export has no offer count. |
+
+Amendment (2026-10-14, still before any rate was computed): the 2017 and 2021 export headers include the number of offers received (`NumarOfertePrimite`, `NUMAR_OFERTE`), so RO0 is added. The 2024 export has no such column; years without it leave RO0 unknown. Bid rigging needs at least two bidders, so, as for the Ukrainian AMCU labels, RO1–RO5 are also reported among procedures with 2+ offers where offers are known (sensitivity, not a decision).
 
 ## Method and decision rule
 
