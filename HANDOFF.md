@@ -1,6 +1,6 @@
 # Project handoff
 
-Updated: 2026-10-12. Current state only; delivery history is in [docs/project-journal.md](docs/project-journal.md).
+Updated: 2026-10-14. Current state only; delivery history is in [docs/project-journal.md](docs/project-journal.md).
 
 ## Project and standing instructions
 
@@ -16,8 +16,9 @@ Updated: 2026-10-12. Current state only; delivery history is in [docs/project-jo
 
 ## Current state
 
-- All work through the Ukraine random-sample check of 2026-10-12 is committed locally, not pushed or deployed. Older checkout, branch and deployment checkpoints are superseded.
-- Latest score version: **3.5** (owner-approved 2026-10-13, revised 2026-10-14; branch `research/ukraine-calibration-v3.5`, uncommitted). Ukrainian points come from court verdicts and AMCU bid-rigging decisions, points = 10 × log2(shrunk LR) ([research/calibration/ukraine-results-2026-10-14.md](research/calibration/ukraine-results-2026-10-14.md)). `ua-single-offer` 12 → 1 (data say 0; owner kept a point), `ua-better-bid-disqualified` 12 → 4, `ua-contract-amendments` 8 → 6 at 3–4 and 10 at 5+, plus 6 with a term extension; new `ua-term-extension` 4. Ukraine has **50 contracts with a positive score** (48 in 3.4). Points are per jurisdiction; other countries unchanged. The frozen Ukrainian public-audit plan replays from its 3.4 selection scores in `data/ukraine-public-audit-scores.json`.
+- `main` at `d66dcc5` is pushed and deployed (2026-10-14, CI green); https://contracts.lasu.dev serves score 3.5. Older checkout, branch and deployment checkpoints are superseded.
+- The owner runs git commit/push/merge on `main` (the assistant's auto-mode blocks them); hand over `! <command>` lines.
+- Latest score version: **3.5** (owner-approved 2026-10-13, revised and released 2026-10-14). Ukrainian points come from court verdicts and AMCU bid-rigging decisions, points = 10 × log2(shrunk LR) ([research/calibration/ukraine-results-2026-10-14.md](research/calibration/ukraine-results-2026-10-14.md)). `ua-single-offer` 12 → 1 (data say 0; owner kept a point), `ua-better-bid-disqualified` 12 → 4, `ua-contract-amendments` 8 → 6 at 3–4 and 10 at 5+, plus 6 with a term extension; new `ua-term-extension` 4. Ukraine has **50 contracts with a positive score** (48 in 3.4). Points are per jurisdiction; other countries unchanged. The frozen Ukrainian public-audit plan replays from its 3.4 selection scores in `data/ukraine-public-audit-scores.json`.
 - France DECP is one explorer entry: **5,286 rows / eight buyers**, backed by Paris/Ardèche (**2,997**) and six-city (**2,289**) files. Old `cities` links redirect to `decp`.
 - Other cohorts: Tours notices **66**, BOAMP consultation notices **10**, BOAMP awards/audit dossiers **3,010**, Chile **522**, Colombia **7,560**, Paraguay **84 + 293**, Portugal TED **493**, Romania **356**, Czechia **674**, Ukraine **488**, UK **1,081**. Counts describe records, not independently validated unique contracts; see [README.md](README.md).
 - French disagreements are displayed/exported as ranges; amount checks use the whole range. Duplicate clusters count once in buyer baselines. Dijon shared-procedure lots are split and linked; disputed offers stay null.
@@ -29,6 +30,8 @@ Updated: 2026-10-12. Current state only; delivery history is in [docs/project-jo
 - Ukraine field check: **488 rows × 20 fields** match cached official records. A frozen **40-row random sample** matches live tender and contracting-module records; only **3 sampled rows are competitive**. This establishes reproduction of Prozorro, not agreement with signed contracts.
 - Remaining limits include a mixed-currency minimum-amount filter with one numeric cutoff, incomplete historical holder coverage, and missing offers/dates/durations. The UK audit found nine rows without amount/currency and three notice-date fallbacks; see [research/uk-contract-multiplicity-review.md](research/uk-contract-multiplicity-review.md).
 - Local import is browser-only, **25 MiB / 20,000 records** maximum, with preview/confirmation. Browse-only is default; French scoring requires opt-in and excludes `unverified` rows. Notes exports are plaintext; keep sensitive casework out.
+
+- Ukrainian court labels are public in `research/labels/` (owner decision 2026-10-14) for checking the points: convictions quoting a tender ID (178 competitive positives), +70 linked by buyer/contract (20/20 spot check), AMCU bid rigging upheld in court (2,714). Labels not yet final stay, with a `finality_note` (owner rejected withholding them) and are left out of the analysis. Court-text snippets and 10-digit individual tax numbers are removed; unredacted copies live in `~/.cache/contract-signals/unredacted/` and `labels-2026-10-14/`. After any label rebuild run `python3 tools/publish-ukraine-labels.py` before committing. Contest procedure: [research/labels/README.md](research/labels/README.md). Per-row/feature files (`ukraine-*-rows.json`, `*candidate-features.json`) are git-ignored and regenerable with `tools/ukraine-analyze-all.sh`.
 
 ## Run, test and reproduce
 
@@ -65,7 +68,8 @@ This merges the 2026-10-09 list with later follow-ups; older queues are supersed
 4. **Offers and duplicates:** **7 Dijon notice-vs-DECP + 5 feed-vs-Ministry** offer disagreements; **25 flagged records / 10 duplicate clusters** lack resolution evidence. Dijon lot 8, `2024vdao017008` (**559,742.62 EUR**), appears in the award notice but not retained DECP inputs. Buyer offer-analysis reports remain the evidence gap; current work stays public-only.
 5. **Ukraine:** obtain exact documents for the **4 + 14** financial cases under a separately reviewed redirect-aware attachment plan; the first attachment returned an unfollowed HTTP 302. Verify portal date filters and fixed-window listing before expansion. Vinnytsia now lists **506** records without an observed 500 cap, but historical completeness remains unproven. Court verdicts set Ukrainian points (v3.5) but are never attached to rows; DASU findings stay outside scoring. Direct award is still unmeasured: the verdict comparison sample has no direct-award reports.
 6. **Verification and housekeeping:** resolve the calibration catalogue mismatch before release; restore browser tools as needed. Old `cities|` browser review marks no longer show. Historical housekeeping notes record `stash@{0}` (an old generated score review) and missing global Git identity; confirm before acting.
-7. **Release:** owner decides deployment. Portugal BASE remains a private **3,966-row candidate / 3 set aside**, browse-only if released; publication is unapproved. Any release still needs its rights/privacy and coverage gates.
+7. **Ukrainian labels, next options:** a direct-award comparison sample (direct award is unmeasured); 125 unclear AMCU cases; 186 unresolved buyer names in linking part A; 32 pending appeals (recheck finality, then recompute points); 666 AMCU candidate tenders missing from the cohort (reason unchecked); C3 (2+ better bidders disqualified) and C9 (small price drop) pass in some sets only. Then repeat the label method for Romania or Colombia; their points stay separate.
+8. **Release:** owner decides deployment. Portugal BASE remains a private **3,966-row candidate / 3 set aside**, browse-only if released; publication is unapproved. Any release still needs its rights/privacy and coverage gates.
 
 ## Detail pointers
 
