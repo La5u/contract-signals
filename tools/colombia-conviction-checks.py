@@ -61,11 +61,14 @@ def signed_year(r):
 
 
 def load_years():
-    data = {}
-    for p in CACHE.glob('*.json.gz'):
+    """SECOP I (historical and 2018+) and SECOP II files of an entity-year are merged; uids are unique per table."""
+    data = defaultdict(dict)
+    for p in sorted(CACHE.glob('*.json.gz')):
         nit, year = p.name.split('.')[0].split('-')
-        data[(nit, int(year))] = [r for r in json.loads(gzip.decompress(p.read_bytes())) if signed_year(r) == int(year)]
-    return data
+        for r in json.loads(gzip.decompress(p.read_bytes())):
+            if signed_year(r) == int(year) and r.get('uid'):
+                data[(nit, int(year))].setdefault(r['uid'], r)
+    return {k: list(v.values()) for k, v in data.items()}
 
 
 def resolve(records, years):
