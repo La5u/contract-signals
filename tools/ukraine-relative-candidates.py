@@ -6,6 +6,9 @@ Part 4 of research/calibration/ukraine-candidate-indicators-plan.md, rules fixed
   R2 increase-near-cap    current contract amount >= signed amount + 90 % of the 10 % reference ceiling (cohort)
   R3 just-under-threshold direct-contract report at 80-100 % of its open-tender threshold (census)
 Offline: census listings come from the cached search pages, buyer kinds from cached tender records.
+--fetch-categories downloads (serial, capped, cached) the tender records of direct-contract reports whose
+listed title carries no CPV code and whose value lies in one of the R3 bands, so their category is known;
+R3 then reads the category from the record (mainProcurementCategory, else the first item's CPV).
 Changes no score, weight or dataset.
 """
 import argparse
@@ -64,6 +67,23 @@ def buyer_kinds(f, rows):
     return kinds
 
 
+def in_band(value):
+    return value is not None and any(BAND[0] * t <= value < BAND[1] * t for pair in THRESHOLDS.values() for t in pair)
+
+
+def record_cpv(f, tender_id):
+    """'45…' for works, another CPV for goods and services, from a cached tender record; None if unknown."""
+    hit = f.fetch(vc.bc.tender_url(tender_id))
+    if not hit or not hit.get('body'):
+        return None
+    data = json.loads(hit['body']).get('data') or {}
+    category = data.get('mainProcurementCategory')
+    if category in ('goods', 'services', 'works'):
+        return '45000000' if category == 'works' else '00000000'
+    items = data.get('items') or []
+    return ((items[0].get('classification') or {}).get('id') or '')[:8] or None if items else None
+
+
 def threshold(kind, cpv):
     cls = KIND_CLASS.get(kind)
     if cls is None or not cpv:
@@ -76,7 +96,7 @@ def status(flag):
     return 'unknown' if flag is None else 'signal' if flag else 'clear'
 
 
-def census_rows(rows, census, kinds):
+def census_rows(rows, census, kinds, categories=None):
     """R1 and R3 rows: eligible positives against the census tenders of the same buyer-years."""
     positives = [r for r in rows if r['label'] in pp.POSITIVE and r['finality'] in pp.ELIGIBLE
                  and r['buyerId'] not in census_mod.PLACEHOLDER_BUYERS]
@@ -94,7 +114,9 @@ def census_rows(rows, census, kinds):
         total = totals[(buyer, year)] + extra
         share = value / total if value is not None and total > 0 else None
         limit = threshold(kinds.get(buyer), cpv)
-        near = None if not direct else (None if value is None or limit is None else BAND[0] * limit <= value < BAND[1] * limit)
+        # Outside every band R3 cannot fire, whatever the category or buyer kind.
+        near = (None if not direct or value is None else False if not in_band(value)
+                else None if limit is None else BAND[0] * limit <= value < BAND[1] * limit)
         c = {'R1 buyer-share': {'status': status(None if share is None else share >= SHARE)},
              'R3 just-under-threshold': {'status': 'clear' if not direct else status(near)}}
         for s in SHARE_SENSITIVITY:
@@ -115,8 +137,9 @@ def census_rows(rows, census, kinds):
         if tid in positive_ids or t.get('status') != 'complete':
             continue
         m = TITLE_CPV.match(t.get('title') or '')
+        cpv = m.group(1) if m else (categories or {}).get(tid)
         out.append({'id': tid, 'buyer': t['buyer'], 'groups': ['comparison'],
-                    'checks': checks(uah(t.get('value')), t['buyer'], tid[3:7], t['kind'] == 'reporting', m and m.group(1), 0)})
+                    'checks': checks(uah(t.get('value')), t['buyer'], tid[3:7], t['kind'] == 'reporting', cpv, 0)})
     return out
 
 
@@ -154,6 +177,8 @@ def main(argv=None):
     p.add_argument('--census', default=str(CENSUS))
     p.add_argument('--cache', default=str(vc.CACHE))
     p.add_argument('--json', help='write results here')
+    p.add_argument('--fetch-categories', action='store_true', help='download the records R3 needs (network)')
+    p.add_argument('--budget', type=int, default=3000, help='new requests allowed for --fetch-categories')
     args = p.parse_args(argv)
     rows = json.loads(gzip.open(args.cohort).read())['rows']
     saved = json.loads(gzip.open(args.census).read())
@@ -163,8 +188,22 @@ def main(argv=None):
         raise SystemExit(f'cached listings do not replay the census: {len(tenders)} vs {len(saved["tenders"])} tenders')
     census = {'buyer_years': saved['buyer_years'], 'tenders': tenders}
     kinds = buyer_kinds(f, rows)
+    need = sorted(tid for tid, t in tenders.items() if t['kind'] == 'reporting' and t.get('status') == 'complete'
+                  and not TITLE_CPV.match(t.get('title') or '') and in_band(uah(t.get('value'))))
+    if args.fetch_categories:
+        net = bc.Fetcher(Path(args.cache).expanduser(), budget=f.requests + args.budget, network=True, prior=0, opener=vc.opener)
+        try:
+            for i, tid in enumerate(need):
+                net.fetch(vc.bc.tender_url(tid))
+                net.responses.clear()
+                if i % 200 == 0:
+                    print(f'{i}/{len(need)} records', flush=True)
+        except (bc.BudgetExceeded, bc.Blocked, bc.Throttled) as e:
+            print(f'stopped: {e}')
+    categories = {tid: record_cpv(f, tid) for tid in need}
+    print(f'R3 band tenders without a title CPV: {len(need)}; category known for {sum(v is not None for v in categories.values())}')
     changes = {r['id']: r['features'] for r in json.loads(Path(args.changes).read_text())['rows'] if r.get('features')}
-    a1, a2 = census_rows(rows, census, kinds), increase_rows(rows, changes)
+    a1, a2 = census_rows(rows, census, kinds, categories), increase_rows(rows, changes)
     results = [evaluate(a1 if check.startswith(('R1', 'R3')) else a2, check)
                for check in [*a1[0]['checks'], *a2[0]['checks']]]
     kinded = {b for b in {r['buyer'] for r in a1}}
