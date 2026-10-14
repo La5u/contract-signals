@@ -766,7 +766,10 @@ window.I18N_DICTS.es = {
   "Contract amendments": "Modificaciones del contrato",
   "Contract record not retrieved: amendments not assessable.": "Registro del contrato no recuperado: modificaciones no evaluables.",
   "none published": "ninguno publicado",
-  "StateWatch/Prozorro risk indicator ARI 1-1 (three or more contract amendments)": "Indicador de riesgo StateWatch/Prozorro ARI 1-1 (tres o más modificaciones del contrato)"
+  "StateWatch/Prozorro risk indicator ARI 1-1 (three or more contract amendments)": "Indicador de riesgo StateWatch/Prozorro ARI 1-1 (tres o más modificaciones del contrato)",
+  "Contract term extended by amendment": "Plazo del contrato prorrogado por modificación",
+  "Contract record not retrieved: term extension not assessable.": "Registro del contrato no obtenido: prórroga del plazo no evaluable.",
+  "No active amendment extends the contract term.": "Ninguna modificación activa prorroga el plazo del contrato."
  },
  "patterns": [
   [
@@ -1106,8 +1109,8 @@ window.I18N_DICTS.es = {
    "Proceso lanzado el {a}, antes de que la Ley 7021/22 se aplicara a todos los procesos (2024-02-19): no se aplica el tope del Art. 67. Fuera de alcance."
   ],
   [
-   "{a} better-ranked bidder(s) on this lot had their award declared unsuccessful before this award. 12 points, all amounts. Disqualification is often lawful (missing documents, non-compliant offer); read the award decisions linked on the Prozorro page.",
-   "{a} oferente(s) mejor clasificado(s) en este lote vio/vieron su adjudicación declarada fallida antes de esta adjudicación. 12 puntos, todos los montos. La descalificación suele ser legal (documentos faltantes, oferta no conforme); lea las decisiones enlazadas en la página de Prozorro."
+   "{a} better-ranked bidder(s) on this lot had their award declared unsuccessful before this award. 4 points, all amounts. Disqualification is often lawful (missing documents, non-compliant offer); read the award decisions linked on the Prozorro page.",
+   "{a} oferente(s) mejor clasificado(s) en este lote vio/vieron su adjudicación declarada fallida antes de esta adjudicación. 4 puntos, todos los montos. La descalificación suele ser legal (documentos faltantes, oferta no conforme); lea las decisiones enlazadas en la página de Prozorro."
   ],
   [
    "Award without competition ({a})",
@@ -1274,8 +1277,16 @@ window.I18N_DICTS.es = {
    "Las fuentes difieren en el importe ({a} a {b} sin IVA), a ambos lados del umbral legal: no evaluado."
   ],
   [
-   "{a} active contract amendment(s). Rationale types: {b}. Amendments are often lawful (Law on Public Procurement art. 41 permits listed changes). The threshold of three follows StateWatch/Prozorro risk indicator ARI 1-1. 8 points when the threshold is met.",
-   "{a} modificación(es) activa(s) del contrato. Tipos de justificación: {b}. Las modificaciones suelen ser legales (el art. 41 de la Ley de Contratación Pública permite los cambios enumerados). El umbral de tres sigue el indicador de riesgo StateWatch/Prozorro ARI 1-1. 8 puntos al alcanzar el umbral."
+   "{a} active contract amendment(s). Rationale types: {b}. Amendments are often lawful (Law on Public Procurement art. 41 permits listed changes). The threshold of three follows StateWatch/Prozorro risk indicator ARI 1-1. {c} points at 3–4 amendments, {d} at 5 or more, plus {e} when an amendment extends the contract term.",
+   "{a} modificación(es) activa(s) del contrato. Tipos de justificación: {b}. Las modificaciones suelen ser legales (el art. 41 de la Ley de Contratación Pública permite los cambios enumerados). El umbral de tres sigue el indicador de riesgo StateWatch/Prozorro ARI 1-1. {c} puntos con 3–4 modificaciones, {d} con 5 o más, más {e} cuando una modificación prorroga el plazo del contrato."
+  ],
+  [
+   "{a} offer(s) published for this lot ({b}). One offer: {c} point(s), all amounts, lowered from 12 because among Ukrainian tenders in criminal verdicts it was less frequent than among the same buyers' other tenders. Admissibility is not assessed.",
+   "{a} oferta(s) publicada(s) para este lote ({b}). Una oferta: {c} punto(s), todos los montos, rebajado(s) desde 12 porque entre las licitaciones ucranianas de sentencias penales fue menos frecuente que entre las demás licitaciones de los mismos compradores. No se evalúa la admisibilidad."
+  ],
+  [
+   "An active amendment extends the contract term (rationale types: {a}). {b} points with fewer than three amendments; with three or more it adds {c} points to the amendments check instead. Extensions are often lawful (Law on Public Procurement art. 41 permits some); this check does not assess their grounds.",
+   "Una modificación activa prorroga el plazo del contrato (tipos de justificación: {a}). {b} puntos con menos de tres modificaciones; con tres o más suma en cambio {c} puntos a la comprobación de modificaciones. Las prórrogas suelen ser legales (el art. 41 de la Ley de Contratación Pública permite algunas); esta comprobación no evalúa sus motivos."
   ]
  ]
 };

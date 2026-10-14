@@ -766,7 +766,10 @@ window.I18N_DICTS.fr = {
   "Contract amendments": "Avenants au contrat",
   "Contract record not retrieved: amendments not assessable.": "Fiche du contrat non récupérée : avenants non évaluables.",
   "none published": "aucun publié",
-  "StateWatch/Prozorro risk indicator ARI 1-1 (three or more contract amendments)": "Indicateur de risque StateWatch/Prozorro ARI 1-1 (trois avenants au contrat ou plus)"
+  "StateWatch/Prozorro risk indicator ARI 1-1 (three or more contract amendments)": "Indicateur de risque StateWatch/Prozorro ARI 1-1 (trois avenants au contrat ou plus)",
+  "Contract term extended by amendment": "Durée du marché prolongée par avenant",
+  "Contract record not retrieved: term extension not assessable.": "Fiche du contrat non récupérée : prolongation de durée non évaluable.",
+  "No active amendment extends the contract term.": "Aucun avenant actif ne prolonge la durée du marché."
  },
  "patterns": [
   [
@@ -1106,8 +1109,8 @@ window.I18N_DICTS.fr = {
    "Procédure lancée le {a}, avant que la Ley 7021/22 ne s’applique à toutes les procédures (2024-02-19) : le plafond de l’art. 67 n’est pas appliqué. Hors périmètre."
   ],
   [
-   "{a} better-ranked bidder(s) on this lot had their award declared unsuccessful before this award. 12 points, all amounts. Disqualification is often lawful (missing documents, non-compliant offer); read the award decisions linked on the Prozorro page.",
-   "{a} soumissionnaire(s) mieux classé(s) sur ce lot a/ont vu son/leur attribution déclarée infructueuse avant celle-ci. 12 points, tous montants. La disqualification est souvent légale (pièces manquantes, offre non conforme) ; lisez les décisions liées sur la page Prozorro."
+   "{a} better-ranked bidder(s) on this lot had their award declared unsuccessful before this award. 4 points, all amounts. Disqualification is often lawful (missing documents, non-compliant offer); read the award decisions linked on the Prozorro page.",
+   "{a} soumissionnaire(s) mieux classé(s) sur ce lot a/ont vu son/leur attribution déclarée infructueuse avant celle-ci. 4 points, tous montants. La disqualification est souvent légale (pièces manquantes, offre non conforme) ; lisez les décisions liées sur la page Prozorro."
   ],
   [
    "Award without competition ({a})",
@@ -1274,8 +1277,16 @@ window.I18N_DICTS.fr = {
    "Les sources divergent sur le montant ({a} à {b} HT), de part et d’autre du seuil légal : non évalué."
   ],
   [
-   "{a} active contract amendment(s). Rationale types: {b}. Amendments are often lawful (Law on Public Procurement art. 41 permits listed changes). The threshold of three follows StateWatch/Prozorro risk indicator ARI 1-1. 8 points when the threshold is met.",
-   "{a} avenant(s) actif(s) au contrat. Types de justification : {b}. Les avenants sont souvent licites (l’art. 41 de la loi sur les marchés publics permet les modifications énumérées). Le seuil de trois suit l’indicateur de risque StateWatch/Prozorro ARI 1-1. 8 points lorsque le seuil est atteint."
+   "{a} active contract amendment(s). Rationale types: {b}. Amendments are often lawful (Law on Public Procurement art. 41 permits listed changes). The threshold of three follows StateWatch/Prozorro risk indicator ARI 1-1. {c} points at 3–4 amendments, {d} at 5 or more, plus {e} when an amendment extends the contract term.",
+   "{a} avenant(s) actif(s) au contrat. Types de justification : {b}. Les avenants sont souvent licites (l’art. 41 de la loi sur les marchés publics permet les modifications énumérées). Le seuil de trois suit l’indicateur de risque StateWatch/Prozorro ARI 1-1. {c} points pour 3 à 4 avenants, {d} à partir de 5, plus {e} lorsqu’un avenant prolonge la durée du marché."
+  ],
+  [
+   "{a} offer(s) published for this lot ({b}). One offer: {c} point(s), all amounts, lowered from 12 because among Ukrainian tenders in criminal verdicts it was less frequent than among the same buyers' other tenders. Admissibility is not assessed.",
+   "{a} offre(s) publiée(s) pour ce lot ({b}). Une offre : {c} point(s), tous montants, abaissé(s) de 12 car, parmi les marchés ukrainiens visés par des condamnations pénales, elle était moins fréquente que parmi les autres marchés des mêmes acheteurs. La recevabilité n’est pas évaluée."
+  ],
+  [
+   "An active amendment extends the contract term (rationale types: {a}). {b} points with fewer than three amendments; with three or more it adds {c} points to the amendments check instead. Extensions are often lawful (Law on Public Procurement art. 41 permits some); this check does not assess their grounds.",
+   "Un avenant actif prolonge la durée du marché (types de justification : {a}). {b} points avec moins de trois avenants ; à partir de trois, il ajoute plutôt {c} points au contrôle des avenants. Les prolongations sont souvent licites (l’art. 41 de la loi sur les marchés publics en permet certaines) ; ce contrôle n’en évalue pas les motifs."
   ]
  ]
 };

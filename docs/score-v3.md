@@ -1,6 +1,10 @@
-# Vigilance index 3.4 — active method
+# Vigilance index 3.5 — active method
 
 **An editorial sorting tool, not a probability, a measure of legal gravity or a certificate of regularity.** The existing data and PDFs are unchanged; the meaning of the score and some eligibility criteria deliberately change. A v2.1 30 must not be compared to a v3 30 as a real evolution of a contract.
+
+## v3.5 (13–14 October 2026): Ukrainian points from court verdicts and bid-rigging decisions
+
+Approved by the owner on 2026-10-13 and revised on 2026-10-14 after the complete data. Ukrainian (Prozorro) rows only: a single offer scores **1** (was 12; the data give 0, the owner kept a point), better-ranked bidder disqualified **4** (was 12), three or more contract amendments **6 at 3–4 and 10 at 5 or more** (flat 8), and a new execution check, `ua-term-extension`: an active amendment that extends the contract term scores **4** with fewer than three amendments and adds **6** to the amendments check with three or more. Points are 10 × log2 of the likelihood ratio between labelled tenders (criminal verdicts; bid-rigging decisions of the competition authority upheld in court) and the same buyers' other tenders, shrunk toward 1; see [the Ukrainian method](score-ukraine.md#points-from-court-verdicts-and-bid-rigging-decisions-v35). Points are set per jurisdiction: other countries are unchanged and the same checks elsewhere keep 12 points. Ukrainian contracts with a positive score: 48 → 50.
 
 ## v3.4 (9 October 2026): Ukrainian contract amendments
 

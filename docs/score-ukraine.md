@@ -1,4 +1,4 @@
-# Ukraine method — Prozorro checks (v3.4 framework)
+# Ukraine method — Prozorro checks (v3.5 framework)
 
 **Checks for the Prozorro cohort** (three buyers, tenders created 2024-09-01 → 2026-09-01). Same vigilance-index framework as [score-v3.md](score-v3.md): two families, family maxima, cap at 100, `null` = “Not assessed”, unknowns never counted as zero. Different checks and eligibility; French, Colombian and Paraguayan rules are not applied. Amounts stay in the published currency (UAH, sometimes EUR or USD) and are never converted.
 
@@ -16,18 +16,19 @@ Written on 25 September 2026, before any record of this cohort was read. Procedu
 - **Without competition:** negotiation, negotiation.quick.
 - **Offer/direct-award checks excluded:** reporting — a direct-contract report recorded without a procedure. Reporting alone adds no points; the concentration check still applies.
 
-## The checks (ten with the universal late-publication check)
+## The checks (eleven with the universal late-publication check)
 
 | Check | ID | Family | Eligibility / trigger | Weight |
 | --- | --- | --- | --- | --- |
-| Single offer in a competitive procedure | `ua-single-offer` | Competition | Competitive type; offers on the awarded lot = 1 (bids whose lot values point to that lot, excluding deleted and draft bids) | **12** |
+| Single offer in a competitive procedure | `ua-single-offer` | Competition | Competitive type; offers on the awarded lot = 1 (bids whose lot values point to that lot, excluding deleted and draft bids) | **1** since v3.5 (was 12) |
 | Award without competition | `ua-direct-award` | Competition | negotiation / negotiation.quick | **18** |
 | Repeated single-offer awards | `ua-repeated-single-offer` | Competition | This award is single-offer; same buyer and supplier (EDRPOU or individual tax number) in ≥3 distinct tenders | **12 at 3 → 40 at 10** |
 | Repeated awards without competition | `ua-repeated-direct` | Competition | This award is negotiated; same buyer and supplier in ≥3 distinct tenders | **18 at 3 → 60 at 10** |
 | Concentrated awards | `ua-concentration` | Competition | Same buyer and main category (goods, works, services); ≥10 distinct procedures with identified suppliers, ≥80 % identification coverage, share ≥60 % | **12 at 60 % → 40 at 100 %** |
 | Amount increase | `amount-increase` | Execution | **Out of scope**: three contract links checked, but no comparable dated amendment history | — |
-| Better-ranked bidder disqualified | `ua-better-bid-disqualified` | Competition | Competitive type; on the awarded lot, at least one award to another bidder was declared unsuccessful before this award (added 2026-09-26) | **12**, flat |
-| Three or more contract amendments | `ua-contract-amendments` | Execution | Signed contract; retrieved integer count of active amendments ≥3 | **8**, flat |
+| Better-ranked bidder disqualified | `ua-better-bid-disqualified` | Competition | Competitive type; on the awarded lot, at least one award to another bidder was declared unsuccessful before this award (added 2026-09-26) | **4**, flat (12 before v3.5) |
+| Three or more contract amendments | `ua-contract-amendments` | Execution | Signed contract; retrieved integer count of active amendments ≥3 | **6** at 3–4, **10** at 5+, **+6** with a term extension (flat 8 in v3.4) |
+| Contract term extended by amendment | `ua-term-extension` | Execution | Signed contract; an active amendment of type durationExtension or fiscalYearExtension | **4** (with 3+ amendments counted as +6 on the amendments check) |
 | Long declared duration | `long-contract` | Execution | **Out of scope** | — |
 
 Offers are counted per lot, which Prozorro publishes (unlike the Paraguayan data). When a record publishes no bids, offers are unknown, never zero. Complaints are shown as context outside the index.
@@ -49,9 +50,39 @@ Reproduced by `tests/national.cjs`. Ministry of Health (national, EDRPOU 0001292
 
 The first run counted concentration in lots rather than procedures; this was corrected for both engines (see [score-ted.md](score-ted.md)). Ukrainian counts did not change.
 
+## Points from court verdicts and bid-rigging decisions (v3.5)
+
+Approved by the owner on 2026-10-13 (first table) and revised on 2026-10-14 after the complete data ([results](../research/calibration/ukraine-results-2026-10-14.md)). Points are Ukrainian only: other countries keep their own points, because procedures, data and enforcement differ.
+
+Labels:
+
+- **Convictions:** every criminal verdict 2017–2026 in the court decisions register under the official-crime articles (191, 364, 364-1, 365-2, 366, 367, 368, 369-2, 354) that convicts through a Prozorro tender (`tools/sweep-ukraine-verdicts.py`): 178 tenders quoting a tender ID (78 buyers), plus 70 linked by buyer, contract number and date ([plan](../research/calibration/ukraine-verdict-linking-plan.md); 20 of 20 spot-checked links correct). One supplier's case alone gives 47 tenders, so the main set counts **one tender per court case: 117 tenders (109 buyers)**.
+- **Bid rigging:** decisions of the competition authority (AMCU) upheld in court: 873 tenders, one per case (556 buyers). A cartel needs two bidders, so these are compared only among tenders with 2+ offers.
+
+Comparison: other tenders of the same buyers (874 for convictions, 6,878 with 2+ offers for bid rigging). Competitive procedures only. Rates count each buyer once; the likelihood ratio is shrunk toward 1 by a prior worth 10 buyers, with 95 % intervals from resampling buyers. Indicated points = 10 × log2(LR), floored at 0 (10 points each time the odds double). Points follow the convictions, one per case; the other sets check the direction ([tables](../research/calibration/ukraine-verdict-plus-linked-one-per-case-execution-points.md), `tools/ukraine-execution-points.py`).
+
+| Check | Hit rate, convictions (one per case) | Comparisons | LR+ [95 %] | Indicated points: one per case / tender ID only / bid rigging | Points |
+| --- | ---: | ---: | --- | --- | --- |
+| Single offer | 23 % | 32 % | 0.75 [0.54, 0.99] | 0 / 0 / not comparable | 12 → 3 → **1** (owner decision) |
+| Better-ranked bidder disqualified | 31 % | 20 % | 1.51 [1.08, 1.99] | 5.9 / 5.4 / 2.4 | 12 → 5 → **4** |
+| 3–4 contract amendments | 13 % | 6 % | 1.93 [1.07, 3.37] | 9.5 / 3.3 / 4.8 | 8 → **6** |
+| 5+ contract amendments | 15 % | 7 % | 2.08 [1.16, 3.53] | 10.6 / 10.3 / 1.2 | 8 → 11 → **10** |
+| Term extension, any amendment count | 32 % | 11 % | 2.61 [1.87, 3.68] | 13.8 / 8.6 / 6.1 | new |
+| Term extension with 0–2 amendments | 9 % | 6 % | 1.51 [0.77, 2.57] | 6.0 / 0.4 / 5.5 | **4** |
+| Term extension added to 3+ amendments | 78 % of amended | 40 % of amended | 1.73 [1.34, 2.31] | 7.9 / 4.5 / 3.2 | **+6** |
+
+- **Term extension** (`ua-term-extension`): an active contract amendment with rationale type `durationExtension` or `fiscalYearExtension`. It passed every test in both sources and is the strongest single execution signal. It is shown as its own check, but because the execution family counts only its maximum, with three or more amendments it adds its points to `ua-contract-amendments` (6 + 6 = 12 at 3–4, 10 + 6 = 16 at 5+); with fewer it scores 4 alone. The bonus is the extension's evidence *among amended contracts*, so it is not counted twice.
+- **Single offer** is less frequent on convicted tenders than on the same buyers' other tenders: most of these schemes ran through competitive tenders and took the money at execution. The data give it 0 points; the owner kept **1 point** (2026-10-14) so it stays visible and filterable.
+- **Better-ranked bidder disqualified:** on bid rigging most of its first strength came from bid count alone; among tenders with 2+ offers the LR is 1.18.
+- Repeated single offers, concentration and direct awards keep their points: too few cases (9 repeated-single-offer tenders), or (direct award) no comparison sample with direct-award reports yet.
+
+Robustness ([table](../research/calibration/ukraine-verdict-plus-linked-robustness.txt), `tools/ukraine-points-robustness.py`): 3+ amendments stay at LR 1.5–2.1 (6–10 points) with all linked tenders, confirmed finality only, without the largest split scheme or before 2022. A disqualified better bid ranges from LR 1.1 to 1.5 (1–6 points). A single offer depends on the 47-tender case: counting every linked tender gives LR 1.25–1.5 (3–6 points), one per case or tender IDs only give below 1. Tenders from 2022 on are too few to tell (64 positives, 37 buyers). Term extension was tested per set, not in this table. Other pre-registered candidates were tested and not added ([results](../research/calibration/ukraine-results-2026-10-14.md)); two or more disqualified bidders, a small price drop, early termination and several bid-pattern checks pass in some sets but not all.
+
+Limits: convictions over-represent what gets prosecuted; comparisons are unlabelled, not proven clean; verdicts under appeal are not counted. In the bundled cohort contracts with a positive score go from 48 (v3.4) to 50: 38 single offers score 1, 9 disqualifications 4, the amended contract (3 amendments, one a fiscal-year extension) 12, and 5 contracts are newly flagged by a term extension.
+
 ## Better-ranked bidder disqualified (added 2026-09-26)
 
-Prozorro opens awards one at a time in ranking order (after the e-auction, or by the evaluated price): when the top-ranked bid is rejected, its award is marked `unsuccessful` and the next bidder is considered. The importer counts, on the awarded lot, the other bidders whose award was declared unsuccessful on or before the winning award's date (`disqualifiedBefore`). One or more gives 12 points in the competition family, so it is not added to a single-offer signal on the same row. The short-bidding-period slot, out of scope here, is used for it.
+Prozorro opens awards one at a time in ranking order (after the e-auction, or by the evaluated price): when the top-ranked bid is rejected, its award is marked `unsuccessful` and the next bidder is considered. The importer counts, on the awarded lot, the other bidders whose award was declared unsuccessful on or before the winning award's date (`disqualifiedBefore`). One or more gives 4 points in the competition family (12 before v3.5), so it is not added to a single-offer signal on the same row. The short-bidding-period slot, out of scope here, is used for it.
 
 - **Bid values are not compared.** Initial bid values in the record predate the e-auction, so “the lowest bid did not win” cannot be read from them reliably; the award sequence can.
 - **Result:** 9 of 64 competitive contracts (8 with one bidder set aside, 1 with two), all newly flagged: Ministry of Health equipment, lift and document-system purchases under the HEAL project, polyclinic and primary-care refurbishment works, rehabilitation vehicles, road maintenance services and linoleum.

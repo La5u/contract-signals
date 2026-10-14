@@ -16,7 +16,7 @@ const VERIFICATION_STATUSES = {
 const HISTORY_START = '2024-01-01';
 const HISTORY_END = '2025-12-31';
 
-const SCORE_VERSION = '3.4';
+const SCORE_VERSION = '3.5';
 
 // Conservative calendar-day upper bound: publication time is not supplied by BOAMP.
 function getBiddingPeriod(contract) {
@@ -323,7 +323,7 @@ const KIND_OF_CHECK = {
   'supplier-concentration': 'concentration', 'secop2-concentration': 'concentration', 'dncp-concentration': 'concentration',
   'long-contract': 'long-duration', 'secop2-long-duration': 'long-duration',
   'amount-increase': 'amount-increase', 'dncp-amount-increase': 'amount-increase',
-  'ua-contract-amendments': 'contract-amendments',
+  'ua-contract-amendments': 'contract-amendments', 'ua-term-extension': 'term-extension',
   'secop2-term-extension': 'term-extension', 'ua-better-bid-disqualified': 'disqualified-better-bid',
   'short-bidding-period': 'short-bidding-period', 'late-publication': 'late-publication', 'notice-late-change': 'late-notice-change',
 };
@@ -801,8 +801,13 @@ function getAssessmentDncp(c) {
 // Ukraine (Prozorro) and Portugal/Romania (TED eForms): one engine, per-family
 // labels and scope. Methods: docs/score-ukraine.md, docs/score-ted.md. Checks were
 // fixed before these cohorts were downloaded; French thresholds are not applied.
+// Ukrainian points from labelled cases (docs/score-ukraine.md, research/calibration/ukraine-results-2026-10-14.md).
+const UA_POINTS = { amendments3: 6, amendments5: 10, termExtension: 4, termExtensionBonus: 6, betterBidDisqualified: 4 };
+const UA_TERM_EXTENSION_TYPES = ['durationExtension', 'fiscalYearExtension'];
 const NATIONAL_FAMILIES = {
-  prozorro: { prefix: 'ua', doc: 'docs/score-ukraine.md', category: c => c.category, notScored: new Set(['reporting']),
+  // Ukraine v3.5: points from court verdicts and bid-rigging decisions (docs/score-ukraine.md). Other
+  // countries keep their own points: a check's weight is set per jurisdiction, never shared by default.
+  prozorro: { prefix: 'ua', doc: 'docs/score-ukraine.md', category: c => c.category, notScored: new Set(['reporting']), singleOfferPoints: 1,
     directLabel: 'Negotiated procedure without competition', directReason: 'negotiation or negotiation.quick',
     outOfScope: { directKind: 'Offer and direct-award checks are excluded for direct-contract reports (reporting), which are recorded without a procedure. Concentration remains assessable where cohort data permits.',
       increase: 'Linked contract samples expose change metadata, not comparable dated amounts: increase out of scope.' } },
@@ -842,9 +847,12 @@ function getAssessmentNational(c) {
   const p = spec.prefix, competitive = c.procedureDirect === false, direct = c.procedureDirect === true, supplier = nationalSupplierIdentity(c);
   // A known type the method deliberately does not score is out of scope, not unknown.
   const unknownKind = spec.notScored.has(c.procedure) ? 'no' : 'unknown';
-  add(`${p}-single-offer`, 'Single offer in a competitive procedure', 'competition', competitive ? 'yes' : direct ? 'no' : unknownKind, nationalOffersKnown(c), c.offers === 1, 12,
+  const singlePoints = spec.singleOfferPoints ?? 12;
+  add(`${p}-single-offer`, 'Single offer in a competitive procedure', 'competition', competitive ? 'yes' : direct ? 'no' : unknownKind, nationalOffersKnown(c), c.offers === 1, singlePoints,
     direct ? 'Procedure without competition: one offer is expected, not a signal.' : !competitive ? spec.outOfScope.directKind :
-    !nationalOffersKnown(c) ? (c.offersNote || 'Number of offers for this lot not published.') : `${c.offers} offer(s) published for this lot (${c.procedure}). One offer: 12 points, all amounts. Admissibility is not assessed.`);
+    !nationalOffersKnown(c) ? (c.offersNote || 'Number of offers for this lot not published.') :
+    singlePoints === 12 ? `${c.offers} offer(s) published for this lot (${c.procedure}). One offer: 12 points, all amounts. Admissibility is not assessed.` :
+    `${c.offers} offer(s) published for this lot (${c.procedure}). One offer: ${singlePoints} point(s), all amounts, lowered from 12 because among Ukrainian tenders in criminal verdicts it was less frequent than among the same buyers' other tenders. Admissibility is not assessed.`);
   add(`${p}-direct-award`, `Award without competition (${spec.directLabel})`, 'competition', spec.directOutOfScope ? 'no' : c.procedureDirect == null ? unknownKind : 'yes', c.procedureDirect != null, direct, 18,
     spec.directOutOfScope ? spec.directOutOfScope : c.procedureDirect == null ? spec.outOfScope.directKind : direct ? `${c.procedure} (${spec.directReason}): award without a competitive call. 18 points, all amounts. A lawful ground may apply (urgency, exclusivity, failed call); not assessed here.` : `Competitive procedure (${c.procedure}): no direct-award signal.`);
   const rs = c.nationalRepeatedSingle;
@@ -860,15 +868,22 @@ function getAssessmentNational(c) {
   if (c.dataFamily === 'prozorro') {
     // Prozorro creates awards in ranking order: an unsuccessful award before the
     // winning one means a better-ranked bid was set aside (docs/score-ukraine.md).
-    const amendments = c.contractChanges;
-    add('ua-contract-amendments', 'Three or more contract amendments', 'execution', 'yes', Number.isInteger(amendments), amendments >= 3, 8,
+    const amendments = c.contractChanges, types = c.contractChangeTypes || [];
+    const extended = Number.isInteger(amendments) && types.some(t => UA_TERM_EXTENSION_TYPES.includes(t));
+    const amendmentPoints = (amendments >= 5 ? UA_POINTS.amendments5 : UA_POINTS.amendments3) + (extended ? UA_POINTS.termExtensionBonus : 0);
+    add('ua-contract-amendments', 'Three or more contract amendments', 'execution', 'yes', Number.isInteger(amendments), amendments >= 3, amendmentPoints,
       !Number.isInteger(amendments) ? 'Contract record not retrieved: amendments not assessable.' :
-      `${amendments} active contract amendment(s). Rationale types: ${(c.contractChangeTypes || []).join(', ') || 'none published'}. Amendments are often lawful (Law on Public Procurement art. 41 permits listed changes). The threshold of three follows StateWatch/Prozorro risk indicator ARI 1-1. 8 points when the threshold is met.`);
+      `${amendments} active contract amendment(s). Rationale types: ${types.join(', ') || 'none published'}. Amendments are often lawful (Law on Public Procurement art. 41 permits listed changes). The threshold of three follows StateWatch/Prozorro risk indicator ARI 1-1. ${UA_POINTS.amendments3} points at 3–4 amendments, ${UA_POINTS.amendments5} at 5 or more, plus ${UA_POINTS.termExtensionBonus} when an amendment extends the contract term.`);
+    // A separate check so it can be filtered; with three or more amendments it counts through the bonus above (family maximum).
+    add('ua-term-extension', 'Contract term extended by amendment', 'execution', 'yes', Number.isInteger(amendments), extended, UA_POINTS.termExtension,
+      !Number.isInteger(amendments) ? 'Contract record not retrieved: term extension not assessable.' :
+      extended ? `An active amendment extends the contract term (rationale types: ${types.filter(t => UA_TERM_EXTENSION_TYPES.includes(t)).join(', ')}). ${UA_POINTS.termExtension} points with fewer than three amendments; with three or more it adds ${UA_POINTS.termExtensionBonus} points to the amendments check instead. Extensions are often lawful (Law on Public Procurement art. 41 permits some); this check does not assess their grounds.` :
+      'No active amendment extends the contract term.');
     const dq = c.disqualifiedBefore;
-    add('ua-better-bid-disqualified', 'Better-ranked bidder disqualified before the award', 'competition', competitive ? 'yes' : direct ? 'no' : unknownKind, Number.isInteger(dq), dq > 0, 12,
+    add('ua-better-bid-disqualified', 'Better-ranked bidder disqualified before the award', 'competition', competitive ? 'yes' : direct ? 'no' : unknownKind, Number.isInteger(dq), dq > 0, UA_POINTS.betterBidDisqualified,
       !competitive ? (direct ? 'Procedure without competition: no ranking of bids.' : spec.outOfScope.directKind) :
       !Number.isInteger(dq) ? 'Award history without dates: disqualifications not assessable.' :
-      dq > 0 ? `${dq} better-ranked bidder(s) on this lot had their award declared unsuccessful before this award. 12 points, all amounts. Disqualification is often lawful (missing documents, non-compliant offer); read the award decisions linked on the Prozorro page.` :
+      dq > 0 ? `${dq} better-ranked bidder(s) on this lot had their award declared unsuccessful before this award. ${UA_POINTS.betterBidDisqualified} points, all amounts. Disqualification is often lawful (missing documents, non-compliant offer); read the award decisions linked on the Prozorro page.` :
       'No better-ranked bid set aside before this award on this lot.');
   } else add('short-bidding-period', 'Short bidding period', 'competition', 'no', false, false, null, 'No validated minimum period for this jurisdiction in this method: out of scope.');
   add('long-contract', 'Long declared duration', 'execution', 'no', false, false, null, 'No duration threshold validated for this jurisdiction: out of scope.');
