@@ -8,6 +8,7 @@ before / from 2022. Changes no score, weight or dataset.
 import argparse
 import importlib.util
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,15 +28,31 @@ def year(row_id):
     return row_id.split('UA-', 1)[1][:4] if 'UA-' in row_id else ''
 
 
-def variants(rows, raw, cases):
-    positive = lambda r: 'combined' in r['groups']
-    final = {r['id'] for r in raw if r.get('finality') == 'confirmed'}
-    seen, first_per_case = set(), set()
+def one_per_case(raw, cases):
+    """Ids of the first positive tender (by id) of each court case or set of cases."""
+    seen, first = set(), set()
     for r in sorted((r for r in raw if r['label'] in pp.POSITIVE), key=lambda r: r['id']):
         key = tuple(sorted(cases.get(v, v) for v in r.get('verdict_ids') or [])) or (r['id'],)
         if key not in seen:
             seen.add(key)
-            first_per_case.add(r['id'])
+            first.add(r['id'])
+    return first
+
+
+def write_one_per_case(rows_path, raw, cases):
+    """Write the one-tender-per-case rows and candidate features next to the full ones."""
+    keep = one_per_case(raw, cases)
+    for src in (Path(rows_path), Path(str(rows_path).replace('-rows.json', '-candidate-features.json'))):
+        data = json.loads(src.read_text())
+        out = src.with_name(src.name.replace('-rows.json', '-one-per-case-rows.json').replace('-candidate-features.json', '-one-per-case-candidate-features.json'))
+        out.write_text(json.dumps([r for r in data if r['label'] not in pp.POSITIVE or r['id'] in keep]) + '\n')
+        print(f'wrote {out}', file=sys.stderr)
+
+
+def variants(rows, raw, cases):
+    positive = lambda r: 'combined' in r['groups']
+    final = {r['id'] for r in raw if r.get('finality') == 'confirmed'}
+    first_per_case = one_per_case(raw, cases)
     split = {r['id'] for r in raw if any(cases.get(v) in SPLIT_SCHEME for v in r.get('verdict_ids') or [])}
     yield 'all (v3.5 basis)', rows
     yield 'confirmed finality only', [r for r in rows if not positive(r) or r['id'] in final]
@@ -50,9 +67,13 @@ def main(argv=None):
     p.add_argument('rows', help='per-row checks JSON from analyze-ukraine-verdict-cohort.cjs')
     p.add_argument('--json', help='write full results here')
     p.add_argument('--changes', default=str(CHANGES), help='amendment features JSON from fetch-verdict-contract-changes.py')
+    p.add_argument('--write-one-per-case', action='store_true',
+                   help='also write <name>-one-per-case-rows.json and -candidate-features.json (the v3.5 points basis)')
     args = p.parse_args(argv)
     raw = json.loads(Path(args.rows).read_text())
     cases = {v['reyestr_id']: v['case_number'] for path in (REVIEWED, LINKED) if path.exists() for v in json.loads(path.read_text())['verdicts']}
+    if args.write_one_per_case:
+        write_one_per_case(args.rows, raw, cases)
     rows, _ = pp.load_rows(args.rows, args.changes)
     out = []
     print('| Variant | Positives (buyers) | ' + ' | '.join(name for name, _ in CHECKS) + ' |')

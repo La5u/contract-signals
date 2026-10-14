@@ -34,7 +34,7 @@ So weighting from confirmed cases would go beyond current practice. The realisti
 
 ## Finality from the register page (2026-10-09)
 
-The register page header shows "Дата набрання законної сили" (date of entry into legal force) when the court has recorded it; for example verdict 137630272 shows 17.08.2026. This can confirm finality without the presumed rule. **The register rate-limits hard:** about 28 parallel page fetches got HTTP 429, a captcha, then refused connections. Fetch one page at a time, with pauses, and stop at the first 429.
+The register page header shows "Дата набрання законної сили" (date of entry into legal force) when the court has recorded it; for example verdict 137630272 shows 17.08.2026. This can confirm finality without the presumed rule. **The register rate-limits hard:** about 28 parallel page fetches got HTTP 429, a captcha, then refused connections. Fetch one page at a time, with pauses, and stop at the first 429. Since then the register has answered every serial page request with a captcha (84 pages before 14 October 2026, 36 on that day; [corrections log §6](../ukraine-corrections-log.md#6-captcha-pages-were-recorded-as-no-date-shown)); finality is read from the appeal decisions instead (`tools/recheck-ukraine-finality.py appeals`).
 
 ## Results (2026-10-09, preliminary)
 

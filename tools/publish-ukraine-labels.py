@@ -28,6 +28,8 @@ POSITIVE_ROW_LABELS = ('corruption', 'fraud', 'collusion')
 NOTES = {
     'pending-appeal': {'conviction': 'convicted; under appeal, not final',
                        'collusion': 'AMCU decision upheld by a court; under appeal, not final'},
+    'quashed': {'conviction': 'conviction quashed on appeal, retrial ordered; not final',
+                'collusion': 'court decision quashed on appeal, retrial ordered; not final'},
     'too-recent': {'conviction': 'convicted less than three months before {day}; an appeal may still be filed, not final',
                    'collusion': 'AMCU decision upheld by a court less than three months before {day}; an appeal may still be filed, not final'},
 }
@@ -43,8 +45,21 @@ def note(finality, label, day):
     return NOTES[finality][kind].format(day=day) if finality in NOTES else None
 
 
+def set_note(record, text):
+    """Set the note, or drop one that no longer applies (the label became final). 1 if changed."""
+    if record.get('finality_note') == text:
+        return 0
+    if text:
+        record['finality_note'] = text
+    elif 'finality_note' in record:
+        del record['finality_note']
+    else:
+        return 0
+    return 1
+
+
 def verdict_file(data, today, day):
-    """Verdict-level records: note each positive label whose tender is not final."""
+    """Verdict-level records: note each positive label whose tender is not final; drop notes that no longer apply."""
     records = data.get('verdicts')
     if not isinstance(records, list):
         return 0
@@ -56,9 +71,7 @@ def verdict_file(data, today, day):
     for v in records:
         if v.get('proposed_label') in builder.LABELS and v.get('tender_id_normalised'):
             text = note(builder.classify_finality(by_tender[v['tender_id_normalised']], today), v['proposed_label'], day)
-            if text and v.get('finality_note') != text:
-                v['finality_note'] = text
-                n += 1
+            n += set_note(v, text)
     return n
 
 
@@ -68,10 +81,7 @@ def row_file(data, day):
     n = 0
     for r in (r for rows in lists if isinstance(rows, list) for r in rows):
         if isinstance(r, dict) and r.get('label') in POSITIVE_ROW_LABELS:
-            text = note(r.get('finality'), r['label'], day)
-            if text and r.get('finality_note') != text:
-                r['finality_note'] = text
-                n += 1
+            n += set_note(r, note(r.get('finality'), r['label'], day))
     return n
 
 

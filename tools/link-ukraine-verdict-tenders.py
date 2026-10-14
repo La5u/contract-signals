@@ -391,10 +391,7 @@ def finality(args):
         for doc in sorted({str(p['doc_id']) for p in linked_rows()}):
             if doc in pages:
                 continue
-            hit = f.fetch(f'https://reyestr.court.gov.ua/Review/{doc}')
-            body = sw.decode(hit['body']) if hit and hit['body'] else ''
-            m = sw.FORCE_RE.search(body)
-            pages[doc] = f'{m.group(3)}-{m.group(2)}-{m.group(1)}' if m else ('no date shown' if 'Review' in body or 'реєстр' in body else 'page unreadable')
+            pages[doc] = sw.page_state(f.fetch(f'https://reyestr.court.gov.ua/Review/{doc}'))
             path.write_text(json.dumps(pages, indent=1))
     except (bc.BudgetExceeded, bc.Blocked, bc.Throttled) as e:
         print(f'stopped: {e}')

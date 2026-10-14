@@ -54,8 +54,12 @@ def classify_finality(verdicts, today):
     unresolved = ('pending', 'unavailable', 'undecided', 'not yet decided', 'not decided')
     # An appellate ruling enters into force when pronounced (CPC art. 532), so a conviction it keeps is final.
     upheld = ('convictions preserved', 'conviction upheld', 'upheld', 'replaced with conviction')
-    if appeals and all(any(word in s for word in upheld) and not any(word in s for word in unresolved) for s in appeals):
+    # One final conviction is enough, as with a register date above.
+    if any(any(word in s for word in upheld) and not any(word in s for word in unresolved) for s in appeals):
         return 'confirmed'
+    # A verdict quashed on appeal with a retrial ordered is no longer a conviction (written by recheck-ukraine-finality.py).
+    if any(s.startswith('appeal: verdict quashed') for s in appeals):
+        return 'quashed'
     if appeals:
         return 'pending-appeal'
     if not appeals and any(bc.day(v.get('verdict_date')) and bc.day(v['verdict_date']) <= three_months_before(today) for v in verdicts):
