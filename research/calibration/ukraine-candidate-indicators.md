@@ -53,3 +53,16 @@ Convictions over-represent what gets prosecuted. Comparisons are unlabelled, not
 | D3 direct contract ≥ UAH 1.5 million | 6 % | 2 % | 2.46 [0.84, 4.68] | 2.44 | 1.44 | fails |
 
 Direct contracting as such is far *less* common on convicted tenders: most direct contracts are small purchases nobody prosecutes. Large direct contracts lean the other way (D3 is 2.5 times as frequent), which supports the existing editorial choice to leave reporting procedures unscored but suggests a size-gated check is worth retesting when more convictions arrive. The negotiated-procedure check (`ua-direct-award`) cannot be measured: only 4 convicted tenders used one.
+
+### Repeat on the conviction cohort with linked tenders (2026-10-14)
+
+Pre-registered addition in the [plan](ukraine-candidate-indicators-plan.md#part-2-direct-contracts-fixed-2026-10-13-before-any-listing-was-downloaded): same census on `ukraine-verdict-plus-linked-cohort.json.gz` (203 buyer-years, 12,217 competitive, 45,058 direct-contract reports, 1,315 negotiated procedures; all listings complete, 2,131 new requests), plus D4, the scored `ua-direct-award` rule. Results: [`ukraine-direct-contract-census-plus-linked-results.json`](ukraine-direct-contract-census-plus-linked-results.json); census `research/labels/ukraine-direct-contract-census-plus-linked.json.gz`. The census was drawn from the cohort as it stood before the two tenders that became final on 14 October were added.
+
+| Candidate | Hit rate, convicted | Comparisons (census) | LR+ all [95 %] | Learn half [95 %] | Check half | Points (all) [95 %] | Decision |
+| --- | ---: | ---: | --- | --- | --- | --- | --- |
+| D1 direct contract, any value | 26 % (72/320) | 80 % | 0.35 [0.29, 0.43] | 0.40 [0.31, 0.51] | 0.38 | 0 | fails |
+| D2 direct contract ≥ UAH 200,000 | 17 % (39/320) | 8 % | 2.18 [1.52, 3.00] | 1.76 [1.06, 2.82] | 2.43 | 11.2 [6.0, 15.8] | **passes** |
+| D3 direct contract ≥ UAH 1.5 million | 5 % (12/320) | 1 % | 2.79 [1.24, 4.82] | 2.39 [0.62, 4.87] | 2.33 | 14.8 [3.1, 22.7] | fails (learn interval) |
+| D4 negotiated procedure (`ua-direct-award`) | 8 % (15/320) | 4 % | 1.94 [1.05, 3.13] | 1.27 [0.35, 2.74] | 2.29 | 9.6 [0.8, 16.5] | fails (learn interval) |
+
+With the linked convictions, a direct contract of at least UAH 200,000 (the open-tender threshold for goods and services) passes the holdout rule: it is twice as frequent on convicted tenders as among the same buyers' other completed tenders. D4 is the first measurement of `ua-direct-award`: the direction supports the check, but its indicated points (about 10, interval 1–17) are below the editorial 18 and the learn half does not exclude 1. Fifteen convicted negotiated tenders are still few. **Nothing adopted**; both are for the owner to decide. Caveats: listings are the site search's completed tenders only, and the size gate may still partly measure size (prosecutions favour large amounts).
