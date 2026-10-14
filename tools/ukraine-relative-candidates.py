@@ -71,17 +71,27 @@ def in_band(value):
     return value is not None and any(BAND[0] * t <= value < BAND[1] * t for pair in THRESHOLDS.values() for t in pair)
 
 
+def details_url(tender_id):
+    # The site endpoint takes the public tender ID; the official API needs the internal id (404 otherwise).
+    return f'https://prozorro.gov.ua/api/tenders/{tender_id}/details'
+
+
 def record_cpv(f, tender_id):
     """'45…' for works, another CPV for goods and services, from a cached tender record; None if unknown."""
-    hit = f.fetch(vc.bc.tender_url(tender_id))
+    hit = f.fetch(details_url(tender_id))
     if not hit or not hit.get('body'):
         return None
-    data = json.loads(hit['body']).get('data') or {}
+    data = json.loads(hit['body'])
+    data = data.get('data', data)
     category = data.get('mainProcurementCategory')
     if category in ('goods', 'services', 'works'):
         return '45000000' if category == 'works' else '00000000'
-    items = data.get('items') or []
-    return ((items[0].get('classification') or {}).get('id') or '')[:8] or None if items else None
+    for item in data.get('items') or []:
+        c = item.get('classification') or {}
+        m = re.search(r'\b(\d{8})-\d', f"{c.get('id') or ''} {c.get('description') or ''}")
+        if m:
+            return m.group(1)
+    return None
 
 
 def threshold(kind, cpv):
@@ -194,7 +204,7 @@ def main(argv=None):
         net = bc.Fetcher(Path(args.cache).expanduser(), budget=f.requests + args.budget, network=True, prior=0, opener=vc.opener)
         try:
             for i, tid in enumerate(need):
-                net.fetch(vc.bc.tender_url(tid))
+                net.fetch(details_url(tid))
                 net.responses.clear()
                 if i % 200 == 0:
                     print(f'{i}/{len(need)} records', flush=True)
