@@ -44,9 +44,9 @@ You can also open `index.html` directly. If the browser blocks loading built-in 
 | Colombia · MEN / Caldas / Usaquén — SECOP II contracts 2024–2026 | 7,560 | Colombian checks |
 | Paraguay · Fernando de la Mora — DNCP OCDS 2024–2025 | 84 | Paraguayan checks |
 | Paraguay · MOPC / Central / Asunción — DNCP OCDS 2024–2026 | 293 | Paraguayan checks |
-| Portugal · Infraestruturas de Portugal / CIM Cávado / Lisboa — TED award notices 2024–2026 | 493 | EU eForms checks |
-| Romania · Ministry of Finance / Cluj county / Cluj-Napoca — TED award notices 2024–2026 | 356 | EU eForms checks |
-| Czechia · Ministry of Finance / Moravian-Silesian region / Ostrava — TED award notices 2024–2026 | 674 | EU eForms checks |
+| Portugal · Infraestruturas de Portugal / CIM Cávado / Lisboa — TED award notices 2024–2026 | 488 | EU eForms checks |
+| Romania · Ministry of Finance / Cluj county / Cluj-Napoca — TED award notices 2024–2026 | 321 | EU eForms checks |
+| Czechia · Ministry of Finance / Moravian-Silesian region / Ostrava — TED award notices 2024–2026 | 630 | EU eForms checks |
 | Ukraine · Ministry of Health / Vinnytsia region / Dnipro — Prozorro contracts 2024–2026 | 488 | Ukrainian checks |
 | United Kingdom · FCDO / Lincolnshire / Milton Keynes — Find a Tender award notices 2024–2026 | 1,081 | UK checks |
 
