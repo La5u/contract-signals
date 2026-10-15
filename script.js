@@ -16,7 +16,7 @@ const VERIFICATION_STATUSES = {
 const HISTORY_START = '2024-01-01';
 const HISTORY_END = '2025-12-31';
 
-const SCORE_VERSION = '3.6';
+const SCORE_VERSION = '3.7';
 
 // Conservative calendar-day upper bound: publication time is not supplied by BOAMP.
 function getBiddingPeriod(contract) {
@@ -130,6 +130,18 @@ const CO_REPETITION_MAX = 10;
 const CO_CONCENTRATION_GROUP_MIN = 10;
 const CO_CONCENTRATION_COVERAGE = 0.8;
 const CO_CONCENTRATION_ENTRY_SHARE = 0.6;
+// Points from labelled cases (v3.7, research/calibration/romania-colombia-results-2026-10-14.md): repeated
+// awards without competition were rarer among convicted contracts (0 % vs 6 %); a token point is kept.
+const CO_REPETITION_POINTS = 1;
+// Buyer share (v3.7): a contract of at least 5 % of its buyer's contract total for its signing year; among
+// contracts in Colombian corruption convictions LR 2.64, 10 x log2 = 14 points. Only 2025 is a complete
+// signing year in the bundled cohort. The tested total merges SECOP I and II: SECOP I contracts signed in
+// 2025 are not in this extract, so their declared total is added (datos.gov.co f789-7hwg, sum of
+// cuantia_contrato, anno_firma_contrato 2025, queried 2026-10-15; x6v4-i8gf and Usaquén: none).
+const CO_BUYER_SHARE = 0.05;
+const CO_BUYER_SHARE_POINTS = 14;
+const CO_COMPLETE_YEARS = { 'secop2-three-buyers-2024-2026': new Set(['2025']) };
+const CO_SECOP1_TOTALS = { '899999001|2025': 77864151275, '890801052|2025': 37103760417 };
 
 function secop2ModalityState(procedure) {
   if (typeof procedure !== 'string' || !procedure.trim()) return 'unknown';
@@ -327,6 +339,7 @@ const KIND_OF_CHECK = {
   'amount-increase': 'amount-increase', 'dncp-amount-increase': 'amount-increase',
   'ua-contract-amendments': 'contract-amendments', 'ua-term-extension': 'term-extension', 'ua-buyer-share': 'buyer-share',
   'secop2-term-extension': 'term-extension', 'ua-better-bid-disqualified': 'disqualified-better-bid',
+  'secop2-buyer-share': 'buyer-share', 'ua-direct-contract': 'direct-award',
   'short-bidding-period': 'short-bidding-period', 'late-publication': 'late-publication', 'notice-late-change': 'late-notice-change',
 };
 function indicatorKind(id) {
@@ -380,6 +393,18 @@ function getLegalContext(contract) {
   return citations;
 }
 
+// v3.7: editorial (unmeasured) points are capped at 30, the strongest measured value so far (Ukrainian
+// buyer share, LR 8). Points from labelled cases are 10 x log2(LR): 40 would claim LR 16, 60 LR 64.
+const EDITORIAL_MAX = 30;
+// Checks whose points come from labelled cases (court verdicts, competition-authority decisions); every other
+// check carries editorial points. Shown next to the points in the record panel, the badges and exports.
+const MEASURED_CHECKS = new Set(['ua-single-offer', 'ua-direct-award', 'ua-direct-contract', 'ua-better-bid-disqualified',
+  'ua-contract-amendments', 'ua-term-extension', 'ua-buyer-share', 'secop2-buyer-share', 'secop2-repeated-plurality']);
+const MEASURED_CHECKS_BY_COUNTRY = { ROU: new Set(['ted-repeated-direct', 'ted-concentration']) };
+function pointsBasis(c, id) {
+  return MEASURED_CHECKS.has(id) || (c.dataFamily === 'ted' && MEASURED_CHECKS_BY_COUNTRY[c.country]?.has(id)) ? 'measured' : 'editorial';
+}
+const BASIS_NOTE = { measured: 'measured on labelled cases', editorial: 'editorial, not measured' };
 function graduated(value, start, end, low, high) {
   return Math.round((low + (high - low) * Math.min(1, Math.max(0, (value - start) / (end - start)))) * 10) / 10;
 }
@@ -570,7 +595,8 @@ function getAdditionalIndicatorChecks(c, excludedReason) {
 function computeAssessment(c) {
   const browse = c.assessmentMode === 'browse';
   const base = browse ? { checks: [], excludedReason: 'Browse-only import: no jurisdiction or scoring eligibility has been established.' } : getAssessmentLocal(c);
-  const checks = [...base.checks, ...(browse ? [] : [latePublicationCheck(c, base.excludedReason)]), ...getAdditionalIndicatorChecks(c, base.excludedReason)];
+  const checks = [...base.checks, ...(browse ? [] : [latePublicationCheck(c, base.excludedReason)]), ...getAdditionalIndicatorChecks(c, base.excludedReason)]
+    .map(r => ({ ...r, basis: pointsBasis(c, r.id) }));
   return { ...base, checks,
     applicable: checks.filter(r => r.applicability === 'yes').length,
     evaluated: checks.filter(r => r.status === 'signal' || r.status === 'clear').length,
@@ -616,18 +642,18 @@ function getAssessmentLocal(c) {
   const biddingApplicability = c.directAward === true || (initial?.procedureType && initial.procedureType !== 'open') || initial?.accelerated === true ? 'no' :
     bidding.status === 'available' || (initial?.procedureType === 'open' && initial.accelerated === false) ? 'yes' : 'unknown';
   add('short-bidding-period', 'Short bidding period', 'competition', biddingApplicability, bidding.status === 'available', bidding.short === true,
-    graduated(15 - (bidding.days ?? 15), 0, 12, 8, 40), biddingApplicability === 'no' ? 'Rule reserved for explicitly open non-accelerated procedures; this record’s known type is out of scope.' : bidding.status === 'available' ? `${bidding.days.toFixed(2)} days, upper bound. Signal if < 15 days; 8 points near 15, 40 at 3 days or fewer. Editorial threshold, not a legal one.` : bidding.reason);
+    graduated(15 - (bidding.days ?? 15), 0, 12, 8, EDITORIAL_MAX), biddingApplicability === 'no' ? 'Rule reserved for explicitly open non-accelerated procedures; this record’s known type is out of scope.' : bidding.status === 'available' ? `${bidding.days.toFixed(2)} days, upper bound. Signal if < 15 days; 8 points near 15, 30 at 3 days or fewer. Editorial threshold, not a legal one.` : bidding.reason);
   const evolution = getAmountEvolution(c);
   const priceExcluded = c.priceType != null && c.priceType !== 'Définitif ferme';
   add('amount-increase', 'Relative increase in declared amount', 'execution', priceExcluded ? 'no' : c.priceType === 'Définitif ferme' ? 'yes' : 'unknown', evolution.status === 'available', evolution.percentage > 20,
-    graduated(evolution.percentage || 0, 20, 100, 8, 40), evolution.status === 'available' ? `Declared increase of ${evolution.percentage.toFixed(2)} %. Signal strictly > 20 %, from 8 points near the threshold to 40 at +100 %. No euro threshold or bonus. Additional services possible: not a final expense nor a proven cost overrun.` : evolution.reason);
+    graduated(evolution.percentage || 0, 20, 100, 8, EDITORIAL_MAX), evolution.status === 'available' ? `Declared increase of ${evolution.percentage.toFixed(2)} %. Signal strictly > 20 %, from 8 points near the threshold to 30 at +100 %. No euro threshold or bonus. Additional services possible: not a final expense nor a proven cost overrun.` : evolution.reason);
   const context = c.competitionContext;
   const oneOfferApplicability = c.directAward === true || (knownOffers && c.offers !== 1) ? 'no' : competitive && c.offers === 1 ? 'yes' : 'unknown';
   add('repeated-single-bid', 'Repeated low competition', 'competition', oneOfferApplicability, Boolean(context?.sufficient), context?.rate >= 0.6,
-    graduated(context?.rate || 0, 0.6, 1, 12, 40), oneOfferApplicability === 'no' ? 'This contract is not a single-offer competitive award: outside the repeated-single-offer scope.' : context ? `${context.single}/${context.known} single offers, ${context.total} eligible contracts, CPV ${context.cpvGroup}, 2024–2025. Minimum 10 observations and 80 % coverage; from 12 points at 60 % to 40 points at 100 %. ${context.sufficient ? '' : 'Insufficient sample/coverage: not assessed.'}` : 'No eligible competitive context: no zero rate assumed.');
+    graduated(context?.rate || 0, 0.6, 1, 12, EDITORIAL_MAX), oneOfferApplicability === 'no' ? 'This contract is not a single-offer competitive award: outside the repeated-single-offer scope.' : context ? `${context.single}/${context.known} single offers, ${context.total} eligible contracts, CPV ${context.cpvGroup}, 2024–2025. Minimum 10 observations and 80 % coverage; from 12 points at 60 % to 30 points at 100 %. ${context.sufficient ? '' : 'Insufficient sample/coverage: not assessed.'}` : 'No eligible competitive context: no zero rate assumed.');
   const supplier = c.supplierContext;
   add('supplier-concentration', 'Concentrated awards', 'competition', (c.supplierIds || []).length > 1 ? 'no' : 'yes', Boolean(supplier?.sufficient), supplier?.share >= 0.6,
-    graduated(supplier?.share || 0, 0.6, 1, 12, 40), supplier ? `Same SIREN: ${supplier.wins}/${supplier.known} contracts to the known holder, out of ${supplier.total} eligible; CPV ${supplier.cpvGroup}, 2024–2025. Minimum 10 and 80 % coverage. From 12 points at 60 % to 40 at 100 %. Specialisation and framework agreements may explain this share. ${supplier.sufficient ? '' : 'Insufficient sample/coverage.'}` : 'Single holder or insufficient/unknown cohort context; no name-based matching.');
+    graduated(supplier?.share || 0, 0.6, 1, 12, EDITORIAL_MAX), supplier ? `Same SIREN: ${supplier.wins}/${supplier.known} contracts to the known holder, out of ${supplier.total} eligible; CPV ${supplier.cpvGroup}, 2024–2025. Minimum 10 and 80 % coverage. From 12 points at 60 % to 30 at 100 %. Specialisation and framework agreements may explain this share. ${supplier.sufficient ? '' : 'Insufficient sample/coverage.'}` : 'Single holder or insufficient/unknown cohort context; no name-based matching.');
   if (c.cohortId === 'tours-full-notices-2025') {
     const change = c.noticeChange;
     add('notice-late-change', 'Late notice change without deadline extension', 'competition', change?.status === 'not-applicable' ? 'no' : 'yes',
@@ -637,7 +663,7 @@ function getAssessmentLocal(c) {
   const directEnough = supplier?.directCount >= 3;
   const directKnown = supplier && supplier.directKnownCount === supplier.supplierContracts;
   add('repeated-direct-award', 'Repeated direct awards', 'competition', c.directAward === false ? 'no' : c.directAward === true ? 'yes' : 'unknown', Boolean(supplier && (directEnough || directKnown)), directEnough,
-    graduated(supplier?.directCount || 0, 3, 10, 18, 60), c.directAward === false ? 'This contract is explicitly competitive: direct repetition out of scope.' : c.directAward == null ? 'Competitive character of this contract unknown: direct repetition not assessable.' : supplier ? `${supplier.directCount} direct awards identified, all amounts, same buyer/CPV/SIREN, 2024–2025. From 18 points at 3 contracts to 60 at 10. Unknown procedures do not become competitive. Legal exceptions possible.` : 'No history for an identified holder: repetition unknown.');
+    graduated(supplier?.directCount || 0, 3, 10, 18, EDITORIAL_MAX), c.directAward === false ? 'This contract is explicitly competitive: direct repetition out of scope.' : c.directAward == null ? 'Competitive character of this contract unknown: direct repetition not assessable.' : supplier ? `${supplier.directCount} direct awards identified, all amounts, same buyer/CPV/SIREN, 2024–2025. From 18 points at 3 contracts to 30 at 10. Unknown procedures do not become competitive. Legal exceptions possible.` : 'No history for an identified holder: repetition unknown.');
   const applicable = checks.filter(r => r.applicability === 'yes').length;
   const evaluated = checks.filter(r => r.status === 'signal' || r.status === 'clear').length;
   return { checks, applicable, evaluated, unknown: checks.filter(r => r.applicability === 'yes' && r.status === 'unknown').length,
@@ -645,10 +671,10 @@ function getAssessmentLocal(c) {
     notApplicable: checks.filter(r => r.status === 'not-applicable').length,
     signals: checks.filter(r => r.status === 'signal').length, excludedReason };
 }
-// SECOP II assessment: five jurisdiction-specific checks plus the three
+// SECOP II assessment: six jurisdiction-specific checks plus the three
 // French checks that stay out of scope here (no offers table, no
 // publication–deadline chronology, no published amount additions).
-// Eight local checks (a ninth, universal transparency check is added by getAssessment).
+// Nine local checks (a tenth, universal transparency check is added by getAssessment).
 function getAssessmentSecop2(c) {
   const excludedReason = c.initialConflicts?.length || c.modificationConflicts?.length ? 'Conflicting versions: calculations excluded.' :
     c.identityAmbiguous ? 'Duplicate contract identifier: calculations excluded.' :
@@ -677,15 +703,22 @@ function getAssessmentSecop2(c) {
   add('secop2-repeated-plurality', 'Repeated awards declared without supplier plurality', 'competition',
     justified ? 'yes' : 'no', Boolean(repetition),
     Boolean(repetition && repetition.count >= CO_REPETITION_ENTRY),
-    graduated(repetition?.count || 0, CO_REPETITION_ENTRY, CO_REPETITION_MAX, 18, 60),
+    CO_REPETITION_POINTS,
     !justified ? 'This contract is not among the awards declared without supplier plurality or under manifest urgency: outside the repetition scope.' :
-    repetition ? `Same buyer and supplier document: ${repetition.count} award(s) of this cohort declared without supplier plurality. From 18 points at ${CO_REPETITION_ENTRY} contracts, linear to 60 at ${CO_REPETITION_MAX}. Published declarations only; a lawful ground may still apply.` : 'No identified holder for a repetition computation.');
+    repetition ? `Same buyer and supplier document: ${repetition.count} award(s) of this cohort declared without supplier plurality. ${CO_REPETITION_POINTS} point from ${CO_REPETITION_ENTRY} contracts, lowered from 18–60 because among contracts in Colombian corruption convictions repeated awards without competition were rarer than among the same buyers' other contracts. Published declarations only; a lawful ground may still apply.` : 'No identified holder for a repetition computation.');
+  const bs = c.coBuyerShare;
+  add('secop2-buyer-share', 'Large share of the buyer’s yearly procurement', 'competition', 'yes', Boolean(bs?.complete && bs.share != null), bs?.share >= CO_BUYER_SHARE, CO_BUYER_SHARE_POINTS,
+    !bs ? 'Buyer share not computed.' :
+    !bs.complete ? `This cohort does not cover the buyer’s whole signing year ${bs.year || '(unknown)'}: share not assessable.` :
+    bs.share == null ? 'Amount not in COP: not compared with the buyer’s COP total (no currency conversion).' :
+    `${(bs.share * 100).toFixed(1)} % of this buyer’s COP contract total for ${bs.year} (${Math.round(bs.total).toLocaleString('en')} COP, contracts signed that year${bs.secop1 ? `, including ${Math.round(bs.secop1).toLocaleString('en')} COP declared in SECOP I` : ''}). ` +
+    (bs.share >= CO_BUYER_SHARE ? `${CO_BUYER_SHARE_POINTS} points at 5 % or more, all modalities: among contracts in Colombian corruption convictions a contract this large relative to its buyer was about 2.6 times as frequent as among the same buyers’ other contracts. Large purchases are often lawful; this check does not assess need or price.` : 'Below the 5 % threshold.'));
   const concentration = c.secop2Concentration;
   add('secop2-concentration', 'Concentrated awards within a contract type', 'competition',
     (c.supplierIds || []).length > 1 ? 'no' : supplierIdentity ? 'yes' : 'unknown',
     Boolean(concentration?.sufficient), Boolean(concentration && concentration.share >= CO_CONCENTRATION_ENTRY_SHARE),
-    graduated(concentration?.share || 0, CO_CONCENTRATION_ENTRY_SHARE, 1, 12, 40),
-    concentration ? `Same buyer and contract type (${concentration.contractType || 'unspecified'}): ${concentration.wins}/${concentration.known} contracts to this holder, out of ${concentration.total} in the group (${Math.round(concentration.coverage * 100)} % coverage). Minimum ${CO_CONCENTRATION_GROUP_MIN} identified contracts and ${Math.round(CO_CONCENTRATION_COVERAGE * 100)} % coverage; from 12 points at ${Math.round(CO_CONCENTRATION_ENTRY_SHARE * 100)} % to 40 at 100 %. ${concentration.sufficient ? '' : 'Insufficient sample or coverage: not assessed.'} Specialisation may explain a share; computed over the whole cohort, before filters.` :
+    graduated(concentration?.share || 0, CO_CONCENTRATION_ENTRY_SHARE, 1, 12, EDITORIAL_MAX),
+    concentration ? `Same buyer and contract type (${concentration.contractType || 'unspecified'}): ${concentration.wins}/${concentration.known} contracts to this holder, out of ${concentration.total} in the group (${Math.round(concentration.coverage * 100)} % coverage). Minimum ${CO_CONCENTRATION_GROUP_MIN} identified contracts and ${Math.round(CO_CONCENTRATION_COVERAGE * 100)} % coverage; from 12 points at ${Math.round(CO_CONCENTRATION_ENTRY_SHARE * 100)} % to 30 at 100 %. ${concentration.sufficient ? '' : 'Insufficient sample or coverage: not assessed.'} Specialisation may explain a share; computed over the whole cohort, before filters.` :
     supplierIdentity ? 'No eligible buyer/contract-type group for this holder: not assessed.' :
     (c.supplierIds || []).length > 1 ? 'Several declared holders: concentration of a single holder out of scope.' : 'Holder identity unknown: applicability not established.');
   const durationText = c.durationOriginal;
@@ -708,10 +741,10 @@ function getAssessmentSecop2(c) {
   add('secop2-term-extension', `Declared term more than doubled by extensions (> ${CO_EXTENSION_ENTRY * 100} %)`, 'execution',
     c.daysAdded != null && typeof durationText === 'string' && durationText.trim() ? 'yes' : 'unknown',
     extensionRatio != null, extensionRatio != null && extensionRatio > CO_EXTENSION_ENTRY,
-    graduated(extensionRatio || 0, CO_EXTENSION_ENTRY, CO_EXTENSION_MAX, 8, 40),
+    graduated(extensionRatio || 0, CO_EXTENSION_ENTRY, CO_EXTENSION_MAX, 8, EDITORIAL_MAX),
     c.daysAdded == null ? 'Days added (dias_adicionados) not published for this row: applicability not established.' :
     extensionRatio == null ? `${c.daysAdded} day(s) added, but the declared duration “${durationText || '—'}” is not comparable to days: not assessed.` :
-    extensionRatio > CO_EXTENSION_ENTRY ? `${c.daysAdded} day(s) added to a declared term of ${durationMonths} months (+${Math.round(extensionRatio * 100)} %). Strictly above +${CO_EXTENSION_ENTRY * 100} %: 8 points, linear to 40 at +${CO_EXTENSION_MAX * 100} %. Editorial threshold; an extension can be lawful and necessary (weather, design changes, budget calendars). Amount additions are not published in this extract.` :
+    extensionRatio > CO_EXTENSION_ENTRY ? `${c.daysAdded} day(s) added to a declared term of ${durationMonths} months (+${Math.round(extensionRatio * 100)} %). Strictly above +${CO_EXTENSION_ENTRY * 100} %: 8 points, linear to 30 at +${CO_EXTENSION_MAX * 100} %. Editorial threshold; an extension can be lawful and necessary (weather, design changes, budget calendars). Amount additions are not published in this extract.` :
     `${c.daysAdded} day(s) added to a declared term of ${durationMonths} months (+${Math.round(extensionRatio * 100)} %): not above +${CO_EXTENSION_ENTRY * 100} %. Not a conclusion of regularity.`);
   add('repeated-single-bid', 'Repeated low competition', 'competition', 'no', false, false, null,
     'Depends on offer counts, absent from this extract: repetition of low competition out of scope.');
@@ -755,30 +788,30 @@ function getAssessmentDncp(c) {
   add('dncp-repeated-single-tenderer', 'Repeated single-tenderer awards to the same supplier', 'competition',
     single ? 'yes' : method === 'direct' || (tenderers.status === 'known' && tenderers.count > 1) ? 'no' : 'unknown',
     Boolean(repeatedSingle), Boolean(repeatedSingle && repeatedSingle.count >= PY_REPETITION_ENTRY),
-    graduated(repeatedSingle?.count || 0, PY_REPETITION_ENTRY, PY_REPETITION_MAX, 12, 40),
+    graduated(repeatedSingle?.count || 0, PY_REPETITION_ENTRY, PY_REPETITION_MAX, 12, EDITORIAL_MAX),
     !single && (method === 'direct' || (tenderers.status === 'known' && tenderers.count > 1)) ? 'This award is not a single-tenderer competitive award: outside the repetition scope.' :
     !single ? 'Single-tenderer status unknown: repetition not assessable.' :
-    repeatedSingle ? `Same buyer and supplier ${supplierId}: ${repeatedSingle.count} distinct process(es) in this cohort won as the only tenderer. From 12 points at ${PY_REPETITION_ENTRY}, linear to 40 at ${PY_REPETITION_MAX}. Computed over the whole cohort before filters.` :
+    repeatedSingle ? `Same buyer and supplier ${supplierId}: ${repeatedSingle.count} distinct process(es) in this cohort won as the only tenderer. From 12 points at ${PY_REPETITION_ENTRY}, linear to 30 at ${PY_REPETITION_MAX}. Computed over the whole cohort before filters.` :
     'Supplier identifier missing: repetition not assessable.');
   const repeatedException = c.dncpRepeatedException;
   add('dncp-repeated-exception', 'Repeated exception awards to the same supplier', 'competition',
     exception ? 'yes' : method === 'unknown' ? 'unknown' : 'no', Boolean(repeatedException),
     Boolean(repeatedException && repeatedException.count >= PY_REPETITION_ENTRY),
-    graduated(repeatedException?.count || 0, PY_REPETITION_ENTRY, PY_REPETITION_MAX, 18, 60),
+    graduated(repeatedException?.count || 0, PY_REPETITION_ENTRY, PY_REPETITION_MAX, 18, EDITORIAL_MAX),
     !exception ? (method === 'unknown' ? 'Procurement method not published: applicability not established.' : 'This award is not declared by exception: outside the repetition scope.') :
-    repeatedException ? `Same buyer and supplier ${supplierId}: ${repeatedException.count} distinct process(es) awarded by exception in this cohort. From 18 points at ${PY_REPETITION_ENTRY}, linear to 60 at ${PY_REPETITION_MAX}. Lawful grounds may apply to each.` :
+    repeatedException ? `Same buyer and supplier ${supplierId}: ${repeatedException.count} distinct process(es) awarded by exception in this cohort. From 18 points at ${PY_REPETITION_ENTRY}, linear to 30 at ${PY_REPETITION_MAX}. Lawful grounds may apply to each.` :
     'Supplier identifier missing: repetition not assessable.');
   const concentration = c.dncpConcentration;
   add('dncp-concentration', 'Concentrated awards within a procurement category', 'competition',
     supplierId ? 'yes' : 'unknown', Boolean(concentration?.sufficient), Boolean(concentration && concentration.share >= PY_CONCENTRATION_ENTRY_SHARE),
-    graduated(concentration?.share || 0, PY_CONCENTRATION_ENTRY_SHARE, 1, 12, 40),
-    concentration ? `Same buyer and category (${concentration.category || 'unspecified'}): ${concentration.wins}/${concentration.known} contracts to this supplier, out of ${concentration.total} in the group (${Math.round(concentration.coverage * 100)} % coverage). Minimum ${PY_CONCENTRATION_GROUP_MIN} identified contracts and ${Math.round(PY_CONCENTRATION_COVERAGE * 100)} % coverage; from 12 points at ${Math.round(PY_CONCENTRATION_ENTRY_SHARE * 100)} % to 40 at 100 %. ${concentration.sufficient ? '' : 'Insufficient sample or coverage: not assessed.'} Specialisation may explain a share.` :
+    graduated(concentration?.share || 0, PY_CONCENTRATION_ENTRY_SHARE, 1, 12, EDITORIAL_MAX),
+    concentration ? `Same buyer and category (${concentration.category || 'unspecified'}): ${concentration.wins}/${concentration.known} contracts to this supplier, out of ${concentration.total} in the group (${Math.round(concentration.coverage * 100)} % coverage). Minimum ${PY_CONCENTRATION_GROUP_MIN} identified contracts and ${Math.round(PY_CONCENTRATION_COVERAGE * 100)} % coverage; from 12 points at ${Math.round(PY_CONCENTRATION_ENTRY_SHARE * 100)} % to 30 at 100 %. ${concentration.sufficient ? '' : 'Insufficient sample or coverage: not assessed.'} Specialisation may explain a share.` :
     'Supplier identity unknown: applicability not established.');
   const increase = dncpAmountIncrease(c);
   const callDate = validIsoDate(c.callPublishedDate);
   const lawApplies = callDate ? callDate >= PY_LAW_7021_FROM : null;
   const band = increase.status === 'known' && increase.count ? dncpCeilingBand(increase.percentage) : null;
-  const ceilingPoints = band === 'beyond' ? graduated(increase.percentage, PY_LEGAL_CEILING, 5 * PY_LEGAL_CEILING, 16, 40) : 8;
+  const ceilingPoints = band === 'beyond' ? graduated(increase.percentage, PY_LEGAL_CEILING, 5 * PY_LEGAL_CEILING, 16, EDITORIAL_MAX) : 8;
   add('dncp-amount-increase', `Declared amount increase at or beyond the ${PY_LEGAL_CEILING} % legal ceiling`, 'execution',
     lawApplies === false ? 'no' : lawApplies === null ? 'unknown' : 'yes', increase.status === 'known' && lawApplies === true, band === 'at' || band === 'beyond',
     ceilingPoints,
@@ -786,7 +819,7 @@ function getAssessmentDncp(c) {
     increase.status !== 'known' ? increase.reason :
     lawApplies === null ? 'Call publication date missing or invalid: whether Ley 7021/22 Art. 67 applies to this process cannot be determined. Not assessed.' :
     !increase.count ? 'No published amount amendment in the downloaded record. The absence of a published amendment does not prove the absence of a real change.' :
-    band === 'beyond' ? `${increase.count} published amount amendment(s): +${increase.percentage.toFixed(2)} % of the original declared amount, above the ${PY_LEGAL_CEILING} % ceiling of Ley 7021/22 Art. 67 on modifications. 16 points just above the ceiling, linear to 40 at +100 %. DNCP rules allow a separate 20 % for unilateral public-interest changes (Art. 65 b), so a larger total is not by itself unlawful; a new procedure may also have been required. Declared, not paid.` :
+    band === 'beyond' ? `${increase.count} published amount amendment(s): +${increase.percentage.toFixed(2)} % of the original declared amount, above the ${PY_LEGAL_CEILING} % ceiling of Ley 7021/22 Art. 67 on modifications. 16 points just above the ceiling, linear to 30 at +100 %. DNCP rules allow a separate 20 % for unilateral public-interest changes (Art. 65 b), so a larger total is not by itself unlawful; a new procedure may also have been required. Declared, not paid.` :
     band === 'at' ? `${increase.count} published amount amendment(s): +${increase.percentage.toFixed(2)} % of the original declared amount, at the ${PY_LEGAL_CEILING} % ceiling of Ley 7021/22 Art. 67 on modifications (from ${PY_LEGAL_CEILING * PY_CEILING_NEAR_SHARE} %). 8 points. Reaching the ceiling is lawful and leaves no further agreed increase; the term, also capped at 20 %, is not published.` :
     `${increase.count} published amount amendment(s): +${increase.percentage.toFixed(2)} % of the original declared amount, below ${PY_LEGAL_CEILING * PY_CEILING_NEAR_SHARE} % (the near-ceiling band of Ley 7021/22 Art. 67). Not a conclusion of regularity.`);
   add('short-bidding-period', 'Short bidding period', 'competition', 'no', false, false, null,
@@ -804,7 +837,10 @@ function getAssessmentDncp(c) {
 // labels and scope. Methods: docs/score-ukraine.md, docs/score-ted.md. Checks were
 // fixed before these cohorts were downloaded; French thresholds are not applied.
 // Ukrainian points from labelled cases (docs/score-ukraine.md, research/calibration/ukraine-results-2026-10-14.md).
-const UA_POINTS = { amendments3: 6, amendments5: 10, termExtension: 4, termExtensionBonus: 6, betterBidDisqualified: 4, buyerShare: 30 };
+const UA_POINTS = { amendments3: 6, amendments5: 10, termExtension: 4, termExtensionBonus: 6, betterBidDisqualified: 4, buyerShare: 30, directContract: 11 };
+// D2 (v3.7): a direct-contract report of at least UAH 200,000, the open-tender threshold for goods and services
+// (research/calibration/ukraine-candidate-indicators.md, census on the linked conviction cohort: LR 2.18).
+const UA_DIRECT_CONTRACT_MIN = 200000;
 // R1 (v3.6): a contract of at least 5 % of the buyer's UAH contract total for the tender's creation year
 // (research/calibration/ukraine-candidate-indicators.md, part 4). Assessed only for buyer-years the cohort
 // covers completely; the bundled cohort runs 2024-09-01 → 2026-09-01, so only 2025 is complete.
@@ -814,11 +850,14 @@ const UA_TERM_EXTENSION_TYPES = ['durationExtension', 'fiscalYearExtension'];
 const NATIONAL_FAMILIES = {
   // Ukraine v3.5: points from court verdicts and bid-rigging decisions (docs/score-ukraine.md). Other
   // countries keep their own points: a check's weight is set per jurisdiction, never shared by default.
-  prozorro: { prefix: 'ua', doc: 'docs/score-ukraine.md', category: c => c.category, notScored: new Set(['reporting']), singleOfferPoints: 1,
+  prozorro: { prefix: 'ua', doc: 'docs/score-ukraine.md', category: c => c.category, notScored: new Set(['reporting']), singleOfferPoints: 1, directAwardPoints: 10,
     directLabel: 'Negotiated procedure without competition', directReason: 'negotiation or negotiation.quick',
     outOfScope: { directKind: 'Offer and direct-award checks are excluded for direct-contract reports (reporting), which are recorded without a procedure. Concentration remains assessable where cohort data permits.',
       increase: 'Linked contract samples expose change metadata, not comparable dated amounts: increase out of scope.' } },
+  // Romania v3.7: Competition Council bid-rigging decisions measured repeated awards without competition
+  // (LR 0.38) and concentration (LR 1.09, fails the holdout); a token point each. Czechia and Portugal unchanged.
   ted: { prefix: 'ted', doc: 'docs/score-ted.md', notScored: new Set(), category: c => /^\d{8}/.test(c.cpv || '') ? c.cpv.slice(0, 2) : null,
+    countryPoints: { ROU: { repeatedDirect: 1, concentration: 1, source: 'Romanian Competition Council bid-rigging decisions' } },
     directLabel: 'Negotiated without prior publication', directReason: 'eForms procedure code neg-wo-call',
     outOfScope: { directKind: 'Procedure code outside the known competitive/direct list: not assessed.',
       increase: 'Contract modification notices are separate TED notices, not imported: increase out of scope.' } },
@@ -860,17 +899,26 @@ function getAssessmentNational(c) {
     !nationalOffersKnown(c) ? (c.offersNote || 'Number of offers for this lot not published.') :
     singlePoints === 12 ? `${c.offers} offer(s) published for this lot (${c.procedure}). One offer: 12 points, all amounts. Admissibility is not assessed.` :
     `${c.offers} offer(s) published for this lot (${c.procedure}). One offer: ${singlePoints} point(s), all amounts, lowered from 12 because among Ukrainian tenders in criminal verdicts it was less frequent than among the same buyers' other tenders. Admissibility is not assessed.`);
-  add(`${p}-direct-award`, `Award without competition (${spec.directLabel})`, 'competition', spec.directOutOfScope ? 'no' : c.procedureDirect == null ? unknownKind : 'yes', c.procedureDirect != null, direct, 18,
-    spec.directOutOfScope ? spec.directOutOfScope : c.procedureDirect == null ? spec.outOfScope.directKind : direct ? `${c.procedure} (${spec.directReason}): award without a competitive call. 18 points, all amounts. A lawful ground may apply (urgency, exclusivity, failed call); not assessed here.` : `Competitive procedure (${c.procedure}): no direct-award signal.`);
+  const directPoints = spec.directAwardPoints ?? 18, countryPoints = spec.countryPoints?.[c.country];
+  add(`${p}-direct-award`, `Award without competition (${spec.directLabel})`, 'competition', spec.directOutOfScope ? 'no' : c.procedureDirect == null ? unknownKind : 'yes', c.procedureDirect != null, direct, directPoints,
+    spec.directOutOfScope ? spec.directOutOfScope : c.procedureDirect == null ? spec.outOfScope.directKind : direct ? `${c.procedure} (${spec.directReason}): award without a competitive call. ${directPoints === 18 ? '18 points, all amounts.' : `${directPoints} points, all amounts, lowered from 18: among Ukrainian tenders in criminal verdicts negotiated procedures were about twice as frequent as among the same buyers' other tenders.`} A lawful ground may apply (urgency, exclusivity, failed call); not assessed here.` : `Competitive procedure (${c.procedure}): no direct-award signal.`);
+  if (c.dataFamily === 'prozorro') {
+    const reporting = c.procedure === 'reporting', uah = c.currency === 'UAH' && Number.isFinite(c.amount);
+    add('ua-direct-contract', 'Direct contract of UAH 200,000 or more', 'competition', reporting ? 'yes' : 'no', uah, uah && c.amount >= UA_DIRECT_CONTRACT_MIN, UA_POINTS.directContract,
+      !reporting ? 'Not a direct-contract report (reporting): outside this check’s scope.' :
+      !uah ? 'Amount not in UAH: not compared with the UAH threshold (no currency conversion).' :
+      c.amount >= UA_DIRECT_CONTRACT_MIN ? `Direct contract of ${Math.round(c.amount).toLocaleString('en')} UAH, at or above UAH 200,000, the open-tender threshold for goods and services. ${UA_POINTS.directContract} points: among Ukrainian tenders in criminal verdicts direct contracts this large were about twice as frequent as among the same buyers' other completed purchases. Thresholds differ for works (UAH 1.5 million) and some exemptions apply; neither is assessed here.` :
+      'Direct contract below UAH 200,000.');
+  }
   const rs = c.nationalRepeatedSingle;
   add(`${p}-repeated-single-offer`, 'Repeated single-offer awards to the same supplier', 'competition', nationalSingle(c) ? 'yes' : competitive && nationalOffersKnown(c) || direct ? 'no' : unknownKind, Boolean(rs), rs?.count >= 3,
-    graduated(rs?.count || 0, 3, 10, 12, 40), !nationalSingle(c) ? 'Not a single-offer competitive award: outside the repetition scope.' : rs ? `Same buyer and supplier ${supplier}: ${rs.count} distinct procedure(s) in this cohort won with a single offer. From 12 points at 3, linear to 40 at 10.` : 'Supplier identifier not usable (not a national registration number): repetition not assessable.');
+    graduated(rs?.count || 0, 3, 10, 12, EDITORIAL_MAX), !nationalSingle(c) ? 'Not a single-offer competitive award: outside the repetition scope.' : rs ? `Same buyer and supplier ${supplier}: ${rs.count} distinct procedure(s) in this cohort won with a single offer. From 12 points at 3, linear to 30 at 10.` : 'Supplier identifier not usable (not a national registration number): repetition not assessable.');
   const rd = c.nationalRepeatedDirect;
   add(`${p}-repeated-direct`, 'Repeated awards without competition to the same supplier', 'competition', spec.directOutOfScope ? 'no' : direct ? 'yes' : c.procedureDirect == null ? unknownKind : 'no', Boolean(rd), rd?.count >= 3,
-    graduated(rd?.count || 0, 3, 10, 18, 60), spec.directOutOfScope ? spec.directOutOfScope : !direct ? 'Not an award without competition: outside the repetition scope.' : rd ? `Same buyer and supplier ${supplier}: ${rd.count} distinct procedure(s) without competition in this cohort. From 18 points at 3, linear to 60 at 10. Lawful grounds may apply to each.` : 'Supplier identifier not usable: repetition not assessable.');
+    countryPoints ? countryPoints.repeatedDirect : graduated(rd?.count || 0, 3, 10, 18, EDITORIAL_MAX), spec.directOutOfScope ? spec.directOutOfScope : !direct ? 'Not an award without competition: outside the repetition scope.' : rd ? `Same buyer and supplier ${supplier}: ${rd.count} distinct procedure(s) without competition in this cohort. ${countryPoints ? `${countryPoints.repeatedDirect} point from 3, lowered from 18–60: in ${countryPoints.source} repeated awards without competition were rarer than among the same buyers' other contracts.` : 'From 18 points at 3, linear to 30 at 10.'} Lawful grounds may apply to each.` : 'Supplier identifier not usable: repetition not assessable.');
   const k = c.nationalConcentration;
   add(`${p}-concentration`, 'Concentrated awards within a category', 'competition', supplier ? 'yes' : 'unknown', Boolean(k?.sufficient), k?.share >= 0.6,
-    graduated(k?.share || 0, 0.6, 1, 12, 40), k ? `Same buyer and category ${k.category}: ${k.wins}/${k.known} procedures won by this supplier, out of ${k.total} (${Math.round(k.coverage * 100)} % with an identified winner; lots of one procedure count once). Minimum 10 and 80 %; from 12 points at 60 % to 40 at 100 %. ${k.sufficient ? '' : 'Insufficient sample or coverage: not assessed.'}` : 'Supplier identity or category unknown: applicability not established.');
+    countryPoints ? countryPoints.concentration : graduated(k?.share || 0, 0.6, 1, 12, EDITORIAL_MAX), k ? `Same buyer and category ${k.category}: ${k.wins}/${k.known} procedures won by this supplier, out of ${k.total} (${Math.round(k.coverage * 100)} % with an identified winner; lots of one procedure count once). Minimum 10 and 80 %; ${countryPoints ? `${countryPoints.concentration} point from 60 %, lowered from 12–40: in ${countryPoints.source} concentration was barely more frequent than among the same buyers' other contracts.` : 'from 12 points at 60 % to 30 at 100 %.'} ${k.sufficient ? '' : 'Insufficient sample or coverage: not assessed.'}` : 'Supplier identity or category unknown: applicability not established.');
   add('amount-increase', 'Relative increase in declared amount', 'execution', 'no', false, false, null, spec.outOfScope.increase);
   if (c.dataFamily === 'prozorro') {
     // Prozorro creates awards in ranking order: an unsuccessful award before the
@@ -1058,6 +1106,18 @@ function prepareContracts(data) {
   }
   for (const group of coRepetitionGroups.values()) {
     for (const c of group) c.secop2Repetition = { count: group.length };
+  }
+  // Colombia: each contract's share of its buyer's COP contract total for its signing year.
+  const coYearTotals = new Map(), coYear = c => `${c.buyerNit || c.buyer}|${(c.date || '').slice(0, 4)}`;
+  for (const c of contracts) {
+    if (c.dataFamily !== 'secop2' || c.currency !== 'COP' || !Number.isFinite(c.amount)) continue;
+    coYearTotals.set(coYear(c), (coYearTotals.get(coYear(c)) || 0) + c.amount);
+  }
+  for (const c of contracts) {
+    if (c.dataFamily !== 'secop2') continue;
+    const year = (c.date || '').slice(0, 4), complete = Boolean(CO_COMPLETE_YEARS[c.cohortId]?.has(year));
+    const secop1 = CO_SECOP1_TOTALS[coYear(c)] || 0, total = (coYearTotals.get(coYear(c)) || 0) + secop1;
+    c.coBuyerShare = { year, complete, total, secop1, share: c.currency === 'COP' && Number.isFinite(c.amount) && total > 0 ? c.amount / total : null };
   }
   // SECOP II public-to-public context (no points): a declared interadministrative
   // agreement, or a comodato / public-credit contract whose counterparty document
@@ -1554,7 +1614,7 @@ function buildProfile(contracts, role, key) {
 // Export the whole filtered view as flat records. Unknown stays empty, never zero.
 const EXPORT_CAVEAT = 'Published declarations and heuristic signals only. A flag is not proof of wrongdoing; zero or no label is not clearance. Declared amounts are not audited payments; never sum amounts across datasets or currencies. Current supplier names are a register snapshot, not historical names.';
 const EXPORT_COLUMNS = ['id', 'date', 'buyer', 'buyerId', 'supplier', 'supplierCurrentName', 'supplierIds', 'description', 'cpv', 'sector', 'procedure',
-  'amount', 'amountLow', 'amountHigh', 'amountVerification', 'currency', 'offers', 'durationMonths', 'index', 'indexStatus', 'signals', 'context', 'officialFinding', 'investigationReported', 'dataStatus', 'source', 'verifyUrls'];
+  'amount', 'amountLow', 'amountHigh', 'amountVerification', 'currency', 'offers', 'durationMonths', 'index', 'indexStatus', 'signals', 'signalPoints', 'context', 'officialFinding', 'investigationReported', 'dataStatus', 'source', 'verifyUrls'];
 
 function exportRecord(c) {
   const score = getVigilanceScore(c);
@@ -1566,6 +1626,7 @@ function exportRecord(c) {
     amount: c.amount ?? null, amountLow: c.verification?.amountRange?.[0] ?? c.amount ?? null, amountHigh: c.verification?.amountRange?.[1] ?? c.amount ?? null,
     amountVerification: c.verification?.status ?? null, currency: c.amount == null ? null : recordCurrency(c), offers: c.offers ?? null, durationMonths: c.durationMonths ?? null,
     index: score, indexStatus: score == null ? 'not assessed' : 'assessed', signals: getIndicators(c).map(i => i.kindLabel).join('; ') || null,
+    signalPoints: getIndicators(c).map(i => `${i.kindLabel}: ${i.weight} (${i.basis})`).join('; ') || null,
     context: contextLabels(c).map(l => l.short).join('; ') || null,
     officialFinding: c.officialFinding === true, investigationReported: hasReportedInvestigation(c), dataStatus: c.dataStatus,
     source: safeSource(c.processUrl) || safeSource(c.source) || null,
@@ -2294,7 +2355,7 @@ function startExplorer() {
         counted.add(indicator.family);
         const familyName = indicator.family === 'competition' ? 'competition' : indicator.family === 'transparency' ? 'transparency' : 'execution/duration';
         const badge = element('span', KIND_SHORT[indicator.kind] || indicator.kindLabel, `badge severity-${indicator.severity}${counts ? '' : ' not-counted'}`);
-        badge.title = `${indicator.label} (this jurisdiction's check). Raw weight ${indicator.weight}. ${counts ? `Counts for the ${familyName} family.` : `Not added: a heavier ${familyName} signal already counts.`} ${indicator.explanation}`;
+        badge.title = `${indicator.label} (this jurisdiction's check). Raw weight ${indicator.weight} (${BASIS_NOTE[indicator.basis]}). ${counts ? `Counts for the ${familyName} family.` : `Not added: a heavier ${familyName} signal already counts.`} ${indicator.explanation}`;
         badges.append(badge);
       }
       for (const label of contextLabels(c)) {
@@ -2487,7 +2548,7 @@ function startExplorer() {
         const item = element('li', null, `severity-line severity-${signal.severity}`);
         const name = element('strong', signal.kindLabel);
         if (KIND_REFERENCES[signal.kind]) name.title = `Also known as ${KIND_REFERENCES[signal.kind]}`;
-        item.append(name, element('span', ` · ${signal.weight} pts`, 'muted'), ...(counts ? [] : [element('span', ' · not added (same family)', 'muted')]), element('p', briefReason(signal.explanation)));
+        item.append(name, element('span', ` · ${signal.weight} pts, ${BASIS_NOTE[signal.basis]}`, 'muted'), ...(counts ? [] : [element('span', ' · not added (same family)', 'muted')]), element('p', briefReason(signal.explanation)));
         triggered.append(item);
       }
       why.append(triggered);
@@ -2655,7 +2716,7 @@ function startExplorer() {
     for (const r of assessment.checks) {
       const item = element('li', null, `check-${r.status}`);
       item.append(element('strong', r.label), ' — ', element('span', states[r.status]));
-      if (r.status === 'signal' && r.weight != null) item.append(' · ', element('span', `${r.weight} pts`));
+      if (r.status === 'signal' && r.weight != null) item.append(' · ', element('span', `${r.weight} pts, ${BASIS_NOTE[r.basis]}`));
       item.append('. ', element('span', briefReason(r.reason), 'muted'));
       checks.append(item);
     }

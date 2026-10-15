@@ -773,7 +773,13 @@ window.I18N_DICTS.es = {
   "Large share of the buyer’s yearly procurement": "Gran parte de la contratación anual del comprador",
   "Buyer share": "Parte del comprador",
   "Buyer share not computed.": "Parte del comprador no calculada.",
-  "Amount not in UAH: not compared with the buyer’s UAH total (no currency conversion).": "Importe no expresado en UAH: no se compara con el total en UAH del comprador (sin conversión de divisas)."
+  "Amount not in UAH: not compared with the buyer’s UAH total (no currency conversion).": "Importe no expresado en UAH: no se compara con el total en UAH del comprador (sin conversión de divisas).",
+  "Direct contract of UAH 200,000 or more": "Contrato directo de 200.000 UAH o más",
+  "Not a direct-contract report (reporting): outside this check’s scope.": "No es un informe de contrato directo (reporting): fuera del alcance de esta comprobación.",
+  "Amount not in UAH: not compared with the UAH threshold (no currency conversion).": "Importe no expresado en UAH: no se compara con el umbral en UAH (sin conversión de divisas).",
+  "Direct contract below UAH 200,000.": "Contrato directo inferior a 200.000 UAH.",
+  "Amount not in COP: not compared with the buyer’s COP total (no currency conversion).": "Importe no expresado en COP: no se compara con el total en COP del comprador (sin conversión de divisas).",
+  "Romanian Competition Council bid-rigging decisions": "las decisiones del Consejo de la Competencia rumano sobre colusión en licitaciones"
  },
  "patterns": [
   [
@@ -1013,24 +1019,24 @@ window.I18N_DICTS.es = {
    "Fecha de publicación ({a}) anterior a la fecha del contrato ({b}): fechas incoherentes, no evaluado."
   ],
   [
-   "{a} days, upper bound. Signal if < 15 days; 8 points near 15, 40 at 3 days or fewer. Editorial threshold, not a legal one.",
-   "{a} días, cota superior. Señal si < 15 días; 8 puntos cerca de 15, 40 a 3 días o menos. Umbral editorial, no legal."
+   "{a} days, upper bound. Signal if < 15 days; 8 points near 15, 30 at 3 days or fewer. Editorial threshold, not a legal one.",
+   "{a} días, cota superior. Señal si < 15 días; 8 puntos cerca de 15, 30 a 3 días o menos. Umbral editorial, no legal."
   ],
   [
-   "Declared increase of {a} %. Signal strictly > 20 %, from 8 points near the threshold to 40 at +100 %. No euro threshold or bonus. Additional services possible: not a final expense nor a proven cost overrun.",
-   "Aumento declarado del {a} %. Señal estrictamente > 20 %, de 8 puntos cerca del umbral a 40 con +100 %. Sin umbral en euros ni bonificación. Posibles prestaciones adicionales: no es un gasto final ni un sobrecoste probado."
+   "Declared increase of {a} %. Signal strictly > 20 %, from 8 points near the threshold to 30 at +100 %. No euro threshold or bonus. Additional services possible: not a final expense nor a proven cost overrun.",
+   "Aumento declarado del {a} %. Señal estrictamente > 20 %, de 8 puntos cerca del umbral a 30 con +100 %. Sin umbral en euros ni bonificación. Posibles prestaciones adicionales: no es un gasto final ni un sobrecoste probado."
   ],
   [
-   "Same SIREN: {a}/{b} contracts to the known holder, out of {c} eligible; CPV {d}, 2024–2025. Minimum 10 and 80 % coverage. From 12 points at 60 % to 40 at 100 %. Specialisation and framework agreements may explain this share.",
-   "Mismo SIREN: {a}/{b} contratos al titular conocido, de {c} elegibles; CPV {d}, 2024–2025. Mínimo 10 y 80 % de cobertura. De 12 puntos al 60 % a 40 al 100 %. La especialización y los acuerdos marco pueden explicar esta cuota."
+   "Same SIREN: {a}/{b} contracts to the known holder, out of {c} eligible; CPV {d}, 2024–2025. Minimum 10 and 80 % coverage. From 12 points at 60 % to 30 at 100 %. Specialisation and framework agreements may explain this share.",
+   "Mismo SIREN: {a}/{b} contratos al titular conocido, de {c} elegibles; CPV {d}, 2024–2025. Mínimo 10 y 80 % de cobertura. De 12 puntos al 60 % a 30 al 100 %. La especialización y los acuerdos marco pueden explicar esta cuota."
   ],
   [
-   "Same SIREN: {a}/{b} contracts to the known holder, out of {c} eligible; CPV {d}, 2024–2025. Minimum 10 and 80 % coverage. From 12 points at 60 % to 40 at 100 %. Specialisation and framework agreements may explain this share. Insufficient sample/coverage.",
-   "Mismo SIREN: {a}/{b} contratos al titular conocido, de {c} elegibles; CPV {d}, 2024–2025. Mínimo 10 y 80 % de cobertura. De 12 puntos al 60 % a 40 al 100 %. La especialización y los acuerdos marco pueden explicar esta cuota. Muestra o cobertura insuficiente."
+   "Same SIREN: {a}/{b} contracts to the known holder, out of {c} eligible; CPV {d}, 2024–2025. Minimum 10 and 80 % coverage. From 12 points at 60 % to 30 at 100 %. Specialisation and framework agreements may explain this share. Insufficient sample/coverage.",
+   "Mismo SIREN: {a}/{b} contratos al titular conocido, de {c} elegibles; CPV {d}, 2024–2025. Mínimo 10 y 80 % de cobertura. De 12 puntos al 60 % a 30 al 100 %. La especialización y los acuerdos marco pueden explicar esta cuota. Muestra o cobertura insuficiente."
   ],
   [
-   "{a} direct awards identified, all amounts, same buyer/CPV/SIREN, 2024–2025. From 18 points at 3 contracts to 60 at 10. Unknown procedures do not become competitive. Legal exceptions possible.",
-   "{a} adjudicaciones directas identificadas, todos los montos, mismo comprador/CPV/SIREN, 2024–2025. De 18 puntos con 3 contratos a 60 con 10. Los procedimientos desconocidos no pasan a ser competitivos. Posibles excepciones legales."
+   "{a} direct awards identified, all amounts, same buyer/CPV/SIREN, 2024–2025. From 18 points at 3 contracts to 30 at 10. Unknown procedures do not become competitive. Legal exceptions possible.",
+   "{a} adjudicaciones directas identificadas, todos los montos, mismo comprador/CPV/SIREN, 2024–2025. De 18 puntos con 3 contratos a 30 con 10. Los procedimientos desconocidos no pasan a ser competitivos. Posibles excepciones legales."
   ],
   [
    "Maintenance, support or licences of an existing software product ({a}), placed with one vendor ({b}). This is often routine: only the publisher or its appointed distributor can maintain its product. Proprietary status and exclusive rights are not verified here. No points added or removed; the index is unchanged.",
@@ -1057,32 +1063,28 @@ window.I18N_DICTS.es = {
    "Contexto retrospectivo {a}–{b}, mismo comprador y CPV {c}: {d} contratos con una sola oferta / {e} con número conocido, de {f} contratos competitivos elegibles ({g} % de cobertura). {h} Calculado sobre toda la cohorte, sin cambios por sus filtros."
   ],
   [
-   "Same buyer and supplier {a}: {b} distinct procedure(s) in this cohort won with a single offer. From 12 points at 3, linear to 40 at 10.",
-   "Mismo comprador y proveedor {a}: {b} procedimiento(s) distinto(s) de esta cohorte ganado(s) con una sola oferta. De 12 puntos con 3, lineal hasta 40 con 10."
+   "Same buyer and supplier {a}: {b} distinct procedure(s) in this cohort won with a single offer. From 12 points at 3, linear to 30 at 10.",
+   "Mismo comprador y proveedor {a}: {b} procedimiento(s) distinto(s) de esta cohorte ganado(s) con una sola oferta. De 12 puntos con 3, lineal hasta 30 con 10."
   ],
   [
-   "Same buyer and supplier {a}: {b} distinct procedure(s) without competition in this cohort. From 18 points at 3, linear to 60 at 10. Lawful grounds may apply to each.",
-   "Mismo comprador y proveedor {a}: {b} procedimiento(s) distinto(s) sin competencia en esta cohorte. De 18 puntos con 3, lineal hasta 60 con 10. Cada uno puede tener un motivo legal."
+   "Same buyer and supplier {a}: {b} distinct procedure(s) without competition in this cohort. From 18 points at 3, linear to 30 at 10. Lawful grounds may apply to each.",
+   "Mismo comprador y proveedor {a}: {b} procedimiento(s) distinto(s) sin competencia en esta cohorte. De 18 puntos con 3, lineal hasta 30 con 10. Cada uno puede tener un motivo legal."
   ],
   [
-   "Same buyer and supplier {a}: {b} distinct process(es) in this cohort won as the only tenderer. From 12 points at {c}, linear to 40 at {d}. Computed over the whole cohort before filters.",
-   "Mismo comprador y proveedor {a}: {b} proceso(s) distinto(s) de esta cohorte ganado(s) como único oferente. De 12 puntos con {c}, lineal hasta 40 con {d}. Calculado sobre toda la cohorte antes de los filtros."
+   "Same buyer and supplier {a}: {b} distinct process(es) in this cohort won as the only tenderer. From 12 points at {c}, linear to 30 at {d}. Computed over the whole cohort before filters.",
+   "Mismo comprador y proveedor {a}: {b} proceso(s) distinto(s) de esta cohorte ganado(s) como único oferente. De 12 puntos con {c}, lineal hasta 30 con {d}. Calculado sobre toda la cohorte antes de los filtros."
   ],
   [
-   "Same buyer and supplier {a}: {b} distinct process(es) awarded by exception in this cohort. From 18 points at {c}, linear to 60 at {d}. Lawful grounds may apply to each.",
-   "Mismo comprador y proveedor {a}: {b} proceso(s) distinto(s) adjudicado(s) por excepción en esta cohorte. De 18 puntos con {c}, lineal hasta 60 con {d}. Cada uno puede tener un motivo legal."
+   "Same buyer and supplier {a}: {b} distinct process(es) awarded by exception in this cohort. From 18 points at {c}, linear to 30 at {d}. Lawful grounds may apply to each.",
+   "Mismo comprador y proveedor {a}: {b} proceso(s) distinto(s) adjudicado(s) por excepción en esta cohorte. De 18 puntos con {c}, lineal hasta 30 con {d}. Cada uno puede tener un motivo legal."
   ],
   [
-   "Same buyer and supplier document: {a} award(s) of this cohort declared without supplier plurality. From 18 points at {b} contracts, linear to 60 at {c}. Published declarations only; a lawful ground may still apply.",
-   "Mismo comprador y documento del proveedor: {a} adjudicación(es) de esta cohorte declarada(s) sin pluralidad de oferentes. De 18 puntos con {b} contratos, lineal hasta 60 con {c}. Solo declaraciones publicadas; puede aplicarse un motivo legal."
+   "Same buyer and category {a}: {b}/{c} procedures won by this supplier, out of {d} ({e} % with an identified winner; lots of one procedure count once). Minimum 10 and 80 %; from 12 points at 60 % to 30 at 100 %. {f}",
+   "Mismo comprador y categoría {a}: {b}/{c} procedimientos ganados por este proveedor, de {d} ({e} % con adjudicatario identificado; los lotes de un procedimiento cuentan una vez). Mínimo 10 y 80 %; de 12 puntos al 60 % a 30 al 100 %. {f}"
   ],
   [
-   "Same buyer and category {a}: {b}/{c} procedures won by this supplier, out of {d} ({e} % with an identified winner; lots of one procedure count once). Minimum 10 and 80 %; from 12 points at 60 % to 40 at 100 %. {f}",
-   "Mismo comprador y categoría {a}: {b}/{c} procedimientos ganados por este proveedor, de {d} ({e} % con adjudicatario identificado; los lotes de un procedimiento cuentan una vez). Mínimo 10 y 80 %; de 12 puntos al 60 % a 40 al 100 %. {f}"
-  ],
-  [
-   "Same buyer and category {a}: {b}/{c} procedures won by this supplier, out of {d} ({e} % with an identified winner; lots of one procedure count once). Minimum 10 and 80 %; from 12 points at 60 % to 40 at 100 %.",
-   "Mismo comprador y categoría {a}: {b}/{c} procedimientos ganados por este proveedor, de {d} ({e} % con adjudicatario identificado; los lotes de un procedimiento cuentan una vez). Mínimo 10 y 80 %; de 12 puntos al 60 % a 40 al 100 %."
+   "Same buyer and category {a}: {b}/{c} procedures won by this supplier, out of {d} ({e} % with an identified winner; lots of one procedure count once). Minimum 10 and 80 %; from 12 points at 60 % to 30 at 100 %.",
+   "Mismo comprador y categoría {a}: {b}/{c} procedimientos ganados por este proveedor, de {d} ({e} % con adjudicatario identificado; los lotes de un procedimiento cuentan una vez). Mínimo 10 y 80 %; de 12 puntos al 60 % a 30 al 100 %."
   ],
   [
    "{a} (OCDS procurementMethod limited): award without a competitive call. 18 points, all amounts. A lawful ground may apply (urgency, exclusivity, failed call); not assessed here.",
@@ -1093,12 +1095,12 @@ window.I18N_DICTS.es = {
    "{a} ({b}): adjudicación sin convocatoria competitiva. 18 puntos, todos los montos. Puede aplicarse un motivo legal (urgencia, exclusividad, convocatoria desierta); no se evalúa aquí."
   ],
   [
-   "{a} day(s) added to a declared term of {b} months (+{c} %). Strictly above +{d} %: 8 points, linear to 40 at +{e} %. Editorial threshold; an extension can be lawful and necessary (weather, design changes, budget calendars). Amount additions are not published in this extract.",
-   "{a} día(s) añadido(s) a un plazo declarado de {b} meses (+{c} %). Estrictamente por encima de +{d} %: 8 puntos, lineal hasta 40 con +{e} %. Umbral editorial; una prórroga puede ser legal y necesaria (clima, cambios de diseño, calendario presupuestal). Las adiciones en valor no se publican en este extracto."
+   "{a} day(s) added to a declared term of {b} months (+{c} %). Strictly above +{d} %: 8 points, linear to 30 at +{e} %. Editorial threshold; an extension can be lawful and necessary (weather, design changes, budget calendars). Amount additions are not published in this extract.",
+   "{a} día(s) añadido(s) a un plazo declarado de {b} meses (+{c} %). Estrictamente por encima de +{d} %: 8 puntos, lineal hasta 30 con +{e} %. Umbral editorial; una prórroga puede ser legal y necesaria (clima, cambios de diseño, calendario presupuestal). Las adiciones en valor no se publican en este extracto."
   ],
   [
-   "{a} published amount amendment(s): +{b} % of the original declared amount, above the 20 % ceiling of Ley 7021/22 Art. 67 on modifications. 16 points just above the ceiling, linear to 40 at +100 %. DNCP rules allow a separate 20 % for unilateral public-interest changes (Art. 65 b), so a larger total is not by itself unlawful; a new procedure may also have been required. Declared, not paid.",
-   "{a} modificación(es) de monto publicada(s): +{b} % del monto original declarado, por encima del tope del 20 % de la Ley 7021/22 Art. 67 para las modificaciones. 16 puntos justo por encima del tope, lineal hasta 40 con +100 %. Las reglas de la DNCP permiten otro 20 % para cambios unilaterales de interés público (Art. 65 b), por lo que un total mayor no es ilegal por sí mismo; también pudo exigirse un nuevo procedimiento. Declarado, no pagado."
+   "{a} published amount amendment(s): +{b} % of the original declared amount, above the 20 % ceiling of Ley 7021/22 Art. 67 on modifications. 16 points just above the ceiling, linear to 30 at +100 %. DNCP rules allow a separate 20 % for unilateral public-interest changes (Art. 65 b), so a larger total is not by itself unlawful; a new procedure may also have been required. Declared, not paid.",
+   "{a} modificación(es) de monto publicada(s): +{b} % del monto original declarado, por encima del tope del 20 % de la Ley 7021/22 Art. 67 para las modificaciones. 16 puntos justo por encima del tope, lineal hasta 30 con +100 %. Las reglas de la DNCP permiten otro 20 % para cambios unilaterales de interés público (Art. 65 b), por lo que un total mayor no es ilegal por sí mismo; también pudo exigirse un nuevo procedimiento. Declarado, no pagado."
   ],
   [
    "{a} published amount amendment(s): +{b} % of the original declared amount, at the 20 % ceiling of Ley 7021/22 Art. 67 on modifications (from 19 %). 8 points. Reaching the ceiling is lawful and leaves no further agreed increase; the term, also capped at 20 %, is not published.",
@@ -1303,6 +1305,66 @@ window.I18N_DICTS.es = {
   [
    "{a} % of this buyer’s UAH contract total for {b} ({c} UAH, contracts of tenders created that year). Below the 5 % threshold.",
    "{a} % del total de contratos en UAH de este comprador en {b} ({c} UAH, contratos de licitaciones creadas ese año). Por debajo del umbral del 5 %."
+  ],
+  [
+   "{a} % of this buyer’s COP contract total for {b} ({c} COP, contracts signed that year, including {d} COP declared in SECOP I). {e} points at 5 % or more, all modalities: among contracts in Colombian corruption convictions a contract this large relative to its buyer was about 2.6 times as frequent as among the same buyers’ other contracts. Large purchases are often lawful; this check does not assess need or price.",
+   "{a} % del total de contratos en COP de este comprador en {b} ({c} COP, contratos firmados ese año, incluidos {d} COP declarados en SECOP I). {e} puntos desde el 5 %, todas las modalidades: entre los contratos de condenas penales colombianas por corrupción, un contrato tan grande respecto de su comprador era unas 2,6 veces más frecuente que entre los demás contratos de los mismos compradores. Las compras grandes suelen ser legales; esta comprobación no evalúa la necesidad ni el precio."
+  ],
+  [
+   "{a} % of this buyer’s COP contract total for {b} ({c} COP, contracts signed that year, including {d} COP declared in SECOP I). Below the 5 % threshold.",
+   "{a} % del total de contratos en COP de este comprador en {b} ({c} COP, contratos firmados ese año, incluidos {d} COP declarados en SECOP I). Por debajo del umbral del 5 %."
+  ],
+  [
+   "{a} % of this buyer’s COP contract total for {b} ({c} COP, contracts signed that year). {d} points at 5 % or more, all modalities: among contracts in Colombian corruption convictions a contract this large relative to its buyer was about 2.6 times as frequent as among the same buyers’ other contracts. Large purchases are often lawful; this check does not assess need or price.",
+   "{a} % del total de contratos en COP de este comprador en {b} ({c} COP, contratos firmados ese año). {d} puntos desde el 5 %, todas las modalidades: entre los contratos de condenas penales colombianas por corrupción, un contrato tan grande respecto de su comprador era unas 2,6 veces más frecuente que entre los demás contratos de los mismos compradores. Las compras grandes suelen ser legales; esta comprobación no evalúa la necesidad ni el precio."
+  ],
+  [
+   "{a} % of this buyer’s COP contract total for {b} ({c} COP, contracts signed that year). Below the 5 % threshold.",
+   "{a} % del total de contratos en COP de este comprador en {b} ({c} COP, contratos firmados ese año). Por debajo del umbral del 5 %."
+  ],
+  [
+   "This cohort does not cover the buyer’s whole signing year {a}: share not assessable.",
+   "Esta cohorte no cubre el año de firma completo {a} del comprador: parte no evaluable."
+  ],
+  [
+   "Same buyer and supplier document: {a} award(s) of this cohort declared without supplier plurality. {b} point from {c} contracts, lowered from 18–60 because among contracts in Colombian corruption convictions repeated awards without competition were rarer than among the same buyers' other contracts. Published declarations only; a lawful ground may still apply.",
+   "Mismo comprador y documento del proveedor: {a} adjudicación(es) de esta cohorte declaradas sin pluralidad de oferentes. {b} punto desde {c} contratos, rebajado de 18–60 porque entre los contratos de condenas penales colombianas por corrupción las adjudicaciones repetidas sin competencia eran menos frecuentes que entre los demás contratos de los mismos compradores. Solo declaraciones publicadas; aún puede aplicarse un motivo legal."
+  ],
+  [
+   "{a} ({b}): award without a competitive call. {c} points, all amounts, lowered from 18: among Ukrainian tenders in criminal verdicts negotiated procedures were about twice as frequent as among the same buyers' other tenders. A lawful ground may apply (urgency, exclusivity, failed call); not assessed here.",
+   "{a} ({b}): adjudicación sin convocatoria competitiva. {c} puntos, todos los montos, rebajado de 18: entre las licitaciones ucranianas de sentencias penales, los procedimientos negociados eran unas dos veces más frecuentes que entre las demás licitaciones de los mismos compradores. Puede aplicarse un motivo legal (urgencia, exclusividad, convocatoria desierta); no se evalúa aquí."
+  ],
+  [
+   "Direct contract of {a} UAH, at or above UAH 200,000, the open-tender threshold for goods and services. {b} points: among Ukrainian tenders in criminal verdicts direct contracts this large were about twice as frequent as among the same buyers' other completed purchases. Thresholds differ for works (UAH 1.5 million) and some exemptions apply; neither is assessed here.",
+   "Contrato directo de {a} UAH, igual o superior a 200.000 UAH, el umbral de licitación abierta para bienes y servicios. {b} puntos: entre las licitaciones ucranianas de sentencias penales, los contratos directos de este tamaño eran unas dos veces más frecuentes que entre las demás compras concluidas de los mismos compradores. Los umbrales difieren para obras (1,5 millones de UAH) y existen algunas exenciones; ninguna de las dos cosas se evalúa aquí."
+  ],
+  [
+   "Same buyer and supplier {a}: {b} distinct procedure(s) without competition in this cohort. {c} point from 3, lowered from 18–60: in {d} repeated awards without competition were rarer than among the same buyers' other contracts. Lawful grounds may apply to each.",
+   "Mismo comprador y proveedor {a}: {b} procedimiento(s) distinto(s) sin competencia en esta cohorte. {c} punto desde 3, rebajado de 18–60: en {d} las adjudicaciones repetidas sin competencia eran menos frecuentes que entre los demás contratos de los mismos compradores. Pueden aplicarse motivos legales a cada una."
+  ],
+  [
+   "Same buyer and category {a}: {b}/{c} procedures won by this supplier, out of {d} ({e} % with an identified winner; lots of one procedure count once). Minimum 10 and 80 %; {f} point from 60 %, lowered from 12–40: in {g} concentration was barely more frequent than among the same buyers' other contracts. {h}",
+   "Mismo comprador y categoría {a}: {b}/{c} procedimientos ganados por este proveedor, de {d} ({e} % con adjudicatario identificado; los lotes de un mismo procedimiento cuentan una vez). Mínimo 10 y 80 %; {f} punto desde el 60 %, rebajado de 12–40: en {g} la concentración era apenas más frecuente que entre los demás contratos de los mismos compradores. {h}"
+  ],
+  [
+   "Same buyer and category {a}: {b}/{c} procedures won by this supplier, out of {d} ({e} % with an identified winner; lots of one procedure count once). Minimum 10 and 80 %; {f} point from 60 %, lowered from 12–40: in {g} concentration was barely more frequent than among the same buyers' other contracts.",
+   "Mismo comprador y categoría {a}: {b}/{c} procedimientos ganados por este proveedor, de {d} ({e} % con adjudicatario identificado; los lotes de un mismo procedimiento cuentan una vez). Mínimo 10 y 80 %; {f} punto desde el 60 %, rebajado de 12–40: en {g} la concentración era apenas más frecuente que entre los demás contratos de los mismos compradores."
+  ],
+  [
+   "· {a} pts, measured on labelled cases",
+   "· {a} pts, medidos en casos etiquetados"
+  ],
+  [
+   "· {a} pts, editorial, not measured",
+   "· {a} pts, editoriales, no medidos"
+  ],
+  [
+   "{a} pts, measured on labelled cases",
+   "{a} pts, medidos en casos etiquetados"
+  ],
+  [
+   "{a} pts, editorial, not measured",
+   "{a} pts, editoriales, no medidos"
   ]
  ]
 };

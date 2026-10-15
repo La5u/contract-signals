@@ -52,14 +52,14 @@ check(run('secop2DurationMonths','0 Mes(es)')===0);
 check(run('secop2DurationMonths','7 Hora(s)')===null);
 check(run('secop2DurationMonths',null)===null);
 // Colombian checks only (evidence checks appear only with indicatorEvidence); French-only checks stay out of scope
-const EXPECTED_IDS=['late-publication','repeated-single-bid','secop2-concentration','secop2-long-duration','secop2-plurality-award','secop2-repeated-plurality','secop2-term-extension','short-bidding-period','single-bid'].sort();
+const EXPECTED_IDS=['late-publication','repeated-single-bid','secop2-buyer-share','secop2-concentration','secop2-long-duration','secop2-plurality-award','secop2-repeated-plurality','secop2-term-extension','short-bidding-period','single-bid'].sort();
 const NA_FRENCH=['single-bid','short-bidding-period','repeated-single-bid','late-publication'];
 let flagged=0,nulls=0,zeros=0,positives=0,partials=0;
 const fires=Object.create(null);
 const scores=new Map();
 for(const c of rows){
   const a=run('getAssessment',c);
-  check(a.checks.length===9);
+  check(a.checks.length===10);
   check(JSON.stringify(a.checks.map(r=>r.id).sort())===JSON.stringify(EXPECTED_IDS));
   for(const r of a.checks){
     if(NA_FRENCH.includes(r.id)) check(r.status==='not-applicable');
@@ -84,15 +84,16 @@ check(fires['secop2-term-extension']===57);
 // Term extension: strictly above +100 % of the declared term, days added never inferred
 const ext=d=>run('getAssessment',{...rows[0],durationOriginal:'3 Mes(es)',daysAdded:d}).checks.find(r=>r.id==='secop2-term-extension');
 check(ext(91).status==='clear'&&ext(92).status==='signal'&&ext(92).weight===8.1);
-check(ext(Math.round(3*3*30.4375)).weight===40&&ext(10000).weight===40);
+check(ext(Math.round(3*3*30.4375)).weight===30&&ext(10000).weight===30);
 check(ext(0).status==='clear'&&ext(null).status==='unknown');
 check(run('getAssessment',{...rows[0],durationOriginal:'7 Hora(s)',daysAdded:30}).checks.find(r=>r.id==='secop2-term-extension').status==='unknown');
-check(positives===272&&zeros===7288&&nulls===0&&flagged===272&&partials===73);
-check(scores.get(18)===170&&scores.get(36)===6&&scores.get(40)===6&&scores.get(10.3)===18);
+check(positives===279&&zeros===7281&&nulls===0&&flagged===279&&partials===4170);
+check(scores.get(18)===176&&!scores.has(36)&&scores.get(14)===8&&scores.get(30)===6&&!scores.has(40)&&scores.get(10.3)===18);
 check(run('selectContracts',rows,{assessment:'unevaluated'}).length===0);
-check(run('selectContracts',rows,{assessment:'zero'}).length===7288);
-check(run('selectContracts',rows,{assessment:"partial"}).length===73);
-check(run('selectContracts',rows,{flagged:true}).length===272);
+check(run('selectContracts',rows,{assessment:'zero'}).length===7281);
+check(run('selectContracts',rows,{assessment:"partial"}).length===4170);
+check(run('selectContracts',rows,{flagged:true}).length===279);
+check(run('selectContracts',rows,{indicator:'secop2-buyer-share'}).length===9);
 check(run('selectContracts',rows,{indicator:'secop2-plurality-award'}).length===176);
 check(run('selectContracts',rows,{indicator:'secop2-repeated-plurality'}).length===15);
 check(run('selectContracts',rows,{indicator:'secop2-concentration'}).length===0);
@@ -101,9 +102,22 @@ check(run('selectContracts',rows,{indicator:'secop2-long-duration'}).length===39
 const directOnly=rows.filter(c=>c.procedure==='Contratación directa'&&c.procedureJustification==='Servicios profesionales y apoyo a la gestión');
 check(directOnly.length>5000);
 check(directOnly.every(c=>run('getIndicators',c).every(i=>i.family==='execution')));
-// Amounts never influence the score: same row scored with amount kept as-is (no path reads amount for secop2)
-const amountRow=rows.find(c=>c.amount>1e11);
+// v3.7: amounts influence the score only through the buyer share, and only in a completely covered signing year (2025)
+const amountRow=rows.filter(c=>!c.coBuyerShare.complete).sort((x,y)=>y.amount-x.amount)[0];
+check(amountRow.amount>1e10);
 check(amountRow&&run('getVigilanceScore',amountRow)===run('getVigilanceScore',{...amountRow,amount:1}));
+check(rows.filter(c=>c.coBuyerShare.complete).every(c=>c.coBuyerShare.year==='2025'));
+const share=c=>run('getAssessment',c).checks.find(r=>r.id==='secop2-buyer-share');
+const big=rows.find(c=>c.coBuyerShare.complete&&c.coBuyerShare.share>=0.05);
+check(share(big).status==='signal'&&share(big).weight===14&&share(big).family==='competition');
+check(share({...big,coBuyerShare:{...big.coBuyerShare,share:0.049}}).status==='clear');
+check(share({...big,coBuyerShare:{...big.coBuyerShare,complete:false}}).status==='unknown');
+check(share({...big,coBuyerShare:{...big.coBuyerShare,share:null}}).status==='unknown');
+// The SECOP I total of 2025 is added to the denominator for MEN and Caldas only (Usaquén has none)
+check(rows.find(c=>c.buyerNit==='890801052'&&c.coBuyerShare.complete).coBuyerShare.secop1===37103760417);
+check(rows.find(c=>c.buyer==='ALCALDIA LOCAL DE USAQUEN'&&c.coBuyerShare.complete).coBuyerShare.secop1===0);
+// Repeated awards without plurality: a token point since v3.7 (rarer among convicted contracts)
+check(rows.filter(c=>run('getAssessment',c).checks.find(r=>r.id==='secop2-repeated-plurality').status==='signal').every(c=>run('getAssessment',c).checks.find(r=>r.id==='secop2-repeated-plurality').weight===1));
 // Sorting, grouping and the out-of-scope increase rule
 for(const sort of ['date','date-asc','amount','amount-asc','buyer','supplier','score'])check(run('selectContracts',rows,{sort}).length===7560);
 check(run('selectContracts',rows,{sort:'amount'})[0].amount>=run('selectContracts',rows,{sort:'amount'})[7559].amount);
@@ -125,8 +139,8 @@ check(loanRows.every(c=>rows.some(o=>o.contractId===c.secop2PublicCounterparty.a
 check(rows.filter(c=>c.secop2PublicCounterparty?.withheld==='community-body').length===130);
 check(rows.filter(c=>c.secop2PublicCounterparty?.withheld==='person-document').length===3);
 check(rows.filter(c=>c.secop2PublicCounterparty&&!c.secop2PublicCounterparty.labelled).every(c=>!run('selectContracts',[c],{legal:'co-public'}).length));
-check(publicRows.filter(c=>run('getVigilanceScore',c)>0).length===28);
+check(publicRows.filter(c=>run('getVigilanceScore',c)>0).length===31);
 for(const c of rows)check(run('getVigilanceScore',{...c,secop2PublicCounterparty:null})===run('getVigilanceScore',c));
 // A comodato with a community counterparty is never labelled, whatever its duration
 check(rows.filter(c=>c.contractType==='Comodato'&&/acci[oó]n comunal|^jac/i.test(c.supplier)).every(c=>!c.secop2PublicCounterparty));
-console.log(`${checks} Colombia SECOP II assertions passed: cohort integrity, join verification, per-buyer counts, liquidation, jurisdiction-specific indicators (176/15/0/39/57 fires, 272 flagged, 7,288 zero, 0 not assessed), parser units, filters, sorting, grouping and the public-to-public context label (442 rows, no score change).`);
+console.log(`${checks} Colombia SECOP II assertions passed: cohort integrity, join verification, per-buyer counts, liquidation, jurisdiction-specific indicators (176/15/0/39/57/9 fires, 279 flagged, 7,281 zero, 0 not assessed), parser units, filters, sorting, grouping and the public-to-public context label (442 rows, no score change).`);

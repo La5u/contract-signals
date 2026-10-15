@@ -26,9 +26,9 @@ One row is one **active award to exactly one supplier, on one lot**: 1,081 award
 | --- | --- | --- | --- | --- |
 | Single offer in a competitive procedure | `uk-single-offer` | Competition | `procurementMethod` open or selective; the `bids` statistic of the awarded lot = 1 | **12** |
 | Award without prior publication | `uk-direct-award` | Competition | `procurementMethod` limited (award without prior publication, negotiated without publication, Procurement Act direct award) | **18** |
-| Repeated single-offer awards | `uk-repeated-single-offer` | Competition | This award is single-offer; same buyer and supplier id in ≥3 distinct procedures (OCIDs) | **12 at 3 → 40 at 10** |
-| Repeated awards without publication | `uk-repeated-direct` | Competition | This award is limited; same buyer and supplier id in ≥3 distinct procedures | **18 at 3 → 60 at 10** |
-| Concentrated awards | `uk-concentration` | Competition | Same buyer and CPV division; ≥10 procedures, ≥80 % with an identified winner, share ≥60 % | **12 at 60 % → 40 at 100 %** |
+| Repeated single-offer awards | `uk-repeated-single-offer` | Competition | This award is single-offer; same buyer and supplier id in ≥3 distinct procedures (OCIDs) | **12 at 3 → 30 at 10** |
+| Repeated awards without publication | `uk-repeated-direct` | Competition | This award is limited; same buyer and supplier id in ≥3 distinct procedures | **18 at 3 → 30 at 10** |
+| Concentrated awards | `uk-concentration` | Competition | Same buyer and CPV division; ≥10 procedures, ≥80 % with an identified winner, share ≥60 % | **12 at 60 % → 30 at 100 %** |
 | Amount increase | `amount-increase` | Execution | **Out of scope**: contract change notices are separate, not imported | — |
 | Short bidding period | `short-bidding-period` | Competition | **Out of scope** | — |
 | Long declared duration | `long-contract` | Execution | **Out of scope** | — |

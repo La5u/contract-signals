@@ -26,9 +26,9 @@ One row is one **active award to exactly one supplier**: 522 awards. Excluded: 1
 | --- | --- | --- | --- | --- |
 | Single offer in a competitive procedure | `cl-single-offer` | Competition | Licitación pública or privada; exactly one tenderer published on the tender | **12** |
 | Award without competition | `cl-direct-award` | Competition | **Out of scope**: direct deals are not in this source | — |
-| Repeated single-offer awards | `cl-repeated-single-offer` | Competition | This award is single-offer; same buyer and supplier RUT in ≥3 distinct tenders | **12 at 3 → 40 at 10** |
+| Repeated single-offer awards | `cl-repeated-single-offer` | Competition | This award is single-offer; same buyer and supplier RUT in ≥3 distinct tenders | **12 at 3 → 30 at 10** |
 | Repeated awards without competition | `cl-repeated-direct` | Competition | **Out of scope** (as above) | — |
-| Concentrated awards | `cl-concentration` | Competition | Same buyer and UNSPSC segment (the items' most frequent 2-digit segment); ≥10 tenders, ≥80 % with an identified winner, share ≥60 % | **12 at 60 % → 40 at 100 %** |
+| Concentrated awards | `cl-concentration` | Competition | Same buyer and UNSPSC segment (the items' most frequent 2-digit segment); ≥10 tenders, ≥80 % with an identified winner, share ≥60 % | **12 at 60 % → 30 at 100 %** |
 | Amount increase | `amount-increase` | Execution | **Out of scope**: modifications are not in this source | — |
 | Short bidding period | `short-bidding-period` | Competition | **Out of scope** | — |
 | Long declared duration | `long-contract` | Execution | **Out of scope** | — |

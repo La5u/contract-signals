@@ -7,16 +7,29 @@ const run = (fn,...args) => {ctx.args=args;return vm.runInContext(`${fn}(...args
 const kinds = vm.runInContext('INDICATOR_KINDS', ctx);
 assert.equal(Object.keys(kinds).length, 20);
 const files = ['decp-history','tours-notices','decp-cities','contracts','colombia-secop2','paraguay-dncp','paraguay-dncp-3buyers','prozorro','ted-portugal','ted-romania','ted-czechia','uk-fts','chile-mp'];
-const seen = new Set();
+const seen = new Set(), measured = new Set();
 for (const f of files) {
   const rows = run('prepareContracts', JSON.parse(fs.readFileSync(`data/${f}.json`)));
   for (const r of rows) for (const c of run('getAssessment', r).checks) {
     const kind = run('indicatorKind', c.id);
     assert.ok(kind && kinds[kind], `${f}: check ${c.id} has no universal kind`);
     seen.add(kind);
+    // v3.7: every check says whether its points were measured on labelled cases; editorial points never exceed 30.
+    assert.ok(['measured', 'editorial'].includes(c.basis), `${f}: check ${c.id} has no points basis`);
+    if (c.status === 'signal' && c.basis === 'editorial') assert.ok(c.weight <= 30, `${f}: editorial ${c.id} scores ${c.weight}`);
+    if (c.basis === 'measured') measured.add(`${f}:${c.id}`);
   }
   for (const i of rows.flatMap(r => run('getIndicators', r))) assert.equal(i.kindLabel, kinds[i.kind]);
 }
+// Measured points: Ukraine, the Colombian buyer share and repeated plurality, two Romanian TED checks; nothing else.
+assert.deepEqual([...measured].sort(), ['colombia-secop2:secop2-buyer-share', 'colombia-secop2:secop2-repeated-plurality',
+  'prozorro:ua-better-bid-disqualified', 'prozorro:ua-buyer-share', 'prozorro:ua-contract-amendments', 'prozorro:ua-direct-award',
+  'prozorro:ua-direct-contract', 'prozorro:ua-single-offer', 'prozorro:ua-term-extension',
+  'ted-romania:ted-concentration', 'ted-romania:ted-repeated-direct']);
+assert.equal(vm.runInContext('EDITORIAL_MAX', ctx), 30);
+// The export names each signal's points and their basis.
+const ua = run('prepareContracts', JSON.parse(fs.readFileSync('data/prozorro.json'))).find(r => run('getIndicators', r).some(i => i.id === 'ua-buyer-share'));
+assert.match(run('exportRecord', ua).signalPoints, /Large share of the buyer’s yearly procurement: 30 \(measured\)/);
 // Evidence-based checks appear only on records carrying indicatorEvidence, so their kinds are checked by id.
 for (const id of ['cap','execution','legalGround','unitPrice','exclusivity']) { const kind = run('indicatorKind', id); assert.ok(kind && kinds[kind], `evidence check ${id} has no universal kind`); seen.add(kind); }
 for (const kind of Object.keys(kinds)) assert.ok(seen.has(kind), `kind ${kind} never used`);

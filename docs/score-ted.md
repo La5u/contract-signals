@@ -18,9 +18,9 @@ Written on 25 September 2026, before any notice of these cohorts was downloaded,
 | --- | --- | --- | --- | --- |
 | Single offer in a competitive procedure | `ted-single-offer` | Competition | Procedure code open, restricted, comp-dial, neg-w-call, innovation or comp-tend; the lot's published `tenders` statistic = 1 | **12** |
 | Award without competition | `ted-direct-award` | Competition | Procedure code `neg-wo-call` (negotiated without prior publication) | **18** |
-| Repeated single-offer awards | `ted-repeated-single-offer` | Competition | This award is single-offer; same buyer and supplier (national number) in ≥3 distinct notices | **12 at 3 → 40 at 10** |
-| Repeated awards without competition | `ted-repeated-direct` | Competition | This award is `neg-wo-call`; same buyer and supplier in ≥3 distinct notices | **18 at 3 → 60 at 10** |
-| Concentrated awards | `ted-concentration` | Competition | Same buyer and CPV division (2 digits); ≥10 lots, ≥80 % with a national supplier number, share ≥60 % | **12 at 60 % → 40 at 100 %** |
+| Repeated single-offer awards | `ted-repeated-single-offer` | Competition | This award is single-offer; same buyer and supplier (national number) in ≥3 distinct notices | **12 at 3 → 30 at 10** |
+| Repeated awards without competition | `ted-repeated-direct` | Competition | This award is `neg-wo-call`; same buyer and supplier in ≥3 distinct notices | **18 at 3 → 30 at 10**; Romania **1** since v3.7 |
+| Concentrated awards | `ted-concentration` | Competition | Same buyer and CPV division (2 digits); ≥10 lots, ≥80 % with a national supplier number, share ≥60 % | **12 at 60 % → 30 at 100 %**; Romania **1** since v3.7 |
 | Amount increase | `amount-increase` | Execution | **Out of scope**: modification notices are separate and were not imported | — |
 | Short bidding period | `short-bidding-period` | Competition | **Out of scope**: the contract-notice chain was not imported | — |
 | Long declared duration | `long-contract` | Execution | **Out of scope**: no duration threshold validated for these jurisdictions | — |
@@ -54,6 +54,8 @@ Ministerul Finanțelor (national, CUI 4221306), Județul Cluj (regional, 4288110
 | `ted-repeated-single-offer` | 42 | 77 | 24 | 213 |
 | `ted-repeated-direct` | 0 | 0 | 4 | 352 |
 | `ted-concentration` | 0 | 70 | 286 | 0 |
+
+**v3.7 (approved 2026-10-15):** on Romanian rows, repeated awards without competition and concentration score 1 point each. In Competition Council bid-rigging decisions (20 decisions, 17 buyers, one procedure per decision) repeated awards without competition were rarer than among the same buyers' other contracts (LR 0.38) and concentration barely more frequent (6 % vs 3 %, LR 1.09, fails the holdout); see [the results](../research/calibration/romania-colombia-results-2026-10-15-audit.md). Neither check fires in this cohort, so no score changes. Portugal and Czechia keep the editorial points.
 
 136 lots with a signal, 220 zero, 0 not assessed before v3.1; with the late-publication check (26 lots), 158 / 198 / 0. 132 of 341 lots with a published offer count had a single offer. Example lead: one supplier won outdoor fitness equipment in several separate Cluj-Napoca notices, each with one offer.
 

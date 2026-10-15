@@ -13,26 +13,27 @@ An editorial sorting tool, not a probability, not a measure of legal gravity, no
 - **Official findings, sanctions, CPI, project membership, personal identifiers**: outside the index, as everywhere else.
 - The three French checks that need fields this extract does not contain (see below).
 
-## The eight checks
+## The checks
 
-Eight checks are always displayed. Five are jurisdiction-specific; three are the French checks kept **out of scope** with an explicit reason — never silently dropped, never scored.
+Nine checks are always displayed. Six are jurisdiction-specific (buyer share since v3.7); three are the French checks kept **out of scope** with an explicit reason — never silently dropped, never scored.
 
 | Check | ID | Family | Eligibility / trigger | Weight |
 | --- | --- | --- | --- | --- |
 | Award declared without supplier plurality or under manifest urgency | `secop2-plurality-award` | Competition | Declared modality in the direct family; published justification is exactly “No existe pluralidad de oferentes en el mercado” or “Urgencia manifiesta” | **18**, flat, all amounts |
-| Repeated awards declared without supplier plurality | `secop2-repeated-plurality` | Competition | This contract is in the avoidance-justified set; same buyer (NIT) and same supplier document (Cédula/NIT) has ≥3 such awards in the cohort | **18 at 3 → 60 at 10**, linear |
-| Concentrated awards within a contract type | `secop2-concentration` | Competition | Single identified holder; same buyer and contract type; group ≥10 identified contracts, coverage ≥80 %, this holder’s share ≥60 % | **12 at 60 % → 40 at 100 %**, linear |
+| Repeated awards declared without supplier plurality | `secop2-repeated-plurality` | Competition | This contract is in the avoidance-justified set; same buyer (NIT) and same supplier document (Cédula/NIT) has ≥3 such awards in the cohort | **1** since v3.7 (was 18 at 3 → 60 at 10): rarer among convicted contracts |
+| Large share of the buyer's yearly procurement | `secop2-buyer-share` | Competition | COP amount; this contract is ≥ 5 % of the buyer's COP contract total for its signing year, in a year the cohort covers completely (bundled cohort: 2025 only) | **14** since v3.7 |
+| Concentrated awards within a contract type | `secop2-concentration` | Competition | Single identified holder; same buyer and contract type; group ≥10 identified contracts, coverage ≥80 %, this holder’s share ≥60 % | **12 at 60 % → 30 at 100 %**, linear |
 | Long declared duration | `secop2-long-duration` | Execution/duration | Published `duraci_n_del_contrato` parses to months ≥36 | **8 at 36 months → 16 at 120 months**, linear, cap 16 (v3.3) |
 | Single offer in a competitive procedure | `single-bid` | Competition | **Not applicable**: no offers/proposals table in this extract | — |
 | Short bidding period | `short-bidding-period` | Competition | **Not applicable**: no publication–deadline chronology | — |
-| Declared term more than doubled by extensions | `secop2-term-extension` | Execution/duration | Published `dias_adicionados` divided by the declared term (`duraci_n_del_contrato` in days) strictly above +100 % | **8 at +100 % → 40 at +300 %**, linear |
+| Declared term more than doubled by extensions | `secop2-term-extension` | Execution/duration | Published `dias_adicionados` divided by the declared term (`duraci_n_del_contrato` in days) strictly above +100 % | **8 at +100 % → 30 at +300 %**, linear |
 | Repeated low competition | `repeated-single-bid` | Competition | **Not applicable**: depends on offer counts, absent here | — |
 
 Score = competition maximum + execution/duration maximum, capped at 100, rounded to the tenth. `null` only when no check can be evaluated; `0` requires at least one evaluated check with no threshold crossed.
 
 ## Term extension (added 2026-09-26)
 
-SECOP II publishes `dias_adicionados`, the days added to the contract term, on every row (1,552 of 7,560 are above zero). The check divides it by the declared term in days (months × 30.4375) and signals **strictly above +100 %**, i.e. a term more than doubled, from 8 points to 40 at +300 %, in the execution/duration family (so it is not added to a long-duration signal on the same row). Amount additions (*adiciones*) are not published in this extract and remain out of scope.
+SECOP II publishes `dias_adicionados`, the days added to the contract term, on every row (1,552 of 7,560 are above zero). The check divides it by the declared term in days (months × 30.4375) and signals **strictly above +100 %**, i.e. a term more than doubled, from 8 points to 30 at +300 %, in the execution/duration family (so it is not added to a long-duration signal on the same row). Amount additions (*adiciones*) are not published in this extract and remain out of scope.
 
 - **The published end date is not used.** Among extended contracts, 567 end dates equal start + declared term + days added, but 819 equal start + declared term only: the end date is often not updated after an extension. `dias_adicionados` is taken as published.
 - **Why +100 %.** 1,002 extensions are at or below +50 %, including a cluster of professional-services contracts extended by exactly 50 %; 200 fall between +50 % and +100 %; 57 are above +100 %. The threshold is editorial, chosen after reading this distribution and flagged and unflagged examples; it is not a Colombian legal limit (Ley 80 caps value additions at 50 %, not term extensions).
@@ -56,12 +57,23 @@ SECOP II publishes `dias_adicionados`, the days added to the contract term, on e
 | `secop2-concentration` | 0 | 7,490 | 70 | 0 |
 | `secop2-long-duration` | 39 | 7,520 | 1 | 0 |
 | `secop2-term-extension` | 57 | 7,500 | 3 | 0 |
+| `secop2-buyer-share` (v3.7) | 9 | 3,417 | 4,134 | 0 |
 | three French out-of-scope checks | 0 | 0 | 0 | 7,560 each |
 
-- Rows with at least one signal: **272** (score > 0); zero after evaluation: **7,288**; not assessed: **0**; partial coverage (≥1 unknown): **73**. The term-extension check (added 2026-09-26) accounts for 57 of these rows; before it, 215 rows were flagged.
+- Rows with at least one signal: **279** (score > 0; 272 before v3.7); zero after evaluation: **7,281**; not assessed: **0**; partial coverage (≥1 unknown): **4,170** (73 before v3.7: buyer share is unknown outside 2025). The term-extension check (added 2026-09-26) accounts for 57 of these rows; before it, 215 rows were flagged.
 - The ≈82 % ordinary direct/professional-services rows score **0 or a duration-only score** — the bare modality never fires.
 - Max observed concentration share in an eligible buyer/contract-type group: 31.3 % — below the 60 % entry threshold; the check is evaluated, not absent.
 - These counts are cohort descriptions, not target proportions. No tuning was done to reach them; changing the cohort would change them.
+
+## Large share of the buyer's yearly procurement (v3.7)
+
+Approved by the owner on 2026-10-15. The Ukrainian buyer-share check (v3.6) was retested on Colombian corruption convictions, with the plan fixed before computing ([untested-checks-plan.md](../research/calibration/untested-checks-plan.md), `tools/colombia-conviction-checks.py`): 10 cases at 10 buyers, links checked by hand, one contract per case against the same buyers' contracts of the same year. Hit rate **60 % vs 12 %**, LR 2.64 [1.31, 6.31], 10 × log2 = **14 points** ([results](../research/calibration/romania-colombia-results-2026-10-14.md)).
+
+**In the explorer:** the contract's COP amount (`valor_del_contrato`) over the buyer's COP contract total for its signing year. The tested total merged SECOP I and SECOP II; this extract is SECOP II only, so the buyer's 2025 SECOP I total is added as a fixed number: MEN 77,864,151,275 COP (10 contracts) and Caldas 37,103,760,417 COP (32 contracts), the sum of `cuantia_contrato` for `anno_firma_contrato` 2025 in datos.gov.co `f789-7hwg`, queried 2026-10-15 (the older SECOP I table `x6v4-i8gf` and Usaquén have none). Only 2025 is a complete signing year in the 1 September 2024 → 1 September 2026 window; the other 4,134 contracts are not assessed, and local imports are not assessed.
+
+On the bundled cohort, 9 contracts reach 5 % (3 per buyer). Five are interadministrative agreements, which also carry the public-to-public context label; the tested comparison included such agreements, so they are scored as tested. One Caldas school-meals contract sits at 5.001 % with the SECOP I total included.
+
+Limits: 10 cases are few (interval 1.3–6.3); prosecutions favour large amounts; large purchases are usually lawful.
 
 ## Context outside the index (no points)
 

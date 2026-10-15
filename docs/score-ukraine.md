@@ -1,4 +1,4 @@
-# Ukraine method — Prozorro checks (v3.6 framework)
+# Ukraine method — Prozorro checks (v3.7 framework)
 
 **Checks for the Prozorro cohort** (three buyers, tenders created 2024-09-01 → 2026-09-01). Same vigilance-index framework as [score-v3.md](score-v3.md): two families, family maxima, cap at 100, `null` = “Not assessed”, unknowns never counted as zero. Different checks and eligibility; French, Colombian and Paraguayan rules are not applied. Amounts stay in the published currency (UAH, sometimes EUR or USD) and are never converted.
 
@@ -16,15 +16,16 @@ Written on 25 September 2026, before any record of this cohort was read. Procedu
 - **Without competition:** negotiation, negotiation.quick.
 - **Offer/direct-award checks excluded:** reporting — a direct-contract report recorded without a procedure. Reporting alone adds no points; the concentration check still applies.
 
-## The checks (twelve with the universal late-publication check)
+## The checks (thirteen with the universal late-publication check)
 
 | Check | ID | Family | Eligibility / trigger | Weight |
 | --- | --- | --- | --- | --- |
 | Single offer in a competitive procedure | `ua-single-offer` | Competition | Competitive type; offers on the awarded lot = 1 (bids whose lot values point to that lot, excluding deleted and draft bids) | **1** since v3.5 (was 12) |
-| Award without competition | `ua-direct-award` | Competition | negotiation / negotiation.quick | **18** |
-| Repeated single-offer awards | `ua-repeated-single-offer` | Competition | This award is single-offer; same buyer and supplier (EDRPOU or individual tax number) in ≥3 distinct tenders | **12 at 3 → 40 at 10** |
-| Repeated awards without competition | `ua-repeated-direct` | Competition | This award is negotiated; same buyer and supplier in ≥3 distinct tenders | **18 at 3 → 60 at 10** |
-| Concentrated awards | `ua-concentration` | Competition | Same buyer and main category (goods, works, services); ≥10 distinct procedures with identified suppliers, ≥80 % identification coverage, share ≥60 % | **12 at 60 % → 40 at 100 %** |
+| Award without competition | `ua-direct-award` | Competition | negotiation / negotiation.quick | **10** since v3.7 (was 18) |
+| Direct contract of UAH 200,000 or more | `ua-direct-contract` | Competition | Direct-contract report (reporting), UAH amount ≥ 200,000, the open-tender threshold for goods and services | **11** since v3.7 |
+| Repeated single-offer awards | `ua-repeated-single-offer` | Competition | This award is single-offer; same buyer and supplier (EDRPOU or individual tax number) in ≥3 distinct tenders | **12 at 3 → 30 at 10** |
+| Repeated awards without competition | `ua-repeated-direct` | Competition | This award is negotiated; same buyer and supplier in ≥3 distinct tenders | **18 at 3 → 30 at 10** |
+| Concentrated awards | `ua-concentration` | Competition | Same buyer and main category (goods, works, services); ≥10 distinct procedures with identified suppliers, ≥80 % identification coverage, share ≥60 % | **12 at 60 % → 30 at 100 %** |
 | Amount increase | `amount-increase` | Execution | **Out of scope**: three contract links checked, but no comparable dated amendment history | — |
 | Better-ranked bidder disqualified | `ua-better-bid-disqualified` | Competition | Competitive type; on the awarded lot, at least one award to another bidder was declared unsuccessful before this award (added 2026-09-26) | **4**, flat (12 before v3.5) |
 | Three or more contract amendments | `ua-contract-amendments` | Execution | Signed contract; retrieved integer count of active amendments ≥3 | **6** at 3–4, **10** at 5+, **+6** with a term extension (flat 8 in v3.4) |
@@ -47,8 +48,9 @@ Reproduced by `tests/national.cjs`. Ministry of Health (national, EDRPOU 0001292
 | `ua-concentration` | 0 | 483 | 5 | 0 |
 | `ua-better-bid-disqualified` | 9 | 55 | 0 | 424 |
 | `ua-buyer-share` (v3.6) | 11 | 231 | 246 | 0 |
+| `ua-direct-contract` (v3.7) | 66 | 358 | 0 | 64 |
 
-47 contracts with a signal, 441 zero, 0 not assessed (38 before the disqualification check). 424 of 488 contracts are direct-contract reports (reporting), out of scope; they score zero only through the concentration check. 38 of the 64 competitive contracts had a single offer. Example lead: one company won the Ministry of Health's commemorative award items repeatedly, each time as the only bidder. No negotiated procedure appears in this cohort.
+47 contracts with a signal, 441 zero, 0 not assessed (38 before the disqualification check). 424 of 488 contracts are direct-contract reports (reporting), out of scope for every check except `ua-direct-contract` (v3.7), concentration and buyer share. With v3.7, 118 contracts have a positive score (55 in v3.6), 63 more from direct contracts of UAH 200,000 or more. 38 of the 64 competitive contracts had a single offer. Example lead: one company won the Ministry of Health's commemorative award items repeatedly, each time as the only bidder. No negotiated procedure appears in this cohort.
 
 The first run counted concentration in lots rather than procedures; this was corrected for both engines (see [score-ted.md](score-ted.md)). Ukrainian counts did not change.
 
@@ -95,6 +97,17 @@ The owner asked for measures relative to the buyer rather than fixed amounts, so
 The share grows with the evidence (LR 4.8 at ≥ 1 %, 9.0 at ≥ 10 %), and the check is not driven by small buyers. It is in the competition family, so it is not added to a single offer or a disqualification on the same contract; it applies to every procedure, direct-contract reports included. **In the explorer:** the share is the contract's UAH amount over the buyer's UAH contract total for the tender's creation year in the same cohort (no currency conversion; other currencies are unknown). It is assessed only where the cohort covers the buyer's whole year: the bundled cohort runs 1 September 2024 → 1 September 2026, so only 2025 counts and the other 246 contracts are not assessed. Local imports are not assessed, because their coverage of a buyer's year is not established. The calibration counted tender values over all completed tenders; the explorer counts signed contracts, the closest measure in this cohort.
 
 Limits: prosecutions favour large amounts, so part of the ratio reflects what gets prosecuted; large purchases are usually lawful. Two related candidates were not adopted: an amount increase close to the legal ceiling (R2) did not separate convicted tenders in Ukraine, where the total may not rise at all, and stays a candidate for countries with a numeric ceiling; a direct contract just under the open-tender threshold (R3) is being retested with complete category data.
+
+## Direct contracts and negotiated procedures (v3.7, approved 2026-10-15)
+
+Measured by a census of every completed tender of the convicted buyers' years on the linked conviction cohort ([results](../research/calibration/ukraine-candidate-indicators.md#repeat-on-the-conviction-cohort-with-linked-tenders-2026-10-14)):
+
+| Check | Hit rate, convictions | Comparisons (census) | LR+ [95 %] | Learn / check half | Points |
+| --- | ---: | ---: | --- | --- | --- |
+| D2 direct contract ≥ UAH 200,000 (`ua-direct-contract`) | 17 % (39/320) | 8 % | 2.18 [1.52, 3.00] | 1.76 [1.06, 2.82] / 2.43 | **11** (11.2 [6.0, 15.8]) |
+| D4 negotiated procedure (`ua-direct-award`) | 8 % (15/320) | 4 % | 1.94 [1.05, 3.13] | 1.27 [0.35, 2.74] / 2.29 | **10** (9.6 [0.8, 16.5]), was 18 |
+
+D2 passes the holdout rule; it is the only check that scores direct-contract reports, which are otherwise recorded without a procedure. D4 points the same way but its learn half does not exclude 1; the owner set it to the measured 10 rather than keep the editorial 18. Both are in the competition family, so D2 does not add to the buyer share on the same contract. Limits: the census lists only the site search's completed tenders; the size gate partly measures size (prosecutions favour large amounts), and the UAH 1.5 million works threshold and legal exemptions are not assessed.
 
 ## Better-ranked bidder disqualified (added 2026-09-26)
 
