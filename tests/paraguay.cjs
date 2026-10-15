@@ -135,7 +135,7 @@ function commonRowChecks(rows, cov, start, end) {
   assert.equal(at(19).status,'signal'); assert.equal(at(19).weight,8);
   assert.equal(at(20).weight,8); assert.equal(at(20.04).weight,8);
   assert.equal(at(20.1).status,'signal'); assert.equal(at(20.1).weight,16.0);
-  assert.equal(at(60).weight,28); assert.equal(at(100).weight,40); assert.equal(at(250).weight,40);
+  assert.equal(at(60).weight,23); assert.equal(at(100).weight,30); assert.equal(at(250).weight,30);
   assert.ok(at(30).weight > at(20).weight);
   // No amendment: clear, not a signal; unreadable amount: unknown.
   assert.equal(check({...base,amendments:[]}).status,'clear');

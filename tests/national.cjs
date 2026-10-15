@@ -8,7 +8,7 @@ function tally(rows) {
   const checks = {}; let flagged = 0, zero = 0, notAssessed = 0;
   for (const row of rows) {
     const a = run('getAssessment', row);
-    assert.equal(a.checks.length, row.dataFamily === 'prozorro' ? 12 : 9);
+    assert.equal(a.checks.length, row.dataFamily === 'prozorro' ? 13 : 9);
     for (const c of a.checks) { checks[c.id] ??= {signal:0,clear:0,unknown:0,'not-applicable':0}; checks[c.id][c.status]++; }
     const s = run('getVigilanceScore', row);
     if (s == null) notAssessed++; else if (s > 0) flagged++; else zero++;
@@ -29,21 +29,23 @@ const pick = (t, prefix) => Object.fromEntries(Object.entries(t.checks).filter((
     assert.match(r.source, /^https:\/\/public-api\.prozorro\.gov\.ua\/api\/2\.5\/tenders\/[0-9a-f]{32}$/);
     const ids = run('getAssessment', r).checks.map(c => c.id);
     for (const foreign of ['single-bid','direct-award','secop2-plurality-award','dncp-single-tenderer']) assert.ok(!ids.includes(foreign));
-    // Reporting is out of scope, never unknown, never a signal.
-    if (r.procedure === 'reporting') for (const c of run('getAssessment', r).checks.filter(c => /single-offer|direct/.test(c.id))) assert.equal(c.status, 'not-applicable');
+    // Reporting is out of scope, never unknown, never a signal, except for the D2 direct-contract check (v3.7).
+    if (r.procedure === 'reporting') for (const c of run('getAssessment', r).checks.filter(c => /single-offer|direct/.test(c.id) && c.id !== 'ua-direct-contract')) assert.equal(c.status, 'not-applicable');
+    const d2 = run('getAssessment', r).checks.find(c => c.id === 'ua-direct-contract');
+    assert.equal(d2.status, r.procedure !== 'reporting' ? 'not-applicable' : r.amount >= 200000 ? 'signal' : 'clear');
     if (r.procedureDirect === false) assert.ok(Number.isInteger(r.offers));
   }
   const t = tally(rows);
   assert.deepEqual(pick(t, 'ua-'), {
     'ua-contract-amendments': [1,487,0,0], 'ua-term-extension': [5,483,0,0], 'ua-single-offer': [38,26,0,424], 'ua-direct-award': [0,64,0,424], 'ua-repeated-single-offer': [10,28,0,450],
     'ua-repeated-direct': [0,0,0,488], 'ua-concentration': [0,483,5,0], 'ua-better-bid-disqualified': [9,55,0,424],
-    'ua-buyer-share': [11,231,246,0] });
-  assert.deepEqual(t.counts, [55,433,0]);
+    'ua-buyer-share': [11,231,246,0], 'ua-direct-contract': [66,358,0,64] });
+  assert.deepEqual(t.counts, [118,370,0]);
   // Disqualification before the award: counted per lot, only on competitive procedures, never on reporting.
   for (const r of rows) {
     if (r.procedureDirect !== false) assert.equal(r.disqualifiedBefore, null);
     const ids = run('getAssessment', r).checks.map(c => c.id);
-    assert.equal(ids.length, 12); assert.ok(!ids.includes('short-bidding-period'));
+    assert.equal(ids.length, 13); assert.ok(!ids.includes('short-bidding-period'));
   }
   const amendments = (fields) => run('getAssessment', { ...rows[0], contractChanges: undefined, contractChangeTypes: undefined, ...fields }).checks.find(c => c.id === 'ua-contract-amendments');
   assert.equal(amendments({contractChanges: 3, contractChangeTypes: ['priceReduction']}).status, 'signal');
@@ -82,7 +84,16 @@ const pick = (t, prefix) => Object.fromEntries(Object.entries(t.checks).filter((
   assert.equal(share({ uaBuyerShare: { ...big.uaBuyerShare, share: 0.049 } }).status, 'clear');
   assert.ok(rows.filter(r => r.uaBuyerShare?.complete).every(r => r.uaBuyerShare.year === '2025'), 'only 2025 is complete in the bundled cohort');
   assert.equal(run('indicatorKind', 'ua-buyer-share'), 'buyer-share');
-  console.log('Ukraine Prozorro: 488 contracts, 55 flagged (11 by buyer share) (9 by a better-ranked bidder disqualified), reporting out of scope, offers counted per lot.');
+  // v3.7: D2, a direct-contract report of UAH 200,000 or more, scores 11 (competition); negotiated awards score 10, not 18.
+  const reportingRow = rows.find(r => r.procedure === 'reporting');
+  const d2 = (fields) => run('getAssessment', { ...reportingRow, ...fields }).checks.find(c => c.id === 'ua-direct-contract');
+  assert.equal(d2({ amount: 200000, currency: 'UAH' }).weight, 11); assert.equal(d2({ amount: 200000, currency: 'UAH' }).family, 'competition');
+  assert.equal(d2({ amount: 199999.99, currency: 'UAH' }).status, 'clear');
+  assert.equal(d2({ amount: 500000, currency: 'EUR' }).status, 'unknown');
+  assert.equal(run('indicatorKind', 'ua-direct-contract'), 'direct-award');
+  const negotiated = run('getAssessment', { ...rows.find(r => r.procedureDirect === false), procedure: 'negotiation', procedureDirect: true }).checks.find(c => c.id === 'ua-direct-award');
+  assert.equal(negotiated.status, 'signal'); assert.equal(negotiated.weight, 10);
+  console.log('Ukraine Prozorro: 488 contracts, 118 flagged (66 by a direct contract of UAH 200,000 or more, 11 by buyer share, 9 by a better-ranked bidder disqualified), offers counted per lot.');
 }
 
 // ---- Portugal and Romania (TED) ----
@@ -107,6 +118,17 @@ for (const [file, country, expected, counts] of [
   assert.deepEqual({...pick(t, 'ted-'), ...pick(t, 'late-')}, expected);
   assert.deepEqual(t.counts, counts);
   console.log(`TED ${country}: ${rows.length} lots, ${counts[0]} flagged.`);
+}
+// v3.7: Romanian repeated awards without competition and concentration score a token point; other TED countries keep 18 and 12 at entry, capped at 30 (editorial maximum).
+{
+  const withId = f => load(f).find(r => run('nationalSupplierIdentity', r));
+  const ro = withId('data/ted-romania.json'), cz = withId('data/ted-czechia.json');
+  const weight = (row, id, fields) => run('getAssessment', { ...row, ...fields }).checks.find(c => c.id === id).weight;
+  const repeated = { procedureDirect: true, nationalRepeatedDirect: { count: 10 } };
+  const concentrated = { nationalConcentration: { category: '45', wins: 10, known: 10, total: 10, coverage: 1, share: 1, sufficient: true } };
+  assert.equal(weight(ro, 'ted-repeated-direct', repeated), 1); assert.equal(weight(cz, 'ted-repeated-direct', repeated), 30);
+  assert.equal(weight(ro, 'ted-concentration', concentrated), 1); assert.equal(weight(cz, 'ted-concentration', concentrated), 30);
+  assert.equal(weight(ro, 'ted-direct-award', { procedureDirect: true }), 18);
 }
 
 // ---- United Kingdom (Find a Tender) ----

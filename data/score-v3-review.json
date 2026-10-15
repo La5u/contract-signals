@@ -1,9 +1,9 @@
 {
-  "version": "3.6",
-  "generatedAt": "2026-10-14T16:44:07.097Z",
+  "version": "3.7",
+  "generatedAt": "2026-10-15T09:23:46.203Z",
   "sourceCodeHashes": {
     "v21": "7055ce9a7cf02702232bb7dcb91a3858579c440e31e967a8adbb6f2ab13b6c87",
-    "v3": "60e9c1a93463b70e00dd532d9ec187497e6a1ca926cc0f74e2c20f6652863f42"
+    "v3": "fcd86515104110d8c1750cb8ae314ef27d0a2547dd16df11a10678349152575d"
   },
   "interpretation": "Editorial triage, not probability. Threshold eligibility is not statistical calibration. Null is unevaluated, not a negative. Official findings are separate evidence. No target fraction of flagged contracts.",
   "coverageDefinition": "evaluated/applicable-known checks plus separately displayed unknown-applicability checks; no normalization by missingness",
@@ -192,26 +192,26 @@
             "competition": 0.8,
             "execution": 1.2
           },
-          "spearmanPositiveOnly": 0.9413,
+          "spearmanPositiveOnly": 0.9331,
           "positiveRows": 346,
           "topK": 20,
-          "topKOverlap": 18,
-          "baselineCutoff": 28.3,
+          "topKOverlap": 17,
+          "baselineCutoff": 22.5,
           "baselineCutoffTies": 10,
-          "scenarioCutoffTies": 10
+          "scenarioCutoffTies": 5
         },
         "executionLower": {
           "multipliers": {
             "competition": 1.2,
             "execution": 0.8
           },
-          "spearmanPositiveOnly": 0.987,
+          "spearmanPositiveOnly": 0.9815,
           "positiveRows": 346,
           "topK": 20,
-          "topKOverlap": 15,
-          "baselineCutoff": 28.3,
+          "topKOverlap": 14,
+          "baselineCutoff": 22.5,
           "baselineCutoffTies": 10,
-          "scenarioCutoffTies": 1
+          "scenarioCutoffTies": 10
         }
       },
       "reviewQueue": [
@@ -235,7 +235,7 @@
           "id": "decp-22070001700019-2024DAT02",
           "source": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2722070001700019%27+AND+id%3D%272024DAT02%27&limit=100",
           "oldScore": 8,
-          "v3Score": 19.7,
+          "v3Score": 16,
           "signals": [
             "amount-increase"
           ],
@@ -308,7 +308,7 @@
             "competition": 0.8,
             "execution": 1.2
           },
-          "spearmanPositiveOnly": 0.9072,
+          "spearmanPositiveOnly": 0.907,
           "positiveRows": 231,
           "topK": 20,
           "topKOverlap": 15,
@@ -321,7 +321,7 @@
             "competition": 1.2,
             "execution": 0.8
           },
-          "spearmanPositiveOnly": 0.9644,
+          "spearmanPositiveOnly": 0.9629,
           "positiveRows": 231,
           "topK": 20,
           "topKOverlap": 20,
