@@ -35,6 +35,8 @@ FIELDS = {
     'title': ['titlucontract', 'denumirecontract'],
     'cpv': ['cpvcode', 'codcpv', 'cpvcodeid'],
     'value_ron': ['valoareron', 'valoarecontractron', 'valoarecontract', 'valoareatribuitaron'],
+    'value': ['valoare'],          # amount in the contract currency (2017-2018 subsequent contracts leave ValoareRON NULL)
+    'currency': ['moneda'],
     'winner': ['castigator', 'catigator', 'ofertant', 'ofertantcastigator', 'denumirecastigator'],
     'winner_cui': ['castigatorcui', 'cuiofertant', 'cuicastigator', 'cuiof', 'cuiofertantcastigator'],
 }
@@ -56,13 +58,21 @@ def mapping(header):
 
 
 def number(s):
-    s = str(s or '').strip().replace(' ', '')
-    if not s:
-        return None
+    """Parse '1,478,296' (comma thousands), '1.478.296,50' (dot thousands, comma decimal), '123.45', '345000'.
+
+    Commas or dots grouping digits in threes are thousands separators; a single separator followed by one,
+    two or four or more digits is a decimal point."""
     if isinstance(s, (int, float)):
         return float(s)
+    s = str(s or '').strip().replace(' ', '').replace('\u00a0', '')
+    if not s:
+        return None
     if ',' in s and '.' in s:
         s = s.replace('.', '').replace(',', '.') if s.rfind(',') > s.rfind('.') else s.replace(',', '')
+    elif re.fullmatch(r'-?\d{1,3}(,\d{3})+', s):
+        s = s.replace(',', '')
+    elif re.fullmatch(r'-?\d{1,3}(\.\d{3}){2,}', s):
+        s = s.replace('.', '')
     elif ',' in s:
         s = s.replace(',', '.')
     try:
@@ -89,8 +99,17 @@ def rows(path):
                 else:
                     yield row
     elif head.startswith(b'PK'):
-        ws = openpyxl.load_workbook(path, read_only=True).worksheets[0]
-        yield from ws.iter_rows(values_only=True)
+        # XLSX exports are also split over several sheets: read them all, skipping repeated headers.
+        header = None
+        for ws in openpyxl.load_workbook(path, read_only=True).worksheets:
+            for i, row in enumerate(ws.iter_rows(values_only=True)):
+                if header is None:
+                    header = row
+                    yield row
+                elif i == 0 and [str(x).strip() for x in row] == [str(x).strip() for x in header]:
+                    continue
+                else:
+                    yield row
     else:
         raw = path.read_bytes()
         text = None
@@ -103,8 +122,8 @@ def rows(path):
         if text is None:   # 2012-2016 exports: Windows-1250 with a few stray bytes
             text = raw.decode('cp1250', errors='replace')
         first = text[:text.find('\n')]
-        delim = max('^,;\t|', key=first.count)
         quote = '|' if first.startswith('|') else '"'
+        delim = max('^,;\t' if quote == '|' else '^,;\t|', key=first.count)
         header = None
         if delim == '^':
             # Unquoted ^-separated exports (2017-2018) carry line breaks inside fields: join lines until a record
@@ -188,6 +207,8 @@ def normalise(path, out):
                 rec['contract_date'] = xlrd.xldate.xldate_as_datetime(rec['contract_date'], 0).strftime('%Y-%m-%d')
             rec = {f: (str(v).strip() if v is not None else None) for f, v in rec.items()}
             rec['value_ron_num'] = number(rec.get('value_ron'))
+            if rec['value_ron_num'] is None and str(rec.get('currency') or '').upper() == 'RON':
+                rec['value_ron_num'] = number(rec.get('value'))
             rec['offers_num'] = number(rec.get('offers'))
             rec['source'] = f'{path.parent.name}/{path.name}'
             fh.write(json.dumps(rec, ensure_ascii=False) + '\n')

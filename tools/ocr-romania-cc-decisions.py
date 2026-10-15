@@ -33,15 +33,16 @@ def ocr_page(job):
 def main():
     p = argparse.ArgumentParser()
     p.add_argument('--workers', type=int, default=3)
+    p.add_argument('--max-pages', type=int, help='only the first N pages of each document (to classify scans)')
     args = p.parse_args()
     names = [n for n in (BASE / 'scans.txt').read_text().split() if n]
-    jobs = [(n, i) for n in names for i in range(len(pdfium.PdfDocument(str(BASE / 'pdf' / n))))]
+    jobs = [(n, i) for n in names for i in range(min(len(pdfium.PdfDocument(str(BASE / 'pdf' / n))), args.max_pages or 10**6))]
     print(f'{len(names)} documents, {len(jobs)} pages', flush=True)
     with Pool(args.workers) as pool:
         for k, _ in enumerate(pool.imap_unordered(ocr_page, jobs, chunksize=4)):
             if k % 100 == 0:
                 print(f'{k}/{len(jobs)} pages', flush=True)
-    for n in names:
+    for n in names if not args.max_pages else []:
         pages = sorted((BASE / 'ocr' / n).glob('*.txt'))
         (BASE / 'text' / f'{n}.txt').write_text('\n\f\n'.join(p.read_text() for p in pages))
     print('done', flush=True)
