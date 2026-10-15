@@ -1972,7 +1972,7 @@ function startExplorer() {
   let localFileIdentity = '';
   const defaultDataset = datasetSelect.options[0].value;
   const initialView = hashToViewState(location.hash);
-  if (datasets[initialView.dataset]) datasetSelect.value = initialView.dataset;
+  if (Object.hasOwn(datasets, initialView.dataset)) datasetSelect.value = initialView.dataset;
   let pendingView = location.hash ? initialView : null;
   // Options sit under their country's group, so the full name joins both.
   const datasetLabel = () => { const option = datasetSelect.selectedOptions[0]; return `${option.parentElement.label} · ${option.textContent.trim()}`; };
@@ -3207,7 +3207,7 @@ function startExplorer() {
   // A pasted link or back/forward: reload only when the dataset differs.
   window.addEventListener('hashchange', () => {
     const view = hashToViewState(location.hash);
-    const wanted = datasets[view.dataset] ? view.dataset : usingLocalFile ? null : defaultDataset;
+    const wanted = Object.hasOwn(datasets, view.dataset) ? view.dataset : usingLocalFile ? null : defaultDataset;
     if (wanted && (wanted !== datasetSelect.value || usingLocalFile)) {
       datasetSelect.value = wanted;
       pendingView = view;
