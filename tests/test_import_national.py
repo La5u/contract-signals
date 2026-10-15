@@ -42,6 +42,28 @@ class TedTests(unittest.TestCase):
             for row in published:
                 self.assertEqual(row, built[row["id"]], row["id"])
 
+    def test_republished_lots_are_counted_once(self):
+        # A later award notice that lists a lot again (same procedure, contract reference and conclusion
+        # date) is not a new award: only the first listing is published, the rest are counted in coverage.
+        for key in ted.COHORTS:
+            manifest = json.loads((ted.raw_dir(key) / "manifest.json").read_text(encoding="utf-8"))
+            listings, relisted = {}, set()
+            for buyer in manifest["buyers"]:
+                for pub in buyer["publicationNumbers"]:
+                    rows, _ = ted.notice_rows(ted.COHORTS[key], pub, gzip.decompress((ted.raw_dir(key) / "notices" / f"{pub}.xml.gz").read_bytes()))
+                    for r in rows:
+                        if r["_listing"] and r["_listing"][1]:
+                            listings.setdefault(r["_listing"], set()).add(r["id"])
+            published = {r["id"] for r in json.loads((ROOT / f"data/ted-{key}.json").read_text(encoding="utf-8"))}
+            for listing, ids in listings.items():
+                self.assertLessEqual(len(ids & published), 1, listing)
+                relisted |= ids - published if ids & published else set()
+            counts = json.loads((ROOT / f"data/ted-{key}-coverage.json").read_text(encoding="utf-8"))["counts"]
+            self.assertEqual(len(relisted), counts["relistedLotsExcluded"], key)
+        romania = {r["id"] for r in json.loads((ROOT / "data/ted-romania.json").read_text(encoding="utf-8"))}
+        self.assertIn("ted-13780-2026-lot-0001", romania)
+        self.assertFalse(any(i.startswith("ted-575056-2026-") for i in romania), "575056-2026 relists 13780-2026")
+
     def test_foreign_winner_numbers_are_not_national_identifiers(self):
         rows = json.loads((ROOT / "data/ted-portugal.json").read_text(encoding="utf-8"))
         for row in rows:

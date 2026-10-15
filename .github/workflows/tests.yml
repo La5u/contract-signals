@@ -9,12 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # the document-review test reads a frozen city snapshot from history
       - uses: actions/setup-node@v4
         with:
           node-version: 22
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - run: pip install -r tests/requirements.txt
       # Playwright is test-only and stays outside the project, as locally.
       - run: npm install --prefix /tmp/procurement-browser playwright@1.58.2 && npx --prefix /tmp/procurement-browser playwright install --with-deps chromium
       - run: sh tests/run-all.sh
