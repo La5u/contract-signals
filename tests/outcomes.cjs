@@ -31,3 +31,30 @@ for(const file of ['contracts','decp-history','decp-cities','consultations','tou
  }
 }
 console.log('Outcome and dated news-lead validation: one historical investigation report, zero adjudicated labels, no points.');
+
+// Supplier proceedings: company-level steps (an inspection, a decision) shown with exact wording, never on
+// the contract's own investigation flag and never scored. Consortium members are matched one by one.
+{
+  const step={stage:'inspection',authority:'Competition Council',eventDate:'2024-05-14',publishedAt:'2024-05-15',verifiedAt:'2026-10-15',
+    sourceUrl:'https://example.org/press',sourceLabel:'Council press release',wording:'The Council inspected this company in a suspected bid-rigging case.'};
+  const file={suppliers:[{country:'ROU',identifierType:'CUI',id:'123',name:'Member B',identityBasis:'Same name and CUI.',proceedings:[step]}]};
+  const index=run('validateSupplierProceedings',file);
+  const row={id:'r',country:'ROU',supplierIds:[{id:'999',identifierType:'CUI'},{id:'123',identifierType:'CUI'}]};
+  const found=run('getSupplierProceedings',row,index);
+  assert.equal(found.length,1); assert.equal(found[0].supplier,'Member B');
+  const note=run('supplierProceedingNote',found[0]);
+  assert.match(note,/^The Council inspected this company/); assert.match(note,/not a finding of wrongdoing/); assert.match(note,/this contract is not known to be part of the case/);
+  assert.equal(run('getSupplierProceedings',{...row,country:'PRT'},index).length,0,'identifiers are national: the country must match');
+  assert.equal(run('hasReportedInvestigation',row),false);
+  for(const change of [{stage:'suspected'},{sourceUrl:'javascript:alert(1)'},{wording:' '},{publishedAt:'2024-05-01'},{eventDate:'2024-5-14'}])
+    assert.throws(()=>run('validateSupplierProceedings',{suppliers:[{...file.suppliers[0],proceedings:[{...step,...change}]}]}),/Supplier proceedings/);
+  assert.throws(()=>run('validateSupplierProceedings',{suppliers:[file.suppliers[0],file.suppliers[0]]}),/duplicate/);
+  assert.throws(()=>run('validateSupplierProceedings',{suppliers:[{...file.suppliers[0],identityBasis:''}]}),/Supplier proceedings/);
+  // The published file: the four firms of the 2024 Cisco tender inspection, matched on the Ministry of Finance's TED rows.
+  const published=run('validateSupplierProceedings',JSON.parse(fs.readFileSync('data/supplier-proceedings.json')));
+  const ro=run('prepareContracts',JSON.parse(fs.readFileSync('data/ted-romania.json')));
+  assert.deepEqual(ro.filter(c=>run('getSupplierProceedings',c,published).length).map(c=>c.id).sort(),
+    ['ted-335119-2025-lot-0000','ted-365345-2025-lot-0000','ted-477464-2025-lot-0000','ted-49562-2025-lot-0000','ted-639516-2025-lot-0000','ted-686957-2024-lot-0000']);
+  assert.ok(ro.every(c=>!run('hasReportedInvestigation',c)));
+  console.log('Supplier proceedings: company-level, exact wording with caveats, consortium members matched, never on the contract flag.');
+}

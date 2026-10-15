@@ -961,6 +961,49 @@ function hasAdjudicatedCorruption(contract) {
 function hasReportedInvestigation(contract) {
   return Array.isArray(contract.investigationReports) && contract.investigationReports.length > 0;
 }
+// Supplier proceedings (data/supplier-proceedings.json, curated by hand): an authority's step that names a
+// company, such as a competition inspection. They describe the company, never this contract, and are
+// never scored. A supplier without an entry has not been checked; it is not known to be clear.
+const PROCEEDING_STAGES = { inspection: 'Competition inspection', investigation: 'Investigation opened', decision: 'Authority decision', court: 'Court ruling' };
+const PROCEEDING_CAVEATS = {
+  inspection: 'An inspection is an investigative step, not a finding of wrongdoing.',
+  investigation: 'An open investigation is not a finding of wrongdoing.',
+  decision: 'A decision of the authority, not a court judgment; it may be under appeal.',
+  court: 'A court ruling; check whether it is final.',
+};
+const PROCEEDING_SCOPE = 'It concerns the company; this contract is not known to be part of the case.';
+function validateSupplierProceedings(data) {
+  const isDate = v => typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v) && Number.isFinite(Date.parse(v)) && new Date(v).toISOString().slice(0, 10) === v;
+  const text = v => typeof v === 'string' && v.trim().length > 0;
+  if (!data || !Array.isArray(data.suppliers)) throw new Error('Supplier proceedings: invalid file.');
+  const index = new Map();
+  for (const s of data.suppliers) {
+    if (!s || !/^[A-Z]{3}$/.test(s.country || '') || !['identifierType', 'id', 'name', 'identityBasis'].every(k => text(s[k])) || !Array.isArray(s.proceedings) || !s.proceedings.length)
+      throw new Error('Supplier proceedings: invalid supplier entry.');
+    for (const x of s.proceedings) {
+      if (!x || !PROCEEDING_STAGES[x.stage] || !['authority', 'wording', 'sourceLabel'].every(k => text(x[k])) || !safeSource(x.sourceUrl) || (x.copyUrl != null && !safeSource(x.copyUrl)) ||
+          !isDate(x.eventDate) || !isDate(x.publishedAt) || !isDate(x.verifiedAt) || x.publishedAt < x.eventDate)
+        throw new Error(`Supplier proceedings: invalid proceeding for ${s.name}.`);
+    }
+    const key = `${s.country}|${s.identifierType}:${s.id.trim()}`;
+    if (index.has(key)) throw new Error(`Supplier proceedings: duplicate supplier ${key}.`);
+    index.set(key, s);
+  }
+  return index;
+}
+// Every identified member of the winning supplier (consortia included), with its proceedings.
+function getSupplierProceedings(c, index) {
+  if (!index?.size || !c.country) return [];
+  const out = [];
+  for (const { id, identifierType } of c.supplierIds || []) {
+    const entry = typeof id === 'string' ? index.get(`${c.country}|${identifierType}:${id.trim()}`) : null;
+    for (const x of entry?.proceedings || []) out.push({ ...x, supplier: entry.name });
+  }
+  return out;
+}
+function supplierProceedingNote(x) {
+  return `${x.wording} ${PROCEEDING_CAVEATS[x.stage]} ${PROCEEDING_SCOPE} Source: ${x.sourceLabel} (${x.publishedAt}); checked ${x.verifiedAt}.`;
+}
 function getIndicators(contract) {
   return getAssessment(contract).checks.filter(r => r.status === 'signal').map(r => ({ ...r, kind: indicatorKind(r.id), kindLabel: INDICATOR_KINDS[indicatorKind(r.id)] || r.label }));
 }
@@ -1957,6 +2000,14 @@ function startExplorer() {
   let boampDecpLinks = [];
   let publicLinkEvidence = [];
   let publicLinkResolutions = null;
+  let supplierProceedings = new Map();
+  // Optional: loaded before the first dataset so badges render with it; a missing or invalid file shows none.
+  const supplierProceedingsReady = fetch('data/supplier-proceedings.json').then(response => {
+    if (!response.ok) throw new Error('Supplier proceedings unavailable');
+    return response.json();
+  }).then(data => { supplierProceedings = validateSupplierProceedings(data); })
+    .catch(error => console.warn('Supplier proceedings not shown:', error.message));
+  const supplierProceedingsWait = Promise.race([supplierProceedingsReady, new Promise(resolve => setTimeout(resolve, 3000))]);
   // Notes repeated on many rows describe the dataset, not a record: shown once under “Scope and limits”.
   let sharedNotes = new Set();
   const fieldNotes = document.querySelector('#field-notes');
@@ -2339,6 +2390,13 @@ function startExplorer() {
       if (c.officialFinding === true) objectCell.append(element('small', 'Official audit finding · not a conviction', 'provenance tone-official'));
       if (hasReportedInvestigation(c)) objectCell.append(element('small', 'Investigation reported at the time · current status unknown', 'provenance'));
       if (hasAdjudicatedCorruption(c)) objectCell.append(element('small', 'Final judgment linked to this contract', 'provenance'));
+      for (const x of getSupplierProceedings(c, usingLocalFile ? null : supplierProceedings)) {
+        const badge = element('small', `Supplier · ${PROCEEDING_STAGES[x.stage]} (${x.eventDate.slice(0, 4)}) · about the company, not this contract`, 'provenance tone-proceeding');
+        const info = element('span', 'i', 'info-tip');
+        info.tabIndex = 0; info.title = supplierProceedingNote(x); info.setAttribute('role', 'img'); info.setAttribute('aria-label', info.title);
+        badge.append(info);
+        objectCell.append(badge);
+      }
       const sector = getSector(c);
       const sectorCell = element('td', sector.label);
       sectorCell.append(element('small', c.cpv || 'unknown CPV', 'provenance'));
@@ -2693,6 +2751,10 @@ function startExplorer() {
     }
     if (c.directAward === true && !legalContext.length && c.dataFamily === 'decp') line(outside, 'No R2122 article cited in the published text.');
     if (c.officialFinding === true) line(outside, `Official audit finding${c.sourceReference ? `: ${c.sourceReference}` : ''}.`);
+    for (const x of getSupplierProceedings(c, usingLocalFile ? null : supplierProceedings)) {
+      line(outside, `Supplier ${x.supplier} · ${PROCEEDING_STAGES[x.stage]} by ${x.authority} (${x.eventDate}): ${x.wording} `, element('span', `${PROCEEDING_CAVEATS[x.stage]} `), element('span', `${PROCEEDING_SCOPE} `),
+        element('span', `Published ${x.publishedAt}; checked ${x.verifiedAt}. `), sourceLink(x.sourceUrl, 'Source'), ...(x.copyUrl ? [' · ', sourceLink(x.copyUrl, 'Copy')] : []));
+    }
     for (const report of c.investigationReports || []) line(outside, `Reported investigation (${report.publisher}, ${report.reportedAt}): ${report.reportedFact} Status: ${report.currentStatus} `, sourceLink(report.sourceUrl, 'Report'));
     if (hasAdjudicatedCorruption(c)) {
       const o = c.corruptionOutcome;
@@ -3190,7 +3252,7 @@ function startExplorer() {
     viewport.scrollTop = 0;
     status.textContent = 'Loading data…';
     try {
-      const data = await fetchRecords(selected.path);
+      const [data] = await Promise.all([fetchRecords(selected.path), supplierProceedingsWait]);
       if (version === loadVersion) accept(data);
     } catch (error) { if (version === loadVersion) fail(error); }
   }

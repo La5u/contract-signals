@@ -29,7 +29,6 @@ window.I18N_DICTS.fr = {
   "declared 0 (likely undisclosed)": "0 déclaré (probablement non divulgué)",
   "Explore contracts": "Explorer les contrats",
   "Dataset": "Jeu de données",
-  "All countries": "Tous les pays",
   "France": "France",
   "Chile": "Chili",
   "Colombia": "Colombie",
@@ -44,7 +43,6 @@ window.I18N_DICTS.fr = {
   "France · Tours — procurement notices · BOAMP/TED": "France · Tours — avis de marchés · BOAMP/TED",
   "France · 3 Feb 2025 — consultation notices · BOAMP": "France · 3 févr. 2025 — avis de consultation · BOAMP",
   "France · nationwide sample — award lots + audit dossiers · BOAMP/CRC": "France · échantillon national — lots attribués + dossiers de contrôle · BOAMP/CRC",
-  "All countries · every dataset side by side (not merged, not summed)": "Tous les pays · tous les jeux côte à côte (ni fusionnés, ni additionnés)",
   "Chile · MOP / Maule region / Puente Alto — licitaciones · Mercado Público": "Chili · MOP / région du Maule / Puente Alto — licitaciones · Mercado Público",
   "Colombia · MEN / Caldas / Usaquén — contracts · SECOP II": "Colombie · MEN / Caldas / Usaquén — contrats · SECOP II",
   "Czechia · Finance / Moravian-Silesian region / Ostrava — award notices · TED": "Tchéquie · Finances / région de Moravie-Silésie / Ostrava — avis d’attribution · TED",
@@ -224,6 +222,15 @@ window.I18N_DICTS.fr = {
   "Official audit finding · not a conviction": "Constat officiel de contrôle · pas une condamnation",
   "Investigation reported at the time · current status unknown": "Enquête signalée à l’époque · statut actuel inconnu",
   "Final judgment linked to this contract": "Jugement définitif lié à ce marché",
+  "Competition inspection": "Inspection de concurrence",
+  "Investigation opened": "Enquête ouverte",
+  "Authority decision": "Décision de l’autorité",
+  "Court ruling": "Décision de justice",
+  "An inspection is an investigative step, not a finding of wrongdoing.": "Une inspection est un acte d’enquête, pas un constat d’infraction.",
+  "An open investigation is not a finding of wrongdoing.": "Une enquête ouverte n’est pas un constat d’infraction.",
+  "A decision of the authority, not a court judgment; it may be under appeal.": "Une décision de l’autorité, pas un jugement ; elle peut faire l’objet d’un recours.",
+  "A court ruling; check whether it is final.": "Une décision de justice ; vérifiez si elle est définitive.",
+  "It concerns the company; this contract is not known to be part of the case.": "Elle concerne l’entreprise ; rien n’indique que ce marché fasse partie de l’affaire.",
   "unknown CPV": "CPV inconnu",
   "No result. Try lowering the minimum amount or changing the filters.": "Aucun résultat. Essayez de baisser le montant minimum ou de changer les filtres.",
   "every data/*.json file above": "tous les fichiers data/*.json ci-dessus",
@@ -1189,6 +1196,34 @@ window.I18N_DICTS.fr = {
   [
    "Official audit finding: {a}.",
    "Constat officiel de contrôle : {a}."
+  ],
+  [
+   "Supplier · {a} ({b}) · about the company, not this contract",
+   "Titulaire · {a} ({b}) · concerne l’entreprise, pas ce marché"
+  ],
+  [
+   "Published {a}; checked {b}.",
+   "Publié le {a} ; vérifié le {b}."
+  ],
+  [
+   "{a} An inspection is an investigative step, not a finding of wrongdoing. It concerns the company; this contract is not known to be part of the case. Source: {b} ({c}); checked {d}.",
+   "{a} Une inspection est un acte d’enquête, pas un constat d’infraction. Elle concerne l’entreprise ; rien n’indique que ce marché fasse partie de l’affaire. Source : {b} ({c}) ; vérifié le {d}."
+  ],
+  [
+   "{a} An open investigation is not a finding of wrongdoing. It concerns the company; this contract is not known to be part of the case. Source: {b} ({c}); checked {d}.",
+   "{a} Une enquête ouverte n’est pas un constat d’infraction. Elle concerne l’entreprise ; rien n’indique que ce marché fasse partie de l’affaire. Source : {b} ({c}) ; vérifié le {d}."
+  ],
+  [
+   "{a} A decision of the authority, not a court judgment; it may be under appeal. It concerns the company; this contract is not known to be part of the case. Source: {b} ({c}); checked {d}.",
+   "{a} Une décision de l’autorité, pas un jugement ; elle peut faire l’objet d’un recours. Elle concerne l’entreprise ; rien n’indique que ce marché fasse partie de l’affaire. Source : {b} ({c}) ; vérifié le {d}."
+  ],
+  [
+   "{a} A court ruling; check whether it is final. It concerns the company; this contract is not known to be part of the case. Source: {b} ({c}); checked {d}.",
+   "{a} Une décision de justice ; vérifiez si elle est définitive. Elle concerne l’entreprise ; rien n’indique que ce marché fasse partie de l’affaire. Source : {b} ({c}) ; vérifié le {d}."
+  ],
+  [
+   "Supplier {a} · {b} by {c} ({d}): {e}",
+   "Titulaire {a} · {b} par {c} ({d}) : {e}"
   ],
   [
    "Colour theme: {a} · click to change",
