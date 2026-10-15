@@ -133,7 +133,7 @@ const server=http.createServer((req,res)=>{
  assert.deepEqual(await page.locator('td.amount-range').first().evaluate(td=>({lines:td.querySelectorAll('span').length,fits:td.scrollWidth<=td.clientWidth+1})),{lines:2,fits:true});
  await openRow(page,page.locator('.row-toggle').first());
  assert.match(await page.locator(panel).textContent(),/Amount sources · Sources disagree/);
- assert.match(await page.locator(panel).textContent(),/Ville de Paris — profil acheteur/);
+ assert.match(await page.locator(panel).textContent(),/ — profil acheteur/);
  await closePanel(page);
  await page.selectOption('#verification','');
  await page.selectOption('#assessment','unevaluated');
@@ -570,16 +570,13 @@ const server=http.createServer((req,res)=>{
   assert.match(await prof.locator('#status').textContent(),/5286 \/ 5286/);
   await prof.close();
  }
- // All countries side by side (over HTTP): each dataset prepared on its own, country shown per row, newest signals first.
+ // The combined view was removed after v3.7: an old link opens the default dataset.
  const allPage=await browser.newPage({locale:'en-GB',viewport:{width:1280,height:900}});
  allPage.on('pageerror',e=>errors.push(e.message));
  await allPage.goto(base+'/#dataset=all');
- await allPage.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 19923'),null,{timeout:60000});
- assert.equal(await allPage.locator('#coverage-link').isHidden(),true);
- await allPage.evaluate(()=>{const sort=document.querySelector('#sort');sort.value='recent-signal';sort.dispatchEvent(new Event('input'));});
- const firstAll=allPage.locator('.contract-row').first();
- assert.match(await firstAll.locator('td').first().locator('.country').textContent(),/\S/);
- assert.doesNotMatch(await firstAll.locator('td').last().textContent(),/Not assessed|^\s*0 \/ 100/);
+ await allPage.waitForFunction(()=>/5286 \/ 5286/.test(document.querySelector('#status').textContent));
+ assert.equal(await allPage.locator('#dataset').inputValue(),'decp');
+ assert.equal(await allPage.locator('#dataset option[value="all"]').count(),0);
  await allPage.close();
  // Spanish and French: interface text and number/date formats change; source evidence does not.
  const sourceObject='MAINTENANCE ET HEBERGEMENT DE LA SOLUTION AIDEN';

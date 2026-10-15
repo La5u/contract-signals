@@ -12,6 +12,8 @@ assert.ok(!/flagged=false|official|page=1\b|size=50/.test(hash));
 const back=run('hashToViewState',hash);
 for(const key of Object.keys(shared))assert.deepEqual(back[key],shared[key],key);
 const junk=run('hashToViewState','#page=-4&size=7&flagged=yes');
+// Old links: merged (cities) and removed (all, the combined view) datasets open the French DECP dataset.
+assert.equal(run('hashToViewState','#dataset=cities').dataset,'decp');assert.equal(run('hashToViewState','#dataset=all').dataset,'decp');
 assert.equal(junk.page,1);assert.equal(junk.pageSize,50);assert.equal(junk.flagged,false);assert.equal(junk.sort,'score');assert.equal(junk['min-score'],'0');
 
 // Export: every filtered row, unknown stays empty (never zero), formulas neutralized, currency kept.

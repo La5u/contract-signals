@@ -43,15 +43,14 @@
     return coverage ? `${range} (${period.endExclusive ? 'end exclusive' : 'end inclusive'}; ${period.basis})` : range;
   }
   function formatEntries(key, map = {}) {
-    const all = key === 'all';
-    const e = validate(!all && key !== 'local' && map && Object.hasOwn(map, key) ? map[key] : null);
+    const e = validate(key !== 'local' && map && Object.hasOwn(map, key) ? map[key] : null);
     return {
       fields: [
-        { label: 'Snapshot collected', value: all ? 'Dates vary by dataset' : periodText(e.snapshot) },
-        { label: 'Coverage period', value: all ? 'Dates and coverage basis vary by dataset' : periodText(e.coverage, true) },
-        { label: 'Source last updated', value: all ? 'Dates vary by dataset; unknown unless recorded' : e.source_updated ? dateText(e.source_updated) : 'Unknown' }
+        { label: 'Snapshot collected', value: periodText(e.snapshot) },
+        { label: 'Coverage period', value: periodText(e.coverage, true) },
+        { label: 'Source last updated', value: e.source_updated ? dateText(e.source_updated) : 'Unknown' }
       ],
-      notes: all ? ['No single collection or coverage date applies. Consult each dataset separately.'] : e.notes
+      notes: e.notes
     };
   }
   const api = { validDate, validate, formatEntries };

@@ -27,7 +27,7 @@ class ConciseUI(unittest.TestCase):
         script = (ROOT / "script.js").read_text()
         definitions = script.split("const datasets = {", 1)[1].split("let datasetMetadata", 1)[0]
         notes = re.findall(r"note: '([^']*)'", definitions)
-        self.assertEqual(len(notes), 14)  # the two DECP datasets are one since 2026-10-08
+        self.assertEqual(len(notes), 13)  # the two DECP datasets are one since 2026-10-08; the combined view was removed after v3.7
         for note in notes:
             self.assertLess(len(note), 400, note)
             self.assertIn(note, translations)
