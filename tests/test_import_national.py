@@ -36,7 +36,8 @@ class TedTests(unittest.TestCase):
             for buyer in manifest["buyers"]:
                 for pub in buyer["publicationNumbers"]:
                     rows, _ = ted.notice_rows(ted.COHORTS[key], pub, gzip.decompress((ted.raw_dir(key) / "notices" / f"{pub}.xml.gz").read_bytes()))
-                    built.update({r["id"]: r for r in rows})
+                    # "_listing" is the importer's internal republication key, removed before writing.
+                    built.update({r["id"]: {k: v for k, v in r.items() if k != "_listing"} for r in rows})
             published = json.loads((ROOT / f"data/ted-{key}.json").read_text(encoding="utf-8"))
             for row in published:
                 self.assertEqual(row, built[row["id"]], row["id"])

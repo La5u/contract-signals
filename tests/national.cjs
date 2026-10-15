@@ -98,12 +98,12 @@ const pick = (t, prefix) => Object.fromEntries(Object.entries(t.checks).filter((
 
 // ---- Portugal and Romania (TED) ----
 for (const [file, country, expected, counts] of [
-  ['data/ted-portugal.json', 'PRT', { 'ted-single-offer': [64,322,43,64], 'ted-direct-award': [64,416,13,0], 'ted-repeated-single-offer': [20,43,44,386],
-    'ted-repeated-direct': [36,25,16,416], 'ted-concentration': [0,237,256,0], 'late-publication': [11,482,0,0] }, [138,355,0]],
-  ['data/ted-romania.json', 'ROU', { 'ted-single-offer': [132,209,11,4], 'ted-direct-award': [4,352,0,0], 'ted-repeated-single-offer': [42,77,24,213],
-    'ted-repeated-direct': [0,0,4,352], 'ted-concentration': [0,70,286,0], 'late-publication': [25,331,0,0] }, [158,198,0]],
-  ['data/ted-czechia.json', 'CZE', { 'ted-single-offer': [92,280,280,22], 'ted-direct-award': [22,373,279,0], 'ted-repeated-single-offer': [16,73,283,302],
-    'ted-repeated-direct': [9,13,279,373], 'ted-concentration': [70,388,216,0], 'late-publication': [40,632,2,0] }, [198,476,0]],
+  ['data/ted-portugal.json', 'PRT', { 'ted-single-offer': [63,319,43,63], 'ted-direct-award': [63,412,13,0], 'ted-repeated-single-offer': [20,42,44,382],
+    'ted-repeated-direct': [35,25,16,412], 'ted-concentration': [0,234,254,0], 'late-publication': [11,477,0,0] }, [136,352,0]],
+  ['data/ted-romania.json', 'ROU', { 'ted-single-offer': [125,186,6,4], 'ted-direct-award': [4,317,0,0], 'ted-repeated-single-offer': [42,70,19,190],
+    'ted-repeated-direct': [0,0,4,317], 'ted-concentration': [0,43,278,0], 'late-publication': [12,309,0,0] }, [138,183,0]],
+  ['data/ted-czechia.json', 'CZE', { 'ted-single-offer': [89,254,267,20], 'ted-direct-award': [20,344,266,0], 'ted-repeated-single-offer': [12,74,270,274],
+    'ted-repeated-direct': [7,13,266,344], 'ted-concentration': [14,393,223,0], 'late-publication': [15,613,2,0] }, [135,495,0]],
 ]) {
   const rows = load(file), cov = JSON.parse(fs.readFileSync(file.replace('.json', '-coverage.json')));
   assert.equal(cov.cohort.country, country);
@@ -118,6 +118,19 @@ for (const [file, country, expected, counts] of [
   assert.deepEqual({...pick(t, 'ted-'), ...pick(t, 'late-')}, expected);
   assert.deepEqual(t.counts, counts);
   console.log(`TED ${country}: ${rows.length} lots, ${counts[0]} flagged.`);
+}
+
+// A lot listed again in a later award notice of the same procedure (same contract reference and
+// conclusion date) is kept once, from its first publication: Cluj-Napoca's 575056-2026 relists the
+// four lots of 13780-2026 with 0.01 RON placeholders and must not add rows or late-publication signals.
+{
+  const ro = load('data/ted-romania.json'), cov = JSON.parse(fs.readFileSync('data/ted-romania-coverage.json'));
+  assert.equal(cov.counts.relistedLotsExcluded, 35);
+  assert.ok(!ro.some(r => r.noticeId === '575056-2026'));
+  assert.deepEqual(ro.filter(r => r.noticeId === '13780-2026').map(r => r.amount), [2130296.39, 1965109.3, 5574428.85, 5887692.2]);
+  assert.deepEqual(ro.filter(r => r.noticeId === '513566-2026').map(r => r.lotId), ['LOT-0003']);
+  assert.ok(!ro.some(r => r.amount != null && r.amount > 0 && r.amount < 1));
+  console.log('TED republished lots kept once, from the first notice.');
 }
 // v3.7: Romanian repeated awards without competition and concentration score a token point; other TED countries keep 18 and 12 at entry, capped at 30 (editorial maximum).
 {

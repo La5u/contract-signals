@@ -204,6 +204,7 @@ def notice_rows(cohort, pub, xml_bytes):
     procedure_code = text(path(notice, "cac:TenderingProcess", "cbc:ProcedureCode"))
     label, direct = PROCEDURES.get(procedure_code, (procedure_code, None))
     title = text(path(notice, "cac:ProcurementProject", "cbc:Name"))
+    folder = text(notice.get("cbc:ContractFolderID"))
     issue = text(notice.get("cbc:IssueDate"))
     rows, excluded = [], []
     for res in as_list(result.get("efac:LotResult")):
@@ -267,6 +268,7 @@ def notice_rows(cohort, pub, xml_bytes):
             "source": PAGE.format(pub=pub), "sourceLabel": f"TED notice {pub} (official page)", "xmlUrl": XML.format(pub=pub),
             "amountBasis": "Value of the winning tender (PayableAmount) in the currency published; not a notice total, a framework ceiling or a payment.",
             "notes": "TED eForms award notice. Offers = the 'tenders' statistic only. Above-EU-threshold procedures only.",
+            "_listing": (folder, text(path(contract, "efac:ContractReference", "cbc:ID")), lot_id, text(path(contract, "cbc:IssueDate"))) if folder and contract else None,
         })
     return rows, excluded
 
@@ -292,6 +294,25 @@ def offline(key):
                     other_buyer.append(r["id"])  # the lead buyer differs (joint procurement): not attributed to the cohort
                     continue
                 rows.append(r)
+    # Buyers republish award notices: a later notice of the same procedure (ContractFolderID) can list
+    # again a lot already awarded under the same contract reference and conclusion date, sometimes with
+    # placeholder amounts (0.01 RON in Romania). Only the first publication is a new award; its date is the
+    # one that measures publication delay. Later listings are dropped and counted, never merged into the
+    # first. The date is part of the key: call-offs under one framework or dynamic purchasing system can
+    # share a contract reference (Czechia) and are separate contracts.
+    rows.sort(key=lambda r: (r["publicationDate"] or "", r["id"]))
+    first, relisted, relisted_changed = {}, [], []
+    for r in rows:
+        listing = r.pop("_listing")
+        if listing and listing[1] and listing in first:
+            relisted.append(r["id"])
+            if any(r[f] != first[listing][f] for f in ("amount", "currency", "supplier", "offers")):
+                relisted_changed.append({"id": r["id"], "firstListing": first[listing]["id"],
+                                         "fields": [f for f in ("amount", "currency", "supplier", "offers") if r[f] != first[listing][f]]})
+            r["_drop"] = True
+        elif listing and listing[1]:
+            first[listing] = r
+    rows = [r for r in rows if not r.get("_drop")]
     by_id = {}
     for r in rows:
         by_id.setdefault(r["id"], []).append(r)
@@ -310,11 +331,13 @@ def offline(key):
                               "rawDirectory": f"data/ted-{key}/raw"},
                 "counts": {"notices": len(seen), "retainedLots": len(rows), "excludedResults": excluded,
                            "lotsWithAnotherLeadBuyer": len(other_buyer), "conflictingLotIdsExcluded": len(conflicting),
+                           "relistedLotsExcluded": len(relisted), "relistedLotsWithChangedValues": relisted_changed,
                            "withOffers": sum(r["offers"] is not None for r in rows), "withAmount": sum(r["amount"] is not None for r in rows),
                            "currencies": sorted({r["currency"] for r in rows if r["currency"]})},
                 "limitations": ["TED publishes procedures above the EU thresholds only; most national procurement is not here.",
                                 "Contract modification notices are separate TED notices and were not imported: no amount-increase check.",
                                 "Offers are the 'tenders' statistic published per lot; admissibility is not assessed.",
+                                "A lot listed again in a later award notice of the same procedure under the same contract reference and conclusion date is kept once, from its first publication; changed values in later listings are counted, not applied.",
                                 "Amounts are in the published currency, never converted or summed across currencies."],
                 "reproduce": [f"python tools/import-ted-cohorts.py --cohort {key} --offline", f"python tools/import-ted-cohorts.py --cohort {key} --download"]}
     (ROOT / f"data/ted-{key}-coverage.json").write_text(json.dumps(coverage, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
