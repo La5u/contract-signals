@@ -257,7 +257,7 @@ Current serving, browser setup, full-suite tests and standard offline rebuilds a
 
 - Index review: `node tools/review-score-v3.cjs`; checks: `node tests/scoring-v3.cjs` (31,032 assertions), `node tests/rules.cjs` (124), `node tests/cities.cjs` (4,835), `node tests/tours.cjs` (831), `node tests/colombia.cjs` (181,492), `node tests/paraguay.cjs`, `node tests/outcomes.cjs`.
 - Python: `python -m unittest discover -s tests -p 'test_*.py'`.
-- Historical city profiles: `python tools/enrich-city-suppliers.py --offline`, then `python tools/import-decp-cities.py --offline`, then `node tools/update-cities-coverage.cjs`. For a network refresh, run `python tools/import-decp-cities.py`, then `python tools/enrich-city-suppliers.py`, then the offline import and coverage update.
+- Historical city profiles (the tool is now `tools/enrich-suppliers.py`, renamed in `97ca65f`): `python tools/enrich-city-suppliers.py --offline`, then `python tools/import-decp-cities.py --offline`, then `node tools/update-cities-coverage.cjs`. For a network refresh, run `python tools/import-decp-cities.py`, then `python tools/enrich-city-suppliers.py`, then the offline import and coverage update.
 - Tours refresh: `python tools/import-tours-notices.py`, then `python tools/download-tours-ted.py`, then `python tools/import-tours-notices.py --offline`.
 - Colombia refresh: `python tools/import-colombia-secop2.py --download`. Consultations refresh: `python tools/import-consultations.py`.
 
