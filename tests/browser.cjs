@@ -270,14 +270,14 @@ const server=http.createServer((req,res)=>{
  await page.evaluate(()=>{const el=document.querySelector('#adjudicated');el.checked=false;el.dispatchEvent(new Event('input',{bubbles:true}));});
  assert.match(await page.locator('#dataset-note').textContent(),/Colombia · SECOP II/);
  assert.equal(await page.locator('.contract-row').count(),50);
- assert.match(await page.locator('#status').textContent(),/272 with a heuristic signal/);
+ assert.match(await page.locator('#status').textContent(),/279 with a heuristic signal/);
  assert.match(await page.locator('#status').textContent(),/0 not assessed/);
  await page.check('#flagged');
- assert.match(await page.locator('#status').textContent(),/272 \/ 7560/);
+ assert.match(await page.locator('#status').textContent(),/279 \/ 7560/);
  assert.match(await page.locator('.contract-row').first().textContent(),/Award without competition|Repeated awards without competition|Long declared duration|Term extended after award/);
  await page.uncheck('#flagged');
  await page.selectOption('#assessment','zero');
- assert.match(await page.locator('#status').textContent(),/7288 \/ 7560/);
+ assert.match(await page.locator('#status').textContent(),/7281 \/ 7560/);
  await page.selectOption('#assessment','');
  await page.selectOption('#indicator','direct-award');
  assert.match(await page.locator('#status').textContent(),/176 \/ 7560/);
@@ -289,7 +289,7 @@ const server=http.createServer((req,res)=>{
  const copDetail=await page.locator(panel).textContent();
  assert.match(copDetail,/Declared justification/);
  assert.match(copDetail,/Process page on SECOP II/);
- assert.equal(await page.locator('#detail-panel .assessment-checks li').count(),9);
+ assert.equal(await page.locator('#detail-panel .assessment-checks li').count(),10);
  await closePanel(page);
  await page.evaluate(()=>{const el=document.querySelector('#legal');el.value='co-public';el.dispatchEvent(new Event('input',{bubbles:true}));});
  assert.match(await page.locator('#status').textContent(),/442 \/ 7560/);
