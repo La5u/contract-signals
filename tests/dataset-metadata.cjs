@@ -19,7 +19,6 @@ for (const [, key, path] of registry) {
 for (const key of ['missing', 'local']) {
   assert.ok(api.formatEntries(key, map).fields.every(f => f.value === 'Unknown'));
 }
-assert.ok(api.formatEntries('all', map).notes[0].includes('No single'));
 for (const date of ['2025-02-29', '2026-04-31', '2026-00-01', '2026-01-00', '2026-01-01T24:00:00Z', '2026-01-01T00:60:00Z', '2026-01-01T00:00:00', 'today']) {
   assert.equal(api.validDate(date), false, date);
   assert.equal(api.validate({ source_updated: date }).source_updated, null);

@@ -1541,8 +1541,8 @@ function viewStateToHash(state) {
   return text ? '#' + text : '';
 }
 
-// Datasets merged into another keep working in old links.
-const DATASET_ALIASES = { cities: 'decp' };
+// Datasets merged into another, or removed, keep working in old links (the combined view was removed after v3.7).
+const DATASET_ALIASES = { cities: 'decp', all: 'decp' };
 function hashToViewState(hash) {
   const params = new URLSearchParams(String(hash || '').replace(/^#/, ''));
   const requested = params.get('dataset') || '';
@@ -1605,7 +1605,7 @@ function buildProfile(contracts, role, key) {
   }
   const dates = rows.map(c => c.date).filter(Boolean).sort();
   const scores = rows.map(getVigilanceScore);
-  return { role, key, name: role === 'buyer' ? rows[0].buyer : (supplierNames(rows[0])[0] || rows[0].supplier), country: rows[0].datasetCountry || null,
+  return { role, key, name: role === 'buyer' ? rows[0].buyer : (supplierNames(rows[0])[0] || rows[0].supplier), 
     ids: new Set(rows.map(c => c.id)), contracts: rows.length, assessed: scores.filter(x => x != null).length, flagged: scores.filter(x => x > 0).length,
     firstDate: dates[0] || null, lastDate: dates[dates.length - 1] || null, kinds: rate(rows), baseline: rate(scope), scopeSize: scope.length,
     counterparts: [...counterparts.values()].sort((a, b) => b.contracts - a.contracts || b.flagged - a.flagged || a.name.localeCompare(b.name)).slice(0, 10), currencies };
@@ -1906,7 +1906,6 @@ function startExplorer() {
     portugal: { path: 'data/ted-portugal.json', coverage: 'data/ted-portugal-coverage.json', sources: { publisher: 'Publications Office of the European Union — TED', links: [['TED search · ted.europa.eu', 'https://ted.europa.eu/'], ['TED Search API documentation', 'https://docs.ted.europa.eu/api/latest/search.html'], ['TED legal notice (reuse authorised)', 'https://ted.europa.eu/en/legal-notice']], licence: 'Free reuse, commercial or not (Commission Decision 2011/833/EU)', raw: 'data/ted-portugal/raw/ (official eForms XML gzipped)', reproduce: 'python tools/import-ted-cohorts.py --cohort portugal --offline', collected: 'Every TED award notice (can-standard) of three buyers announced before download, published 2024-09-01 → 2026-09-01, matched by identifier and its spelling variants.' }, note: 'Portugal · TED · Infraestruturas de Portugal, Cávado and Lisboa. Published September 2024–August 2026: 442 notices, 493 awarded lots, amounts in EUR. Below-threshold purchases are absent; 137 multi-winner results excluded. Cávado notices lack winning-tender links.' },
     czechia: { path: 'data/ted-czechia.json', coverage: 'data/ted-czechia-coverage.json', sources: { publisher: 'Publications Office of the European Union — TED', links: [['TED search · ted.europa.eu', 'https://ted.europa.eu/'], ['TED Search API documentation', 'https://docs.ted.europa.eu/api/latest/search.html'], ['TED legal notice (reuse authorised)', 'https://ted.europa.eu/en/legal-notice']], licence: 'Free reuse, commercial or not (Commission Decision 2011/833/EU)', raw: 'data/ted-czechia/raw/ (official eForms XML gzipped)', reproduce: 'python tools/import-ted-cohorts.py --cohort czechia --offline', collected: 'Every TED award notice (can-standard) of three buyers announced before download, published 2024-09-01 → 2026-09-01, matched by IČO and its spelling variants.' }, note: 'Czechia · TED · Finance, Moravian-Silesian Region and Ostrava (including districts sharing its IČO). Published September 2024–August 2026: 661 notices, 674 awarded lots, CZK or EUR. Below-threshold purchases are absent; 122 results with multiple or missing winning references excluded.' },
     romania: { path: 'data/ted-romania.json', coverage: 'data/ted-romania-coverage.json', sources: { publisher: 'Publications Office of the European Union — TED', links: [['TED search · ted.europa.eu', 'https://ted.europa.eu/'], ['TED Search API documentation', 'https://docs.ted.europa.eu/api/latest/search.html'], ['TED legal notice (reuse authorised)', 'https://ted.europa.eu/en/legal-notice']], licence: 'Free reuse, commercial or not (Commission Decision 2011/833/EU)', raw: 'data/ted-romania/raw/ (official eForms XML gzipped)', reproduce: 'python tools/import-ted-cohorts.py --cohort romania --offline', collected: 'Every TED award notice (can-standard) of three buyers announced before download, published 2024-09-01 → 2026-09-01, matched by identifier and its spelling variants.' }, note: 'Romania · TED · Finance, Cluj county and Cluj-Napoca. Published September 2024–August 2026: 299 notices, 356 awarded lots, RON or EUR. Below-threshold purchases are absent; 289 multi-winner results excluded.' },
-    all: { combined: true, path: null, coverage: null, note: 'All datasets side by side, not merged. Amounts retain their currencies; amount sorting groups by currency. Dates follow each source (signature, award or publication). Indicators are calculated within each dataset using jurisdiction-specific rules.' },
   };
   let datasetMetadata = {};
   function renderDatasetDates(key) {
@@ -2132,7 +2131,7 @@ function startExplorer() {
     const p = activeProfile;
     const pct = (a, b) => b ? `${Math.round(a / b * 100)} %` : '—';
     profilePanel.append(element('h2', `${p.role === 'buyer' ? 'Buyer' : 'Supplier'} profile · ${p.name || '—'}`),
-      element('p', `${p.contracts} contract(s)${p.country ? ` · ${p.country}` : ''}${p.firstDate ? ` · ${p.firstDate} → ${p.lastDate}` : ''} · ${p.assessed} assessed · ${p.flagged} with a signal (${pct(p.flagged, p.assessed)}). The table below now shows only these contracts. Compared with the ${p.scopeSize} records of the same dataset; amounts are never summed.`));
+      element('p', `${p.contracts} contract(s)${p.firstDate ? ` · ${p.firstDate} → ${p.lastDate}` : ''} · ${p.assessed} assessed · ${p.flagged} with a signal (${pct(p.flagged, p.assessed)}). The table below now shows only these contracts. Compared with the ${p.scopeSize} records of the same dataset; amounts are never summed.`));
     const table = element('table', null, 'profile-table');
     const head = element('tr');
     head.append(element('th', 'Indicator'), element('th', `This ${p.role}`), element('th', 'Whole dataset'));
@@ -2310,7 +2309,6 @@ function startExplorer() {
       const dateCell = element('td', formatDate(c));
       if (c.noticeEvidence) dateCell.append(element('small', 'BOAMP publication', 'provenance'));
       if (c.dataFamily === 'dncp') dateCell.append(element('small', 'Contract-period start · not signature', 'provenance'));
-      if (c.datasetCountry) dateCell.append(element('small', c.datasetCountry, 'provenance country'));
       row.append(dateCell, element('td', c.buyer), supplierCell);
       const objectCell = element('td');
       const button = element('button', c.description, 'row-toggle');
@@ -3191,20 +3189,6 @@ function startExplorer() {
     projectPanel.replaceChildren();
     viewport.scrollTop = 0;
     status.textContent = 'Loading data…';
-    if (selected.combined) {
-      document.querySelector('#coverage-link').hidden = true;
-      document.querySelector('#file-path').textContent = 'every data/*.json file above';
-      try {
-        const keys = Object.keys(datasets).filter(key => !datasets[key].combined);
-        const parts = await Promise.all(keys.map(async key => {
-          const option = [...datasetSelect.options].find(o => o.value === key);
-          const country = option?.parentElement?.label || '';
-          return prepareContracts(await fetchRecords(datasets[key].path)).map(c => ({ ...c, datasetKey: key, datasetCountry: country }));
-        }));
-        if (version === loadVersion) accept(null, parts.flat());
-      } catch (error) { if (version === loadVersion) fail(error); }
-      return;
-    }
     try {
       const data = await fetchRecords(selected.path);
       if (version === loadVersion) accept(data);

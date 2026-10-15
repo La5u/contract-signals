@@ -67,11 +67,6 @@ So that a flag can be cited by the name an auditor knows. “Equivalent” means
 
 Sources: [OCP Cardinal indicator list](https://github.com/open-contracting/cardinal-rs/blob/main/docs/cli/indicators/index.md); [Prozorro risk rules of the State Audit Service](https://github.com/ProzorroUKR/prozorro-risks/tree/master/src/prozorro/risks/rules); Fazekas, M. and Kocsis, G. (2020), *Uncovering high-level corruption: cross-national objective corruption risk indicators using public procurement data*, British Journal of Political Science 50(1). Cardinal flags we do not compute yet, because they need every bid's price: R024 price close to winning bid, R028 identical bid prices, R058 heavily discounted bid. Prozorro, TED (partly) and Mercado Público publish bids; these are candidates.
 
-## The All countries view
+## The All countries view (removed after v3.7)
 
-*All countries* loads every dataset, prepares each one on its own (repetition and concentration never cross cohorts) and lists the rows side by side with their country. It exists to find the strongest leads quickly across countries; the sort *Signals · newest first* puts the most recent flagged rows on top. Limits that do not go away:
-
-- **Amounts are never converted or summed.** The amount sort groups rows by currency, then orders them within it.
-- **Dates keep each source's meaning**: signature (France, Colombia, Ukraine, UK), award (Chile), contract-period start (Paraguay), contract conclusion (TED).
-- **Coverage differs by dataset**: TED and Find a Tender hold above-threshold notices only; some cohorts cannot evaluate some kinds (see the table). A country with fewer evaluable kinds will score lower for reasons of data, not of conduct.
-- A signal is a reason to read the source, not a finding of wrongdoing.
+Until 15 October 2026 an *All countries* entry loaded every dataset at once (about 58 MB of JSON) and listed the rows side by side. It was removed: the load was too large, and a single ranking across countries mixed points measured on labelled cases with editorial points (see [score-v3.md](score-v3.md)). Old `#dataset=all` links open the French DECP dataset. The universal kinds still let a reader apply the same *Indicator* filter in each dataset. Limits that applied to the combined view still apply when comparing datasets by hand: amounts are never converted or summed, dates keep each source's meaning, and coverage differs by dataset, so a country with fewer evaluable kinds scores lower for reasons of data, not of conduct.
