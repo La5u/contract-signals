@@ -34,7 +34,7 @@ SHARE, CONC_SHARE, CONC_MIN = 0.05, 0.6, 10
 # Plan amendment of 2026-10-15: chance that a decision still open in court is upheld (High Court rulings in the
 # Council's favour, annual reports 2023-2025: 89 %, 94 %, 90 %). Every other decision weighs 1.
 UPHELD_P = 0.91
-OPEN = ('134/2024', '148/2025', '77/2017', '99/2021', '43/2020', '271/2024', '44/2013')
+OPEN = ('134/2024', '148/2025', '77/2017', '99/2021', '43/2020', '271/2024', '44/2013', '118/2022')   # 118/2022: appeal pending (portal)
 ANNULLED_UNDER_APPEAL = ('80/2023',)
 CHECKS = ['RO0 single offer', 'RO1 direct award', 'RO2 buyer share >= 5 %', 'RO3 concentration', 'RO5 framework / subsequent',
           'U1 repeated single offer', 'U2 repeated direct award', 'N1 December signature', 'N2 weekend signature',
