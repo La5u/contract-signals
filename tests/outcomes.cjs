@@ -50,11 +50,13 @@ console.log('Outcome and dated news-lead validation: one historical investigatio
     assert.throws(()=>run('validateSupplierProceedings',{suppliers:[{...file.suppliers[0],proceedings:[{...step,...change}]}]}),/Supplier proceedings/);
   assert.throws(()=>run('validateSupplierProceedings',{suppliers:[file.suppliers[0],file.suppliers[0]]}),/duplicate/);
   assert.throws(()=>run('validateSupplierProceedings',{suppliers:[{...file.suppliers[0],identityBasis:''}]}),/Supplier proceedings/);
-  // The published file: the four firms of the 2024 Cisco tender inspection, matched on the Ministry of Finance's TED rows.
+  // The published file: the four firms of the 2024 Cisco tender inspection (Ministry of Finance TED rows) and the two
+  // firms fined in Decision 225/2024 (Cluj County and Cluj-Napoca rows, not part of that case).
   const published=run('validateSupplierProceedings',JSON.parse(fs.readFileSync('data/supplier-proceedings.json')));
   const ro=run('prepareContracts',JSON.parse(fs.readFileSync('data/ted-romania.json')));
   assert.deepEqual(ro.filter(c=>run('getSupplierProceedings',c,published).length).map(c=>c.id).sort(),
-    ['ted-335119-2025-lot-0000','ted-365345-2025-lot-0000','ted-477464-2025-lot-0000','ted-49562-2025-lot-0000','ted-639516-2025-lot-0000','ted-686957-2024-lot-0000']);
+    ['ted-335119-2025-lot-0000','ted-365345-2025-lot-0000','ted-477464-2025-lot-0000','ted-49562-2025-lot-0000','ted-576922-2024-lot-0004','ted-613767-2024-lot-0022',
+     'ted-639516-2025-lot-0000','ted-686957-2024-lot-0000','ted-735680-2024-lot-0000']);
   assert.ok(ro.every(c=>!run('hasReportedInvestigation',c)));
   console.log('Supplier proceedings: company-level, exact wording with caveats, consortium members matched, never on the contract flag.');
 }
