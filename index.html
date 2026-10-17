@@ -17,9 +17,8 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
   <script src="theme.js"></script>
+  <script src="prefetch.js"></script>
   <script src="import.js" defer></script>
-  <script src="i18n-es.js" defer></script>
-  <script src="i18n-fr.js" defer></script>
   <script src="i18n.js" defer></script>
   <script src="indicator-evidence.js" defer></script>
   <script src="dataset-metadata.js" defer></script>
@@ -48,39 +47,26 @@
   <section class="primary-controls" aria-label="Explore contracts">
     <label class="dataset-selector">Dataset
       <select id="dataset">
-        <optgroup label="France">
-          <option value="decp">eight buyers — contracts · DECP</option>
-          <option value="tours">Tours — procurement notices · BOAMP/TED</option>
-          <option value="consultations">3 Feb 2025 — consultation notices · BOAMP</option>
-          <option value="boamp">nationwide sample — award lots + audit dossiers · BOAMP/CRC</option>
-        </optgroup>
-        <optgroup label="Chile">
-          <option value="chile">MOP / Maule region / Puente Alto — licitaciones · Mercado Público</option>
-        </optgroup>
-        <optgroup label="Colombia">
-          <option value="colombia">MEN / Caldas / Usaquén — contracts · SECOP II</option>
-        </optgroup>
-        <optgroup label="Czechia">
-          <option value="czechia">Finance / Moravian-Silesian region / Ostrava — award notices · TED</option>
-        </optgroup>
-        <optgroup label="Paraguay">
-          <option value="paraguay">Fernando de la Mora — contract records · DNCP OCDS</option>
-          <option value="paraguay3">MOPC / Central / Asunción — contract records · DNCP OCDS</option>
-        </optgroup>
-        <optgroup label="Portugal">
-          <option value="portugal">IP / Cávado / Lisboa — award notices · TED</option>
-        </optgroup>
-        <optgroup label="Romania">
-          <option value="romania">Finance / Cluj county / Cluj-Napoca — award notices · TED</option>
-        </optgroup>
-        <optgroup label="United Kingdom">
-          <option value="uk">FCDO / Lincolnshire / Milton Keynes — award notices · Find a Tender</option>
-        </optgroup>
-        <optgroup label="Ukraine">
-          <option value="ukraine">Health / Vinnytsia / Dnipro — contracts · Prozorro</option>
-        </optgroup>
+        <option value="decp" data-country="France">🇫🇷 eight buyers — contracts · DECP</option>
+        <option value="tours" data-country="France">🇫🇷 Tours — procurement notices · BOAMP/TED</option>
+        <option value="consultations" data-country="France">🇫🇷 3 Feb 2025 — consultation notices · BOAMP</option>
+        <option value="boamp" data-country="France">🇫🇷 nationwide sample — award lots + audit dossiers · BOAMP/CRC</option>
+        <option value="chile" data-country="Chile">🇨🇱 MOP / Maule region / Puente Alto — licitaciones · Mercado Público</option>
+        <option value="colombia" data-country="Colombia">🇨🇴 MEN / Caldas / Usaquén — contracts · SECOP II</option>
+        <option value="czechia" data-country="Czechia">🇨🇿 Finance / Moravian-Silesian region / Ostrava — award notices · TED</option>
+        <option value="paraguay" data-country="Paraguay">🇵🇾 Fernando de la Mora — contract records · DNCP OCDS</option>
+        <option value="paraguay3" data-country="Paraguay">🇵🇾 MOPC / Central / Asunción — contract records · DNCP OCDS</option>
+        <option value="portugal" data-country="Portugal">🇵🇹 IP / Cávado / Lisboa — award notices · TED</option>
+        <option value="romania" data-country="Romania">🇷🇴 Finance / Cluj county / Cluj-Napoca — award notices · TED</option>
+        <option value="uk" data-country="United Kingdom">🇬🇧 FCDO / Lincolnshire / Milton Keynes — award notices · Find a Tender</option>
+        <option value="korea" data-country="South Korea">🇰🇷 every contracting institution (choose one) — contracts · KONEPS</option>
+        <option value="ukraine" data-country="Ukraine">🇺🇦 Health / Vinnytsia / Dnipro — contracts · Prozorro</option>
       </select>
     </label>
+    <div id="korea-picker" class="korea-picker" hidden>
+      <label>Contracting institution<input id="korea-search" type="search" placeholder="Name or code, e.g. 서울특별시 or 1230000" autocomplete="off"></label>
+      <ul id="korea-results" class="korea-results" aria-label="Matching contracting institutions"></ul>
+    </div>
     <label class="search">Search<input id="search" type="search" placeholder="Buyer, supplier, subject, ID…" autocomplete="off">
     </label>
     <label class="checkbox basic-signal-filter"><input id="flagged" type="checkbox">Signals only</label>
@@ -164,7 +150,7 @@
       <div class="table-wrap" tabindex="0" role="region" aria-label="Contracts table, horizontal scrolling possible">
         <table class="main-table">
           <caption class="visually-hidden">Contracts and documented records — select a subject to open its details, evidence and sources.</caption>
-          <thead><tr><th scope="col" data-sort-key="date"><button type="button" class="sort-header">Date</button></th><th scope="col" data-sort-key="buyer"><button type="button" class="sort-header">Buyer</button></th><th scope="col" data-sort-key="supplier"><button type="button" class="sort-header">Supplier</button></th><th scope="col">Subject</th><th scope="col" data-sort-key="sector" title="Purchase sector, not the supplier’s NAF activity"><button type="button" class="sort-header">CPV sector</button></th><th scope="col" class="numeric" data-sort-key="amount" title="Declared financial stake, outside the index; not necessarily an expense"><button type="button" class="sort-header">Declared amount</button></th><th scope="col" class="numeric" data-sort-key="offers"><button type="button" class="sort-header">Offers</button></th><th scope="col" data-sort-key="indicators"><button type="button" class="sort-header">Signals</button></th><th scope="col" class="numeric" data-sort-key="score" title="Vigilance index: an editorial review priority, not a probability"><button type="button" class="sort-header">Index</button></th></tr></thead>
+          <thead><tr><th scope="col" data-sort-key="date"><button type="button" class="sort-header">Date</button></th><th scope="col" data-sort-key="buyer"><button type="button" class="sort-header">Buyer</button></th><th scope="col" data-sort-key="supplier"><button type="button" class="sort-header">Supplier</button></th><th scope="col">Subject</th><th scope="col" data-sort-key="sector" title="Purchase sector, not the supplier’s NAF activity"><button type="button" class="sort-header">CPV sector</button></th><th scope="col" class="numeric" data-sort-key="amount" title="Declared financial stake; not necessarily an expense. Some checks use it (amount thresholds, a buyer’s yearly share)"><button type="button" class="sort-header">Declared amount</button></th><th scope="col" class="numeric" data-sort-key="offers"><button type="button" class="sort-header">Offers</button></th><th scope="col" data-sort-key="indicators"><button type="button" class="sort-header">Signals</button></th><th scope="col" class="numeric" data-sort-key="score" title="Vigilance index: an editorial review priority, not a probability"><button type="button" class="sort-header">Index</button></th></tr></thead>
           <tbody id="contracts"></tbody>
         </table>
       </div>

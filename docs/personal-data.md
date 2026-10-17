@@ -35,6 +35,15 @@ The normalized records largely contain buyer/supplier names and organization ide
 3. **Preserve safeguards on enrichment.** Keep the diffusion-status gate, provenance and retrieval timestamps; do not add non-diffusible API results or treat the availability of an identifier/name in a procurement notice as permission to enrich it from elsewhere.
 4. **Targeted upstream follow-up:** ask DILA about third-party notice text/attachments, exceptions, and publication basis for named contacts/representatives; ask the API owner about fields beyond the documented name/status/identifier enrichment (if used) and the meaning/coverage of `statut_diffusion = O`; ask publishing buyers about notice fields that trigger personal disclosures and correction/removal channels.
 
+## Individual suppliers: project-wide rule (2026-10-16)
+
+Owner decision, for every country (Portugal BASE, South Korea and later sources): a supplier that is an individual (sole trader, individual business) keeps its **published name, shown as published** in lists, search, record and profile views, so an investigator finds it at once. No masking, codes or reveal buttons. Two light limits only:
+
+- The importer flags such suppliers in `supplierIndividual` (one boolean per name in `supplierNamesPublished`), from the source identifier: Portugal NIF blank or starting 1, 2, 3 or 45; Korea business registration number with middle digits 01–79 or 90–99. The explorer marks them “individual”; CSV/JSON exports write `individual (name in the explorer)` instead of the name.
+- `/data/` is kept out of search engines (`robots.txt`, `X-Robots-Tag: noindex` in `_headers`).
+
+Still dropped at load: personal identifiers (individual tax numbers), representatives' and officials' names, phones, e-mails and street addresses, and unsuccessful bidders' names. This is not anonymisation: the names are public at the source and in the data files.
+
 ## Wider inventory by source (schema and field-presence risk)
 
 | Source and checked-in files | Personal-data indicators and scope | Evidence status / limitation |

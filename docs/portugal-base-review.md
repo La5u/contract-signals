@@ -1,5 +1,7 @@
 # BASE battery-only technical review
 
+> **Superseded 2026-10-16:** scrambled names, stable codes and subject redaction were removed; individual holders are now shown as published and left out of exports only ([rule](personal-data.md#individual-suppliers-project-wide-rule-2026-10-16)). Findings below about codes, PBKDF2 and redaction describe the old design.
+
 Reviewed 2026-10-02 by the coding assistant. **Current result: the authorized bounded candidate check passed, with no obvious incidental disclosures found by the checks below. Not publication approval.** The initial recommendation to withhold pending candidate checks is followed by the completed check in section 6 below. The owner has not performed a technical review and is not represented as having done so. This is a software/provenance review, not independent factual verification or legal clearance.
 
 ## What was actually checked

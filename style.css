@@ -127,6 +127,10 @@ main { max-width: 1480px; margin: 0 auto; padding: 14px 24px 32px; }
 .primary-controls label { min-width: 0; }
 .primary-controls .basic-signal-filter { padding: 0 0 10px; white-space: nowrap; }
 .primary-controls select, .primary-controls input:not([type="checkbox"]) { width: 100%; min-height: 38px; }
+.korea-picker { grid-column: 1 / -1; display: grid; gap: 6px; }
+.korea-picker[hidden] { display: none; }
+.korea-picker label { display: grid; gap: 4px; }
+.korea-results { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 14px; max-height: 9.5em; overflow-y: auto; }
 .notice-box { border-left: 4px solid var(--mod-fg); background: var(--surface-2); padding: 4px 14px; margin-top: 12px; font-size: 13px; }
 
 /* One-line dataset overview */

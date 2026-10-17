@@ -150,7 +150,7 @@ window.I18N_DICTS.fr = {
   "Indicators": "Indicateurs",
   "Index": "Indice",
   "Purchase sector, not the supplier’s NAF activity": "Secteur d’achat, pas l’activité NAF du fournisseur",
-  "Declared financial stake, outside the index; not necessarily an expense": "Enjeu financier déclaré, hors indice ; pas nécessairement une dépense",
+  "Declared financial stake; not necessarily an expense. Some checks use it (amount thresholds, a buyer’s yearly share)": "Enjeu financier déclaré ; pas nécessairement une dépense. Certains contrôles l’utilisent (seuils de montant, part annuelle d’un acheteur)",
   "Vigilance index": "Indice de vigilance",
   "Vigilance scale, not a regularity measure": "Échelle de vigilance, pas une mesure de régularité",
   "How to read the results": "Comment lire les résultats",
@@ -269,7 +269,7 @@ window.I18N_DICTS.fr = {
   "Repeated single-tenderer awards to the same supplier": "Attributions répétées à soumissionnaire unique au même fournisseur",
   "Repeated exception awards to the same supplier": "Attributions répétées par exception au même fournisseur",
   "Concentrated awards within a procurement category": "Attributions concentrées dans une catégorie d’achat",
-  "Declared amount increase at or beyond the 20 % legal ceiling": "Hausse du montant déclaré au plafond légal de 20 % ou au-delà",
+  "Declared amount increase near or beyond the 20 % legal ceiling": "Hausse du montant déclaré proche du plafond légal de 20 % ou au-delà",
   "Call publication date missing or invalid: whether Ley 7021/22 Art. 67 applies to this process cannot be determined. Not assessed.": "Date de publication de l’appel manquante ou invalide : impossible de déterminer si la Ley 7021/22 art. 67 s’applique à cette procédure. Non évalué.",
   "Award without competition (Negotiated procedure without competition)": "Attribution sans mise en concurrence (procédure négociée sans concurrence)",
   "Repeated single-offer awards to the same supplier": "Attributions répétées à offre unique au même fournisseur",
@@ -698,10 +698,7 @@ window.I18N_DICTS.fr = {
   "Amount increase": "Hausse du montant",
   "Term extended": "Durée prolongée",
   "Late publication": "Publication tardive",
-  "Show name": "Afficher le nom",
-  "Working…": "Traitement…",
-  "Name unavailable": "Nom indisponible",
-  "Published by the source register. Shown one record at a time; not in lists, search or exports.": "Publié par le registre source. Affiché un enregistrement à la fois ; absent des listes, de la recherche et des exports.",
+  "individual": "personne physique",
   "Late notice change without deadline extension": "Modification tardive de l’avis sans report de la date limite",
   "Context": "Contexte",
   "Publication date": "Date de publication",
@@ -786,7 +783,32 @@ window.I18N_DICTS.fr = {
   "Amount not in UAH: not compared with the UAH threshold (no currency conversion).": "Montant hors UAH : non comparé au seuil en UAH (aucune conversion de devises).",
   "Direct contract below UAH 200,000.": "Contrat direct inférieur à 200 000 UAH.",
   "Amount not in COP: not compared with the buyer’s COP total (no currency conversion).": "Montant hors COP : non comparé au total en COP de l’acheteur (aucune conversion de devises).",
-  "Romanian Competition Council bid-rigging decisions": "les décisions du Conseil de la concurrence roumain sur les ententes dans les marchés publics"
+  "Romanian Competition Council bid-rigging decisions": "les décisions du Conseil de la concurrence roumain sur les ententes dans les marchés publics",
+  "services": "services",
+  "goods": "fournitures",
+  "Offer and direct-award checks are excluded for direct-contract reports (reporting), which are recorded without a procedure. Concentration remains assessable where cohort data permits.": "Les contrôles d’offres et d’attribution directe sont exclus pour les rapports de contrats directs (reporting), enregistrés sans procédure. La concentration reste évaluable lorsque les données de la cohorte le permettent.",
+  "Linked contract samples expose change metadata, not comparable dated amounts: increase out of scope.": "Les échantillons de contrats liés exposent des métadonnées de modification, pas de montants datés comparables : hausse hors champ.",
+  "Price not declared exclusively fixed and firm (Définitif ferme): revision or update cannot be isolated, no automatic signal.": "Prix non déclaré exclusivement définitif ferme (Définitif ferme) : la révision ou l’actualisation ne peut pas être isolée, aucun signal automatique.",
+  "Completeness of versions not demonstrated; no bidding-period calculation.": "Exhaustivité des versions non démontrée ; pas de calcul du délai de remise des offres.",
+  "Not a correction notice.": "Ce n’est pas un avis rectificatif.",
+  "Modified amount lower than the initial one: possible decrease or mis-entered increment. No increments are summed.": "Montant modifié inférieur au montant initial : baisse possible ou incrément mal saisi. Aucun incrément n’est additionné.",
+  "Number of tenderers not published for this process.": "Nombre de soumissionnaires non publié pour cette procédure.",
+  "This explicitly linked correction extends the submission deadline; not a late change without extension.": "Cet avis rectificatif explicitement lié prolonge la date limite de remise ; ce n’est pas une modification tardive sans prolongation.",
+  "Contract date missing or invalid: the legal threshold in force cannot be determined. Not assessed.": "Date du contrat absente ou invalide : le seuil légal en vigueur ne peut pas être déterminé. Non évalué.",
+  "No bid count published for this lot: offers unknown, never zero.": "Aucun nombre d’offres publié pour ce lot : offres inconnues, jamais zéro.",
+  "South Korea": "Corée du Sud",
+  "every contracting institution (choose one) — contracts · KONEPS": "toutes les entités contractantes (en choisir une) — contrats · KONEPS",
+  "Contracting institution": "Entité contractante",
+  "Name or code, e.g. 서울특별시 or 1230000": "Nom ou code, p. ex. 서울특별시 ou 1230000",
+  "Matching contracting institutions": "Entités contractantes correspondantes",
+  "No contracting institution matches.": "Aucune entité contractante ne correspond.",
+  "Korean checks are not set yet: this contract is shown for browsing and is not assessed. They will be calibrated on court rulings and Fair Trade Commission decisions first.": "Les contrôles coréens ne sont pas encore fixés : ce contrat est affiché pour consultation et n’est pas évalué. Ils seront d’abord calibrés sur des décisions de justice et de la Commission de la concurrence (KFTC).",
+  "Signed before September 2024: this is the date of its first change in the period.": "Signé avant septembre 2024 : c’est la date de sa première modification dans la période.",
+  "Contract date (계약체결일자).": "Date du contrat (계약체결일자).",
+  "Contract amount (계약금액) of the latest version in the period.": "Montant du contrat (계약금액) de la dernière version dans la période.",
+  "Joint contract (공동계약).": "Contrat conjoint (공동계약).",
+  "KONEPS (나라장터) contract page": "Page du contrat sur KONEPS (나라장터)",
+  "South Korea · KONEPS · every contracting institution, contracts dated September 2024–August 2026 (2.7 million). Choose a buyer to load its contracts. Korean checks are not set yet: contracts are shown for browsing and are not assessed. Amounts in KRW; the full record is on KONEPS.": "Corée du Sud · KONEPS · toutes les entités contractantes, contrats datés de septembre 2024 à août 2026 (2,7 millions). Choisissez un acheteur pour charger ses contrats. Les contrôles coréens ne sont pas encore fixés : les contrats sont affichés pour consultation et ne sont pas évalués. Montants en KRW ; la fiche complète est sur KONEPS."
  },
  "patterns": [
   [
@@ -804,6 +826,18 @@ window.I18N_DICTS.fr = {
   [
    "{a} / {b} results · {c} with a heuristic signal · {d} not assessed · {e} advanced filter(s) active",
    "{a} / {b} résultats · {c} avec un signal heuristique · {d} non évalués · {e} filtre(s) avancé(s) actif(s)"
+  ],
+  [
+   "Top {a} of {b} records by index. Loading the full dataset to filter, sort and open records…",
+   "Les {a} premiers des {b} enregistrements par indice. Chargement du jeu complet pour filtrer, trier et ouvrir les enregistrements…"
+  ],
+  [
+   "Missing values: {a} amounts, {b} offer counts, {c} durations ({d} records).",
+   "Valeurs manquantes : {a} montants, {b} nombres d’offres, {c} durées ({d} enregistrements)."
+  ],
+  [
+   "Missing values: {a} amounts, {b} offer counts, {c} durations ({d} records). Amounts declared as 0: {e}.",
+   "Valeurs manquantes : {a} montants, {b} nombres d’offres, {c} durées ({d} enregistrements). Montants déclarés à 0 : {e}."
   ],
   [
    "Page {a} / {b} · {c} rows per page",
@@ -1110,8 +1144,8 @@ window.I18N_DICTS.fr = {
    "{a} avenant(s) de montant publié(s) : +{b} % du montant initial déclaré, au-delà du plafond de 20 % de la Ley 7021/22 art. 67 sur les modifications. 16 points juste au-dessus du plafond, linéaire jusqu’à 30 à +100 %. Les règles de la DNCP autorisent 20 % supplémentaires pour des changements unilatéraux d’intérêt public (art. 65 b), donc un total supérieur n’est pas illégal en soi ; une nouvelle procédure a pu aussi être exigée. Déclaré, pas payé."
   ],
   [
-   "{a} published amount amendment(s): +{b} % of the original declared amount, at the 20 % ceiling of Ley 7021/22 Art. 67 on modifications (from 19 %). 8 points. Reaching the ceiling is lawful and leaves no further agreed increase; the term, also capped at 20 %, is not published.",
-   "{a} avenant(s) de montant publié(s) : +{b} % du montant initial déclaré, au plafond de 20 % de la Ley 7021/22 art. 67 sur les modifications (dès 19 %). 8 points. Atteindre le plafond est licite et ne laisse plus de hausse convenue ; le délai, également plafonné à 20 %, n’est pas publié."
+   "{a} published amount amendment(s): +{b} % of the original declared amount, near or at the 20 % ceiling of Ley 7021/22 Art. 67 on modifications (band from 19 %). 8 points. Reaching the ceiling is lawful and leaves no further agreed increase; the term, also capped at 20 %, is not published.",
+   "{a} avenant(s) de montant publié(s) : +{b} % du montant initial déclaré, proche du plafond de 20 % de la Ley 7021/22 art. 67 sur les modifications ou à ce plafond (tranche dès 19 %). 8 points. Atteindre le plafond est licite et ne laisse plus de hausse convenue ; le délai, également plafonné à 20 %, n’est pas publié."
   ],
   [
    "{a} published amount amendment(s): +{b} % of the original declared amount, below 19 % (the near-ceiling band of Ley 7021/22 Art. 67). Not a conclusion of regularity.",
@@ -1198,6 +1232,22 @@ window.I18N_DICTS.fr = {
    "Constat officiel de contrôle : {a}."
   ],
   [
+   "Joint offer by {a} firms · a relationship between them, not a signal",
+   "Offre conjointe de {a} entreprises · une relation entre elles, pas un signal"
+  ],
+  [
+   "{a} firms hold this award (joint offer or several framework holders; the source does not say) · a relationship between them, not a signal",
+   "{a} entreprises sont titulaires de cette attribution (offre conjointe ou plusieurs titulaires d’un accord-cadre ; la source ne le précise pas) · une relation entre elles, pas un signal"
+  ],
+  [
+   "Joint offer by {a} firms (declared grouping: {b}) · a relationship between them, not a signal",
+   "Offre conjointe de {a} entreprises (groupement déclaré : {b}) · une relation entre elles, pas un signal"
+  ],
+  [
+   "{a} firms hold this award, declared without a grouping (likely several framework holders) · a relationship between them, not a signal",
+   "{a} entreprises sont titulaires de cette attribution, déclarée sans groupement (probablement plusieurs titulaires d’un accord-cadre) · une relation entre elles, pas un signal"
+  ],
+  [
    "Supplier · {a} ({b}) · about the company, not this contract",
    "Titulaire · {a} ({b}) · concerne l’entreprise, pas ce marché"
   ],
@@ -1244,10 +1294,6 @@ window.I18N_DICTS.fr = {
   [
    "{a} records loaded locally.",
    "{a} enregistrements chargés localement."
-  ],
-  [
-   "Missing values: {a} amounts, {b} offer counts, {c} durations ({d} records).",
-   "Valeurs manquantes : {a} montants, {b} nombres d’offres, {c} durées ({d} enregistrements)."
   ],
   [
    "{a} record summaries copied with source links.",
@@ -1400,6 +1446,90 @@ window.I18N_DICTS.fr = {
   [
    "{a} pts, editorial, not measured",
    "{a} pts, éditoriaux, non mesurés"
+  ],
+  [
+   "No validated Paraguayan minimum period per modality in this method: out of scope. Published tender period: {a} day(s), shown as context only.",
+   "Aucun délai minimum paraguayen validé par modalité dans cette méthode : hors champ. Délai de remise publié : {a} jour(s), indiqué à titre de contexte seulement."
+  ],
+  [
+   "{a}/{b} single offers, {c} eligible contracts, CPV {d}, 2024–2025. Minimum 10 observations and 80 % coverage; from 12 points at 60 % to 30 points at 100 %. Insufficient sample/coverage: not assessed.",
+   "{a}/{b} offres uniques, {c} marchés éligibles, CPV {d}, 2024–2025. Minimum 10 observations et 80 % de couverture ; de 12 points à 60 % à 30 points à 100 %. Échantillon ou couverture insuffisants : non évalué."
+  ],
+  [
+   "{a}/{b} single offers, {c} eligible contracts, CPV {d}, 2024–2025. Minimum 10 observations and 80 % coverage; from 12 points at 60 % to 30 points at 100 %.",
+   "{a}/{b} offres uniques, {c} marchés éligibles, CPV {d}, 2024–2025. Minimum 10 observations et 80 % de couverture ; de 12 points à 60 % à 30 points à 100 %."
+  ],
+  [
+   "{a} tenderer(s) published for this {b} process (OCDS numberOfTenderers, matching the tenderer list). One tenderer: 12 points, all amounts. Admissibility of offers is not assessed; a small market may explain it.",
+   "{a} soumissionnaire(s) publié(s) pour cette procédure {b} (OCDS numberOfTenderers, conforme à la liste des soumissionnaires). Un soumissionnaire : 12 points, tous montants. La recevabilité des offres n’est pas évaluée ; un marché restreint peut l’expliquer."
+  ],
+  [
+   "Same buyer and category ({a}): {b}/{c} contracts to this supplier, out of {d} in the group ({e} % coverage). Minimum 10 identified contracts and 80 % coverage; from 12 points at 60 % to 30 at 100 %. Specialisation may explain a share.",
+   "Même acheteur et catégorie ({a}) : {b}/{c} contrats à ce fournisseur, sur {d} dans le groupe ({e} % de couverture). Minimum 10 contrats identifiés et 80 % de couverture ; de 12 points à 60 % à 30 à 100 %. Une spécialisation peut expliquer une part."
+  ],
+  [
+   "Same buyer and category ({a}): {b}/{c} contracts to this supplier, out of {d} in the group ({e} % coverage). Minimum 10 identified contracts and 80 % coverage; from 12 points at 60 % to 30 at 100 %. Insufficient sample or coverage: not assessed. Specialisation may explain a share.",
+   "Même acheteur et catégorie ({a}) : {b}/{c} contrats à ce fournisseur, sur {d} dans le groupe ({e} % de couverture). Minimum 10 contrats identifiés et 80 % de couverture ; de 12 points à 60 % à 30 à 100 %. Échantillon ou couverture insuffisants : non évalué. Une spécialisation peut expliquer une part."
+  ],
+  [
+   "Same buyer and contract type ({a}): {b}/{c} contracts to this holder, out of {d} in the group ({e} % coverage). Minimum 10 identified contracts and 80 % coverage; from 12 points at 60 % to 30 at 100 %. Insufficient sample or coverage: not assessed. Specialisation may explain a share; computed over the whole cohort, before filters.",
+   "Même acheteur et type de contrat ({a}) : {b}/{c} contrats à ce titulaire, sur {d} dans le groupe ({e} % de couverture). Minimum 10 contrats identifiés et 80 % de couverture ; de 12 points à 60 % à 30 à 100 %. Échantillon ou couverture insuffisants : non évalué. Une spécialisation peut expliquer une part ; calculé sur toute la cohorte, avant filtres."
+  ],
+  [
+   "{a} tenderers across {b} lots: the OCDS data publishes no per-lot count, so a single tenderer on this lot cannot be excluded. The bid comparison table or evaluation report linked under “Verify it yourself” lists offers per lot.",
+   "{a} soumissionnaires sur {b} lots : les données OCDS ne publient pas de décompte par lot, un soumissionnaire unique sur ce lot ne peut donc pas être exclu. Le tableau comparatif des offres ou le rapport d’évaluation lié sous « Vérifiez par vous-même » énumère les offres par lot."
+  ],
+  [
+   "Declared modality “{a}”: contracting by way of exception (Contratación por Vía de la Excepción). 18 points, all amounts. The published rationale is absent; a lawful exception may apply and is not assessed here.",
+   "Modalité déclarée « {a} » : passation par voie d’exception (Contratación por Vía de la Excepción). 18 points, tous montants. La justification publiée est absente ; une exception légale peut s’appliquer et n’est pas évaluée ici."
+  ],
+  [
+   "0 day(s) added, but the declared duration “{a}” is not comparable to days: not assessed.",
+   "0 jour(s) ajouté(s), mais la durée déclarée « {a} » n’est pas comparable à des jours : non évalué."
+  ],
+  [
+   "Declared duration “{a}” not comparable to months: not assessed.",
+   "Durée déclarée « {a} » non comparable à des mois : non évalué."
+  ],
+  [
+   "{a} contracting institutions. Search for one above to load its contracts.",
+   "{a} entités contractantes. Recherchez-en une ci-dessus pour charger ses contrats."
+  ],
+  [
+   "Loading {a} contracts of {b}…",
+   "Chargement de {a} contrats de {b}…"
+  ],
+  [
+   "{a} · {b} · {c} contracts",
+   "{a} · {b} · {c} contrats"
+  ],
+  [
+   "Requesting institution (수요기관): {a}.",
+   "Entité demandeuse (수요기관) : {a}."
+  ],
+  [
+   "Legal ground cited: {a}.",
+   "Fondement juridique cité : {a}."
+  ],
+  [
+   "Contract amount of the latest version in the period; the original contract was {a} KRW ({b} versions).",
+   "Montant du contrat de la dernière version dans la période ; le contrat initial était de {a} KRW ({b} versions)."
+  ],
+  [
+   "Requesting institution (수요기관): {a}. Legal ground cited: {b}.",
+   "Entité demandeuse (수요기관) : {a}. Fondement juridique cité : {b}."
+  ],
+  [
+   "Requesting institution (수요기관): {a}. Legal ground cited: {b}. Joint contract (공동계약).",
+   "Entité demandeuse (수요기관) : {a}. Fondement juridique cité : {b}. Contrat conjoint (공동계약)."
+  ],
+  [
+   "Legal ground cited: {a}. Joint contract (공동계약).",
+   "Fondement juridique cité : {a}. Contrat conjoint (공동계약)."
+  ],
+  [
+   "Requesting institution (수요기관): {a}. Joint contract (공동계약).",
+   "Entité demandeuse (수요기관) : {a}. Contrat conjoint (공동계약)."
   ]
  ]
 };

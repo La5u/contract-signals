@@ -120,3 +120,26 @@ Method, holdout and decision rule as in part 1, applied to the collusion cohort 
 Expected bias, stated in advance: the Antimonopoly Committee builds its cases on exactly this kind of evidence (shared contacts, addresses, files, submission times), so K1–K4 hit rates among its cases overstate what they would catch among undetected collusion. Their LRs are an upper bound; the conviction cohort is the less selected check. The same applies to C5 complaints (complaints can start an investigation).
 
 Personal data: contacts and addresses are compared inside one tender in memory; only the yes/no result is stored.
+
+## Part 5: related parties from the company register (fixed 2026-10-17, before any was computed)
+
+Owner request (2026-10-17): related-party checks, starting with Ukraine. Contact-based links were already tested in part 3 (K1 shared phone or e-mail, K2 shared address): they pass only on the AMCU cohort, whose cases are built on such evidence, and are rare among convictions (K1 1 of 171 rows). This part adds ownership and management links from the Unified State Register (ЄДР), open data on data.gov.ua (dataset a1799820-195b-4982-8141-6e84f58103e7, legal entities file `UO.zip` dated 2026-10-13, CC BY; private cache `~/.cache/contract-signals/ukraine-edr/2026-10-13/`, SHA-256 in `SHA256SUMS`).
+
+| ID | Rule |
+| --- | --- |
+| R1 shared-owner | On the awarded lot (bid scope as in part 3), two bidders share a founder, beneficial owner or signer (manager), or one bidder is a founder of another. People match on their full normalised name (surname, first name and patronymic, all three present); legal-entity founders match on their EDRPOU code. A bidder that is an individual entrepreneur (RNOKPP) is represented by its own name as published in the bid. |
+| R2 official-owner | The buyer's contact person named in the tender (`procuringEntity.contactPoint.name`) has the same full normalised name (all three parts) as a founder, beneficial owner or signer of the winner, or as the winner itself when it is an individual entrepreneur. |
+| R3 young-winner | The winner (a legal entity) was registered less than 365 days before the tender was created (`tenderCreated`; registration date from the register's `REGISTRATION` field). |
+
+Normalisation: upper case, apostrophe variants and hyphens unified, Latin look-alike letters mapped to Cyrillic, spaces collapsed. No surname-only, initial or fuzzy matches: common surnames would make them noise.
+
+Status: *unknown* when the tender record is not cached, a needed party is not in the register snapshot (for R1 and R2 any bidder or the winner; for R3 the winner, or the winner is an individual entrepreneur), or the needed names are missing; *clear* when every party is known and nothing matches. R1 needs 2+ bidders, otherwise clear, as in part 3.
+
+Cohorts, method, holdout and decision rule as in parts 1 and 3: the conviction cohort with linked tenders (`research/labels/ukraine-verdict-plus-linked-cohort.json.gz`), also one row per case; the collusion cohort (`research/labels/ukraine-amcu-cohort-full.json.gz`, positives `collusion`), also one row per case. Hit rate among labelled tenders is reported first.
+
+Expected biases, stated in advance:
+- **Snapshot, not history.** The register gives today's founders, owners and managers, not those at the time of the tender (convicted tenders date mostly from 2016–2023). Changes since then hide links (hit rates are a lower bound) and companies that were struck off may have lost data. Register coverage is reported separately for labelled and comparison tenders; if it differs by more than 10 points, the result is reported as biased.
+- **R1 on the AMCU cohort** is an upper bound, like K1–K4: the Committee finds cartels through such links.
+- **R2** depends on the buyer naming a person as contact; many tenders name a department or role. Its coverage is reported.
+
+Personal data: names are compared in memory; the register extract (only the companies that appear in these cohorts) stays in the private cache; only yes/no results are written to the repository. No name, match or company link is published.

@@ -50,7 +50,7 @@ Reproduced by `tests/national.cjs`. Ministry of Health (national, EDRPOU 0001292
 | `ua-buyer-share` (v3.6) | 11 | 231 | 246 | 0 |
 | `ua-direct-contract` (v3.7) | 66 | 358 | 0 | 64 |
 
-47 contracts with a signal, 441 zero, 0 not assessed (38 before the disqualification check). 424 of 488 contracts are direct-contract reports (reporting), out of scope for every check except `ua-direct-contract` (v3.7), concentration and buyer share. With v3.7, 118 contracts have a positive score (55 in v3.6), 63 more from direct contracts of UAH 200,000 or more. 38 of the 64 competitive contracts had a single offer. Example lead: one company won the Ministry of Health's commemorative award items repeatedly, each time as the only bidder. No negotiated procedure appears in this cohort.
+118 contracts with a signal, 370 zero, 0 not assessed with v3.7 (47 / 441 / 0 in v3.4; 38 signals before the disqualification check). 424 of 488 contracts are direct-contract reports (reporting), out of scope for every check except `ua-direct-contract` (v3.7), concentration and buyer share. That is 63 more than in v3.6 (55) from direct contracts of UAH 200,000 or more. 38 of the 64 competitive contracts had a single offer. Example lead: one company won the Ministry of Health's commemorative award items repeatedly, each time as the only bidder. No negotiated procedure appears in this cohort.
 
 The first run counted concentration in lots rather than procedures; this was corrected for both engines (see [score-ted.md](score-ted.md)). Ukrainian counts did not change.
 
@@ -107,7 +107,7 @@ Measured by a census of every completed tender of the convicted buyers' years on
 | D2 direct contract ≥ UAH 200,000 (`ua-direct-contract`) | 17 % (39/320) | 8 % | 2.18 [1.52, 3.00] | 1.76 [1.06, 2.82] / 2.43 | **11** (11.2 [6.0, 15.8]) |
 | D4 negotiated procedure (`ua-direct-award`) | 8 % (15/320) | 4 % | 1.94 [1.05, 3.13] | 1.27 [0.35, 2.74] / 2.29 | **10** (9.6 [0.8, 16.5]), was 18 |
 
-D2 passes the holdout rule; it is the only check that scores direct-contract reports, which are otherwise recorded without a procedure. D4 points the same way but its learn half does not exclude 1; the owner set it to the measured 10 rather than keep the editorial 18. Both are in the competition family, so D2 does not add to the buyer share on the same contract. Limits: the census lists only the site search's completed tenders; the size gate partly measures size (prosecutions favour large amounts), and the UAH 1.5 million works threshold and legal exemptions are not assessed.
+D2 passes the holdout rule; it and `ua-buyer-share` are the only checks that score direct-contract reports, which are otherwise recorded without a procedure. D4 points the same way but its learn half does not exclude 1; the owner set it to the measured 10 rather than keep the editorial 18. Both are in the competition family, so D2 does not add to the buyer share on the same contract. Limits: the census lists only the site search's completed tenders; the size gate partly measures size (prosecutions favour large amounts), and the UAH 1.5 million works threshold and legal exemptions are not assessed.
 
 ## Better-ranked bidder disqualified (added 2026-09-26)
 

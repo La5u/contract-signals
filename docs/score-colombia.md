@@ -15,7 +15,7 @@ An editorial sorting tool, not a probability, not a measure of legal gravity, no
 
 ## The checks
 
-Nine checks are always displayed. Six are jurisdiction-specific (buyer share since v3.7); three are the French checks kept **out of scope** with an explicit reason — never silently dropped, never scored.
+Ten checks are always displayed. Six are jurisdiction-specific (buyer share since v3.7); three are the French checks kept **out of scope** with an explicit reason — never silently dropped, never scored; the tenth is the universal late-publication check.
 
 | Check | ID | Family | Eligibility / trigger | Weight |
 | --- | --- | --- | --- | --- |

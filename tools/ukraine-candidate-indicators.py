@@ -93,15 +93,15 @@ def address_part(value):
     return ''.join(c for c in str(value or '').lower() if not c.isspace() and not unicodedata.category(c).startswith('P'))
 
 
-def bid_features(row, tender):
-    """K1–K8 compare bidders in memory; only True/False/None leave this function."""
-    out = dict.fromkeys(BID_CANDIDATES)
+def awarded_lot_bids(row, tender):
+    """The awarded lot's bids (part 3 scope): (selected, {bidder id: (bid, lot value, tenderer)},
+    unidentified), or None when the record has no bid list or the awarded lot cannot be told."""
     if tender is None or not isinstance(tender.get('bids'), list):
-        return out
+        return None
     award = next((a for a in tender.get('awards') or [] if a.get('id') == row.get('awardId')), None)
     lot = (award or {}).get('lotID')
     if tender.get('lots') and not lot:
-        return out
+        return None
     opening = instant((tender.get('tenderPeriod') or {}).get('endDate'))
     selected = []
     for bid in tender['bids']:
@@ -131,7 +131,19 @@ def bid_features(row, tender):
             unidentified = True
         else:
             bidders.setdefault(bidder, (bid, lv, tenderer))
+    return selected, bidders, unidentified
+
+
+def bid_features(row, tender):
+    """K1–K8 compare bidders in memory; only True/False/None leave this function."""
+    out = dict.fromkeys(BID_CANDIDATES)
+    scope = awarded_lot_bids(row, tender)
+    if scope is None:
+        return out
+    selected, bidders, unidentified = scope
     bids = list(bidders.values())
+    award = next((a for a in tender.get('awards') or [] if a.get('id') == row.get('awardId')), None)
+    lot = (award or {}).get('lotID')
 
     def too_few(minimum):
         return len(selected) < minimum or (not unidentified and len(bids) < minimum)

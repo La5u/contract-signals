@@ -196,3 +196,14 @@ for (const [file, country, expected, counts] of [
   assert.equal(r.nationalConcentration.wins, 1);
   console.log('Concentration counts procedures, not lots.');
 }
+
+// "Declared without competition" covers the source's own declaration in every family:
+// DECP/BOAMP directAward, TED and Find a Tender procedureDirect.
+{
+  const pt = run('prepareContracts', JSON.parse(fs.readFileSync('data/ted-portugal.json')));
+  const direct = run('selectContracts', pt, { legal: 'direct' });
+  assert.equal(direct.length, pt.filter(c => c.procedureDirect === true).length);
+  assert.ok(direct.length > 0);
+  assert.ok(direct.every(c => c.procedureDirect === true));
+  console.log(`Declared-without-competition filter: ${direct.length} Portuguese TED direct awards.`);
+}
