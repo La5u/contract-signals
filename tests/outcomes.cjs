@@ -60,3 +60,22 @@ console.log('Outcome and dated news-lead validation: one historical investigatio
   assert.ok(ro.every(c=>!run('hasReportedInvestigation',c)));
   console.log('Supplier proceedings: company-level, exact wording with caveats, consortium members matched, never on the contract flag.');
 }
+
+// Joint offers: several declared holders are recorded as a relationship between the firms, never a signal.
+{
+  // A joint offer is claimed only with evidence: TED tendering-party members or a declared DECP grouping.
+  assert.equal(run('jointOfferNote',{dataFamily:'ted',supplierIds:[{id:'1'},{id:'2'}]}),'Joint offer by 2 firms · a relationship between them, not a signal');
+  assert.equal(run('jointOfferNote',{dataFamily:'decp',operatorGrouping:['Conjoint'],supplierIds:[{id:'1'},{id:'2'}]}),'Joint offer by 2 firms (declared grouping: Conjoint) · a relationship between them, not a signal');
+  assert.match(run('jointOfferNote',{dataFamily:'decp',operatorGrouping:['Pas de groupement'],supplierIds:[{id:'1'},{id:'2'}]}),/^2 firms hold this award, declared without a grouping/);
+  assert.match(run('jointOfferNote',{dataFamily:'boamp',supplierIds:[{id:'1'},{id:'2'}]}),/^2 firms hold this award \(joint offer or several framework holders; the source does not say\)/);
+  // Two establishments (SIRET) of one company (SIREN) are one firm.
+  assert.equal(run('jointOfferNote',{dataFamily:'ted',supplierIds:[{id:'55204499201624',siren:'552044992'},{id:'55204499201947',siren:'552044992'}]}),null);
+  assert.match(run('jointOfferNote',{dataFamily:'ted',supplierIds:[{id:'a',siren:'1'},{id:'b',siren:'1'},{id:'c',siren:'2'}]}),/^Joint offer by 2 firms/);
+  assert.equal(run('jointOfferNote',{supplierIds:[{id:'1'}]}),null);
+  assert.equal(run('jointOfferNote',{}),null);
+  const ro=run('prepareContracts',JSON.parse(fs.readFileSync('data/ted-romania.json')));
+  const joint=ro.filter(c=>c.supplierIds?.length>1);
+  assert.ok(joint.length>0);
+  for(const c of joint) assert.ok(!run('getIndicators',c).some(i=>i.id==='supplier-concentration'),`${c.id}: a joint offer is not a concentrated award`);
+  console.log(`Joint offers: ${joint.length} Romanian TED rows noted as a relationship, never as concentration.`);
+}

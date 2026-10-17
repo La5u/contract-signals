@@ -248,7 +248,21 @@ def supplier_identifier(supplier_id):
     return {"identifierType": "RUC" if supplier_id.startswith("PY-RUC-") else "OCDS party ID", "id": supplier_id}
 
 
-def contract_rows(record, buyers=(BUYER,), cohort_id="dncp-fernando-2024-2025"):
+def date_note(start, signed, retrieved=None):
+    """What the displayed date is, and published dates that cannot be right (kept as published)."""
+    note = "OCDS contract.period.startDate"
+    if start and start[:4] < "1990":
+        note += f"; start year {start[:4]} as published, implausible (likely a typing error at source)"
+    if not signed:
+        note += "; dateSigned not supplied"
+    elif retrieved and signed > retrieved:
+        note += f"; dateSigned {signed} is later than the download ({retrieved}): as published, not a past signature"
+    else:
+        note += "; dateSigned published separately"
+    return note + ". Not proof of signature."
+
+
+def contract_rows(record, buyers=(BUYER,), cohort_id="dncp-fernando-2024-2025", retrieved=None):
     """Only explicit contract->award links; never interpret search hits as contracts."""
     release = record.get("compiledRelease") or {}
     ocid = record["ocid"]
@@ -288,7 +302,7 @@ def contract_rows(record, buyers=(BUYER,), cohort_id="dncp-fernando-2024-2025"):
             "tenderPeriodDays": (tender.get("tenderPeriod") or {}).get("durationInDays"),
             "contractId": contract["id"], "awardId": award["id"], "ocid": ocid,
             "date": ((contract.get("period") or {}).get("startDate") or "")[:10] or None,
-            "dateNote": "OCDS contract.period.startDate; dateSigned not supplied. Not proof of signature.",
+            "dateNote": date_note(((contract.get("period") or {}).get("startDate") or "")[:10] or None, (contract.get("dateSigned") or "")[:10] or None, retrieved),
             "signatureDate": (contract.get("dateSigned") or "")[:10] or None,
             "callPublishedDate": (tender.get("datePublished") or "")[:10] or None,
             "awardDate": (award.get("date") or "")[:10] or None,
@@ -341,7 +355,7 @@ def offline(cohort):
         amendment_events += sum(len(c.get("amendments") or []) for c in contracts)
         budget_only += sum(1 for c in contracts if not c.get("id") and set(c) <= {"implementation"})
         amendment_entry_ids.update(a.get("financialCode") for c in contracts for a in c.get("amendments") or [] if a.get("financialCode"))
-        matched = contract_rows(record, buyers, cohort["cohortId"])
+        matched = contract_rows(record, buyers, cohort["cohortId"], (manifest.get("retrievalFinishedAt") or "")[:10] or None)
         if any(not row["callPublishedDate"] or not cohort["start"] <= row["callPublishedDate"] < cohort["end"] for row in matched):
             raise ValueError("Compiled call publication outside fixed search window: " + ocid)
         records_with_contracts += bool(matched)

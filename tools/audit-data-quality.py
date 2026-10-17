@@ -54,6 +54,9 @@ def published_datasets(root):
         key = re.match(r'\s*([a-z][a-z0-9]*): \{', line)
         single = re.search(r"\bpath: '([^']+)'", line)
         several = re.search(r"\bpath: \[([^\]]+)\]", line)
+        # A remote dataset (South Korea) is served from another host: no file in this repository.
+        if key and re.search(r"\bremote: '", line) and not single and not several:
+            continue
         if not key or (not single and not several and not re.search(r'\bpath: null\b', line)):
             raise ValueError('Unsupported datasets registry format')
         files = [single[1]] if single else re.findall(r"'([^']+)'", several[1]) if several else []

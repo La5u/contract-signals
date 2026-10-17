@@ -19,6 +19,14 @@ class DncpImportTests(unittest.TestCase):
                            "documents": [{"documentType": "contractSigned", "url": "https://www.contrataciones.gov.py/test"}]}],
         }}
 
+    def test_date_note_follows_the_published_dates(self):
+        self.assertIn("dateSigned not supplied", mod.date_note("2025-01-02", None))
+        self.assertIn("dateSigned published separately", mod.date_note("2025-01-02", "2025-01-01", "2026-09-25"))
+        late = mod.date_note("2026-04-30", "2026-12-31", "2026-09-25")
+        self.assertIn("later than the download (2026-09-25)", late)
+        self.assertNotIn("not supplied", late)
+        self.assertIn("start year 0025 as published, implausible", mod.date_note("0025-12-03", None))
+
     def test_contract_award_link_no_invented_signature(self):
         row, = mod.contract_rows(self.sample())
         self.assertEqual(row["contractId"], "contract1")

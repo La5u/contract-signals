@@ -1,0 +1,8 @@
+118 eligible positive rows (110 buyers); 880 comparison rows; left out (non-competitive): {'corruption': 16, 'fraud': 22}.
+Coverage (rows with a known status, competitive): R1 shared-owner: labelled 0.729, comparison 0.758; R2 official-owner: labelled 0.407, comparison 0.448; R3 young-winner: labelled 0.746, comparison 0.753
+
+| Candidate | Hit rate, convicted | Corruption | Fraud | Comparisons | LR+ all [95 %] | LR+ learn half [95 %] | LR+ check half | Points (all) [95 %] | Decision |
+|---|---|---|---|---|---|---|---|---|---|
+| R3 young-winner | 8% (8/88) | 10% (4/43) | 6% (4/45) | 7% (47/663) | 1.08 [0.44, 2.29] | 0.91 [0.30, 2.09] | 1.26 [0.20, 3.68] | 1.1 [0.0, 11.9] | fails rule |
+| R1 shared-owner | 4% (3/86) | 5% (2/44) | 3% (1/42) | 1% (5/667) | 3.89 [0.12, 17.24] | 5.65 [0.22, 20.73] | 0.19 [0.16, 0.24] | 19.6 [0.0, 41.1] | fails rule |
+| R2 official-owner | 0% (0/48) | 0% (0/30) | 0% (0/18) | 0% (0/394) | 0.17 [0.14, 0.22] | 0.31 [0.25, 0.42] | 0.29 [0.23, 0.37] | 0.0 [0.0, 0.0] | fails rule |

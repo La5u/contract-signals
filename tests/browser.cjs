@@ -35,8 +35,9 @@ const server=http.createServer((req,res)=>{
  await page.waitForFunction(()=>document.querySelector('#dataset-dates').textContent.includes('Coverage period'));
  assert.equal(await page.locator('#dataset-dates dt').count(),3);
  assert.match(await page.locator('#dataset-dates').textContent(),/Snapshot collectedUnknown/,'current DECP snapshot is not invented');
- assert.match(await page.locator('#dataset option:checked').textContent(),/^eight buyers.*contracts.*DECP$/);
- assert.equal(await page.locator('#dataset option:checked').evaluate(o=>o.parentElement.label),'France','the country is the option group, not repeated in the option');
+ assert.match(await page.locator('#dataset option:checked').textContent(),/^🇫🇷 eight buyers.*contracts.*DECP$/);
+ assert.equal(await page.locator('#dataset option:checked').getAttribute('data-country'),'France','the country is a flag, not repeated as a heading');
+ assert.equal(await page.locator('#dataset optgroup').count(),0);
  const multiSignalRow=page.locator('.contract-row').filter({has:page.locator('.badge:not(.context):nth-of-type(2)')}).first();
  const badgeLabels=(await multiSignalRow.locator('.badge:not(.context)').allTextContents()).map(t=>t.split(' · ')[0]);
  assert.ok(badgeLabels.length>1,'all indicators are visible on a multi-signal row');
@@ -302,7 +303,7 @@ const server=http.createServer((req,res)=>{
  await page.selectOption('#dataset','paraguay');
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 84'));
  assert.match(await page.locator('#dataset-note').textContent(),/Fernando de la Mora/);
- assert.match(await page.locator('#dataset option:checked').textContent(),/^Fernando de la Mora.*contract records.*DNCP OCDS$/);
+ assert.match(await page.locator('#dataset option:checked').textContent(),/^🇵🇾 Fernando de la Mora.*contract records.*DNCP OCDS$/);
  assert.match(await page.locator('#status').textContent(),/36 with a heuristic signal · 0 not assessed/);
  assert.equal(await page.locator('#dataset-sources').isHidden(),false);
  const pySources=await page.locator('#sources-body').textContent();
@@ -341,7 +342,7 @@ const server=http.createServer((req,res)=>{
  assert.match(copied,/Verify: Award page on contrataciones\.gov\.py/);
  await page.selectOption('#dataset','paraguay3');
  await page.waitForFunction(()=>/\/ \d+ results/.test(document.querySelector('#status').textContent)&&document.querySelector('#dataset-note').textContent.includes('Asunción'));
- assert.match(await page.locator('#dataset option:checked').textContent(),/^MOPC.*Central.*Asunción/);
+ assert.match(await page.locator('#dataset option:checked').textContent(),/^🇵🇾 MOPC.*Central.*Asunción/);
  assert.equal(await page.locator('#sources-body a[href="data/paraguay-dncp-3buyers-coverage.json"]').count(),1);
  await page.selectOption('#dataset','decp');
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 5286'));
@@ -530,28 +531,27 @@ const server=http.createServer((req,res)=>{
  assert.match(await page.locator('#import-status').textContent(),/Unable to preview.*amount/);
  assert.equal(await page.locator('#confirm-import').isDisabled(),true);
  assert.deepEqual(errors,[]);
- // Protected names (Portugal BASE): a natural person's name is not in the page until asked for,
- // one record at a time. Same fixed vector as tests/test_import_portugal_base.py.
+ // Individual suppliers (Portugal BASE, Korea): shown as published and marked; exports leave the name out.
  {
-  const pn=await browser.newPage({locale:'en-GB',viewport:{width:1280,height:900}});
+  const pn=await browser.newPage({locale:'en-GB',viewport:{width:1280,height:900},acceptDownloads:true});
   pn.on('pageerror',e=>errors.push(e.message));
   await pn.goto(base);
   await pn.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 5286'));
-  const record={id:'base-1',buyer:'Public buyer',supplier:'Individual or foreign holder · 0a1b2c3d / Company Lda',supplierNamesPublished:['Individual or foreign holder · 0a1b2c3d','Company Lda'],
-   supplierProtectedNames:[{code:'0a1b2c3d',data:'gOAHCKdifNZHQSdVLA=='},null],description:'Synthetic service contract',amount:1000,date:'2025-01-02'};
+  const record={id:'base-1',buyer:'Public buyer',supplier:'Maria Exemplo / Company Lda',supplierNamesPublished:['Maria Exemplo','Company Lda'],
+   supplierIndividual:[true,false],description:'Synthetic service contract',amount:1000,date:'2025-01-02'};
   await pn.click('#open-import');
-  await pn.setInputFiles('#file',{name:'protected.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify([record]))});
+  await pn.setInputFiles('#file',{name:'individual.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify([record]))});
   await pn.waitForFunction(()=>!document.querySelector('#preview-import').disabled);
   await pn.click('#preview-import');await pn.click('#confirm-import');
   await pn.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 1'));
-  assert.doesNotMatch(await pn.locator('body').textContent(),/Maria Exemplo/);
+  assert.match(await pn.locator('.contract-row').first().textContent(),/Maria Exemplo/);
   await openRow(pn,pn.locator('.row-toggle').first());
-  assert.match(await pn.locator(panel).textContent(),/Individual or foreign holder · 0a1b2c3d.*Company Lda/);
-  assert.doesNotMatch(await pn.locator(panel).textContent(),/Maria Exemplo/);
-  await pn.locator('#detail-panel button',{hasText:'Show name'}).click();
-  await pn.waitForFunction(()=>document.querySelector('#detail-panel').textContent.includes('Maria Exemplo (0a1b2c3d)'),null,{timeout:20000});
-  assert.equal(await pn.locator('#detail-panel button',{hasText:'Show name'}).count(),0);
-  assert.doesNotMatch(await pn.locator('.contract-row').first().textContent(),/Maria Exemplo/,'the table keeps the code, not the name');
+  assert.match(await pn.locator(panel).textContent(),/Maria Exemplo individual \/ Company Lda/);
+  await pn.keyboard.press('Escape');
+  const [csv]=await Promise.all([pn.waitForEvent('download'),pn.click('#export-csv')]);
+  const text=fs.readFileSync(await csv.path(),'utf8');
+  assert.doesNotMatch(text,/Maria Exemplo/);
+  assert.match(text,/individual \(name in the explorer\) \/ Company Lda/);
   await pn.close();
  }
  // Buyer profile: filters the table to the buyer, compares rates with the dataset, closes back.
@@ -649,5 +649,48 @@ const server=http.createServer((req,res)=>{
  assert.equal(await mobile.locator('#advanced-count').textContent(),'');
  assert.deepEqual(errors,[]);
  await mobile.close();
+ // First-page preview: while the full dataset is held back, the prepared top rows show read-only,
+ // in the order and with the index the full dataset gives them.
+ const pv=await browser.newPage({locale:'en-GB',viewport:{width:1280,height:900}});
+ let release;const held=new Promise(r=>{release=r;});
+ await pv.route('**/data/web/colombia-secop2.json',async route=>{await held;await route.continue();});
+ await pv.goto(`${base}/#dataset=colombia`);
+ await pv.waitForFunction(()=>document.querySelector('#status').textContent.startsWith('Top 50 of 7560'));
+ const rowsNow=()=>pv.locator('.contract-row').evaluateAll(rows=>rows.map(r=>[r.dataset.id,r.textContent]));
+ const previewRows=await rowsNow();
+ assert.equal(previewRows.length,50);assert(previewRows.every(([id])=>id));
+ assert(await pv.locator('#search').isDisabled(),'search is locked during the preview');
+ assert(await pv.locator('#export-csv').isDisabled(),'export is locked during the preview');
+ assert.equal(await pv.locator('.table-wrap').evaluate(el=>el.inert),true);
+ assert.equal(await pv.locator('#pagination').isHidden(),true);
+ release();
+ await pv.waitForFunction(()=>/^7560 \/ 7560 results/.test(document.querySelector('#status').textContent));
+ assert.deepEqual(await rowsNow(),previewRows,'the full dataset shows the same first page, row for row');
+ assert(!(await pv.locator('#search').isDisabled()));
+ assert.equal(await pv.locator('.table-wrap').evaluate(el=>el.inert),false);
+ await pv.close();
+ // South Korea: buyer search, one buyer's contracts, the buyer kept in the link. The files are built
+ // locally (tools/build-korea-site.py, linked as korea-site/) and never in git: skipped without them.
+ if(fs.existsSync(path.join(process.cwd(),'korea-site','buyers.json'))){
+  const kr=await browser.newPage({locale:'en-GB',viewport:{width:1280,height:900}});
+  const krErrors=[];kr.on('pageerror',e=>krErrors.push(e.message));
+  await kr.goto(`${base}/#dataset=korea`);
+  await kr.waitForFunction(()=>/contracting institutions\. Search/.test(document.querySelector('#status').textContent));
+  assert(await kr.locator('#korea-picker').isVisible());
+  const buyers=JSON.parse(fs.readFileSync(path.join(process.cwd(),'korea-site','buyers.json'),'utf8'));
+  const small=buyers.find(b=>b[3]>=5&&b[3]<=60);
+  await kr.fill('#korea-search',small[0]);
+  await kr.locator('#korea-results button').first().click();
+  await kr.waitForFunction(n=>document.querySelector('#status').textContent.startsWith(`${n} / ${n} results`),small[3]);
+  assert.equal(await kr.evaluate(()=>new URLSearchParams(location.hash.slice(1)).get('buyer')),small[0]);
+  assert.match(await kr.locator('.contract-row').first().textContent(),/₩/);
+  await kr.reload();
+  await kr.waitForFunction(n=>document.querySelector('#status').textContent.startsWith(`${n} / ${n} results`),small[3]);
+  await kr.selectOption('#dataset','romania');
+  await kr.waitForFunction(()=>/ results/.test(document.querySelector('#status').textContent)&&document.querySelector('#korea-picker').hidden);
+  assert.equal(new URLSearchParams((await kr.evaluate(()=>location.hash)).slice(1)).get('buyer'),null);
+  assert.deepEqual(krErrors,[]);
+  await kr.close();
+ }
  await browser.close();server.close();console.log('HTTP, file:// picker, collapsible filters, record panel, review notes, theme and mobile layout: passed.');
 })().catch(e=>{console.error(e);server.close();process.exit(1)});

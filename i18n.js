@@ -1,5 +1,5 @@
-// Interface translation (Spanish, French). No build step, no network: dictionaries are
-// plain scripts (i18n-es.js, i18n-fr.js) loaded before this file.
+// Interface translation (Spanish, French). No build step: dictionaries are plain scripts
+// (i18n-es.js, i18n-fr.js); prefetch.js loads only the one for the chosen language, before this file.
 //
 // Only interface text is translated: a text node is replaced when it matches an English
 // interface string exactly, or a full-sentence pattern whose {slots} capture data values.
@@ -27,7 +27,8 @@
     return 'en';
   }
 
-  const lang = chooseLanguage();
+  // prefetch.js decides first and loads only that dictionary; on its own, this file decides.
+  const lang = known(window.I18N_BOOT_LANG) ? window.I18N_BOOT_LANG : chooseLanguage();
   window.i18nLang = () => lang;
   window.i18nLocale = () => LOCALES[lang];
   window.I18N_LANGUAGES = NAMES;
@@ -63,9 +64,10 @@
   }
   function translate(text) {
     if (!dict) return null;
-    const key = norm(text);
+    // A leading flag (the dataset menu) is kept as is and the text after it is translated.
+    const lead = /^\s*(?:[\u{1F1E6}-\u{1F1FF}]{2}\s*)?/u.exec(text)[0], trail = /\s*$/.exec(text)[0];
+    const key = norm(text.slice(lead.length));
     if (!key) return null;
-    const lead = /^\s*/.exec(text)[0], trail = /\s*$/.exec(text)[0];
     if (exact.has(key)) return lead + exact.get(key) + trail;
     for (const p of patterns) {
       if (p.literal && !key.includes(p.literal)) continue;
