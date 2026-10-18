@@ -4,6 +4,11 @@ const assert = require('node:assert/strict');
 const path = require('node:path');
 const http = require('node:http');
 const fs = require('node:fs');
+const datasetCountries = Object.fromEntries([...fs.readFileSync('index.html', 'utf8').matchAll(/<option value="([^"]+)" data-country="([^"]+)">/g)].map(match => [match[1], match[2]]));
+async function selectDataset(page, id) {
+ if (await page.locator('#country').inputValue() !== datasetCountries[id]) await page.selectOption('#country', datasetCountries[id]);
+ await page.selectOption('#dataset', id);
+}
 // Own static server on a free port (or PORT): no collision with other local servers.
 const types={'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.json':'application/json','.md':'text/markdown; charset=utf-8','.xml':'application/xml','.pdf':'application/pdf'};
 const csp=fs.readFileSync('_headers','utf8').match(/Content-Security-Policy: (.+)/)[1].trim();
@@ -36,7 +41,9 @@ const server=http.createServer((req,res)=>{
  assert.equal(await page.locator('#dataset-dates dt').count(),3);
  assert.match(await page.locator('#dataset-dates').textContent(),/Snapshot collectedUnknown/,'current DECP snapshot is not invented');
  assert.match(await page.locator('#dataset option:checked').textContent(),/^🇫🇷 eight buyers.*contracts.*DECP$/);
- assert.equal(await page.locator('#dataset option:checked').getAttribute('data-country'),'France','the country is a flag, not repeated as a heading');
+ assert.equal(await page.locator('#dataset option:checked').getAttribute('data-country'),'France');
+ assert.equal(await page.locator('#country').inputValue(),'France');
+ assert.equal(await page.locator('#dataset option').count(),4,'only French sources/cohorts are offered');
  assert.equal(await page.locator('#dataset optgroup').count(),0);
  const multiSignalRow=page.locator('.contract-row').filter({has:page.locator('.badge:not(.context):nth-of-type(2)')}).first();
  const badgeLabels=(await multiSignalRow.locator('.badge:not(.context)').allTextContents()).map(t=>t.split(' · ')[0]);
@@ -264,7 +271,7 @@ const server=http.createServer((req,res)=>{
  assert.match(await page.locator(panel).textContent(),/not assessable/);
  assert.equal(await page.locator('#indicator option[value="short-bidding-period"]').count(),0,'out-of-scope indicators are omitted');
  // Colombia SECOP II pilot: jurisdiction-specific indicators, Spanish source text, COP amounts
- await page.selectOption('#dataset','colombia');
+ await selectDataset(page,'colombia');
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 7560'));
  await page.evaluate(()=>{const el=document.querySelector('#adjudicated');el.checked=true;el.dispatchEvent(new Event('input',{bubbles:true}));});
  assert.match(await page.locator('#status').textContent(),/0 \/ 7560/);
@@ -300,7 +307,7 @@ const server=http.createServer((req,res)=>{
  await closePanel(page);
  await page.evaluate(()=>{const el=document.querySelector('#legal');el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
  // Paraguay: linked contract records scored with Paraguayan checks only (docs/score-paraguay.md).
- await page.selectOption('#dataset','paraguay');
+ await selectDataset(page,'paraguay');
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 84'));
  assert.match(await page.locator('#dataset-note').textContent(),/Fernando de la Mora/);
  assert.match(await page.locator('#dataset option:checked').textContent(),/^🇵🇾 Fernando de la Mora.*contract records.*DNCP OCDS$/);
@@ -344,9 +351,9 @@ const server=http.createServer((req,res)=>{
  await page.waitForFunction(()=>/\/ \d+ results/.test(document.querySelector('#status').textContent)&&document.querySelector('#dataset-note').textContent.includes('Asunción'));
  assert.match(await page.locator('#dataset option:checked').textContent(),/^🇵🇾 MOPC.*Central.*Asunción/);
  assert.equal(await page.locator('#sources-body a[href="data/paraguay-dncp-3buyers-coverage.json"]').count(),1);
- await page.selectOption('#dataset','decp');
+ await selectDataset(page,'decp');
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 5286'));
- await page.selectOption('#dataset','ukraine');
+ await selectDataset(page,'ukraine');
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 488'));
  const ukraineNote=await page.locator('#dataset-note').textContent();
  assert.match(ukraineNote,/526 tenders, 488 signed contracts/);
@@ -358,7 +365,7 @@ const server=http.createServer((req,res)=>{
  assert.match(reportingDetail,/Offer and direct-award checks are excluded for direct-contract reports \(reporting\)/);
  assert.match(reportingDetail,/Concentrated awards within a category/);
  assert.doesNotMatch(reportingDetail,/reporting.*not scored/i);
- await page.selectOption('#dataset','decp');
+ await selectDataset(page,'decp');
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 5286'));
  // Shareable links: a fresh load restores dataset, filters, sort, page and page size.
  const linked=await browser.newPage({locale:'en-GB',viewport:{width:1280,height:900}});
@@ -686,7 +693,7 @@ const server=http.createServer((req,res)=>{
   assert.match(await kr.locator('.contract-row').first().textContent(),/₩/);
   await kr.reload();
   await kr.waitForFunction(n=>document.querySelector('#status').textContent.startsWith(`${n} / ${n} results`),small[3]);
-  await kr.selectOption('#dataset','romania');
+  await selectDataset(kr,'romania');
   await kr.waitForFunction(()=>/ results/.test(document.querySelector('#status').textContent)&&document.querySelector('#korea-picker').hidden);
   assert.equal(new URLSearchParams((await kr.evaluate(()=>location.hash)).slice(1)).get('buyer'),null);
   assert.deepEqual(krErrors,[]);

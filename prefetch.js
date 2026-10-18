@@ -12,6 +12,7 @@
     paraguay: ['data/paraguay-dncp.json'],
     paraguay3: ['data/paraguay-dncp-3buyers.json'],
     ukraine: ['data/prozorro.json'],
+    ukraineSample: ['data/prozorro-slice-2026-06-08/contracts.json'],
     chile: ['data/chile-mp.json'],
     uk: ['data/uk-fts.json'],
     portugal: ['data/ted-portugal.json'],

@@ -45,7 +45,10 @@
     <p>A signal is a reason to look, not proof.</p>
   </div>
   <section class="primary-controls" aria-label="Explore contracts">
-    <label class="dataset-selector">Dataset
+    <label class="country-selector"><span id="country-label" data-no-i18n>Country</span>
+      <select id="country"></select>
+    </label>
+    <label class="dataset-selector"><span id="source-label" data-no-i18n>Source / cohort</span>
       <select id="dataset">
         <option value="decp" data-country="France">🇫🇷 eight buyers — contracts · DECP</option>
         <option value="tours" data-country="France">🇫🇷 Tours — procurement notices · BOAMP/TED</option>
@@ -59,12 +62,26 @@
         <option value="portugal" data-country="Portugal">🇵🇹 IP / Cávado / Lisboa — award notices · TED</option>
         <option value="romania" data-country="Romania">🇷🇴 Finance / Cluj county / Cluj-Napoca — award notices · TED</option>
         <option value="uk" data-country="United Kingdom">🇬🇧 FCDO / Lincolnshire / Milton Keynes — award notices · Find a Tender</option>
-        <option value="korea" data-country="South Korea">🇰🇷 every contracting institution (choose one) — contracts · KONEPS</option>
+        <option value="korea" data-country="South Korea">🇰🇷 all contracting institutions — contracts · KONEPS</option>
         <option value="ukraine" data-country="Ukraine">🇺🇦 Health / Vinnytsia / Dnipro — contracts · Prozorro</option>
+        <option value="ukraineSample" data-country="Ukraine">🇺🇦 open tenders Jun–Aug 2026, random sample — contracts · Prozorro</option>
+        <option value="global" data-country="All published collections">All published collections · progressive static scan</option>
       </select>
     </label>
+      <section id="korea-scan" class="notice-box" hidden aria-label="Published collections static scan">
+        <p>Scan the selected scope’s published collections sequentially. Collections can overlap: results are not unique contracts. Slow and bandwidth-intensive: each page rescans from the beginning, retaining at most 200 matches. Each source keeps its own assessment rules; unknown is not zero, and Korea is not assessed. Amount filters use native currencies, without conversion or combined totals.</p>
+        <p>Page membership follows collection then published record order (Korea: shard / buyer / row). Sort and grouping controls apply <strong>within this scan page only</strong>; there is no globally sorted result set or cross-country ranking. Changing filters, sorting, page size or review notes requires a fresh scan. Copy and exports contain only this scan page.</p>
+        <div class="korea-scan-actions">
+          <button id="korea-scan-start" type="button">Scan / rescan current filters</button>
+          <button id="korea-scan-cancel" type="button" disabled>Cancel scan</button>
+          <button id="korea-scan-previous" type="button" disabled>Previous scan page</button>
+          <button id="korea-scan-next" type="button" disabled>Next scan page</button>
+        </div>
+        <p id="korea-scan-status" role="status" aria-live="polite"></p>
+      </section>
     <div id="korea-picker" class="korea-picker" hidden>
-      <label>Contracting institution<input id="korea-search" type="search" placeholder="Name or code, e.g. 서울특별시 or 1230000" autocomplete="off"></label>
+      <button id="korea-all" type="button">All institutions · nationwide</button>
+      <label>Or choose one contracting institution<input id="korea-search" type="search" placeholder="Name or code, e.g. 서울특별시 or 1230000" autocomplete="off"></label>
       <ul id="korea-results" class="korea-results" aria-label="Matching contracting institutions"></ul>
     </div>
     <label class="search">Search<input id="search" type="search" placeholder="Buyer, supplier, subject, ID…" autocomplete="off">
@@ -107,6 +124,13 @@
         </fieldset>
         <fieldset>
           <legend>Contract</legend>
+          <label>Record country<select id="filter-country"><option value="">All countries</option><option value="FRA">France</option><option value="CHL">Chile</option><option value="COL">Colombia</option><option value="PRY">Paraguay</option><option value="PRT">Portugal</option><option value="ROU">Romania</option><option value="CZE">Czechia</option><option value="UKR">Ukraine</option><option value="GBR">United Kingdom</option><option value="KOR">South Korea</option></select></label>
+          <label>Record date from<input id="date-from" type="date"></label>
+          <label>Record date to<input id="date-to" type="date"></label>
+          <p class="field-help">Dates are inclusive and use each source’s displayed record date, not a universal signature date. Records with unknown dates do not match an active date range. Coverage remains limited to published snapshots.</p>
+          <label>Buyer name or ID contains<input id="filter-buyer" type="search" autocomplete="off"></label>
+          <label>Supplier name contains<input id="filter-supplier" type="search" autocomplete="off"></label>
+          <label>Procedure contains<input id="filter-procedure" type="search" autocomplete="off"></label>
           <label>Minimum amount<input id="minimum" type="number" min="0" step="any" placeholder="Any"></label>
           <label>CPV sector<select id="sector"><option value="">All sectors</option></select></label>
           <label>Project<select id="project"><option value="">All records</option></select></label>

@@ -5,7 +5,8 @@ Reads every file under ~/.cache/contract-signals/romania-seap/<year>/ (CSV with 
 old XLS even when named .xlsx, real XLSX) and writes normalized/<year>/<file>.jsonl.gz, one contract per
 line: buyer, buyer_cui, procedure, concluded_by, notice_init, notice_award, lot, offers, contract_no,
 contract_date, title, cpv, value_ron, winner, winner_cui. Raw value strings are kept next to parsed numbers.
-Resumable per file. Winner and buyer identities are organisations; no personal data is added.
+Resumable per file. Research cache only: winner names/IDs may identify individuals or sole traders.
+Normalization is not a privacy clearance; do not publish the raw or normalized cache.
 """
 import csv
 from collections import Counter
@@ -34,6 +35,7 @@ FIELDS = {
     'contract_date': ['datacontract'],
     'title': ['titlucontract', 'denumirecontract'],
     'cpv': ['cpvcode', 'codcpv', 'cpvcodeid'],
+    'cpv_label': ['denumirecpv'],  # classification label, NOT a contract subject/title
     'value_ron': ['valoareron', 'valoarecontractron', 'valoarecontract', 'valoareatribuitaron'],
     'value': ['valoare'],          # amount in the contract currency (2017-2018 subsequent contracts leave ValoareRON NULL)
     'currency': ['moneda'],
@@ -82,7 +84,8 @@ def number(s):
 
 
 def rows(path):
-    head = path.read_bytes()[:8]
+    with path.open('rb') as fh:
+        head = fh.read(8)
     if head.startswith(b'\xd0\xcf\x11\xe0'):
         # Old XLS holds at most 65,536 rows per sheet: large quarters continue on further sheets.
         book = xlrd.open_workbook(str(path), on_demand=True)
