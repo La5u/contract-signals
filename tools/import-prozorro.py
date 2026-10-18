@@ -13,6 +13,8 @@ endpoints only locate them. Window: tender dateCreated 2024-09-01 (inclusive) to
 """
 import argparse
 import gzip
+import hashlib
+import re
 import json
 import time
 import urllib.parse
@@ -348,12 +350,91 @@ def offline():
     print(json.dumps(coverage["counts"], ensure_ascii=False))
 
 
+def expand_cached(config_path, cache_dir, output_dir):
+    """Build a separate frozen convenience cohort; never perform discovery or network IO."""
+    config_bytes = Path(config_path).read_bytes()
+    config = json.loads(config_bytes)
+    if config.get("schemaVersion") != 1 or not re.fullmatch(r"prozorro-[a-z0-9-]+", config.get("cohortId", "")):
+        raise ValueError("Invalid expansion schema/cohortId")
+    entries = config["records"]
+    if not entries or len(entries) > 5000:
+        raise ValueError("Expansion must contain 1..5000 frozen records")
+    start, end = config["window"]["startInclusive"], config["window"]["endExclusive"]
+    if not start < end or not config.get("selection"):
+        raise ValueError("Invalid window or missing selection provenance")
+    rows, sources, excluded, seen = [], [], {}, set()
+    no_contracts = 0
+    for entry in entries:
+        internal = entry["internalId"]
+        if not re.fullmatch(r"[a-f0-9]{32}", internal) or internal in seen:
+            raise ValueError("Invalid or duplicate tender id")
+        seen.add(internal)
+        url = f"{API}/tenders/{internal}"
+        key = hashlib.sha256(url.encode()).hexdigest()[:32]
+        meta = json.loads((Path(cache_dir) / f"{key}.meta.json").read_bytes())
+        body = gzip.decompress((Path(cache_dir) / f"{key}.gz").read_bytes())
+        digest = hashlib.sha256(body).hexdigest()
+        if (meta.get("url") != url or meta.get("status") != 200 or
+                digest != meta.get("sha256") or digest != entry["sourceSha256"] or
+                meta.get("retrieved_at") != entry["retrievedAt"]):
+            raise ValueError(f"Cache provenance mismatch: {internal}")
+        tender = json.loads(body)["data"]
+        if (tender.get("id") != internal or tender.get("tenderID") != entry["tenderID"] or
+                tender["procuringEntity"]["identifier"].get("id") != entry["buyerId"] or
+                not start <= (tender.get("dateCreated") or "")[:10] < end):
+            raise ValueError(f"Frozen tender identity/window mismatch: {internal}")
+        got, why = contract_rows(tender)
+        no_contracts += not bool(got)
+        for row in got:
+            row.update(cohortId=config["cohortId"], sourceSha256=digest,
+                       sourceRetrievedAt=entry["retrievedAt"])
+        rows.extend(got)
+        for reason, count in why.items():
+            excluded[reason] = excluded.get(reason, 0) + count
+        sources.append(dict(entry, source=url, retainedContracts=len(got)))
+    if len({r["id"] for r in rows}) != len(rows):
+        raise ValueError("Duplicate contract row ids")
+    rows.sort(key=lambda r: (r["tenderCreated"] or "", r["id"]))
+    coverage = {"cohortId": config["cohortId"], "source": API,
+                "configSha256": hashlib.sha256(config_bytes).hexdigest(),
+                "window": config["window"], "selection": config["selection"],
+                "counts": {"tenders": len(entries), "buyers": len({e["buyerId"] for e in entries}),
+                           "retainedContracts": len(rows), "tendersWithoutRetainedContracts": no_contracts,
+                           "excludedContracts": excluded},
+                "sources": sources,
+                "limitations": ["Frozen cache convenience cohort, not a country sample or buyer census.",
+                                "Cache collected for audit/label research; selection bias is inherited, not removed by hash ranking.",
+                                "No fresh requests, attachments, amendment enrichment, payment checks or completeness inference.",
+                                "Contracts without signed status, active award and exactly one supplier are not retained.",
+                                "Published currencies are not converted; missing offers remain unknown."],
+                "license": "Prozorro open-data reuse terms with source attribution; no named standard licence inferred.",
+                "attribution": "Prozorro, Ministry of Economy of Ukraine / State enterprise Prozorro"}
+    output_dir = Path(output_dir)
+    if output_dir.resolve() == (ROOT / "data").resolve():
+        raise ValueError("Use a separate expansion output directory")
+    output_dir.mkdir(parents=True, exist_ok=True)
+    for name, value in (("contracts.json", rows), ("coverage.json", coverage)):
+        (output_dir / name).write_text(json.dumps(value, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    print(json.dumps(coverage["counts"], ensure_ascii=False))
+    return coverage
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--download", action="store_true")
     parser.add_argument("--offline", action="store_true")
     parser.add_argument("--contract-changes", action="store_true", help="Fetch minimized amendments for retained signed contracts; resumable")
+    parser.add_argument("--expansion-config", type=Path, help="Frozen cache-only expansion JSON; separate from the pilot")
+    parser.add_argument("--cache-dir", type=Path, help="Directory containing official response .meta.json/.gz pairs")
+    parser.add_argument("--output-dir", type=Path, help="Separate directory for expansion contracts.json and coverage.json")
     args = parser.parse_args()
+    if args.expansion_config:
+        if args.download or args.offline or args.contract_changes or not args.cache_dir or not args.output_dir:
+            parser.error("Expansion requires --cache-dir and --output-dir and cannot mix pilot actions")
+        expand_cached(args.expansion_config, args.cache_dir, args.output_dir)
+        sys.exit(0)
+    if args.cache_dir or args.output_dir:
+        parser.error("--cache-dir/--output-dir require --expansion-config")
     if args.download:
         download()
     if args.contract_changes:

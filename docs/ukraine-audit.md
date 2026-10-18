@@ -1,5 +1,7 @@
 # Prozorro cohort audit (bounded, no score changes)
 
+A separate [bounded cached expansion](ukraine-expansion.md) now provides 100 explicitly frozen tenders outside the pilot buyers (106 retained contracts). It does not change this pilot or resolve its discovery/completeness limitations.
+
 Reproduce with `python tools/audit-prozorro.py`; test with `python -m unittest tests/test_audit_prozorro.py`.
 
 `--live` checks seven deterministic sample tenders through at most seven official API GETs (four-second timeout each); `--write path.json` saves the report. `data/prozorro-audit.json` records timestamps, API/portal URLs and field matches or unavailability.

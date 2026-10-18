@@ -460,6 +460,35 @@ class PrivateWorkflowTests(unittest.TestCase):
                 self.assertFalse(self.candidate.exists())
                 self.assertFalse(self.outputs.exists())
 
+    def test_aggregate_audit_never_opens_archives_or_exposes_names(self):
+        manifest = self.extract()
+        for path in self.archives.iterdir():
+            path.unlink()
+        with mock.patch.object(base, 'archive_rows', side_effect=AssertionError('must not scan')), \
+             mock.patch.object(base.zipfile, 'ZipFile', side_effect=AssertionError('must not open ZIP')):
+            report = base.audit_candidate(self.candidate, self.plan_path, self.downloads_path)
+        self.assertEqual(report['candidateSha256'], manifest['candidateSha256'])
+        self.assertEqual(report['recordCount'], 1)
+        self.assertEqual(report['tedOverlap']['status'], 'unknown')
+        self.assertEqual(report['status'], 'private-candidate-audited-not-approved')
+        self.assertTrue(report['reviewRequired'])
+        self.assertEqual(report['textPatternMatches']['email'], 0)
+        self.assertNotIn('supplierNamesPublished', json.dumps(report))
+        self.assertNotIn('description', report)
+        self.assertFalse(self.outputs.exists())
+
+    def test_audit_rejects_tampering_and_public_permissions(self):
+        self.extract()
+        path = self.candidate / 'candidate.json'
+        original = path.read_bytes()
+        path.write_bytes(original + b' ')
+        with self.assertRaisesRegex(ValueError, 'fingerprint'):
+            base.audit_candidate(self.candidate, self.plan_path, self.downloads_path)
+        path.write_bytes(original)
+        path.chmod(0o644)
+        with self.assertRaisesRegex(ValueError, 'private regular'):
+            base.audit_candidate(self.candidate, self.plan_path, self.downloads_path)
+
     def test_publish_reviewed_does_not_open_archives(self):
         manifest = self.extract()
         for path in self.archives.iterdir():

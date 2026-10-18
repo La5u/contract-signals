@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "cohortId": "romania-seap-2025q1-candidate",
+  "status": "private-candidate-not-registered",
+  "method": "browse-only",
+  "input": {
+    "relativePath": "normalized/2025/Contracte-T1-2025.xlsx.jsonl.gz",
+    "sha256": "e849a63f2273502d7994052904cc45b8b406ee9ca9445ac0a653fde8d72235e1",
+    "compressedBytes": 2361773,
+    "decodedBytes": 61252068
+  },
+  "selection": {
+    "buyerIds": [
+      "4221306",
+      "4288110",
+      "4305857"
+    ],
+    "resource": "https://data.gov.ro/dataset/e0cf7ffc-1fa0-4ffb-a82f-c83981d81f21/resource/7344eeaf-c478-4f87-9669-c1bac3e521a8",
+    "basis": "All matching buyer identifiers in one cached Contracte T1 2025 export; not a contract-date or publication-date filter."
+  },
+  "counts": {
+    "inputRows": 124086,
+    "exactRepeatedSelectedRows": 0,
+    "selectedRows": 149
+  },
+  "byBuyer": {
+    "4221306": 109,
+    "4288110": 13,
+    "4305857": 27
+  },
+  "missingContractDates": 0,
+  "conclusionTypes": {
+    "Un contract de achizitii publice": 35,
+    "Incheierea unui acord-cadru": 114
+  },
+  "rights": {
+    "license": "CC-BY-4.0",
+    "attribution": "Autoritatea pentru Digitalizarea României, SEAP/SICAP via data.gov.ro; minimized and transformed by Contract Signals",
+    "evidence": "data/romania-seap-rights.json",
+    "privacyCleared": false
+  },
+  "overlap": {
+    "tedFile": "data/ted-romania.json",
+    "tedFileSha256": "66617c6e64cdf64de7dd238f3cfd405e708f47076fb48121d7bfe4a279785b8d",
+    "tedRows": 321,
+    "sameBuyerIds": [
+      "4221306",
+      "4288110",
+      "4305857"
+    ],
+    "confirmedRecordLinks": null,
+    "assessment": "Not joined: TED contractId is a local eForms CON-* reference, not the SEAP national contract number; native CAN/SCN identifiers are not retained in the TED normalized file. Same buyer or similar date/value/name does not establish overlap. Do not add totals or merge."
+  },
+  "limits": {
+    "maxInputRows": 200000,
+    "maxDecodedBytes": 100663296,
+    "maxOutputRows": 20000,
+    "networkRequests": 0
+  },
+  "blockers": [
+    "Supplier names and free-text locators need privacy/content review; supplier legal form unknown.",
+    "Export has no contract subject field: descriptions are explicitly generated locators.",
+    "Duplicate publication-date headers are ambiguous; no publication date adopted.",
+    "Framework, call-off and contract value semantics not validated; all amounts and scores withheld.",
+    "National identifiers must be recovered from bounded TED XML before exact overlap audit.",
+    "Existing normalized cache is not independently authenticated against the original export."
+  ],
+  "candidate": {
+    "relativePath": "candidates/romania-seap-2025q1.json",
+    "sha256": "3038685d7c1813d01064c878cd0bc89b06ab1f5ef3e7149549731dfe913b4928",
+    "bytes": 267985,
+    "dataStatus": "unverified"
+  }
+}

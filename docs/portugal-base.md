@@ -78,6 +78,10 @@ python tools/inspect-base-archives.py --write  # retain aggregate schema report 
 
 These inspection commands require no full-file scan/hash, whole extraction, cohort filtering, browser test or dataset rebuild. The private extraction was completed separately on 2026-10-01; any new heavy processing still requires authorization. No source inquiries were sent, and no BASE cohort is currently available in the explorer.
 
+## Existing plain-name candidate and bounded audit
+
+The existing 3,966-row plain-name candidate has now passed the bounded current-schema/fingerprint audit without archive reprocessing. It remains private, not registered or release-approved. Aggregate evidence, overlap/amount blockers, the `--audit-candidate` command and parent registry instructions are in [portugal-base-integration.md](portugal-base-integration.md). This does not supersede the rights/privacy limitations above.
+
 ## Implemented candidate importer
 
 ```sh

@@ -709,6 +709,58 @@ def validate_coverage(report, records, plan, provenance):
         fail('Archive/national reconciliation failed.')
 
 
+def audit_candidate(candidate_dir, plan_path=PLAN, downloads_path=DOWNLOADS):
+    """Bounded offline audit of existing minimized bytes; never publication approval.
+
+    No archive reads, name logging or writes. The returned aggregate manifest may
+    be retained publicly; the candidate itself still needs redistribution review.
+    """
+    directory = private_path(candidate_dir)
+    if not directory.is_dir() or directory.stat().st_mode & 0o077:
+        fail('Candidate directory must be private (mode 0700).')
+    blobs = {}
+    for name in ('candidate.json', 'coverage.json', 'manifest.json'):
+        path = directory / name
+        if path.is_symlink() or not path.is_file() or path.stat().st_mode & 0o077:
+            fail('Candidate documents must be private regular files.')
+        blobs[name] = bounded_read(path)
+    plan, provenance, fingerprints = read_inputs(plan_path, downloads_path)
+    manifest = decode_json(blobs['manifest.json'])
+    expected = {'schemaVersion': 1, 'status': 'candidate', **fingerprints,
+                'candidateSha256': sha256(blobs['candidate.json']),
+                'coverageSha256': sha256(blobs['coverage.json']), 'completeScan': True,
+                'reviewRequired': True, 'assessmentMode': 'browse', 'dataStatus': 'unverified'}
+    if manifest != expected:
+        fail('Candidate/provenance fingerprint mismatch.')
+    records = decode_json(blobs['candidate.json'])
+    coverage = decode_json(blobs['coverage.json'])
+    validate_candidate(records, plan)
+    validate_coverage(coverage, records, plan, provenance)
+    texts = [text for row in records for text in
+             [row['description'], *row['supplierNamesPublished']]]
+    return {
+        **expected, 'status': 'private-candidate-audited-not-approved',
+        'candidateBytes': len(blobs['candidate.json']), 'recordCount': len(records),
+        'scope': scope(plan), 'counts': coverage['counts'], 'perBuyer': coverage['perBuyer'],
+        'completeness': coverage['completeness'], 'normalizationErrors': coverage['normalizationErrors'],
+        'archives': coverage['archives'],
+        'supplierEntries': sum(len(row['supplierNamesPublished']) for row in records),
+        'individualFlaggedEntries': sum(sum(row.get('supplierIndividual', [])) for row in records),
+        'textPatternMatches': {
+            'email': sum(bool(EMAIL.search(text)) for text in texts),
+            'nineDigitIdentifier': sum(bool(re.search(r'(?<![0-9])[0-9]{9}(?![0-9])', text)) for text in texts),
+            'portugueseIban': sum(bool(re.search(r'PT\\s*50(?:\\s*\\d){21}', text, re.I)) for text in texts),
+        },
+        'amountReview': 'precoContratual declarations only; currency and framework/lot basis unresolved. Do not sum, score, or compare with effective totals.',
+        'tedOverlap': {'status': 'unknown', 'reason': 'Shared buyer/date cohort, but BASE process and announcement IDs were minimized away. TED CON identifiers are notice-local, not BASE contract IDs. No safe exact join established; never add cohort counts as distinct contracts.'},
+        'rightsEvidence': 'data/portugal-base-rights.json',
+        'releaseBlockers': ['Candidate-level incidental-content review and explicit redistribution confirmation remain required.',
+                            'other-pd is a publisher public-domain category, not CC0 or privacy clearance.',
+                            'Unknown buyer parsing and normalization omissions prevent a completeness claim.'],
+        'notes': 'Aggregate integrity/schema/pattern audit only; no independent factual verification, exhaustive privacy review or legal clearance. Existing private extraction reused; no national scan or network.'
+    }
+
+
 def publish_reviewed(candidate_dir, reviewer, candidate_sha256, plan_path=PLAN,
                      downloads_path=DOWNLOADS, output_dir=None):
     """No archive IO. Fingerprints bind review to the exact private candidate bytes."""
@@ -781,6 +833,8 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument('--extract', action='store_true')
+    mode.add_argument('--audit-candidate', action='store_true',
+                      help='Validate an existing private candidate and print aggregate audit JSON; no archive reads or publication.')
     mode.add_argument('--publish-reviewed', action='store_true')
     parser.add_argument('--candidate-dir', type=Path, default=CACHE / 'base-candidate')
     parser.add_argument('--archive-dir', type=Path, default=CACHE / 'base-archives')
@@ -791,6 +845,8 @@ def main(argv=None):
         if args.extract:
             manifest = extract(args.candidate_dir, args.archive_dir)
             print(f"Private candidate complete; SHA-256 {manifest['candidateSha256']}. No publication or UI changes.")
+        elif args.audit_candidate:
+            print(json.dumps(audit_candidate(args.candidate_dir), ensure_ascii=False, indent=2))
         elif args.publish_reviewed:
             publish_reviewed(args.candidate_dir, args.reviewer, args.candidate_sha256)
             print('Reviewed candidate published in browse/unverified mode; UI unchanged.')

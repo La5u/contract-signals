@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "mode": "offline-cache-audit",
+  "networkRequests": 0,
+  "ukraine": {
+    "candidateSha256": "2bd416d92d22e64d067a7b1bb44c9d734cc89d51787073661dba0ec106dec431",
+    "pilotSha256": "d3c6ca4154cc2158da1dab332cf1dc6edf67e384b0c3deafab29e6b7a010960c",
+    "replayByteIdentical": {
+      "contracts.json": true,
+      "coverage.json": true
+    },
+    "selectedTenders": 100,
+    "retainedRows": 106,
+    "retainedBuyers": 96,
+    "buyersWithOneRetainedRow": 91,
+    "overlapWithPilot": {
+      "id": 0,
+      "procedureId": 0,
+      "contractInternalId": 0,
+      "buyerId": 0
+    },
+    "missingOffers": 22,
+    "missingContractChanges": 106,
+    "sourceRetrievalRange": [
+      "2026-10-04T08:54:35+00:00",
+      "2026-10-04T11:57:48+00:00"
+    ],
+    "selectionBias": "Audit/label-research cache convenience sample; hash selection does not remove inherited bias. Not complete buyer histories.",
+    "recommendation": "Do not register as a general second Ukrainian dataset. Keep as a separately labelled research extract; use systematic discovery for real coverage expansion."
+  },
+  "romania": {
+    "candidateSha256": "3038685d7c1813d01064c878cd0bc89b06ab1f5ef3e7149549731dfe913b4928",
+    "inputSha256": "e849a63f2273502d7994052904cc45b8b406ee9ca9445ac0a653fde8d72235e1",
+    "tedSnapshotSha256": "66617c6e64cdf64de7dd238f3cfd405e708f47076fb48121d7bfe4a279785b8d",
+    "replayRecordsIdentical": true,
+    "candidateHashAndBytesMatch": true,
+    "retainedRows": 149,
+    "retainedBuyers": 3,
+    "contractDateRange": [
+      "2020-12-31",
+      "2025-03-27"
+    ],
+    "contractDatesOutsideQ12025": 99,
+    "generatedDescriptions": 149,
+    "frameworkLabelRows": 114,
+    "knownAmounts": 0,
+    "retainedSupplierIds": 0,
+    "unknownSupplierLegalForm": 149,
+    "overlap": {
+      "cachedNoticesInspected": 162,
+      "decodedXmlBytes": 5694112,
+      "xmlInventorySha256": "b6f0400a86843c6529effb45870c976dda102e7869607cdee73019610e122ab0",
+      "recoveredTedContractReferences": 321,
+      "seapRowsWithBuyerReferenceDateCandidate": 38,
+      "tedRowsWithBuyerReferenceDateCandidate": 35,
+      "sharedBuyerReferenceDateKeys": 26,
+      "duplicateSeapBuyerReferenceDateKeys": 11,
+      "confirmedContractLinks": null,
+      "method": "Exact buyer ID + whitespace/case-normalized native contract reference + exact contract date. Punctuation and leading zeros retained. Candidate links only: lot, supplier and framework/call-off identity not adjudicated.",
+      "nonMatchesAreNotProvenAdditionalContracts": true
+    },
+    "privacyCleared": false,
+    "recommendation": "Do not register this candidate yet. A separate SEAP source is worthwhile in principle, but resolve overlap/granularity and review public fields first. Never inherit TED scoring or sum framework values."
+  }
+}

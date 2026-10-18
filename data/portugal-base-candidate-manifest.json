@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "status": "private-candidate-audited-not-approved",
+  "planSha256": "91b4aeafbd91c09fc4bf0f6ae0e2bed34945fb58ccb0b1aeeec92caaab6d572c",
+  "downloadsSha256": "434c1e1f4f6d85499cc79503656bb043af154d549d30962c7beb652f78cee451",
+  "candidateSha256": "4bfb01bd3cf7ad56eeb4fff1dd1c39c8785e8149bf714226581b3baf228d7d2a",
+  "coverageSha256": "48f8167c0efc9d538163ec65a4a5c17d6db5cc3e1e52e0e8ec27b0404287b7d5",
+  "completeScan": true,
+  "reviewRequired": true,
+  "assessmentMode": "browse",
+  "dataStatus": "unverified",
+  "candidateBytes": 9957755,
+  "recordCount": 3966,
+  "scope": {
+    "buyerIds": [
+      "503933813",
+      "508779472",
+      "500051070"
+    ],
+    "startInclusive": "2024-09-01",
+    "endExclusive": "2026-09-01",
+    "dateField": "dataPublicacao"
+  },
+  "counts": {
+    "buyerParseErrorRows": 277,
+    "conflictingRows": 0,
+    "duplicateIdenticalRows": 17,
+    "extractedRows": 3966,
+    "inWindowRows": 3986,
+    "invalidPublicationDateRows": 0,
+    "matchingBuyerRows": 5296,
+    "nationalRows": 655235,
+    "nonMatchingBuyerRows": 649666,
+    "normalizedRows": 3983,
+    "outsideWindowRows": 1310,
+    "rejectedNormalizationRows": 3,
+    "unknownBuyerRows": 273
+  },
+  "perBuyer": {
+    "500051070": {
+      "conflictingRows": 0,
+      "duplicateIdenticalRows": 16,
+      "extractedRows": 2351,
+      "inWindowRows": 2369,
+      "invalidPublicationDateRows": 0,
+      "matchingBuyerRows": 3088,
+      "normalizedRows": 2367,
+      "outsideWindowRows": 719,
+      "rejectedNormalizationRows": 2
+    },
+    "503933813": {
+      "conflictingRows": 0,
+      "duplicateIdenticalRows": 1,
+      "extractedRows": 1515,
+      "inWindowRows": 1517,
+      "invalidPublicationDateRows": 0,
+      "matchingBuyerRows": 2073,
+      "normalizedRows": 1516,
+      "outsideWindowRows": 556,
+      "rejectedNormalizationRows": 1
+    },
+    "508779472": {
+      "conflictingRows": 0,
+      "duplicateIdenticalRows": 0,
+      "extractedRows": 100,
+      "inWindowRows": 100,
+      "invalidPublicationDateRows": 0,
+      "matchingBuyerRows": 135,
+      "normalizedRows": 100,
+      "outsideWindowRows": 35,
+      "rejectedNormalizationRows": 0
+    }
+  },
+  "completeness": "unknown",
+  "normalizationErrors": {
+    "subject": 2,
+    "supplier-shape": 1
+  },
+  "archives": [
+    {
+      "bytes": 44570348,
+      "scannedRows": 227262,
+      "sha256": "3ff29bae0776bbefebddc72f9d21411a195dea0b36dc2fc0609ce0f340b8f586",
+      "year": 2024
+    },
+    {
+      "bytes": 55274614,
+      "scannedRows": 247587,
+      "sha256": "4e7aa3419c02a0e20a1f416744bbc1a4703480ba5b9c46d605ea85103bdc9b06",
+      "year": 2025
+    },
+    {
+      "bytes": 42232603,
+      "scannedRows": 180386,
+      "sha256": "e3c73d15cd15f56bfbb0fa27b6256520249a59ab2849d54def71b1c3e9d1f073",
+      "year": 2026
+    }
+  ],
+  "supplierEntries": 4077,
+  "individualFlaggedEntries": 615,
+  "textPatternMatches": {
+    "email": 0,
+    "nineDigitIdentifier": 0,
+    "portugueseIban": 0
+  },
+  "amountReview": "precoContratual declarations only; currency and framework/lot basis unresolved. Do not sum, score, or compare with effective totals.",
+  "tedOverlap": {
+    "status": "unknown",
+    "reason": "Shared buyer/date cohort, but BASE process and announcement IDs were minimized away. TED CON identifiers are notice-local, not BASE contract IDs. No safe exact join established; never add cohort counts as distinct contracts."
+  },
+  "rightsEvidence": "data/portugal-base-rights.json",
+  "releaseBlockers": [
+    "Candidate-level incidental-content review and explicit redistribution confirmation remain required.",
+    "other-pd is a publisher public-domain category, not CC0 or privacy clearance.",
+    "Unknown buyer parsing and normalization omissions prevent a completeness claim."
+  ],
+  "notes": "Aggregate integrity/schema/pattern audit only; no independent factual verification, exhaustive privacy review or legal clearance. Existing private extraction reused; no national scan or network."
+}

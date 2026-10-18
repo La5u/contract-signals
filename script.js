@@ -855,6 +855,9 @@ const UA_DIRECT_CONTRACT_MIN = 200000;
 // covers completely; the bundled cohort runs 2024-09-01 → 2026-09-01, so only 2025 is complete.
 const UA_BUYER_SHARE = 0.05;
 const UA_COMPLETE_YEARS = { 'prozorro-3buyers-2024-2026': new Set(['2025']) };
+// Random samples of tenders, not every tender of a buyer: repetition, concentration and buyer share are not assessable.
+const UA_SAMPLE_COHORTS = new Set(['prozorro-abovethreshold-2026-06-08']);
+const UA_SAMPLE_REASON = 'Random sample of tenders, not every tender of this buyer: not assessable.';
 const UA_TERM_EXTENSION_TYPES = ['durationExtension', 'fiscalYearExtension'];
 const NATIONAL_FAMILIES = {
   // Ukraine v3.5: points from court verdicts and bid-rigging decisions (docs/score-ukraine.md). Other
@@ -921,13 +924,13 @@ function getAssessmentNational(c) {
   }
   const rs = c.nationalRepeatedSingle;
   add(`${p}-repeated-single-offer`, 'Repeated single-offer awards to the same supplier', 'competition', nationalSingle(c) ? 'yes' : competitive && nationalOffersKnown(c) || direct ? 'no' : unknownKind, Boolean(rs), rs?.count >= 3,
-    graduated(rs?.count || 0, 3, 10, 12, EDITORIAL_MAX), !nationalSingle(c) ? 'Not a single-offer competitive award: outside the repetition scope.' : rs ? `Same buyer and supplier ${supplier}: ${rs.count} distinct procedure(s) in this cohort won with a single offer. From 12 points at 3, linear to 30 at 10.` : 'Supplier identifier not usable (not a national registration number): repetition not assessable.');
+    graduated(rs?.count || 0, 3, 10, 12, EDITORIAL_MAX), !nationalSingle(c) ? 'Not a single-offer competitive award: outside the repetition scope.' : UA_SAMPLE_COHORTS.has(c.cohortId) ? UA_SAMPLE_REASON : rs ? `Same buyer and supplier ${supplier}: ${rs.count} distinct procedure(s) in this cohort won with a single offer. From 12 points at 3, linear to 30 at 10.` : 'Supplier identifier not usable (not a national registration number): repetition not assessable.');
   const rd = c.nationalRepeatedDirect;
   add(`${p}-repeated-direct`, 'Repeated awards without competition to the same supplier', 'competition', spec.directOutOfScope ? 'no' : direct ? 'yes' : c.procedureDirect == null ? unknownKind : 'no', Boolean(rd), rd?.count >= 3,
-    countryPoints ? countryPoints.repeatedDirect : graduated(rd?.count || 0, 3, 10, 18, EDITORIAL_MAX), spec.directOutOfScope ? spec.directOutOfScope : !direct ? 'Not an award without competition: outside the repetition scope.' : rd ? `Same buyer and supplier ${supplier}: ${rd.count} distinct procedure(s) without competition in this cohort. ${countryPoints ? `${countryPoints.repeatedDirect} point from 3, lowered from 18–60: in ${countryPoints.source} repeated awards without competition were rarer than among the same buyers' other contracts.` : 'From 18 points at 3, linear to 30 at 10.'} Lawful grounds may apply to each.` : 'Supplier identifier not usable: repetition not assessable.');
+    countryPoints ? countryPoints.repeatedDirect : graduated(rd?.count || 0, 3, 10, 18, EDITORIAL_MAX), spec.directOutOfScope ? spec.directOutOfScope : !direct ? 'Not an award without competition: outside the repetition scope.' : UA_SAMPLE_COHORTS.has(c.cohortId) ? UA_SAMPLE_REASON : rd ? `Same buyer and supplier ${supplier}: ${rd.count} distinct procedure(s) without competition in this cohort. ${countryPoints ? `${countryPoints.repeatedDirect} point from 3, lowered from 18–60: in ${countryPoints.source} repeated awards without competition were rarer than among the same buyers' other contracts.` : 'From 18 points at 3, linear to 30 at 10.'} Lawful grounds may apply to each.` : 'Supplier identifier not usable: repetition not assessable.');
   const k = c.nationalConcentration;
   add(`${p}-concentration`, 'Concentrated awards within a category', 'competition', supplier ? 'yes' : 'unknown', Boolean(k?.sufficient), k?.share >= 0.6,
-    countryPoints ? countryPoints.concentration : graduated(k?.share || 0, 0.6, 1, 12, EDITORIAL_MAX), k ? `Same buyer and category ${k.category}: ${k.wins}/${k.known} procedures won by this supplier, out of ${k.total} (${Math.round(k.coverage * 100)} % with an identified winner; lots of one procedure count once). Minimum 10 and 80 %; ${countryPoints ? `${countryPoints.concentration} point from 60 %, lowered from 12–40: in ${countryPoints.source} concentration was barely more frequent than among the same buyers' other contracts.` : 'from 12 points at 60 % to 30 at 100 %.'} ${k.sufficient ? '' : 'Insufficient sample or coverage: not assessed.'}` : 'Supplier identity or category unknown: applicability not established.');
+    countryPoints ? countryPoints.concentration : graduated(k?.share || 0, 0.6, 1, 12, EDITORIAL_MAX), supplier && UA_SAMPLE_COHORTS.has(c.cohortId) ? UA_SAMPLE_REASON : k ? `Same buyer and category ${k.category}: ${k.wins}/${k.known} procedures won by this supplier, out of ${k.total} (${Math.round(k.coverage * 100)} % with an identified winner; lots of one procedure count once). Minimum 10 and 80 %; ${countryPoints ? `${countryPoints.concentration} point from 60 %, lowered from 12–40: in ${countryPoints.source} concentration was barely more frequent than among the same buyers' other contracts.` : 'from 12 points at 60 % to 30 at 100 %.'} ${k.sufficient ? '' : 'Insufficient sample or coverage: not assessed.'}` : 'Supplier identity or category unknown: applicability not established.');
   add('amount-increase', 'Relative increase in declared amount', 'execution', 'no', false, false, null, spec.outOfScope.increase);
   if (c.dataFamily === 'prozorro') {
     // Prozorro creates awards in ranking order: an unsuccessful award before the
@@ -945,7 +948,7 @@ function getAssessmentNational(c) {
       'No active amendment extends the contract term.');
     const bs = c.uaBuyerShare;
     add('ua-buyer-share', 'Large share of the buyer’s yearly procurement', 'competition', 'yes', Boolean(bs?.complete && bs.share != null), bs?.share >= UA_BUYER_SHARE, UA_POINTS.buyerShare,
-      !bs ? 'Buyer share not computed.' :
+      !bs ? 'Buyer share not computed.' : UA_SAMPLE_COHORTS.has(c.cohortId) ? UA_SAMPLE_REASON :
       !bs.complete ? `This cohort does not cover the buyer’s whole year ${bs.year || '(unknown)'}: share not assessable.` :
       bs.share == null ? 'Amount not in UAH: not compared with the buyer’s UAH total (no currency conversion).' :
       `${(bs.share * 100).toFixed(1)} % of this buyer’s UAH contract total for ${bs.year} (${Math.round(bs.total).toLocaleString('en')} UAH, contracts of tenders created that year). ` +
@@ -1263,7 +1266,7 @@ function prepareContracts(data) {
       const id = nationalSupplierIdentity(c);
       if (id == null) continue;
       c.nationalConcentration = { category: NATIONAL_FAMILIES[c.dataFamily].category(c), total: all.size, known: known.size,
-        wins: wins.get(id).size, share: wins.get(id).size / known.size, coverage, sufficient: known.size >= 10 && coverage >= 0.8 };
+        wins: wins.get(id).size, share: wins.get(id).size / known.size, coverage, sufficient: known.size >= 10 && coverage >= 0.8 && !UA_SAMPLE_COHORTS.has(c.cohortId) };
     }
   }
   // Ukraine: each contract's share of its buyer's UAH contract total for the tender's creation year.
@@ -1279,7 +1282,7 @@ function prepareContracts(data) {
     c.uaBuyerShare = { year, complete, total, share: c.currency === 'UAH' && Number.isFinite(c.amount) && total > 0 ? c.amount / total : null };
   }
   for (const c of contracts) {
-    if (!NATIONAL_FAMILIES[c.dataFamily] || !nationalSupplierIdentity(c)) continue;
+    if (!NATIONAL_FAMILIES[c.dataFamily] || !nationalSupplierIdentity(c) || UA_SAMPLE_COHORTS.has(c.cohortId)) continue;
     const pair = `${c.dataFamily}|${c.buyerId || c.buyer}|${nationalSupplierIdentity(c)}`;
     if (nationalSingle(c)) c.nationalRepeatedSingle = { count: natRep.single.get(pair).size };
     if (c.procedureDirect === true) c.nationalRepeatedDirect = { count: natRep.direct.get(pair).size };
@@ -1294,6 +1297,10 @@ function prepareContracts(data) {
 }
 
 function groupInfo(contract, mode) {
+  if (contract.collectionId && mode) {
+    const info = groupInfo({ ...contract, collectionId: null }, mode);
+    return { key: `${contract.collectionId}::${info.key}`, label: `${contract.collectionLabel} · ${info.label}` };
+  }
   if (mode === 'sector') { const sector = getSector(contract); return { key: `sector:${sector.code}`, label: `${sector.code === 'unknown' ? '' : sector.code + ' · '}${sector.label}` }; }
   if (mode === 'buyer') return { key: `buyer:${contract.buyerSiret || normalize(contract.buyer)}`, label: contract.buyer + (contract.buyerSiret ? ` · ${contract.buyerSiret}` : ' · matched by name, to be verified') };
   if (mode === 'supplier') {
@@ -1510,7 +1517,10 @@ function searchText(c) {
 // The source's own declaration of an award without competition: DECP/BOAMP directAward,
 // TED and Find a Tender procedureDirect (a direct award or negotiated procedure without prior publication).
 function declaredWithoutCompetition(c) { return c.directAward === true || c.procedureDirect === true; }
-function selectContracts(contracts, { search = '', minimum = 0, minScore = 0, flagged = false, official = false, adjudicated = false, investigation = false, indicator = '', legal = '', noticeContext = '', assessment = '', sector = '', project = '', verification = '', sort = 'score' } = {}) {
+function recordCountry(c) {
+  return c.country || ({ decp: 'FRA', boamp: 'FRA', secop2: 'COL', dncp: 'PRY', prozorro: 'UKR', koneps: 'KOR', chile: 'CHL', uk: 'GBR' }[c.dataFamily]) || '';
+}
+function selectContracts(contracts, { country = '', dateFrom = '', dateTo = '', buyer = '', supplier = '', procedure = '', search = '', minimum = 0, minScore = 0, flagged = false, official = false, adjudicated = false, investigation = false, indicator = '', legal = '', noticeContext = '', assessment = '', sector = '', project = '', verification = '', sort = 'score' } = {}) {
   const terms = normalize(search).trim().split(/\s+/).filter(Boolean);
   // Per-render caches only: no stale scores when data or cohort context changes.
   const scores = new Map();
@@ -1532,6 +1542,13 @@ function selectContracts(contracts, { search = '', minimum = 0, minScore = 0, fl
   };
   const filtered = contracts.filter(c => {
     const evidence = c.noticeEvidence;
+    if (country && recordCountry(c) !== country) return false;
+    const day = typeof c.date === 'string' ? c.date.slice(0, 10) : '';
+    if ((dateFrom || dateTo) && !/^\d{4}-\d{2}-\d{2}$/.test(day)) return false;
+    if ((dateFrom && day < dateFrom) || (dateTo && day > dateTo)) return false;
+    if (buyer && !normalize(`${c.buyer || ''} ${c.buyerId || ''}`).includes(normalize(buyer))) return false;
+    if (supplier && !normalize(`${c.supplier || ''} ${(c.supplierNamesPublished || []).join(' ')}`).includes(normalize(supplier))) return false;
+    if (procedure && !normalize(c.procedure || '').includes(normalize(procedure))) return false;
     if (verification && c.verification?.status !== verification) return false;
     const noticeMatch = !noticeContext || Boolean(evidence && (noticeContext === 'criteria' ? evidence.awardCriteria.length : noticeContext === 'explanation' ? evidence.procedureDescription || evidence.justifications.some(j => j.text) : noticeContext === 'correction' ? evidence.kind === 'correction' : noticeContext === 'ted' ? evidence.ted.length : false));
     const citations = legal && !['py-complaint', 'co-public', 'fr-software', 'direct'].includes(legal) ? getLegalContext(c) : [];
@@ -1593,7 +1610,7 @@ function pageSummaryForCopy(rows, { dataset, page, totalPages, totalResults }) {
 
 // Shareable view state lives in the URL fragment (#…), which browsers never send to the server.
 // [fragment key, control id, default value]
-const VIEW_FIELDS = [['q', 'search', ''], ['sort', 'sort', 'score'], ['min', 'minimum', ''], ['sector', 'sector', ''], ['group', 'group-by', ''],
+const VIEW_FIELDS = [['country', 'filter-country', ''], ['from', 'date-from', ''], ['to', 'date-to', ''], ['buyer', 'filter-buyer', ''], ['supplier', 'filter-supplier', ''], ['procedure', 'filter-procedure', ''], ['q', 'search', ''], ['sort', 'sort', 'score'], ['min', 'minimum', ''], ['sector', 'sector', ''], ['group', 'group-by', ''],
   ['project', 'project', ''], ['assessment', 'assessment', ''], ['index', 'min-score', '0'], ['indicator', 'indicator', ''],
   ['notice', 'notice-context', ''], ['legal', 'legal', ''], ['verif', 'verification', ''], ['open', 'open-record', ''], ['buyer', 'korea-buyer', '']];
 const VIEW_FLAGS = ['flagged', 'official', 'adjudicated', 'investigation'];
@@ -1619,10 +1636,10 @@ const KOREA_BASE = globalThis.location && /^(127\.0\.0\.1|localhost)$/.test(glob
 // (tools/build-korea-site.py; never in the repository). A shard holds several buyers' rows as arrays;
 // this turns one buyer's rows into explorer records. Individual businesses keep their published trade
 // name, flagged; their registration number is not in the files (docs/personal-data.md).
-function koreaRecords(meta, shard, buyer) {
+function koreaRecords(meta, shard, buyer, rows = shard.buyers[buyer[0]] || []) {
   const [code, buyerName] = buyer;
   const col = Object.fromEntries(meta.columns.map((k, i) => [k, i]));
-  return (shard.buyers[code] || []).map(r => {
+  return rows.map(r => {
     const g = k => r[col[k]] ?? null;
     const kind = meta.supplierKinds[g('supplierKind')] || 'unknown';
     const supplier = g('supplier');
@@ -1642,13 +1659,104 @@ function koreaRecords(meta, shard, buyer) {
       supplier: supplier || null, supplierNamesPublished: supplier ? [supplier] : [], supplierIndividual: supplier ? [kind === 'individual'] : [],
       supplierIds: g('supplierBizrno') ? [{ id: g('supplierBizrno'), identifierType: 'KR-BRN' }] : [],
       procedure: [method, type].filter(Boolean).join(' · ') || null, contractId: g('contractNo'), noticeId: g('noticeNo'),
-      date: g('date'), dateNote: g('dateIsFirstChange') ? 'Signed before September 2024: this is the date of its first change in the period.' : 'Contract date (계약체결일자).',
+      date: g('date'), dateNote: g('dateIsFirstChange') ? `Signed before ${meta.period?.[0] || 'the period'}: this is the date of its first change in the period.` : 'Contract date (계약체결일자).',
       amount: typeof latest === 'number' ? latest : null, currency: 'KRW',
       amountBasis: original != null && original !== latest ? `Contract amount of the latest version in the period; the original contract was ${original} KRW (${versions} versions).` : 'Contract amount (계약금액) of the latest version in the period.',
       notes: notes || null, source, sourceLabel: 'KONEPS (나라장터) contract page',
     };
   });
 }
+// A page is a bounded window in published shard/buyer/row order, NOT a global sort.
+// Later pages rescan from the start: no growing cursor history or retained shard cache.
+// A buyer too big for one file lists its shards (oldest contracts first) in a sixth entry.
+const koreaParts = buyer => Array.isArray(buyer[5]) ? buyer[5] : [buyer[4]];
+async function scanKoreaPage({ meta, buyers, fetchShard, predicate, offset = 0, limit = 50,
+  signal, progress = () => {}, yieldTask = () => new Promise(resolve => setTimeout(resolve, 0)) }) {
+  limit = Math.max(1, Math.min(200, Math.floor(limit) || 50));
+  offset = Math.max(0, Math.floor(offset) || 0);
+  const check = () => { if (signal?.aborted) { const e = new Error('Scan cancelled'); e.name = 'AbortError'; throw e; } };
+  const groups = new Map();
+  for (const b of buyers) for (const n of koreaParts(b)) {
+    if (!groups.has(n)) groups.set(n, []);
+    groups.get(n).push(b);
+  }
+  const rows = [];
+  let examined = 0, matches = 0, shards = 0;
+  for (const n of [...groups.keys()].sort((a, b) => a - b)) {
+    check();
+    const shard = await fetchShard(n, signal);
+    check();
+    for (const buyer of groups.get(n)) {
+      const raw = shard.buyers?.[buyer[0]];
+      if (!Array.isArray(raw) || (!buyer[5] && raw.length !== buyer[3])) throw new Error(`Incomplete shard ${n} for buyer ${buyer[0]}; retry after publication completes.`);
+      for (let i = 0; i < raw.length; i += 256) {
+        check();
+        const batch = prepareContracts(koreaRecords(meta, shard, buyer, raw.slice(i, i + 256)));
+        for (const c of batch) {
+          examined++;
+          if (!predicate(c)) continue;
+          matches++;
+          if (matches <= offset) continue;
+          if (rows.length === limit) return { rows, examined, matches, shards, hasMore: true, complete: false };
+          rows.push(c);
+        }
+        progress({ examined, matches, shards, retained: rows.length });
+        await yieldTask();
+        check();
+      }
+    }
+    shards++;
+  }
+  return { rows, examined, matches, shards, hasMore: false, complete: true };
+}
+
+// Bounded published-order union. Assess each ordinary collection in isolation.
+async function scanPublishedPage({ collections, loadCollection, korea, predicate, offset = 0, limit = 50,
+  signal, progress = () => {}, yieldTask = () => new Promise(resolve => setTimeout(resolve, 0)) }) {
+  limit = Math.max(1, Math.min(200, Math.floor(limit) || 50));
+  offset = Math.max(0, Math.floor(offset) || 0);
+  const rows = [];
+  let examined = 0, matches = 0;
+  const check = () => { if (signal?.aborted) { const e = new Error('Scan cancelled'); e.name = 'AbortError'; throw e; } };
+  const context = (c, key, label) => {
+    getAssessment(c); // Freeze source assessment before namespacing the display identifier.
+    c.collectionId = key; c.collectionLabel = label; c.originalId = c.id;
+    c.id = `${key}::${c.id}`;
+    return c;
+  };
+  for (const { key, label } of collections) {
+    check();
+    const records = prepareContracts(await loadCollection(key, signal));
+    check();
+    for (let i = 0; i < records.length; i++) {
+      const c = context(records[i], key, label);
+      examined++;
+      if (predicate(c)) {
+        matches++;
+        if (matches > offset) {
+          if (rows.length === limit) return { rows, examined, matches, hasMore: true, complete: false };
+          rows.push(c);
+        }
+      }
+      if (i % 256 === 255) {
+        progress({ examined, matches, retained: rows.length });
+        await yieldTask(); check();
+      }
+    }
+    progress({ examined, matches, retained: rows.length });
+    await yieldTask(); check();
+  }
+  const result = await scanKoreaPage({ ...await korea(signal), signal,
+    offset: Math.max(0, offset - matches), limit: Math.max(1, limit - rows.length),
+    predicate: c => predicate(context(c, 'korea', 'South Korea · KONEPS')),
+    progress: p => progress({ examined: examined + p.examined, matches: matches + p.matches,
+      retained: Math.min(limit, rows.length + p.retained) }), yieldTask });
+  const hasMore = rows.length === limit ? result.matches > 0 : result.hasMore;
+  if (rows.length < limit) rows.push(...result.rows);
+  return { rows, examined: examined + result.examined, matches: matches + result.matches,
+    hasMore, complete: !hasMore && result.complete };
+}
+
 function hashToViewState(hash) {
   const params = new URLSearchParams(String(hash || '').replace(/^#/, ''));
   const requested = params.get('dataset') || '';
@@ -1719,12 +1827,13 @@ function buildProfile(contracts, role, key) {
 
 // Export the whole filtered view as flat records. Unknown stays empty, never zero.
 const EXPORT_CAVEAT = 'Published declarations and heuristic signals only. A flag is not proof of wrongdoing; zero or no label is not clearance. Declared amounts are not audited payments; never sum amounts across datasets or currencies. Current supplier names are a register snapshot, not historical names.';
-const EXPORT_COLUMNS = ['id', 'date', 'buyer', 'buyerId', 'supplier', 'supplierCurrentName', 'supplierIds', 'description', 'cpv', 'sector', 'procedure',
+const EXPORT_COLUMNS = ['collectionId', 'collectionLabel', 'originalId', 'id', 'date', 'buyer', 'buyerId', 'supplier', 'supplierCurrentName', 'supplierIds', 'description', 'cpv', 'sector', 'procedure',
   'amount', 'amountLow', 'amountHigh', 'amountVerification', 'currency', 'offers', 'durationMonths', 'index', 'indexStatus', 'signals', 'signalPoints', 'context', 'officialFinding', 'investigationReported', 'dataStatus', 'source', 'verifyUrls'];
 
 function exportRecord(c) {
   const score = getVigilanceScore(c);
   return {
+    collectionId: c.collectionId ?? null, collectionLabel: c.collectionLabel ?? null, originalId: c.originalId ?? c.id,
     id: c.id, date: c.date ?? null, buyer: c.buyer, buyerId: c.buyerSiret || c.buyerNit || c.buyerId || null, supplier: exportSupplier(c),
     supplierCurrentName: supplierNames(c).join('; ') || null,
     supplierIds: (c.supplierIds || []).map(s => `${s.identifierType || 'identifier'} ${s.id}`).join('; ') || null,
@@ -1980,13 +2089,59 @@ function publicLinkEvidenceLabel(p) {
     'Disfavored notice-lot mapping; not proof of a different legal contract.';
 }
 
+// Keep dataset IDs as the unit of loading and URL state. Country is only navigation:
+// no combined country dataset, and no extra country parameter in shared links.
+function setupDatasetSelection(countrySelect, datasetSelect, onChange) {
+  const options = [...datasetSelect.options];
+  const remembered = new Map();
+  const countries = [...new Set(options.map(option => option.dataset.country))];
+  for (const country of countries) {
+    const option = countrySelect.ownerDocument.createElement('option');
+    option.value = country;
+    const flag = options.find(item => item.dataset.country === country).textContent.match(/[\u{1F1E6}-\u{1F1FF}]{2}/u)?.[0];
+    option.textContent = `${flag ? flag + ' ' : ''}${country}`;
+    countrySelect.append(option);
+  }
+  function sync() {
+    const selected = options.find(option => option.value === datasetSelect.value);
+    if (!selected) return;
+    const country = selected.dataset.country;
+    countrySelect.value = country;
+    remembered.set(country, selected.value);
+    // Reuse the option nodes: preserve their IDs, metadata and translated text.
+    datasetSelect.replaceChildren(...options.filter(option => option.dataset.country === country));
+    datasetSelect.value = selected.value;
+  }
+  countrySelect.addEventListener('change', () => {
+    const country = countrySelect.value;
+    const candidates = options.filter(option => option.dataset.country === country);
+    datasetSelect.replaceChildren(...candidates);
+    datasetSelect.value = remembered.get(country) || candidates[0].value;
+    sync();
+    onChange();
+  });
+  datasetSelect.addEventListener('change', () => { sync(); onChange(); });
+  // Deep links can select an option which is currently detached from the menu.
+  function selectDataset(id) {
+    const option = options.find(option => option.value === id);
+    if (!option) return false;
+    datasetSelect.replaceChildren(...options.filter(item => item.dataset.country === option.dataset.country));
+    datasetSelect.value = id;
+    sync();
+    return true;
+  }
+  sync();
+  return { sync, selectDataset };
+}
+
 function startExplorer() {
   const body = document.querySelector('#contracts');
   const status = document.querySelector('#status');
   const fileHelp = document.querySelector('#file-help');
-  const controls = Object.fromEntries(['search', 'minimum', 'flagged', 'official', 'adjudicated', 'investigation', 'indicator', 'legal', 'notice-context', 'assessment', 'sort', 'sector', 'project', 'group-by', 'min-score', 'review', 'verification'].map(id => [id, document.getElementById(id)]));
+  const controls = Object.fromEntries(['filter-country', 'date-from', 'date-to', 'filter-buyer', 'filter-supplier', 'filter-procedure', 'search', 'minimum', 'flagged', 'official', 'adjudicated', 'investigation', 'indicator', 'legal', 'notice-context', 'assessment', 'sort', 'sector', 'project', 'group-by', 'min-score', 'review', 'verification'].map(id => [id, document.getElementById(id)]));
   const datasetSelect = document.querySelector('#dataset');
   const datasets = {
+    global: { remote: 'global', note: 'All published collections, not unique contracts: overlapping representations are retained. Source-specific assessments are not comparable risk rankings. No combined currency totals. Unknown is not zero. Minimum amount uses native currency, not conversion. Only one bounded scan page is retained.', sources: { publisher: 'Existing published registry collections (including KONEPS)', links: [], licence: 'Each collection retains its own source and licence; select that collection for publication details.' } },
     tours: { path: 'data/tours-notices.json', coverage: 'data/tours-notices-coverage.json', sources: { publisher: 'DILA — BOAMP; Publications Office of the EU — TED', links: [['BOAMP search', 'https://www.boamp.fr/'], ['BOAMP API used', 'https://www.boamp.fr/api/explore/v2.1/catalog/datasets/boamp/records'], ['TED search', 'https://ted.europa.eu/']], licence: 'BOAMP: Licence Ouverte 2.0 (DILA legal notice and data.gouv.fr); TED legal notice applies. See docs/data-sources.md for scope.', raw: 'data/tours-notices/raw/', reproduce: 'python tools/import-tours-notices.py --offline', collected: 'BOAMP notices matched by the buyer’s exact SIRET, TED XML matched by UUID and version.' }, note: 'Tours · 2025 BOAMP/TED notices and linked references: 25 notices, 66 version/lot rows, including joint purchases. Rows represent documents, not individual contracts. Bidding periods require a complete notice chain.' },
     consultations: { path: 'data/consultations.json', coverage: 'data/consultations-coverage.json', sources: { publisher: 'DILA — BOAMP', links: [['BOAMP search', 'https://www.boamp.fr/'], ['BOAMP API used', 'https://www.boamp.fr/api/explore/v2.1/catalog/datasets/boamp/records']], licence: 'Licence Ouverte 2.0 (DILA legal notice and official data.gouv.fr records); incorporated third-party material may have separate rights.', raw: 'data/consultations-raw.json', reproduce: 'python tools/import-consultations.py --offline', collected: 'The first 10 initial BOAMP calls published on 3 February 2025, by identifier order.' }, note: '10 BOAMP consultation notices published on 3 February 2025, with one linked correction and three award notices. Rows represent notices, not awarded contracts. Incomplete notice chains prevent bidding-period calculations.' },
     decp: { path: ['data/decp-history.json', 'data/decp-cities.json'], coverage: 'data/decp-france-coverage.json', sources: { publisher: 'Ministère de l’Économie et des Finances — DECP (données essentielles de la commande publique); buyers’ own publication feeds and open-data lists', links: [['Dataset page · data.economie.gouv.fr', 'https://data.economie.gouv.fr/explore/dataset/decp-2022-marches-valides/'], ['API used (records endpoint)', 'https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records'], ['DECP schema v2.0.4', 'https://github.com/139bercy/decp-arr2022/blob/main/schemes/schema_decp_v2.0.4.json'], ['Buyer feeds · national consolidated DECP (decp.info, Licence Ouverte 2.0)', 'https://www.data.gouv.fr/datasets/donnees-essentielles-de-la-commande-publique-consolidees-format-tabulaire'], ['Ville de Nantes · concluded contracts 2025', 'https://www.data.gouv.fr/datasets/marches-publics-conclus-en-2025-par-la-ville-de-nantes'], ['Bordeaux Métropole datahub · contracts since 2024', 'https://www.data.gouv.fr/datasets/marches-publics-de-bordeaux-metropole-et-des-communes-mutulalisees-depuis-2024']], licence: 'Licence Ouverte v2.0 (Etalab) for every source', raw: 'data/decp-history-raw.json.gz, data/decp-cities-raw.json, data/decp-feeds-raw.json.gz, data/city-portals-raw.json.gz', reproduce: 'python tools/import-decp-paris-ardeche.py --offline && python tools/import-decp-cities.py --offline && python tools/build-decp-france-coverage.py', collected: 'Every DECP row for eight pre-selected buyer SIRETs (Ville de Paris, Département de l’Ardèche and six municipalities), notified 2024–2025, reconciled with the buyers’ own feeds and open-data lists. Three rows of the Paris 13 November dossier carry hand-curated fields.' }, note: 'France · DECP contracts of eight buyers (Ville de Paris, Ardèche, Rennes, Nantes, Bordeaux, Grenoble, Dijon, Tours), notified 2024–2025: 5,286 contracts. Amounts are compared across the Ministry dataset, buyer feeds and open-data lists; disagreements show as ranges. Coverage depends on source publication. Supplier names are current register names.' },
@@ -1994,12 +2149,13 @@ function startExplorer() {
     colombia: { path: 'data/colombia-secop2.json', coverage: 'data/colombia-secop2-coverage.json', sources: { publisher: 'Colombia Compra Eficiente — SECOP II, via datos.gov.co', links: [['Dataset page · datos.gov.co (jbjy-vk9h)', 'https://www.datos.gov.co/Gastos-Gubernamentales/SECOP-II-Contratos-Electr-nicos/jbjy-vk9h'], ['API used', 'https://www.datos.gov.co/resource/jbjy-vk9h.json'], ['SECOP II public search', 'https://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index']], licence: 'CC BY-SA 4.0', raw: 'data/colombia-secop2/raw/', reproduce: 'python tools/import-colombia-secop2.py --offline', collected: 'Every SECOP II contract of three buyers announced before download, signed 2024-09-01 → 2026-09-01.' }, note: 'Colombia · SECOP II · MEN, Caldas and Usaquén. Signed September 2024–August 2026: 7,560 contracts, amounts in COP. Coverage depends on source publication; offer counts are unavailable.' },
     paraguay: { path: 'data/paraguay-dncp.json', coverage: 'data/paraguay-dncp-coverage.json', sources: { publisher: 'Dirección Nacional de Contrataciones Públicas (DNCP), Paraguay', links: [['Public procurement portal · contrataciones.gov.py', 'https://www.contrataciones.gov.py/'], ['Open data and API documentation', 'https://www.contrataciones.gov.py/datos/api/v3/doc/'], ['Legal notice and licence (the OCDS packages cite /datos/legal, which now returns 404)', 'https://www.contrataciones.gov.py/datos/aviso-legal']], licence: 'CC BY 4.0', raw: 'data/paraguay-dncp/raw/', reproduce: 'python tools/import-paraguay-dncp.py --cohort fernando --offline', collected: 'Every process of the buyer whose call was published 2024-09-01 → 2025-09-01, then each full OCDS record by OCID.' }, note: 'Paraguay · DNCP · Fernando de la Mora. Calls published September 2024–August 2025: 88 processes, 84 retained contract entries, amounts in PYG. Displayed contract dates are period start dates, not signature dates. Amendments remain on their parent contracts.' },
     paraguay3: { path: 'data/paraguay-dncp-3buyers.json', coverage: 'data/paraguay-dncp-3buyers-coverage.json', sources: { publisher: 'Dirección Nacional de Contrataciones Públicas (DNCP), Paraguay', links: [['Public procurement portal · contrataciones.gov.py', 'https://www.contrataciones.gov.py/'], ['Open data and API documentation', 'https://www.contrataciones.gov.py/datos/api/v3/doc/'], ['Legal notice and licence (the OCDS packages cite /datos/legal, which now returns 404)', 'https://www.contrataciones.gov.py/datos/aviso-legal']], licence: 'CC BY 4.0', raw: 'data/paraguay-dncp-3buyers/raw/ (records gzipped, exact response bytes)', reproduce: 'python tools/import-paraguay-dncp.py --cohort 3buyers --offline', collected: 'Every process of three buyers announced before download (one per government level) whose call was published 2024-09-01 → 2026-09-01, then each full OCDS record by OCID.' }, note: 'Paraguay · DNCP · MOPC, Central and Asunción. Calls published September 2024–August 2026: 339 processes, 293 retained contract entries, amounts in PYG. Amendments remain on their parent contracts; 92 multi-lot awards lack per-lot tenderer counts.' },
-    ukraine: { path: 'data/prozorro.json', coverage: 'data/prozorro-coverage.json', sources: { publisher: 'Prozorro (State enterprise Prozorro, Ministry of Economy of Ukraine)', links: [['Prozorro public portal', 'https://prozorro.gov.ua/'], ['Open-data reuse terms', 'https://prozorro.gov.ua/openprocurement'], ['Public API documentation', 'https://prozorro-api-docs.readthedocs.io/'], ['Public API used (official records)', 'https://public-api.prozorro.gov.ua/api/2.5/tenders']], licence: 'Prozorro open-data reuse terms: redistribution, including commercial reuse, permitted with source attribution; no named licence for API records', raw: 'data/prozorro/raw/ (official records gzipped, exact response bytes)', reproduce: 'python tools/import-prozorro.py --offline', collected: 'Search-discovered tenders for three preselected buyers, created 2024-09-01 → 2026-09-01, checked against the official API buyer field. Search completeness is not established; see docs/ukraine-audit.md.' }, note: 'Ukraine · Prozorro · Health, Vinnytsia and Dnipro. Tenders created September 2024–August 2026: 526 tenders, 488 signed contracts. Amounts in UAH, EUR or USD. Search coverage is unverified; wartime rules permit withheld publications.' },
+    ukraineSample: { path: 'data/prozorro-slice-2026-06-08/contracts.json', coverage: 'data/prozorro-slice-2026-06-08/coverage.json', documents: 'data/prozorro-slice-2026-06-08/documents/', sources: { publisher: 'Prozorro (State enterprise Prozorro, Ministry of Economy of Ukraine)', links: [['Prozorro public portal', 'https://prozorro.gov.ua/'], ['Open-data reuse terms', 'https://prozorro.gov.ua/openprocurement'], ['Public API documentation', 'https://prozorro-api-docs.readthedocs.io/'], ['Public API used (official records)', 'https://public-api.prozorro.gov.ua/api/2.5/tenders']], licence: 'Prozorro open-data reuse terms: redistribution, including commercial reuse, permitted with source attribution; no named licence for API records', raw: 'private cache (official full-tender responses, SHA-256 per record in config.json)', reproduce: 'python tools/fetch-prozorro-slice.py --out <dir> --since 2026-06-01 --until 2026-09-01 --limit 3500, then python tools/import-prozorro.py --expansion-config data/prozorro-slice-2026-06-08/config.json --cache-dir <dir> --output-dir data/prozorro-slice-2026-06-08', collected: 'Random sample (SHA-256 ranking) of 3,500 of the 44,780 open tenders (aboveThreshold) with status complete, created June–August 2026, from the national Prozorro tender feed. No amount, indicator or label filter.' }, note: 'Ukraine · Prozorro · random sample of 3,500 completed open tenders (aboveThreshold) created June–August 2026, all buyers: 3,663 signed contracts. Per-tender checks only: repetition, concentration and buyer share need every tender of a buyer and are not assessed; amendments were not retrieved. Amounts in UAH, EUR or USD.' },
+    ukraine: { path: 'data/prozorro.json', coverage: 'data/prozorro-coverage.json', documents: 'data/prozorro-documents/', sources: { publisher: 'Prozorro (State enterprise Prozorro, Ministry of Economy of Ukraine)', links: [['Prozorro public portal', 'https://prozorro.gov.ua/'], ['Open-data reuse terms', 'https://prozorro.gov.ua/openprocurement'], ['Public API documentation', 'https://prozorro-api-docs.readthedocs.io/'], ['Public API used (official records)', 'https://public-api.prozorro.gov.ua/api/2.5/tenders']], licence: 'Prozorro open-data reuse terms: redistribution, including commercial reuse, permitted with source attribution; no named licence for API records', raw: 'data/prozorro/raw/ (official records gzipped, exact response bytes)', reproduce: 'python tools/import-prozorro.py --offline', collected: 'Search-discovered tenders for three preselected buyers, created 2024-09-01 → 2026-09-01, checked against the official API buyer field. Search completeness is not established; see docs/ukraine-audit.md.' }, note: 'Ukraine · Prozorro · Health, Vinnytsia and Dnipro. Tenders created September 2024–August 2026: 526 tenders, 488 signed contracts. Amounts in UAH, EUR or USD. Search coverage is unverified; wartime rules permit withheld publications.' },
     chile: { path: 'data/chile-mp.json', coverage: 'data/chile-mp-coverage.json', sources: { publisher: 'Dirección de Compras y Contratación Pública (ChileCompra) — Mercado Público', links: [['Mercado Público · buscador de licitaciones', 'https://www.mercadopublico.cl/Home/BusquedaLicitacion'], ['OCDS API used (tender and award releases)', 'https://api.mercadopublico.cl/APISOCDS/OCDS/listaOCDSAgnoMes/2025/03/0/10'], ['CC0 1.0 public-domain dedication', 'https://creativecommons.org/publicdomain/zero/1.0/']], licence: 'CC0 1.0 (declared in every release package)', raw: 'data/chile-mp/raw/ (monthly listings, prefix map, tender and award releases gzipped, exact response bytes)', reproduce: 'python tools/import-chilecompra.py --offline', collected: 'Every licitación of three purchasing units announced before download (one per level), listed 2024-09 → 2026-08, chosen from a map of all 4,582 purchasing-unit prefixes.' }, note: 'Chile · Mercado Público · MOP (Dirección General de Aguas), Maule and Puente Alto. Listed September 2024–August 2026: 844 tenders, 522 single-supplier awards, amounts in CLP. Direct purchase orders (trato directo) are not included.' },
     uk: { path: 'data/uk-fts.json', coverage: 'data/uk-fts-coverage.json', sources: { publisher: 'Find a Tender service (Cabinet Office, United Kingdom)', links: [['Find a Tender · search notices', 'https://www.find-tender.service.gov.uk/Search'], ['OCDS API used (release packages)', 'https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages'], ['Open Government Licence v3.0', 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/']], licence: 'Open Government Licence v3.0', raw: 'data/uk-fts/raw/ (compact award index and full notices, gzipped exact response bytes)', reproduce: 'python tools/import-find-a-tender.py --offline', collected: 'Every award notice of three buyer accounts announced before download (one per level), released 2024-09-01 → 2026-09-01, chosen from a compact index of all 33,457 award releases in the window.' }, note: 'United Kingdom · Find a Tender · FCDO, Lincolnshire and Milton Keynes. Published September 2024–August 2026: 516 notices, 1,081 single-supplier awards, mostly GBP. Above-threshold and Procurement Act notices only; separate party IDs may split one supplier.' },
     portugal: { path: 'data/ted-portugal.json', coverage: 'data/ted-portugal-coverage.json', sources: { publisher: 'Publications Office of the European Union — TED', links: [['TED search · ted.europa.eu', 'https://ted.europa.eu/'], ['TED Search API documentation', 'https://docs.ted.europa.eu/api/latest/search.html'], ['TED legal notice (reuse authorised)', 'https://ted.europa.eu/en/legal-notice']], licence: 'Free reuse, commercial or not (Commission Decision 2011/833/EU)', raw: 'data/ted-portugal/raw/ (official eForms XML gzipped)', reproduce: 'python tools/import-ted-cohorts.py --cohort portugal --offline', collected: 'Every TED award notice (can-standard) of three buyers announced before download, published 2024-09-01 → 2026-09-01, matched by identifier and its spelling variants.' }, note: 'Portugal · TED · Infraestruturas de Portugal, Cávado and Lisboa. Published September 2024–August 2026: 442 notices, 488 awarded lots, amounts in EUR. Below-threshold purchases are absent; 137 multi-winner results excluded. Cávado notices lack winning-tender links.' },
     czechia: { path: 'data/ted-czechia.json', coverage: 'data/ted-czechia-coverage.json', sources: { publisher: 'Publications Office of the European Union — TED', links: [['TED search · ted.europa.eu', 'https://ted.europa.eu/'], ['TED Search API documentation', 'https://docs.ted.europa.eu/api/latest/search.html'], ['TED legal notice (reuse authorised)', 'https://ted.europa.eu/en/legal-notice']], licence: 'Free reuse, commercial or not (Commission Decision 2011/833/EU)', raw: 'data/ted-czechia/raw/ (official eForms XML gzipped)', reproduce: 'python tools/import-ted-cohorts.py --cohort czechia --offline', collected: 'Every TED award notice (can-standard) of three buyers announced before download, published 2024-09-01 → 2026-09-01, matched by IČO and its spelling variants.' }, note: 'Czechia · TED · Finance, Moravian-Silesian Region and Ostrava (including districts sharing its IČO). Published September 2024–August 2026: 661 notices, 630 awarded lots, CZK or EUR. Below-threshold purchases are absent; 122 results with multiple or missing winning references excluded.' },
-    korea: { remote: 'korea', coverage: `${KOREA_BASE}/meta.json`, sources: { publisher: 'Public Procurement Service (조달청) — KONEPS (나라장터), open-standard contract data on data.go.kr', links: [['KONEPS (나라장터)', 'https://www.g2b.go.kr/'], ['Dataset page · data.go.kr (조달청_공공데이터개방표준서비스)', 'https://www.data.go.kr/data/15058815/openapi.do'], ['Data files used (separate host)', `${KOREA_BASE}/`]], licence: 'data.go.kr: no restriction on use (이용허락범위 제한 없음); source attributed', raw: 'private cache (weekly API responses); published files: tools/build-korea-site.py', reproduce: 'python tools/fetch-korea-opnstd-contracts.py, tools/normalize-korea-opnstd.py, tools/build-korea-site.py', collected: 'Every contract published in the open-standard contract service with a contract or change date from 1 September 2024 to 1 September 2026, national download (all contracting institutions).' }, note: 'South Korea · KONEPS · every contracting institution, contracts dated September 2024–August 2026 (2.7 million). Choose a buyer to load its contracts. Korean checks are not set yet: contracts are shown for browsing and are not assessed. Amounts in KRW; the full record is on KONEPS.' },
+    korea: { remote: 'korea', coverage: `${KOREA_BASE}/meta.json`, sources: { publisher: 'Public Procurement Service (조달청) — KONEPS (나라장터), open-standard contract data on data.go.kr', links: [['KONEPS (나라장터)', 'https://www.g2b.go.kr/'], ['Dataset page · data.go.kr (조달청_공공데이터개방표준서비스)', 'https://www.data.go.kr/data/15058815/openapi.do'], ['Data files used (separate host)', `${KOREA_BASE}/`]], licence: 'data.go.kr: no restriction on use (이용허락범위 제한 없음); source attributed', raw: 'private cache (weekly API responses); published files: tools/build-korea-site.py', reproduce: 'python tools/fetch-korea-opnstd-contracts.py, tools/normalize-korea-opnstd.py, tools/build-korea-site.py', collected: 'Every contract published in the open-standard contract service with a contract or change date from 1 September 2024 to 1 September 2026, national download (all contracting institutions).' }, note: 'South Korea · KONEPS · every contracting institution, contracts dated September 2024–August 2026 (2.7 million). Browse all institutions with sequential static-file scans, or choose a buyer. Korean checks are not set yet: contracts are shown for browsing and are not assessed. Amounts in KRW; the full record is on KONEPS.' },
     romania: { path: 'data/ted-romania.json', coverage: 'data/ted-romania-coverage.json', sources: { publisher: 'Publications Office of the European Union — TED', links: [['TED search · ted.europa.eu', 'https://ted.europa.eu/'], ['TED Search API documentation', 'https://docs.ted.europa.eu/api/latest/search.html'], ['TED legal notice (reuse authorised)', 'https://ted.europa.eu/en/legal-notice']], licence: 'Free reuse, commercial or not (Commission Decision 2011/833/EU)', raw: 'data/ted-romania/raw/ (official eForms XML gzipped)', reproduce: 'python tools/import-ted-cohorts.py --cohort romania --offline', collected: 'Every TED award notice (can-standard) of three buyers announced before download, published 2024-09-01 → 2026-09-01, matched by identifier and its spelling variants.' }, note: 'Romania · TED · Finance, Cluj county and Cluj-Napoca. Published September 2024–August 2026: 299 notices, 321 awarded lots, RON or EUR. Below-threshold purchases are absent; 289 multi-winner results excluded.' },
   };
   let datasetMetadata = {};
@@ -2057,11 +2213,16 @@ function startExplorer() {
   let linkEvidenceStarted = false;
   // South Korea: the buyer list loads with the dataset; one buyer's shard loads when it is chosen.
   let koreaBuyer = '', koreaMeta = null, koreaBuyers = null;
-  const koreaShards = new Map();
+  let koreaScanController = null, koreaScanVersion = 0, koreaNationwide = false;
+  let koreaScanPage = 0, koreaScanResult = null, koreaScanMessage = '', koreaSnapshotKey = '';
+  const koreaScanPanel = document.querySelector('#korea-scan');
+  const koreaScanStatus = document.querySelector('#korea-scan-status');
+  const koreaScanNext = document.querySelector('#korea-scan-next');
+  const koreaScanPrevious = document.querySelector('#korea-scan-previous');
   const koreaPicker = document.querySelector('#korea-picker');
   const koreaSearch = document.querySelector('#korea-search');
   const koreaResults = document.querySelector('#korea-results');
-  const koreaJson = path => fetch(`${KOREA_BASE}/${path}`).then(response => {
+  const koreaJson = (path, signal) => fetch(`${KOREA_BASE}/${path}`, { signal, cache: 'no-store' }).then(response => {
     if (!response.ok) throw new Error(`${KOREA_BASE}/${path}: HTTP ${response.status}`);
     return response.json();
   });
@@ -2072,14 +2233,77 @@ function startExplorer() {
     }).catch(error => { koreaBuyers = null; throw error; });
     return koreaBuyers;
   }
-  function koreaShard(n) {
-    if (!koreaShards.has(n)) {
-      const request = koreaJson(`s/${String(n).padStart(4, '0')}.json`);
-      koreaShards.set(n, request);
-      request.catch(() => koreaShards.delete(n));
-    }
-    return koreaShards.get(n);
+  function koreaShard(n, signal) {
+    return koreaJson(`s/${String(n).padStart(4, '0')}.json`, signal);
   }
+  function cancelKoreaScan(message = 'Filters changed. Scan again to apply the current filters.') {
+    koreaScanVersion++;
+    koreaScanController?.abort();
+    koreaScanController = null;
+    koreaScanResult = null;
+    koreaScanMessage = message;
+    if (koreaNationwide) {
+      contracts = []; selectionMemo = null; rowsForExport = []; pageRowsForCopy = [];
+      closeDetail({ restoreFocus: false });
+    }
+  }
+  async function startKoreaScan(wantedPage = 0) {
+    cancelKoreaScan('Scanning…');
+    const version = koreaScanVersion;
+    const controller = koreaScanController = new AbortController();
+    koreaScanPage = wantedPage;
+    const options = selectionOptions();
+    // Review notes are also snapshotted: subsequent edits require a new scan.
+    const reviewWanted = controls.review.value;
+    const reviewSnapshot = structuredClone(reviews);
+    const reviewPrefix = reviewScope() + '|';
+    const reviewPredicate = c => {
+      const mark = reviewSnapshot[c.collectionId ? `${c.collectionId}|${c.originalId}` : reviewPrefix + c.id]?.status || '';
+      return !reviewWanted || (reviewWanted === '@none' ? !mark : reviewWanted === '@any' ? Boolean(mark) : mark === reviewWanted);
+    };
+    koreaSnapshotKey = koreaFilterKey();
+    render();
+    try {
+      const scan = datasetSelect.value === 'global' ? scanPublishedPage : scanKoreaPage;
+      const result = await scan({ meta: koreaMeta, buyers: datasetSelect.value === 'global' ? [] : await koreaIndex(), fetchShard: koreaShard,
+        collections: Object.entries(datasets).filter(([key, value]) => key !== 'global' && !value.remote).map(([key, value]) => ({ key, label: `${key} · ${value.sources.publisher}` })),
+        loadCollection: async (key, signal) => {
+          const files = globalThis.DATASET_FILES?.[key] || [].concat(datasets[key].path);
+          const parts = [];
+          for (const file of files) {
+            const response = await fetch(file, { signal });
+            if (!response.ok) throw new Error(`${file}: HTTP ${response.status}`);
+            parts.push(await response.json());
+          }
+          return parts.flat();
+        },
+        korea: async () => { const buyers = await koreaIndex(); return { meta: koreaMeta, buyers, fetchShard: koreaShard }; },
+        offset: wantedPage * Math.min(200, pageSize), limit: Math.min(200, pageSize), signal: controller.signal,
+        predicate: c => reviewPredicate(c) && selectContracts([c], options).length > 0,
+        progress: p => { if (version === koreaScanVersion) {
+          koreaScanStatus.textContent = `Scanning: ${p.examined.toLocaleString()} records checked · ${p.matches.toLocaleString()} matches so far (partial) · ${p.retained} retained.`;
+        } }
+      });
+      if (version !== koreaScanVersion || controller.signal.aborted || !koreaNationwide) return;
+      koreaScanController = null;
+      koreaScanResult = result;
+      contracts = result.rows;
+      selectionMemo = null;
+      page = 0;
+      koreaScanMessage = `${datasetSelect.value === 'global' ? 'Collections scan' : 'Nationwide'} page ${wantedPage + 1}: ${result.rows.length} matches retained (page cap ${Math.min(200, pageSize)}). ${result.complete ? `${result.matches.toLocaleString()} total matches; scan complete.` : `At least ${result.matches.toLocaleString()} matches; count partial. More matches accessible with Next scan page.`} ${result.examined.toLocaleString()} records checked. Export covers this page only.`;
+      render();
+    } catch (error) {
+      if (version !== koreaScanVersion) return;
+      koreaScanController = null;
+      koreaScanMessage = error.name === 'AbortError' ? 'Scan cancelled. Scan again to restart.' : `Scan failed; no complete results: ${error.message}. Retry with Scan.`;
+      render();
+    }
+  }
+  document.querySelector('#korea-all').addEventListener('click', () => chooseKoreaBuyer(''));
+  document.querySelector('#korea-scan-start').addEventListener('click', () => startKoreaScan());
+  document.querySelector('#korea-scan-cancel').addEventListener('click', () => { cancelKoreaScan('Scan cancelled. Scan again to restart.'); render(); });
+  koreaScanNext.addEventListener('click', () => startKoreaScan(koreaScanPage + 1));
+  koreaScanPrevious.addEventListener('click', () => startKoreaScan(Math.max(0, koreaScanPage - 1)));
   const koreaKey = text => String(text || '').toLowerCase().replace(/\s+/g, '');
   function showKoreaResults(buyers) {
     const wanted = koreaKey(koreaSearch.value);
@@ -2112,13 +2336,16 @@ function startExplorer() {
     const buyer = koreaBuyer && buyers.find(b => b[0] === koreaBuyer);
     if (!buyer) {
       koreaBuyer = '';
-      status.textContent = `${buyers.length} contracting institutions. Search for one above to load its contracts.`;
+      koreaNationwide = true;
+      koreaScanPanel.hidden = false;
+      accept([]);
+      startKoreaScan();
       return;
     }
     koreaSearch.value = buyer[1];
     status.textContent = `Loading ${buyer[3]} contracts of ${buyer[1]}…`;
-    const shard = await koreaShard(buyer[4]);
-    if (version === loadVersion) accept(koreaRecords(koreaMeta, shard, buyer));
+    const shards = await Promise.all(koreaParts(buyer).map(n => koreaShard(n)));
+    if (version === loadVersion) accept(shards.flatMap(shard => koreaRecords(koreaMeta, shard, buyer)));
   }
   // First-page preview (prefetch.js, tools/build-first-pages.cjs): the default view's top rows,
   // shown read-only until the full dataset is in. Filters, sorting, export and the record panel
@@ -2165,7 +2392,18 @@ function startExplorer() {
   const initialView = hashToViewState(location.hash);
   if (Object.hasOwn(datasets, initialView.dataset)) datasetSelect.value = initialView.dataset;
   let pendingView = location.hash ? initialView : null;
-  // Options sit under their country's group, so the full name joins both.
+  const datasetSelection = setupDatasetSelection(document.querySelector('#country'), datasetSelect, () => {
+    pendingView = null;
+    loadDataset();
+  });
+  // These new navigation labels live here because the shared dictionaries are generated
+  // separately. Existing country names and cohort labels use the normal i18n observer.
+  const selectionLabels = { en: ['Country', 'Source / cohort'], fr: ['Pays', 'Source / cohorte'], es: ['País', 'Fuente / cohorte'] };
+  const selectionLanguage = uiLocale.slice(0, 2);
+  const [countryLabel, sourceLabel] = selectionLabels[selectionLanguage] || selectionLabels.en;
+  document.querySelector('#country-label').textContent = countryLabel;
+  document.querySelector('#source-label').textContent = sourceLabel;
+  // The full label joins the country and the selected source/cohort.
   const datasetLabel = () => {
     const option = datasetSelect.selectedOptions[0], country = option.dataset.country;
     return `${typeof i18nTranslate === 'function' ? i18nTranslate(country) : country} · ${option.textContent.replace(/^\s*[\u{1F1E6}-\u{1F1FF}]{2}/u, '').trim()}`;
@@ -2238,7 +2476,7 @@ function startExplorer() {
     try { localStorage.setItem(REVIEW_STORE, JSON.stringify(reviews)); reviewStorageWorks = true; } catch { reviewStorageWorks = false; }
   }
   const reviewScope = () => usingLocalFile ? `local:${localFileIdentity}` : datasetSelect.value;
-  const reviewKey = c => `${reviewScope()}|${c.id}`;
+  const reviewKey = c => c.collectionId ? `${c.collectionId}|${c.originalId}` : `${reviewScope()}|${c.id}`;
   const reviewOf = c => reviews[reviewKey(c)] || null;
   function setReview(c, patch) {
     const key = reviewKey(c);
@@ -2246,6 +2484,7 @@ function startExplorer() {
     if (!entry.status && !entry.note?.trim()) delete reviews[key]; else reviews[key] = entry;
     saveReviews();
     renderReviewSummary();
+    if (koreaNationwide) render();
   }
   function reviewMatch(c) {
     const wanted = controls.review.value;
@@ -2298,7 +2537,7 @@ function startExplorer() {
     if (hash === location.hash) return;
     try { history.replaceState(null, '', hash || location.pathname + location.search); } catch { /* Some file:// contexts refuse history updates. */ }
   }
-  const FILTER_VALUES = ['minimum', 'sector', 'group-by', 'project', 'assessment', 'min-score', 'indicator', 'notice-context', 'legal', 'review', 'verification'];
+  const FILTER_VALUES = ['filter-country', 'date-from', 'date-to', 'filter-buyer', 'filter-supplier', 'filter-procedure', 'minimum', 'sector', 'group-by', 'project', 'assessment', 'min-score', 'indicator', 'notice-context', 'legal', 'review', 'verification'];
   function clearFilters() {
     for (const id of FILTER_VALUES) controls[id].value = '';
     controls['min-score'].value = '0';
@@ -2376,6 +2615,14 @@ function startExplorer() {
 
   // Indicator list: only the checks this dataset runs, most frequent first, each with its count.
   function computeOverview() {
+    if (koreaNationwide) {
+      fillSelect(controls.indicator, [['', 'All indicators'], ...indicatorLabels].filter(([id], i) => id || i === 0));
+      for (const id of ['notice-context', 'legal', 'verification', 'official', 'adjudicated', 'investigation']) {
+        controls[id].closest('label').dataset.available = 'true';
+        if (controls[id].options) for (const option of controls[id].options) option.hidden = false;
+      }
+      return;
+    }
     const officialCount = contracts.filter(c => c.officialFinding === true).length;
     signalCounts = new Map();
     const present = new Set();
@@ -2450,7 +2697,12 @@ function startExplorer() {
     chip.title = `${level.label} — editorial index, not a probability nor legal gravity.`;
     return chip;
   }
+  function selectionOptions() {
+    return { country: controls['filter-country'].value, dateFrom: controls['date-from'].value, dateTo: controls['date-to'].value, buyer: controls['filter-buyer'].value, supplier: controls['filter-supplier'].value, procedure: controls['filter-procedure'].value, search: controls.search.value, minimum: Math.max(0, Number(controls.minimum.value) || 0), minScore: Number(controls['min-score'].value) || 0, flagged: controls.flagged.checked, official: controls.official.checked, adjudicated: controls.adjudicated.checked, investigation: controls.investigation.checked, indicator: controls.indicator.value, legal: controls.legal.value, noticeContext: controls['notice-context'].value, assessment: controls.assessment.value, sector: controls.sector.value, project: controls.project.value, verification: controls.verification.value, sort: controls.sort.value };
+  }
+  function koreaFilterKey() { return JSON.stringify([selectionOptions(), controls.review.value, reviewsVersion, pageSize, controls['group-by'].value]); }
   function render() {
+    if (koreaNationwide && (koreaScanController || koreaScanResult) && koreaSnapshotKey !== koreaFilterKey()) cancelKoreaScan();
     syncSortHeaders();
     if (!loaded) return;
     // An active filter from a shared URL remains visible even when it matches no records.
@@ -2463,14 +2715,15 @@ function startExplorer() {
       }
     }
     document.querySelector('.context-filters').hidden = [...document.querySelectorAll('.context-filters > label')].every(label => label.hidden);
-    const minimum = Math.max(0, Number(controls.minimum.value) || 0);
     // Selection, sorting and grouping depend only on the controls, the records and review marks:
     // page changes and re-renders reuse them.
-    const options = { search: controls.search.value, minimum, minScore: Number(controls['min-score'].value) || 0, flagged: controls.flagged.checked, official: controls.official.checked, adjudicated: controls.adjudicated.checked, investigation: controls.investigation.checked, indicator: controls.indicator.value, legal: controls.legal.value, noticeContext: controls['notice-context'].value, assessment: controls.assessment.value, sector: controls.sector.value, project: controls.project.value, verification: controls.verification.value, sort: controls.sort.value };
+    const options = selectionOptions();
     const selectionKey = JSON.stringify([options, controls.review.value, controls['group-by'].value, reviewsVersion]);
     if (!selectionMemo || selectionMemo.records !== contracts || selectionMemo.profile !== activeProfile || selectionMemo.key !== selectionKey) {
       const pool = activeProfile ? contracts.filter(c => activeProfile.ids.has(c.id)) : contracts;
-      const filtered = selectContracts(controls.review.value ? pool.filter(reviewMatch) : pool, options);
+      const filtered = koreaNationwide ? (datasetSelect.value === 'global'
+        ? [...new Set(contracts.map(c => c.collectionId))].flatMap(key => selectContracts(contracts.filter(c => c.collectionId === key), { sort: options.sort }))
+        : selectContracts(contracts, { sort: options.sort })) : selectContracts(controls.review.value ? pool.filter(reviewMatch) : pool, options);
       selectionMemo = { records: contracts, profile: activeProfile, key: selectionKey, arrangement: arrangeGroups(filtered, controls['group-by'].value) };
     }
     const arrangement = selectionMemo.arrangement;
@@ -2521,6 +2774,7 @@ function startExplorer() {
       button.setAttribute('aria-controls', 'detail-panel');
       button.title = `${c.description} — open details, evidence and sources`;
       objectCell.append(button, element('small', c.buyer, 'mobile-buyer'));
+      if (c.collectionLabel) objectCell.append(element('small', `Collection: ${c.collectionLabel} · source record ${c.originalId}`, 'collection-context'));
       const mark = reviewOf(c)?.status;
       if (mark) objectCell.append(element('span', REVIEW_STATUSES[mark], `review-tag review-${mark}`));
       if (c.dataStatus !== 'verified') objectCell.append(element('small', provenance[c.dataStatus], 'provenance'));
@@ -2621,6 +2875,15 @@ function startExplorer() {
       copyPage.disabled = exportCsv.disabled = exportJson.disabled = true;
       return;
     }
+    if (koreaNationwide) {
+      pagination.hidden = true;
+      koreaScanStatus.textContent = koreaScanMessage;
+      koreaScanNext.disabled = !koreaScanResult?.hasMore || Boolean(koreaScanController);
+      koreaScanPrevious.disabled = !koreaScanResult || koreaScanPage === 0 || Boolean(koreaScanController);
+      document.querySelector('#korea-scan-cancel').disabled = !koreaScanController;
+      status.textContent = koreaScanMessage;
+      document.querySelector('#completeness').textContent = 'Static scan: counts, sorting, grouping, copy and exports cover only the displayed scan page. Published collection/record order determines membership. Sorting is within each collection, never a cross-country risk or currency ranking. Collections may overlap; records are not unique contracts. No combined amount totals.';
+    }
     writeView();
   }
 
@@ -2630,6 +2893,51 @@ function startExplorer() {
     section.id = `detail-${id}`;
     section.append(element('h3', title, 'section-title'));
     return section;
+  }
+  // Prozorro document links: published in each tender record, stored per tender (tools/build-prozorro-documents.py),
+  // loaded only when a record opens. Opening a link is the reader's own click; the site fetches no document.
+  const PROZORRO_DOCS = 'https://public-docs.prozorro.gov.ua/get/';
+  const documentShards = new Map();
+  function prozorroDocuments(c, base) {
+    const box = element('section', null, 'detail-documents');
+    box.id = 'detail-documents';
+    const top = element('p', null, 'documents-head');
+    top.append(element('strong', 'Documents'));
+    if (safeSource(c.portalUrl)) top.append(' · ', sourceLink(c.portalUrl, 'Prozorro page'));
+    const status = element('span', ' · loading…', 'muted');
+    top.append(status);
+    box.append(top);
+    const shard = c.procedureId.slice(0, 2);
+    if (!documentShards.has(base + shard)) documentShards.set(base + shard, fetch(`${base}${shard}.json`).then(r => r.ok ? r.json() : Promise.reject(new Error(r.status))));
+    const link = ([title, url]) => sourceLink(url.startsWith('https://') ? url : PROZORRO_DOCS + url, title);
+    const group = (label, docs, open) => {
+      if (!docs?.length) return;
+      const row = element('div', null, 'doc-group');
+      const shown = docs.length > 6 && !open ? docs.slice(0, 5) : docs;
+      row.append(element('span', `${label} (${docs.length})`, 'doc-label'), ' ');
+      shown.forEach((d, i) => row.append(i ? ' · ' : '', link(d)));
+      if (shown.length < docs.length) {
+        const more = element('details', null, 'doc-more');
+        more.append(element('summary', `+${docs.length - shown.length} more`));
+        docs.slice(shown.length).forEach((d, i) => more.append(i ? ' · ' : '', link(d)));
+        row.append(' ', more);
+      }
+      box.append(row);
+    };
+    documentShards.get(base + shard).then(all => {
+      const e = all[c.procedureId];
+      if (!e) { status.textContent = ' · none listed'; return; }
+      status.textContent = ` · links as of ${e.asOf}`;
+      const award = e.a[c.awardId];
+      const sameLot = a => (a.l || null) === (c.lotId || null);
+      group('Award decision', award?.d, true);
+      group('Winner’s offer', award?.b);
+      Object.values(e.a).filter(a => a !== award && a.s === 'unsuccessful' && sameLot(a))
+        .forEach(a => group(`Rejected: ${a.n || 'bidder'}`, a.d, true));
+      group('Tender documents', e.t);
+      if (box.childElementCount === 1) status.textContent = ` · none published (as of ${e.asOf})`;
+    }).catch(() => { status.textContent = ' · could not load the document list'; });
+    return box;
   }
   function renderDetail(c) {
     // Only what is specific to this record. Dataset-wide notes live in “Scope and limits”;
@@ -2643,6 +2951,7 @@ function startExplorer() {
     const title = element('h2', c.description);
     title.id = 'detail-title';
     head.append(title);
+    if (c.collectionLabel) head.append(element('p', `Collection: ${c.collectionLabel} · source record ${c.originalId}. Assessment uses this source’s rules; not a cross-country ranking.`, 'collection-context'));
     const facts = element('dl', null, 'detail-facts');
     const fact = (label, ...values) => {
       if (!values.length || values[0] == null || values[0] === '') return;
@@ -2650,6 +2959,7 @@ function startExplorer() {
       const dd = element('dd'); dd.append(...values); box.append(dd); facts.append(box);
     };
     const profileButton = role => {
+      if (koreaNationwide) return []; // A page is not a complete buyer/supplier profile.
       if (!profileKey(c, role)) return [];
       const button = element('button', 'Profile', 'link-button profile-link');
       button.type = 'button';
@@ -2691,6 +3001,8 @@ function startExplorer() {
     if (c.durationMonths != null || c.durationOriginal) fact('Duration', ...(c.durationMonths != null ? [`${c.durationMonths} `, element('span', 'months')] : [c.durationOriginal]));
     fact('Index', scoreChip(c));
     head.append(facts);
+    const documentsBase = datasets[datasetSelect.value]?.documents;
+    if (documentsBase && c.dataFamily === 'prozorro' && /^[a-f0-9]{2}/.test(c.procedureId || '')) head.append(prozorroDocuments(c, documentsBase));
     if (c.dataStatus && c.dataStatus !== 'verified') head.append(element('p', provenance[c.dataStatus] || c.dataStatus, 'detail-status'));
 
     // Reviewer's own mark and note.
@@ -3087,14 +3399,20 @@ function startExplorer() {
   });
 
   function accept(data, prepared = null) {
+    if (usingLocalFile && koreaNationwide) {
+      cancelKoreaScan('Local file loaded.');
+      koreaNationwide = false;
+      koreaScanPanel.hidden = true;
+      koreaPicker.hidden = true;
+    }
     if (previewing) setPreviewLock(false);
     contracts = prepared || prepareContracts(data);
     assessmentCache = new WeakMap();
     const sectors = [...new Map(contracts.map(c => { const s = getSector(c); return [s.code, s]; })).values()].sort((a, b) => a.code === 'unknown' ? 1 : b.code === 'unknown' ? -1 : a.label.localeCompare(b.label, 'en'));
-    fillSelect(controls.sector, [['', 'All sectors'], ...sectors.map(s => [s.code, `${s.code === 'unknown' ? '' : s.code + ' · '}${s.label}`])]);
+    fillSelect(controls.sector, [['', 'All sectors'], ...(koreaNationwide ? [...Object.entries(CPV_SECTORS), ['unknown', 'Sector not specified']] : sectors.map(s => [s.code, `${s.code === 'unknown' ? '' : s.code + ' · '}${s.label}`]))]);
     projectCatalog = new Map(contracts.filter(c => c.project).map(c => [c.project.id, c.project]));
-    fillSelect(controls.project, [['', 'All records'], ...(projectCatalog.size ? [['@documented', 'Documented projects only']] : []), ...[...projectCatalog.values()].map(p => [p.id, p.title])]);
-    controls.project.disabled = projectCatalog.size === 0;
+    fillSelect(controls.project, [['', 'All records'], ...(projectCatalog.size || koreaNationwide ? [['@documented', 'Documented projects only']] : []), ...[...projectCatalog.values()].map(p => [p.id, p.title])]);
+    controls.project.disabled = !koreaNationwide && projectCatalog.size === 0;
     computeOverview();
     const noteCounts = new Map();
     for (const c of contracts) for (const key of ['dateNote', 'amountBasis', 'notes', 'identifierNote', 'offersNote']) {
@@ -3135,6 +3453,7 @@ function startExplorer() {
   // fast typing, one character at a time, is filtered once it stops.
   let searchTimer = 0, lastSearchInput = -Infinity, lastSearchValue = '';
   function searchInput() {
+    if (koreaNationwide) { clearTimeout(searchTimer); refresh(); return; }
     const now = performance.now(), value = controls.search.value;
     const typed = Math.abs(value.length - lastSearchValue.length) === 1 && (value.startsWith(lastSearchValue) || lastSearchValue.startsWith(value));
     const immediate = !typed || now - lastSearchInput > 150;
@@ -3216,7 +3535,7 @@ function startExplorer() {
   copyPage.addEventListener('click', async () => {
     if (!loaded || !pageRowsForCopy.length) return;
     const copiedCount = pageRowsForCopy.length;
-    const text = pageSummaryForCopy(pageRowsForCopy, { dataset: currentDatasetLabel,
+    const text = pageSummaryForCopy(pageRowsForCopy, { dataset: currentDatasetLabel + (koreaNationwide ? ` · static scan page ${koreaScanPage + 1} ONLY; counts and sorting are page-local` : ''),
       page: page + 1, totalPages: Math.max(1, Math.ceil(totalResultsForCopy / pageSize)), totalResults: totalResultsForCopy });
     copyStatus.textContent = await copyText(text) ? `${copiedCount} record summaries copied with source links.` : 'Unable to copy. Serve over localhost or select the rows manually.';
     const original = 'Copy page';
@@ -3234,16 +3553,16 @@ function startExplorer() {
     link.remove();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
-  const exportName = extension => `contract-signals-${usingLocalFile ? 'local-file' : datasetSelect.value}-${new Date().toISOString().slice(0, 10)}.${extension}`;
+  const exportName = extension => `contract-signals-${usingLocalFile ? 'local-file' : datasetSelect.value}${koreaNationwide ? '-scan-page-' + (koreaScanPage + 1) : ''}-${new Date().toISOString().slice(0, 10)}.${extension}`;
   exportCsv.addEventListener('click', () => {
     if (!loaded || !rowsForExport.length) return;
     download(exportName('csv'), 'text/csv;charset=utf-8', '﻿' + rowsToCsv(rowsForExport));
-    copyStatus.textContent = `${rowsForExport.length} filtered records exported as CSV.`;
+    copyStatus.textContent = `${rowsForExport.length} ${koreaNationwide ? 'scan-page records (not nationwide totals)' : 'filtered records'} exported as CSV.`;
   });
   exportJson.addEventListener('click', () => {
     if (!loaded || !rowsForExport.length) return;
-    download(exportName('json'), 'application/json', rowsToJson(rowsForExport, { dataset: currentDatasetLabel, view: viewStateToHash(currentView()), exportedAt: new Date().toISOString() }));
-    copyStatus.textContent = `${rowsForExport.length} filtered records exported as JSON.`;
+    download(exportName('json'), 'application/json', rowsToJson(rowsForExport, { dataset: currentDatasetLabel + (koreaNationwide ? ` · scan page ${koreaScanPage + 1} ONLY; published-order membership, page-local sorting; not a nationwide export` : ''), view: viewStateToHash(currentView()), exportedAt: new Date().toISOString() }));
+    copyStatus.textContent = `${rowsForExport.length} ${koreaNationwide ? 'scan-page records (not nationwide totals)' : 'filtered records'} exported as JSON.`;
   });
   // Review notes travel as a JSON file the reviewer chooses to share; nothing is uploaded.
   const reviewStatus = document.querySelector('#review-status');
@@ -3384,8 +3703,12 @@ function startExplorer() {
     if (version === importVersion) confirmImport.disabled = false;
   });
   async function loadDataset() {
+    datasetSelection.sync();
     const selected = datasets[datasetSelect.value];
     invalidateImport();
+    cancelKoreaScan('Ready to scan.');
+    koreaNationwide = false;
+    koreaScanPanel.hidden = true;
     const version = ++loadVersion;
     activeProfile = null;
     loaded = false;
@@ -3417,6 +3740,15 @@ function startExplorer() {
     if (previewing) setPreviewLock(false);
     koreaPicker.hidden = !selected.remote;
     if (pendingView?.['korea-buyer'] != null && selected.remote) koreaBuyer = pendingView['korea-buyer'];
+    if (selected.remote === 'global') {
+      koreaPicker.hidden = true;
+      koreaNationwide = true;
+      koreaScanPanel.hidden = false;
+      document.querySelector('#coverage-link').hidden = true;
+      accept([]);
+      startKoreaScan();
+      return;
+    }
     if (selected.remote === 'korea') {
       try { await loadKorea(version); } catch (error) { if (version === loadVersion) fail(error); }
       return;
@@ -3467,13 +3799,12 @@ function startExplorer() {
       return parsedFiles.get(file);
     })).then(parts => parts.flat());
   }
-  datasetSelect.addEventListener('change', loadDataset);
   // A pasted link or back/forward: reload only when the dataset differs.
   window.addEventListener('hashchange', () => {
     const view = hashToViewState(location.hash);
     const wanted = Object.hasOwn(datasets, view.dataset) ? view.dataset : usingLocalFile ? null : defaultDataset;
     if (wanted && (wanted !== datasetSelect.value || usingLocalFile || (wanted === 'korea' && (view['korea-buyer'] || '') !== koreaBuyer))) {
-      datasetSelect.value = wanted;
+      datasetSelection.selectDataset(wanted);
       pendingView = view;
       loadDataset();
     } else if (previewing) {
