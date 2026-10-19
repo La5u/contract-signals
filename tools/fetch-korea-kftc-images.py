@@ -38,8 +38,10 @@ def decisions(source, since_year):
 
 def as_text(text):
     count = 0
-    def marker(_):
+    def marker(m):  # numbered like the downloads; law.go.kr leaves some tables as dead relative links (table_image_N.png)
         nonlocal count
+        if 'flSeq=' not in m.group(0):
+            return '\n[IMAGE MISSING: not published on law.go.kr]\n'
         count += 1
         return f'\n[IMAGE img{count:03d}.png]\n'
     text = re.sub(r'<img[^>]*>(</img>)?', marker, text)
