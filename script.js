@@ -16,7 +16,7 @@ const VERIFICATION_STATUSES = {
 const HISTORY_START = '2024-01-01';
 const HISTORY_END = '2025-12-31';
 
-const SCORE_VERSION = '3.7';
+const SCORE_VERSION = '3.8';
 
 // Conservative calendar-day upper bound: publication time is not supplied by BOAMP.
 function getBiddingPeriod(contract) {
@@ -134,12 +134,15 @@ const CO_CONCENTRATION_ENTRY_SHARE = 0.6;
 // awards without competition were rarer among convicted contracts (0 % vs 6 %); a token point is kept.
 const CO_REPETITION_POINTS = 1;
 // Buyer share (v3.7): a contract of at least 5 % of its buyer's contract total for its signing year; among
-// contracts in Colombian corruption convictions LR 2.64, 10 x log2 = 14 points. Only 2025 is a complete
+// contracts in Colombian corruption convictions LR 2.4, but at the same contract value, allowing convicted prices
+// 30 % overpricing, only LR 1.64 (25th percentile 1.39): 4.7 points since v3.8
+// (research/calibration/colombia-buyer-share-size-results.json, fine value bands;
+// 14 in v3.7, which measured contract size, favoured by prosecutions). Only 2025 is a complete
 // signing year in the bundled cohort. The tested total merges SECOP I and II: SECOP I contracts signed in
 // 2025 are not in this extract, so their declared total is added (datos.gov.co f789-7hwg, sum of
 // cuantia_contrato, anno_firma_contrato 2025, queried 2026-10-15; x6v4-i8gf and Usaquén: none).
 const CO_BUYER_SHARE = 0.05;
-const CO_BUYER_SHARE_POINTS = 14;
+const CO_BUYER_SHARE_POINTS = 4.7;
 const CO_COMPLETE_YEARS = { 'secop2-three-buyers-2024-2026': new Set(['2025']) };
 const CO_SECOP1_TOTALS = { '899999001|2025': 77864151275, '890801052|2025': 37103760417 };
 
@@ -393,8 +396,9 @@ function getLegalContext(contract) {
   return citations;
 }
 
-// v3.7: editorial (unmeasured) points are capped at 30, the strongest measured value so far (Ukrainian
-// buyer share, LR 8). Points from labelled cases are 10 x log2(LR): 40 would claim LR 16, 60 LR 64.
+// v3.7: editorial (unmeasured) points are capped at 30, then the strongest measured value (Ukrainian buyer
+// share, LR 8). v3.8 found that value was contract size (now 2.2 points); the cap is kept pending an owner
+// decision, although no measured check now scores above 11. Points from labelled cases are 10 x log2(LR).
 const EDITORIAL_MAX = 30;
 // Checks whose points come from labelled cases (court verdicts, competition-authority decisions); every other
 // check carries editorial points. Shown next to the points in the record panel, the badges and exports.
@@ -721,7 +725,7 @@ function getAssessmentSecop2(c) {
     !bs.complete ? `This cohort does not cover the buyer’s whole signing year ${bs.year || '(unknown)'}: share not assessable.` :
     bs.share == null ? 'Amount not in COP: not compared with the buyer’s COP total (no currency conversion).' :
     `${(bs.share * 100).toFixed(1)} % of this buyer’s COP contract total for ${bs.year} (${Math.round(bs.total).toLocaleString('en')} COP, contracts signed that year${bs.secop1 ? `, including ${Math.round(bs.secop1).toLocaleString('en')} COP declared in SECOP I` : ''}). ` +
-    (bs.share >= CO_BUYER_SHARE ? `${CO_BUYER_SHARE_POINTS} points at 5 % or more, all modalities: among contracts in Colombian corruption convictions a contract this large relative to its buyer was about 2.6 times as frequent as among the same buyers’ other contracts. Large purchases are often lawful; this check does not assess need or price.` : 'Below the 5 % threshold.'));
+    (bs.share >= CO_BUYER_SHARE ? `${CO_BUYER_SHARE_POINTS} points at 5 % or more, all modalities: among contracts in Colombian corruption convictions a contract this large relative to its buyer was about 2.4 times as frequent as among the same buyers’ other contracts, but at the same contract value only about 1.6 times: most of the difference is size, which prosecutions favour. Large purchases are often lawful; this check does not assess need or price.` : 'Below the 5 % threshold.'));
   const concentration = c.secop2Concentration;
   add('secop2-concentration', 'Concentrated awards within a contract type', 'competition',
     (c.supplierIds || []).length > 1 ? 'no' : supplierIdentity ? 'yes' : 'unknown',
@@ -846,12 +850,14 @@ function getAssessmentDncp(c) {
 // labels and scope. Methods: docs/score-ukraine.md, docs/score-ted.md. Checks were
 // fixed before these cohorts were downloaded; French thresholds are not applied.
 // Ukrainian points from labelled cases (docs/score-ukraine.md, research/calibration/ukraine-results-2026-10-14.md).
-const UA_POINTS = { amendments3: 6, amendments5: 10, termExtension: 4, termExtensionBonus: 6, betterBidDisqualified: 4, buyerShare: 30, directContract: 11 };
+const UA_POINTS = { amendments3: 6, amendments5: 10, termExtension: 4, termExtensionBonus: 6, betterBidDisqualified: 4, buyerShare: 2.2, directContract: 11 };
 // D2 (v3.7): a direct-contract report of at least UAH 200,000, the open-tender threshold for goods and services
 // (research/calibration/ukraine-candidate-indicators.md, census on the linked conviction cohort: LR 2.18).
 const UA_DIRECT_CONTRACT_MIN = 200000;
 // R1 (v3.6): a contract of at least 5 % of the buyer's UAH contract total for the tender's creation year
-// (research/calibration/ukraine-candidate-indicators.md, part 4). Assessed only for buyer-years the cohort
+// (research/calibration/ukraine-candidate-indicators.md, part 4). v3.8: 2.2 points (30 in v3.6-3.7): at the same
+// contract value, allowing convicted prices 30 % overpricing, the LR is 1.21 (25th percentile 1.16), so the
+// unadjusted LR 6.5 measured size, which prosecutions favour (research/calibration/ukraine-buyer-share-size-results.json). Assessed only for buyer-years the cohort
 // covers completely; the bundled cohort runs 2024-09-01 → 2026-09-01, so only 2025 is complete.
 const UA_BUYER_SHARE = 0.05;
 const UA_COMPLETE_YEARS = { 'prozorro-3buyers-2024-2026': new Set(['2025']) };
@@ -952,7 +958,7 @@ function getAssessmentNational(c) {
       !bs.complete ? `This cohort does not cover the buyer’s whole year ${bs.year || '(unknown)'}: share not assessable.` :
       bs.share == null ? 'Amount not in UAH: not compared with the buyer’s UAH total (no currency conversion).' :
       `${(bs.share * 100).toFixed(1)} % of this buyer’s UAH contract total for ${bs.year} (${Math.round(bs.total).toLocaleString('en')} UAH, contracts of tenders created that year). ` +
-      (bs.share >= UA_BUYER_SHARE ? `${UA_POINTS.buyerShare} points at 5 % or more, all procedures: among Ukrainian tenders in criminal verdicts a contract this large relative to its buyer was about 8 times as frequent as among the same buyers’ other tenders. Large purchases are often lawful; this check does not assess need or price.` : 'Below the 5 % threshold.'));
+      (bs.share >= UA_BUYER_SHARE ? `${UA_POINTS.buyerShare} points at 5 % or more, all procedures: among Ukrainian tenders in criminal verdicts a contract this large relative to its buyer was about 6.5 times as frequent as among the same buyers’ other tenders, but at the same contract value only about 1.2 times: most of the difference is size, which prosecutions favour. Large purchases are often lawful; this check does not assess need or price.` : 'Below the 5 % threshold.'));
     const dq = c.disqualifiedBefore;
     add('ua-better-bid-disqualified', 'Better-ranked bidder disqualified before the award', 'competition', competitive ? 'yes' : direct ? 'no' : unknownKind, Number.isInteger(dq), dq > 0, UA_POINTS.betterBidDisqualified,
       !competitive ? (direct ? 'Procedure without competition: no ranking of bids.' : spec.outOfScope.directKind) :

@@ -88,7 +88,7 @@ check(ext(Math.round(3*3*30.4375)).weight===30&&ext(10000).weight===30);
 check(ext(0).status==='clear'&&ext(null).status==='unknown');
 check(run('getAssessment',{...rows[0],durationOriginal:'7 Hora(s)',daysAdded:30}).checks.find(r=>r.id==='secop2-term-extension').status==='unknown');
 check(positives===279&&zeros===7281&&nulls===0&&flagged===279&&partials===4170);
-check(scores.get(18)===176&&!scores.has(36)&&scores.get(14)===8&&scores.get(30)===6&&!scores.has(40)&&scores.get(10.3)===18);
+check(scores.get(18)===176&&!scores.has(36)&&scores.get(14)===1&&scores.get(4.7)===7&&scores.get(30)===6&&!scores.has(40)&&scores.get(10.3)===18);
 check(run('selectContracts',rows,{assessment:'unevaluated'}).length===0);
 check(run('selectContracts',rows,{assessment:'zero'}).length===7281);
 check(run('selectContracts',rows,{assessment:"partial"}).length===4170);
@@ -109,7 +109,7 @@ check(amountRow&&run('getVigilanceScore',amountRow)===run('getVigilanceScore',{.
 check(rows.filter(c=>c.coBuyerShare.complete).every(c=>c.coBuyerShare.year==='2025'));
 const share=c=>run('getAssessment',c).checks.find(r=>r.id==='secop2-buyer-share');
 const big=rows.find(c=>c.coBuyerShare.complete&&c.coBuyerShare.share>=0.05);
-check(share(big).status==='signal'&&share(big).weight===14&&share(big).family==='competition');
+check(share(big).status==='signal'&&share(big).weight===4.7&&share(big).family==='competition');
 check(share({...big,coBuyerShare:{...big.coBuyerShare,share:0.049}}).status==='clear');
 check(share({...big,coBuyerShare:{...big.coBuyerShare,complete:false}}).status==='unknown');
 check(share({...big,coBuyerShare:{...big.coBuyerShare,share:null}}).status==='unknown');
