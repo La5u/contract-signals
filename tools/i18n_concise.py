@@ -45,7 +45,7 @@ EXACT = [
 ]
 
 PATTERNS = [
-    ("{a} records loaded locally.", "{a} registros cargados localmente.", "{a} enregistrements chargés localement."),    ("Missing values: {a} amounts, {b} offer counts, {c} durations ({d} records).", "Valores ausentes: {a} importes, {b} recuentos de ofertas, {c} duraciones ({d} registros).", "Valeurs manquantes : {a} montants, {b} nombres d’offres, {c} durées ({d} enregistrements)."),
+    ("{a} records loaded locally.", "{a} registros cargados localmente.", "{a} enregistrements chargés localement."),
     ("{a} record summaries copied with source links.", "{a} resúmenes de registros copiados con enlaces a las fuentes.", "{a} résumés d’enregistrements copiés avec les liens vers les sources."),
     ("Context · {a} cited", "Contexto · {a} citado", "Contexte · {a} cité"),
 ]
