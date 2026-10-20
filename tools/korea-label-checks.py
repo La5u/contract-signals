@@ -168,7 +168,7 @@ def build_checks(contracts):
             'G3 buyer share >= 5 %': st(None if not total[key] else c['amount'] / total[key] >= 0.05),
             'G4 concentration': st(None if not s or n < 10 else g[s] / n >= 0.6),
             'G5 3+ changes': st(None if not c['window_complete'] or c['long_term'] else c['changes'] >= 3),
-            'G6 amount increase > 20 %': st(None if not c['amount'] or c['long_term'] else c['last_amount'] > 1.2 * c['amount']),
+            'G6 amount increase > 20 %': st(None if not c['amount'] or not c['window_complete'] or c['long_term'] else c['last_amount'] > 1.2 * c['amount']),
             'N1 December signature': st(c['date'].month == 12),
             'N2 weekend signature': st(c['date'].weekday() >= 5),
             'N4 supplier dependence >= 25 %': st(None if not s or not total[key] else value_by[key + (s,)] / total[key] >= 0.25),
