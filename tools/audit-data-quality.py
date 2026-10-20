@@ -17,6 +17,9 @@ from pathlib import Path
 import re
 import tempfile
 from urllib.parse import urlsplit
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import datasets  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_QUEUE = Path.home() / '.cache/contract-signals/accuracy-review'
@@ -42,30 +45,22 @@ FILE_KEYS = {'data/decp-cities.json': 'cities'}  # the six-city import inside th
 
 
 def published_datasets(root):
-    """Read the current one-entry-per-line JS registry; fail on format drift."""
-    text = (root / 'script.js').read_text(encoding='utf-8')
-    match = re.search(r'\bconst datasets = \{\n(.*?)^  \};', text, re.M | re.S)
-    if not match:
-        raise ValueError('Cannot locate explicit datasets registry')
+    """Published files per explorer dataset (datasets.js); fail on format drift."""
     entries = []
-    for line in match[1].splitlines():
-        if not line.strip():
-            continue
-        key = re.match(r'\s*([a-z][A-Za-z0-9]*): \{', line)
-        single = re.search(r"\bpath: '([^']+)'", line)
-        several = re.search(r"\bpath: \[([^\]]+)\]", line)
+    for key, entry in datasets(root).items():
         # A remote dataset (South Korea) is served from another host: no file in this repository.
-        if key and re.search(r"\bremote: '", line) and not single and not several:
+        if entry.get('remote') and 'path' not in entry:
             continue
-        if not key or (not single and not several and not re.search(r'\bpath: null\b', line)):
+        if 'path' not in entry:
             raise ValueError('Unsupported datasets registry format')
-        files = [single[1]] if single else re.findall(r"'([^']+)'", several[1]) if several else []
+        path = entry['path']
+        files = [] if path is None else [path] if isinstance(path, str) else path
         for file in files:
             relative = Path(file)
             if relative.is_absolute() or '..' in relative.parts or relative.suffix != '.json' or relative.parts[0] != 'data':
                 raise ValueError('Unsupported published path')
             # One explorer dataset may load several import files; each keeps its audit key.
-            entries.append((FILE_KEYS.get(relative.as_posix(), key[1]), relative.as_posix()))
+            entries.append((FILE_KEYS.get(relative.as_posix(), key), relative.as_posix()))
     if not entries or len(set(k for k, _ in entries)) != len(entries):
         raise ValueError('Empty or duplicate datasets registry')
     return entries

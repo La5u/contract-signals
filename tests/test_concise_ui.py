@@ -24,9 +24,8 @@ class ConciseUI(unittest.TestCase):
         sys.path.insert(0, str(ROOT / "tools"))
         from i18n_table import EXACT
         translations = {row[0] for row in EXACT}
-        script = (ROOT / "script.js").read_text()
-        definitions = script.split("const datasets = {", 1)[1].split("let datasetMetadata", 1)[0]
-        notes = re.findall(r"note: '([^']*)'", definitions)
+        from common import datasets
+        notes = [d["note"] for d in datasets(ROOT).values() if "note" in d]
         self.assertEqual(len(notes), 16)  # the two DECP datasets are one since 2026-10-08; the combined view was removed after v3.7; South Korea added 2026-10-17; the Ukraine sample and the progressive all-collections scan added 2026-10-18
         for note in notes:
             self.assertLess(len(note), 400, note)

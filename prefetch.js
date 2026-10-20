@@ -3,22 +3,8 @@
 // Files are the browser copies: data/web/ omits archival fields the explorer never reads
 // (tools/build-web-data.py).
 (function () {
-  const files = {
-    tours: ['data/tours-notices.json'],
-    consultations: ['data/consultations.json'],
-    decp: ['data/web/decp-history.json', 'data/web/decp-cities.json'],
-    boamp: ['data/contracts.json'],
-    colombia: ['data/web/colombia-secop2.json'],
-    paraguay: ['data/paraguay-dncp.json'],
-    paraguay3: ['data/paraguay-dncp-3buyers.json'],
-    ukraine: ['data/prozorro.json'],
-    ukraineSample: ['data/prozorro-slice-2026-06-08/contracts.json'],
-    chile: ['data/chile-mp.json'],
-    uk: ['data/uk-fts.json'],
-    portugal: ['data/ted-portugal.json'],
-    czechia: ['data/ted-czechia.json'],
-    romania: ['data/ted-romania.json'],
-  };
+  // Browser copies where they exist, else the published files (datasets.js).
+  const files = Object.fromEntries(Object.entries(globalThis.DATASETS).filter(([, d]) => d.path).map(([key, d]) => [key, d.web || [].concat(d.path)]));
   // Interface language, decided once here (i18n.js uses it): only that dictionary is loaded.
   // Same order as i18n.js: ?lang=, the saved choice, then the browser's languages.
   const LANGS = ['en', 'es', 'fr'];

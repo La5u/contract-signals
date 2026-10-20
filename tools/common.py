@@ -19,6 +19,16 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def datasets(root=ROOT):
+    """The explorer's dataset list (datasets.js; Node: tools/datasets.cjs), parsed as JSON."""
+    text = (Path(root) / 'datasets.js').read_text(encoding='utf-8')
+    prefix = 'globalThis.DATASETS = '
+    start = text.find(prefix)
+    if start < 0:
+        raise ValueError('datasets.js: DATASETS not found')
+    return json.loads(text[start + len(prefix):].strip().removesuffix(';'))
+
+
 def canonical(value):
     """Canonical JSON bytes for hashing: sorted keys, no spaces, UTF-8, NaN refused."""
     return json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(',', ':'), allow_nan=False).encode()

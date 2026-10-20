@@ -1,9 +1,8 @@
 """The browser copies in data/web/ (slim record files, first pages) must match what their
-builders produce from the current data and script.js, and prefetch.js must list the same
-datasets and files as script.js."""
+builders produce from the current data and script.js, and each dataset's browser files in
+datasets.js must be the copies of its published files."""
 import importlib.util
 import json
-import re
 import subprocess
 import sys
 import unittest
@@ -13,20 +12,8 @@ ROOT = Path(__file__).resolve().parent.parent
 spec = importlib.util.spec_from_file_location('build_web_data', ROOT / 'tools' / 'build-web-data.py')
 build = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(build)
-
-
-def prefetch_files():
-    text = (ROOT / 'prefetch.js').read_text(encoding='utf-8')
-    block = text[text.index('const files = {'):text.index('};', text.index('const files = {'))]
-    return {key: re.findall(r"'([^']+)'", files) for key, files in re.findall(r"(\w+): \[([^\]]*)\]", block)}
-
-
-def script_paths():
-    text = (ROOT / 'script.js').read_text(encoding='utf-8')
-    out = {}
-    for key, value in re.findall(r"^    (\w+): \{ path: (\[[^\]]*\]|'[^']+')", text, re.M):
-        out[key] = re.findall(r"'([^']+)'", value)
-    return out
+sys.path.insert(0, str(ROOT / 'tools'))
+from common import datasets  # noqa: E402
 
 
 class WebData(unittest.TestCase):
@@ -38,13 +25,13 @@ class WebData(unittest.TestCase):
         result = subprocess.run(['node', str(ROOT / 'tools' / 'build-first-pages.cjs'), '--check'], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr)
 
-    def test_prefetch_lists_script_datasets(self):
-        web = prefetch_files()
-        canonical = script_paths()
-        self.assertEqual(set(web), set(canonical))
-        for key, files in canonical.items():
+    def test_browser_files_are_the_copies(self):
+        for key, entry in datasets(ROOT).items():
+            if 'path' not in entry:
+                continue
+            files = [entry['path']] if isinstance(entry['path'], str) else entry['path']
             expected = [f'data/web/{Path(f).name}' if Path(f).name in build.DROP else f for f in files]
-            self.assertEqual(web[key], expected, key)
+            self.assertEqual(entry.get('web', files), expected, key)
 
     def test_dropped_fields_unused_by_explorer(self):
         code = ''.join((ROOT / name).read_text(encoding='utf-8') for name in ['script.js', 'import.js', 'indicator-evidence.js'])
