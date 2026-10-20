@@ -15,19 +15,14 @@ Changes no score, weight or dataset.
 import argparse
 import bisect
 import gzip
-import importlib.util
 import json
 from collections import Counter, defaultdict
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import load  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
-
-
-def load(name, path):
-    spec = importlib.util.spec_from_file_location(name, ROOT / path)
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    return mod
 
 
 rel = load('relative', 'tools/ukraine-relative-candidates.py')

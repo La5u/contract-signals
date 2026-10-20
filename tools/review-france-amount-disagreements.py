@@ -5,25 +5,19 @@ No network, replacements, ranking changes, annualisation or financial equivalenc
 Detailed queue and provenance are written exclusively to a new private cache run.
 """
 import gzip
-import hashlib
 import json
 import os
 from pathlib import Path
 import tempfile
 from collections import Counter, defaultdict
 from decimal import Decimal, InvalidOperation
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import sha as digest, many, text  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = Path.home() / '.cache/contract-signals'
 DATASETS = ('data/decp-history.json', 'data/decp-cities.json')
-
-
-def many(value):
-    return value if isinstance(value, list) else [] if value is None else [value]
-
-
-def text(value):
-    return value.get('#text') if isinstance(value, dict) else value
 
 
 def number(value):
@@ -110,10 +104,6 @@ def reconcile(row, declarations, notices):
             'unknowns': ['annual_or_full_term_not_established', 'signed_contract_and_actual_spend_not_verified',
                          'declaration_tax_and_period_not_independently_verified',
                          'source_routes_not_independent_votes', 'no_amount_precedence_established']}
-
-
-def digest(blob):
-    return hashlib.sha256(blob).hexdigest()
 
 
 def build(root=ROOT, cache=CACHE):

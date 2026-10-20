@@ -2,7 +2,6 @@
 """Bounded public search audit; default replays committed minimized evidence offline."""
 import argparse
 from contextlib import contextmanager
-import hashlib
 import json
 import math
 import os
@@ -14,6 +13,9 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import canonical, sha as digest, without_hashes  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / 'data/ukraine-discovery-evidence.json'
@@ -26,22 +28,8 @@ TENDER_ID = r'UA-\d{4}-\d{2}-\d{2}-\d+-[a-zA-Z0-9]+'
 INTEGRITY_LABEL = 'local minimized evidence integrity; not remote authentication'
 
 
-def canonical(value):
-    return json.dumps(value, sort_keys=True, separators=(',', ':'), ensure_ascii=False,
-                      allow_nan=False).encode()
-
-
 def checksum(result):
     return digest(canonical({k: v for k, v in result.items() if k != 'integrity'}))
-
-
-def without_hashes(value):
-    if isinstance(value, dict):
-        return {k: without_hashes(v) for k, v in value.items()
-                if k not in ('inputHashes', 'rawSnapshotHashes', 'checksum') and not k.lower().endswith('sha256')}
-    if isinstance(value, list):
-        return [without_hashes(v) for v in value]
-    return value
 
 
 def strict_json(body):
@@ -92,10 +80,6 @@ def private_directory(value):
         return p, child
     finally:
         os.close(fd)
-
-
-def digest(body):
-    return hashlib.sha256(body).hexdigest()
 
 
 def url(page, window=False):

@@ -124,7 +124,7 @@ class DiscoveryTests(unittest.TestCase):
     def test_offline_fresh_without_private_cache(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            for name in ('tools/audit-ukraine-discovery.py', 'data/ukraine-discovery-evidence.json',
+            for name in ('tools/audit-ukraine-discovery.py', 'tools/common.py', 'data/ukraine-discovery-evidence.json',
                          'data/prozorro/raw/manifest.json', 'data/prozorro-audit.json'):
                 target = root / name
                 target.parent.mkdir(parents=True, exist_ok=True)

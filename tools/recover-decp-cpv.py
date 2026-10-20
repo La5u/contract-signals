@@ -3,7 +3,6 @@
 import argparse
 from collections import Counter, defaultdict
 import gzip
-import hashlib
 import json
 from pathlib import Path
 import re
@@ -11,6 +10,9 @@ import subprocess
 import urllib.request
 import xml.etree.ElementTree as ET
 import zipfile
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import sha  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = Path.home() / '.cache/contract-signals/decp-cpv'
@@ -21,10 +23,6 @@ RETAINED = ('data/decp-cities-raw.json', 'data/decp-history-raw.json.gz',
 FULL = re.compile(r'[0-9]{8}-[0-9]\Z')
 SHORT = re.compile(r'[0-9]{8}\Z')
 LIMIT = 40 * 1024 * 1024
-
-
-def sha(blob):
-    return hashlib.sha256(blob).hexdigest()
 
 
 def row_hash(row):

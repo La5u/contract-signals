@@ -24,6 +24,7 @@ import os
 import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from personal_ids import mask, mask_ids  # noqa: E402
+from common import load_gz  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data/chile-mp/raw"
@@ -63,10 +64,6 @@ def get_bytes(url):
 def save_gz(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_bytes(gzip.compress(data, mtime=0))
-
-
-def load_gz(path):
-    return json.loads(gzip.decompress(path.read_bytes()))
 
 
 def discover():

@@ -12,7 +12,6 @@ importer mistake shows up as published != cached raw; later publisher edits as c
 import argparse
 from datetime import datetime, timezone
 import gzip
-import hashlib
 import json
 import os
 from pathlib import Path
@@ -23,6 +22,7 @@ import urllib.request
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'tools'))
 from personal_ids import mask  # noqa: E402
+from common import sha, without_hashes  # noqa: E402
 
 ROWS = 'data/prozorro.json'
 RAW = ROOT / 'data/prozorro/raw/records'
@@ -38,19 +38,6 @@ COMPETITIVE = {'aboveThreshold', 'aboveThresholdEU', 'aboveThresholdUA', 'belowT
 FIELDS = ['tenderID', 'procedureId', 'contractId', 'awardId', 'lotId', 'lotCount', 'buyer', 'buyerId', 'supplier',
           'supplierIds', 'date', 'amount', 'currency', 'procedure', 'category', 'cpv', 'description', 'offers',
           'complaintCount', 'tenderCreated']
-
-
-def sha(blob):
-    return hashlib.sha256(blob).hexdigest()
-
-
-def without_hashes(value):
-    if isinstance(value, dict):
-        return {k: without_hashes(v) for k, v in value.items()
-                if k not in ('inputHashes', 'rawSnapshotHashes', 'checksum') and not k.lower().endswith('sha256')}
-    if isinstance(value, list):
-        return [without_hashes(v) for v in value]
-    return value
 
 
 def plan():

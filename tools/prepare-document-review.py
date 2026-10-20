@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """Freeze an offline, exact-ID document reading queue; no validation claims or fetching."""
 import argparse
-import hashlib
 import json
 import math
 import os
 from pathlib import Path
 import subprocess
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import canonical, sha as digest  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_PLAN = Path.home() / '.cache/contract-signals/document-review/plan.json'
@@ -61,15 +63,6 @@ URL_HOSTS = {
     'awardUrl': {'www.contrataciones.gov.py'},
     'signedDocumentUrls': {'www.contrataciones.gov.py'},
 }
-
-
-def digest(blob):
-    return hashlib.sha256(blob).hexdigest()
-
-
-def canonical(value):
-    return json.dumps(value, sort_keys=True, ensure_ascii=False,
-                      separators=(',', ':'), allow_nan=False).encode('utf-8')
 
 
 def official_urls(row):

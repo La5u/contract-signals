@@ -12,26 +12,21 @@ elsewhere. Changes no score, weight or dataset.
 """
 import argparse
 import gzip
-import importlib.util
 import json
 import re
 import zipfile
 from datetime import date
 from pathlib import Path
 from xml.etree.ElementTree import iterparse
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import load  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = Path.home() / '.cache/contract-signals'
 SNAPSHOT = CACHE / 'ukraine-edr/2026-10-13'
 CANDIDATES = ['R1 shared-owner', 'R2 official-owner', 'R3 young-winner']
 YOUNG_DAYS = 365
-
-
-def load(name, path):
-    spec = importlib.util.spec_from_file_location(name, ROOT / path)
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    return mod
 
 
 ci = load('ukraine_candidate_indicators', 'tools/ukraine-candidate-indicators.py')

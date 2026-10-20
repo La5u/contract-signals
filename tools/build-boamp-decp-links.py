@@ -9,6 +9,9 @@ import json
 from pathlib import Path
 import re
 from urllib.parse import urlsplit
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import many  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 INPUTS = ('data/contracts.json', 'data/decp-history.json', 'data/decp-cities.json',
@@ -24,10 +27,6 @@ def official_url(value):
                 and not u.password and u.port in (None, 443))
     except (ValueError, TypeError):
         return False
-
-
-def many(value):
-    return value if isinstance(value, list) else [] if value is None else [value]
 
 
 def text(value):

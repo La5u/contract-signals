@@ -22,6 +22,8 @@ import shutil
 import sys
 import tempfile
 import zipfile
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import sha as sha256, write_private  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 PLAN = ROOT / 'data/portugal-base-download-plan.json'
@@ -306,10 +308,6 @@ def json_bytes(value):
                        indent=2) + '\n').encode('utf-8')
 
 
-def sha256(blob):
-    return hashlib.sha256(blob).hexdigest()
-
-
 def bounded_read(path, limit=MAX_CANDIDATE_BYTES):
     with Path(path).open('rb') as stream:
         blob = stream.read(limit + 1)
@@ -510,14 +508,6 @@ def archive_rows(archive_dir, provenance):
                     fail('Unexpected, encrypted or oversized JSON member.')
                 with archive.open(matches[0]) as member:
                     yield year, iter_json_array(member)
-
-
-def write_private(path, blob):
-    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
-    with os.fdopen(fd, 'wb') as stream:
-        stream.write(blob)
-        stream.flush()
-        os.fsync(stream.fileno())
 
 
 def extract(candidate_dir, archive_dir, plan_path=PLAN, downloads_path=DOWNLOADS):
