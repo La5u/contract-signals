@@ -18,7 +18,7 @@ const DEFAULT_VIEW = { search: '', minimum: 0, minScore: 0, flagged: false, offi
 
 const files = require('./datasets.cjs').browserFiles();
 const explorer = vm.createContext({ URL, console });
-vm.runInContext(fs.readFileSync(path.join(ROOT, 'script.js'), 'utf8'), explorer);
+require('./engine.cjs').load(explorer);
 
 function firstPage(key) {
   const data = files[key].flatMap(file => JSON.parse(fs.readFileSync(path.join(ROOT, file), 'utf8')));

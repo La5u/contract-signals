@@ -1,0 +1,138 @@
+// Ukraine (Prozorro), TED eForms (Portugal, Romania, Czechia), Chile and the UK: one check set with
+// per-family labels and scope (docs/score-ukraine.md, docs/score-ted.md); South Korea is not assessed.
+'use strict';
+
+// South Korea (KONEPS): shown for browsing; no check is scored until the Korean checks are fixed and
+// calibrated on court rulings and Fair Trade Commission decisions (research/calibration/korea-labels-plan.md).
+const KONEPS_NOT_ASSESSED = 'Korean checks are not set yet: this contract is shown for browsing and is not assessed. They will be calibrated on court rulings and Fair Trade Commission decisions first.';
+function getAssessmentKoneps() {
+  return { checks: [], applicable: 0, evaluated: 0, unknown: 0, unknownApplicability: 0, notApplicable: 0, signals: 0, excludedReason: KONEPS_NOT_ASSESSED };
+}
+
+// Ukraine (Prozorro) and Portugal/Romania (TED eForms): one engine, per-family
+// labels and scope. Methods: docs/score-ukraine.md, docs/score-ted.md. Checks were
+// fixed before these cohorts were downloaded; French thresholds are not applied.
+// Ukrainian points from labelled cases (docs/score-ukraine.md, research/calibration/ukraine-results-2026-10-14.md).
+const UA_POINTS = { amendments3: 6, amendments5: 10, termExtension: 4, termExtensionBonus: 6, betterBidDisqualified: 4, buyerShare: 2.2, directContract: 11 };
+// D2 (v3.7): a direct-contract report of at least UAH 200,000, the open-tender threshold for goods and services
+// (research/calibration/ukraine-candidate-indicators.md, census on the linked conviction cohort: LR 2.18).
+const UA_DIRECT_CONTRACT_MIN = 200000;
+// R1 (v3.6): a contract of at least 5 % of the buyer's UAH contract total for the tender's creation year
+// (research/calibration/ukraine-candidate-indicators.md, part 4). v3.8: 2.2 points (30 in v3.6-3.7): at the same
+// contract value, allowing convicted prices 30 % overpricing, the LR is 1.21 (25th percentile 1.16), so the
+// unadjusted LR 6.5 measured size, which prosecutions favour (research/calibration/ukraine-buyer-share-size-results.json). Assessed only for buyer-years the cohort
+// covers completely; the bundled cohort runs 2024-09-01 → 2026-09-01, so only 2025 is complete.
+const UA_BUYER_SHARE = 0.05;
+const UA_COMPLETE_YEARS = { 'prozorro-3buyers-2024-2026': new Set(['2025']) };
+// Random samples of tenders, not every tender of a buyer: repetition, concentration and buyer share are not assessable.
+const UA_SAMPLE_COHORTS = new Set(['prozorro-abovethreshold-2026-06-08']);
+const UA_SAMPLE_REASON = 'Random sample of tenders, not every tender of this buyer: not assessable.';
+const UA_TERM_EXTENSION_TYPES = ['durationExtension', 'fiscalYearExtension'];
+const NATIONAL_FAMILIES = {
+  // Ukraine v3.5: points from court verdicts and bid-rigging decisions (docs/score-ukraine.md). Other
+  // countries keep their own points: a check's weight is set per jurisdiction, never shared by default.
+  prozorro: { prefix: 'ua', doc: 'docs/score-ukraine.md', category: c => c.category, notScored: new Set(['reporting']), singleOfferPoints: 1, directAwardPoints: 10,
+    directLabel: 'Negotiated procedure without competition', directReason: 'negotiation or negotiation.quick',
+    outOfScope: { directKind: 'Offer and direct-award checks are excluded for direct-contract reports (reporting), which are recorded without a procedure. Concentration remains assessable where cohort data permits.',
+      increase: 'Linked contract samples expose change metadata, not comparable dated amounts: increase out of scope.' } },
+  // Romania v3.7: Competition Council bid-rigging decisions measured repeated awards without competition
+  // (LR 0.38) and concentration (LR 1.09, fails the holdout); a token point each. Czechia and Portugal unchanged.
+  ted: { prefix: 'ted', doc: 'docs/score-ted.md', notScored: new Set(), category: c => /^\d{8}/.test(c.cpv || '') ? c.cpv.slice(0, 2) : null,
+    countryPoints: { ROU: { repeatedDirect: 1, concentration: 1, source: 'Romanian Competition Council bid-rigging decisions' } },
+    directLabel: 'Negotiated without prior publication', directReason: 'eForms procedure code neg-wo-call',
+    outOfScope: { directKind: 'Procedure code outside the known competitive/direct list: not assessed.',
+      increase: 'Contract modification notices are separate TED notices, not imported: increase out of scope.' } },
+  fts: { prefix: 'uk', doc: 'docs/score-uk.md', notScored: new Set(), category: c => /^\d{8}/.test(c.cpv || '') ? c.cpv.slice(0, 2) : null,
+    directLabel: 'Award without prior publication', directReason: 'OCDS procurementMethod limited',
+    outOfScope: { directKind: 'Procurement method not published in this notice: not assessed.',
+      increase: 'Contract change notices are separate Find a Tender notices, not imported: increase out of scope.' } },
+  chile: { prefix: 'cl', doc: 'docs/score-chile.md', notScored: new Set(), category: c => c.category || null,
+    directLabel: 'Direct deal (trato directo)', directReason: 'trato directo',
+    directOutOfScope: 'This source lists licitaciones only: direct deals (trato directo) are published as purchase orders, not imported. Out of scope, not clear.',
+    outOfScope: { directKind: 'Procedure name not published: not assessed.',
+      increase: 'Contract modifications are not in this OCDS source: increase out of scope.' } },
+};
+function nationalSupplierIdentity(c) {
+  // Find a Tender rows carry the platform party id, plus a Companies House number when published.
+  const ids = c.dataFamily === 'fts' ? (c.supplierIds || []).filter(x => x.identifierType === 'GB-FTS') : c.supplierIds || [];
+  if (ids.length !== 1) return null;
+  const { id, identifierType } = ids[0];
+  return ['EDRPOU', 'RNOKPP', 'NIF', 'CUI', 'ICO', 'GB-FTS', 'CL-RUT'].includes(identifierType) && typeof id === 'string' && id.trim() ? `${identifierType}:${id.trim()}` : null;
+}
+function nationalOffersKnown(c) { return Number.isInteger(c.offers) && c.offers > 0; }
+function nationalSingle(c) { return c.procedureDirect === false && c.offers === 1; }
+function getAssessmentNational(c) {
+  const spec = NATIONAL_FAMILIES[c.dataFamily];
+  const excludedReason = c.dataStatus === 'unverified' ? 'Unverified record: calculations excluded.' : null;
+  const checks = [];
+  function add(id, label, family, applicability, evaluable, triggered, weight, reason) {
+    if (excludedReason) { applicability = 'unknown'; evaluable = false; reason = excludedReason; }
+    const status = applicability === 'no' ? 'not-applicable' : applicability !== 'yes' || !evaluable ? 'unknown' : triggered ? 'signal' : 'clear';
+    const severity = indicatorSeverity(weight || 0);
+    checks.push({ id, label, family, applicability, status, weight: status === 'signal' ? weight : null, reason, explanation: reason, severity: severity.id, severityLabel: severity.label });
+  }
+  const p = spec.prefix, competitive = c.procedureDirect === false, direct = c.procedureDirect === true, supplier = nationalSupplierIdentity(c);
+  // A known type the method deliberately does not score is out of scope, not unknown.
+  const unknownKind = spec.notScored.has(c.procedure) ? 'no' : 'unknown';
+  const singlePoints = spec.singleOfferPoints ?? 12;
+  add(`${p}-single-offer`, 'Single offer in a competitive procedure', 'competition', competitive ? 'yes' : direct ? 'no' : unknownKind, nationalOffersKnown(c), c.offers === 1, singlePoints,
+    direct ? 'Procedure without competition: one offer is expected, not a signal.' : !competitive ? spec.outOfScope.directKind :
+    !nationalOffersKnown(c) ? (c.offersNote || 'Number of offers for this lot not published.') :
+    singlePoints === 12 ? `${c.offers} offer(s) published for this lot (${c.procedure}). One offer: 12 points, all amounts. Admissibility is not assessed.` :
+    `${c.offers} offer(s) published for this lot (${c.procedure}). One offer: ${singlePoints} point(s), all amounts, lowered from 12 because among Ukrainian tenders in criminal verdicts it was less frequent than among the same buyers' other tenders. Admissibility is not assessed.`);
+  const directPoints = spec.directAwardPoints ?? 18, countryPoints = spec.countryPoints?.[c.country];
+  add(`${p}-direct-award`, `Award without competition (${spec.directLabel})`, 'competition', spec.directOutOfScope ? 'no' : c.procedureDirect == null ? unknownKind : 'yes', c.procedureDirect != null, direct, directPoints,
+    spec.directOutOfScope ? spec.directOutOfScope : c.procedureDirect == null ? spec.outOfScope.directKind : direct ? `${c.procedure} (${spec.directReason}): award without a competitive call. ${directPoints === 18 ? '18 points, all amounts.' : `${directPoints} points, all amounts, lowered from 18: among Ukrainian tenders in criminal verdicts negotiated procedures were about twice as frequent as among the same buyers' other tenders.`} A lawful ground may apply (urgency, exclusivity, failed call); not assessed here.` : `Competitive procedure (${c.procedure}): no direct-award signal.`);
+  if (c.dataFamily === 'prozorro') {
+    const reporting = c.procedure === 'reporting', uah = c.currency === 'UAH' && Number.isFinite(c.amount);
+    add('ua-direct-contract', 'Direct contract of UAH 200,000 or more', 'competition', reporting ? 'yes' : 'no', uah, uah && c.amount >= UA_DIRECT_CONTRACT_MIN, UA_POINTS.directContract,
+      !reporting ? 'Not a direct-contract report (reporting): outside this check’s scope.' :
+      !uah ? 'Amount not in UAH: not compared with the UAH threshold (no currency conversion).' :
+      c.amount >= UA_DIRECT_CONTRACT_MIN ? `Direct contract of ${Math.round(c.amount).toLocaleString('en')} UAH, at or above UAH 200,000, the open-tender threshold for goods and services. ${UA_POINTS.directContract} points: among Ukrainian tenders in criminal verdicts direct contracts this large were about twice as frequent as among the same buyers' other completed purchases. Thresholds differ for works (UAH 1.5 million) and some exemptions apply; neither is assessed here.` :
+      'Direct contract below UAH 200,000.');
+  }
+  const rs = c.nationalRepeatedSingle;
+  add(`${p}-repeated-single-offer`, 'Repeated single-offer awards to the same supplier', 'competition', nationalSingle(c) ? 'yes' : competitive && nationalOffersKnown(c) || direct ? 'no' : unknownKind, Boolean(rs), rs?.count >= 3,
+    graduated(rs?.count || 0, 3, 10, 12, EDITORIAL_MAX), !nationalSingle(c) ? 'Not a single-offer competitive award: outside the repetition scope.' : UA_SAMPLE_COHORTS.has(c.cohortId) ? UA_SAMPLE_REASON : rs ? `Same buyer and supplier ${supplier}: ${rs.count} distinct procedure(s) in this cohort won with a single offer. From 12 points at 3, linear to 30 at 10.` : 'Supplier identifier not usable (not a national registration number): repetition not assessable.');
+  const rd = c.nationalRepeatedDirect;
+  add(`${p}-repeated-direct`, 'Repeated awards without competition to the same supplier', 'competition', spec.directOutOfScope ? 'no' : direct ? 'yes' : c.procedureDirect == null ? unknownKind : 'no', Boolean(rd), rd?.count >= 3,
+    countryPoints ? countryPoints.repeatedDirect : graduated(rd?.count || 0, 3, 10, 18, EDITORIAL_MAX), spec.directOutOfScope ? spec.directOutOfScope : !direct ? 'Not an award without competition: outside the repetition scope.' : UA_SAMPLE_COHORTS.has(c.cohortId) ? UA_SAMPLE_REASON : rd ? `Same buyer and supplier ${supplier}: ${rd.count} distinct procedure(s) without competition in this cohort. ${countryPoints ? `${countryPoints.repeatedDirect} point from 3, lowered from 18–60: in ${countryPoints.source} repeated awards without competition were rarer than among the same buyers' other contracts.` : 'From 18 points at 3, linear to 30 at 10.'} Lawful grounds may apply to each.` : 'Supplier identifier not usable: repetition not assessable.');
+  const k = c.nationalConcentration;
+  add(`${p}-concentration`, 'Concentrated awards within a category', 'competition', supplier ? 'yes' : 'unknown', Boolean(k?.sufficient), k?.share >= 0.6,
+    countryPoints ? countryPoints.concentration : graduated(k?.share || 0, 0.6, 1, 12, EDITORIAL_MAX), supplier && UA_SAMPLE_COHORTS.has(c.cohortId) ? UA_SAMPLE_REASON : k ? `Same buyer and category ${k.category}: ${k.wins}/${k.known} procedures won by this supplier, out of ${k.total} (${Math.round(k.coverage * 100)} % with an identified winner; lots of one procedure count once). Minimum 10 and 80 %; ${countryPoints ? `${countryPoints.concentration} point from 60 %, lowered from 12–40: in ${countryPoints.source} concentration was barely more frequent than among the same buyers' other contracts.` : 'from 12 points at 60 % to 30 at 100 %.'} ${k.sufficient ? '' : 'Insufficient sample or coverage: not assessed.'}` : 'Supplier identity or category unknown: applicability not established.');
+  add('amount-increase', 'Relative increase in declared amount', 'execution', 'no', false, false, null, spec.outOfScope.increase);
+  if (c.dataFamily === 'prozorro') {
+    // Prozorro creates awards in ranking order: an unsuccessful award before the
+    // winning one means a better-ranked bid was set aside (docs/score-ukraine.md).
+    const amendments = c.contractChanges, types = c.contractChangeTypes || [];
+    const extended = Number.isInteger(amendments) && types.some(t => UA_TERM_EXTENSION_TYPES.includes(t));
+    const amendmentPoints = (amendments >= 5 ? UA_POINTS.amendments5 : UA_POINTS.amendments3) + (extended ? UA_POINTS.termExtensionBonus : 0);
+    add('ua-contract-amendments', 'Three or more contract amendments', 'execution', 'yes', Number.isInteger(amendments), amendments >= 3, amendmentPoints,
+      !Number.isInteger(amendments) ? 'Contract record not retrieved: amendments not assessable.' :
+      `${amendments} active contract amendment(s). Rationale types: ${types.join(', ') || 'none published'}. Amendments are often lawful (Law on Public Procurement art. 41 permits listed changes). The threshold of three follows StateWatch/Prozorro risk indicator ARI 1-1. ${UA_POINTS.amendments3} points at 3–4 amendments, ${UA_POINTS.amendments5} at 5 or more, plus ${UA_POINTS.termExtensionBonus} when an amendment extends the contract term.`);
+    // A separate check so it can be filtered; with three or more amendments it counts through the bonus above (family maximum).
+    add('ua-term-extension', 'Contract term extended by amendment', 'execution', 'yes', Number.isInteger(amendments), extended, UA_POINTS.termExtension,
+      !Number.isInteger(amendments) ? 'Contract record not retrieved: term extension not assessable.' :
+      extended ? `An active amendment extends the contract term (rationale types: ${types.filter(t => UA_TERM_EXTENSION_TYPES.includes(t)).join(', ')}). ${UA_POINTS.termExtension} points with fewer than three amendments; with three or more it adds ${UA_POINTS.termExtensionBonus} points to the amendments check instead. Extensions are often lawful (Law on Public Procurement art. 41 permits some); this check does not assess their grounds.` :
+      'No active amendment extends the contract term.');
+    const bs = c.uaBuyerShare;
+    add('ua-buyer-share', 'Large share of the buyer’s yearly procurement', 'competition', 'yes', Boolean(bs?.complete && bs.share != null), bs?.share >= UA_BUYER_SHARE, UA_POINTS.buyerShare,
+      !bs ? 'Buyer share not computed.' : UA_SAMPLE_COHORTS.has(c.cohortId) ? UA_SAMPLE_REASON :
+      !bs.complete ? `This cohort does not cover the buyer’s whole year ${bs.year || '(unknown)'}: share not assessable.` :
+      bs.share == null ? 'Amount not in UAH: not compared with the buyer’s UAH total (no currency conversion).' :
+      `${(bs.share * 100).toFixed(1)} % of this buyer’s UAH contract total for ${bs.year} (${Math.round(bs.total).toLocaleString('en')} UAH, contracts of tenders created that year). ` +
+      (bs.share >= UA_BUYER_SHARE ? `${UA_POINTS.buyerShare} points at 5 % or more, all procedures: among Ukrainian tenders in criminal verdicts a contract this large relative to its buyer was about 6.5 times as frequent as among the same buyers’ other tenders, but at the same contract value only about 1.2 times: most of the difference is size, which prosecutions favour. Large purchases are often lawful; this check does not assess need or price.` : 'Below the 5 % threshold.'));
+    const dq = c.disqualifiedBefore;
+    add('ua-better-bid-disqualified', 'Better-ranked bidder disqualified before the award', 'competition', competitive ? 'yes' : direct ? 'no' : unknownKind, Number.isInteger(dq), dq > 0, UA_POINTS.betterBidDisqualified,
+      !competitive ? (direct ? 'Procedure without competition: no ranking of bids.' : spec.outOfScope.directKind) :
+      !Number.isInteger(dq) ? 'Award history without dates: disqualifications not assessable.' :
+      dq > 0 ? `${dq} better-ranked bidder(s) on this lot had their award declared unsuccessful before this award. ${UA_POINTS.betterBidDisqualified} points, all amounts. Disqualification is often lawful (missing documents, non-compliant offer); read the award decisions linked on the Prozorro page.` :
+      'No better-ranked bid set aside before this award on this lot.');
+  } else add('short-bidding-period', 'Short bidding period', 'competition', 'no', false, false, null, 'No validated minimum period for this jurisdiction in this method: out of scope.');
+  add('long-contract', 'Long declared duration', 'execution', 'no', false, false, null, 'No duration threshold validated for this jurisdiction: out of scope.');
+  const applicable = checks.filter(r => r.applicability === 'yes').length;
+  const evaluated = checks.filter(r => r.status === 'signal' || r.status === 'clear').length;
+  return { checks, applicable, evaluated, unknown: checks.filter(r => r.applicability === 'yes' && r.status === 'unknown').length,
+    unknownApplicability: checks.filter(r => r.applicability === 'unknown').length, notApplicable: checks.filter(r => r.status === 'not-applicable').length,
+    signals: checks.filter(r => r.status === 'signal').length, excludedReason };
+}

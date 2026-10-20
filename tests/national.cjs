@@ -1,7 +1,7 @@
 // Ukraine (Prozorro) and Portugal/Romania (TED): cohorts, checks and exclusions.
 const fs = require('node:fs'), vm = require('node:vm'), assert = require('node:assert/strict');
 const ctx = vm.createContext({URL});
-vm.runInContext(fs.readFileSync('script.js','utf8'),ctx);
+require('../tools/engine.cjs').load(ctx);
 const run = (fn,...args) => {ctx.args=args;return vm.runInContext(`${fn}(...args)`,ctx);};
 
 function tally(rows) {

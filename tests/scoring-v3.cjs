@@ -1,5 +1,5 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
-const ctx=vm.createContext({URL});vm.runInContext(fs.readFileSync('script.js','utf8'),ctx);
+const ctx=vm.createContext({URL});require('../tools/engine.cjs').load(ctx);
 const run=(fn,...args)=>{ctx.args=args;return vm.runInContext(`${fn}(...args)`,ctx);};
 let checks=0;const check=(v,message)=>{assert.ok(v,message);checks++;};
 const base={id:'test',buyer:'Buyer',description:'Test',dataStatus:'verified',amount:null,offers:null,durationMonths:null,directAward:null};
@@ -149,7 +149,10 @@ for(const file of datasets){
  check(labelled.length===softwareCounts[file]);
  for(const r of labelled){const l=run('softwareMaintenanceContext',r);check(r.directAward!==false&&['direct','R2122-3','one-offer'].includes(l.vendor)&&['cpv','text'].includes(l.software));}
 }
-const scoringSource=fs.readFileSync('script.js','utf8').split('function getAssessment(c)')[1].split('function prepareContracts')[0];
+// Every function that computes checks or points (context labels are built elsewhere, in contextLabels).
+const scoringFunctions=[...require('../tools/engine.cjs').source().matchAll(/^function (getAssessment\w*|computeAssessment|getAdditionalIndicatorChecks|latePublicationCheck|getIndicators|getScoreBreakdown|getVigilanceScore)\([^]*?^}$/gm)];
+check(['getAssessment','getAssessmentLocal','getAssessmentSecop2','getAssessmentDncp','getAssessmentNational','getAssessmentKoneps','computeAssessment','latePublicationCheck','getScoreBreakdown'].every(n=>scoringFunctions.some(m=>m[1]===n)),'scoring functions found');
+const scoringSource=scoringFunctions.map(m=>m[0]).join('\n');
 check(!/softwareMaintenanceContext|secop2PublicCounterparty/.test(scoringSource),'context labels are never read by scoring');
 check(run('softwareMaintenanceContext',{dataFamily:'boamp',cpv:'72267000',description:'Maintenance du progiciel X',directAward:false,offers:1})===null,'competitive single offer is not a single-vendor context');
 check(run('softwareMaintenanceContext',{dataFamily:'decp',cpv:'50324200-4',description:'Maintenance et garantie de la station totale avec mises à jour des logiciels',directAward:true,offers:1})===null,'equipment with bundled software is not labelled');

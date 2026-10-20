@@ -1,5 +1,5 @@
 const fs=require('node:fs'), vm=require('node:vm'), assert=require('node:assert/strict');
-const ctx=vm.createContext({URL}); vm.runInContext(fs.readFileSync('script.js','utf8'),ctx);
+const ctx=vm.createContext({URL}); require('../tools/engine.cjs').load(ctx);
 const run=(fn,...args)=>{ctx.args=args;return vm.runInContext(`${fn}(...args)`,ctx);};
 const base={id:'example',buyer:'Buyer',description:'Contract',dataFamily:'dncp',dataStatus:'verified',contractId:'ABC-1',source:'https://example.org/record',amount:100};
 const outcome={status:'final-adjudication',scope:'contract',contractId:'ABC-1',authority:'Competent court',decisionId:'Decision 1',decisionDate:'2025-02-01',judgmentUrl:'https://example.org/decision',finalityUrl:'https://example.org/finality',verifiedAsOf:'2025-04-01',sourcePassage:'Contract ABC-1 is expressly identified.',offence:'Bribery',linkageBasis:'Contract ID quoted by court'};

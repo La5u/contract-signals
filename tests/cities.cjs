@@ -2,7 +2,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
 const ctx = vm.createContext({ URL });
-vm.runInContext(fs.readFileSync('script.js','utf8'),ctx);
+require('../tools/engine.cjs').load(ctx);
 const run=(fn,...args)=>{ctx.args=args;return vm.runInContext(`${fn}(...args)`,ctx);};
 let checks=0;
 const check=(value)=>{assert.ok(value);checks++;};

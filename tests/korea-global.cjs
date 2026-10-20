@@ -11,7 +11,7 @@ const buyers = [['A','Alpha','',305,0],['B','Beta','',305,0],['C','Gamma','',305
 const makeRows = prefix => Array.from({length:305},(_,i)=>[prefix+i, i % 2 ? 'Road' : 'School','2025-01-01',i+1,'Published company',0,0]);
 const shards = [{buyers:{A:makeRows('A'),B:makeRows('B')},demand:[],legal:[]},{buyers:{C:makeRows('C')},demand:[],legal:[]}];
 async function unitTests() {
- const ctx=vm.createContext({URL,structuredClone,setTimeout}); vm.runInContext(source,ctx);
+ const ctx=vm.createContext({URL,structuredClone,setTimeout}); require('../tools/engine.cjs').load(ctx);
  ctx.args={meta,buyers,fetchShard:async n=>shards[n],limit:25,offset:25,signal:new AbortController().signal};
  ctx.args.predicate=c=>vm.runInContext('selectContracts([record], {search:"school", minimum:100, assessment:"unevaluated"}).length > 0',Object.assign(ctx,{record:c}));
  const r=await vm.runInContext('scanKoreaPage(args)',ctx);

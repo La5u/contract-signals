@@ -1,5 +1,5 @@
 """The browser copies in data/web/ (slim record files, first pages) must match what their
-builders produce from the current data and script.js, and each dataset's browser files in
+builders produce from the current data and engine, and each dataset's browser files in
 datasets.js must be the copies of its published files."""
 import importlib.util
 import json
@@ -13,7 +13,7 @@ spec = importlib.util.spec_from_file_location('build_web_data', ROOT / 'tools' /
 build = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(build)
 sys.path.insert(0, str(ROOT / 'tools'))
-from common import datasets  # noqa: E402
+from common import datasets, engine_files  # noqa: E402
 
 
 class WebData(unittest.TestCase):
@@ -34,7 +34,7 @@ class WebData(unittest.TestCase):
             self.assertEqual(entry.get('web', files), expected, key)
 
     def test_dropped_fields_unused_by_explorer(self):
-        code = ''.join((ROOT / name).read_text(encoding='utf-8') for name in ['script.js', 'import.js', 'indicator-evidence.js'])
+        code = ''.join((ROOT / name).read_text(encoding='utf-8') for name in [*engine_files(ROOT), 'script.js', 'import.js', 'indicator-evidence.js'])
         for name, fields in build.DROP.items():
             for field in fields:
                 self.assertNotRegex(code, rf"\.{field}\b|'{field}'|\"{field}\"", f'{field} ({name}) is read by the explorer')

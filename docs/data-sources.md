@@ -27,7 +27,7 @@ The [bounded public audit](../research/ukraine-public-audit.md) publishes minimi
 
 ## Rebuilding the explorer datasets
 
-Run these commands from the repository root. `--offline` uses the saved source responses rather than fetching new records. The raw snapshots and API/schema links are also recorded in the dataset definitions in [`../script.js`](../script.js).
+Run these commands from the repository root. `--offline` uses the saved source responses rather than fetching new records. The raw snapshots and API/schema links are also recorded in the dataset definitions in [`../datasets.js`](../datasets.js).
 
 | Dataset | Saved responses under `data/` | Rebuild command |
 | --- | --- | --- |

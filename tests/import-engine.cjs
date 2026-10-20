@@ -2,7 +2,7 @@
 const fs = require('node:fs'), vm = require('node:vm'), assert = require('node:assert/strict');
 const importer = require('../import.js');
 const ctx = vm.createContext({ URL, URLSearchParams });
-vm.runInContext(fs.readFileSync('script.js', 'utf8'), ctx);
+require('../tools/engine.cjs').load(ctx);
 const run = (fn, ...args) => { ctx.args = args; return vm.runInContext(`${fn}(...args)`, ctx); };
 const text = JSON.stringify([{ id: 'local', buyer: 'Buyer', description: 'Work', amount: 42, offers: 1, directAward: true, durationMonths: 150, dataStatus: 'verified', dataFamily: 'secop2' }]);
 const browsed = run('prepareContracts', importer.parse(text).records)[0];

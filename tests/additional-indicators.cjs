@@ -14,7 +14,7 @@ const fixtures = {
 function harness(engine = true) {
   const ctx = vm.createContext({ URL, structuredClone });
   if (engine) vm.runInContext(fs.readFileSync('indicator-evidence.js', 'utf8'), ctx);
-  vm.runInContext(fs.readFileSync('script.js', 'utf8'), ctx);
+  require('../tools/engine.cjs').load(ctx);
   return (fn, ...args) => { ctx.args = args; return vm.runInContext(`${fn}(...args)`, ctx); };
 }
 const run = harness();

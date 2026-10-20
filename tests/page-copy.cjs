@@ -1,5 +1,5 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
-const ctx=vm.createContext({URL});vm.runInContext(fs.readFileSync('script.js','utf8'),ctx);
+const ctx=vm.createContext({URL});require('../tools/engine.cjs').load(ctx);
 const run=(fn,...args)=>{ctx.args=args;return vm.runInContext(`${fn}(...args)`,ctx);};
 const french=run('prepareContracts',JSON.parse(fs.readFileSync('data/contracts.json')));
 const lead=french.find(c=>c.id==='crc-station-nuage');

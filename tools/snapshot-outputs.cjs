@@ -2,17 +2,18 @@
 //   node tools/snapshot-outputs.cjs DIR          write one JSON file per bundled dataset into DIR
 //   node tools/snapshot-outputs.cjs --check DIR  compare with DIR; list the first differing rows, exit 1
 // Per row: the score breakdown, assessment, signals and export record, computed by the browser engine
-// (indicator-evidence.js and script.js in one context, as index.html loads them). Keep DIR outside the
+// (indicator-evidence.js, then the engine files, in one context as index.html loads them). Keep DIR outside the
 // repository (e.g. ~/.cache/contract-signals/snapshots/<commit>).
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm'), crypto = require('node:crypto');
 const { datasetPaths } = require('./datasets.cjs');
 const root = path.resolve(__dirname, '..');
-const ENGINE = ['indicator-evidence.js', 'script.js'];
+const { load } = require('./engine.cjs');
 
 function engine() {
   const context = vm.createContext({ URL });
   context.globalThis = context;
-  for (const file of ENGINE) vm.runInContext(fs.readFileSync(path.join(root, file), 'utf8'), context, { filename: file });
+  vm.runInContext(fs.readFileSync(path.join(root, 'indicator-evidence.js'), 'utf8'), context, { filename: 'indicator-evidence.js' });
+  load(context);
   return (fn, ...args) => { context.args = args; return vm.runInContext(`${fn}(...args)`, context); };
 }
 

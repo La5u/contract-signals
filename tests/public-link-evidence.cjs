@@ -1,6 +1,6 @@
 const fs = require('node:fs'), vm = require('node:vm'), assert = require('node:assert/strict');
 const ctx = vm.createContext({ URL });
-vm.runInContext(fs.readFileSync('script.js', 'utf8'), ctx);
+require('../tools/engine.cjs').load(ctx);
 const ledger = JSON.parse(fs.readFileSync('data/public-link-evidence.json', 'utf8'));
 const links = JSON.parse(fs.readFileSync('data/boamp-decp-links.json', 'utf8'));
 const result = ctx.validatePublicLinkEvidence(ledger, links);

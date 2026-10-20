@@ -110,7 +110,7 @@ Legal eligibility reviewed 4 October 2026; unchanged. On 5 October 2026 the owne
 ```sh
 python tools/import-colombia-secop2.py --offline   # re-normalize from the raw snapshot
 node tests/colombia.cjs                            # exact counts above
-node tools/review-score-v3.cjs                     # after any script.js change (French datasets)
+node tools/review-score-v3.cjs                     # after any engine change (French datasets)
 node tests/score-review.cjs
 python -m unittest discover -s tests -p 'test_*.py'
 node tests/browser.cjs                             # own server on a free port, test-only Playwright

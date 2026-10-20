@@ -7,8 +7,11 @@ const { datasetPaths } = require('./datasets.cjs');
 const root = path.resolve(__dirname, '..');
 const hash = content => crypto.createHash('sha256').update(content).digest('hex');
 
+// A checkout directory (its engine files, tools/engine.cjs) or one engine file, such as a revision's
+// script.js from before the split (git show REV:script.js).
 function engine(file) {
-  const code = fs.readFileSync(path.resolve(root, file), 'utf8');
+  const full = path.resolve(root, file);
+  const code = fs.statSync(full).isDirectory() ? require('./engine.cjs').source(full) : fs.readFileSync(full, 'utf8');
   const context = vm.createContext({ URL });
   vm.runInContext(code, context, { filename: file });
   return { code, hash: hash(code), call(fn, ...args) {
@@ -71,7 +74,7 @@ function compareDataset(before, after, data) {
     } };
 }
 
-function compareRevisions(before, after = engine('script.js')) {
+function compareRevisions(before, after = engine(root)) {
   const report = {
     sourceCodeHashes: { before: before.hash, after: after.hash },
     method: 'Same bundled inputs, independent preparation. Positive-score ranks and top 20 use each engine selectContracts(rows, {sort: "score"}); zero/null excluded. Offline revision diagnostics, not ground-truth validation.',
@@ -87,7 +90,7 @@ module.exports = { engine, datasetPaths, snapshot, compareDataset, compareRevisi
 if (require.main === module) {
   const [beforeFile, outputFile, ...extra] = process.argv.slice(2);
   if (!beforeFile || extra.length) {
-    console.error('Usage: node tools/compare-score-revisions.cjs BEFORE_SCRIPT [OUTPUT_JSON]');
+    console.error('Usage: node tools/compare-score-revisions.cjs BEFORE_CHECKOUT_DIR_OR_SCRIPT [OUTPUT_JSON]');
     process.exitCode = 1;
   } else {
     const report = compareRevisions(engine(path.resolve(beforeFile)));

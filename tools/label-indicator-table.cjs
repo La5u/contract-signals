@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 // Descriptive association table: for each label target, the share of rows where each explorer indicator is
 // a "signal", among positives and among all other rows (negatives plus unknowns, positive-unlabelled view).
-// Read-only: loads script.js in a VM like the tests do. No model fitting, no causal or corruption claim.
+// Read-only: loads the engine (tools/engine.cjs) in a VM like the tests do. No model fitting, no causal or corruption claim.
 // Usage: node tools/label-indicator-table.cjs <labels.json> <explorer-data.json> [output.json]
 const fs = require('node:fs'), vm = require('node:vm');
 const [labelsFile, dataFile, outFile] = process.argv.slice(2);
 if (!labelsFile || !dataFile) { console.error('usage: label-indicator-table.cjs labels.json data.json [out.json]'); process.exit(2); }
 const ctx = vm.createContext({URL});
-vm.runInContext(fs.readFileSync(require('node:path').join(__dirname, '..', 'script.js'), 'utf8'), ctx);
+require('./engine.cjs').load(ctx);
 const run = (fn, ...args) => { ctx.args = args; return vm.runInContext(`${fn}(...args)`, ctx); };
 const labels = JSON.parse(fs.readFileSync(labelsFile));
 const rows = run('prepareContracts', JSON.parse(fs.readFileSync(dataFile)));

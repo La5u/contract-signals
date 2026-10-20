@@ -29,6 +29,23 @@ def datasets(root=ROOT):
     return json.loads(text[start + len(prefix):].strip().removesuffix(';'))
 
 
+def engine_files(root=ROOT):
+    """The scoring engine's files in load order: index.html's <script data-engine> (as tools/engine.cjs).
+    A checkout from before the split (2026-10-20) has one engine file, script.js."""
+    root = Path(root)
+    if not (root / 'scoring.js').exists():
+        return ['script.js']
+    files = re.findall(r'<script src="([^"]+)" data-engine\b', (root / 'index.html').read_text(encoding='utf-8'))
+    if not files or files[0] != 'scoring.js':
+        raise ValueError('index.html: engine scripts not found')
+    return files
+
+
+def engine_source(root=ROOT):
+    """The engine's source, files joined in load order: the same text as engine.cjs source()."""
+    return '\n'.join((Path(root) / name).read_text(encoding='utf-8') for name in engine_files(root))
+
+
 def canonical(value):
     """Canonical JSON bytes for hashing: sorted keys, no spaces, UTF-8, NaN refused."""
     return json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(',', ':'), allow_nan=False).encode()
