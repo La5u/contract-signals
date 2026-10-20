@@ -290,7 +290,8 @@ def main():
                 groups[key + (str(r.get('cpv') or '')[:2],)][w] += 1
     for g, cnt in groups.items():
         n = sum(cnt.values())
-        conc[g] = {w: (k / n >= CONC_SHARE) for w, k in cnt.items()} if n >= CONC_MIN else {}
+        # Fewer than CONC_MIN identified contracts: not assessable (unknown), as in the explorer, never clear.
+        conc[g] = {w: (k / n >= CONC_SHARE) for w, k in cnt.items()} if n >= CONC_MIN else None
 
     def kind(r):
         proc = (r.get('procedure') or '').lower()

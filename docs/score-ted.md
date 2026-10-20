@@ -57,6 +57,8 @@ Ministerul Finanțelor (national, CUI 4221306), Județul Cluj (regional, 4288110
 
 **v3.7 (approved 2026-10-15):** on Romanian rows, repeated awards without competition and concentration score 1 point each. In Competition Council bid-rigging decisions (20 decisions, 17 buyers, one procedure per decision) repeated awards without competition were rarer than among the same buyers' other contracts (LR 0.38) and concentration barely more frequent (6 % vs 3 %, LR 1.09, fails the holdout); see [the results](../research/calibration/romania-colombia-results-2026-10-15-audit.md). Neither check fires in this cohort, so no score changes. Portugal and Czechia keep the editorial points.
 
+**Correction (2026-10-20):** the research script counted a contract as clear when its buyer/year/CPV group had fewer than 10 contracts with an identified winner; the plan's rule (the explorer's) makes it unknown. Recomputed (`tools/romania-bid-rigging-checks.py`, [results](../research/calibration/romania-bid-rigging-results.md)): one procedure per decision, weighted by appeal outcome, 9 % vs 6 %, LR 1.02 (was 1.09); all procedures, the current decision rule, 1 % vs 6 %, LR 0.49 (was 0.32). Still no points from labels: the 1 point stands.
+
 129 lots with a signal, 192 zero, 0 not assessed before v3.1; with the late-publication check (12 lots), 138 / 183 / 0. 128 of 314 lots with a published offer count had a single offer. Example lead: one supplier won outdoor fitness equipment in several separate Cluj-Napoca notices, each with one offer.
 
 ### Czechia (added 2026-09-26; reproduced by `tests/national.cjs`)
