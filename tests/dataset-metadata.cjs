@@ -7,7 +7,7 @@ const map = require('../data/dataset-metadata.json');
 const script = fs.readFileSync(require.resolve('../script.js'), 'utf8');
 // A dataset may load several files (the merged France DECP dataset): path is a string or a list.
 const registry = [...script.matchAll(/^\s+(\w+): \{ path: (?:'[^']+'|\[[^\]]+\]), coverage: '([^']+)'/gm)];
-assert.equal(registry.length, 13);
+assert.equal(registry.length, 14);
 assert.deepEqual(Object.keys(map).sort(), registry.map(m => m[1]).sort());
 for (const [, key, path] of registry) {
   assert.equal(map[key].coveragePath, path);

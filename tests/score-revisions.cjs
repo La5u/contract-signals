@@ -2,7 +2,7 @@ const assert = require('node:assert/strict');
 const { engine, datasetPaths, compareDataset, compareRevisions } = require('../tools/compare-score-revisions.cjs');
 const current = engine('script.js');
 const report = compareRevisions(current, current);
-assert.equal(datasetPaths(current.code).length, 14);
+assert.equal(datasetPaths(current.code).length, 15);
 assert.deepEqual(Object.keys(report.datasets), datasetPaths(current.code));
 assert.equal(report.sourceCodeHashes.before, report.sourceCodeHashes.after);
 for (const [file, result] of Object.entries(report.datasets)) {

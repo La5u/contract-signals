@@ -51,7 +51,7 @@ def published_datasets(root):
     for line in match[1].splitlines():
         if not line.strip():
             continue
-        key = re.match(r'\s*([a-z][a-z0-9]*): \{', line)
+        key = re.match(r'\s*([a-z][A-Za-z0-9]*): \{', line)
         single = re.search(r"\bpath: '([^']+)'", line)
         several = re.search(r"\bpath: \[([^\]]+)\]", line)
         # A remote dataset (South Korea) is served from another host: no file in this repository.
