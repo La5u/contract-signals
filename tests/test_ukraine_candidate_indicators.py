@@ -353,9 +353,7 @@ class Reporting(unittest.TestCase):
                 self.assertEqual([r['candidate'] for r in results], ci.CANDIDATES)
                 for r in results:
                     self.assertEqual(r['all']['combined']['tenders'], int(checks[r['candidate']]['status'] != 'unknown'))
-                    learn, check = r['learn_half'], r['check_half']
-                    passes = bool(learn.get('lr_ci') and learn['lr_ci'][0] > 1 and check.get('lr_shrunk') and check['lr_shrunk'] > 1)
-                    self.assertEqual(r['decision'], 'proposal' if passes else 'fails rule')
+                    self.assertEqual(r['decision'], ci.pp.decide(r['all']))
                 self.assertTrue(all(f'| {k} |' in stdout.getvalue() for k in ci.BID_CANDIDATES))
                 self.assertEqual(json.loads(features_path.read_text()), feature_rows)
 

@@ -354,9 +354,7 @@ def evaluate(rows):
         res = {'candidate': check, 'all': pp.analyse(rows, check)}
         for name in ('learn', 'check'):
             res[name + '_half'] = pp.analyse([r for r in rows if half(r['buyer']) == name], check)
-        learn, chk = res['learn_half'], res['check_half']
-        passes = bool(learn.get('lr_ci') and learn['lr_ci'][0] > 1 and chk.get('lr_shrunk') and chk['lr_shrunk'] > 1)
-        res['decision'] = 'proposal' if passes else 'fails rule'
+        res['decision'] = pp.decide(res['all'])
         results.append(res)
     return results
 

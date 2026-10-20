@@ -174,9 +174,7 @@ def evaluate(analysis, check):
     res = {'candidate': check, 'all': pp.analyse(analysis, check)}
     for name in ('learn', 'check'):
         res[name + '_half'] = pp.analyse([r for r in analysis if cand.half(r['buyer']) == name], check)
-    learn, chk = res['learn_half'], res['check_half']
-    res['decision'] = ('sensitivity only' if 'sensitivity' in check else
-                       'proposal' if learn.get('lr_ci') and learn['lr_ci'][0] > 1 and (chk.get('lr_shrunk') or 0) > 1 else 'fails rule')
+    res['decision'] = 'sensitivity only' if 'sensitivity' in check else pp.decide(res['all'])
     return res
 
 
