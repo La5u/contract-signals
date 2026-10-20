@@ -408,8 +408,8 @@ const server=http.createServer((req,res)=>{
  const [csvDownload]=await Promise.all([linked.waitForEvent('download'),linked.click('#export-csv')]);
  assert.match(csvDownload.suggestedFilename(),/^contract-signals-decp-\d{4}-\d{2}-\d{2}\.csv$/);
  const csv=fs.readFileSync(await csvDownload.path(),'utf8');
- assert.ok(csv.startsWith('\ufeffid,date,buyer,'));
- assert.equal(csv.split('\r\n').filter(line=>line.startsWith('decp-')).length,flaggedTotal);
+ assert.ok(csv.startsWith('\ufeffcollectionId,collectionLabel,originalId,id,date,buyer,'));
+ assert.equal(csv.split('\r\n').filter(line=>/^,,decp-/.test(line)).length,flaggedTotal);
  const [jsonDownload]=await Promise.all([linked.waitForEvent('download'),linked.click('#export-json')]);
  const exported=JSON.parse(fs.readFileSync(await jsonDownload.path(),'utf8'));
  assert.equal(exported.count,flaggedTotal);assert.equal(exported.view,'#sort=date&flagged=1&size=25');
@@ -682,7 +682,8 @@ const server=http.createServer((req,res)=>{
   const kr=await browser.newPage({locale:'en-GB',viewport:{width:1280,height:900}});
   const krErrors=[];kr.on('pageerror',e=>krErrors.push(e.message));
   await kr.goto(`${base}/#dataset=korea`);
-  await kr.waitForFunction(()=>/contracting institutions\. Search/.test(document.querySelector('#status').textContent));
+  // Without a chosen buyer the explorer starts the nationwide scan (since 2026-10-18); the buyer search stays available.
+  await kr.waitForFunction(()=>/^Nationwide page 1: /.test(document.querySelector('#status').textContent));
   assert(await kr.locator('#korea-picker').isVisible());
   const buyers=JSON.parse(fs.readFileSync(path.join(process.cwd(),'korea-site','buyers.json'),'utf8'));
   const small=buyers.find(b=>b[3]>=5&&b[3]<=60);
