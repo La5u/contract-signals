@@ -2,7 +2,8 @@
 """Download Fair Trade Commission decisions or court rulings (law.go.kr DRF API) for corruption labels.
 
 Research only. --target ftc lists every KFTC decision whose title matches 입찰 (tender) or 공동행위 (cartel)
-into ~/.cache/contract-signals/korea/ftc/; --target prec lists court rulings whose full text matches procurement
+into ~/.cache/contract-signals/korea/ftc/; --target ftc-suits lists court rulings on suits against KFTC orders
+(case names with 시정명령 / 과징금) into korea/ftc-suits/; --target prec lists court rulings whose full text matches procurement
 bribery/obstruction queries into ~/.cache/contract-signals/korea/prec/. Each full text is fetched once, slowly
 (law.go.kr limits bursts), as decisions/<serial>.xml.gz, plus list.json. Reruns resume.
 The OC credential is read from ~/.config/contract-signals/law-go-kr.oc and never written anywhere.
@@ -27,7 +28,10 @@ TARGETS = {
     'ftc': ('ftc', '결정문일련번호', 1, ('입찰', '공동행위')),
     'prec': ('prec', '판례일련번호', 2, ('뇌물 계약', '뇌물 입찰', '입찰방해', '수의계약 뇌물', '배임 수의계약',
                                      '업무방해 입찰', '공무상비밀누설 입찰', '공무상비밀누설 예정가격')),
+    # court rulings on suits against KFTC orders (case-name search), for the finality of collusion labels
+    'ftc-suits': ('prec', '판례일련번호', 1, ('시정명령', '과징금납부명령', '과징금부과처분')),
 }
+API_TARGET = {'ftc-suits': 'prec'}
 
 
 def get(opener, path, **params):
@@ -49,7 +53,7 @@ def listing(opener, oc, delay, target):
     for query in queries:
         page = 1
         while True:
-            root = ET.fromstring(get(opener, 'lawSearch.do', OC=oc, target=target, type='XML', query=query,
+            root = ET.fromstring(get(opener, 'lawSearch.do', OC=oc, target=API_TARGET.get(target, target), type='XML', query=query,
                                      search=scope, display=100, page=page))
             items = root.findall(element)
             for item in items:
@@ -86,7 +90,7 @@ def main():
     todo = [s for s in found if re.fullmatch(r'\d+', s) and not (out / f'{s}.xml.gz').exists()]
     print(f'{len(found)} decisions listed, {len(todo)} to fetch', flush=True)
     for n, serial in enumerate(todo, 1):
-        body = get(opener, 'lawService.do', OC=oc, target=args.target, ID=serial, type='XML')
+        body = get(opener, 'lawService.do', OC=oc, target=API_TARGET.get(args.target, args.target), ID=serial, type='XML')
         tmp = out / f'{serial}.part'
         tmp.write_bytes(gzip.compress(body))
         tmp.rename(out / f'{serial}.xml.gz')
