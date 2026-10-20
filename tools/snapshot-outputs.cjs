@@ -5,7 +5,7 @@
 // (indicator-evidence.js and script.js in one context, as index.html loads them). Keep DIR outside the
 // repository (e.g. ~/.cache/contract-signals/snapshots/<commit>).
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm'), crypto = require('node:crypto');
-const { datasetPaths } = require('./compare-score-revisions.cjs');
+const { datasetPaths } = require('./datasets.cjs');
 const root = path.resolve(__dirname, '..');
 const ENGINE = ['indicator-evidence.js', 'script.js'];
 
@@ -30,7 +30,7 @@ const name = file => file.replace(/^data\//, '').replace(/\//g, '__');
 const args = process.argv.slice(2), check = args[0] === '--check', dir = check ? args[1] : args[0];
 if (!dir) { console.error('usage: snapshot-outputs.cjs [--check] DIR'); process.exit(2); }
 const run = engine();
-const files = datasetPaths(fs.readFileSync(path.join(root, 'script.js'), 'utf8'));
+const files = datasetPaths();
 let failed = false;
 if (!check) fs.mkdirSync(dir, { recursive: true });
 for (const file of files) {

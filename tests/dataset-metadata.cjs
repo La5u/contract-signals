@@ -4,9 +4,8 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const api = require('../dataset-metadata.js');
 const map = require('../data/dataset-metadata.json');
-const script = fs.readFileSync(require.resolve('../script.js'), 'utf8');
-// A dataset may load several files (the merged France DECP dataset): path is a string or a list.
-const registry = [...script.matchAll(/^\s+(\w+): \{ path: (?:'[^']+'|\[[^\]]+\]), coverage: '([^']+)'/gm)];
+// Local datasets (with published files) and their coverage files; remote datasets have their own metadata.
+const registry = Object.entries(require('../tools/datasets.cjs').readDatasets()).filter(([, d]) => d.path).map(([key, d]) => [null, key, d.coverage]);
 assert.equal(registry.length, 14);
 assert.deepEqual(Object.keys(map).sort(), registry.map(m => m[1]).sort());
 for (const [, key, path] of registry) {

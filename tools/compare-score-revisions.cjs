@@ -3,6 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const crypto = require('node:crypto');
+const { datasetPaths } = require('./datasets.cjs');
 const root = path.resolve(__dirname, '..');
 const hash = content => crypto.createHash('sha256').update(content).digest('hex');
 
@@ -14,18 +15,6 @@ function engine(file) {
     context.args = args;
     return vm.runInContext(`${fn}(...args)`, context);
   } };
-}
-
-// Read only primary paths from the UI dataset config, not coverage/raw paths.
-function datasetPaths(code) {
-  const start = code.indexOf('const datasets = {');
-  const end = code.indexOf('\n  };', start);
-  if (start < 0 || end < 0) throw new Error('Dataset config not found');
-  // A dataset's path is one file or a list of files (the merged France DECP dataset): every file is compared.
-  const paths = [...code.slice(start, end).matchAll(/\bpath:\s*(\[[^\]]*\]|['"]data\/[^'"]+\.json['"])/g)]
-    .flatMap(match => [...match[1].matchAll(/['"](data\/[^'"]+\.json)['"]/g)].map(m => m[1]));
-  if (!paths.length || new Set(paths).size !== paths.length) throw new Error('Invalid dataset paths');
-  return paths;
 }
 
 function snapshot(runtime, data) {
@@ -88,7 +77,7 @@ function compareRevisions(before, after = engine('script.js')) {
     method: 'Same bundled inputs, independent preparation. Positive-score ranks and top 20 use each engine selectContracts(rows, {sort: "score"}); zero/null excluded. Offline revision diagnostics, not ground-truth validation.',
     datasets: {},
   };
-  for (const file of datasetPaths(after.code)) {
+  for (const file of datasetPaths()) {
     report.datasets[file] = compareDataset(before, after, fs.readFileSync(path.join(root, file), 'utf8'));
   }
   return report;

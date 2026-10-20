@@ -16,9 +16,7 @@ const PAGE_SIZE = 50;
 // The controls' initial values (index.html); render() passes the same options.
 const DEFAULT_VIEW = { search: '', minimum: 0, minScore: 0, flagged: false, official: false, adjudicated: false, investigation: false, indicator: '', legal: '', noticeContext: '', assessment: '', sector: '', project: '', verification: '', sort: 'score' };
 
-const prefetch = vm.createContext({ window: {}, location: { protocol: 'file:', hash: '' }, URLSearchParams });
-vm.runInContext(fs.readFileSync(path.join(ROOT, 'prefetch.js'), 'utf8'), prefetch);
-const files = prefetch.window.DATASET_FILES;
+const files = require('./datasets.cjs').browserFiles();
 const explorer = vm.createContext({ URL, console });
 vm.runInContext(fs.readFileSync(path.join(ROOT, 'script.js'), 'utf8'), explorer);
 

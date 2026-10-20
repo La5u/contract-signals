@@ -84,7 +84,9 @@ class AuditTests(unittest.TestCase):
 
     def fixture_root(self, root):
         (root / 'data').mkdir()
-        (root / 'script.js').write_text("const datasets = {\n  example: { path: 'data/example.json', coverage: 'data/coverage.json' },\n  all: { combined: true, path: null },\n  local: { path: null },\n  };\nfetch('data/dataset-metadata.json');\n")
+        (root / 'datasets.js').write_text('globalThis.DATASETS = ' + json.dumps({
+            'example': {'path': 'data/example.json', 'coverage': 'data/coverage.json'},
+            'all': {'combined': True, 'path': None}, 'local': {'path': None}, 'korea': {'remote': 'korea'}}) + ';\n')
         (root / 'data/example.json').write_text(json.dumps([row(amount=0)]))
         for path in ('coverage.json', 'dataset-metadata.json', 'raw.json', 'supplier-identities.json'):
             (root / 'data' / path).write_text('not valid JSON; must not be loaded')
@@ -123,7 +125,7 @@ class AuditTests(unittest.TestCase):
     def test_registry_drift_and_non_row_files_fail_closed(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            (root / 'script.js').write_text('const datasets = {};')
+            (root / 'datasets.js').write_text('globalThis.DATASETS = {};')
             with self.assertRaises(ValueError):
                 audit.published_datasets(root)
         for rows in ({'contracts': []}, [1], [None]):
