@@ -3,7 +3,7 @@
   "buyer": "buyer_code",
   "finality_checked": true,
   "sets": {
-   "weighted, one per case, all contracts (decision rule)": [
+   "weighted, one per case, all contracts (decision basis until 2026-10-20)": [
     {
      "check": "G2 private contract",
      "corruption": {
@@ -38,13 +38,15 @@
      "lr_shrunk": 0.342,
      "lr_ci": [
       0.228,
-      0.464
+      0.467
      ],
+     "lr_confident": 0.299,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G2 private contract",
       "corruption": {
@@ -79,13 +81,15 @@
       "lr_shrunk": 0.387,
       "lr_ci": [
        0.272,
-       0.548
+       0.55
       ],
+      "lr_confident": 0.342,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G2 private contract",
@@ -123,13 +127,15 @@
        0.337,
        0.672
       ],
+      "lr_confident": 0.431,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "G3 buyer share >= 5 %",
@@ -165,13 +171,15 @@
      "lr_shrunk": 1.388,
      "lr_ci": [
       0.888,
-      2.068
+      2.069
      ],
+     "lr_confident": 1.217,
      "proposed_points": 4.7,
      "proposed_points_ci": [
       0.0,
       10.5
      ],
+     "decision_points": 2.8,
      "learn_half": {
       "check": "G3 buyer share >= 5 %",
       "corruption": {
@@ -206,13 +214,15 @@
       "lr_shrunk": 1.404,
       "lr_ci": [
        0.78,
-       2.327
+       2.334
       ],
+      "lr_confident": 1.164,
       "proposed_points": 4.9,
       "proposed_points_ci": [
        0.0,
        12.2
-      ]
+      ],
+      "decision_points": 2.2
      },
      "check_half": {
       "check": "G3 buyer share >= 5 %",
@@ -248,15 +258,17 @@
       "lr_shrunk": 1.246,
       "lr_ci": [
        0.698,
-       2.024
+       2.03
       ],
+      "lr_confident": 1.043,
       "proposed_points": 3.2,
       "proposed_points_ci": [
        0.0,
        10.2
-      ]
+      ],
+      "decision_points": 0.6
      },
-     "decision": "fails rule"
+     "decision": "2.8 points"
     },
     {
      "check": "G4 concentration",
@@ -292,13 +304,15 @@
      "lr_shrunk": 0.938,
      "lr_ci": [
       0.48,
-      1.458
+      1.462
      ],
+     "lr_confident": 0.767,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
-      5.4
+      5.5
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G4 concentration",
       "corruption": {
@@ -333,13 +347,15 @@
       "lr_shrunk": 0.948,
       "lr_ci": [
        0.438,
-       1.497
+       1.509
       ],
+      "lr_confident": 0.753,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
-       5.8
-      ]
+       5.9
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G4 concentration",
@@ -377,13 +393,15 @@
        0.37,
        1.547
       ],
+      "lr_confident": 0.691,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        6.3
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "G5 3+ changes",
@@ -419,13 +437,15 @@
      "lr_shrunk": 1.772,
      "lr_ci": [
       0.339,
-      3.59
+      3.601
      ],
+     "lr_confident": 1.148,
      "proposed_points": 8.3,
      "proposed_points_ci": [
       0.0,
-      18.4
+      18.5
      ],
+     "decision_points": 2.0,
      "learn_half": {
       "check": "G5 3+ changes",
       "corruption": {
@@ -460,13 +480,15 @@
       "lr_shrunk": 1.5,
       "lr_ci": [
        0.286,
-       3.816
+       3.847
       ],
+      "lr_confident": 0.651,
       "proposed_points": 5.9,
       "proposed_points_ci": [
        0.0,
-       19.3
-      ]
+       19.4
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G5 3+ changes",
@@ -502,15 +524,17 @@
       "lr_shrunk": 1.552,
       "lr_ci": [
        0.333,
-       3.404
+       3.422
       ],
+      "lr_confident": 0.947,
       "proposed_points": 6.3,
       "proposed_points_ci": [
        0.0,
        17.7
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "2 points"
     },
     {
      "check": "G6 amount increase > 20 %",
@@ -546,13 +570,15 @@
      "lr_shrunk": 1.579,
      "lr_ci": [
       0.315,
-      3.323
+      3.343
      ],
+     "lr_confident": 1.032,
      "proposed_points": 6.6,
      "proposed_points_ci": [
       0.0,
-      17.3
+      17.4
      ],
+     "decision_points": 0.5,
      "learn_half": {
       "check": "G6 amount increase > 20 %",
       "corruption": {
@@ -587,13 +613,15 @@
       "lr_shrunk": 0.502,
       "lr_ci": [
        0.263,
-       0.961
+       0.962
       ],
+      "lr_confident": 0.333,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G6 amount increase > 20 %",
@@ -629,15 +657,17 @@
       "lr_shrunk": 2.237,
       "lr_ci": [
        0.385,
-       4.701
+       4.715
       ],
+      "lr_confident": 1.481,
       "proposed_points": 11.6,
       "proposed_points_ci": [
        0.0,
-       22.3
-      ]
+       22.4
+      ],
+      "decision_points": 5.7
      },
-     "decision": "fails rule"
+     "decision": "0.5 points"
     },
     {
      "check": "N1 December signature",
@@ -673,13 +703,15 @@
      "lr_shrunk": 1.323,
      "lr_ci": [
       0.637,
-      2.07
+      2.071
      ],
+     "lr_confident": 1.059,
      "proposed_points": 4.0,
      "proposed_points_ci": [
       0.0,
       10.5
      ],
+     "decision_points": 0.8,
      "learn_half": {
       "check": "N1 December signature",
       "corruption": {
@@ -714,13 +746,15 @@
       "lr_shrunk": 1.592,
       "lr_ci": [
        0.709,
-       2.634
+       2.639
       ],
+      "lr_confident": 1.253,
       "proposed_points": 6.7,
       "proposed_points_ci": [
        0.0,
        14.0
-      ]
+      ],
+      "decision_points": 3.3
      },
      "check_half": {
       "check": "N1 December signature",
@@ -756,15 +790,17 @@
       "lr_shrunk": 0.814,
       "lr_ci": [
        0.343,
-       1.53
+       1.536
       ],
+      "lr_confident": 0.574,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
-       6.1
-      ]
+       6.2
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "0.8 points"
     },
     {
      "check": "N2 weekend signature",
@@ -800,13 +836,15 @@
      "lr_shrunk": 0.918,
      "lr_ci": [
       0.143,
-      2.947
+      2.968
      ],
+     "lr_confident": 0.169,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
-      15.6
+      15.7
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "N2 weekend signature",
       "corruption": {
@@ -843,11 +881,13 @@
        0.217,
        0.333
       ],
+      "lr_confident": 0.244,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "N2 weekend signature",
@@ -883,15 +923,17 @@
       "lr_shrunk": 1.442,
       "lr_ci": [
        0.256,
-       4.479
+       4.494
       ],
+      "lr_confident": 0.323,
       "proposed_points": 5.3,
       "proposed_points_ci": [
        0.0,
-       21.6
-      ]
+       21.7
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "N4 supplier dependence >= 25 %",
@@ -929,11 +971,13 @@
       0.605,
       1.441
      ],
+     "lr_confident": 0.86,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       5.3
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "N4 supplier dependence >= 25 %",
       "corruption": {
@@ -968,13 +1012,15 @@
       "lr_shrunk": 1.035,
       "lr_ci": [
        0.584,
-       1.712
+       1.723
       ],
+      "lr_confident": 0.863,
       "proposed_points": 0.5,
       "proposed_points_ci": [
        0.0,
-       7.8
-      ]
+       7.9
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "N4 supplier dependence >= 25 %",
@@ -1010,15 +1056,17 @@
       "lr_shrunk": 0.942,
       "lr_ci": [
        0.532,
-       1.423
+       1.425
       ],
+      "lr_confident": 0.792,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        5.1
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "N5 first-time supplier",
@@ -1056,11 +1104,13 @@
       0.574,
       1.065
      ],
+     "lr_confident": 0.734,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.9
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "N5 first-time supplier",
       "corruption": {
@@ -1095,13 +1145,15 @@
       "lr_shrunk": 0.927,
       "lr_ci": [
        0.66,
-       1.206
+       1.208
       ],
+      "lr_confident": 0.839,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        2.7
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "N5 first-time supplier",
@@ -1137,15 +1189,17 @@
       "lr_shrunk": 0.752,
       "lr_ci": [
        0.515,
-       1.035
+       1.037
       ],
+      "lr_confident": 0.656,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.5
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "U2 repeated private contract",
@@ -1183,11 +1237,13 @@
       0.169,
       0.525
      ],
+     "lr_confident": 0.266,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "U2 repeated private contract",
       "corruption": {
@@ -1222,13 +1278,15 @@
       "lr_shrunk": 0.351,
       "lr_ci": [
        0.227,
-       0.56
+       0.561
       ],
+      "lr_confident": 0.278,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "U2 repeated private contract",
@@ -1264,15 +1322,17 @@
       "lr_shrunk": 0.512,
       "lr_ci": [
        0.278,
-       0.8
+       0.801
       ],
+      "lr_confident": 0.409,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K1 single-bidder private contract",
@@ -1310,11 +1370,13 @@
       0.137,
       0.192
      ],
+     "lr_confident": 0.152,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K1 single-bidder private contract",
       "corruption": {
@@ -1351,11 +1413,13 @@
        0.217,
        0.333
       ],
+      "lr_confident": 0.244,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K1 single-bidder private contract",
@@ -1393,13 +1457,15 @@
        0.238,
        0.37
       ],
+      "lr_confident": 0.27,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K2 re-tender private contract",
@@ -1437,11 +1503,13 @@
       0.137,
       0.196
      ],
+     "lr_confident": 0.152,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K2 re-tender private contract",
       "corruption": {
@@ -1478,11 +1546,13 @@
        0.217,
        0.333
       ],
+      "lr_confident": 0.244,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K2 re-tender private contract",
@@ -1520,13 +1590,15 @@
        0.244,
        0.37
       ],
+      "lr_confident": 0.27,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K3 just under small-value limit",
@@ -1564,11 +1636,13 @@
       0.137,
       0.2
      ],
+     "lr_confident": 0.152,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K3 just under small-value limit",
       "corruption": {
@@ -1605,11 +1679,13 @@
        0.217,
        0.333
       ],
+      "lr_confident": 0.244,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K3 just under small-value limit",
@@ -1645,15 +1721,17 @@
       "lr_shrunk": 0.294,
       "lr_ci": [
        0.238,
-       0.37
+       0.385
       ],
+      "lr_confident": 0.27,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K4 split contracts",
@@ -1689,13 +1767,15 @@
      "lr_shrunk": 1.182,
      "lr_ci": [
       0.143,
-      3.553
+      3.588
      ],
+     "lr_confident": 0.169,
      "proposed_points": 2.4,
      "proposed_points_ci": [
       0.0,
-      18.3
+      18.4
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K4 split contracts",
       "corruption": {
@@ -1732,11 +1812,13 @@
        0.217,
        0.333
       ],
+      "lr_confident": 0.244,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K4 split contracts",
@@ -1772,15 +1854,17 @@
       "lr_shrunk": 1.945,
       "lr_ci": [
        0.256,
-       5.185
+       5.188
       ],
+      "lr_confident": 0.323,
       "proposed_points": 9.6,
       "proposed_points_ci": [
        0.0,
-       23.7
-      ]
+       23.8
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K5 restricted competition",
@@ -1816,13 +1900,15 @@
      "lr_shrunk": 1.622,
      "lr_ci": [
       1.202,
-      2.053
+      2.059
      ],
+     "lr_confident": 1.465,
      "proposed_points": 7.0,
      "proposed_points_ci": [
       2.7,
       10.4
      ],
+     "decision_points": 5.5,
      "learn_half": {
       "check": "K5 restricted competition",
       "corruption": {
@@ -1857,13 +1943,15 @@
       "lr_shrunk": 1.436,
       "lr_ci": [
        0.951,
-       2.023
+       2.031
       ],
+      "lr_confident": 1.244,
       "proposed_points": 5.2,
       "proposed_points_ci": [
        0.0,
        10.2
-      ]
+      ],
+      "decision_points": 3.1
      },
      "check_half": {
       "check": "K5 restricted competition",
@@ -1901,13 +1989,15 @@
        1.154,
        2.162
       ],
+      "lr_confident": 1.444,
       "proposed_points": 7.0,
       "proposed_points_ci": [
        2.1,
        11.1
-      ]
+      ],
+      "decision_points": 5.3
      },
-     "decision": "fails rule"
+     "decision": "5.5 points"
     },
     {
      "check": "K6 award >= 95 % of reserve",
@@ -1943,13 +2033,15 @@
      "lr_shrunk": 2.072,
      "lr_ci": [
       1.567,
-      2.616
+      2.618
      ],
+     "lr_confident": 1.888,
      "proposed_points": 10.5,
      "proposed_points_ci": [
       6.5,
       13.9
      ],
+     "decision_points": 9.2,
      "learn_half": {
       "check": "K6 award >= 95 % of reserve",
       "corruption": {
@@ -1986,11 +2078,13 @@
        1.289,
        2.55
       ],
+      "lr_confident": 1.663,
       "proposed_points": 9.1,
       "proposed_points_ci": [
        3.7,
        13.5
-      ]
+      ],
+      "decision_points": 7.3
      },
      "check_half": {
       "check": "K6 award >= 95 % of reserve",
@@ -2026,18 +2120,20 @@
       "lr_shrunk": 1.838,
       "lr_ci": [
        1.317,
-       2.455
+       2.456
       ],
+      "lr_confident": 1.642,
       "proposed_points": 8.8,
       "proposed_points_ci": [
        4.0,
        13.0
-      ]
+      ],
+      "decision_points": 7.2
      },
-     "decision": "proposal"
+     "decision": "9.2 points"
     }
    ],
-   "weighted, all linked tenders, all contracts": [
+   "weighted, all linked tenders, all contracts (decision rule, amendment 2026-10-20)": [
     {
      "check": "G2 private contract",
      "corruption": {
@@ -2074,11 +2170,13 @@
       0.389,
       0.587
      ],
+     "lr_confident": 0.453,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G2 private contract",
       "corruption": {
@@ -2115,11 +2213,13 @@
        0.351,
        0.585
       ],
+      "lr_confident": 0.424,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G2 private contract",
@@ -2157,13 +2257,15 @@
        0.438,
        0.724
       ],
+      "lr_confident": 0.533,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "G3 buyer share >= 5 %",
@@ -2199,13 +2301,15 @@
      "lr_shrunk": 1.825,
      "lr_ci": [
       1.483,
-      2.317
+      2.318
      ],
+     "lr_confident": 1.693,
      "proposed_points": 8.7,
      "proposed_points_ci": [
       5.7,
       12.1
      ],
+     "decision_points": 7.6,
      "learn_half": {
       "check": "G3 buyer share >= 5 %",
       "corruption": {
@@ -2240,13 +2344,15 @@
       "lr_shrunk": 2.032,
       "lr_ci": [
        1.575,
-       2.86
+       2.868
       ],
+      "lr_confident": 1.852,
       "proposed_points": 10.2,
       "proposed_points_ci": [
        6.6,
        15.2
-      ]
+      ],
+      "decision_points": 8.9
      },
      "check_half": {
       "check": "G3 buyer share >= 5 %",
@@ -2282,15 +2388,17 @@
       "lr_shrunk": 1.485,
       "lr_ci": [
        1.152,
-       2.048
+       2.049
       ],
+      "lr_confident": 1.362,
       "proposed_points": 5.7,
       "proposed_points_ci": [
        2.0,
-       10.3
-      ]
+       10.4
+      ],
+      "decision_points": 4.5
      },
-     "decision": "proposal"
+     "decision": "7.6 points"
     },
     {
      "check": "G4 concentration",
@@ -2326,13 +2434,15 @@
      "lr_shrunk": 1.854,
      "lr_ci": [
       1.491,
-      2.392
+      2.394
      ],
+     "lr_confident": 1.717,
      "proposed_points": 8.9,
      "proposed_points_ci": [
       5.8,
       12.6
      ],
+     "decision_points": 7.8,
      "learn_half": {
       "check": "G4 concentration",
       "corruption": {
@@ -2367,13 +2477,15 @@
       "lr_shrunk": 1.722,
       "lr_ci": [
        1.285,
-       2.36
+       2.362
       ],
+      "lr_confident": 1.547,
       "proposed_points": 7.8,
       "proposed_points_ci": [
        3.6,
        12.4
-      ]
+      ],
+      "decision_points": 6.3
      },
      "check_half": {
       "check": "G4 concentration",
@@ -2409,15 +2521,17 @@
       "lr_shrunk": 1.798,
       "lr_ci": [
        1.2,
-       2.697
+       2.7
       ],
+      "lr_confident": 1.579,
       "proposed_points": 8.5,
       "proposed_points_ci": [
        2.6,
        14.3
-      ]
+      ],
+      "decision_points": 6.6
      },
-     "decision": "proposal"
+     "decision": "7.8 points"
     },
     {
      "check": "G5 3+ changes",
@@ -2453,13 +2567,15 @@
      "lr_shrunk": 0.833,
      "lr_ci": [
       0.211,
-      1.668
+      1.675
      ],
+     "lr_confident": 0.584,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       7.4
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G5 3+ changes",
       "corruption": {
@@ -2494,13 +2610,15 @@
       "lr_shrunk": 0.596,
       "lr_ci": [
        0.122,
-       1.545
+       1.546
       ],
+      "lr_confident": 0.237,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        6.3
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G5 3+ changes",
@@ -2536,15 +2654,17 @@
       "lr_shrunk": 0.946,
       "lr_ci": [
        0.165,
-       2.026
+       2.029
       ],
+      "lr_confident": 0.592,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        10.2
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "G6 amount increase > 20 %",
@@ -2580,13 +2700,15 @@
      "lr_shrunk": 0.664,
      "lr_ci": [
       0.214,
-      1.287
+      1.289
      ],
+     "lr_confident": 0.461,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
-      3.6
+      3.7
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G6 amount increase > 20 %",
       "corruption": {
@@ -2621,13 +2743,15 @@
       "lr_shrunk": 0.57,
       "lr_ci": [
        0.123,
-       1.329
+       1.332
       ],
+      "lr_confident": 0.314,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        4.1
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G6 amount increase > 20 %",
@@ -2663,15 +2787,17 @@
       "lr_shrunk": 0.714,
       "lr_ci": [
        0.231,
-       1.519
+       1.521
       ],
+      "lr_confident": 0.465,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
-       6.0
-      ]
+       6.1
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "N1 December signature",
@@ -2707,13 +2833,15 @@
      "lr_shrunk": 0.951,
      "lr_ci": [
       0.579,
-      1.37
+      1.371
      ],
+     "lr_confident": 0.81,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
-      4.5
+      4.6
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "N1 December signature",
       "corruption": {
@@ -2748,13 +2876,15 @@
       "lr_shrunk": 1.137,
       "lr_ci": [
        0.603,
-       1.733
+       1.735
       ],
+      "lr_confident": 0.944,
       "proposed_points": 1.8,
       "proposed_points_ci": [
        0.0,
        7.9
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "N1 December signature",
@@ -2790,15 +2920,17 @@
       "lr_shrunk": 0.653,
       "lr_ci": [
        0.289,
-       1.135
+       1.138
       ],
+      "lr_confident": 0.485,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
-       1.8
-      ]
+       1.9
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "N2 weekend signature",
@@ -2834,13 +2966,15 @@
      "lr_shrunk": 0.203,
      "lr_ci": [
       0.066,
-      0.546
+      0.55
      ],
+     "lr_confident": 0.081,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "N2 weekend signature",
       "corruption": {
@@ -2877,11 +3011,13 @@
        0.115,
        0.115
       ],
+      "lr_confident": 0.115,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "N2 weekend signature",
@@ -2917,15 +3053,17 @@
       "lr_shrunk": 0.367,
       "lr_ci": [
        0.135,
-       0.93
+       0.931
       ],
+      "lr_confident": 0.161,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "N4 supplier dependence >= 25 %",
@@ -2961,13 +3099,15 @@
      "lr_shrunk": 1.545,
      "lr_ci": [
       1.325,
-      1.85
+      1.851
      ],
+     "lr_confident": 1.463,
      "proposed_points": 6.3,
      "proposed_points_ci": [
       4.1,
       8.9
      ],
+     "decision_points": 5.5,
      "learn_half": {
       "check": "N4 supplier dependence >= 25 %",
       "corruption": {
@@ -3002,13 +3142,15 @@
       "lr_shrunk": 1.644,
       "lr_ci": [
        1.334,
-       2.171
+       2.173
       ],
+      "lr_confident": 1.523,
       "proposed_points": 7.2,
       "proposed_points_ci": [
        4.2,
        11.2
-      ]
+      ],
+      "decision_points": 6.1
      },
      "check_half": {
       "check": "N4 supplier dependence >= 25 %",
@@ -3046,13 +3188,15 @@
        1.134,
        1.663
       ],
+      "lr_confident": 1.251,
       "proposed_points": 4.1,
       "proposed_points_ci": [
        1.8,
        7.3
-      ]
+      ],
+      "decision_points": 3.2
      },
-     "decision": "proposal"
+     "decision": "5.5 points"
     },
     {
      "check": "N5 first-time supplier",
@@ -3090,11 +3234,13 @@
       0.839,
       1.095
      ],
+     "lr_confident": 0.92,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       1.3
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "N5 first-time supplier",
       "corruption": {
@@ -3129,13 +3275,15 @@
       "lr_shrunk": 1.024,
       "lr_ci": [
        0.88,
-       1.177
+       1.178
       ],
+      "lr_confident": 0.973,
       "proposed_points": 0.3,
       "proposed_points_ci": [
        0.0,
        2.4
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "N5 first-time supplier",
@@ -3171,15 +3319,17 @@
       "lr_shrunk": 0.882,
       "lr_ci": [
        0.69,
-       1.065
+       1.066
       ],
+      "lr_confident": 0.814,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.9
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "U2 repeated private contract",
@@ -3217,11 +3367,13 @@
       0.4,
       0.71
      ],
+     "lr_confident": 0.504,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "U2 repeated private contract",
       "corruption": {
@@ -3256,13 +3408,15 @@
       "lr_shrunk": 0.547,
       "lr_ci": [
        0.357,
-       0.748
+       0.749
       ],
+      "lr_confident": 0.478,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "U2 repeated private contract",
@@ -3298,15 +3452,17 @@
       "lr_shrunk": 0.636,
       "lr_ci": [
        0.419,
-       0.842
+       0.843
       ],
+      "lr_confident": 0.555,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K1 single-bidder private contract",
@@ -3344,11 +3500,13 @@
       0.066,
       0.066
      ],
+     "lr_confident": 0.066,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K1 single-bidder private contract",
       "corruption": {
@@ -3385,11 +3543,13 @@
        0.115,
        0.115
       ],
+      "lr_confident": 0.115,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K1 single-bidder private contract",
@@ -3427,13 +3587,15 @@
        0.135,
        0.135
       ],
+      "lr_confident": 0.135,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K2 re-tender private contract",
@@ -3469,13 +3631,15 @@
      "lr_shrunk": 0.292,
      "lr_ci": [
       0.066,
-      0.705
+      0.706
      ],
+     "lr_confident": 0.133,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K2 re-tender private contract",
       "corruption": {
@@ -3510,13 +3674,15 @@
       "lr_shrunk": 0.423,
       "lr_ci": [
        0.115,
-       0.965
+       0.967
       ],
+      "lr_confident": 0.206,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K2 re-tender private contract",
@@ -3554,13 +3720,15 @@
        0.135,
        0.159
       ],
+      "lr_confident": 0.135,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K3 just under small-value limit",
@@ -3598,11 +3766,13 @@
       0.066,
       0.066
      ],
+     "lr_confident": 0.066,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K3 just under small-value limit",
       "corruption": {
@@ -3639,11 +3809,13 @@
        0.115,
        0.115
       ],
+      "lr_confident": 0.115,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K3 just under small-value limit",
@@ -3681,13 +3853,15 @@
        0.135,
        0.135
       ],
+      "lr_confident": 0.135,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K4 split contracts",
@@ -3723,13 +3897,15 @@
      "lr_shrunk": 0.485,
      "lr_ci": [
       0.066,
-      1.391
+      1.396
      ],
+     "lr_confident": 0.066,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       4.8
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K4 split contracts",
       "corruption": {
@@ -3766,11 +3942,13 @@
        0.115,
        0.115
       ],
+      "lr_confident": 0.115,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K4 split contracts",
@@ -3806,15 +3984,17 @@
       "lr_shrunk": 0.894,
       "lr_ci": [
        0.135,
-       2.406
+       2.409
       ],
+      "lr_confident": 0.135,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        12.7
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K5 restricted competition",
@@ -3850,13 +4030,15 @@
      "lr_shrunk": 1.367,
      "lr_ci": [
       1.114,
-      1.65
+      1.654
      ],
+     "lr_confident": 1.277,
      "proposed_points": 4.5,
      "proposed_points_ci": [
       1.6,
-      7.2
+      7.3
      ],
+     "decision_points": 3.5,
      "learn_half": {
       "check": "K5 restricted competition",
       "corruption": {
@@ -3893,11 +4075,13 @@
        1.056,
        1.752
       ],
+      "lr_confident": 1.268,
       "proposed_points": 4.6,
       "proposed_points_ci": [
        0.8,
        8.1
-      ]
+      ],
+      "decision_points": 3.4
      },
      "check_half": {
       "check": "K5 restricted competition",
@@ -3935,13 +4119,15 @@
        0.968,
        1.698
       ],
+      "lr_confident": 1.171,
       "proposed_points": 3.7,
       "proposed_points_ci": [
        0.0,
        7.6
-      ]
+      ],
+      "decision_points": 2.3
      },
-     "decision": "proposal"
+     "decision": "3.5 points"
     },
     {
      "check": "K6 award >= 95 % of reserve",
@@ -3979,11 +4165,13 @@
       1.996,
       2.912
      ],
+     "lr_confident": 2.239,
      "proposed_points": 12.6,
      "proposed_points_ci": [
       10.0,
       15.4
      ],
+     "decision_points": 11.6,
      "learn_half": {
       "check": "K6 award >= 95 % of reserve",
       "corruption": {
@@ -4018,13 +4206,15 @@
       "lr_shrunk": 2.209,
       "lr_ci": [
        1.774,
-       2.832
+       2.839
       ],
+      "lr_confident": 2.04,
       "proposed_points": 11.4,
       "proposed_points_ci": [
        8.3,
-       15.0
-      ]
+       15.1
+      ],
+      "decision_points": 10.3
      },
      "check_half": {
       "check": "K6 award >= 95 % of reserve",
@@ -4062,13 +4252,15 @@
        1.831,
        3.131
       ],
+      "lr_confident": 2.151,
       "proposed_points": 12.4,
       "proposed_points_ci": [
        8.7,
        16.5
-      ]
+      ],
+      "decision_points": 11.1
      },
-     "decision": "proposal"
+     "decision": "11.6 points"
     }
    ],
    "weighted, one per case, competitive tenders with a notice": [
@@ -4108,11 +4300,13 @@
       0.167,
       0.256
      ],
+     "lr_confident": 0.192,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G2 private contract",
       "corruption": {
@@ -4149,11 +4343,13 @@
        0.25,
        0.4
       ],
+      "lr_confident": 0.294,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G2 private contract",
@@ -4191,13 +4387,15 @@
        0.294,
        0.476
       ],
+      "lr_confident": 0.345,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "G3 buyer share >= 5 %",
@@ -4233,13 +4431,15 @@
      "lr_shrunk": 1.27,
      "lr_ci": [
       0.668,
-      2.074
+      2.078
      ],
+     "lr_confident": 1.041,
      "proposed_points": 3.5,
      "proposed_points_ci": [
       0.0,
       10.5
      ],
+     "decision_points": 0.6,
      "learn_half": {
       "check": "G3 buyer share >= 5 %",
       "corruption": {
@@ -4274,13 +4474,15 @@
       "lr_shrunk": 1.219,
       "lr_ci": [
        0.649,
-       2.064
+       2.07
       ],
+      "lr_confident": 1.009,
       "proposed_points": 2.9,
       "proposed_points_ci": [
        0.0,
        10.5
-      ]
+      ],
+      "decision_points": 0.1
      },
      "check_half": {
       "check": "G3 buyer share >= 5 %",
@@ -4316,15 +4518,17 @@
       "lr_shrunk": 1.182,
       "lr_ci": [
        0.417,
-       2.378
+       2.384
       ],
+      "lr_confident": 0.88,
       "proposed_points": 2.4,
       "proposed_points_ci": [
        0.0,
        12.5
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "0.6 points"
     },
     {
      "check": "G4 concentration",
@@ -4360,13 +4564,15 @@
      "lr_shrunk": 0.989,
      "lr_ci": [
       0.479,
-      1.572
+      1.573
      ],
+     "lr_confident": 0.794,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       6.5
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G4 concentration",
       "corruption": {
@@ -4401,13 +4607,15 @@
       "lr_shrunk": 1.117,
       "lr_ci": [
        0.543,
-       1.818
+       1.822
       ],
+      "lr_confident": 0.885,
       "proposed_points": 1.6,
       "proposed_points_ci": [
        0.0,
-       8.6
-      ]
+       8.7
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G4 concentration",
@@ -4443,15 +4651,17 @@
       "lr_shrunk": 0.769,
       "lr_ci": [
        0.385,
-       1.21
+       1.215
       ],
+      "lr_confident": 0.57,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
-       2.7
-      ]
+       2.8
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "G5 3+ changes",
@@ -4489,11 +4699,13 @@
       0.222,
       1.621
      ],
+     "lr_confident": 0.528,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       7.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G5 3+ changes",
       "corruption": {
@@ -4528,13 +4740,15 @@
       "lr_shrunk": 0.892,
       "lr_ci": [
        0.323,
-       1.984
+       1.987
       ],
+      "lr_confident": 0.506,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        9.9
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G5 3+ changes",
@@ -4570,15 +4784,17 @@
       "lr_shrunk": 0.779,
       "lr_ci": [
        0.345,
-       1.638
+       1.649
       ],
+      "lr_confident": 0.435,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
-       7.1
-      ]
+       7.2
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "G6 amount increase > 20 %",
@@ -4614,13 +4830,15 @@
      "lr_shrunk": 0.832,
      "lr_ci": [
       0.244,
-      1.802
+      1.805
      ],
+     "lr_confident": 0.534,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       8.5
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G6 amount increase > 20 %",
       "corruption": {
@@ -4655,13 +4873,15 @@
       "lr_shrunk": 0.474,
       "lr_ci": [
        0.286,
-       0.796
+       0.799
       ],
+      "lr_confident": 0.357,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G6 amount increase > 20 %",
@@ -4697,15 +4917,17 @@
       "lr_shrunk": 1.179,
       "lr_ci": [
        0.385,
-       2.501
+       2.502
       ],
+      "lr_confident": 0.762,
       "proposed_points": 2.4,
       "proposed_points_ci": [
        0.0,
        13.2
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "N1 December signature",
@@ -4741,13 +4963,15 @@
      "lr_shrunk": 1.16,
      "lr_ci": [
       0.532,
-      1.872
+      1.876
      ],
+     "lr_confident": 0.903,
      "proposed_points": 2.1,
      "proposed_points_ci": [
       0.0,
-      9.0
+      9.1
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "N1 December signature",
       "corruption": {
@@ -4782,13 +5006,15 @@
       "lr_shrunk": 1.248,
       "lr_ci": [
        0.528,
-       2.087
+       2.09
       ],
+      "lr_confident": 0.944,
       "proposed_points": 3.2,
       "proposed_points_ci": [
        0.0,
        10.6
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "N1 December signature",
@@ -4824,15 +5050,17 @@
       "lr_shrunk": 0.943,
       "lr_ci": [
        0.442,
-       1.675
+       1.676
       ],
+      "lr_confident": 0.683,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
-       7.4
-      ]
+       7.5
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "N2 weekend signature",
@@ -4868,13 +5096,15 @@
      "lr_shrunk": 1.81,
      "lr_ci": [
       0.196,
-      5.283
+      5.288
      ],
+     "lr_confident": 0.375,
      "proposed_points": 8.6,
      "proposed_points_ci": [
       0.0,
       24.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "N2 weekend signature",
       "corruption": {
@@ -4911,11 +5141,13 @@
        0.256,
        0.4
       ],
+      "lr_confident": 0.286,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "N2 weekend signature",
@@ -4951,15 +5183,17 @@
       "lr_shrunk": 2.085,
       "lr_ci": [
        0.357,
-       5.636
+       5.64
       ],
+      "lr_confident": 0.563,
       "proposed_points": 10.6,
       "proposed_points_ci": [
        0.0,
-       24.9
-      ]
+       25.0
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "N4 supplier dependence >= 25 %",
@@ -4995,13 +5229,15 @@
      "lr_shrunk": 0.919,
      "lr_ci": [
       0.477,
-      1.516
+      1.521
      ],
+     "lr_confident": 0.754,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
-      6.0
+      6.1
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "N4 supplier dependence >= 25 %",
       "corruption": {
@@ -5036,13 +5272,15 @@
       "lr_shrunk": 0.977,
       "lr_ci": [
        0.519,
-       1.583
+       1.584
       ],
+      "lr_confident": 0.801,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        6.6
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "N4 supplier dependence >= 25 %",
@@ -5078,15 +5316,17 @@
       "lr_shrunk": 0.834,
       "lr_ci": [
        0.345,
-       1.719
+       1.729
       ],
+      "lr_confident": 0.625,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
-       7.8
-      ]
+       7.9
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "N5 first-time supplier",
@@ -5122,13 +5362,15 @@
      "lr_shrunk": 0.688,
      "lr_ci": [
       0.467,
-      0.926
+      0.932
      ],
+     "lr_confident": 0.602,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "N5 first-time supplier",
       "corruption": {
@@ -5165,11 +5407,13 @@
        0.573,
        1.097
       ],
+      "lr_confident": 0.731,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        1.3
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "N5 first-time supplier",
@@ -5205,12 +5449,14 @@
       "lr_shrunk": 0.648,
       "lr_ci": [
        0.465,
-       0.922
+       0.924
       ],
+      "lr_confident": 0.575,
       "proposed_points": "too few (9 buyers)",
-      "proposed_points_ci": null
+      "proposed_points_ci": null,
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "U2 repeated private contract",
@@ -5248,11 +5494,13 @@
       0.169,
       0.256
      ],
+     "lr_confident": 0.192,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "U2 repeated private contract",
       "corruption": {
@@ -5289,11 +5537,13 @@
        0.256,
        0.4
       ],
+      "lr_confident": 0.286,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "U2 repeated private contract",
@@ -5331,13 +5581,15 @@
        0.294,
        0.476
       ],
+      "lr_confident": 0.345,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K1 single-bidder private contract",
@@ -5375,11 +5627,13 @@
       0.169,
       0.256
      ],
+     "lr_confident": 0.192,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K1 single-bidder private contract",
       "corruption": {
@@ -5416,11 +5670,13 @@
        0.256,
        0.4
       ],
+      "lr_confident": 0.286,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K1 single-bidder private contract",
@@ -5458,13 +5714,15 @@
        0.294,
        0.5
       ],
+      "lr_confident": 0.345,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K2 re-tender private contract",
@@ -5500,13 +5758,15 @@
      "lr_shrunk": 0.204,
      "lr_ci": [
       0.169,
-      0.25
+      0.256
      ],
+     "lr_confident": 0.192,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K2 re-tender private contract",
       "corruption": {
@@ -5543,11 +5803,13 @@
        0.25,
        0.4
       ],
+      "lr_confident": 0.286,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K2 re-tender private contract",
@@ -5583,15 +5845,17 @@
       "lr_shrunk": 0.37,
       "lr_ci": [
        0.303,
-       0.476
+       0.5
       ],
+      "lr_confident": 0.345,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K3 just under small-value limit",
@@ -5629,11 +5893,13 @@
       0.169,
       0.256
      ],
+     "lr_confident": 0.192,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K3 just under small-value limit",
       "corruption": {
@@ -5670,11 +5936,13 @@
        0.256,
        0.417
       ],
+      "lr_confident": 0.286,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K3 just under small-value limit",
@@ -5712,13 +5980,15 @@
        0.294,
        0.476
       ],
+      "lr_confident": 0.345,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K4 split contracts",
@@ -5756,11 +6026,13 @@
       0.169,
       0.256
      ],
+     "lr_confident": 0.192,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K4 split contracts",
       "corruption": {
@@ -5797,11 +6069,13 @@
        0.256,
        0.4
       ],
+      "lr_confident": 0.294,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K4 split contracts",
@@ -5839,13 +6113,15 @@
        0.303,
        0.476
       ],
+      "lr_confident": 0.345,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K5 restricted competition",
@@ -5881,13 +6157,15 @@
      "lr_shrunk": 0.725,
      "lr_ci": [
       0.59,
-      0.864
+      0.865
      ],
+     "lr_confident": 0.678,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K5 restricted competition",
       "corruption": {
@@ -5924,11 +6202,13 @@
        0.572,
        0.899
       ],
+      "lr_confident": 0.677,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K5 restricted competition",
@@ -5964,15 +6244,17 @@
       "lr_shrunk": 0.821,
       "lr_ci": [
        0.666,
-       0.978
+       0.979
       ],
+      "lr_confident": 0.769,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K6 award >= 95 % of reserve",
@@ -6008,13 +6290,15 @@
      "lr_shrunk": 2.721,
      "lr_ci": [
       2.023,
-      3.599
+      3.601
      ],
+     "lr_confident": 2.449,
      "proposed_points": 14.4,
      "proposed_points_ci": [
       10.2,
       18.5
      ],
+     "decision_points": 12.9,
      "learn_half": {
       "check": "K6 award >= 95 % of reserve",
       "corruption": {
@@ -6049,13 +6333,15 @@
       "lr_shrunk": 2.299,
       "lr_ci": [
        1.532,
-       3.31
+       3.318
       ],
+      "lr_confident": 2.013,
       "proposed_points": 12.0,
       "proposed_points_ci": [
        6.2,
        17.3
-      ]
+      ],
+      "decision_points": 10.1
      },
      "check_half": {
       "check": "K6 award >= 95 % of reserve",
@@ -6093,13 +6379,15 @@
        1.538,
        3.427
       ],
+      "lr_confident": 2.095,
       "proposed_points": 12.7,
       "proposed_points_ci": [
        6.2,
        17.8
-      ]
+      ],
+      "decision_points": 10.7
      },
-     "decision": "proposal"
+     "decision": "12.9 points"
     }
    ],
    "unweighted (court outcome ignored), one per case, all contracts": [
@@ -6137,13 +6425,15 @@
      "lr_shrunk": 0.342,
      "lr_ci": [
       0.228,
-      0.464
+      0.467
      ],
+     "lr_confident": 0.299,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G2 private contract",
       "corruption": {
@@ -6178,13 +6468,15 @@
       "lr_shrunk": 0.387,
       "lr_ci": [
        0.272,
-       0.548
+       0.55
       ],
+      "lr_confident": 0.342,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G2 private contract",
@@ -6222,13 +6514,15 @@
        0.337,
        0.672
       ],
+      "lr_confident": 0.431,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "G3 buyer share >= 5 %",
@@ -6264,13 +6558,15 @@
      "lr_shrunk": 1.388,
      "lr_ci": [
       0.888,
-      2.068
+      2.069
      ],
+     "lr_confident": 1.217,
      "proposed_points": 4.7,
      "proposed_points_ci": [
       0.0,
       10.5
      ],
+     "decision_points": 2.8,
      "learn_half": {
       "check": "G3 buyer share >= 5 %",
       "corruption": {
@@ -6305,13 +6601,15 @@
       "lr_shrunk": 1.404,
       "lr_ci": [
        0.78,
-       2.327
+       2.334
       ],
+      "lr_confident": 1.164,
       "proposed_points": 4.9,
       "proposed_points_ci": [
        0.0,
        12.2
-      ]
+      ],
+      "decision_points": 2.2
      },
      "check_half": {
       "check": "G3 buyer share >= 5 %",
@@ -6347,15 +6645,17 @@
       "lr_shrunk": 1.246,
       "lr_ci": [
        0.698,
-       2.024
+       2.03
       ],
+      "lr_confident": 1.043,
       "proposed_points": 3.2,
       "proposed_points_ci": [
        0.0,
        10.2
-      ]
+      ],
+      "decision_points": 0.6
      },
-     "decision": "fails rule"
+     "decision": "2.8 points"
     },
     {
      "check": "G4 concentration",
@@ -6391,13 +6691,15 @@
      "lr_shrunk": 0.938,
      "lr_ci": [
       0.48,
-      1.458
+      1.462
      ],
+     "lr_confident": 0.767,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
-      5.4
+      5.5
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G4 concentration",
       "corruption": {
@@ -6432,13 +6734,15 @@
       "lr_shrunk": 0.948,
       "lr_ci": [
        0.438,
-       1.497
+       1.509
       ],
+      "lr_confident": 0.753,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
-       5.8
-      ]
+       5.9
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G4 concentration",
@@ -6476,13 +6780,15 @@
        0.37,
        1.547
       ],
+      "lr_confident": 0.691,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        6.3
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "G5 3+ changes",
@@ -6518,13 +6824,15 @@
      "lr_shrunk": 1.772,
      "lr_ci": [
       0.339,
-      3.59
+      3.601
      ],
+     "lr_confident": 1.148,
      "proposed_points": 8.3,
      "proposed_points_ci": [
       0.0,
-      18.4
+      18.5
      ],
+     "decision_points": 2.0,
      "learn_half": {
       "check": "G5 3+ changes",
       "corruption": {
@@ -6559,13 +6867,15 @@
       "lr_shrunk": 1.5,
       "lr_ci": [
        0.286,
-       3.816
+       3.847
       ],
+      "lr_confident": 0.651,
       "proposed_points": 5.9,
       "proposed_points_ci": [
        0.0,
-       19.3
-      ]
+       19.4
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G5 3+ changes",
@@ -6601,15 +6911,17 @@
       "lr_shrunk": 1.552,
       "lr_ci": [
        0.333,
-       3.404
+       3.422
       ],
+      "lr_confident": 0.947,
       "proposed_points": 6.3,
       "proposed_points_ci": [
        0.0,
        17.7
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "2 points"
     },
     {
      "check": "G6 amount increase > 20 %",
@@ -6645,13 +6957,15 @@
      "lr_shrunk": 1.579,
      "lr_ci": [
       0.315,
-      3.323
+      3.343
      ],
+     "lr_confident": 1.032,
      "proposed_points": 6.6,
      "proposed_points_ci": [
       0.0,
-      17.3
+      17.4
      ],
+     "decision_points": 0.5,
      "learn_half": {
       "check": "G6 amount increase > 20 %",
       "corruption": {
@@ -6686,13 +7000,15 @@
       "lr_shrunk": 0.502,
       "lr_ci": [
        0.263,
-       0.961
+       0.962
       ],
+      "lr_confident": 0.333,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G6 amount increase > 20 %",
@@ -6728,15 +7044,17 @@
       "lr_shrunk": 2.237,
       "lr_ci": [
        0.385,
-       4.701
+       4.715
       ],
+      "lr_confident": 1.481,
       "proposed_points": 11.6,
       "proposed_points_ci": [
        0.0,
-       22.3
-      ]
+       22.4
+      ],
+      "decision_points": 5.7
      },
-     "decision": "fails rule"
+     "decision": "0.5 points"
     },
     {
      "check": "N1 December signature",
@@ -6772,13 +7090,15 @@
      "lr_shrunk": 1.323,
      "lr_ci": [
       0.637,
-      2.07
+      2.071
      ],
+     "lr_confident": 1.059,
      "proposed_points": 4.0,
      "proposed_points_ci": [
       0.0,
       10.5
      ],
+     "decision_points": 0.8,
      "learn_half": {
       "check": "N1 December signature",
       "corruption": {
@@ -6813,13 +7133,15 @@
       "lr_shrunk": 1.592,
       "lr_ci": [
        0.709,
-       2.634
+       2.639
       ],
+      "lr_confident": 1.253,
       "proposed_points": 6.7,
       "proposed_points_ci": [
        0.0,
        14.0
-      ]
+      ],
+      "decision_points": 3.3
      },
      "check_half": {
       "check": "N1 December signature",
@@ -6855,15 +7177,17 @@
       "lr_shrunk": 0.814,
       "lr_ci": [
        0.343,
-       1.53
+       1.536
       ],
+      "lr_confident": 0.574,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
-       6.1
-      ]
+       6.2
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "0.8 points"
     },
     {
      "check": "N2 weekend signature",
@@ -6899,13 +7223,15 @@
      "lr_shrunk": 0.918,
      "lr_ci": [
       0.143,
-      2.947
+      2.968
      ],
+     "lr_confident": 0.169,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
-      15.6
+      15.7
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "N2 weekend signature",
       "corruption": {
@@ -6942,11 +7268,13 @@
        0.217,
        0.333
       ],
+      "lr_confident": 0.244,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "N2 weekend signature",
@@ -6982,15 +7310,17 @@
       "lr_shrunk": 1.442,
       "lr_ci": [
        0.256,
-       4.479
+       4.494
       ],
+      "lr_confident": 0.323,
       "proposed_points": 5.3,
       "proposed_points_ci": [
        0.0,
-       21.6
-      ]
+       21.7
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "N4 supplier dependence >= 25 %",
@@ -7028,11 +7358,13 @@
       0.605,
       1.441
      ],
+     "lr_confident": 0.86,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       5.3
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "N4 supplier dependence >= 25 %",
       "corruption": {
@@ -7067,13 +7399,15 @@
       "lr_shrunk": 1.035,
       "lr_ci": [
        0.584,
-       1.712
+       1.723
       ],
+      "lr_confident": 0.863,
       "proposed_points": 0.5,
       "proposed_points_ci": [
        0.0,
-       7.8
-      ]
+       7.9
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "N4 supplier dependence >= 25 %",
@@ -7109,15 +7443,17 @@
       "lr_shrunk": 0.942,
       "lr_ci": [
        0.532,
-       1.423
+       1.425
       ],
+      "lr_confident": 0.792,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        5.1
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "N5 first-time supplier",
@@ -7155,11 +7491,13 @@
       0.574,
       1.065
      ],
+     "lr_confident": 0.734,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.9
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "N5 first-time supplier",
       "corruption": {
@@ -7194,13 +7532,15 @@
       "lr_shrunk": 0.927,
       "lr_ci": [
        0.66,
-       1.206
+       1.208
       ],
+      "lr_confident": 0.839,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        2.7
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "N5 first-time supplier",
@@ -7236,15 +7576,17 @@
       "lr_shrunk": 0.752,
       "lr_ci": [
        0.515,
-       1.035
+       1.037
       ],
+      "lr_confident": 0.656,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.5
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "U2 repeated private contract",
@@ -7282,11 +7624,13 @@
       0.169,
       0.525
      ],
+     "lr_confident": 0.266,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "U2 repeated private contract",
       "corruption": {
@@ -7321,13 +7665,15 @@
       "lr_shrunk": 0.351,
       "lr_ci": [
        0.227,
-       0.56
+       0.561
       ],
+      "lr_confident": 0.278,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "U2 repeated private contract",
@@ -7363,15 +7709,17 @@
       "lr_shrunk": 0.512,
       "lr_ci": [
        0.278,
-       0.8
+       0.801
       ],
+      "lr_confident": 0.409,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K1 single-bidder private contract",
@@ -7409,11 +7757,13 @@
       0.137,
       0.192
      ],
+     "lr_confident": 0.152,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K1 single-bidder private contract",
       "corruption": {
@@ -7450,11 +7800,13 @@
        0.217,
        0.333
       ],
+      "lr_confident": 0.244,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K1 single-bidder private contract",
@@ -7492,13 +7844,15 @@
        0.238,
        0.37
       ],
+      "lr_confident": 0.27,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K2 re-tender private contract",
@@ -7536,11 +7890,13 @@
       0.137,
       0.196
      ],
+     "lr_confident": 0.152,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K2 re-tender private contract",
       "corruption": {
@@ -7577,11 +7933,13 @@
        0.217,
        0.333
       ],
+      "lr_confident": 0.244,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K2 re-tender private contract",
@@ -7619,13 +7977,15 @@
        0.244,
        0.37
       ],
+      "lr_confident": 0.27,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K3 just under small-value limit",
@@ -7663,11 +8023,13 @@
       0.137,
       0.2
      ],
+     "lr_confident": 0.152,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K3 just under small-value limit",
       "corruption": {
@@ -7704,11 +8066,13 @@
        0.217,
        0.333
       ],
+      "lr_confident": 0.244,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K3 just under small-value limit",
@@ -7744,15 +8108,17 @@
       "lr_shrunk": 0.294,
       "lr_ci": [
        0.238,
-       0.37
+       0.385
       ],
+      "lr_confident": 0.27,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K4 split contracts",
@@ -7788,13 +8154,15 @@
      "lr_shrunk": 1.182,
      "lr_ci": [
       0.143,
-      3.553
+      3.588
      ],
+     "lr_confident": 0.169,
      "proposed_points": 2.4,
      "proposed_points_ci": [
       0.0,
-      18.3
+      18.4
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K4 split contracts",
       "corruption": {
@@ -7831,11 +8199,13 @@
        0.217,
        0.333
       ],
+      "lr_confident": 0.244,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K4 split contracts",
@@ -7871,15 +8241,17 @@
       "lr_shrunk": 1.945,
       "lr_ci": [
        0.256,
-       5.185
+       5.188
       ],
+      "lr_confident": 0.323,
       "proposed_points": 9.6,
       "proposed_points_ci": [
        0.0,
-       23.7
-      ]
+       23.8
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K5 restricted competition",
@@ -7915,13 +8287,15 @@
      "lr_shrunk": 1.622,
      "lr_ci": [
       1.202,
-      2.053
+      2.059
      ],
+     "lr_confident": 1.465,
      "proposed_points": 7.0,
      "proposed_points_ci": [
       2.7,
       10.4
      ],
+     "decision_points": 5.5,
      "learn_half": {
       "check": "K5 restricted competition",
       "corruption": {
@@ -7956,13 +8330,15 @@
       "lr_shrunk": 1.436,
       "lr_ci": [
        0.951,
-       2.023
+       2.031
       ],
+      "lr_confident": 1.244,
       "proposed_points": 5.2,
       "proposed_points_ci": [
        0.0,
        10.2
-      ]
+      ],
+      "decision_points": 3.1
      },
      "check_half": {
       "check": "K5 restricted competition",
@@ -8000,13 +8376,15 @@
        1.154,
        2.162
       ],
+      "lr_confident": 1.444,
       "proposed_points": 7.0,
       "proposed_points_ci": [
        2.1,
        11.1
-      ]
+      ],
+      "decision_points": 5.3
      },
-     "decision": "fails rule"
+     "decision": "5.5 points"
     },
     {
      "check": "K6 award >= 95 % of reserve",
@@ -8042,13 +8420,15 @@
      "lr_shrunk": 2.072,
      "lr_ci": [
       1.567,
-      2.616
+      2.618
      ],
+     "lr_confident": 1.888,
      "proposed_points": 10.5,
      "proposed_points_ci": [
       6.5,
       13.9
      ],
+     "decision_points": 9.2,
      "learn_half": {
       "check": "K6 award >= 95 % of reserve",
       "corruption": {
@@ -8085,11 +8465,13 @@
        1.289,
        2.55
       ],
+      "lr_confident": 1.663,
       "proposed_points": 9.1,
       "proposed_points_ci": [
        3.7,
        13.5
-      ]
+      ],
+      "decision_points": 7.3
      },
      "check_half": {
       "check": "K6 award >= 95 % of reserve",
@@ -8125,15 +8507,17 @@
       "lr_shrunk": 1.838,
       "lr_ci": [
        1.317,
-       2.455
+       2.456
       ],
+      "lr_confident": 1.642,
       "proposed_points": 8.8,
       "proposed_points_ci": [
        4.0,
        13.0
-      ]
+      ],
+      "decision_points": 7.2
      },
-     "decision": "proposal"
+     "decision": "9.2 points"
     }
    ]
   }
@@ -8142,7 +8526,7 @@
   "buyer": "demand_code",
   "finality_checked": true,
   "sets": {
-   "weighted, one per case, all contracts (decision rule)": [
+   "weighted, one per case, all contracts (decision basis until 2026-10-20)": [
     {
      "check": "G2 private contract",
      "corruption": {
@@ -8179,11 +8563,13 @@
       0.161,
       0.343
      ],
+     "lr_confident": 0.21,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G2 private contract",
       "corruption": {
@@ -8218,13 +8604,15 @@
       "lr_shrunk": 0.264,
       "lr_ci": [
        0.177,
-       0.375
+       0.376
       ],
+      "lr_confident": 0.227,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G2 private contract",
@@ -8260,15 +8648,17 @@
       "lr_shrunk": 0.398,
       "lr_ci": [
        0.27,
-       0.552
+       0.553
       ],
+      "lr_confident": 0.344,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "G3 buyer share >= 5 %",
@@ -8304,13 +8694,15 @@
      "lr_shrunk": 1.767,
      "lr_ci": [
       1.218,
-      2.426
+      2.428
      ],
+     "lr_confident": 1.557,
      "proposed_points": 8.2,
      "proposed_points_ci": [
       2.8,
       12.8
      ],
+     "decision_points": 6.4,
      "learn_half": {
       "check": "G3 buyer share >= 5 %",
       "corruption": {
@@ -8345,13 +8737,15 @@
       "lr_shrunk": 1.935,
       "lr_ci": [
        1.238,
-       2.891
+       2.892
       ],
+      "lr_confident": 1.676,
       "proposed_points": 9.5,
       "proposed_points_ci": [
        3.1,
        15.3
-      ]
+      ],
+      "decision_points": 7.5
      },
      "check_half": {
       "check": "G3 buyer share >= 5 %",
@@ -8389,13 +8783,15 @@
        0.683,
        2.079
       ],
+      "lr_confident": 1.104,
       "proposed_points": 4.2,
       "proposed_points_ci": [
        0.0,
        10.6
-      ]
+      ],
+      "decision_points": 1.4
      },
-     "decision": "proposal"
+     "decision": "6.4 points"
     },
     {
      "check": "G4 concentration",
@@ -8433,11 +8829,13 @@
       0.339,
       1.225
      ],
+     "lr_confident": 0.597,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       2.9
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G4 concentration",
       "corruption": {
@@ -8474,11 +8872,13 @@
        0.33,
        1.397
       ],
+      "lr_confident": 0.628,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        4.8
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G4 concentration",
@@ -8514,15 +8914,17 @@
       "lr_shrunk": 0.736,
       "lr_ci": [
        0.303,
-       1.331
+       1.332
       ],
+      "lr_confident": 0.551,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        4.1
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "G5 3+ changes",
@@ -8558,13 +8960,15 @@
      "lr_shrunk": 1.288,
      "lr_ci": [
       0.213,
-      2.831
+      2.842
      ],
+     "lr_confident": 0.804,
      "proposed_points": 3.7,
      "proposed_points_ci": [
       0.0,
-      15.0
+      15.1
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G5 3+ changes",
       "corruption": {
@@ -8599,13 +9003,15 @@
       "lr_shrunk": 0.978,
       "lr_ci": [
        0.175,
-       2.892
+       2.909
       ],
+      "lr_confident": 0.213,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
-       15.3
-      ]
+       15.4
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G5 3+ changes",
@@ -8641,15 +9047,17 @@
       "lr_shrunk": 1.427,
       "lr_ci": [
        0.27,
-       3.294
+       3.303
       ],
+      "lr_confident": 0.799,
       "proposed_points": 5.1,
       "proposed_points_ci": [
        0.0,
        17.2
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "G6 amount increase > 20 %",
@@ -8685,13 +9093,15 @@
      "lr_shrunk": 0.806,
      "lr_ci": [
       0.13,
-      1.854
+      1.866
      ],
+     "lr_confident": 0.498,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
-      8.9
+      9.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G6 amount increase > 20 %",
       "corruption": {
@@ -8728,11 +9138,13 @@
        0.164,
        0.25
       ],
+      "lr_confident": 0.185,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G6 amount increase > 20 %",
@@ -8768,15 +9180,17 @@
       "lr_shrunk": 1.363,
       "lr_ci": [
        0.286,
-       3.275
+       3.28
       ],
+      "lr_confident": 0.836,
       "proposed_points": 4.5,
       "proposed_points_ci": [
        0.0,
        17.1
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "N1 December signature",
@@ -8814,11 +9228,13 @@
       0.944,
       2.231
      ],
+     "lr_confident": 1.31,
      "proposed_points": 6.2,
      "proposed_points_ci": [
       0.0,
       11.6
      ],
+     "decision_points": 3.9,
      "learn_half": {
       "check": "N1 December signature",
       "corruption": {
@@ -8853,13 +9269,15 @@
       "lr_shrunk": 2.066,
       "lr_ci": [
        1.251,
-       3.037
+       3.053
       ],
+      "lr_confident": 1.745,
       "proposed_points": 10.5,
       "proposed_points_ci": [
        3.2,
-       16.0
-      ]
+       16.1
+      ],
+      "decision_points": 8.0
      },
      "check_half": {
       "check": "N1 December signature",
@@ -8895,15 +9313,17 @@
       "lr_shrunk": 0.704,
       "lr_ci": [
        0.275,
-       1.266
+       1.271
       ],
+      "lr_confident": 0.502,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
-       3.4
-      ]
+       3.5
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "3.9 points"
     },
     {
      "check": "N2 weekend signature",
@@ -8939,13 +9359,15 @@
      "lr_shrunk": 1.616,
      "lr_ci": [
       0.102,
-      5.406
+      5.431
      ],
+     "lr_confident": 0.118,
      "proposed_points": 6.9,
      "proposed_points_ci": [
       0.0,
-      24.3
+      24.4
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "N2 weekend signature",
       "corruption": {
@@ -8980,13 +9402,15 @@
       "lr_shrunk": 1.952,
       "lr_ci": [
        0.156,
-       6.86
+       6.88
       ],
+      "lr_confident": 0.189,
       "proposed_points": 9.7,
       "proposed_points_ci": [
        0.0,
        27.8
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "N2 weekend signature",
@@ -9024,13 +9448,15 @@
        0.192,
        0.303
       ],
+      "lr_confident": 0.222,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "N4 supplier dependence >= 25 %",
@@ -9066,13 +9492,15 @@
      "lr_shrunk": 1.062,
      "lr_ci": [
       0.628,
-      1.584
+      1.585
      ],
+     "lr_confident": 0.898,
      "proposed_points": 0.9,
      "proposed_points_ci": [
       0.0,
       6.6
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "N4 supplier dependence >= 25 %",
       "corruption": {
@@ -9109,11 +9537,13 @@
        0.634,
        2.041
       ],
+      "lr_confident": 1.013,
       "proposed_points": 2.9,
       "proposed_points_ci": [
        0.0,
        10.3
-      ]
+      ],
+      "decision_points": 0.2
      },
      "check_half": {
       "check": "N4 supplier dependence >= 25 %",
@@ -9149,15 +9579,17 @@
       "lr_shrunk": 0.853,
       "lr_ci": [
        0.403,
-       1.429
+       1.434
       ],
+      "lr_confident": 0.683,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
-       5.1
-      ]
+       5.2
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "N5 first-time supplier",
@@ -9193,13 +9625,15 @@
      "lr_shrunk": 0.969,
      "lr_ci": [
       0.737,
-      1.203
+      1.206
      ],
+     "lr_confident": 0.892,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       2.7
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "N5 first-time supplier",
       "corruption": {
@@ -9234,13 +9668,15 @@
       "lr_shrunk": 0.994,
       "lr_ci": [
        0.744,
-       1.258
+       1.259
       ],
+      "lr_confident": 0.897,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        3.3
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "N5 first-time supplier",
@@ -9276,15 +9712,17 @@
       "lr_shrunk": 0.94,
       "lr_ci": [
        0.669,
-       1.236
+       1.238
       ],
+      "lr_confident": 0.84,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        3.1
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "U2 repeated private contract",
@@ -9320,13 +9758,15 @@
      "lr_shrunk": 0.248,
      "lr_ci": [
       0.119,
-      0.417
+      0.418
      ],
+     "lr_confident": 0.193,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "U2 repeated private contract",
       "corruption": {
@@ -9363,11 +9803,13 @@
        0.156,
        0.398
       ],
+      "lr_confident": 0.189,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "U2 repeated private contract",
@@ -9405,13 +9847,15 @@
        0.227,
        0.718
       ],
+      "lr_confident": 0.336,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K1 single-bidder private contract",
@@ -9449,11 +9893,13 @@
       0.098,
       0.135
      ],
+     "lr_confident": 0.108,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K1 single-bidder private contract",
       "corruption": {
@@ -9490,11 +9936,13 @@
        0.149,
        0.222
       ],
+      "lr_confident": 0.169,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K1 single-bidder private contract",
@@ -9532,13 +9980,15 @@
        0.196,
        0.312
       ],
+      "lr_confident": 0.222,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K2 re-tender private contract",
@@ -9576,11 +10026,13 @@
       0.097,
       0.133
      ],
+     "lr_confident": 0.108,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K2 re-tender private contract",
       "corruption": {
@@ -9617,11 +10069,13 @@
        0.149,
        0.222
       ],
+      "lr_confident": 0.169,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K2 re-tender private contract",
@@ -9659,13 +10113,15 @@
        0.192,
        0.303
       ],
+      "lr_confident": 0.222,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K3 just under small-value limit",
@@ -9703,11 +10159,13 @@
       0.097,
       0.137
      ],
+     "lr_confident": 0.108,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K3 just under small-value limit",
       "corruption": {
@@ -9744,11 +10202,13 @@
        0.149,
        0.222
       ],
+      "lr_confident": 0.167,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K3 just under small-value limit",
@@ -9786,13 +10246,15 @@
        0.196,
        0.303
       ],
+      "lr_confident": 0.222,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K4 split contracts",
@@ -9828,13 +10290,15 @@
      "lr_shrunk": 0.967,
      "lr_ci": [
       0.102,
-      3.152
+      3.156
      ],
+     "lr_confident": 0.118,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       16.6
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K4 split contracts",
       "corruption": {
@@ -9871,11 +10335,13 @@
        0.149,
        0.217
       ],
+      "lr_confident": 0.167,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K4 split contracts",
@@ -9911,15 +10377,17 @@
       "lr_shrunk": 2.042,
       "lr_ci": [
        0.204,
-       5.717
+       5.736
       ],
+      "lr_confident": 0.256,
       "proposed_points": 10.3,
       "proposed_points_ci": [
        0.0,
        25.2
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K5 restricted competition",
@@ -9955,13 +10423,15 @@
      "lr_shrunk": 1.681,
      "lr_ci": [
       1.311,
-      2.089
+      2.093
      ],
+     "lr_confident": 1.553,
      "proposed_points": 7.5,
      "proposed_points_ci": [
       3.9,
-      10.6
+      10.7
      ],
+     "decision_points": 6.4,
      "learn_half": {
       "check": "K5 restricted competition",
       "corruption": {
@@ -9996,13 +10466,15 @@
       "lr_shrunk": 1.8,
       "lr_ci": [
        1.32,
-       2.323
+       2.326
       ],
+      "lr_confident": 1.631,
       "proposed_points": 8.5,
       "proposed_points_ci": [
        4.0,
        12.2
-      ]
+      ],
+      "decision_points": 7.1
      },
      "check_half": {
       "check": "K5 restricted competition",
@@ -10040,13 +10512,15 @@
        0.949,
        1.86
       ],
+      "lr_confident": 1.228,
       "proposed_points": 4.6,
       "proposed_points_ci": [
        0.0,
        9.0
-      ]
+      ],
+      "decision_points": 3.0
      },
-     "decision": "proposal"
+     "decision": "6.4 points"
     },
     {
      "check": "K6 award >= 95 % of reserve",
@@ -10082,13 +10556,15 @@
      "lr_shrunk": 2.042,
      "lr_ci": [
       1.692,
-      2.403
+      2.406
      ],
+     "lr_confident": 1.922,
      "proposed_points": 10.3,
      "proposed_points_ci": [
       7.6,
-      12.6
+      12.7
      ],
+     "decision_points": 9.4,
      "learn_half": {
       "check": "K6 award >= 95 % of reserve",
       "corruption": {
@@ -10123,13 +10599,15 @@
       "lr_shrunk": 2.149,
       "lr_ci": [
        1.684,
-       2.633
+       2.636
       ],
+      "lr_confident": 1.984,
       "proposed_points": 11.0,
       "proposed_points_ci": [
        7.5,
        14.0
-      ]
+      ],
+      "decision_points": 9.9
      },
      "check_half": {
       "check": "K6 award >= 95 % of reserve",
@@ -10167,16 +10645,18 @@
        1.192,
        2.107
       ],
+      "lr_confident": 1.478,
       "proposed_points": 7.1,
       "proposed_points_ci": [
        2.5,
-       10.7
-      ]
+       10.8
+      ],
+      "decision_points": 5.6
      },
-     "decision": "proposal"
+     "decision": "9.4 points"
     }
    ],
-   "weighted, all linked tenders, all contracts": [
+   "weighted, all linked tenders, all contracts (decision rule, amendment 2026-10-20)": [
     {
      "check": "G2 private contract",
      "corruption": {
@@ -10213,11 +10693,13 @@
       0.36,
       0.503
      ],
+     "lr_confident": 0.406,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G2 private contract",
       "corruption": {
@@ -10254,11 +10736,13 @@
        0.341,
        0.533
       ],
+      "lr_confident": 0.404,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G2 private contract",
@@ -10296,13 +10780,15 @@
        0.368,
        0.586
       ],
+      "lr_confident": 0.435,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "G3 buyer share >= 5 %",
@@ -10338,13 +10824,15 @@
      "lr_shrunk": 1.675,
      "lr_ci": [
       1.386,
-      2.015
+      2.017
      ],
+     "lr_confident": 1.572,
      "proposed_points": 7.4,
      "proposed_points_ci": [
       4.7,
       10.1
      ],
+     "decision_points": 6.5,
      "learn_half": {
       "check": "G3 buyer share >= 5 %",
       "corruption": {
@@ -10379,13 +10867,15 @@
       "lr_shrunk": 1.891,
       "lr_ci": [
        1.504,
-       2.465
+       2.467
       ],
+      "lr_confident": 1.735,
       "proposed_points": 9.2,
       "proposed_points_ci": [
        5.9,
        13.0
-      ]
+      ],
+      "decision_points": 7.9
      },
      "check_half": {
       "check": "G3 buyer share >= 5 %",
@@ -10421,15 +10911,17 @@
       "lr_shrunk": 1.348,
       "lr_ci": [
        1.033,
-       1.781
+       1.782
       ],
+      "lr_confident": 1.224,
       "proposed_points": 4.3,
       "proposed_points_ci": [
        0.5,
        8.3
-      ]
+      ],
+      "decision_points": 2.9
      },
-     "decision": "proposal"
+     "decision": "6.5 points"
     },
     {
      "check": "G4 concentration",
@@ -10465,13 +10957,15 @@
      "lr_shrunk": 0.908,
      "lr_ci": [
       0.656,
-      1.169
+      1.171
      ],
+     "lr_confident": 0.811,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       2.3
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G4 concentration",
       "corruption": {
@@ -10508,11 +11002,13 @@
        0.696,
        1.368
       ],
+      "lr_confident": 0.891,
       "proposed_points": 0.1,
       "proposed_points_ci": [
        0.0,
        4.5
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G4 concentration",
@@ -10548,15 +11044,17 @@
       "lr_shrunk": 0.792,
       "lr_ci": [
        0.471,
-       1.201
+       1.202
       ],
+      "lr_confident": 0.67,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
-       2.6
-      ]
+       2.7
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "G5 3+ changes",
@@ -10594,11 +11092,13 @@
       0.189,
       1.214
      ],
+     "lr_confident": 0.444,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       2.8
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G5 3+ changes",
       "corruption": {
@@ -10633,13 +11133,15 @@
       "lr_shrunk": 0.586,
       "lr_ci": [
        0.065,
-       1.375
+       1.377
       ],
+      "lr_confident": 0.331,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        4.6
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G5 3+ changes",
@@ -10677,13 +11179,15 @@
        0.119,
        1.395
       ],
+      "lr_confident": 0.379,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        4.8
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "G6 amount increase > 20 %",
@@ -10719,13 +11223,15 @@
      "lr_shrunk": 0.515,
      "lr_ci": [
       0.185,
-      0.951
+      0.953
      ],
+     "lr_confident": 0.378,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G6 amount increase > 20 %",
       "corruption": {
@@ -10760,13 +11266,15 @@
       "lr_shrunk": 0.294,
       "lr_ci": [
        0.084,
-       0.619
+       0.622
       ],
+      "lr_confident": 0.197,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G6 amount increase > 20 %",
@@ -10802,15 +11310,17 @@
       "lr_shrunk": 0.689,
       "lr_ci": [
        0.219,
-       1.479
+       1.484
       ],
+      "lr_confident": 0.473,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
-       5.6
-      ]
+       5.7
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "N1 December signature",
@@ -10848,11 +11358,13 @@
       0.63,
       1.131
      ],
+     "lr_confident": 0.787,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       1.8
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "N1 December signature",
       "corruption": {
@@ -10889,11 +11401,13 @@
        0.744,
        1.533
       ],
+      "lr_confident": 0.972,
       "proposed_points": 1.5,
       "proposed_points_ci": [
        0.0,
        6.2
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "N1 December signature",
@@ -10929,15 +11443,17 @@
       "lr_shrunk": 0.611,
       "lr_ci": [
        0.351,
-       0.886
+       0.891
       ],
+      "lr_confident": 0.506,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "N2 weekend signature",
@@ -10973,13 +11489,15 @@
      "lr_shrunk": 1.237,
      "lr_ci": [
       0.219,
-      2.909
+      2.931
      ],
+     "lr_confident": 0.764,
      "proposed_points": 3.1,
      "proposed_points_ci": [
       0.0,
-      15.4
+      15.5
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "N2 weekend signature",
       "corruption": {
@@ -11014,13 +11532,15 @@
       "lr_shrunk": 1.248,
       "lr_ci": [
        0.113,
-       3.264
+       3.285
       ],
+      "lr_confident": 0.712,
       "proposed_points": 3.2,
       "proposed_points_ci": [
        0.0,
-       17.1
-      ]
+       17.2
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "N2 weekend signature",
@@ -11056,15 +11576,17 @@
       "lr_shrunk": 0.666,
       "lr_ci": [
        0.074,
-       2.251
+       2.254
       ],
+      "lr_confident": 0.099,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        11.7
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "N4 supplier dependence >= 25 %",
@@ -11100,13 +11622,15 @@
      "lr_shrunk": 1.208,
      "lr_ci": [
       0.978,
-      1.503
+      1.504
      ],
+     "lr_confident": 1.122,
      "proposed_points": 2.7,
      "proposed_points_ci": [
       0.0,
       5.9
      ],
+     "decision_points": 1.7,
      "learn_half": {
       "check": "N4 supplier dependence >= 25 %",
       "corruption": {
@@ -11141,13 +11665,15 @@
       "lr_shrunk": 1.394,
       "lr_ci": [
        1.035,
-       1.887
+       1.89
       ],
+      "lr_confident": 1.269,
       "proposed_points": 4.8,
       "proposed_points_ci": [
        0.5,
        9.2
-      ]
+      ],
+      "decision_points": 3.4
      },
      "check_half": {
       "check": "N4 supplier dependence >= 25 %",
@@ -11183,15 +11709,17 @@
       "lr_shrunk": 0.981,
       "lr_ci": [
        0.735,
-       1.274
+       1.275
       ],
+      "lr_confident": 0.898,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        3.5
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "1.7 points"
     },
     {
      "check": "N5 first-time supplier",
@@ -11227,13 +11755,15 @@
      "lr_shrunk": 1.107,
      "lr_ci": [
       0.996,
-      1.216
+      1.217
      ],
+     "lr_confident": 1.068,
      "proposed_points": 1.5,
      "proposed_points_ci": [
       0.0,
       2.8
      ],
+     "decision_points": 0.9,
      "learn_half": {
       "check": "N5 first-time supplier",
       "corruption": {
@@ -11268,13 +11798,15 @@
       "lr_shrunk": 1.094,
       "lr_ci": [
        0.962,
-       1.24
+       1.241
       ],
+      "lr_confident": 1.049,
       "proposed_points": 1.3,
       "proposed_points_ci": [
        0.0,
        3.1
-      ]
+      ],
+      "decision_points": 0.7
      },
      "check_half": {
       "check": "N5 first-time supplier",
@@ -11310,15 +11842,17 @@
       "lr_shrunk": 1.113,
       "lr_ci": [
        0.949,
-       1.282
+       1.283
       ],
+      "lr_confident": 1.056,
       "proposed_points": 1.5,
       "proposed_points_ci": [
        0.0,
        3.6
-      ]
+      ],
+      "decision_points": 0.8
      },
-     "decision": "fails rule"
+     "decision": "0.9 points"
     },
     {
      "check": "U2 repeated private contract",
@@ -11356,11 +11890,13 @@
       0.211,
       0.409
      ],
+     "lr_confident": 0.272,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "U2 repeated private contract",
       "corruption": {
@@ -11397,11 +11933,13 @@
        0.188,
        0.45
       ],
+      "lr_confident": 0.264,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "U2 repeated private contract",
@@ -11439,13 +11977,15 @@
        0.206,
        0.503
       ],
+      "lr_confident": 0.298,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K1 single-bidder private contract",
@@ -11483,11 +12023,13 @@
       0.035,
       0.035
      ],
+     "lr_confident": 0.035,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K1 single-bidder private contract",
       "corruption": {
@@ -11524,11 +12066,13 @@
        0.062,
        0.063
       ],
+      "lr_confident": 0.062,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K1 single-bidder private contract",
@@ -11566,13 +12110,15 @@
        0.074,
        0.074
       ],
+      "lr_confident": 0.074,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K2 re-tender private contract",
@@ -11608,13 +12154,15 @@
      "lr_shrunk": 0.89,
      "lr_ci": [
       0.272,
-      1.74
+      1.745
      ],
+     "lr_confident": 0.634,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       8.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K2 re-tender private contract",
       "corruption": {
@@ -11649,13 +12197,15 @@
       "lr_shrunk": 0.883,
       "lr_ci": [
        0.151,
-       1.896
+       1.902
       ],
+      "lr_confident": 0.572,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
-       9.2
-      ]
+       9.3
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K2 re-tender private contract",
@@ -11691,15 +12241,17 @@
       "lr_shrunk": 0.759,
       "lr_ci": [
        0.074,
-       1.869
+       1.87
       ],
+      "lr_confident": 0.413,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        9.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K3 just under small-value limit",
@@ -11737,11 +12289,13 @@
       0.035,
       0.035
      ],
+     "lr_confident": 0.035,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K3 just under small-value limit",
       "corruption": {
@@ -11778,11 +12332,13 @@
        0.062,
        0.062
       ],
+      "lr_confident": 0.062,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K3 just under small-value limit",
@@ -11820,13 +12376,15 @@
        0.074,
        0.074
       ],
+      "lr_confident": 0.074,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K4 split contracts",
@@ -11862,13 +12420,15 @@
      "lr_shrunk": 0.297,
      "lr_ci": [
       0.035,
-      0.937
+      0.938
      ],
+     "lr_confident": 0.035,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K4 split contracts",
       "corruption": {
@@ -11905,11 +12465,13 @@
        0.062,
        0.063
       ],
+      "lr_confident": 0.062,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K4 split contracts",
@@ -11945,15 +12507,17 @@
       "lr_shrunk": 0.631,
       "lr_ci": [
        0.074,
-       1.842
+       1.844
       ],
+      "lr_confident": 0.074,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        8.8
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K5 restricted competition",
@@ -11991,11 +12555,13 @@
       1.2,
       1.62
      ],
+     "lr_confident": 1.336,
      "proposed_points": 4.9,
      "proposed_points_ci": [
       2.6,
       7.0
      ],
+     "decision_points": 4.2,
      "learn_half": {
       "check": "K5 restricted competition",
       "corruption": {
@@ -12030,13 +12596,15 @@
       "lr_shrunk": 1.56,
       "lr_ci": [
        1.301,
-       1.864
+       1.865
       ],
+      "lr_confident": 1.464,
       "proposed_points": 6.4,
       "proposed_points_ci": [
        3.8,
        9.0
-      ]
+      ],
+      "decision_points": 5.5
      },
      "check_half": {
       "check": "K5 restricted competition",
@@ -12074,13 +12642,15 @@
        0.933,
        1.512
       ],
+      "lr_confident": 1.109,
       "proposed_points": 2.6,
       "proposed_points_ci": [
        0.0,
        6.0
-      ]
+      ],
+      "decision_points": 1.5
      },
-     "decision": "proposal"
+     "decision": "4.2 points"
     },
     {
      "check": "K6 award >= 95 % of reserve",
@@ -12118,11 +12688,13 @@
       1.885,
       2.41
      ],
+     "lr_confident": 2.049,
      "proposed_points": 10.9,
      "proposed_points_ci": [
       9.1,
       12.7
      ],
+     "decision_points": 10.3,
      "learn_half": {
       "check": "K6 award >= 95 % of reserve",
       "corruption": {
@@ -12157,13 +12729,15 @@
       "lr_shrunk": 2.168,
       "lr_ci": [
        1.848,
-       2.531
+       2.533
       ],
+      "lr_confident": 2.05,
       "proposed_points": 11.2,
       "proposed_points_ci": [
        8.9,
        13.4
-      ]
+      ],
+      "decision_points": 10.4
      },
      "check_half": {
       "check": "K6 award >= 95 % of reserve",
@@ -12199,15 +12773,17 @@
       "lr_shrunk": 1.998,
       "lr_ci": [
        1.659,
-       2.423
+       2.425
       ],
+      "lr_confident": 1.871,
       "proposed_points": 10.0,
       "proposed_points_ci": [
        7.3,
        12.8
-      ]
+      ],
+      "decision_points": 9.0
      },
-     "decision": "proposal"
+     "decision": "10.3 points"
     }
    ],
    "weighted, one per case, competitive tenders with a notice": [
@@ -12247,11 +12823,13 @@
       0.12,
       0.179
      ],
+     "lr_confident": 0.137,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G2 private contract",
       "corruption": {
@@ -12288,11 +12866,13 @@
        0.175,
        0.27
       ],
+      "lr_confident": 0.2,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G2 private contract",
@@ -12330,13 +12910,15 @@
        0.244,
        0.417
       ],
+      "lr_confident": 0.286,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "G3 buyer share >= 5 %",
@@ -12372,13 +12954,15 @@
      "lr_shrunk": 1.321,
      "lr_ci": [
       0.747,
-      1.989
+      1.99
      ],
+     "lr_confident": 1.108,
      "proposed_points": 4.0,
      "proposed_points_ci": [
       0.0,
       9.9
      ],
+     "decision_points": 1.5,
      "learn_half": {
       "check": "G3 buyer share >= 5 %",
       "corruption": {
@@ -12413,13 +12997,15 @@
       "lr_shrunk": 1.676,
       "lr_ci": [
        0.995,
-       2.568
+       2.574
       ],
+      "lr_confident": 1.426,
       "proposed_points": 7.5,
       "proposed_points_ci": [
        0.0,
        13.6
-      ]
+      ],
+      "decision_points": 5.1
      },
      "check_half": {
       "check": "G3 buyer share >= 5 %",
@@ -12457,13 +13043,15 @@
        0.27,
        0.567
       ],
+      "lr_confident": 0.331,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "1.5 points"
     },
     {
      "check": "G4 concentration",
@@ -12499,13 +13087,15 @@
      "lr_shrunk": 0.953,
      "lr_ci": [
       0.395,
-      1.591
+      1.593
      ],
+     "lr_confident": 0.738,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       6.7
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G4 concentration",
       "corruption": {
@@ -12540,13 +13130,15 @@
       "lr_shrunk": 1.105,
       "lr_ci": [
        0.414,
-       2.015
+       2.017
       ],
+      "lr_confident": 0.813,
       "proposed_points": 1.4,
       "proposed_points_ci": [
        0.0,
        10.1
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G4 concentration",
@@ -12582,15 +13174,17 @@
       "lr_shrunk": 0.738,
       "lr_ci": [
        0.333,
-       1.383
+       1.385
       ],
+      "lr_confident": 0.487,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        4.7
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "G5 3+ changes",
@@ -12626,13 +13220,15 @@
      "lr_shrunk": 0.589,
      "lr_ci": [
       0.159,
-      1.191
+      1.195
      ],
+     "lr_confident": 0.39,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
-      2.5
+      2.6
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G5 3+ changes",
       "corruption": {
@@ -12667,13 +13263,15 @@
       "lr_shrunk": 0.541,
       "lr_ci": [
        0.2,
-       1.352
+       1.354
       ],
+      "lr_confident": 0.244,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        4.4
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G5 3+ changes",
@@ -12709,15 +13307,17 @@
       "lr_shrunk": 0.763,
       "lr_ci": [
        0.303,
-       1.561
+       1.567
       ],
+      "lr_confident": 0.453,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
-       6.4
-      ]
+       6.5
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "G6 amount increase > 20 %",
@@ -12753,13 +13353,15 @@
      "lr_shrunk": 0.585,
      "lr_ci": [
       0.145,
-      1.361
+      1.371
      ],
+     "lr_confident": 0.307,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
-      4.4
+      4.5
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G6 amount increase > 20 %",
       "corruption": {
@@ -12796,11 +13398,13 @@
        0.185,
        0.286
       ],
+      "lr_confident": 0.213,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G6 amount increase > 20 %",
@@ -12836,15 +13440,17 @@
       "lr_shrunk": 1.103,
       "lr_ci": [
        0.303,
-       2.52
+       2.55
       ],
+      "lr_confident": 0.618,
       "proposed_points": 1.4,
       "proposed_points_ci": [
        0.0,
-       13.3
-      ]
+       13.5
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "N1 December signature",
@@ -12880,13 +13486,15 @@
      "lr_shrunk": 1.429,
      "lr_ci": [
       0.809,
-      2.115
+      2.117
      ],
+     "lr_confident": 1.213,
      "proposed_points": 5.1,
      "proposed_points_ci": [
       0.0,
       10.8
      ],
+     "decision_points": 2.8,
      "learn_half": {
       "check": "N1 December signature",
       "corruption": {
@@ -12921,13 +13529,15 @@
       "lr_shrunk": 1.739,
       "lr_ci": [
        0.973,
-       2.578
+       2.58
       ],
+      "lr_confident": 1.446,
       "proposed_points": 8.0,
       "proposed_points_ci": [
        0.0,
        13.7
-      ]
+      ],
+      "decision_points": 5.3
      },
      "check_half": {
       "check": "N1 December signature",
@@ -12963,15 +13573,17 @@
       "lr_shrunk": 0.885,
       "lr_ci": [
        0.371,
-       1.533
+       1.537
       ],
+      "lr_confident": 0.666,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        6.2
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "2.8 points"
     },
     {
      "check": "N2 weekend signature",
@@ -13007,13 +13619,15 @@
      "lr_shrunk": 5.284,
      "lr_ci": [
       0.137,
-      14.323
+      14.327
      ],
+     "lr_confident": 2.685,
      "proposed_points": 24.0,
      "proposed_points_ci": [
       0.0,
       38.4
      ],
+     "decision_points": 14.2,
      "learn_half": {
       "check": "N2 weekend signature",
       "corruption": {
@@ -13048,13 +13662,15 @@
       "lr_shrunk": 5.372,
       "lr_ci": [
        0.2,
-       14.859
+       14.961
       ],
+      "lr_confident": 2.761,
       "proposed_points": 24.3,
       "proposed_points_ci": [
        0.0,
-       38.9
-      ]
+       39.0
+      ],
+      "decision_points": 14.7
      },
      "check_half": {
       "check": "N2 weekend signature",
@@ -13092,13 +13708,15 @@
        0.25,
        0.417
       ],
+      "lr_confident": 0.286,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "14.2 points"
     },
     {
      "check": "N4 supplier dependence >= 25 %",
@@ -13134,13 +13752,15 @@
      "lr_shrunk": 1.235,
      "lr_ci": [
       0.669,
-      1.89
+      1.892
      ],
+     "lr_confident": 1.016,
      "proposed_points": 3.1,
      "proposed_points_ci": [
       0.0,
       9.2
      ],
+     "decision_points": 0.2,
      "learn_half": {
       "check": "N4 supplier dependence >= 25 %",
       "corruption": {
@@ -13175,13 +13795,15 @@
       "lr_shrunk": 1.534,
       "lr_ci": [
        0.768,
-       2.508
+       2.513
       ],
+      "lr_confident": 1.257,
       "proposed_points": 6.2,
       "proposed_points_ci": [
        0.0,
        13.3
-      ]
+      ],
+      "decision_points": 3.3
      },
      "check_half": {
       "check": "N4 supplier dependence >= 25 %",
@@ -13217,15 +13839,17 @@
       "lr_shrunk": 0.655,
       "lr_ci": [
        0.294,
-       1.251
+       1.255
       ],
+      "lr_confident": 0.433,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
-       3.2
-      ]
+       3.3
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "0.2 points"
     },
     {
      "check": "N5 first-time supplier",
@@ -13261,13 +13885,15 @@
      "lr_shrunk": 0.795,
      "lr_ci": [
       0.593,
-      0.99
+      0.993
      ],
+     "lr_confident": 0.724,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "N5 first-time supplier",
       "corruption": {
@@ -13302,13 +13928,15 @@
       "lr_shrunk": 0.828,
       "lr_ci": [
        0.61,
-       1.053
+       1.054
       ],
+      "lr_confident": 0.754,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.8
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "N5 first-time supplier",
@@ -13344,15 +13972,17 @@
       "lr_shrunk": 0.825,
       "lr_ci": [
        0.569,
-       1.084
+       1.085
       ],
+      "lr_confident": 0.737,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        1.2
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "U2 repeated private contract",
@@ -13388,13 +14018,15 @@
      "lr_shrunk": 0.145,
      "lr_ci": [
       0.122,
-      0.175
+      0.179
      ],
+     "lr_confident": 0.137,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "U2 repeated private contract",
       "corruption": {
@@ -13431,11 +14063,13 @@
        0.175,
        0.27
       ],
+      "lr_confident": 0.2,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "U2 repeated private contract",
@@ -13473,13 +14107,15 @@
        0.25,
        0.417
       ],
+      "lr_confident": 0.286,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K1 single-bidder private contract",
@@ -13517,11 +14153,13 @@
       0.122,
       0.175
      ],
+     "lr_confident": 0.135,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K1 single-bidder private contract",
       "corruption": {
@@ -13558,11 +14196,13 @@
        0.172,
        0.263
       ],
+      "lr_confident": 0.2,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K1 single-bidder private contract",
@@ -13600,13 +14240,15 @@
        0.25,
        0.417
       ],
+      "lr_confident": 0.286,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K2 re-tender private contract",
@@ -13644,11 +14286,13 @@
       0.122,
       0.175
      ],
+     "lr_confident": 0.135,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K2 re-tender private contract",
       "corruption": {
@@ -13685,11 +14329,13 @@
        0.175,
        0.27
       ],
+      "lr_confident": 0.2,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K2 re-tender private contract",
@@ -13727,13 +14373,15 @@
        0.25,
        0.417
       ],
+      "lr_confident": 0.286,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K3 just under small-value limit",
@@ -13771,11 +14419,13 @@
       0.122,
       0.179
      ],
+     "lr_confident": 0.135,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K3 just under small-value limit",
       "corruption": {
@@ -13812,11 +14462,13 @@
        0.175,
        0.27
       ],
+      "lr_confident": 0.196,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K3 just under small-value limit",
@@ -13854,13 +14506,15 @@
        0.25,
        0.417
       ],
+      "lr_confident": 0.286,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K4 split contracts",
@@ -13898,11 +14552,13 @@
       0.122,
       0.179
      ],
+     "lr_confident": 0.137,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K4 split contracts",
       "corruption": {
@@ -13937,13 +14593,15 @@
       "lr_shrunk": 0.213,
       "lr_ci": [
        0.172,
-       0.263
+       0.27
       ],
+      "lr_confident": 0.196,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K4 split contracts",
@@ -13981,13 +14639,15 @@
        0.25,
        0.417
       ],
+      "lr_confident": 0.286,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K5 restricted competition",
@@ -14025,11 +14685,13 @@
       0.545,
       0.811
      ],
+     "lr_confident": 0.635,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K5 restricted competition",
       "corruption": {
@@ -14066,11 +14728,13 @@
        0.607,
        0.928
       ],
+      "lr_confident": 0.712,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K5 restricted competition",
@@ -14108,13 +14772,15 @@
        0.502,
        0.823
       ],
+      "lr_confident": 0.603,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K6 award >= 95 % of reserve",
@@ -14150,13 +14816,15 @@
      "lr_shrunk": 3.057,
      "lr_ci": [
       2.459,
-      3.7
+      3.705
      ],
+     "lr_confident": 2.849,
      "proposed_points": 16.1,
      "proposed_points_ci": [
       13.0,
       18.9
      ],
+     "decision_points": 15.1,
      "learn_half": {
       "check": "K6 award >= 95 % of reserve",
       "corruption": {
@@ -14191,13 +14859,15 @@
       "lr_shrunk": 3.282,
       "lr_ci": [
        2.572,
-       4.159
+       4.165
       ],
+      "lr_confident": 3.028,
       "proposed_points": 17.1,
       "proposed_points_ci": [
        13.6,
        20.6
-      ]
+      ],
+      "decision_points": 16.0
      },
      "check_half": {
       "check": "K6 award >= 95 % of reserve",
@@ -14233,15 +14903,17 @@
       "lr_shrunk": 1.996,
       "lr_ci": [
        1.334,
-       2.736
+       2.748
       ],
+      "lr_confident": 1.745,
       "proposed_points": 10.0,
       "proposed_points_ci": [
        4.2,
-       14.5
-      ]
+       14.6
+      ],
+      "decision_points": 8.0
      },
-     "decision": "proposal"
+     "decision": "15.1 points"
     }
    ],
    "unweighted (court outcome ignored), one per case, all contracts": [
@@ -14281,11 +14953,13 @@
       0.161,
       0.343
      ],
+     "lr_confident": 0.21,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G2 private contract",
       "corruption": {
@@ -14320,13 +14994,15 @@
       "lr_shrunk": 0.264,
       "lr_ci": [
        0.177,
-       0.375
+       0.376
       ],
+      "lr_confident": 0.227,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G2 private contract",
@@ -14362,15 +15038,17 @@
       "lr_shrunk": 0.398,
       "lr_ci": [
        0.27,
-       0.552
+       0.553
       ],
+      "lr_confident": 0.344,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "G3 buyer share >= 5 %",
@@ -14406,13 +15084,15 @@
      "lr_shrunk": 1.767,
      "lr_ci": [
       1.218,
-      2.426
+      2.428
      ],
+     "lr_confident": 1.557,
      "proposed_points": 8.2,
      "proposed_points_ci": [
       2.8,
       12.8
      ],
+     "decision_points": 6.4,
      "learn_half": {
       "check": "G3 buyer share >= 5 %",
       "corruption": {
@@ -14447,13 +15127,15 @@
       "lr_shrunk": 1.935,
       "lr_ci": [
        1.238,
-       2.891
+       2.892
       ],
+      "lr_confident": 1.676,
       "proposed_points": 9.5,
       "proposed_points_ci": [
        3.1,
        15.3
-      ]
+      ],
+      "decision_points": 7.5
      },
      "check_half": {
       "check": "G3 buyer share >= 5 %",
@@ -14491,13 +15173,15 @@
        0.683,
        2.079
       ],
+      "lr_confident": 1.104,
       "proposed_points": 4.2,
       "proposed_points_ci": [
        0.0,
        10.6
-      ]
+      ],
+      "decision_points": 1.4
      },
-     "decision": "proposal"
+     "decision": "6.4 points"
     },
     {
      "check": "G4 concentration",
@@ -14535,11 +15219,13 @@
       0.339,
       1.225
      ],
+     "lr_confident": 0.597,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       2.9
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G4 concentration",
       "corruption": {
@@ -14576,11 +15262,13 @@
        0.33,
        1.397
       ],
+      "lr_confident": 0.628,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        4.8
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G4 concentration",
@@ -14616,15 +15304,17 @@
       "lr_shrunk": 0.736,
       "lr_ci": [
        0.303,
-       1.331
+       1.332
       ],
+      "lr_confident": 0.551,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        4.1
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "G5 3+ changes",
@@ -14660,13 +15350,15 @@
      "lr_shrunk": 1.288,
      "lr_ci": [
       0.213,
-      2.831
+      2.842
      ],
+     "lr_confident": 0.804,
      "proposed_points": 3.7,
      "proposed_points_ci": [
       0.0,
-      15.0
+      15.1
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G5 3+ changes",
       "corruption": {
@@ -14701,13 +15393,15 @@
       "lr_shrunk": 0.978,
       "lr_ci": [
        0.175,
-       2.892
+       2.909
       ],
+      "lr_confident": 0.213,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
-       15.3
-      ]
+       15.4
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G5 3+ changes",
@@ -14743,15 +15437,17 @@
       "lr_shrunk": 1.427,
       "lr_ci": [
        0.27,
-       3.294
+       3.303
       ],
+      "lr_confident": 0.799,
       "proposed_points": 5.1,
       "proposed_points_ci": [
        0.0,
        17.2
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "G6 amount increase > 20 %",
@@ -14787,13 +15483,15 @@
      "lr_shrunk": 0.806,
      "lr_ci": [
       0.13,
-      1.854
+      1.866
      ],
+     "lr_confident": 0.498,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
-      8.9
+      9.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "G6 amount increase > 20 %",
       "corruption": {
@@ -14830,11 +15528,13 @@
        0.164,
        0.25
       ],
+      "lr_confident": 0.185,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "G6 amount increase > 20 %",
@@ -14870,15 +15570,17 @@
       "lr_shrunk": 1.363,
       "lr_ci": [
        0.286,
-       3.275
+       3.28
       ],
+      "lr_confident": 0.836,
       "proposed_points": 4.5,
       "proposed_points_ci": [
        0.0,
        17.1
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "N1 December signature",
@@ -14916,11 +15618,13 @@
       0.944,
       2.231
      ],
+     "lr_confident": 1.31,
      "proposed_points": 6.2,
      "proposed_points_ci": [
       0.0,
       11.6
      ],
+     "decision_points": 3.9,
      "learn_half": {
       "check": "N1 December signature",
       "corruption": {
@@ -14955,13 +15659,15 @@
       "lr_shrunk": 2.066,
       "lr_ci": [
        1.251,
-       3.037
+       3.053
       ],
+      "lr_confident": 1.745,
       "proposed_points": 10.5,
       "proposed_points_ci": [
        3.2,
-       16.0
-      ]
+       16.1
+      ],
+      "decision_points": 8.0
      },
      "check_half": {
       "check": "N1 December signature",
@@ -14997,15 +15703,17 @@
       "lr_shrunk": 0.704,
       "lr_ci": [
        0.275,
-       1.266
+       1.271
       ],
+      "lr_confident": 0.502,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
-       3.4
-      ]
+       3.5
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "3.9 points"
     },
     {
      "check": "N2 weekend signature",
@@ -15041,13 +15749,15 @@
      "lr_shrunk": 1.616,
      "lr_ci": [
       0.102,
-      5.406
+      5.431
      ],
+     "lr_confident": 0.118,
      "proposed_points": 6.9,
      "proposed_points_ci": [
       0.0,
-      24.3
+      24.4
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "N2 weekend signature",
       "corruption": {
@@ -15082,13 +15792,15 @@
       "lr_shrunk": 1.952,
       "lr_ci": [
        0.156,
-       6.86
+       6.88
       ],
+      "lr_confident": 0.189,
       "proposed_points": 9.7,
       "proposed_points_ci": [
        0.0,
        27.8
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "N2 weekend signature",
@@ -15126,13 +15838,15 @@
        0.192,
        0.303
       ],
+      "lr_confident": 0.222,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "N4 supplier dependence >= 25 %",
@@ -15168,13 +15882,15 @@
      "lr_shrunk": 1.062,
      "lr_ci": [
       0.628,
-      1.584
+      1.585
      ],
+     "lr_confident": 0.898,
      "proposed_points": 0.9,
      "proposed_points_ci": [
       0.0,
       6.6
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "N4 supplier dependence >= 25 %",
       "corruption": {
@@ -15211,11 +15927,13 @@
        0.634,
        2.041
       ],
+      "lr_confident": 1.013,
       "proposed_points": 2.9,
       "proposed_points_ci": [
        0.0,
        10.3
-      ]
+      ],
+      "decision_points": 0.2
      },
      "check_half": {
       "check": "N4 supplier dependence >= 25 %",
@@ -15251,15 +15969,17 @@
       "lr_shrunk": 0.853,
       "lr_ci": [
        0.403,
-       1.429
+       1.434
       ],
+      "lr_confident": 0.683,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
-       5.1
-      ]
+       5.2
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "N5 first-time supplier",
@@ -15295,13 +16015,15 @@
      "lr_shrunk": 0.969,
      "lr_ci": [
       0.737,
-      1.203
+      1.206
      ],
+     "lr_confident": 0.892,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       2.7
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "N5 first-time supplier",
       "corruption": {
@@ -15336,13 +16058,15 @@
       "lr_shrunk": 0.994,
       "lr_ci": [
        0.744,
-       1.258
+       1.259
       ],
+      "lr_confident": 0.897,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        3.3
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "N5 first-time supplier",
@@ -15378,15 +16102,17 @@
       "lr_shrunk": 0.94,
       "lr_ci": [
        0.669,
-       1.236
+       1.238
       ],
+      "lr_confident": 0.84,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        3.1
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "U2 repeated private contract",
@@ -15422,13 +16148,15 @@
      "lr_shrunk": 0.248,
      "lr_ci": [
       0.119,
-      0.417
+      0.418
      ],
+     "lr_confident": 0.193,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "U2 repeated private contract",
       "corruption": {
@@ -15465,11 +16193,13 @@
        0.156,
        0.398
       ],
+      "lr_confident": 0.189,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "U2 repeated private contract",
@@ -15507,13 +16237,15 @@
        0.227,
        0.718
       ],
+      "lr_confident": 0.336,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K1 single-bidder private contract",
@@ -15551,11 +16283,13 @@
       0.098,
       0.135
      ],
+     "lr_confident": 0.108,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K1 single-bidder private contract",
       "corruption": {
@@ -15592,11 +16326,13 @@
        0.149,
        0.222
       ],
+      "lr_confident": 0.169,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K1 single-bidder private contract",
@@ -15634,13 +16370,15 @@
        0.196,
        0.312
       ],
+      "lr_confident": 0.222,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K2 re-tender private contract",
@@ -15678,11 +16416,13 @@
       0.097,
       0.133
      ],
+     "lr_confident": 0.108,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K2 re-tender private contract",
       "corruption": {
@@ -15719,11 +16459,13 @@
        0.149,
        0.222
       ],
+      "lr_confident": 0.169,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K2 re-tender private contract",
@@ -15761,13 +16503,15 @@
        0.192,
        0.303
       ],
+      "lr_confident": 0.222,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K3 just under small-value limit",
@@ -15805,11 +16549,13 @@
       0.097,
       0.137
      ],
+     "lr_confident": 0.108,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       0.0
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K3 just under small-value limit",
       "corruption": {
@@ -15846,11 +16592,13 @@
        0.149,
        0.222
       ],
+      "lr_confident": 0.167,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K3 just under small-value limit",
@@ -15888,13 +16636,15 @@
        0.196,
        0.303
       ],
+      "lr_confident": 0.222,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K4 split contracts",
@@ -15930,13 +16680,15 @@
      "lr_shrunk": 0.967,
      "lr_ci": [
       0.102,
-      3.152
+      3.156
      ],
+     "lr_confident": 0.118,
      "proposed_points": 0.0,
      "proposed_points_ci": [
       0.0,
       16.6
      ],
+     "decision_points": 0.0,
      "learn_half": {
       "check": "K4 split contracts",
       "corruption": {
@@ -15973,11 +16725,13 @@
        0.149,
        0.217
       ],
+      "lr_confident": 0.167,
       "proposed_points": 0.0,
       "proposed_points_ci": [
        0.0,
        0.0
-      ]
+      ],
+      "decision_points": 0.0
      },
      "check_half": {
       "check": "K4 split contracts",
@@ -16013,15 +16767,17 @@
       "lr_shrunk": 2.042,
       "lr_ci": [
        0.204,
-       5.717
+       5.736
       ],
+      "lr_confident": 0.256,
       "proposed_points": 10.3,
       "proposed_points_ci": [
        0.0,
        25.2
-      ]
+      ],
+      "decision_points": 0.0
      },
-     "decision": "fails rule"
+     "decision": "no points"
     },
     {
      "check": "K5 restricted competition",
@@ -16057,13 +16813,15 @@
      "lr_shrunk": 1.681,
      "lr_ci": [
       1.311,
-      2.089
+      2.093
      ],
+     "lr_confident": 1.553,
      "proposed_points": 7.5,
      "proposed_points_ci": [
       3.9,
-      10.6
+      10.7
      ],
+     "decision_points": 6.4,
      "learn_half": {
       "check": "K5 restricted competition",
       "corruption": {
@@ -16098,13 +16856,15 @@
       "lr_shrunk": 1.8,
       "lr_ci": [
        1.32,
-       2.323
+       2.326
       ],
+      "lr_confident": 1.631,
       "proposed_points": 8.5,
       "proposed_points_ci": [
        4.0,
        12.2
-      ]
+      ],
+      "decision_points": 7.1
      },
      "check_half": {
       "check": "K5 restricted competition",
@@ -16142,13 +16902,15 @@
        0.949,
        1.86
       ],
+      "lr_confident": 1.228,
       "proposed_points": 4.6,
       "proposed_points_ci": [
        0.0,
        9.0
-      ]
+      ],
+      "decision_points": 3.0
      },
-     "decision": "proposal"
+     "decision": "6.4 points"
     },
     {
      "check": "K6 award >= 95 % of reserve",
@@ -16184,13 +16946,15 @@
      "lr_shrunk": 2.042,
      "lr_ci": [
       1.692,
-      2.403
+      2.406
      ],
+     "lr_confident": 1.922,
      "proposed_points": 10.3,
      "proposed_points_ci": [
       7.6,
-      12.6
+      12.7
      ],
+     "decision_points": 9.4,
      "learn_half": {
       "check": "K6 award >= 95 % of reserve",
       "corruption": {
@@ -16225,13 +16989,15 @@
       "lr_shrunk": 2.149,
       "lr_ci": [
        1.684,
-       2.633
+       2.636
       ],
+      "lr_confident": 1.984,
       "proposed_points": 11.0,
       "proposed_points_ci": [
        7.5,
        14.0
-      ]
+      ],
+      "decision_points": 9.9
      },
      "check_half": {
       "check": "K6 award >= 95 % of reserve",
@@ -16269,13 +17035,15 @@
        1.192,
        2.107
       ],
+      "lr_confident": 1.478,
       "proposed_points": 7.1,
       "proposed_points_ci": [
        2.5,
-       10.7
-      ]
+       10.8
+      ],
+      "decision_points": 5.6
      },
-     "decision": "proposal"
+     "decision": "9.4 points"
     }
    ]
   }

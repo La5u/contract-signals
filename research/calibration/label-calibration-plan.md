@@ -56,3 +56,12 @@ Reading:
 - **Single offer fires *less* often on convicted tenders** than on their buyers' other tenders: these schemes mostly ran through competitive tenders and took the money at payment.
 - Most convictions are payment-stage fraud (work paid but not done), which no tender or contract field shows directly.
 - Caveats: 21 positives; 17 rest on presumed finality; positives were found by web search for verdicts quoting a tender ID (selection bias); intervals ignore buyer matching; comparisons are unlabelled, not clean. The register (reyestr.court.gov.ua) is still refusing connections, so finality dates were not read.
+
+## Decision rule amendment, 2026-10-20 (owner: the safeguards were too strict; fewer, more lenient, and less certainty means fewer points)
+
+Made after results under the old rule had been seen (Romania, Colombia, Ukraine and the Korean preparation run). It applies to every country alike and is implemented once, in `tools/propose-indicator-points.py` (`decide`).
+
+- **Kept:** at least 10 labelled buyers; buyer-weighted rates (each buyer counts once); LR shrunk toward 1 by a prior worth 10 buyers; 95 % intervals from resampling buyers.
+- **Points from the evidence we are 75 % sure of:** points = 10 × log2 of the shrunk LR at the 25th percentile of the buyer resamples (never above the shrunk LR itself), floored at 0. Uncertainty lowers the points instead of excluding the check; any check reliably above LR 1 gets some points, possibly a fraction of one.
+- **Dropped:** the requirement that the learn half's 95 % interval lie above 1 and the check half's LR exceed 1 (the halves are still reported), and one tender/procedure per case as the points basis: all linked tenders are the basis, one per case is reported as robustness.
+- Hit rate stays the first column reported, as before.

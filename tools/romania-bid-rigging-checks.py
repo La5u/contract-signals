@@ -372,12 +372,12 @@ def main():
             out.append(r)
         return out
 
-    sets = {'unchallenged, one per decision (decision rule)': one_per_decision(rows(lambda l: not l['challenged'])),
+    sets = {'unchallenged, one per decision': one_per_decision(rows(lambda l: not l['challenged'])),
             'unchallenged, all procedures': rows(lambda l: not l['challenged']),
             'all Council findings, one per decision': one_per_decision(rows(lambda l: True)),
             'all Council findings, all procedures': rows(lambda l: True)}
-    sets['weighted by appeal outcome, one per decision (decision rule, amendment 2026-10-15)'] = one_per_decision(rows(lambda l: True, weighted=True))
-    sets['weighted by appeal outcome, all procedures'] = rows(lambda l: True, weighted=True)
+    sets['weighted by appeal outcome, one per decision (decision basis until 2026-10-20)'] = one_per_decision(rows(lambda l: True, weighted=True))
+    sets['weighted by appeal outcome, all procedures (decision rule, amendment 2026-10-20)'] = rows(lambda l: True, weighted=True)
     sets['all findings, 2+ offers (sensitivity)'] = [r for r in sets['all Council findings, all procedures'] if (r['offers'] or 0) >= 2]
     out = {'linking': dict(report), 'challenged': chal, 'sets': {}}
     for name, rs in sets.items():
@@ -389,7 +389,7 @@ def main():
         for check in CHECKS:
             res = pp.analyse(rs, check)
             halves = {h: pp.analyse([r for r in rs if cand.half(r['buyer']) == h], check) for h in ('learn', 'check')}
-            decision = 'proposal' if halves['learn'].get('lr_ci') and halves['learn']['lr_ci'][0] > 1 and (halves['check'].get('lr_shrunk') or 0) > 1 else 'fails rule'
+            decision = pp.decide(res)
             f = lambda g: f"{res[g]['rate'] * 100:.0f}% ({res[g]['tender_hits']}/{res[g]['tenders']})" if res[g]['rate'] is not None else 'NA'
             ci = f" [{res['lr_ci'][0]:.2f}, {res['lr_ci'][1]:.2f}]" if res.get('lr_ci') else ''
             print(f"| {check} | {f('combined')} | {f('comparison')} | {res.get('lr_shrunk')}{ci} | {halves['learn'].get('lr_shrunk')} / {halves['check'].get('lr_shrunk')} | {res.get('proposed_points')} {res.get('proposed_points_ci') or ''} | {decision} |")

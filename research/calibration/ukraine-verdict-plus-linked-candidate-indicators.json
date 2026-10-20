@@ -1,12 +1,6 @@
 {
  "plan": "research/calibration/ukraine-candidate-indicators-plan.md",
- "short_period_cutoffs": {
-  "aboveThresholdUA": 16,
-  "aboveThresholdEU": 31,
-  "belowThreshold": 3,
-  "aboveThreshold": 8,
-  "priceQuotation": 3
- },
+ "short_period_cutoffs": "not recomputed (features reused)",
  "results": [
   {
    "candidate": "C1 two-bidders",
@@ -46,11 +40,13 @@
      0.59,
      0.96
     ],
+    "lr_confident": 0.706,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.0
-    ]
+    ],
+    "decision_points": 0.0
    },
    "learn_half": {
     "check": "C1 two-bidders",
@@ -86,13 +82,15 @@
     "lr_shrunk": 0.907,
     "lr_ci": [
      0.655,
-     1.22
+     1.221
     ],
+    "lr_confident": 0.815,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      2.9
-    ]
+    ],
+    "decision_points": 0.0
    },
    "check_half": {
     "check": "C1 two-bidders",
@@ -128,15 +126,17 @@
     "lr_shrunk": 0.669,
     "lr_ci": [
      0.466,
-     0.899
+     0.9
     ],
+    "lr_confident": 0.589,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.0
-    ]
+    ],
+    "decision_points": 0.0
    },
-   "decision": "fails rule"
+   "decision": "no points"
   },
   {
    "candidate": "C2 only-qualified-bidder",
@@ -174,13 +174,15 @@
     "lr_shrunk": 0.972,
     "lr_ci": [
      0.577,
-     1.52
+     1.522
     ],
+    "lr_confident": 0.81,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
-     6.0
-    ]
+     6.1
+    ],
+    "decision_points": 0.0
    },
    "learn_half": {
     "check": "C2 only-qualified-bidder",
@@ -216,13 +218,15 @@
     "lr_shrunk": 0.866,
     "lr_ci": [
      0.426,
-     1.446
+     1.456
     ],
+    "lr_confident": 0.693,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
-     5.3
-    ]
+     5.4
+    ],
+    "decision_points": 0.0
    },
    "check_half": {
     "check": "C2 only-qualified-bidder",
@@ -258,15 +262,17 @@
     "lr_shrunk": 1.075,
     "lr_ci": [
      0.485,
-     1.882
+     1.883
     ],
+    "lr_confident": 0.85,
     "proposed_points": 1.0,
     "proposed_points_ci": [
      0.0,
      9.1
-    ]
+    ],
+    "decision_points": 0.0
    },
-   "decision": "fails rule"
+   "decision": "no points"
   },
   {
    "candidate": "C3 two-plus-disqualified",
@@ -304,13 +310,15 @@
     "lr_shrunk": 1.961,
     "lr_ci": [
      1.037,
-     3.517
+     3.525
     ],
+    "lr_confident": 1.593,
     "proposed_points": 9.7,
     "proposed_points_ci": [
      0.5,
-     18.1
-    ]
+     18.2
+    ],
+    "decision_points": 6.7
    },
    "learn_half": {
     "check": "C3 two-plus-disqualified",
@@ -346,13 +354,15 @@
     "lr_shrunk": 1.877,
     "lr_ci": [
      0.783,
-     4.47
+     4.478
     ],
+    "lr_confident": 1.41,
     "proposed_points": 9.1,
     "proposed_points_ci": [
      0.0,
      21.6
-    ]
+    ],
+    "decision_points": 5.0
    },
    "check_half": {
     "check": "C3 two-plus-disqualified",
@@ -388,15 +398,17 @@
     "lr_shrunk": 1.749,
     "lr_ci": [
      0.708,
-     3.596
+     3.604
     ],
+    "lr_confident": 1.307,
     "proposed_points": 8.1,
     "proposed_points_ci": [
      0.0,
      18.5
-    ]
+    ],
+    "decision_points": 3.9
    },
-   "decision": "fails rule"
+   "decision": "6.7 points"
   },
   {
    "candidate": "C4 short-tender-period",
@@ -436,11 +448,13 @@
      0.693,
      1.016
     ],
+    "lr_confident": 0.788,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.2
-    ]
+    ],
+    "decision_points": 0.0
    },
    "learn_half": {
     "check": "C4 short-tender-period",
@@ -478,11 +492,13 @@
      0.668,
      1.117
     ],
+    "lr_confident": 0.793,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      1.6
-    ]
+    ],
+    "decision_points": 0.0
    },
    "check_half": {
     "check": "C4 short-tender-period",
@@ -518,15 +534,17 @@
     "lr_shrunk": 0.832,
     "lr_ci": [
      0.655,
-     1.044
+     1.045
     ],
+    "lr_confident": 0.764,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.6
-    ]
+    ],
+    "decision_points": 0.0
    },
-   "decision": "fails rule"
+   "decision": "no points"
   },
   {
    "candidate": "C5 complaint",
@@ -564,13 +582,15 @@
     "lr_shrunk": 0.855,
     "lr_ci": [
      0.5,
-     1.312
+     1.314
     ],
+    "lr_confident": 0.715,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      3.9
-    ]
+    ],
+    "decision_points": 0.0
    },
    "learn_half": {
     "check": "C5 complaint",
@@ -606,13 +626,15 @@
     "lr_shrunk": 1.167,
     "lr_ci": [
      0.649,
-     1.978
+     1.988
     ],
+    "lr_confident": 0.95,
     "proposed_points": 2.2,
     "proposed_points_ci": [
      0.0,
-     9.8
-    ]
+     9.9
+    ],
+    "decision_points": 0.0
    },
    "check_half": {
     "check": "C5 complaint",
@@ -648,15 +670,17 @@
     "lr_shrunk": 0.531,
     "lr_ci": [
      0.218,
-     0.998
+     1.003
     ],
+    "lr_confident": 0.389,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.0
-    ]
+    ],
+    "decision_points": 0.0
    },
-   "decision": "fails rule"
+   "decision": "no points"
   },
   {
    "candidate": "C6 late-document-change",
@@ -696,11 +720,13 @@
      0.65,
      1.695
     ],
+    "lr_confident": 0.914,
     "proposed_points": 1.1,
     "proposed_points_ci": [
      0.0,
      7.6
-    ]
+    ],
+    "decision_points": 0.0
    },
    "learn_half": {
     "check": "C6 late-document-change",
@@ -736,13 +762,15 @@
     "lr_shrunk": 1.355,
     "lr_ci": [
      0.728,
-     2.411
+     2.414
     ],
+    "lr_confident": 1.117,
     "proposed_points": 4.4,
     "proposed_points_ci": [
      0.0,
      12.7
-    ]
+    ],
+    "decision_points": 1.6
    },
    "check_half": {
     "check": "C6 late-document-change",
@@ -778,15 +806,17 @@
     "lr_shrunk": 0.748,
     "lr_ci": [
      0.319,
-     1.372
+     1.387
     ],
+    "lr_confident": 0.587,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
-     4.6
-    ]
+     4.7
+    ],
+    "decision_points": 0.0
    },
-   "decision": "fails rule"
+   "decision": "no points"
   },
   {
    "candidate": "C7 december-award",
@@ -826,11 +856,13 @@
      0.406,
      0.883
     ],
+    "lr_confident": 0.543,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.0
-    ]
+    ],
+    "decision_points": 0.0
    },
    "learn_half": {
     "check": "C7 december-award",
@@ -866,13 +898,15 @@
     "lr_shrunk": 0.622,
     "lr_ci": [
      0.339,
-     0.985
+     0.986
     ],
+    "lr_confident": 0.514,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.0
-    ]
+    ],
+    "decision_points": 0.0
    },
    "check_half": {
     "check": "C7 december-award",
@@ -908,15 +942,17 @@
     "lr_shrunk": 0.662,
     "lr_ci": [
      0.39,
-     1.025
+     1.027
     ],
+    "lr_confident": 0.551,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.4
-    ]
+    ],
+    "decision_points": 0.0
    },
-   "decision": "fails rule"
+   "decision": "no points"
   },
   {
    "candidate": "C8 fast-signature",
@@ -956,11 +992,13 @@
      0.062,
      0.074
     ],
+    "lr_confident": 0.066,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.0
-    ]
+    ],
+    "decision_points": 0.0
    },
    "learn_half": {
     "check": "C8 fast-signature",
@@ -998,11 +1036,13 @@
      0.118,
      0.149
     ],
+    "lr_confident": 0.127,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.0
-    ]
+    ],
+    "decision_points": 0.0
    },
    "check_half": {
     "check": "C8 fast-signature",
@@ -1040,13 +1080,15 @@
      0.111,
      0.137
     ],
+    "lr_confident": 0.118,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.0
-    ]
+    ],
+    "decision_points": 0.0
    },
-   "decision": "fails rule"
+   "decision": "no points"
   },
   {
    "candidate": "C9 small-price-drop",
@@ -1086,11 +1128,13 @@
      1.355,
      1.808
     ],
+    "lr_confident": 1.496,
     "proposed_points": 6.6,
     "proposed_points_ci": [
      4.4,
      8.5
-    ]
+    ],
+    "decision_points": 5.8
    },
    "learn_half": {
     "check": "C9 small-price-drop",
@@ -1128,11 +1172,13 @@
      1.141,
      1.715
     ],
+    "lr_confident": 1.32,
     "proposed_points": 4.9,
     "proposed_points_ci": [
      1.9,
      7.8
-    ]
+    ],
+    "decision_points": 4.0
    },
    "check_half": {
     "check": "C9 small-price-drop",
@@ -1170,13 +1216,15 @@
      1.38,
      2.001
     ],
+    "lr_confident": 1.556,
     "proposed_points": 7.3,
     "proposed_points_ci": [
      4.6,
      10.0
-    ]
+    ],
+    "decision_points": 6.4
    },
-   "decision": "proposal"
+   "decision": "5.8 points"
   },
   {
    "candidate": "C10 just-below-threshold",
@@ -1214,13 +1262,15 @@
     "lr_shrunk": 2.196,
     "lr_ci": [
      1.063,
-     4.395
+     4.406
     ],
+    "lr_confident": 1.73,
     "proposed_points": 11.4,
     "proposed_points_ci": [
      0.9,
      21.4
-    ]
+    ],
+    "decision_points": 7.9
    },
    "learn_half": {
     "check": "C10 just-below-threshold",
@@ -1256,13 +1306,15 @@
     "lr_shrunk": 1.563,
     "lr_ci": [
      0.408,
-     3.854
+     3.865
     ],
+    "lr_confident": 1.085,
     "proposed_points": 6.4,
     "proposed_points_ci": [
      0.0,
      19.5
-    ]
+    ],
+    "decision_points": 1.2
    },
    "check_half": {
     "check": "C10 just-below-threshold",
@@ -1298,15 +1350,17 @@
     "lr_shrunk": 2.493,
     "lr_ci": [
      0.856,
-     6.278
+     6.381
     ],
+    "lr_confident": 1.789,
     "proposed_points": 13.2,
     "proposed_points_ci": [
      0.0,
-     26.5
-    ]
+     26.7
+    ],
+    "decision_points": 8.4
    },
-   "decision": "fails rule"
+   "decision": "7.9 points"
   },
   {
    "candidate": "C11 price-change-amendment",
@@ -1344,13 +1398,15 @@
     "lr_shrunk": 0.655,
     "lr_ci": [
      0.319,
-     1.08
+     1.081
     ],
+    "lr_confident": 0.526,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      1.1
-    ]
+    ],
+    "decision_points": 0.0
    },
    "learn_half": {
     "check": "C11 price-change-amendment",
@@ -1386,13 +1442,15 @@
     "lr_shrunk": 0.482,
     "lr_ci": [
      0.153,
-     0.887
+     0.888
     ],
+    "lr_confident": 0.351,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.0
-    ]
+    ],
+    "decision_points": 0.0
    },
    "check_half": {
     "check": "C11 price-change-amendment",
@@ -1428,15 +1486,17 @@
     "lr_shrunk": 0.921,
     "lr_ci": [
      0.339,
-     1.75
+     1.757
     ],
+    "lr_confident": 0.696,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      8.1
-    ]
+    ],
+    "decision_points": 0.0
    },
-   "decision": "fails rule"
+   "decision": "no points"
   },
   {
    "candidate": "C12 term-extension-amendment",
@@ -1474,13 +1534,15 @@
     "lr_shrunk": 2.11,
     "lr_ci": [
      1.516,
-     2.981
+     2.987
     ],
+    "lr_confident": 1.892,
     "proposed_points": 10.8,
     "proposed_points_ci": [
      6.0,
      15.8
-    ]
+    ],
+    "decision_points": 9.2
    },
    "learn_half": {
     "check": "C12 term-extension-amendment",
@@ -1516,13 +1578,15 @@
     "lr_shrunk": 2.154,
     "lr_ci": [
      1.502,
-     3.176
+     3.192
     ],
+    "lr_confident": 1.916,
     "proposed_points": 11.1,
     "proposed_points_ci": [
      5.9,
      16.7
-    ]
+    ],
+    "decision_points": 9.4
    },
    "check_half": {
     "check": "C12 term-extension-amendment",
@@ -1558,15 +1622,17 @@
     "lr_shrunk": 1.742,
     "lr_ci": [
      0.899,
-     3.16
+     3.164
     ],
+    "lr_confident": 1.434,
     "proposed_points": 8.0,
     "proposed_points_ci": [
      0.0,
      16.6
-    ]
+    ],
+    "decision_points": 5.2
    },
-   "decision": "proposal"
+   "decision": "9.2 points"
   },
   {
    "candidate": "C13 quantity-cut-amendment",
@@ -1604,13 +1670,15 @@
     "lr_shrunk": 0.954,
     "lr_ci": [
      0.588,
-     1.444
+     1.449
     ],
+    "lr_confident": 0.809,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
-     5.3
-    ]
+     5.4
+    ],
+    "decision_points": 0.0
    },
    "learn_half": {
     "check": "C13 quantity-cut-amendment",
@@ -1646,13 +1714,15 @@
     "lr_shrunk": 0.932,
     "lr_ci": [
      0.494,
-     1.548
+     1.551
     ],
+    "lr_confident": 0.756,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      6.3
-    ]
+    ],
+    "decision_points": 0.0
    },
    "check_half": {
     "check": "C13 quantity-cut-amendment",
@@ -1688,15 +1758,17 @@
     "lr_shrunk": 0.959,
     "lr_ci": [
      0.451,
-     1.766
+     1.778
     ],
+    "lr_confident": 0.762,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
-     8.2
-    ]
+     8.3
+    ],
+    "decision_points": 0.0
    },
-   "decision": "fails rule"
+   "decision": "no points"
   },
   {
    "candidate": "C14 early-termination",
@@ -1736,11 +1808,13 @@
      0.471,
      1.263
     ],
+    "lr_confident": 0.677,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      3.4
-    ]
+    ],
+    "decision_points": 0.0
    },
    "learn_half": {
     "check": "C14 early-termination",
@@ -1776,13 +1850,15 @@
     "lr_shrunk": 0.626,
     "lr_ci": [
      0.252,
-     1.185
+     1.196
     ],
+    "lr_confident": 0.466,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
-     2.4
-    ]
+     2.6
+    ],
+    "decision_points": 0.0
    },
    "check_half": {
     "check": "C14 early-termination",
@@ -1818,15 +1894,17 @@
     "lr_shrunk": 1.001,
     "lr_ci": [
      0.533,
-     1.647
+     1.648
     ],
+    "lr_confident": 0.818,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      7.2
-    ]
+    ],
+    "decision_points": 0.0
    },
-   "decision": "fails rule"
+   "decision": "no points"
   },
   {
    "candidate": "C15 individual-supplier",
@@ -1866,11 +1944,13 @@
      0.5,
      0.962
     ],
+    "lr_confident": 0.64,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.0
-    ]
+    ],
+    "decision_points": 0.0
    },
    "learn_half": {
     "check": "C15 individual-supplier",
@@ -1906,13 +1986,15 @@
     "lr_shrunk": 0.736,
     "lr_ci": [
      0.455,
-     1.09
+     1.091
     ],
+    "lr_confident": 0.637,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
-     1.2
-    ]
+     1.3
+    ],
+    "decision_points": 0.0
    },
    "check_half": {
     "check": "C15 individual-supplier",
@@ -1948,15 +2030,17 @@
     "lr_shrunk": 0.723,
     "lr_ci": [
      0.456,
-     1.065
+     1.066
     ],
+    "lr_confident": 0.622,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.9
-    ]
+    ],
+    "decision_points": 0.0
    },
-   "decision": "fails rule"
+   "decision": "no points"
   },
   {
    "candidate": "K1 shared-contact",
@@ -1994,13 +2078,15 @@
     "lr_shrunk": 1.155,
     "lr_ci": [
      0.062,
-     4.923
+     4.973
     ],
+    "lr_confident": 0.067,
     "proposed_points": 2.1,
     "proposed_points_ci": [
      0.0,
-     23.0
-    ]
+     23.1
+    ],
+    "decision_points": 0.0
    },
    "learn_half": {
     "check": "K1 shared-contact",
@@ -2036,13 +2122,15 @@
     "lr_shrunk": 1.352,
     "lr_ci": [
      0.118,
-     5.049
+     5.178
     ],
+    "lr_confident": 0.13,
     "proposed_points": 4.4,
     "proposed_points_ci": [
      0.0,
-     23.4
-    ]
+     23.7
+    ],
+    "decision_points": 0.0
    },
    "check_half": {
     "check": "K1 shared-contact",
@@ -2080,13 +2168,15 @@
      0.11,
      0.135
     ],
+    "lr_confident": 0.116,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.0
-    ]
+    ],
+    "decision_points": 0.0
    },
-   "decision": "fails rule"
+   "decision": "no points"
   },
   {
    "candidate": "K2 shared-address",
@@ -2126,11 +2216,13 @@
      0.062,
      0.073
     ],
+    "lr_confident": 0.066,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.0
-    ]
+    ],
+    "decision_points": 0.0
    },
    "learn_half": {
     "check": "K2 shared-address",
@@ -2168,11 +2260,13 @@
      0.118,
      0.147
     ],
+    "lr_confident": 0.125,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.0
-    ]
+    ],
+    "decision_points": 0.0
    },
    "check_half": {
     "check": "K2 shared-address",
@@ -2210,13 +2304,15 @@
      0.111,
      0.139
     ],
+    "lr_confident": 0.119,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.0
-    ]
+    ],
+    "decision_points": 0.0
    },
-   "decision": "fails rule"
+   "decision": "no points"
   },
   {
    "candidate": "K3 shared-document",
@@ -2254,13 +2350,15 @@
     "lr_shrunk": 0.732,
     "lr_ci": [
      0.129,
-     1.687
+     1.691
     ],
+    "lr_confident": 0.471,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
-     7.5
-    ]
+     7.6
+    ],
+    "decision_points": 0.0
    },
    "learn_half": {
     "check": "K3 shared-document",
@@ -2296,13 +2394,15 @@
     "lr_shrunk": 1.94,
     "lr_ci": [
      0.223,
-     6.248
+     6.299
     ],
+    "lr_confident": 1.191,
     "proposed_points": 9.6,
     "proposed_points_ci": [
      0.0,
-     26.4
-    ]
+     26.6
+    ],
+    "decision_points": 2.5
    },
    "check_half": {
     "check": "K3 shared-document",
@@ -2338,15 +2438,17 @@
     "lr_shrunk": 0.172,
     "lr_ci": [
      0.114,
-     0.298
+     0.299
     ],
+    "lr_confident": 0.125,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.0
-    ]
+    ],
+    "decision_points": 0.0
    },
-   "decision": "fails rule"
+   "decision": "no points"
   },
   {
    "candidate": "K4 close-submission",
@@ -2384,13 +2486,15 @@
     "lr_shrunk": 0.817,
     "lr_ci": [
      0.613,
-     1.052
+     1.053
     ],
+    "lr_confident": 0.743,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.7
-    ]
+    ],
+    "decision_points": 0.0
    },
    "learn_half": {
     "check": "K4 close-submission",
@@ -2426,13 +2530,15 @@
     "lr_shrunk": 0.986,
     "lr_ci": [
      0.705,
-     1.346
+     1.352
     ],
+    "lr_confident": 0.88,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      4.3
-    ]
+    ],
+    "decision_points": 0.0
    },
    "check_half": {
     "check": "K4 close-submission",
@@ -2470,13 +2576,15 @@
      0.466,
      0.956
     ],
+    "lr_confident": 0.599,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.0
-    ]
+    ],
+    "decision_points": 0.0
    },
-   "decision": "fails rule"
+   "decision": "no points"
   },
   {
    "candidate": "K5 tight-bids",
@@ -2516,11 +2624,13 @@
      0.623,
      2.171
     ],
+    "lr_confident": 0.997,
     "proposed_points": 3.3,
     "proposed_points_ci": [
      0.0,
      11.2
-    ]
+    ],
+    "decision_points": 0.0
    },
    "learn_half": {
     "check": "K5 tight-bids",
@@ -2556,13 +2666,15 @@
     "lr_shrunk": 0.856,
     "lr_ci": [
      0.204,
-     1.974
+     1.983
     ],
+    "lr_confident": 0.576,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
-     9.8
-    ]
+     9.9
+    ],
+    "decision_points": 0.0
    },
    "check_half": {
     "check": "K5 tight-bids",
@@ -2598,15 +2710,17 @@
     "lr_shrunk": 1.54,
     "lr_ci": [
      0.647,
-     2.937
+     2.943
     ],
+    "lr_confident": 1.187,
     "proposed_points": 6.2,
     "proposed_points_ci": [
      0.0,
-     15.5
-    ]
+     15.6
+    ],
+    "decision_points": 2.5
    },
-   "decision": "fails rule"
+   "decision": "no points"
   },
   {
    "candidate": "K6 close-runner-up",
@@ -2646,11 +2760,13 @@
      0.626,
      0.984
     ],
+    "lr_confident": 0.746,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.0
-    ]
+    ],
+    "decision_points": 0.0
    },
    "learn_half": {
     "check": "K6 close-runner-up",
@@ -2688,11 +2804,13 @@
      0.634,
      1.143
     ],
+    "lr_confident": 0.78,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      1.9
-    ]
+    ],
+    "decision_points": 0.0
    },
    "check_half": {
     "check": "K6 close-runner-up",
@@ -2730,13 +2848,15 @@
      0.574,
      0.992
     ],
+    "lr_confident": 0.698,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      0.0
-    ]
+    ],
+    "decision_points": 0.0
    },
-   "decision": "fails rule"
+   "decision": "no points"
   },
   {
    "candidate": "K7 all-bids-near-expected",
@@ -2774,13 +2894,15 @@
     "lr_shrunk": 1.223,
     "lr_ci": [
      0.863,
-     1.647
+     1.648
     ],
+    "lr_confident": 1.084,
     "proposed_points": 2.9,
     "proposed_points_ci": [
      0.0,
      7.2
-    ]
+    ],
+    "decision_points": 1.2
    },
    "learn_half": {
     "check": "K7 all-bids-near-expected",
@@ -2816,13 +2938,15 @@
     "lr_shrunk": 1.41,
     "lr_ci": [
      0.875,
-     2.202
+     2.207
     ],
+    "lr_confident": 1.207,
     "proposed_points": 5.0,
     "proposed_points_ci": [
      0.0,
      11.4
-    ]
+    ],
+    "decision_points": 2.7
    },
    "check_half": {
     "check": "K7 all-bids-near-expected",
@@ -2858,15 +2982,17 @@
     "lr_shrunk": 1.027,
     "lr_ci": [
      0.659,
-     1.487
+     1.492
     ],
+    "lr_confident": 0.893,
     "proposed_points": 0.4,
     "proposed_points_ci": [
      0.0,
-     5.7
-    ]
+     5.8
+    ],
+    "decision_points": 0.0
    },
-   "decision": "fails rule"
+   "decision": "1.2 points"
   },
   {
    "candidate": "K8 empty-cover-bid",
@@ -2904,13 +3030,15 @@
     "lr_shrunk": 0.639,
     "lr_ci": [
      0.288,
-     1.146
+     1.148
     ],
+    "lr_confident": 0.497,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      2.0
-    ]
+    ],
+    "decision_points": 0.0
    },
    "learn_half": {
     "check": "K8 empty-cover-bid",
@@ -2946,13 +3074,15 @@
     "lr_shrunk": 0.494,
     "lr_ci": [
      0.128,
-     1.151
+     1.153
     ],
+    "lr_confident": 0.346,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      2.0
-    ]
+    ],
+    "decision_points": 0.0
    },
    "check_half": {
     "check": "K8 empty-cover-bid",
@@ -2988,15 +3118,17 @@
     "lr_shrunk": 0.828,
     "lr_ci": [
      0.312,
-     1.735
+     1.737
     ],
+    "lr_confident": 0.604,
     "proposed_points": 0.0,
     "proposed_points_ci": [
      0.0,
      8.0
-    ]
+    ],
+    "decision_points": 0.0
    },
-   "decision": "fails rule"
+   "decision": "no points"
   }
  ]
 }

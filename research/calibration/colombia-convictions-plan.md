@@ -23,3 +23,12 @@ All other SECOP I contracts (datos.gov.co `x6v4-i8gf`) of the same entity (NIT) 
 | CO5 concentration | Same entity and year: the contractor holds ≥ 60 % of ≥ 10 contracts with an identified contractor (the existing rule, by year). |
 
 Method and decision rule as in Ukraine (buyer-weighted hit rates first, LR shrunk toward 1 by a prior worth 10 buyers, buyer-resampled 95 % intervals, points = 10 × log2(LR), no proposal below 10 labelled buyers, buyer-half holdout). Points basis: one contract per case, final and first-instance combined, each label also reported alone. Expected weakness: few cases (tens); results are a check of direction unless intervals are clearly away from 1. Colombian points stay separate from other countries.
+
+## Decision rule amendment, 2026-10-20 (owner: the safeguards were too strict; fewer, more lenient, and less certainty means fewer points)
+
+Made after results under the old rule had been seen (Romania, Colombia, Ukraine and the Korean preparation run). It applies to every country alike and is implemented once, in `tools/propose-indicator-points.py` (`decide`).
+
+- **Kept:** at least 10 labelled buyers; buyer-weighted rates (each buyer counts once); LR shrunk toward 1 by a prior worth 10 buyers; 95 % intervals from resampling buyers.
+- **Points from the evidence we are 75 % sure of:** points = 10 × log2 of the shrunk LR at the 25th percentile of the buyer resamples (never above the shrunk LR itself), floored at 0. Uncertainty lowers the points instead of excluding the check; any check reliably above LR 1 gets some points, possibly a fraction of one.
+- **Dropped:** the requirement that the learn half's 95 % interval lie above 1 and the check half's LR exceed 1 (the halves are still reported), and one tender/procedure per case as the points basis: all linked tenders are the basis, one per case is reported as robustness.
+- Hit rate stays the first column reported, as before.

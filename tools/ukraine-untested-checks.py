@@ -53,8 +53,7 @@ def main():
         res = {'candidate': check, 'all': pp.analyse(out, check)}
         for h in ('learn', 'check'):
             res[h + '_half'] = pp.analyse([r for r in out if cand.half(r['buyer']) == h], check)
-        l, c = res['learn_half'], res['check_half']
-        res['decision'] = 'proposal' if l.get('lr_ci') and l['lr_ci'][0] > 1 and (c.get('lr_shrunk') or 0) > 1 else 'fails rule'
+        res['decision'] = pp.decide(res['all'])
         results.append(res)
     print(cand.table(results))
 

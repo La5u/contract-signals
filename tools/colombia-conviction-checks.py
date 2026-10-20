@@ -171,7 +171,7 @@ def report_rows(rows, title):
             h, n, (ph, pn) = pp.weighted(rows, check, lab)
             res[lab] = {'rate': round(h / n, 3) if n else None, 'tender_hits': ph, 'tenders': pn, 'buyers': n}
         halves = {name: pp.analyse([r for r in rows if cand.half(r['buyer']) == name], check) for name in ('learn', 'check')}
-        decision = 'proposal' if halves['learn'].get('lr_ci') and halves['learn']['lr_ci'][0] > 1 and (halves['check'].get('lr_shrunk') or 0) > 1 else 'fails rule'
+        decision = pp.decide(res)
         f = lambda g: f"{res[g]['rate'] * 100:.0f}% ({res[g]['tender_hits']}/{res[g]['tenders']})" if res[g]['rate'] is not None else 'NA'
         ci = f" [{res['lr_ci'][0]:.2f}, {res['lr_ci'][1]:.2f}]" if res.get('lr_ci') else ''
         pci = f" {res['proposed_points_ci']}" if res.get('proposed_points_ci') else ''
@@ -192,8 +192,8 @@ def main():
     print(f'{len(records)} conviction records; {len(years)} entity-years; contracts: {dict(rep)}; '
           f"labelled by label: {dict(Counter(l['label'] for l in labelled))}; cases: {len({l['case'] for l in labelled})}")
     out = {'resolution': dict(rep), 'labelled': labelled}
-    out['one_per_case'] = report_rows(analysis_rows(years, labelled, True), 'One contract per case (points basis)')
-    out['all'] = report_rows(analysis_rows(years, labelled, False), 'All labelled contracts')
+    out['one_per_case'] = report_rows(analysis_rows(years, labelled, True), 'One contract per case (points basis until 2026-10-20)')
+    out['all'] = report_rows(analysis_rows(years, labelled, False), 'All labelled contracts (points basis, amendment 2026-10-20)')
     if args.json:
         Path(args.json).write_text(json.dumps(out, indent=1, ensure_ascii=False) + '\n')
 

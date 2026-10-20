@@ -11,8 +11,9 @@ Labels: one representative contract per linked notice (the original version with
 notice's other contracts are left out of the comparisons. Comparisons: every other contract of the same buyer
 (`--buyer contract`: 계약기관 `buyer_code`, as the plan says; `--buyer demand`: 수요기관 `demand_code`, a
 sensitivity, because most rigged tenders were run by the PPS for another body) signed in the same year.
-Decision rule (plan): one tender per case, buyer-weighted rates, LR shrunk by 10 buyers, points 10 x log2(LR),
-learn/check halves by buyer hash. Not computed here: G1 single offer (needs the bid-opening results of each
+Decision rule (amendment 2026-10-20): all linked tenders, buyer-weighted rates (each buyer counts once), LR shrunk by
+10 buyers, at least 10 labelled buyers, points 10 x log2 of the LR at the 25th percentile of the buyer resamples
+(propose-indicator-points.decide). One tender per case and the learn/check halves are reported, not decided on. Not computed here: G1 single offer (needs the bid-opening results of each
 notice, not downloaded yet).
 """
 import argparse
@@ -240,8 +241,8 @@ def main():
 
     every = lambda c: True
     competitive = lambda c: c['method'] in COMPETITIVE and bool(c['notice'])
-    sets = {'weighted, one per case, all contracts (decision rule)': one_per_case(rows(every, True)),
-            'weighted, all linked tenders, all contracts': rows(every, True),
+    sets = {'weighted, one per case, all contracts (decision basis until 2026-10-20)': one_per_case(rows(every, True)),
+            'weighted, all linked tenders, all contracts (decision rule, amendment 2026-10-20)': rows(every, True),
             'weighted, one per case, competitive tenders with a notice': one_per_case(rows(competitive, True)),
             'unweighted (court outcome ignored), one per case, all contracts': one_per_case(rows(every, False))}
     out = {'buyer': key_col, 'finality_checked': bool(finality), 'sets': {}}
@@ -255,8 +256,7 @@ def main():
         for check in CHECKS:
             res = pp.analyse(rs, check)
             halves = {h: pp.analyse([r for r in rs if cand.half(r['buyer']) == h], check) for h in ('learn', 'check')}
-            ok = halves['learn'].get('lr_ci') and halves['learn']['lr_ci'][0] > 1 and (halves['check'].get('lr_shrunk') or 0) > 1
-            decision = 'proposal' if ok else 'fails rule'
+            decision = pp.decide(res)
             f = lambda g: (f"{res[g]['rate'] * 100:.0f}% ({res[g]['tender_hits']}/{res[g]['tenders']}, {res[g]['buyers']} buyers)"
                            if res[g]['rate'] is not None else 'NA')
             ci = f" [{res['lr_ci'][0]:.2f}, {res['lr_ci'][1]:.2f}]" if res.get('lr_ci') else ''

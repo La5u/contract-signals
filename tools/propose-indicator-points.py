@@ -11,7 +11,10 @@ For each check, in this order (owner rule: hit rate decides inclusion, the compa
      comparison rate (LR 1, no evidence) by a prior worth PRIOR_BUYERS buyers; 95 % interval by
      resampling buyers (a scheme usually sits at one buyer, so buyers, not tenders, are independent);
   4. proposed points = PDO * log2(LR shrunk), floored at 0: PDO points each time the odds double
-     (credit-scorecard convention). PDO is a scale for the owner to choose, not a fitted value.
+     (credit-scorecard convention). PDO is a scale for the owner to choose, not a fitted value;
+  5. decision points (owner, 2026-10-20: fewer, more lenient safeguards; less certainty, fewer points) =
+     PDO * log2 of the LR we are 75 % sure of (25th percentile of the buyer resamples, at most LR shrunk),
+     floored at 0, given at least MIN_BUYERS labelled buyers. Any check reliably above LR 1 gets some points.
 
 Only competitive procedures are compared: the comparison sample (Prozorro site search filtered on the
 tendering period) contains no direct-award reports or negotiated procedures, so positives of those kinds
@@ -36,6 +39,7 @@ BOOT = 2000
 SEED = 20261012
 AMENDMENT_CHECK = 'amendments-3plus (from contract records)'
 MIN_BUYERS = 10                         # fewer evaluable positive buyers: no proposal
+CONFIDENT_Q = 0.25                      # decision points use the LR at this quantile of the resamples
 NON_COMPETITIVE = ('reporting', 'negotiation', 'negotiation.quick')
 NOT_COMPARABLE = {'ua-direct-award': 'comparisons contain no direct awards', 'ua-repeated-direct': 'comparisons contain no direct awards'}
 
@@ -107,7 +111,7 @@ def shrunk_lr(h1, n1, h0, n0):
     return p1 / p0
 
 
-def bootstrap(rows, check, group, test=lambda c: c['status'] == 'signal'):
+def bootstrap(rows, check, group, test=lambda c: c['status'] == 'signal', quantiles=(0.025, 0.975)):
     buyers = sorted({r['buyer'] for r in rows})
     # Each resampled copy is a distinct buyer, so the weighted() sums reduce to per-buyer summaries:
     # (hit fraction, evaluable) for the group and for the comparisons. Same draws, same result.
@@ -133,7 +137,7 @@ def bootstrap(rows, check, group, test=lambda c: c['status'] == 'signal'):
     if len(values) < BOOT / 2:
         return None
     values.sort()
-    return values[int(0.025 * len(values))], values[int(0.975 * len(values)) - 1]
+    return tuple(values[min(len(values) - 1, int(q * len(values)))] for q in quantiles)
 
 
 def points(lr):
@@ -157,11 +161,19 @@ def analyse(rows, check, test=lambda c: c['status'] == 'signal'):
     lr = shrunk_lr(c['buyer_hits'], c['buyers'], k['buyer_hits'], k['buyers'])
     res['lr_raw'] = round((c['buyer_hits'] / c['buyers']) / ((k['buyer_hits'] + 0.5) / (k['buyers'] + 1)), 3) if c['buyers'] and k['buyers'] else None
     res['lr_shrunk'] = round(lr, 3) if lr else None
-    ci = bootstrap(rows, check, 'combined', test) if lr else None
+    qs = bootstrap(rows, check, 'combined', test, (0.025, CONFIDENT_Q, 0.975)) if lr else None
+    ci = (qs[0], qs[2]) if qs else None
     res['lr_ci'] = [round(x, 3) for x in ci] if ci else None
+    res['lr_confident'] = round(min(qs[1], lr), 3) if qs else None
     res['proposed_points'] = points(lr) if c['buyers'] >= MIN_BUYERS else f'too few ({c["buyers"]} buyers)'
     res['proposed_points_ci'] = [points(x) for x in ci] if ci and c['buyers'] >= MIN_BUYERS else None
+    res['decision_points'] = points(res['lr_confident']) if qs and c['buyers'] >= MIN_BUYERS else 0.0
     return res
+
+
+def decide(res):
+    """Decision rule (owner, 2026-10-20): at least MIN_BUYERS labelled buyers; points from the LR we are 75 % sure of."""
+    return f"{res['decision_points']:g} points" if res.get('decision_points') else 'no points'
 
 
 def bands(rows, check):
