@@ -729,6 +729,18 @@ PATTERNS = [
 
 # ---- Redesign of 2026-09-29 and compact record panel of 2026-10-01 ----
 # Entries already present above are skipped, so a key may be listed here for completeness.
+def _merge(rows, extra):
+    """Append the rows whose English text is new. A repeated English text must carry the same
+    translation: a different one fails instead of being silently dropped."""
+    known = {row[0]: tuple(row) for row in rows}
+    for row in extra:
+        if row[0] not in known:
+            rows.append(row)
+            known[row[0]] = tuple(row)
+        elif known[row[0]] != tuple(row):
+            raise ValueError(f'i18n_table: conflicting translations for {row[0]!r}')
+
+
 _NEW_EXACT = [
     # Header, datasets, top controls
     ("Explore published procurement records.", "Explore registros publicados de contratación pública.", "Explorez les données publiées de la commande publique."),
@@ -840,7 +852,7 @@ _NEW_EXACT = [
     ("Single offer", "Oferta única", "Offre unique"), ("No competition", "Sin competencia", "Sans concurrence"),
     ("Repeated single offer", "Oferta única repetida", "Offre unique répétée"), ("Repeated no competition", "Sin competencia repetida", "Sans concurrence répété"),
     ("Low competition rate", "Baja competencia", "Faible concurrence"), ("Concentration", "Concentración", "Concentration"),
-    ("Better bid disqualified", "Mejor oferta descalificada", "Meilleure offre écartée"), ("Short bidding period", "Plazo de oferta corto", "Délai de remise court"),
+    ("Better bid disqualified", "Mejor oferta descalificada", "Meilleure offre écartée"),
     ("Late notice change", "Cambio tardío del anuncio", "Avis modifié tardivement"), ("Long duration", "Duración larga", "Durée longue"),
     ("Amount increase", "Aumento del importe", "Hausse du montant"), ("Term extended", "Plazo ampliado", "Durée prolongée"),
     ("Late publication", "Publicación tardía", "Publication tardive"),
@@ -876,16 +888,12 @@ _NEW_PATTERNS = [
     ("Individual or foreign holder · {a}", "Persona física o titular extranjero · {a}", "Personne physique ou titulaire étranger · {a}"),
     ("Also known as {a}", "También conocido como {a}", "Aussi appelé {a}"),
 ]
-_known = {en for en, *_ in EXACT}
-EXACT += [row for row in _NEW_EXACT if row[0] not in _known]
-_known_patterns = {en for en, *_ in PATTERNS}
-PATTERNS += [row for row in _NEW_PATTERNS if row[0] not in _known_patterns]
+_merge(EXACT, _NEW_EXACT)
+_merge(PATTERNS, _NEW_PATTERNS)
 
 from i18n_concise import EXACT as _CONCISE_EXACT, PATTERNS as _CONCISE_PATTERNS
-_known = {en for en, *_ in EXACT}
-EXACT += [row for row in _CONCISE_EXACT if row[0] not in _known]
-_known_patterns = {en for en, *_ in PATTERNS}
-PATTERNS += [row for row in _CONCISE_PATTERNS if row[0] not in _known_patterns]
+_merge(EXACT, _CONCISE_EXACT)
+_merge(PATTERNS, _CONCISE_PATTERNS)
 
 # DECP identifier splits, buyer-feed reconciliation and verification (2026-10-08).
 _FEED_EXACT = [
@@ -933,10 +941,8 @@ _FEED_PATTERNS = [
     ("Offers unknown: the buyer declared {a} in DECP and {b} in notice {c}; neither is chosen.", "Ofertas desconocidas: el comprador declaró {a} en DECP y {b} en el anuncio {c}; no se elige ninguna.", "Offres inconnues : l’acheteur a déclaré {a} dans DECP et {b} dans l’avis {c} ; aucune n’est retenue."),
     ("Sources disagree on the amount ({a} to {b} HT), on either side of the legal threshold: not assessed.", "Las fuentes difieren en el importe ({a} a {b} sin IVA), a ambos lados del umbral legal: no evaluado.", "Les sources divergent sur le montant ({a} à {b} HT), de part et d’autre du seuil légal : non évalué."),
 ]
-_known = {en for en, *_ in EXACT}
-EXACT += [row for row in _FEED_EXACT if row[0] not in _known]
-_known_patterns = {en for en, *_ in PATTERNS}
-PATTERNS += [row for row in _FEED_PATTERNS if row[0] not in _known_patterns]
+_merge(EXACT, _FEED_EXACT)
+_merge(PATTERNS, _FEED_PATTERNS)
 
 
 # Ukrainian contract-amendment check (v3.4).

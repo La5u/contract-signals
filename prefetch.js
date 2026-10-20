@@ -6,7 +6,7 @@
   // Browser copies where they exist, else the published files (datasets.js).
   const files = Object.fromEntries(Object.entries(globalThis.DATASETS).filter(([, d]) => d.path).map(([key, d]) => [key, d.web || [].concat(d.path)]));
   // Interface language, decided once here (i18n.js uses it): only that dictionary is loaded.
-  // Same order as i18n.js: ?lang=, the saved choice, then the browser's languages.
+  // Order: ?lang=, the saved choice, then the browser's languages; i18n.js reads the result (I18N_BOOT_LANG).
   const LANGS = ['en', 'es', 'fr'];
   let lang = 'en';
   try {

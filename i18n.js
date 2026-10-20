@@ -11,24 +11,8 @@
   const LOCALES = { en: 'en-IE', es: 'es-ES', fr: 'fr-FR' };
   const known = code => typeof code === 'string' && Object.hasOwn(NAMES, code);
 
-  function chooseLanguage() {
-    try {
-      const fromQuery = new URLSearchParams(location.search).get('lang');
-      if (known(fromQuery)) return fromQuery;
-    } catch { /* no location */ }
-    try {
-      const saved = localStorage.getItem('contract-signals-lang');
-      if (known(saved)) return saved;
-    } catch { /* storage unavailable */ }
-    for (const tag of (typeof navigator !== 'undefined' && navigator.languages) || []) {
-      const base = String(tag).slice(0, 2).toLowerCase();
-      if (known(base)) return base;
-    }
-    return 'en';
-  }
-
-  // prefetch.js decides first and loads only that dictionary; on its own, this file decides.
-  const lang = known(window.I18N_BOOT_LANG) ? window.I18N_BOOT_LANG : chooseLanguage();
+  // prefetch.js (loaded first) chooses the language: ?lang=, the saved choice, then the browser's languages.
+  const lang = known(window.I18N_BOOT_LANG) ? window.I18N_BOOT_LANG : 'en';
   window.i18nLang = () => lang;
   window.i18nLocale = () => LOCALES[lang];
   window.I18N_LANGUAGES = NAMES;
