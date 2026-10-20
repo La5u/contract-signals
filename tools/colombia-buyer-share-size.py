@@ -9,19 +9,14 @@ convicted buyers the within-band rates are reported but too thin to decide. Chan
 """
 import argparse
 import bisect
-import importlib.util
 import json
 from collections import Counter
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import load  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
-
-
-def load(name, path):
-    spec = importlib.util.spec_from_file_location(name, ROOT / path)
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    return mod
 
 
 co = load('colombia', 'tools/colombia-conviction-checks.py')

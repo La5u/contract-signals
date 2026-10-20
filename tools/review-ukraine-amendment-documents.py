@@ -4,7 +4,6 @@ No metadata fetches, OCR, redirects, retries, authentication or inferred linkage
 """
 import argparse
 from datetime import datetime, timezone
-import hashlib
 import importlib.util
 import json
 import os
@@ -15,6 +14,9 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import canonical, require, sha, without_hashes  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 PLAN = 'data/ukraine-amendment-document-plan.json'
@@ -23,28 +25,6 @@ MODULE = 'data/ukraine-amendment-evidence.json'
 HOSTS = {'public-docs.prozorro.gov.ua', 'publisherdocservice.prozorro.gov.ua'}
 LIMIT = 2 * 1024 * 1024
 PRIVATE = Path.home() / '.cache/contract-signals/ukraine-amendment-documents/v1'
-
-
-def canonical(x):
-    return json.dumps(x, sort_keys=True, ensure_ascii=False, separators=(',', ':'), allow_nan=False).encode()
-
-
-def sha(x):
-    return hashlib.sha256(x).hexdigest()
-
-
-def without_hashes(value):
-    if isinstance(value, dict):
-        return {k: without_hashes(v) for k, v in value.items()
-                if k not in ('inputHashes', 'rawSnapshotHashes', 'checksum') and not k.lower().endswith('sha256')}
-    if isinstance(value, list):
-        return [without_hashes(v) for v in value]
-    return value
-
-
-def require(ok, msg):
-    if not ok:
-        raise ValueError(msg)
 
 
 def now():

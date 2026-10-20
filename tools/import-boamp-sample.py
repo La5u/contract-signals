@@ -21,6 +21,9 @@ import urllib.parse
 import urllib.request
 from datetime import date, datetime, timezone
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import many as as_list, text  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
@@ -38,16 +41,6 @@ TEXT = {
 
 
 # ---- helpers for the XML-as-JSON shape of eForms (text nodes, single-or-list) ----
-def as_list(v):
-    return [] if v is None else v if isinstance(v, list) else [v]
-
-
-def text(v):
-    if isinstance(v, dict):
-        return v.get("#text")
-    return v
-
-
 def first_text(v):
     items = as_list(v)
     return text(items[0]) if items else None

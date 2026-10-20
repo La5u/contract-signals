@@ -4,7 +4,6 @@ import argparse
 from collections import Counter
 from datetime import datetime, timezone
 import gzip
-import hashlib
 import importlib.util
 import json
 import os
@@ -13,6 +12,9 @@ import re
 import subprocess
 import tempfile
 import time
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import canonical, require, sha, without_hashes  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 PRIVATE_PLAN = Path.home() / '.cache/contract-signals/ukraine-public-audit/v1/plan.json'
@@ -22,25 +24,6 @@ TYPES = {'priceReductionWithoutQuantity', 'qualityImprovement', 'fiscalYearExten
          'durationExtension', 'itemPriceVariation', 'taxRate', 'thirdParty', 'volumeCuts',
          'currencyRate', 'partyChange'}
 STATUSES = {'active', 'pending', 'terminated', 'cancelled', 'unsuccessful'}
-
-def canonical(x):
-    return json.dumps(x, sort_keys=True, ensure_ascii=False, separators=(',', ':'), allow_nan=False).encode()
-
-def sha(x):
-    return hashlib.sha256(x).hexdigest()
-
-def without_hashes(value):
-    if isinstance(value, dict):
-        return {k: without_hashes(v) for k, v in value.items()
-                if k not in ('inputHashes', 'rawSnapshotHashes', 'checksum') and not k.lower().endswith('sha256')}
-    if isinstance(value, list):
-        return [without_hashes(v) for v in value]
-    return value
-
-
-def require(ok, message):
-    if not ok:
-        raise ValueError(message)
 
 def load(path):
     return json.loads(Path(path).read_text())

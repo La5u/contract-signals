@@ -16,7 +16,6 @@ Sources: prozorro (Ukraine). One module per source; each has a self-test against
 endpoint is reported as broken, not as "no documents".
 """
 import argparse
-import gzip
 import hashlib
 import json
 import re
@@ -26,6 +25,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from polite_http import CACHE, Disallowed, PoliteClient, Refused  # noqa: E402
+from common import save_json_gz as save_gz  # noqa: E402
 
 OUT = CACHE / 'documents'
 
@@ -50,11 +50,6 @@ def sniff(data):
     if data.lstrip()[:15].lower().startswith((b'<!doctype', b'<html')):
         return 'html'
     return 'unknown'
-
-
-def save_gz(path, value):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_bytes(gzip.compress((json.dumps(value, ensure_ascii=False, indent=1) + '\n').encode(), mtime=0))
 
 
 # --- Prozorro -------------------------------------------------------------------------------------------------

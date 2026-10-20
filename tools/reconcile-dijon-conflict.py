@@ -10,18 +10,13 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import many, text  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = Path.home() / '.cache/contract-signals/decp-conflict-dijon'
 BUYER, PROCEDURE, NOTICE = '21210231300013', '2023VDAO1642', '24-79759'
-
-
-def text(value):
-    return value.get('#text') if isinstance(value, dict) else value
-
-
-def many(value):
-    return value if isinstance(value, list) else [] if value is None else [value]
 
 
 def unique(items, accessor):

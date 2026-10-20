@@ -9,6 +9,9 @@ from collections import Counter
 import hashlib
 import json
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import require, without_hashes  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = 'data/ukraine-amendment-evidence.json'
@@ -35,20 +38,6 @@ RULE = {
                      '`documents`/`milestones` when empty.',
     'log': 'research/ukraine-corrections-log.md#1-omitted-amendment-list-was-silently-counted-as-zero',
 }
-
-
-def without_hashes(value):
-    if isinstance(value, dict):
-        return {k: without_hashes(v) for k, v in value.items()
-                if k not in ('inputHashes', 'rawSnapshotHashes', 'checksum') and not k.lower().endswith('sha256')}
-    if isinstance(value, list):
-        return [without_hashes(v) for v in value]
-    return value
-
-
-def require(condition, reason):
-    if not condition:
-        raise ValueError(reason)
 
 
 def interpret(root=ROOT):

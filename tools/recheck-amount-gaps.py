@@ -7,7 +7,6 @@ published data, exports, attachments, credentials, redirects or retries.
 import argparse
 from collections import Counter
 from datetime import datetime, timezone
-import hashlib
 import importlib.util
 import json
 import os
@@ -17,6 +16,9 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import write_private as private_bytes, sha  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = Path.home() / '.cache/contract-signals'
@@ -42,21 +44,9 @@ def utc():
     return datetime.now(timezone.utc).isoformat()
 
 
-def sha(blob):
-    return hashlib.sha256(blob).hexdigest()
-
-
 def private_json(path, value):
     blob = (json.dumps(value, indent=2, ensure_ascii=True, allow_nan=False) + '\n').encode()
     private_bytes(path, blob)
-
-
-def private_bytes(path, blob):
-    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
-    with os.fdopen(fd, 'wb') as stream:
-        stream.write(blob)
-        stream.flush()
-        os.fsync(stream.fileno())
 
 
 def private_run():

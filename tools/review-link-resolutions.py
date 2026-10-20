@@ -3,10 +3,12 @@
 import argparse
 from collections import Counter
 import gzip
-import hashlib
 import importlib.util
 import json
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import canonical, require, sha  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 ROWS = ('data/contracts.json', 'data/decp-history.json', 'data/decp-cities.json')
@@ -16,14 +18,6 @@ DECISIONS = 'data/boamp-decp-link-decisions.json'
 TED = 'data/paris-ted-version-evidence.json'
 
 
-def canonical(value):
-    return json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(',', ':'), allow_nan=False).encode()
-
-
-def sha(blob):
-    return hashlib.sha256(blob).hexdigest()
-
-
 def pointer(value, path):
     if not isinstance(path, str) or not path.startswith('/'):
         raise ValueError('Invalid evidence pointer')
@@ -31,11 +25,6 @@ def pointer(value, path):
         token = token.replace('~1', '/').replace('~0', '~')
         value = value[int(token)] if isinstance(value, list) else value[token]
     return value
-
-
-def require(condition, reason):
-    if not condition:
-        raise ValueError(reason)
 
 
 def build(root=ROOT, decisions=None):

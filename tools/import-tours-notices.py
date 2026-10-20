@@ -4,7 +4,6 @@ Online: BOAMP cohort + exact procedure/reference discovery. TED is downloaded by
  tools/download-tours-ted.py. --offline never changes saved retrieval provenance.
 """
 import argparse
-import hashlib
 import json
 import math
 import re
@@ -13,6 +12,9 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import many as array  # noqa: E402
 try:
     from linked_evidence import notice_change
 except ModuleNotFoundError:
@@ -26,7 +28,6 @@ WHERE = "dateparution >= date'2025-01-01' AND dateparution < date'2026-01-01' AN
 UUID = re.compile(r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$', re.I)
 
 
-def array(v): return v if isinstance(v, list) else [] if v is None else [v]
 def text(v):
     if isinstance(v, dict): return v.get('#text')
     return str(v) if v is not None else None

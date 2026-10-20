@@ -21,6 +21,9 @@ from pathlib import Path
 import random
 import re
 import urllib.parse
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import many, text  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 _spec = importlib.util.spec_from_file_location('dijon_holders', ROOT / 'tools/link-dijon-holders.py')
@@ -83,14 +86,6 @@ def amounts(node):
         for v in node:
             found += amounts(v)
     return found
-
-
-def text(v):
-    return v.get('#text') if isinstance(v, dict) else v
-
-
-def many(v):
-    return v if isinstance(v, list) else [] if v is None else [v]
 
 
 def lots(record):

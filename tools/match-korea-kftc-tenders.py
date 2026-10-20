@@ -24,6 +24,9 @@ import re
 import sqlite3
 from collections import defaultdict
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import to_int  # noqa: E402
 
 BASE = Path(os.environ.get('XDG_CACHE_HOME', str(Path.home() / '.cache'))) / 'contract-signals/korea'
 COLS = ['cntrct_no', 'ord', 'signed', 'name', 'notice_no', 'notice_name', 'opening_date', 'amount', 'total_amount',
@@ -43,14 +46,6 @@ def norm_name(s):
 
 def masked(s):
     return not norm_name(s) or bool(re.search(r'[☆★●○◎◇◆□■△▲▽▼]|^[A-Z가-힣]사$', s or ''))
-
-
-def to_int(v):
-    if isinstance(v, (int, float)):
-        return int(v)
-    if isinstance(v, str) and re.fullmatch(r'[\d,]+', v.strip()):
-        return int(v.replace(',', ''))
-    return None
 
 
 def parse_date(s):

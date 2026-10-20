@@ -27,6 +27,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from linked_evidence import bid_attrition  # noqa: E402
 from personal_ids import mask, mask_ids  # noqa: E402
+from common import load_gz, save_json_gz as save_gz  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data/prozorro/raw"
@@ -75,15 +76,6 @@ def get_json(url, method="GET"):
             if attempt == 5:
                 raise
             time.sleep(5 * (attempt + 1))  # 503/429 under load: back off politely
-
-
-def save_gz(path, value):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_bytes(gzip.compress((json.dumps(value, ensure_ascii=False, indent=1) + "\n").encode("utf-8"), mtime=0))
-
-
-def load_gz(path):
-    return json.loads(gzip.decompress(path.read_bytes()))
 
 
 def download():

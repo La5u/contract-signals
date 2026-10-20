@@ -7,7 +7,6 @@ BOAMP/DECP crosswalk. XML root notice UUID AND VersionID establish version ident
 import argparse
 import datetime as dt
 import gzip
-import hashlib
 import json
 import os
 from pathlib import Path
@@ -16,6 +15,9 @@ import selectors
 import subprocess
 import time
 import xml.etree.ElementTree as ET
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import text as scalar, sha  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 TARGETS = ('25-21317', '25-21329', '25-37616', '25-45958', '25-47556')
@@ -25,14 +27,6 @@ LIMIT = 2 * 1024 * 1024
 PUB = re.compile(r'[1-9][0-9]{0,5}-20[0-9]{2}')
 UUID = re.compile(r'[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}', re.I)
 B = '/EFORMS/ContractAwardNotice'
-
-
-def sha(blob):
-    return hashlib.sha256(blob).hexdigest()
-
-
-def scalar(v):
-    return v.get('#text') if isinstance(v, dict) else v
 
 
 def walk(v, p=''):

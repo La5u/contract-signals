@@ -10,7 +10,6 @@ Changes no score, weight or dataset.
 import argparse
 import gzip
 import hashlib
-import importlib.util
 import json
 import math
 import re
@@ -18,15 +17,11 @@ import unicodedata
 from datetime import date, datetime
 from pathlib import Path
 from statistics import mean, pstdev
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import load  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
-
-
-def load(name, path):
-    spec = importlib.util.spec_from_file_location(name, ROOT / path)
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    return mod
 
 
 pp = load('propose_indicator_points', 'tools/propose-indicator-points.py')

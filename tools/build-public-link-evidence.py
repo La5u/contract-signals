@@ -12,6 +12,9 @@ import selectors
 import subprocess
 import time
 from urllib.parse import urlsplit
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import canonical, require as check, sha  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 ANNOTATIONS = 'research/public-link-observations.json'
@@ -33,12 +36,6 @@ DECODED_SUFFIXES = {
  '/cac:ProcurementProject/cac:PlannedPeriod/cbc:DurationMeasure/@unitCode',
  '/cac:NoticeDocumentReference/cbc:ID'}
 
-def sha(data):
-    return hashlib.sha256(data).hexdigest()
-
-def canonical(value):
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()
-
 def render(value):
     return json.dumps(value, ensure_ascii=False, indent=2) + '\n'
 
@@ -49,10 +46,6 @@ def pointer(value, path):
         token = token.replace('~1', '/').replace('~0', '~')
         value = value[int(token)] if isinstance(value, list) else value[token]
     return value
-
-def check(condition, message):
-    if not condition:
-        raise ValueError(message)
 
 def allowed_decoded(path):
     if path in {B + '/cbc:IssueDate', B + '/cbc:ContractFolderID'}:

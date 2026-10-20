@@ -26,6 +26,8 @@ import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import to_int  # noqa: E402
 
 BASE = Path(os.environ.get('XDG_CACHE_HOME', str(Path.home() / '.cache'))) / 'contract-signals/korea/ftc'
 
@@ -271,14 +273,6 @@ def pending(redo_failed, only, out, force=False):
 
 def squash(s):
     return re.sub(r'\s+', '', s or '')
-
-
-def to_int(v):
-    if isinstance(v, (int, float)):
-        return int(v)
-    if isinstance(v, str) and re.fullmatch(r'[\d,]+', v.strip()):
-        return int(v.replace(',', ''))
-    return None
 
 
 def to_float(v):
