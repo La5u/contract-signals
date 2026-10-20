@@ -30,7 +30,7 @@ Written on 25 September 2026, before any record of this cohort was read. Procedu
 | Better-ranked bidder disqualified | `ua-better-bid-disqualified` | Competition | Competitive type; on the awarded lot, at least one award to another bidder was declared unsuccessful before this award (added 2026-09-26) | **4**, flat (12 before v3.5) |
 | Three or more contract amendments | `ua-contract-amendments` | Execution | Signed contract; retrieved integer count of active amendments ≥3 | **6** at 3–4, **10** at 5+, **+6** with a term extension (flat 8 in v3.4) |
 | Contract term extended by amendment | `ua-term-extension` | Execution | Signed contract; an active amendment of type durationExtension or fiscalYearExtension | **4** (with 3+ amendments counted as +6 on the amendments check) |
-| Large share of the buyer's yearly procurement | `ua-buyer-share` | Competition | Any procedure, UAH amount; this contract is ≥ 5 % of the buyer's UAH contract total for the tender's creation year, in a year the cohort covers completely (bundled cohort: 2025 only) | **30** since v3.6 |
+| Large share of the buyer's yearly procurement | `ua-buyer-share` | Competition | Any procedure, UAH amount; this contract is ≥ 5 % of the buyer's UAH contract total for the tender's creation year, in a year the cohort covers completely (bundled cohort: 2025 only) | **2.2** since v3.8 (30 in v3.6–3.7, a contract-size effect: [score-v3.md](score-v3.md#v38-20-october-2026-buyer-share-controlled-for-contract-size)) |
 | Long declared duration | `long-contract` | Execution | **Out of scope** | — |
 
 Offers are counted per lot, which Prozorro publishes (unlike the Paraguayan data). When a record publishes no bids, offers are unknown, never zero. Complaints are shown as context outside the index.

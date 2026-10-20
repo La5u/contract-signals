@@ -75,10 +75,10 @@ const pick = (t, prefix) => Object.fromEntries(Object.entries(t.checks).filter((
   assert.equal(rows.filter(r=>r.linkedContract).length,3);
   for(const r of rows.filter(r=>r.linkedContract)) assert.ok(run('verificationLinks',r).some(l=>l.url===r.linkedContract.url));
   assert.ok(rows.every(r=>!run('getAssessment',r).checks.some(c=>c.id==='ua-bid-attrition')),'bid-attrition decisions are context, not a check');
-  // v3.6: a contract of 5 % or more of its buyer's UAH total for a completely covered year scores 30 (competition).
+  // v3.6: a contract of 5 % or more of its buyer's UAH total for a completely covered year signals (competition); 2.2 points since v3.8 (30 before: a size effect).
   const share = (fields) => run('getAssessment', { ...rows.find(r => r.uaBuyerShare?.complete), ...fields }).checks.find(c => c.id === 'ua-buyer-share');
   const big = rows.find(r => r.uaBuyerShare?.share >= 0.05 && r.uaBuyerShare.complete);
-  assert.equal(share(big).status, 'signal'); assert.equal(share(big).weight, 30); assert.equal(share(big).family, 'competition');
+  assert.equal(share(big).status, 'signal'); assert.equal(share(big).weight, 2.2); assert.equal(share(big).family, 'competition');
   assert.equal(share({ uaBuyerShare: { ...big.uaBuyerShare, complete: false } }).status, 'unknown');
   assert.equal(share({ uaBuyerShare: { ...big.uaBuyerShare, share: null } }).status, 'unknown');
   assert.equal(share({ uaBuyerShare: { ...big.uaBuyerShare, share: 0.049 } }).status, 'clear');

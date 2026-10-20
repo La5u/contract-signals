@@ -1,6 +1,17 @@
-# Vigilance index 3.7 — active method
+# Vigilance index 3.8 — active method
 
 **An editorial sorting tool, not a probability, a measure of legal gravity or a certificate of regularity.** The existing data and PDFs are unchanged; the meaning of the score and some eligibility criteria deliberately change. A v2.1 30 must not be compared to a v3 30 as a real evolution of a contract.
+
+## v3.8 (20 October 2026): buyer share controlled for contract size
+
+Prosecutions favour large amounts, and a contract of at least 5 % of its buyer's year is usually a large contract. With the rules fixed beforehand ([bias-controls-plan.md](../research/calibration/bias-controls-plan.md)), the buyer-share LR was recomputed at equal contract value (the comparisons' rate in each value band, weighted by the convicted contracts' band mix; decision rule of 2026-10-20, LR at the 25th bootstrap percentile).
+
+Corruption can also make a contract bigger (overpricing), which a size control would wrongly remove. The owner set the assumption on 2026-10-20: convicted contracts' prices are taken as inflated by 30 % on average (they are banded at value / 1.3). Many schemes (bribes, accepting work not done) leave the price normal-sized, so a higher average was judged unlikely; the uninflated results are reported beside them.
+
+- **Ukraine `ua-buyer-share`: 30 → 2.2 points.** Unadjusted LR 6.5; at equal value 1.21 [1.07, 1.35] with the 30 % allowance, 1.13 [1.01, 1.26] without (1.2 points); ×1.5 would give 2.9 and ×3 5.5. Inside every value band with enough cases the check fires as often on ordinary tenders as on convicted ones, and "value ≥ UAH 1.7 million" alone reaches LR 5.8 ([results](../research/calibration/ukraine-buyer-share-size-results.json), `tools/ukraine-buyer-share-size.py`).
+- **Colombia `secop2-buyer-share`: 14 → 4.7 points.** Unadjusted LR 2.4; at equal value 1.64 [1.05, 2.24] with the 30 % allowance (1.53 [0.94, 2.20], 3.4 points, without), with bands at the comparisons' 50th–99th percentiles. The pre-set quintile bands put 28 of 30 convicted contracts in the top fifth and barely adjust (LR 2.09); the finer bands were chosen after seeing that, and rest on 10 convicted buyers ([results](../research/calibration/colombia-buyer-share-size-results.json), `tools/colombia-buyer-share-size.py`).
+- Effect on the bundled data: 11 of 488 Ukrainian and 9 of 7,560 Colombian scores fall; no contract loses its last signal (positive scores unchanged, 118 and 279).
+- **Editorial cap left at 30, open:** its basis was the Ukrainian buyer share (LR 8). No measured check now scores above 11 (`ua-direct-contract`), which is itself a size check (UAH 200,000 or more) not yet controlled for size.
 
 ## v3.7 (15 October 2026): points from labelled cases in Colombia, Ukraine and Romania
 

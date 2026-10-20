@@ -1,0 +1,636 @@
+{
+ "edges_cop": [
+  6400000.0,
+  10500000.0,
+  16000000.0,
+  33470000.0
+ ],
+ "unadjusted": {
+  "check": "CO4 buyer share >= 5 %",
+  "corruption": {
+   "buyer_hits": 0,
+   "buyers": 0,
+   "tender_hits": 0,
+   "tenders": 0,
+   "rate": null
+  },
+  "fraud": {
+   "buyer_hits": 0,
+   "buyers": 0,
+   "tender_hits": 0,
+   "tenders": 0,
+   "rate": null
+  },
+  "combined": {
+   "buyer_hits": 5.42,
+   "buyers": 10,
+   "tender_hits": 9,
+   "tenders": 30,
+   "rate": 0.542
+  },
+  "comparison": {
+   "buyer_hits": 2.31,
+   "buyers": 19,
+   "tender_hits": 115,
+   "tenders": 24211,
+   "rate": 0.122
+  },
+  "lr_raw": 3.858,
+  "lr_shrunk": 2.429,
+  "lr_ci": [
+   1.267,
+   5.896
+  ],
+  "lr_confident": 1.904,
+  "proposed_points": 12.8,
+  "proposed_points_ci": [
+   3.4,
+   25.6
+  ],
+  "decision_points": 9.3
+ },
+ "size_standardised": {
+  "combined": {
+   "rate": 0.542,
+   "buyers": 10.0,
+   "tender_hits": 9,
+   "tenders": 30
+  },
+  "comparison": {
+   "rate": 0.154,
+   "buyers": 19
+  },
+  "band_mix_convicted": {
+   "Q1": 0.0,
+   "Q2": 0.006,
+   "Q3": 0.0,
+   "Q4": 0.006,
+   "Q5": 0.989
+  },
+  "lr_shrunk": 2.085,
+  "lr_ci": [
+   1.2,
+   4.485
+  ],
+  "lr_confident": 1.711,
+  "decision_points": 7.7
+ },
+ "within_band": {
+  "Q1": {
+   "check": "CO4 buyer share >= 5 %",
+   "corruption": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "fraud": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "combined": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "comparison": {
+    "buyer_hits": 0.39,
+    "buyers": 17,
+    "tender_hits": 13,
+    "tenders": 4829,
+    "rate": 0.023
+   },
+   "lr_raw": null,
+   "lr_shrunk": null,
+   "lr_ci": null,
+   "lr_confident": null,
+   "proposed_points": "too few (0 buyers)",
+   "proposed_points_ci": null,
+   "decision_points": 0.0
+  },
+  "Q2": {
+   "check": "CO4 buyer share >= 5 %",
+   "corruption": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "fraud": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "combined": {
+    "buyer_hits": 0.0,
+    "buyers": 1,
+    "tender_hits": 0,
+    "tenders": 1,
+    "rate": 0.0
+   },
+   "comparison": {
+    "buyer_hits": 0.92,
+    "buyers": 17,
+    "tender_hits": 22,
+    "tenders": 4847,
+    "rate": 0.054
+   },
+   "lr_raw": 0.0,
+   "lr_shrunk": 0.909,
+   "lr_ci": [
+    0.769,
+    0.909
+   ],
+   "lr_confident": 0.833,
+   "proposed_points": "too few (1 buyers)",
+   "proposed_points_ci": null,
+   "decision_points": 0.0
+  },
+  "Q3": {
+   "check": "CO4 buyer share >= 5 %",
+   "corruption": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "fraud": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "combined": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "comparison": {
+    "buyer_hits": 1.0,
+    "buyers": 17,
+    "tender_hits": 10,
+    "tenders": 4714,
+    "rate": 0.059
+   },
+   "lr_raw": null,
+   "lr_shrunk": null,
+   "lr_ci": null,
+   "lr_confident": null,
+   "proposed_points": "too few (0 buyers)",
+   "proposed_points_ci": null,
+   "decision_points": 0.0
+  },
+  "Q4": {
+   "check": "CO4 buyer share >= 5 %",
+   "corruption": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "fraud": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "combined": {
+    "buyer_hits": 0.0,
+    "buyers": 1,
+    "tender_hits": 0,
+    "tenders": 1,
+    "rate": 0.0
+   },
+   "comparison": {
+    "buyer_hits": 1.0,
+    "buyers": 17,
+    "tender_hits": 2,
+    "tenders": 4978,
+    "rate": 0.059
+   },
+   "lr_raw": 0.0,
+   "lr_shrunk": 0.909,
+   "lr_ci": [
+    0.769,
+    0.909
+   ],
+   "lr_confident": 0.833,
+   "proposed_points": "too few (1 buyers)",
+   "proposed_points_ci": null,
+   "decision_points": 0.0
+  },
+  "Q5": {
+   "check": "CO4 buyer share >= 5 %",
+   "corruption": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "fraud": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "combined": {
+    "buyer_hits": 5.44,
+    "buyers": 10,
+    "tender_hits": 9,
+    "tenders": 28,
+    "rate": 0.544
+   },
+   "comparison": {
+    "buyer_hits": 2.78,
+    "buyers": 18,
+    "tender_hits": 68,
+    "tenders": 4843,
+    "rate": 0.155
+   },
+   "lr_raw": 3.151,
+   "lr_shrunk": 2.076,
+   "lr_ci": [
+    1.241,
+    4.529
+   ],
+   "lr_confident": 1.695,
+   "proposed_points": 10.5,
+   "proposed_points_ci": [
+    3.1,
+    21.8
+   ],
+   "decision_points": 7.6
+  }
+ },
+ "fine_edges_cop": [
+  12800000.0,
+  33470000.0,
+  100184560.0,
+  384975000.0,
+  1118390000.0,
+  2600764227.0
+ ],
+ "size_standardised_fine": {
+  "combined": {
+   "rate": 0.542,
+   "buyers": 10.0,
+   "tender_hits": 9,
+   "tenders": 30
+  },
+  "comparison": {
+   "rate": 0.251,
+   "buyers": 19
+  },
+  "band_mix_convicted": {
+   "<p50": 0.006,
+   "p50-80": 0.006,
+   "p80-90": 0.1,
+   "p90-95": 0.011,
+   "p95-98": 0.217,
+   "p98-99": 0.139,
+   ">=p99": 0.522
+  },
+  "lr_shrunk": 1.53,
+  "lr_ci": [
+   0.94,
+   2.202
+  ],
+  "lr_confident": 1.265,
+  "decision_points": 3.4
+ },
+ "size_standardised_fine_inflation": {
+  "combined": {
+   "rate": 0.542,
+   "buyers": 10.0,
+   "tender_hits": 9,
+   "tenders": 30
+  },
+  "comparison": {
+   "rate": 0.223,
+   "buyers": 19
+  },
+  "band_mix_convicted": {
+   "<p50": 0.006,
+   "p50-80": 0.006,
+   "p80-90": 0.106,
+   "p90-95": 0.006,
+   "p95-98": 0.228,
+   "p98-99": 0.233,
+   ">=p99": 0.417
+  },
+  "lr_shrunk": 1.643,
+  "lr_ci": [
+   1.054,
+   2.243
+  ],
+  "lr_confident": 1.389,
+  "decision_points": 4.7,
+  "inflation": 1.3
+ },
+ "within_fine_band": {
+  "<p50": {
+   "check": "CO4 buyer share >= 5 %",
+   "corruption": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "fraud": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "combined": {
+    "buyer_hits": 0.0,
+    "buyers": 1,
+    "tender_hits": 0,
+    "tenders": 1,
+    "rate": 0.0
+   },
+   "comparison": {
+    "buyer_hits": 0.67,
+    "buyers": 17,
+    "tender_hits": 44,
+    "tenders": 12051,
+    "rate": 0.039
+   },
+   "lr_raw": 0.0,
+   "lr_shrunk": 0.909,
+   "lr_ci": [
+    0.769,
+    0.909
+   ],
+   "lr_confident": 0.833,
+   "proposed_points": "too few (1 buyers)",
+   "proposed_points_ci": null,
+   "decision_points": 0.0
+  },
+  "p50-80": {
+   "check": "CO4 buyer share >= 5 %",
+   "corruption": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "fraud": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "combined": {
+    "buyer_hits": 0.0,
+    "buyers": 1,
+    "tender_hits": 0,
+    "tenders": 1,
+    "rate": 0.0
+   },
+   "comparison": {
+    "buyer_hits": 1.0,
+    "buyers": 18,
+    "tender_hits": 3,
+    "tenders": 7317,
+    "rate": 0.056
+   },
+   "lr_raw": 0.0,
+   "lr_shrunk": 0.909,
+   "lr_ci": [
+    0.769,
+    0.909
+   ],
+   "lr_confident": 0.833,
+   "proposed_points": "too few (1 buyers)",
+   "proposed_points_ci": null,
+   "decision_points": 0.0
+  },
+  "p80-90": {
+   "check": "CO4 buyer share >= 5 %",
+   "corruption": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "fraud": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "combined": {
+    "buyer_hits": 1.0,
+    "buyers": 1,
+    "tender_hits": 1,
+    "tenders": 1,
+    "rate": 1.0
+   },
+   "comparison": {
+    "buyer_hits": 1.0,
+    "buyers": 17,
+    "tender_hits": 5,
+    "tenders": 2421,
+    "rate": 0.059
+   },
+   "lr_raw": 12.0,
+   "lr_shrunk": 2.0,
+   "lr_ci": [
+    1.956,
+    2.033
+   ],
+   "lr_confident": 2.0,
+   "proposed_points": "too few (1 buyers)",
+   "proposed_points_ci": null,
+   "decision_points": 0.0
+  },
+  "p90-95": {
+   "check": "CO4 buyer share >= 5 %",
+   "corruption": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "fraud": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "combined": {
+    "buyer_hits": 0.0,
+    "buyers": 1,
+    "tender_hits": 0,
+    "tenders": 2,
+    "rate": 0.0
+   },
+   "comparison": {
+    "buyer_hits": 1.0,
+    "buyers": 16,
+    "tender_hits": 1,
+    "tenders": 1211,
+    "rate": 0.062
+   },
+   "lr_raw": 0.0,
+   "lr_shrunk": 0.909,
+   "lr_ci": [
+    0.714,
+    0.909
+   ],
+   "lr_confident": 0.833,
+   "proposed_points": "too few (1 buyers)",
+   "proposed_points_ci": null,
+   "decision_points": 0.0
+  },
+  "p95-98": {
+   "check": "CO4 buyer share >= 5 %",
+   "corruption": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "fraud": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "combined": {
+    "buyer_hits": 1.0,
+    "buyers": 3,
+    "tender_hits": 1,
+    "tenders": 5,
+    "rate": 0.333
+   },
+   "comparison": {
+    "buyer_hits": 3.4,
+    "buyers": 15,
+    "tender_hits": 6,
+    "tenders": 726,
+    "rate": 0.227
+   },
+   "lr_raw": 1.368,
+   "lr_shrunk": 1.085,
+   "lr_ci": [
+    0.714,
+    1.535
+   ],
+   "lr_confident": 0.909,
+   "proposed_points": "too few (3 buyers)",
+   "proposed_points_ci": null,
+   "decision_points": 0.0
+  },
+  "p98-99": {
+   "check": "CO4 buyer share >= 5 %",
+   "corruption": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "fraud": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "combined": {
+    "buyer_hits": 1.0,
+    "buyers": 2,
+    "tender_hits": 1,
+    "tenders": 8,
+    "rate": 0.5
+   },
+   "comparison": {
+    "buyer_hits": 1.0,
+    "buyers": 13,
+    "tender_hits": 1,
+    "tenders": 242,
+    "rate": 0.077
+   },
+   "lr_raw": 4.667,
+   "lr_shrunk": 1.611,
+   "lr_ci": [
+    0.769,
+    1.767
+   ],
+   "lr_confident": 0.909,
+   "proposed_points": "too few (2 buyers)",
+   "proposed_points_ci": null,
+   "decision_points": 0.0
+  },
+  ">=p99": {
+   "check": "CO4 buyer share >= 5 %",
+   "corruption": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "fraud": {
+    "buyer_hits": 0,
+    "buyers": 0,
+    "tender_hits": 0,
+    "tenders": 0,
+    "rate": null
+   },
+   "combined": {
+    "buyer_hits": 3.0,
+    "buyers": 6,
+    "tender_hits": 6,
+    "tenders": 12,
+    "rate": 0.5
+   },
+   "comparison": {
+    "buyer_hits": 4.57,
+    "buyers": 13,
+    "tender_hits": 55,
+    "tenders": 243,
+    "rate": 0.352
+   },
+   "lr_raw": 1.381,
+   "lr_shrunk": 1.143,
+   "lr_ci": [
+    0.755,
+    1.824
+   ],
+   "lr_confident": 0.984,
+   "proposed_points": "too few (6 buyers)",
+   "proposed_points_ci": null,
+   "decision_points": 0.0
+  }
+ }
+}

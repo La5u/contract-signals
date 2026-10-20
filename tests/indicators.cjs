@@ -29,7 +29,7 @@ assert.deepEqual([...measured].sort(), ['colombia-secop2:secop2-buyer-share', 'c
 assert.equal(vm.runInContext('EDITORIAL_MAX', ctx), 30);
 // The export names each signal's points and their basis.
 const ua = run('prepareContracts', JSON.parse(fs.readFileSync('data/prozorro.json'))).find(r => run('getIndicators', r).some(i => i.id === 'ua-buyer-share'));
-assert.match(run('exportRecord', ua).signalPoints, /Large share of the buyer’s yearly procurement: 30 \(measured\)/);
+assert.match(run('exportRecord', ua).signalPoints, /Large share of the buyer’s yearly procurement: 2.2 \(measured\)/);
 // Evidence-based checks appear only on records carrying indicatorEvidence, so their kinds are checked by id.
 for (const id of ['cap','execution','legalGround','unitPrice','exclusivity']) { const kind = run('indicatorKind', id); assert.ok(kind && kinds[kind], `evidence check ${id} has no universal kind`); seen.add(kind); }
 for (const kind of Object.keys(kinds)) assert.ok(seen.has(kind), `kind ${kind} never used`);
