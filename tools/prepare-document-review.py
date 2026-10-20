@@ -8,7 +8,7 @@ from pathlib import Path
 import subprocess
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import canonical, sha as digest  # noqa: E402
+from common import canonical, engine_files, engine_source, sha as digest  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_PLAN = Path.home() / '.cache/contract-signals/document-review/plan.json'
@@ -145,7 +145,7 @@ def build_plan(root=ROOT):
             raise ValueError(f'Non-unique or invalid row IDs: {key}')
         datasets[key] = rows
         snapshots[key] = {'path': relative, 'sha256': digest(blob)}
-    code = (root / 'script.js').read_bytes()
+    code = engine_source(root).encode()
     scored = json.loads(subprocess.run(
         ['node', '-e', NODE_HELPER], input=json.dumps({'code': code.decode(), 'datasets': datasets}),
         text=True, capture_output=True, check=True).stdout)

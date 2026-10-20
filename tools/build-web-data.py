@@ -16,7 +16,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
-# Fields the explorer (script.js, import.js) never reads, per canonical file.
+# Fields the explorer (engine files, script.js, import.js) never reads, per canonical file.
 DROP = {
     'decp-history.json': ['rawVariantCount', 'feedUid'],
     'decp-cities.json': ['sourceRowVariants', 'feedUid'],

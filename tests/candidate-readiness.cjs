@@ -7,7 +7,7 @@ const vm = require('node:vm');
 const assert = require('node:assert/strict');
 const importer = require('../import.js');
 const ctx = vm.createContext({ URL, URLSearchParams });
-vm.runInContext(fs.readFileSync('script.js', 'utf8'), ctx);
+require('../tools/engine.cjs').load(ctx);
 const run = (expression, rows) => { ctx.input = rows; return vm.runInContext(expression, ctx); };
 const ukraineText = fs.readFileSync('data/prozorro-expansion/contracts.json', 'utf8');
 const ukraine = JSON.parse(ukraineText);

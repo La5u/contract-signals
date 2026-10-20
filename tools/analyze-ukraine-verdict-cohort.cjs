@@ -7,7 +7,7 @@ const file = process.argv[2] || path.join(root, 'research/labels/ukraine-verdict
 const bytes = fs.readFileSync(file);
 const cohort = JSON.parse(file.endsWith('.gz') ? zlib.gunzipSync(bytes) : bytes.toString('utf8'));
 const ctx = vm.createContext({ URL });
-vm.runInContext(fs.readFileSync(path.join(root, 'script.js'), 'utf8'), ctx);
+require('./engine.cjs').load(ctx);
 const call = (fn, ...args) => { ctx.args = args; return vm.runInContext(`${fn}(...args)`, ctx); };
 const rows = call('prepareContracts', Array.isArray(cohort) ? cohort : cohort.rows);
 const groups = ['corruption', 'fraud', 'combined', 'comparison'];

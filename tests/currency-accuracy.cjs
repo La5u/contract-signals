@@ -1,7 +1,7 @@
 const fs = require('node:fs'), vm = require('node:vm'), assert = require('node:assert/strict');
 const source = fs.readFileSync('script.js', 'utf8');
 const ctx = vm.createContext({ URL, URLSearchParams });
-vm.runInContext(source, ctx);
+require('../tools/engine.cjs').load(ctx);
 const run = (fn, ...args) => { ctx.args = args; return vm.runInContext(`${fn}(...args)`, ctx); };
 const legacy = { id: 'legacy', buyer: 'Buyer', supplier: 'Supplier', amount: 200, date: '2025-06-01', cpv: '72000000', dataStatus: 'verified' };
 const local = { ...legacy, assessmentMode: 'fr-v3', datasetKey: 'local' };

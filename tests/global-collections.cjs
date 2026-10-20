@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const source = fs.readFileSync('script.js', 'utf8');
 const ctx = vm.createContext({ URL, URLSearchParams, structuredClone, setTimeout });
-vm.runInContext(source, ctx);
+require('../tools/engine.cjs').load(ctx);
 const meta = { columns: ['contractNo','name','date','latestAmount','supplier','supplierKind','method'], supplierKinds:['corporation'], methods:['Open'], businessTypes:[],linkKinds:[],link:'' };
 const buyers = [['A','Alpha','',7,0]];
 const shard = {buyers:{A:Array.from({length:7},(_,i)=>['K'+i,'School','2025-01-01',i+1,'Company',0,0])},demand:[],legal:[]};

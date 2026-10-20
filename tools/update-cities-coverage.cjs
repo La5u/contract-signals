@@ -4,7 +4,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const context = vm.createContext({ URL });
-vm.runInContext(fs.readFileSync(path.join(root, 'script.js'), 'utf8'), context);
+require('./engine.cjs').load(context);
 context.data = JSON.parse(fs.readFileSync(path.join(root, 'data/decp-cities.json'), 'utf8'));
 const metrics = vm.runInContext(`(() => {
  const rows = prepareContracts(data);

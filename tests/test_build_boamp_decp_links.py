@@ -199,7 +199,7 @@ const server = http.createServer((req, res) => {
         js = r'''
 const fs = require('fs'), vm = require('vm'), assert = require('assert');
 const context = vm.createContext({ URL });
-vm.runInContext(fs.readFileSync('script.js', 'utf8'), context);
+require('./tools/engine.cjs').load(context);
 const data = JSON.parse(fs.readFileSync('data/boamp-decp-links.json', 'utf8'));
 assert.equal(context.validateBoampDecpLinks(data).length, data.links.length);
 for (const mutate of [d => d.schemaVersion = 2, d => d.sources[0].sha256 = 'bad',
@@ -210,7 +210,7 @@ for (const mutate of [d => d.schemaVersion = 2, d => d.sources[0].sha256 = 'bad'
 }
 '''
         subprocess.run(['node', '-e', js], cwd=ROOT, check=True)
-        script = (ROOT / 'script.js').read_text()
+        script = ''.join((ROOT / name).read_text() for name in ('views.js', 'script.js'))
         self.assertIn('Unconfirmed candidate only', script)
         self.assertIn('Missing or invalid optional evidence must not block', script)
         self.assertIn('!usingLocalFile', script)

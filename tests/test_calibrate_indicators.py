@@ -80,7 +80,7 @@ class CalibrationTests(unittest.TestCase):
 
     def test_catalogue(self):
         import re
-        script = (Path(__file__).parents[1] / 'script.js').read_text()
+        script = (Path(__file__).parents[1] / 'scoring.js').read_text()
         block = script.split('const INDICATOR_KINDS = {', 1)[1].split('};', 1)[0]
         self.assertEqual(set(c.KINDS), set(re.findall(r"'([^']+)':", block)))
         self.assertEqual(len(c.KINDS), 20)

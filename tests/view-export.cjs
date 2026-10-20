@@ -1,5 +1,5 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
-const ctx=vm.createContext({URL,URLSearchParams});vm.runInContext(fs.readFileSync('script.js','utf8'),ctx);
+const ctx=vm.createContext({URL,URLSearchParams});require('../tools/engine.cjs').load(ctx);
 const run=(fn,...args)=>{ctx.args=args;return vm.runInContext(`${fn}(...args)`,ctx);};
 
 // URL fragment state: defaults omitted, round trip exact, junk rejected.

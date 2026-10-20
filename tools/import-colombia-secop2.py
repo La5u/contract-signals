@@ -12,7 +12,7 @@ Rules inherited from the project charter:
 - original Spanish text is never translated or normalized;
 - amounts stay in COP (never converted to euros);
 - no French threshold is applied to Colombian rows: jurisdiction-specific
-  indicators live in script.js and docs/score-colombia.md;
+  indicators live in checks-colombia.js and docs/score-colombia.md;
 - no score-based selection: the cohort was announced before download.
 
 Usage:

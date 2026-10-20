@@ -2,8 +2,9 @@
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),crypto=require('node:crypto');
 const root=path.resolve(__dirname,'..');
 const hash=s=>crypto.createHash('sha256').update(s).digest('hex');
-function engine(file){const code=fs.readFileSync(path.join(root,file),'utf8'),c=vm.createContext({URL});vm.runInContext(code,c);return {hash:hash(code),version:vm.runInContext('SCORE_VERSION',c),call(fn,...args){c.args=args;return vm.runInContext(`${fn}(...args)`,c);}};}
-const old=engine('tools/legacy/scoring-v2.1.js'),current=engine('script.js');
+// A file (the frozen v2.1 engine) or a checkout directory (its engine files, tools/engine.cjs).
+function engine(file){const full=path.join(root,file),code=fs.statSync(full).isDirectory()?require('./engine.cjs').source(full):fs.readFileSync(full,'utf8'),c=vm.createContext({URL});vm.runInContext(code,c);return {hash:hash(code),version:vm.runInContext('SCORE_VERSION',c),call(fn,...args){c.args=args;return vm.runInContext(`${fn}(...args)`,c);}};}
+const old=engine('tools/legacy/scoring-v2.1.js'),current=engine('.');
 const datasets=['contracts','decp-history','decp-cities','consultations','tours-notices'];
 function ranks(values){const pairs=values.map((value,i)=>({value,i})).sort((a,b)=>b.value-a.value);const ranks=[];for(let i=0;i<pairs.length;){let end=i+1;while(end<pairs.length&&pairs[end].value===pairs[i].value)end++;const rank=(i+1+end)/2;for(let k=i;k<end;k++)ranks[pairs[k].i]=rank;i=end;}return ranks;}
 function correlation(a,b){if(a.length<2)return null;const ar=ranks(a),br=ranks(b),mean=(a.length+1)/2;let xy=0,xx=0,yy=0;for(let i=0;i<a.length;i++){const x=ar[i]-mean,y=br[i]-mean;xy+=x*y;xx+=x*x;yy+=y*y;}return xx&&yy?Math.round(xy/Math.sqrt(xx*yy)*10000)/10000:null;}

@@ -30,7 +30,7 @@ def frozen_available():
 
 def frozen_root(tmp):
     root = Path(tmp)
-    for relative in ['script.js', *m.DATASETS.values()]:
+    for relative in ['index.html', 'tools/engine.cjs', *m.engine_files(ROOT), *m.DATASETS.values()]:
         (root / relative).parent.mkdir(parents=True, exist_ok=True)
         (root / relative).write_bytes((ROOT / relative).read_bytes())
     commit, relative, sha = FROZEN_CITIES
@@ -73,14 +73,14 @@ class DocumentReviewTests(unittest.TestCase):
         changed['rows'][0]['published']['amount'] += 1
         with self.assertRaises(ValueError):
             m.verify_hash(changed)
-        self.assertEqual(self.plan['scoring']['scriptSha256'], m.digest((self.root / 'script.js').read_bytes()))
+        self.assertEqual(self.plan['scoring']['scriptSha256'], m.digest(m.engine_source(self.root).encode()))
 
     def test_independent_node_app_preparation_and_lexicographic_selection(self):
         # Independently load complete files in Node, using fresh preparation per
         # dataset exactly as loadDataset does. Do not prepare only six selected rows.
         code = r"""
 const fs=require('node:fs'),vm=require('node:vm');
-const ctx=vm.createContext({URL});vm.runInContext(fs.readFileSync('script.js','utf8'),ctx);
+const ctx=vm.createContext({URL});require('./tools/engine.cjs').load(ctx);
 const paths=JSON.parse(process.argv[1]),out={};
 for(const [key,path] of Object.entries(paths)) {
  ctx.rows=JSON.parse(fs.readFileSync(path,'utf8'));

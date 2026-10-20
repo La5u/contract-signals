@@ -2,7 +2,7 @@
 // published name, flagged, and are left out of exports by name.
 const fs = require('node:fs'), vm = require('node:vm'), assert = require('node:assert/strict');
 const ctx = vm.createContext({ URL });
-vm.runInContext(fs.readFileSync('script.js', 'utf8'), ctx);
+require('../tools/engine.cjs').load(ctx);
 const run = (fn, ...args) => { ctx.args = args; return vm.runInContext(`${fn}(...args)`, ctx); };
 const columns = ['contractNo', 'date', 'dateIsFirstChange', 'name', 'demand', 'supplier', 'supplierBizrno', 'supplierKind',
   'originalAmount', 'latestAmount', 'versions', 'method', 'businessType', 'noticeNo', 'legalRef', 'joint', 'linkContract', 'linkChangeOrder', 'linkKind'];

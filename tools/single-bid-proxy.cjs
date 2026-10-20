@@ -1,7 +1,7 @@
 // Research only: odds ratio of each non-circular check against single bidding, per bundled cohort.
 // Usage: node tools/single-bid-proxy.cjs .   Changes no score or dataset.
 const fs=require('fs'),path=require('path'),vm=require('vm');
-const root=process.argv[2];const c=vm.createContext({URL});vm.runInContext(fs.readFileSync(path.join(root,'script.js'),'utf8'),c);
+const root=process.argv[2];const c=vm.createContext({URL});require('./engine.cjs').load(c, root);
 const call=(fn,...a)=>{c.args=a;return vm.runInContext(`${fn}(...args)`,c);};
 const outcome=/^(single-bid|[a-z]+-single-offer|dncp-single-tenderer)$/, circular=/repeated-single|repeated-plurality|single-tenderer|single-offer|single-bid|better-bid/;
 for(const f of ['contracts','decp-history','decp-cities','ted-czechia','ted-portugal','ted-romania','paraguay-dncp-3buyers','prozorro','uk-fts','chile-mp']){

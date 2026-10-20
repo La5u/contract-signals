@@ -5,7 +5,7 @@
 Cross-country filtering can run entirely in the visitor's browser over published,
 versioned static JSON chunks. It needs no paid backend, database, search service,
 or server-side execution. The explorer now implements bounded scan-page browsing
-in `script.js` (`scanKoreaPage` and `scanPublishedPage`). `static-scan.js` is a
+in `views.js` (`scanKoreaPage` and `scanPublishedPage`). `static-scan.js` is a
 separate reusable full-count scan primitive, tested by `tests/static-scan.cjs`;
 it is not loaded by the current UI. No national rebuild was needed for these UI changes.
 

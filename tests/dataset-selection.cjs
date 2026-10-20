@@ -5,7 +5,7 @@ const assert = require('node:assert/strict');
 const html = fs.readFileSync('index.html', 'utf8');
 const script = fs.readFileSync('script.js', 'utf8');
 const ctx = vm.createContext({ URL, URLSearchParams });
-vm.runInContext(script, ctx);
+require('../tools/engine.cjs').load(ctx);
 const catalogue = [...html.matchAll(/<option value="([^"]+)" data-country="([^"]+)">([^<]+)<\/option>/g)]
   .map(([, value, country, textContent]) => ({ value, dataset: { country }, textContent }));
 assert.equal(catalogue.length, 16);

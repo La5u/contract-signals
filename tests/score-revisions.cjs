@@ -1,6 +1,6 @@
 const assert = require('node:assert/strict');
 const { engine, datasetPaths, compareDataset, compareRevisions } = require('../tools/compare-score-revisions.cjs');
-const current = engine('script.js');
+const current = engine('.');
 const report = compareRevisions(current, current);
 assert.equal(datasetPaths().length, 15);
 assert.deepEqual(Object.keys(report.datasets), datasetPaths());

@@ -152,7 +152,7 @@ class NormalizationTests(unittest.TestCase):
         subprocess.run(['node', '-e', '''
 const fs = require('node:fs'), vm = require('node:vm'), assert = require('node:assert/strict');
 const ctx = vm.createContext({URL});
-vm.runInContext(fs.readFileSync('script.js', 'utf8'), ctx);
+require('./tools/engine.cjs').load(ctx);
 ctx.rows = JSON.parse(fs.readFileSync(0, 'utf8'));
 vm.runInContext('validateContracts(rows)', ctx);
 const prepared = vm.runInContext('prepareContracts(rows)', ctx);

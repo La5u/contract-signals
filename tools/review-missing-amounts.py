@@ -370,7 +370,7 @@ def review(root):
     audit, _ = AUDIT.inventory(root)
     helper, queue, counts = Review(root), [], {}
     scoped = set(audit['datasets'])
-    hashes = {'script.js': hashlib.sha256((Path(root) / 'script.js').read_bytes()).hexdigest()}
+    hashes = {'datasets.js': hashlib.sha256((Path(root) / 'datasets.js').read_bytes()).hexdigest()}
     for key, dataset in audit['datasets'].items():
         payload = (Path(root) / dataset['path']).read_bytes()
         hashes[dataset['path']] = hashlib.sha256(payload).hexdigest()

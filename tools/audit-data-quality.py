@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Offline inventory of published rows, not validation of contracts or payments.
 
-Only script.js's explicit datasets registry is scanned: no glob of data/*.json,
+Only the explicit datasets registry (datasets.js) is scanned: no glob of data/*.json,
 no raw/coverage/metadata files, no network and no third-party dependencies.
 Default: private exact-ID review.jsonl under ~/.cache/contract-signals/accuracy-review.
 Public-safe aggregate JSON is written only with --output (use '-' for stdout).
@@ -132,7 +132,7 @@ def audit_rows(rows, dataset_path):
     if not isinstance(rows, list) or any(not isinstance(r, dict) for r in rows):
         raise ValueError('Published dataset must be an array of row objects')
     ids = Counter(r['id'] for r in rows if isinstance(r.get('id'), str) and r['id'].strip())
-    # Mirrors script.js enrichContracts' DECP buyer/contract identity scope.
+    # Mirrors records.js prepareContracts' DECP buyer/contract identity scope.
     identities = Counter((r['buyerSiret'], r['contractId']) for r in rows
                          if isinstance(r.get('buyerSiret'), str) and r['buyerSiret']
                          and isinstance(r.get('contractId'), str) and r['contractId'])
