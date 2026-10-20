@@ -84,9 +84,6 @@ def direct(procedure):
     if procedure in PROCEDURE_COMPETITIVE: return False
     return None
 
-def alternatives_equal(a,b):
-    return a == b
-
 def single_siret(r):
     ids=[x["id"] for x in supplier_ids(r) if x.get("identifierType")=="SIRET"]
     return ids[0] if len(ids)==1 else None

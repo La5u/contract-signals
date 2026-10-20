@@ -1,9 +1,13 @@
 #!/bin/sh
-# Every suite in one command. Browser test last; skip it with NO_BROWSER=1.
+# Every suite in one command: each tests/*.cjs, then the Python tests, then the suites that start
+# Chromium (BROWSER below); skip those with NO_BROWSER=1.
 set -e
 cd "$(dirname "$0")/.."
-for t in import import-engine scoring-v3 score-review score-revisions rules cities tours colombia paraguay national indicators additional-indicators experimental-indicators dataset-metadata outcomes page-copy view-export currency-accuracy public-link-evidence korea; do
-  node "tests/$t.cjs"
+BROWSER="browser korea-global"
+for f in tests/*.cjs; do
+  t=$(basename "$f" .cjs)
+  case " $BROWSER " in *" $t "*) continue ;; esac
+  node "$f"
 done
 python -m unittest discover -s tests -p 'test_*.py'
-[ -n "$NO_BROWSER" ] || node tests/browser.cjs
+[ -n "$NO_BROWSER" ] || for t in $BROWSER; do node "tests/$t.cjs"; done
