@@ -5,7 +5,7 @@ const ctx = vm.createContext({URL});
 require('../tools/engine.cjs').load(ctx);
 const run = (fn,...args) => {ctx.args=args;return vm.runInContext(`${fn}(...args)`,ctx);};
 const kinds = vm.runInContext('INDICATOR_KINDS', ctx);
-assert.equal(Object.keys(kinds).length, 23);
+assert.equal(Object.keys(kinds).length, 25);
 const files = ['decp-history','tours-notices','decp-cities','contracts','colombia-secop2','paraguay-dncp','paraguay-dncp-3buyers','prozorro','ted-portugal','ted-romania','ted-czechia','uk-fts','chile-mp'];
 const seen = new Set(), measured = new Set();
 for (const f of files) {
@@ -32,7 +32,7 @@ const ua = run('prepareContracts', JSON.parse(fs.readFileSync('data/prozorro.jso
 assert.match(run('exportRecord', ua).signalPoints, /Large share of the buyer’s yearly procurement: 2.2 \(measured\)/);
 // Evidence-based checks appear only on records carrying indicatorEvidence, so their kinds are checked by id.
 // Korean checks are precomputed into the hosted shards (tests/korea.cjs), so theirs are checked by id too.
-for (const id of ['cap','execution','legalGround','unitPrice','exclusivity','kr-award-near-reserve','kr-restricted-competition','kr-supplier-dependence']) { const kind = run('indicatorKind', id); assert.ok(kind && kinds[kind], `evidence check ${id} has no universal kind`); seen.add(kind); }
+for (const id of ['cap','execution','legalGround','unitPrice','exclusivity','kr-award-near-reserve','kr-restricted-competition','kr-supplier-dependence','kr-few-bidders','kr-bid-gap']) { const kind = run('indicatorKind', id); assert.ok(kind && kinds[kind], `evidence check ${id} has no universal kind`); seen.add(kind); }
 for (const kind of Object.keys(kinds)) assert.ok(seen.has(kind), `kind ${kind} never used`);
 for (const kind of Object.keys(vm.runInContext('KIND_REFERENCES', ctx))) assert.ok(kinds[kind], `reference for unknown kind ${kind}`);
 // The kind filter spans jurisdictions; an old check id in a saved link still works.

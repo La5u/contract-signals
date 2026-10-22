@@ -94,6 +94,8 @@ const INDICATOR_KINDS = {
   'award-near-reserve': 'Award close to the reserve price',
   'restricted-competition': 'Restricted or nominated competition',
   'supplier-dependence': 'Supplier holds a large share of the buyer’s yearly amount',
+  'few-bidders': 'Only two or three bids',
+  'bid-pattern': 'Unusual pattern of bid amounts',
 };
 // Short names for the table chips; the full name is in the tooltip, the filter and the record panel.
 const KIND_SHORT = {
@@ -106,7 +108,7 @@ const KIND_SHORT = {
   'cap': 'Near applicable cap', 'execution': 'Payment / execution',
   'legalGround': 'Legal ground mismatch', 'unitPrice': 'Unit-price increase', 'exclusivity': 'Exclusivity context',
   'buyer-share': 'Buyer share', 'award-near-reserve': 'Near reserve price', 'restricted-competition': 'Restricted competition',
-  'supplier-dependence': 'Supplier dependence',
+  'supplier-dependence': 'Supplier dependence', 'few-bidders': 'Two or three bids', 'bid-pattern': 'Bid pattern',
 };
 // Where a kind matches a red flag in a framework auditors already use (docs/indicators.md).
 const KIND_REFERENCES = {
@@ -117,6 +119,7 @@ const KIND_REFERENCES = {
   'disqualified-better-bid': 'related to OCP Cardinal R036 “Lowest bid disqualified” and R035, and to Ukraine’s State Audit Service risk indicators sas-3-2 and sas-3-5',
   'repeated-direct': 'related to Ukraine’s State Audit Service risk indicator sas-3-3 (one supplier across many purchase codes)',
   'concentration': 'related to Ukraine’s State Audit Service risk indicator sas-3-3 and OCP Cardinal R048 “Heterogeneous supplier”',
+  'bid-pattern': 'the coefficient-of-variation and relative-distance screens for bid rigging (Imhof, Karagök and Rutz 2018)',
 };
 const KIND_OF_CHECK = {
   cap: 'cap', execution: 'execution', legalGround: 'legalGround', unitPrice: 'unitPrice', exclusivity: 'exclusivity',
@@ -132,6 +135,7 @@ const KIND_OF_CHECK = {
   'secop2-buyer-share': 'buyer-share', 'ua-direct-contract': 'direct-award',
   'kr-award-near-reserve': 'award-near-reserve', 'kr-supplier-dependence': 'supplier-dependence', 'kr-buyer-share': 'buyer-share',
   'kr-concentration': 'concentration', 'kr-restricted-competition': 'restricted-competition',
+  'kr-few-bidders': 'few-bidders', 'kr-bid-gap': 'bid-pattern', 'kr-bid-dispersion': 'bid-pattern',
   'short-bidding-period': 'short-bidding-period', 'late-publication': 'late-publication', 'notice-late-change': 'late-notice-change',
 };
 function indicatorKind(id) {
@@ -193,7 +197,8 @@ const EDITORIAL_MAX = 30;
 // check carries editorial points. Shown next to the points in the record panel, the badges and exports.
 const MEASURED_CHECKS = new Set(['ua-single-offer', 'ua-direct-award', 'ua-direct-contract', 'ua-better-bid-disqualified',
   'ua-contract-amendments', 'ua-term-extension', 'ua-buyer-share', 'secop2-buyer-share', 'secop2-repeated-plurality',
-  'kr-award-near-reserve', 'kr-supplier-dependence', 'kr-buyer-share', 'kr-concentration', 'kr-restricted-competition']);
+  'kr-award-near-reserve', 'kr-supplier-dependence', 'kr-buyer-share', 'kr-concentration', 'kr-restricted-competition',
+  'kr-few-bidders', 'kr-bid-gap', 'kr-bid-dispersion']);
 const MEASURED_CHECKS_BY_COUNTRY = { ROU: new Set(['ted-repeated-direct', 'ted-concentration']) };
 function pointsBasis(c, id) {
   return MEASURED_CHECKS.has(id) || (c.dataFamily === 'ted' && MEASURED_CHECKS_BY_COUNTRY[c.country]?.has(id)) ? 'measured' : 'editorial';

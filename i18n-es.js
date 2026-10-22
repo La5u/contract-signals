@@ -822,6 +822,17 @@ window.I18N_DICTS.es = {
   "Near reserve price": "Cerca del precio de reserva",
   "Restricted competition": "Competencia restringida",
   "Supplier dependence": "Dependencia del proveedor",
+  "Only two or three bids": "Solo dos o tres ofertas",
+  "One bid, or four or more bids, were opened.": "Se abrió una oferta, o cuatro o más.",
+  "The tender’s bid opening (개찰결과) was not found: not assessable.": "No se encontró la apertura de ofertas (개찰결과) de la licitación: no evaluable.",
+  "Large gap between the two lowest bids": "Gran diferencia entre las dos ofertas más bajas",
+  "The gap between the two lowest valid bids is within the usual range.": "La diferencia entre las dos ofertas válidas más bajas está dentro de lo habitual.",
+  "Fewer than three valid bids, or the bid opening (개찰결과) was not found: not assessable.": "Menos de tres ofertas válidas, o no se encontró la apertura de ofertas (개찰결과): no evaluable.",
+  "Bid amounts unusually close together": "Importes de las ofertas inusualmente próximos",
+  "The valid bids are spread as usual.": "Las ofertas válidas tienen la dispersión habitual.",
+  "Unusual pattern of bid amounts": "Patrón inusual de importes de las ofertas",
+  "Two or three bids": "Dos o tres ofertas",
+  "Bid pattern": "Patrón de ofertas",
   "Contract date (계약체결일자).": "Fecha del contrato (계약체결일자).",
   "Contract amount (계약금액) of the latest version in the period.": "Importe del contrato (계약금액) de la última versión en el periodo.",
   "Joint contract (공동계약).": "Contrato conjunto (공동계약).",
@@ -1534,6 +1545,18 @@ window.I18N_DICTS.es = {
   [
    "Awarded by restricted (제한경쟁) or nominated (지명경쟁) competition, which limits who may bid. Among rigged tenders 1.4 times as frequent as among the office’s other contracts. Restrictions are often lawful (region, licence, performance record). {a} points.",
    "Adjudicado mediante competencia restringida (제한경쟁) o por invitación (지명경쟁), que limita quién puede presentar ofertas. Entre las licitaciones amañadas, es 1,4 veces más frecuente que entre los demás contratos de la entidad. Las restricciones suelen ser lícitas (región, licencia, historial de ejecución). {a} puntos."
+  ],
+  [
+   "Two or three bids were opened in this tender (개찰결과). Among tenders the Fair Trade Commission found rigged it was 3 times as frequent as among the same contracting offices’ other contracts, also at equal contract value. Specialised or small markets often draw few bidders lawfully. {a} points.",
+   "En esta licitación se abrieron dos o tres ofertas (개찰결과). Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas, era 3 veces más frecuente que entre los demás contratos de las mismas entidades contratantes, también a igual importe del contrato. Los mercados especializados o pequeños suelen atraer pocos licitadores de forma lícita. {a} puntos."
+  ],
+  [
+   "The gap between the two lowest valid bids is large against the spread of the other valid bids (above the 90th percentile for this business type and year), the pattern cover bids placed above an agreed winner leave. Among rigged tenders 2.8 times as frequent as among the offices’ other contracts. It also arises by chance. {a} points.",
+   "La diferencia entre las dos ofertas válidas más bajas es grande respecto a la dispersión de las demás ofertas válidas (por encima del percentil 90 para este tipo de actividad y año), el patrón que dejan las ofertas de cobertura situadas por encima de un ganador pactado. Entre las licitaciones amañadas, es 2,8 veces más frecuente que entre los demás contratos de las entidades. También ocurre por azar. {a} puntos."
+  ],
+  [
+   "The valid bids are unusually close to one another (coefficient of variation below the 10th percentile for this business type and year). Among rigged tenders 1.7 times as frequent as among the offices’ other contracts. Korean bids cluster near the lower award limit by design, so this is a weak signal. {a} points.",
+   "Las ofertas válidas están inusualmente próximas entre sí (coeficiente de variación por debajo del percentil 10 para este tipo de actividad y año). Entre las licitaciones amañadas, es 1,7 veces más frecuente que entre los demás contratos de las entidades. Por diseño, las ofertas coreanas se agrupan cerca del límite inferior de adjudicación, así que es una señal débil. {a} puntos."
   ],
   [
    "{a} contracting institutions. Search for one above to load its contracts.",

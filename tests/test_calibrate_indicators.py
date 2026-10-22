@@ -83,7 +83,7 @@ class CalibrationTests(unittest.TestCase):
         script = (Path(__file__).parents[1] / 'scoring.js').read_text()
         block = script.split('const INDICATOR_KINDS = {', 1)[1].split('};', 1)[0]
         self.assertEqual(set(c.KINDS), set(re.findall(r"'([^']+)':", block)))
-        self.assertEqual(len(c.KINDS), 23)
+        self.assertEqual(len(c.KINDS), 25)
         np.testing.assert_array_equal(c.family_score(np.zeros((2, c.N)), c.POINTS), [0, 0])
 
 

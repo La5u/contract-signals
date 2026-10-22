@@ -10,7 +10,7 @@ const columns = ['contractNo', 'date', 'dateIsFirstChange', 'name', 'demand', 's
 const meta = { columns, methods: ['수의계약'], businessTypes: ['용역'], supplierKinds: ['corporation', 'individual', 'public-body', 'association', 'foreign', 'unknown'],
   linkKinds: ['조070003'], link: 'https://www.g2b.go.kr/link/FIUA027_01/single/?ctrtNo={}&ctrtChgOrd={}&prcmBsneSeCd={}&srchName=ctrtCrst&openUrl=Y' };
 const shard = { v: 1, demand: ['서울특별시 강남구', '서울특별시 강남구 보건소'], legal: ['지방계약법 제25조제1항5호다목'], buyers: { '3220000': [
-  ['A1', '2025-01-02', 0, '용역 A', 0, '(주)회사', '215-87-29444', 0, 1000, 1200, 2, 0, 0, '20250100001', 0, 0, 'A1_1', '02', 0, 'csuuuccsucccccss'],
+  ['A1', '2025-01-02', 0, '용역 A', 0, '(주)회사', '215-87-29444', 0, 1000, 1200, 2, 0, 0, '20250100001', 0, 0, 'A1_1', '02', 0, 'csuuuccsucccccsscsuucuc'],
   ['A2', '2024-10-01', 1, '용역 B', 1, '홍길동상회', null, 1, null, 500, 1, 0, 0, null, null, 1, 'A2_1', '01', 0, null]] } };
 const rows = run('koreaRecords', meta, shard, ['3220000', '서울특별시 강남구', '지방자치단체', 2, 0]);
 assert.equal(rows.length, 2);
@@ -25,17 +25,20 @@ assert.deepEqual(JSON.parse(JSON.stringify(person.supplierIndividual)), [true]);
 assert.match(person.dateNote, /first change in the data/);
 assert.equal(person.notes, 'Requesting institution (수요기관): 서울특별시 강남구 보건소. Joint contract (공동계약).');
 const prepared = run('prepareContracts', rows);
-// G3, N4, K5 and K6 signal, G4 unknown: one family (competition), so the score is the largest, K6's 12.7.
+// G3, N4, K5, K6 and B2 signal, G4 and B4 unknown, B5 clear: one family (competition), so the score is the largest, B2's 14.8.
 const checks = run('computeAssessment', prepared[0]).checks;
 const by = Object.fromEntries(checks.map(r => [r.id, r]));
-assert.equal(run('getVigilanceScore', prepared[0]), 12.7);
-assert.deepEqual(['kr-award-near-reserve', 'kr-supplier-dependence', 'kr-buyer-share', 'kr-restricted-competition'].map(id => by[id].weight), [12.7, 9.2, 8.4, 3.7]);
-assert.equal(by['kr-concentration'].status, 'unknown');
+assert.equal(run('getVigilanceScore', prepared[0]), 14.8);
+assert.deepEqual(['kr-few-bidders', 'kr-award-near-reserve', 'kr-supplier-dependence', 'kr-buyer-share', 'kr-restricted-competition'].map(id => by[id].weight), [14.8, 12.7, 9.2, 8.4, 3.7]);
+assert.deepEqual(['kr-concentration', 'kr-bid-dispersion', 'kr-bid-gap'].map(id => by[id].status), ['unknown', 'unknown', 'clear']);
 assert.ok(checks.filter(r => r.id.startsWith('kr-')).every(r => r.basis === 'measured' && r.family === 'competition'));
 for (const id of Object.keys(by).filter(id => id.startsWith('kr-'))) assert.ok(run('indicatorKind', id), id);
-const longer = run('prepareContracts', run('koreaRecords', meta, { ...shard, buyers: { '3220000': [[...shard.buyers['3220000'][0].slice(0, 19), 'csuuuccsucccccssuuuuuuu']] } },
+const longer = run('prepareContracts', run('koreaRecords', meta, { ...shard, buyers: { '3220000': [[...shard.buyers['3220000'][0].slice(0, 19), 'csuuuccsucccccsscsuucucsss']] } },
   ['3220000', '서울특별시 강남구', '지방자치단체', 1, 0]));
-assert.equal(run('getVigilanceScore', longer[0]), 12.7, 'letters of checks appended later are ignored');
+assert.equal(run('getVigilanceScore', longer[0]), 14.8, 'letters of checks appended later are ignored');
+const older = run('prepareContracts', run('koreaRecords', meta, { ...shard, buyers: { '3220000': [[...shard.buyers['3220000'][0].slice(0, 19), 'csuuuccsucccccss']] } },
+  ['3220000', '서울특별시 강남구', '지방자치단체', 1, 0]));
+assert.equal(run('getVigilanceScore', older[0]), null, 'a row from a build without the bid checks is not assessed');
 assert.equal(run('getVigilanceScore', prepared[1]), null, 'a row without computed checks is not assessed');
 assert.match(run('computeAssessment', prepared[1]).excludedReason, /not computed for this record/);
 assert.equal(run('exportRecord', prepared[1]).supplier, 'individual (name in the explorer)');
