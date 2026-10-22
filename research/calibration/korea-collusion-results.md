@@ -4,12 +4,14 @@ Plan and amendments: [korea-labels-plan.md](korea-labels-plan.md). Research only
 Scripts: `tools/extract-korea-kftc-tenders.py` (tender tables read from decision images), `tools/match-korea-kftc-tenders.py`
 (links to KONEPS notices), `tools/check-korea-kftc-finality.py` (court outcomes), `tools/korea-label-checks.py` (this table).
 
-**Status: preparation, not a decision.** Decision rule as amended 2026-10-20 (owner: fewer, more lenient safeguards): all linked tenders, points from the LR we are 75 % sure of; see the plan. Collusion family only (court convictions not linked yet). G1 single offer not computed
-(the bid-opening results per notice are not downloaded). Finality: law.go.kr publishes 100 court rulings on KFTC bid-rigging
+**Status: preparation, not a decision.** Decision rule as amended 2026-10-20 (owner: fewer, more lenient safeguards): all linked tenders, points from the LR we are 75 % sure of; see the plan. Collusion family only (court convictions not linked yet).
+Finality: law.go.kr publishes 100 court rulings on KFTC bid-rigging
 orders, and only 2 of them cite one of the 124 cases with linked tenders (both upheld). The other cases count as "no challenge
 found", weight 1.
 
 **Rerun 2026-10-22:** contracts whose original version (ord 0) is not in the data are no longer labels, comparisons or part of any total (their signing year and original amount are an amendment's); 3 linked notices drop out (721 with a contract; two have no original anywhere in the data), and comparisons fall from 432,515 to 409,522 (mostly contracts signed before the scan window, whose in-window changes had been taken for originals). Decision-rule points moved by at most 0.6 (G3 7.6 → 8.2, K5 3.5 → 3.7).
+**Bid-level checks, 2026-10-22:** B1-B7 as fixed in the plan ("Bid-level checks"), from the KONEPS bid-opening results (`tools/fetch-korea-bid-results.py bids`, label days plus 24 sampled days per label year, 2010-2026; `tools/korea-bid-features.py`: 5,424 day files, 1,461,145 openings). A contract's B checks are unknown when its notice's opening is not in those days, so they are rated on 294 labelled tenders and 38,809 comparisons (buyer = contracting office). All other rows are unchanged. Under the decision rule B2 two or three bids earns 14.8 points, B5 large first gap 12.1 and B4 low bid dispersion 4.5; B1, B3, B6 and B7 earn none (B1 and B3 are rarer among rigged tenders than among comparisons; a cartel needs at least two bidders, so B1 cannot work on these labels, and G1 single offer stays uncomputed). The demanding-body sensitivity agrees (13.5, 12.0, 4.0). Size does not explain them: size-standardised, rigged values / 1.3, B2 16.2, B5 13.2, B4 4.7 ([korea-buyer-share-size-results.md](korea-buyer-share-size-results.md)); points use the lower, decision-rule values.
+
 
 Labels: 1,218 KFTC bid-rigging decisions → 12,534 tenders read → 6,480 public tenders → 1,087 linked to one KONEPS notice
 (416 by winner + amount, 269 by notice number, 249 by amount + buyer, 153 by winner + buyer + name; 109 ambiguous,
@@ -40,6 +42,13 @@ Labels: 1,218 KFTC bid-rigging decisions → 12,534 tenders read → 6,480 publi
 | K4 split contracts | 2% (1/102, 50 buyers) | 1% (2242/409522, 133 buyers) | 1.205 [0.15, 3.60] | 0.27 / 1.978 | 2.7 [0.0, 18.5] | no points |
 | K5 restricted competition | 45% (45/102, 50 buyers) | 26% (137859/409522, 133 buyers) | 1.615 [1.17, 2.10] | 1.411 / 1.633 | 6.9 [2.3, 10.7] | 5.5 points |
 | K6 award >= 95 % of reserve | 64% (49/73, 33 buyers) | 26% (175613/309409, 129 buyers) | 2.072 [1.57, 2.62] | 1.867 / 1.85 | 10.5 [6.5, 13.9] | 9.2 points |
+| B1 single bid | 4% (1/51, 25 buyers) | 4% (11334/38809, 114 buyers) | 0.9 [0.24, 2.26] | 0.476 / 1.337 | 0.0 [0.0, 11.8] | no points |
+| B2 two or three bids | 58% (37/51, 25 buyers) | 22% (10519/38809, 114 buyers) | 2.201 [1.57, 2.91] | 1.909 / 1.927 | 11.4 [6.5, 15.4] | 9.8 points |
+| B3 just above the lower limit | 18% (11/49, 24 buyers) | 43% (8807/38647, 114 buyers) | 0.597 [0.38, 0.87] | 0.784 / 0.61 | 0.0 [0.0, 0.0] | no points |
+| B4 low bid dispersion | 19% (3/15, 13 buyers) | 9% (1727/16642, 109 buyers) | 1.638 [0.50, 3.04] | 2.214 / 0.852 | 7.1 [0.0, 16.0] | 2.4 points |
+| B5 large first gap | 31% (4/15, 13 buyers) | 10% (1903/16642, 109 buyers) | 2.132 [0.80, 3.99] | 1.703 / 1.829 | 10.9 [0.0, 20.0] | 6.8 points |
+| B6 better bids disqualified | 0% (0/49, 24 buyers) | 2% (722/38569, 114 buyers) | 0.294 [0.23, 0.39] | 0.5 / 0.417 | 0.0 [0.0, 0.0] | no points |
+| B7 same-minute bids | 14% (8/51, 25 buyers) | 5% (2115/38809, 114 buyers) | 2.163 [0.69, 4.33] | 1.272 / 2.303 | 11.1 [0.0, 21.1] | 6.1 points |
 
 ### weighted, all linked tenders, all contracts (decision rule, amendment 2026-10-20): 721 labelled (139 buyers), 409522 comparisons
 
@@ -61,6 +70,13 @@ Labels: 1,218 KFTC bid-rigging decisions → 12,534 tenders read → 6,480 publi
 | K4 split contracts | 1% (1/721, 139 buyers) | 1% (2242/409522, 133 buyers) | 0.485 [0.07, 1.50] | 0.116 / 0.894 | 0.0 [0.0, 5.8] | no points |
 | K5 restricted competition | 37% (279/721, 139 buyers) | 26% (137859/409522, 133 buyers) | 1.391 [1.14, 1.70] | 1.394 / 1.32 | 4.8 [1.8, 7.6] | 3.7 points |
 | K6 award >= 95 % of reserve | 67% (391/641, 119 buyers) | 26% (175613/309409, 129 buyers) | 2.389 [1.98, 2.90] | 2.195 / 2.371 | 12.6 [9.9, 15.3] | 11.6 points |
+| B1 single bid | 1% (6/294, 84 buyers) | 4% (11334/38809, 114 buyers) | 0.278 [0.10, 0.52] | 0.319 / 0.355 | 0.0 [0.0, 0.0] | no points |
+| B2 two or three bids | 71% (151/294, 84 buyers) | 22% (10519/38809, 114 buyers) | 3.028 [2.44, 3.80] | 2.737 / 2.877 | 16.0 [12.9, 19.3] | 14.8 points |
+| B3 just above the lower limit | 8% (30/289, 84 buyers) | 43% (8807/38647, 114 buyers) | 0.266 [0.17, 0.38] | 0.323 / 0.35 | 0.0 [0.0, 0.0] | no points |
+| B4 low bid dispersion | 18% (22/111, 31 buyers) | 9% (1727/16642, 109 buyers) | 1.728 [0.77, 2.86] | 2.483 / 0.834 | 7.9 [0.0, 15.1] | 4.5 points |
+| B5 large first gap | 34% (36/111, 31 buyers) | 10% (1903/16642, 109 buyers) | 2.765 [1.54, 4.46] | 1.619 / 3.298 | 14.7 [6.3, 21.6] | 12.1 points |
+| B6 better bids disqualified | 1% (1/289, 84 buyers) | 2% (722/38569, 114 buyers) | 0.645 [0.10, 1.15] | 0.185 / 0.843 | 0.0 [0.0, 2.0] | no points |
+| B7 same-minute bids | 4% (29/294, 84 buyers) | 5% (2115/38809, 114 buyers) | 0.753 [0.29, 1.39] | 0.649 / 0.838 | 0.0 [0.0, 4.8] | no points |
 
 ### weighted, one per case, competitive tenders with a notice: 79 labelled (39 buyers), 175433 comparisons
 
@@ -82,6 +98,13 @@ Labels: 1,218 KFTC bid-rigging decisions → 12,534 tenders read → 6,480 publi
 | K4 split contracts | 0% (0/79, 39 buyers) | 0% (0/175433, 116 buyers) | 0.204 [0.17, 0.26] | 0.312 / 0.37 | 0.0 [0.0, 0.0] | no points |
 | K5 restricted competition | 54% (37/79, 39 buyers) | 82% (111778/175433, 116 buyers) | 0.723 [0.58, 0.85] | 0.731 / 0.821 | 0.0 [0.0, 0.0] | no points |
 | K6 award >= 95 % of reserve | 65% (41/60, 30 buyers) | 19% (30996/105033, 116 buyers) | 2.755 [2.01, 3.67] | 2.313 / 2.455 | 14.6 [10.1, 18.8] | 13.1 points |
+| B1 single bid | 4% (1/54, 25 buyers) | 1% (678/21545, 105 buyers) | 2.067 [0.24, 4.96] | 0.435 / 2.706 | 10.5 [0.0, 23.1] | no points |
+| B2 two or three bids | 64% (40/54, 25 buyers) | 21% (8465/21545, 105 buyers) | 2.41 [1.73, 3.20] | 2.333 / 1.83 | 12.7 [7.9, 16.8] | 11.1 points |
+| B3 just above the lower limit | 23% (12/52, 24 buyers) | 46% (6215/21409, 104 buyers) | 0.641 [0.42, 0.91] | 0.698 / 0.744 | 0.0 [0.0, 0.0] | no points |
+| B4 low bid dispersion | 18% (3/16, 13 buyers) | 7% (1242/12304, 99 buyers) | 1.727 [0.50, 3.19] | 2.275 / 0.803 | 7.9 [0.0, 16.7] | 2.9 points |
+| B5 large first gap | 33% (5/16, 13 buyers) | 9% (1445/12304, 99 buyers) | 2.472 [0.97, 4.40] | 1.855 / 2.1 | 13.1 [0.0, 21.4] | 9 points |
+| B6 better bids disqualified | 0% (0/52, 24 buyers) | 2% (718/21359, 104 buyers) | 0.294 [0.23, 0.39] | 0.455 / 0.455 | 0.0 [0.0, 0.0] | no points |
+| B7 same-minute bids | 14% (8/54, 25 buyers) | 6% (1708/21545, 105 buyers) | 1.915 [0.61, 3.84] | 1.048 / 2.322 | 9.4 [0.0, 19.4] | 4.7 points |
 
 ### unweighted (court outcome ignored), one per case, all contracts: 102 labelled (50 buyers), 409522 comparisons
 
@@ -103,6 +126,13 @@ Labels: 1,218 KFTC bid-rigging decisions → 12,534 tenders read → 6,480 publi
 | K4 split contracts | 2% (1/102, 50 buyers) | 1% (2242/409522, 133 buyers) | 1.205 [0.15, 3.60] | 0.27 / 1.978 | 2.7 [0.0, 18.5] | no points |
 | K5 restricted competition | 45% (45/102, 50 buyers) | 26% (137859/409522, 133 buyers) | 1.615 [1.17, 2.10] | 1.411 / 1.633 | 6.9 [2.3, 10.7] | 5.5 points |
 | K6 award >= 95 % of reserve | 64% (49/73, 33 buyers) | 26% (175613/309409, 129 buyers) | 2.072 [1.57, 2.62] | 1.867 / 1.85 | 10.5 [6.5, 13.9] | 9.2 points |
+| B1 single bid | 4% (1/51, 25 buyers) | 4% (11334/38809, 114 buyers) | 0.9 [0.24, 2.26] | 0.476 / 1.337 | 0.0 [0.0, 11.8] | no points |
+| B2 two or three bids | 58% (37/51, 25 buyers) | 22% (10519/38809, 114 buyers) | 2.201 [1.57, 2.91] | 1.909 / 1.927 | 11.4 [6.5, 15.4] | 9.8 points |
+| B3 just above the lower limit | 18% (11/49, 24 buyers) | 43% (8807/38647, 114 buyers) | 0.597 [0.38, 0.87] | 0.784 / 0.61 | 0.0 [0.0, 0.0] | no points |
+| B4 low bid dispersion | 19% (3/15, 13 buyers) | 9% (1727/16642, 109 buyers) | 1.638 [0.50, 3.04] | 2.214 / 0.852 | 7.1 [0.0, 16.0] | 2.4 points |
+| B5 large first gap | 31% (4/15, 13 buyers) | 10% (1903/16642, 109 buyers) | 2.132 [0.80, 3.99] | 1.703 / 1.829 | 10.9 [0.0, 20.0] | 6.8 points |
+| B6 better bids disqualified | 0% (0/49, 24 buyers) | 2% (722/38569, 114 buyers) | 0.294 [0.23, 0.39] | 0.5 / 0.417 | 0.0 [0.0, 0.0] | no points |
+| B7 same-minute bids | 14% (8/51, 25 buyers) | 5% (2115/38809, 114 buyers) | 2.163 [0.69, 4.33] | 1.272 / 2.303 | 11.1 [0.0, 21.1] | 6.1 points |
 
 ## Buyer = demanding body (sensitivity)
 
@@ -129,6 +159,13 @@ Labels: 1,218 KFTC bid-rigging decisions → 12,534 tenders read → 6,480 publi
 | K4 split contracts | 1% (1/104, 76 buyers) | 1% (3638/204999, 269 buyers) | 0.981 [0.10, 3.02] | 0.182 / 2.066 | 0.0 [0.0, 15.9] | no points |
 | K5 restricted competition | 46% (45/104, 76 buyers) | 26% (54321/204999, 269 buyers) | 1.654 [1.27, 2.06] | 1.777 / 1.346 | 7.3 [3.4, 10.4] | 6.1 points |
 | K6 award >= 95 % of reserve | 67% (48/72, 57 buyers) | 30% (35356/107181, 264 buyers) | 2.046 [1.69, 2.45] | 2.147 / 1.641 | 10.3 [7.6, 12.9] | 9.4 points |
+| B1 single bid | 2% (1/53, 40 buyers) | 8% (1838/16089, 240 buyers) | 0.459 [0.17, 1.00] | 0.323 / 0.758 | 0.0 [0.0, 0.1] | no points |
+| B2 two or three bids | 72% (38/53, 40 buyers) | 24% (2770/16089, 240 buyers) | 2.575 [2.06, 3.12] | 2.24 / 2.364 | 13.6 [10.4, 16.4] | 12.6 points |
+| B3 just above the lower limit | 22% (14/51, 38 buyers) | 41% (6476/15879, 239 buyers) | 0.638 [0.41, 0.91] | 0.642 / 0.768 | 0.0 [0.0, 0.0] | no points |
+| B4 low bid dispersion | 19% (3/15, 12 buyers) | 10% (1110/10976, 222 buyers) | 1.52 [0.53, 2.80] | 1.895 / 0.908 | 6.0 [0.0, 14.8] | 1 points |
+| B5 large first gap | 33% (4/15, 12 buyers) | 10% (1048/10976, 222 buyers) | 2.233 [0.87, 3.74] | 1.603 / 2.119 | 11.6 [0.0, 19.0] | 7.3 points |
+| B6 better bids disqualified | 0% (0/51, 38 buyers) | 2% (444/15874, 239 buyers) | 0.208 [0.17, 0.27] | 0.333 / 0.357 | 0.0 [0.0, 0.0] | no points |
+| B7 same-minute bids | 17% (11/53, 40 buyers) | 6% (759/16089, 240 buyers) | 2.573 [1.12, 4.44] | 1.744 / 3.036 | 13.6 [1.6, 21.5] | 10.2 points |
 
 ### weighted, all linked tenders, all contracts (decision rule, amendment 2026-10-20): 738 labelled (275 buyers), 204999 comparisons
 
@@ -150,6 +187,13 @@ Labels: 1,218 KFTC bid-rigging decisions → 12,534 tenders read → 6,480 publi
 | K4 split contracts | 0% (1/738, 275 buyers) | 1% (3638/204999, 269 buyers) | 0.296 [0.04, 0.92] | 0.062 / 0.627 | 0.0 [0.0, 0.0] | no points |
 | K5 restricted competition | 38% (280/738, 275 buyers) | 26% (54321/204999, 269 buyers) | 1.413 [1.20, 1.64] | 1.569 / 1.205 | 5.0 [2.6, 7.1] | 4.3 points |
 | K6 award >= 95 % of reserve | 66% (392/643, 233 buyers) | 30% (35356/107181, 264 buyers) | 2.14 [1.89, 2.42] | 2.166 / 2.009 | 11.0 [9.2, 12.7] | 10.3 points |
+| B1 single bid | 3% (6/307, 143 buyers) | 8% (1838/16089, 240 buyers) | 0.376 [0.12, 0.75] | 0.372 / 0.447 | 0.0 [0.0, 0.0] | no points |
+| B2 two or three bids | 69% (162/307, 143 buyers) | 24% (2770/16089, 240 buyers) | 2.704 [2.31, 3.15] | 2.542 / 2.639 | 14.4 [12.1, 16.6] | 13.5 points |
+| B3 just above the lower limit | 16% (43/302, 143 buyers) | 41% (6476/15879, 239 buyers) | 0.438 [0.31, 0.58] | 0.448 / 0.502 | 0.0 [0.0, 0.0] | no points |
+| B4 low bid dispersion | 17% (22/115, 49 buyers) | 10% (1110/10976, 222 buyers) | 1.614 [0.84, 2.52] | 2.016 / 1.083 | 6.9 [0.0, 13.4] | 4 points |
+| B5 large first gap | 30% (36/115, 49 buyers) | 10% (1048/10976, 222 buyers) | 2.64 [1.61, 3.87] | 2.025 / 2.843 | 14.0 [6.9, 19.5] | 12 points |
+| B6 better bids disqualified | 1% (1/302, 143 buyers) | 2% (444/15874, 239 buyers) | 0.447 [0.06, 1.02] | 0.115 / 0.762 | 0.0 [0.0, 0.3] | no points |
+| B7 same-minute bids | 14% (42/307, 143 buyers) | 6% (759/16089, 240 buyers) | 2.291 [1.48, 3.38] | 2.067 / 2.27 | 12.0 [5.7, 17.6] | 9.9 points |
 
 ### weighted, one per case, competitive tenders with a notice: 80 labelled (59 buyers), 82313 comparisons
 
@@ -171,6 +215,13 @@ Labels: 1,218 KFTC bid-rigging decisions → 12,534 tenders read → 6,480 publi
 | K4 split contracts | 0% (0/80, 59 buyers) | 0% (0/82313, 248 buyers) | 0.145 [0.12, 0.18] | 0.213 / 0.312 | 0.0 [0.0, 0.0] | no points |
 | K5 restricted competition | 48% (37/80, 59 buyers) | 78% (51276/82313, 248 buyers) | 0.675 [0.54, 0.80] | 0.763 / 0.652 | 0.0 [0.0, 0.0] | no points |
 | K6 award >= 95 % of reserve | 72% (41/58, 46 buyers) | 20% (12080/43552, 240 buyers) | 3.067 [2.46, 3.74] | 3.298 / 1.997 | 16.2 [13.0, 19.0] | 15.1 points |
+| B1 single bid | 2% (1/55, 42 buyers) | 2% (103/8067, 227 buyers) | 1.113 [0.17, 2.72] | 0.286 / 1.704 | 1.6 [0.0, 14.4] | no points |
+| B2 two or three bids | 76% (41/55, 42 buyers) | 26% (1781/8067, 227 buyers) | 2.539 [2.06, 3.05] | 2.309 / 2.264 | 13.4 [10.5, 16.1] | 12.5 points |
+| B3 just above the lower limit | 24% (15/53, 40 buyers) | 45% (3195/7932, 226 buyers) | 0.621 [0.42, 0.87] | 0.539 / 0.888 | 0.0 [0.0, 0.0] | no points |
+| B4 low bid dispersion | 19% (3/15, 12 buyers) | 8% (556/6064, 205 buyers) | 1.711 [0.53, 3.33] | 2.153 / 0.937 | 7.8 [0.0, 17.3] | 2.5 points |
+| B5 large first gap | 33% (4/15, 12 buyers) | 8% (478/6064, 205 buyers) | 2.695 [0.91, 4.82] | 1.782 / 2.63 | 14.3 [0.0, 22.7] | 9.7 points |
+| B6 better bids disqualified | 0% (0/53, 40 buyers) | 2% (441/7931, 226 buyers) | 0.2 [0.16, 0.26] | 0.294 / 0.385 | 0.0 [0.0, 0.0] | no points |
+| B7 same-minute bids | 16% (11/55, 42 buyers) | 6% (534/8067, 227 buyers) | 2.219 [1.02, 3.63] | 1.389 / 3.002 | 11.5 [0.3, 18.6] | 8.2 points |
 
 ### unweighted (court outcome ignored), one per case, all contracts: 104 labelled (76 buyers), 204999 comparisons
 
@@ -192,3 +243,10 @@ Labels: 1,218 KFTC bid-rigging decisions → 12,534 tenders read → 6,480 publi
 | K4 split contracts | 1% (1/104, 76 buyers) | 1% (3638/204999, 269 buyers) | 0.981 [0.10, 3.02] | 0.182 / 2.066 | 0.0 [0.0, 15.9] | no points |
 | K5 restricted competition | 46% (45/104, 76 buyers) | 26% (54321/204999, 269 buyers) | 1.654 [1.27, 2.06] | 1.777 / 1.346 | 7.3 [3.4, 10.4] | 6.1 points |
 | K6 award >= 95 % of reserve | 67% (48/72, 57 buyers) | 30% (35356/107181, 264 buyers) | 2.046 [1.69, 2.45] | 2.147 / 1.641 | 10.3 [7.6, 12.9] | 9.4 points |
+| B1 single bid | 2% (1/53, 40 buyers) | 8% (1838/16089, 240 buyers) | 0.459 [0.17, 1.00] | 0.323 / 0.758 | 0.0 [0.0, 0.1] | no points |
+| B2 two or three bids | 72% (38/53, 40 buyers) | 24% (2770/16089, 240 buyers) | 2.575 [2.06, 3.12] | 2.24 / 2.364 | 13.6 [10.4, 16.4] | 12.6 points |
+| B3 just above the lower limit | 22% (14/51, 38 buyers) | 41% (6476/15879, 239 buyers) | 0.638 [0.41, 0.91] | 0.642 / 0.768 | 0.0 [0.0, 0.0] | no points |
+| B4 low bid dispersion | 19% (3/15, 12 buyers) | 10% (1110/10976, 222 buyers) | 1.52 [0.53, 2.80] | 1.895 / 0.908 | 6.0 [0.0, 14.8] | 1 points |
+| B5 large first gap | 33% (4/15, 12 buyers) | 10% (1048/10976, 222 buyers) | 2.233 [0.87, 3.74] | 1.603 / 2.119 | 11.6 [0.0, 19.0] | 7.3 points |
+| B6 better bids disqualified | 0% (0/51, 38 buyers) | 2% (444/15874, 239 buyers) | 0.208 [0.17, 0.27] | 0.333 / 0.357 | 0.0 [0.0, 0.0] | no points |
+| B7 same-minute bids | 17% (11/53, 40 buyers) | 6% (759/16089, 240 buyers) | 2.573 [1.12, 4.44] | 1.744 / 3.036 | 13.6 [1.6, 21.5] | 10.2 points |
