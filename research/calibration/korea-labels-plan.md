@@ -101,3 +101,40 @@ Made after results under the old rule had been seen (Romania, Colombia, Ukraine 
 - **Points from the evidence we are 75 % sure of:** points = 10 × log2 of the shrunk LR at the 25th percentile of the buyer resamples (never above the shrunk LR itself), floored at 0. Uncertainty lowers the points instead of excluding the check; any check reliably above LR 1 gets some points, possibly a fraction of one.
 - **Dropped:** the requirement that the learn half's 95 % interval lie above 1 and the check half's LR exceed 1 (the halves are still reported), and one tender/procedure per case as the points basis: all linked tenders are the basis, one per case is reported as robustness.
 - Hit rate stays the first column reported, as before.
+
+## Bid-level checks, fixed 2026-10-22 (before any bid of a labelled tender or of its comparisons was downloaded)
+
+Seen beforehand: the field list and value vocabulary of one 2024-25 day file (no label, no rate). Bid-opening rows from
+the open-standard dataset (`getDataSetOpnStdScsbidInfo`, `tools/fetch-korea-bid-results.py bids`), joined to contracts
+by `bidNtceNo` = `notice_no`.
+
+- **Days fetched:** every opening day of a labelled notice (`bids-label-days.txt`, 280 days 2009–2023), plus a fixed
+  sample of 24 days per label year (the days whose SHA-256 of `korea-comparison-day:YYYY-MM-DD` is smallest among
+  that year's days; weekends included, they are few and cheap). All four business types.
+- **Universe:** contracts (as in `contracts_from`, originals only) of the labelled buyer-years whose notice has bid
+  rows on a fetched day; everything else is unknown. Same buyer modes, weights, comparisons and decision rule as above.
+  Comparisons are contracts of the same buyer-years whose notice opened on a fetched day (label days and sampled days
+  alike).
+- **Opening used:** of a notice's openings (`bidNtceOrd`, re-tenders), the one whose order equals the contract's
+  `notice_ord`; else the latest with a winner (`sucsfYn` Y); else the latest. Bids counted: rows of that opening.
+  "Valid" bids (B4, B5) are those with `dqlfctnRsn` 정상: bids below the lower limit (낙찰하한선 미달) lose by rule and
+  are left out of the dispersion screens; they are not disqualifications either (B6).
+- Amended 2026-10-22, still before any labelled bid was read: opening by `notice_ord` first; B4/B5 on 정상 bids only
+  (were: 정상 and 낙찰하한선 미달); B5's gap is between the two lowest valid bids, its spread that of the valid bids
+  other than the lowest (at least two, so B4/B5 need three valid bids). Reference percentiles (B4, B5) are computed
+  over every opening in the downloaded day files of the same business type and opening year.
+
+| ID | Rule |
+| --- | --- |
+| B1 single bid (G1) | One bid row at the opening. |
+| B2 few bids | Two or three bid rows. |
+| B3 just above the lower limit | Winner's bid rate (`bidprcRt`) less than 0.1 points above the lower-limit rate (`sucsfLwstlmtRt`); unknown without a lower-limit rate. |
+| B4 low bid dispersion | Three or more valid bids, and the coefficient of variation of their amounts below the 10th percentile of all fetched openings of the same business type and year with three or more valid bids (screen from the cartel literature: cover bids cluster). |
+| B5 large first gap | Three or more valid bids, and (2nd lowest − lowest valid amount) / standard deviation of the losing valid amounts above the 90th percentile, same reference (relative-distance screen). |
+| B6 better bids disqualified | Two or more bids lower than the winner's excluded for a reason other than 정상 / 낙찰하한선 미달 (cf. Ukrainian C3). |
+| B7 same-minute bids | Two to twenty bid rows, and two or more of them submitted in the same minute (`bidprcDate` + `bidprcTm`). |
+
+Not tested: rotating winners and losers who never win (need every tender of a buyer-year, not sampled days). B1 and B2
+are expected among collusion labels (cover bidders keep the field small); B3 is common in lawful 적격심사 tenders.
+Everything else (weights, buyer modes, points rule) as in the amendments above; size control applies only if a check
+turns out size-like.
