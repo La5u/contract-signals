@@ -822,6 +822,17 @@ window.I18N_DICTS.fr = {
   "Near reserve price": "Proche du prix de réserve",
   "Restricted competition": "Mise en concurrence restreinte",
   "Supplier dependence": "Dépendance au fournisseur",
+  "Only two or three bids": "Seulement deux ou trois offres",
+  "One bid, or four or more bids, were opened.": "Une offre, ou quatre offres ou plus, ont été ouvertes.",
+  "The tender’s bid opening (개찰결과) was not found: not assessable.": "L’ouverture des offres (개찰결과) de l’appel d’offres est introuvable : non évaluable.",
+  "Large gap between the two lowest bids": "Grand écart entre les deux offres les plus basses",
+  "The gap between the two lowest valid bids is within the usual range.": "L’écart entre les deux offres valides les plus basses est dans la norme.",
+  "Fewer than three valid bids, or the bid opening (개찰결과) was not found: not assessable.": "Moins de trois offres valides, ou ouverture des offres (개찰결과) introuvable : non évaluable.",
+  "Bid amounts unusually close together": "Montants des offres inhabituellement proches",
+  "The valid bids are spread as usual.": "Les offres valides ont une dispersion habituelle.",
+  "Unusual pattern of bid amounts": "Profil inhabituel des montants des offres",
+  "Two or three bids": "Deux ou trois offres",
+  "Bid pattern": "Profil des offres",
   "Contract date (계약체결일자).": "Date du contrat (계약체결일자).",
   "Contract amount (계약금액) of the latest version in the period.": "Montant du contrat (계약금액) de la dernière version dans la période.",
   "Joint contract (공동계약).": "Contrat conjoint (공동계약).",
@@ -1534,6 +1545,18 @@ window.I18N_DICTS.fr = {
   [
    "Awarded by restricted (제한경쟁) or nominated (지명경쟁) competition, which limits who may bid. Among rigged tenders 1.4 times as frequent as among the office’s other contracts. Restrictions are often lawful (region, licence, performance record). {a} points.",
    "Attribué par mise en concurrence restreinte (제한경쟁) ou sur invitation (지명경쟁), ce qui limite les candidats admis à soumissionner. Parmi les appels d’offres truqués, ce cas est 1,4 fois plus fréquent que parmi les autres contrats de l’entité. Les restrictions sont souvent licites (région, licence, références d’exécution). {a} points."
+  ],
+  [
+   "Two or three bids were opened in this tender (개찰결과). Among tenders the Fair Trade Commission found rigged it was 3 times as frequent as among the same contracting offices’ other contracts, also at equal contract value. Specialised or small markets often draw few bidders lawfully. {a} points.",
+   "Deux ou trois offres ont été ouvertes dans cet appel d’offres (개찰결과). Parmi les appels d’offres jugés truqués par la Commission de la concurrence (KFTC), ce cas était 3 fois plus fréquent que parmi les autres contrats des mêmes entités contractantes, y compris à montant égal. Les marchés spécialisés ou petits attirent souvent peu de soumissionnaires de façon licite. {a} points."
+  ],
+  [
+   "The gap between the two lowest valid bids is large against the spread of the other valid bids (above the 90th percentile for this business type and year), the pattern cover bids placed above an agreed winner leave. Among rigged tenders 2.8 times as frequent as among the offices’ other contracts. It also arises by chance. {a} points.",
+   "L’écart entre les deux offres valides les plus basses est grand par rapport à la dispersion des autres offres valides (au-delà du 90e centile pour ce type d’activité et cette année), le profil que laissent des offres de couverture placées au-dessus d’un gagnant convenu. Parmi les appels d’offres truqués, ce cas est 2,8 fois plus fréquent que parmi les autres contrats des entités. Il arrive aussi par hasard. {a} points."
+  ],
+  [
+   "The valid bids are unusually close to one another (coefficient of variation below the 10th percentile for this business type and year). Among rigged tenders 1.7 times as frequent as among the offices’ other contracts. Korean bids cluster near the lower award limit by design, so this is a weak signal. {a} points.",
+   "Les offres valides sont inhabituellement proches les unes des autres (coefficient de variation sous le 10e centile pour ce type d’activité et cette année). Parmi les appels d’offres truqués, ce cas est 1,7 fois plus fréquent que parmi les autres contrats des entités. Par construction, les offres coréennes se regroupent près du seuil inférieur d’attribution : c’est donc un signal faible. {a} points."
   ],
   [
    "{a} contracting institutions. Search for one above to load its contracts.",
