@@ -77,10 +77,10 @@ function koreaRecords(meta, shard, buyer, rows = shard.buyers[buyer[0]] || []) {
       supplier: supplier || null, supplierNamesPublished: supplier ? [supplier] : [], supplierIndividual: supplier ? [kind === 'individual'] : [],
       supplierIds: g('supplierBizrno') ? [{ id: g('supplierBizrno'), identifierType: 'KR-BRN' }] : [],
       procedure: [method, type].filter(Boolean).join(' · ') || null, contractId: g('contractNo'), noticeId: g('noticeNo'),
-      date: g('date'), dateNote: g('dateIsFirstChange') ? `Signed before ${meta.period?.[0] || 'the period'}: this is the date of its first change in the period.` : 'Contract date (계약체결일자).',
+      date: g('date'), dateNote: g('dateIsFirstChange') ? `Signed before ${(meta.dataFrom || meta.period?.[0] || '').slice(0, 4)}: this is the date of its first change in the data.` : 'Contract date (계약체결일자).',
       amount: typeof latest === 'number' ? latest : null, currency: 'KRW',
       amountBasis: original != null && original !== latest ? `Contract amount of the latest version in the period; the original contract was ${original} KRW (${versions} versions).` : 'Contract amount (계약금액) of the latest version in the period.',
-      notes: notes || null, source, sourceLabel: 'KONEPS (나라장터) contract page',
+      notes: notes || null, source, sourceLabel: 'KONEPS (나라장터) contract page', koreaChecks: g('checks'),
     };
   });
 }

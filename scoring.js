@@ -91,6 +91,9 @@ const INDICATOR_KINDS = {
   'unitPrice': 'Year-over-year comparable unit-price increase',
   'exclusivity': 'Exclusivity claim and comparable competitive wins',
   'buyer-share': 'Large share of the buyer’s yearly procurement',
+  'award-near-reserve': 'Award close to the reserve price',
+  'restricted-competition': 'Restricted or nominated competition',
+  'supplier-dependence': 'Supplier holds a large share of the buyer’s yearly amount',
 };
 // Short names for the table chips; the full name is in the tooltip, the filter and the record panel.
 const KIND_SHORT = {
@@ -102,7 +105,8 @@ const KIND_SHORT = {
   'term-extension': 'Term extended', 'late-publication': 'Late publication',
   'cap': 'Near applicable cap', 'execution': 'Payment / execution',
   'legalGround': 'Legal ground mismatch', 'unitPrice': 'Unit-price increase', 'exclusivity': 'Exclusivity context',
-  'buyer-share': 'Buyer share',
+  'buyer-share': 'Buyer share', 'award-near-reserve': 'Near reserve price', 'restricted-competition': 'Restricted competition',
+  'supplier-dependence': 'Supplier dependence',
 };
 // Where a kind matches a red flag in a framework auditors already use (docs/indicators.md).
 const KIND_REFERENCES = {
@@ -126,6 +130,8 @@ const KIND_OF_CHECK = {
   'ua-contract-amendments': 'contract-amendments', 'ua-term-extension': 'term-extension', 'ua-buyer-share': 'buyer-share',
   'secop2-term-extension': 'term-extension', 'ua-better-bid-disqualified': 'disqualified-better-bid',
   'secop2-buyer-share': 'buyer-share', 'ua-direct-contract': 'direct-award',
+  'kr-award-near-reserve': 'award-near-reserve', 'kr-supplier-dependence': 'supplier-dependence', 'kr-buyer-share': 'buyer-share',
+  'kr-concentration': 'concentration', 'kr-restricted-competition': 'restricted-competition',
   'short-bidding-period': 'short-bidding-period', 'late-publication': 'late-publication', 'notice-late-change': 'late-notice-change',
 };
 function indicatorKind(id) {
@@ -186,7 +192,8 @@ const EDITORIAL_MAX = 30;
 // Checks whose points come from labelled cases (court verdicts, competition-authority decisions); every other
 // check carries editorial points. Shown next to the points in the record panel, the badges and exports.
 const MEASURED_CHECKS = new Set(['ua-single-offer', 'ua-direct-award', 'ua-direct-contract', 'ua-better-bid-disqualified',
-  'ua-contract-amendments', 'ua-term-extension', 'ua-buyer-share', 'secop2-buyer-share', 'secop2-repeated-plurality']);
+  'ua-contract-amendments', 'ua-term-extension', 'ua-buyer-share', 'secop2-buyer-share', 'secop2-repeated-plurality',
+  'kr-award-near-reserve', 'kr-supplier-dependence', 'kr-buyer-share', 'kr-concentration', 'kr-restricted-competition']);
 const MEASURED_CHECKS_BY_COUNTRY = { ROU: new Set(['ted-repeated-direct', 'ted-concentration']) };
 function pointsBasis(c, id) {
   return MEASURED_CHECKS.has(id) || (c.dataFamily === 'ted' && MEASURED_CHECKS_BY_COUNTRY[c.country]?.has(id)) ? 'measured' : 'editorial';

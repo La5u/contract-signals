@@ -802,8 +802,26 @@ window.I18N_DICTS.fr = {
   "Name or code, e.g. 서울특별시 or 1230000": "Nom ou code, p. ex. 서울특별시 ou 1230000",
   "Matching contracting institutions": "Entités contractantes correspondantes",
   "No contracting institution matches.": "Aucune entité contractante ne correspond.",
-  "Korean checks are not set yet: this contract is shown for browsing and is not assessed. They will be calibrated on court rulings and Fair Trade Commission decisions first.": "Les contrôles coréens ne sont pas encore fixés : ce contrat est affiché pour consultation et n’est pas évalué. Ils seront d’abord calibrés sur des décisions de justice et de la Commission de la concurrence (KFTC).",
-  "Signed before September 2024: this is the date of its first change in the period.": "Signé avant septembre 2024 : c’est la date de sa première modification dans la période.",
+  "Korean checks were not computed for this record: it is shown for browsing and is not assessed.": "Les contrôles coréens n’ont pas été calculés pour cette fiche : elle est affichée pour consultation et n’est pas évaluée.",
+  "Award at 95 % or more of the reserve price": "Attribution à 95 % ou plus du prix de réserve",
+  "The contract amount is below 95 % of the reserve price.": "Le montant du contrat est inférieur à 95 % du prix de réserve.",
+  "No reserve price or amount published: not assessable.": "Prix de réserve ou montant non publié : non évaluable.",
+  "Supplier holds 25 % or more of the buyer’s yearly amount": "Le fournisseur détient 25 % ou plus du montant annuel de l’acheteur",
+  "This supplier holds less than 25 % of the office’s yearly contract amount.": "Ce fournisseur détient moins de 25 % du montant annuel des contrats de l’entité.",
+  "Supplier number or the office’s yearly total unknown: not assessable.": "Numéro du fournisseur ou total annuel de l’entité inconnu : non évaluable.",
+  "Below 5 % of the office’s yearly contract amount.": "Sous le seuil de 5 % du montant annuel des contrats de l’entité.",
+  "The office’s yearly total is unknown: not assessable.": "Le total annuel de l’entité est inconnu : non évaluable.",
+  "Concentrated awards within a business type": "Attributions concentrées dans un type d’activité",
+  "The supplier holds less than 60 % of the office’s contracts of this type that year.": "Le fournisseur détient moins de 60 % des contrats de ce type de l’entité cette année-là.",
+  "Fewer than 10 contracts of this type at the office that year, or no supplier number: not assessable.": "Moins de 10 contrats de ce type pour l’entité cette année-là, ou aucun numéro de fournisseur : non évaluable.",
+  "Restricted or nominated competition": "Mise en concurrence restreinte ou sur invitation",
+  "Open competition or another method.": "Mise en concurrence ouverte ou autre méthode.",
+  "Contract method not published: not assessable.": "Méthode de passation non publiée : non évaluable.",
+  "Award close to the reserve price": "Attribution proche du prix de réserve",
+  "Supplier holds a large share of the buyer’s yearly amount": "Le fournisseur détient une part importante du montant annuel de l’acheteur",
+  "Near reserve price": "Proche du prix de réserve",
+  "Restricted competition": "Mise en concurrence restreinte",
+  "Supplier dependence": "Dépendance au fournisseur",
   "Contract date (계약체결일자).": "Date du contrat (계약체결일자).",
   "Contract amount (계약금액) of the latest version in the period.": "Montant du contrat (계약금액) de la dernière version dans la période.",
   "Joint contract (공동계약).": "Contrat conjoint (공동계약).",
@@ -1492,6 +1510,30 @@ window.I18N_DICTS.fr = {
   [
    "Declared duration “{a}” not comparable to months: not assessed.",
    "Durée déclarée « {a} » non comparable à des mois : non évalué."
+  ],
+  [
+   "Signed before {a}: this is the date of its first change in the data.",
+   "Signé avant {a} : c’est la date de sa première modification dans les données."
+  ],
+  [
+   "The contract amount is at least 95 % of the reserve price (예정가격). Among tenders the Fair Trade Commission found rigged it was 2.5 times as frequent as among the same contracting offices’ other contracts, at equal contract value. Lawful awards also come close to the reserve price. {a} points.",
+   "Le montant du contrat atteint au moins 95 % du prix de réserve (예정가격). Parmi les appels d’offres jugés truqués par la Commission de la concurrence (KFTC), ce cas était 2,5 fois plus fréquent que parmi les autres contrats des mêmes entités contractantes, à montant égal. Les attributions licites sont aussi proches du prix de réserve. {a} points."
+  ],
+  [
+   "This supplier’s contracts make up at least 25 % of the contracting office’s contract amount for the signing year. Among rigged tenders 2 times as frequent as among the office’s other contracts, at equal contract value. A sole specialist supplier is often lawful. {a} points.",
+   "Les contrats de ce fournisseur représentent au moins 25 % du montant des contrats de l’entité contractante pour l’année de signature. Parmi les appels d’offres truqués, ce cas est 2 fois plus fréquent que parmi les autres contrats de l’entité, à montant égal. Le recours à un fournisseur spécialisé unique est souvent licite. {a} points."
+  ],
+  [
+   "This contract alone is at least 5 % of the contracting office’s contract amount for its signing year. Among rigged tenders 1.9 times as frequent as among the office’s other contracts, at equal contract value. Large purchases are often lawful. {a} points.",
+   "Ce contrat représente à lui seul au moins 5 % du montant des contrats de l’entité contractante pour son année de signature. Parmi les appels d’offres truqués, ce cas est 1,9 fois plus fréquent que parmi les autres contrats de l’entité, à montant égal. Les gros achats sont souvent licites. {a} points."
+  ],
+  [
+   "This supplier won at least 60 % of the contracting office’s contracts of this business type in the signing year (10 or more contracts). Among rigged tenders 1.9 times as frequent as among the office’s other contracts. {a} points.",
+   "Ce fournisseur a remporté au moins 60 % des contrats de l’entité contractante de ce type d’activité pendant l’année de signature (10 contrats ou plus). Parmi les appels d’offres truqués, ce cas est 1,9 fois plus fréquent que parmi les autres contrats de l’entité. {a} points."
+  ],
+  [
+   "Awarded by restricted (제한경쟁) or nominated (지명경쟁) competition, which limits who may bid. Among rigged tenders 1.4 times as frequent as among the office’s other contracts. Restrictions are often lawful (region, licence, performance record). {a} points.",
+   "Attribué par mise en concurrence restreinte (제한경쟁) ou sur invitation (지명경쟁), ce qui limite les candidats admis à soumissionner. Parmi les appels d’offres truqués, ce cas est 1,4 fois plus fréquent que parmi les autres contrats de l’entité. Les restrictions sont souvent licites (région, licence, références d’exécution). {a} points."
   ],
   [
    "{a} contracting institutions. Search for one above to load its contracts.",
