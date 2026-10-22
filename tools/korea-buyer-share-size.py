@@ -7,7 +7,8 @@ bias-controls-plan.md): the comparisons' rate in each value band, weighted by th
 (direct standardisation, tools/ukraine-buyer-share-size.py). Bands fixed before this ran: the Colombian scheme,
 comparison-value percentiles 50/80/90/95/98/99 (KRW, original contract amount). Points basis: rigged contracts
 banded at value / 1.3 (owner, 2026-10-20: prices assumed inflated x1.3); the uninflated basis is reported.
-K6 (award >= 95 % of reserve) is reported as a sensitivity. Changes no score, weight or dataset.
+K6 (award >= 95 % of reserve) is reported as a sensitivity, and so are the bid-level checks that earned points (B2, B4,
+B5; bid features from tools/korea-bid-features.py, `--bids`). Changes no score, weight or dataset.
 """
 import argparse
 import bisect
@@ -21,19 +22,20 @@ from common import load  # noqa: E402
 ko = load('korea_checks', 'tools/korea-label-checks.py')
 size = load('ua_size', 'tools/ukraine-buyer-share-size.py')
 pp = size.pp
-CHECKS = ['G3 buyer share >= 5 %', 'N4 supplier dependence >= 25 %', 'K6 award >= 95 % of reserve']
+CHECKS = ['G3 buyer share >= 5 %', 'N4 supplier dependence >= 25 %', 'K6 award >= 95 % of reserve', 'B2 two or three bids',
+          'B4 low bid dispersion', 'B5 large first gap']
 QUANTILES = (0.5, 0.8, 0.9, 0.95, 0.98, 0.99)
 NAMES = ['<p50', 'p50-80', 'p80-90', 'p90-95', 'p95-98', 'p98-99', '>=p99']
 
 
-def decision_rows(db):
+def decision_rows(db, bids_path=None):
     """The rows of 'weighted, all linked tenders, all contracts' in korea-label-checks.py, with each contract's value."""
     labels = ko.load_labels()
     fin_path = ko.BASE / 'ftc-suits/finality.json'
     finality = json.loads(fin_path.read_text()) if fin_path.exists() else {}
     versions, key_col = ko.scan(db, labels, 'contract')
     contracts = ko.contracts_from(versions, key_col)
-    checks = ko.build_checks(contracts)
+    checks = ko.build_checks(contracts, bids=ko.Bids(bids_path) if bids_path and bids_path.exists() else None)
     members, reps = set(), {}
     for lab in labels.values():
         cs = [contracts[n] for n in lab['contracts'] if n in contracts]
@@ -63,9 +65,10 @@ def decision_rows(db):
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     p.add_argument('--db', type=Path, default=ko.BASE / 'opnstd.sqlite')
+    p.add_argument('--bids', type=Path, default=ko.BASE / 'bid-features.sqlite')
     p.add_argument('--json')
     args = p.parse_args(argv)
-    rows = decision_rows(args.db)
+    rows = decision_rows(args.db, args.bids)
     values = sorted(r['value'] for r in rows if 'comparison' in r['groups'] and r['value'])
     edges = [values[int(q * len(values))] for q in QUANTILES]
     band = lambda v: None if not v else NAMES[bisect.bisect_right(edges, v)]
