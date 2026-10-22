@@ -13,8 +13,9 @@ notice's other contracts are left out of the comparisons. Comparisons: every oth
 sensitivity, because most rigged tenders were run by the PPS for another body) signed in the same year.
 Decision rule (amendment 2026-10-20): all linked tenders, buyer-weighted rates (each buyer counts once), LR shrunk by
 10 buyers, at least 10 labelled buyers, points 10 x log2 of the LR at the 25th percentile of the buyer resamples
-(propose-indicator-points.decide). One tender per case and the learn/check halves are reported, not decided on. Not computed here: G1 single offer (needs the bid-opening results of each
-notice, not downloaded yet).
+(propose-indicator-points.decide). One tender per case and the learn/check halves are reported, not decided on. Bid-level
+checks B1-B7 (B1 is the plan's G1 single offer) come from --bids (tools/korea-bid-features.py) and are unknown for
+tenders whose opening day was not downloaded.
 """
 import argparse
 import datetime as dt
@@ -44,6 +45,10 @@ CHECKS = ['G2 private contract', 'G3 buyer share >= 5 %', 'G4 concentration', 'G
           'N1 December signature', 'N2 weekend signature', 'N4 supplier dependence >= 25 %', 'N5 first-time supplier',
           'U2 repeated private contract', 'K1 single-bidder private contract', 'K2 re-tender private contract',
           'K3 just under small-value limit', 'K4 split contracts', 'K5 restricted competition', 'K6 award >= 95 % of reserve']
+# Bid-level checks (plan, "Bid-level checks", 2026-10-22), from tools/korea-bid-features.py; unknown without bid rows.
+BID_CHECKS = ['B1 single bid', 'B2 two or three bids', 'B3 just above the lower limit', 'B4 low bid dispersion',
+              'B5 large first gap', 'B6 better bids disqualified', 'B7 same-minute bids']
+CHECKS += BID_CHECKS
 COMPETITIVE = ('일반경쟁', '제한경쟁', '지명경쟁')
 # Legal grounds as cited in prvtcntrctRsn (normalize-korea-opnstd.py `legal_ref`): decree articles of the State and
 # Local Contract Acts.
@@ -94,7 +99,7 @@ def scan(db, labels, buyer_mode):
     """One pass over `versions`: the labelled contracts, then every version of their buyers' contracts."""
     con = sqlite3.connect(f'file:{db}?mode=ro', uri=True)
     cols = ['cntrct_no', 'ord', 'signed', 'method', 'amount', 'total_amount', 'business_type', 'buyer_code', 'demand_code',
-            'supplier_bizrno', 'notice_no', 'legal_ref', 'reserve_price', 'term_type']
+            'supplier_bizrno', 'notice_no', 'notice_ord', 'legal_ref', 'reserve_price', 'term_type']
     wanted = {n for lab in labels.values() for n in lab['contracts']}
     marks = {}
     q = f'SELECT {", ".join(cols)} FROM versions WHERE cntrct_no IN ({",".join("?" * len(wanted))})'
@@ -114,9 +119,13 @@ def scan(db, labels, buyer_mode):
 
 
 def contracts_from(versions, key_col):
+    """One record per contract from its earliest version in `versions` (its buyer: tools/korea-site-checks.py
+    partitions by the same attribution). original False: the original (ord 0) is missing, so date, amount and
+    supplier are an amendment's; build_checks leaves such a contract out of every total and its checks unknown."""
     out = {}
     for no, vs in versions.items():
-        vs.sort(key=lambda r: (r['ord'] or 0))
+        # Ties on ord: the smallest buyer code, as tools/korea-site-checks.py attributes.
+        vs.sort(key=lambda r: (r['ord'] or 0, r[key_col] is None, r[key_col] or ''))
         first, last = vs[0], vs[-1]
         d = parse_date(first['signed'])
         if not d or not first[key_col]:
@@ -128,16 +137,58 @@ def contracts_from(versions, key_col):
                    'amount': amt(first) or 0, 'last_amount': amt(last) or 0, 'business': first['business_type'],
                    'supplier': first['supplier_bizrno'], 'notice': (first['notice_no'] or '').strip(),
                    'ref': first['legal_ref'] or '', 'reserve': first['reserve_price'], 'changes': len(later),
-                   'window_complete': horizon <= DATA_END, 'long_term': '장기' in (first['term_type'] or '')}
+                   'window_complete': horizon <= DATA_END, 'long_term': '장기' in (first['term_type'] or ''),
+                   'original': (first['ord'] or 0) == 0, 'notice_ord': (first.get('notice_ord') or '').strip()}
     return out
 
 
-def build_checks(contracts):
+class Bids:
+    """Bid features per opening (tools/korea-bid-features.py), looked up by notice."""
+
+    def __init__(self, path=BASE / 'bid-features.sqlite'):
+        self.con = sqlite3.connect(f'file:{path}?mode=ro', uri=True)
+        self.con.row_factory = sqlite3.Row
+        self.refs = {(r['type'], r['year']): r for r in self.con.execute('SELECT * FROM refs')}
+
+    def opening(self, notice, notice_ord):
+        """The contract's opening: same order as its notice_ord, else the latest with a winner, else the latest."""
+        rows = self.con.execute('SELECT * FROM openings WHERE notice = ? ORDER BY day, ord', (notice,)).fetchall()
+        if not rows:
+            return None
+        same = [r for r in rows if r['ord'] == notice_ord]
+        pool = same or rows
+        won = [r for r in pool if r['winner']]
+        return (won or pool)[-1]
+
+
+def bid_checks(o, refs):
+    st = lambda v: {'status': 'unknown' if v is None else 'signal' if v else 'clear'}
+    if o is None:
+        return {k: st(None) for k in BID_CHECKS}
+    ref = refs.get((o['type'], o['year']))
+    wr, lr = o['winner_rate'], o['lower_rate']
+    return {
+        'B1 single bid': st(o['bids'] == 1),
+        'B2 two or three bids': st(o['bids'] in (2, 3)),
+        'B3 just above the lower limit': st(None if wr is None or lr is None else 0 <= wr - lr < 0.1),
+        'B4 low bid dispersion': st(None if o['cv'] is None or not ref or ref['cv_p10'] is None else o['cv'] < ref['cv_p10']),
+        'B5 large first gap': st(None if o['rd'] is None or not ref or ref['rd_p90'] is None else o['rd'] > ref['rd_p90']),
+        'B6 better bids disqualified': st(None if o['dq_lower'] is None else o['dq_lower'] >= 2),
+        'B7 same-minute bids': st(2 <= o['bids'] <= 20 and bool(o['same_minute'])),
+    }
+
+
+def build_checks(contracts, first_year=None, bids=None):
+    """first_year: the data's first year (N5 needs three earlier years); default the earliest in contracts.
+    tools/korea-site-checks.py passes it, since it calls this one buyer at a time."""
     total, value_by, n_private = Counter(), Counter(), Counter()
     groups = defaultdict(Counter)
     years_with = defaultdict(set)
     small = defaultdict(list)
-    for c in contracts.values():
+    # Amendment-only contracts are left out of the totals: their signing year and original amount are unknown, and an
+    # amended amount counted in the amendment's year would misstate that year.
+    originals = [c for c in contracts.values() if c.get('original', True)]
+    for c in originals:
         key = (c['buyer'], c['year'])
         total[key] += c['amount']
         if c['supplier']:
@@ -148,7 +199,7 @@ def build_checks(contracts):
                 n_private[key + (c['supplier'],)] += 1
                 if c['ref'] in SMALL_REFS:
                     small[(c['buyer'], c['supplier'])].append(c)
-    first_year = min(c['year'] for c in contracts.values())
+    first_year = first_year or min((c['year'] for c in originals), default=None)
     split = set()
     for cs in small.values():
         cs.sort(key=lambda c: c['date'])
@@ -158,6 +209,12 @@ def build_checks(contracts):
                 split.add(c['no'])
 
     def checks(c):
+        if not c.get('original', True):
+            return {k: {'status': 'unknown'} for k in CHECKS}
+        return {**contract_checks(c), **bid_checks(bids.opening(c['notice'], c.get('notice_ord', '')) if bids and c['notice'] else None,
+                                                   bids.refs if bids else {})}
+
+    def contract_checks(c):
         key, s = (c['buyer'], c['year']), c['supplier']
         st = lambda v: {'status': 'unknown' if v is None else 'signal' if v else 'clear'}
         private = c['method'] == '수의계약'
@@ -190,17 +247,20 @@ def main():
     p.add_argument('--db', type=Path, default=BASE / 'opnstd.sqlite')
     p.add_argument('--buyer', choices=('contract', 'demand'), default='contract')
     p.add_argument('--json', type=Path)
+    p.add_argument('--bids', type=Path, default=BASE / 'bid-features.sqlite', help='tools/korea-bid-features.py output; '
+                   'without it the B checks are unknown')
     args = p.parse_args()
     labels = load_labels()
     fin_path = BASE / 'ftc-suits/finality.json'
     finality = json.loads(fin_path.read_text()) if fin_path.exists() else {}
     versions, key_col = scan(args.db, labels, args.buyer)
     contracts = contracts_from(versions, key_col)
-    checks = build_checks(contracts)
+    checks = build_checks(contracts, bids=Bids(args.bids) if args.bids.exists() else None)
     members, reps = set(), {}
     for lab in labels.values():
         cs = [contracts[n] for n in lab['contracts'] if n in contracts]
         members |= {c['no'] for c in cs}
+        cs = [c for c in cs if c['original']]  # an amendment-only record cannot stand for the awarded contract
         if cs:
             rep = max(cs, key=lambda c: (c['amount'], c['no']))
             reps.setdefault(rep['no'], lab)
@@ -214,7 +274,7 @@ def main():
     def rows(universe, weighted):
         out = []
         for c in contracts.values():
-            if (c['buyer'], c['year']) not in buyer_years or not universe(c):
+            if (c['buyer'], c['year']) not in buyer_years or not c['original'] or not universe(c):
                 continue
             lab = reps.get(c['no'])
             if c['no'] in members and not lab:
