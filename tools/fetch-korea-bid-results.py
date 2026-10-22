@@ -121,7 +121,7 @@ def fetch_notices(api, start, end):
             print(f'{kind} {lo}..{hi}: {total} notices', flush=True)
 
 
-def fetch_bids(api, start, end, only=None, workers=1):
+def fetch_bids(api, start, end, only=None, workers=1, page_workers=1):
     """One file per opening day and business type, newest day first, `workers` at a time. A day is saved only when
     its rows reach the totalCount of its first page (past openings no longer change). only: a set of days instead
     of the range."""
@@ -135,13 +135,13 @@ def fetch_bids(api, start, end, only=None, workers=1):
                 tasks.append((day, code, name, folder / f'{day}.jsonl.gz'))
     pool = ThreadPoolExecutor(workers)
     try:
-        for future in [pool.submit(fetch_bid_day, api, *task) for task in tasks]:
+        for future in [pool.submit(fetch_bid_day, api, *task, page_workers) for task in tasks]:
             future.result()
     finally:
         pool.shutdown(cancel_futures=True)   # on an error, finish the running days only
 
 
-def fetch_bid_day(api, day, code, name, target):
+def fetch_bid_day(api, day, code, name, target, page_workers=1):
     """Each page is saved as it arrives (in <day>.pages/, with the day's totalCount), so a restart repeats only the
     pages in flight; the pages are joined into <day>.jsonl.gz once all are there."""
     stamp = day.strftime('%Y%m%d')
@@ -168,12 +168,17 @@ def fetch_bid_day(api, day, code, name, target):
         save(1, rows)
         total_file.write_text(str(total))
     count = max(1, -(-total // ROWS))
-    for n in range(2, count + 1):
-        if not page_file(n).exists():
-            page_total, rows = api.get('openStandard', pageNo=n, **params)
-            if page_total != total:
-                raise SystemExit(f'{name} {day}: totalCount changed from {total} to {page_total} at page {n}')
-            save(n, rows)
+
+    def page(n):
+        page_total, rows = api.get('openStandard', pageNo=n, **params)
+        if page_total != total:
+            raise SystemExit(f'{name} {day}: totalCount changed from {total} to {page_total} at page {n}')
+        save(n, rows)
+
+    missing = [n for n in range(2, count + 1) if not page_file(n).exists()]
+    with ThreadPoolExecutor(min(page_workers, len(missing)) or 1) as pool:
+        for future in [pool.submit(page, n) for n in missing]:
+            future.result()
     saved = 0
     part = target.with_suffix('.part')
     with gzip.open(part, 'wt', encoding='utf-8') as out:
@@ -222,6 +227,7 @@ def main():
     parser.add_argument('--end', default='2026-09-01', help='exclusive')
     parser.add_argument('--max-calls', type=int, default=9500, help='per operation and run (daily quota 10,000)')
     parser.add_argument('--workers', type=int, default=1, help='bids: days fetched at once (calls take ~13 s)')
+    parser.add_argument('--page-workers', type=int, default=1, help='bids: pages of one day fetched at once')
     args = parser.parse_args()
     api = Api(KEY_FILE.read_text().strip(), args.max_calls)
     CACHE.mkdir(parents=True, exist_ok=True)
@@ -229,13 +235,13 @@ def main():
         if args.stage == 'openings':
             find_openings(api, args.notices.read_text().split())
         elif args.stage == 'bids' and args.days:
-            fetch_bids(api, None, None, {date.fromisoformat(d) for d in args.days.read_text().split()}, args.workers)
+            fetch_bids(api, None, None, {date.fromisoformat(d) for d in args.days.read_text().split()}, args.workers, args.page_workers)
         else:
             start, end = date.fromisoformat(args.start), date.fromisoformat(args.end)
             if args.stage == 'notices':
                 fetch_notices(api, start, end)
             else:
-                fetch_bids(api, start, end, workers=args.workers)
+                fetch_bids(api, start, end, workers=args.workers, page_workers=args.page_workers)
     except Budget:
         print(f'{args.stage}: call limit reached; rerun tomorrow to continue', flush=True)
     print('calls:', api.calls, flush=True)
