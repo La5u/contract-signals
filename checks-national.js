@@ -1,12 +1,44 @@
 // Ukraine (Prozorro), TED eForms (Portugal, Romania, Czechia), Chile and the UK: one check set with
-// per-family labels and scope (docs/score-ukraine.md, docs/score-ted.md); South Korea is not assessed.
+// per-family labels and scope (docs/score-ukraine.md, docs/score-ted.md); South Korea's checks come precomputed.
 'use strict';
 
-// South Korea (KONEPS): shown for browsing; no check is scored until the Korean checks are fixed and
-// calibrated on court rulings and Fair Trade Commission decisions (research/calibration/korea-labels-plan.md).
-const KONEPS_NOT_ASSESSED = 'Korean checks are not set yet: this contract is shown for browsing and is not assessed. They will be calibrated on court rulings and Fair Trade Commission decisions first.';
-function getAssessmentKoneps() {
-  return { checks: [], applicable: 0, evaluated: 0, unknown: 0, unknownApplicability: 0, notApplicable: 0, signals: 0, excludedReason: KONEPS_NOT_ASSESSED };
+// South Korea (KONEPS). Each contract's checks are computed when the static files are built
+// (tools/korea-site-checks.py) by the calibration's own code (tools/korea-label-checks.py), one letter per check
+// in KR_CHECK_ORDER (letters for checks appended later are ignored): s signal, c clear, u unknown. Points: 10 x log2 of the LR at the 25th percentile, KFTC
+// bid-rigging decisions against the same contracting offices' other contracts (decision rule of 2026-10-20,
+// research/calibration/korea-collusion-results.md); G3 and N4 controlled for contract size, rigged prices taken as
+// inflated x1.3 (research/calibration/korea-buyer-share-size-results.md). Checks without points are not shown.
+const KONEPS_NOT_ASSESSED = 'Korean checks were not computed for this record: it is shown for browsing and is not assessed.';
+const KR_CHECK_ORDER = ['G2', 'G3', 'G4', 'G5', 'G6', 'N1', 'N2', 'N4', 'N5', 'U2', 'K1', 'K2', 'K3', 'K4', 'K5', 'K6'];
+const KR_CHECKS = [
+  ['K6', 'kr-award-near-reserve', 'Award at 95 % or more of the reserve price', 12.7,
+    'The contract amount is at least 95 % of the reserve price (예정가격). Among tenders the Fair Trade Commission found rigged it was 2.5 times as frequent as among the same contracting offices’ other contracts, at equal contract value. Lawful awards also come close to the reserve price.',
+    'The contract amount is below 95 % of the reserve price.', 'No reserve price or amount published: not assessable.'],
+  ['N4', 'kr-supplier-dependence', 'Supplier holds 25 % or more of the buyer’s yearly amount', 9.2,
+    'This supplier’s contracts make up at least 25 % of the contracting office’s contract amount for the signing year. Among rigged tenders 2 times as frequent as among the office’s other contracts, at equal contract value. A sole specialist supplier is often lawful.',
+    'This supplier holds less than 25 % of the office’s yearly contract amount.', 'Supplier number or the office’s yearly total unknown: not assessable.'],
+  ['G3', 'kr-buyer-share', 'Large share of the buyer’s yearly procurement', 8.4,
+    'This contract alone is at least 5 % of the contracting office’s contract amount for its signing year. Among rigged tenders 1.9 times as frequent as among the office’s other contracts, at equal contract value. Large purchases are often lawful.',
+    'Below 5 % of the office’s yearly contract amount.', 'The office’s yearly total is unknown: not assessable.'],
+  ['G4', 'kr-concentration', 'Concentrated awards within a business type', 7.7,
+    'This supplier won at least 60 % of the contracting office’s contracts of this business type in the signing year (10 or more contracts). Among rigged tenders 1.9 times as frequent as among the office’s other contracts.',
+    'The supplier holds less than 60 % of the office’s contracts of this type that year.', 'Fewer than 10 contracts of this type at the office that year, or no supplier number: not assessable.'],
+  ['K5', 'kr-restricted-competition', 'Restricted or nominated competition', 3.7,
+    'Awarded by restricted (제한경쟁) or nominated (지명경쟁) competition, which limits who may bid. Among rigged tenders 1.4 times as frequent as among the office’s other contracts. Restrictions are often lawful (region, licence, performance record).',
+    'Open competition or another method.', 'Contract method not published: not assessable.'],
+];
+function getAssessmentKoneps(c) {
+  const letters = typeof c.koreaChecks === 'string' && c.koreaChecks.length >= KR_CHECK_ORDER.length ? c.koreaChecks : null;
+  if (!letters) return { checks: [], applicable: 0, evaluated: 0, unknown: 0, unknownApplicability: 0, notApplicable: 0, signals: 0, excludedReason: KONEPS_NOT_ASSESSED };
+  const checks = KR_CHECKS.map(([code, id, label, weight, signal, clear, unknown]) => {
+    const letter = letters[KR_CHECK_ORDER.indexOf(code)];
+    const status = letter === 's' ? 'signal' : letter === 'c' ? 'clear' : 'unknown';
+    const reason = status === 'signal' ? `${signal} ${weight} points.` : status === 'clear' ? clear : unknown;
+    const severity = indicatorSeverity(status === 'signal' ? weight : 0);
+    return { id, label, family: 'competition', applicability: 'yes', status, weight: status === 'signal' ? weight : null,
+      reason, explanation: reason, severity: severity.id, severityLabel: severity.label };
+  });
+  return { checks, excludedReason: null };
 }
 
 // Ukraine (Prozorro) and Portugal/Romania (TED eForms): one engine, per-family

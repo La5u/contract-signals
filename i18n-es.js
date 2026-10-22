@@ -802,8 +802,26 @@ window.I18N_DICTS.es = {
   "Name or code, e.g. 서울특별시 or 1230000": "Nombre o código, p. ej. 서울특별시 o 1230000",
   "Matching contracting institutions": "Entidades contratantes coincidentes",
   "No contracting institution matches.": "Ninguna entidad contratante coincide.",
-  "Korean checks are not set yet: this contract is shown for browsing and is not assessed. They will be calibrated on court rulings and Fair Trade Commission decisions first.": "Las verificaciones coreanas aún no están definidas: este contrato se muestra para consulta y no se evalúa. Primero se calibrarán con sentencias judiciales y decisiones de la Comisión de Comercio Justo.",
-  "Signed before September 2024: this is the date of its first change in the period.": "Firmado antes de septiembre de 2024: es la fecha de su primera modificación en el periodo.",
+  "Korean checks were not computed for this record: it is shown for browsing and is not assessed.": "Las verificaciones coreanas no se calcularon para este registro: se muestra para consulta y no se evalúa.",
+  "Award at 95 % or more of the reserve price": "Adjudicación al 95 % o más del precio de reserva",
+  "The contract amount is below 95 % of the reserve price.": "El importe del contrato es inferior al 95 % del precio de reserva.",
+  "No reserve price or amount published: not assessable.": "Precio de reserva o importe no publicado: no evaluable.",
+  "Supplier holds 25 % or more of the buyer’s yearly amount": "El proveedor concentra el 25 % o más del importe anual del comprador",
+  "This supplier holds less than 25 % of the office’s yearly contract amount.": "Este proveedor concentra menos del 25 % del importe anual de contratos de la entidad.",
+  "Supplier number or the office’s yearly total unknown: not assessable.": "Número del proveedor o total anual de la entidad desconocido: no evaluable.",
+  "Below 5 % of the office’s yearly contract amount.": "Por debajo del 5 % del importe anual de contratos de la entidad.",
+  "The office’s yearly total is unknown: not assessable.": "El total anual de la entidad es desconocido: no evaluable.",
+  "Concentrated awards within a business type": "Adjudicaciones concentradas en un tipo de actividad",
+  "The supplier holds less than 60 % of the office’s contracts of this type that year.": "El proveedor concentra menos del 60 % de los contratos de este tipo de la entidad ese año.",
+  "Fewer than 10 contracts of this type at the office that year, or no supplier number: not assessable.": "Menos de 10 contratos de este tipo en la entidad ese año, o sin número del proveedor: no evaluable.",
+  "Restricted or nominated competition": "Competencia restringida o por invitación",
+  "Open competition or another method.": "Competencia abierta u otro método.",
+  "Contract method not published: not assessable.": "Método de contratación no publicado: no evaluable.",
+  "Award close to the reserve price": "Adjudicación cercana al precio de reserva",
+  "Supplier holds a large share of the buyer’s yearly amount": "El proveedor concentra gran parte del importe anual del comprador",
+  "Near reserve price": "Cerca del precio de reserva",
+  "Restricted competition": "Competencia restringida",
+  "Supplier dependence": "Dependencia del proveedor",
   "Contract date (계약체결일자).": "Fecha del contrato (계약체결일자).",
   "Contract amount (계약금액) of the latest version in the period.": "Importe del contrato (계약금액) de la última versión en el periodo.",
   "Joint contract (공동계약).": "Contrato conjunto (공동계약).",
@@ -1492,6 +1510,30 @@ window.I18N_DICTS.es = {
   [
    "Declared duration “{a}” not comparable to months: not assessed.",
    "Duración declarada «{a}» no comparable a meses: no evaluado."
+  ],
+  [
+   "Signed before {a}: this is the date of its first change in the data.",
+   "Firmado antes de {a}: es la fecha de su primera modificación en los datos."
+  ],
+  [
+   "The contract amount is at least 95 % of the reserve price (예정가격). Among tenders the Fair Trade Commission found rigged it was 2.5 times as frequent as among the same contracting offices’ other contracts, at equal contract value. Lawful awards also come close to the reserve price. {a} points.",
+   "El importe del contrato es al menos el 95 % del precio de reserva (예정가격). Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas, era 2,5 veces más frecuente que entre los demás contratos de las mismas entidades contratantes, a igual importe del contrato. Las adjudicaciones lícitas también se acercan al precio de reserva. {a} puntos."
+  ],
+  [
+   "This supplier’s contracts make up at least 25 % of the contracting office’s contract amount for the signing year. Among rigged tenders 2 times as frequent as among the office’s other contracts, at equal contract value. A sole specialist supplier is often lawful. {a} points.",
+   "Los contratos de este proveedor representan al menos el 25 % del importe de contratos de la entidad contratante en el año de firma. Entre las licitaciones amañadas, es 2 veces más frecuente que entre los demás contratos de la entidad, a igual importe del contrato. Tener un único proveedor especializado suele ser lícito. {a} puntos."
+  ],
+  [
+   "This contract alone is at least 5 % of the contracting office’s contract amount for its signing year. Among rigged tenders 1.9 times as frequent as among the office’s other contracts, at equal contract value. Large purchases are often lawful. {a} points.",
+   "Este contrato por sí solo representa al menos el 5 % del importe de contratos de la entidad contratante en su año de firma. Entre las licitaciones amañadas, es 1,9 veces más frecuente que entre los demás contratos de la entidad, a igual importe del contrato. Las compras grandes suelen ser lícitas. {a} puntos."
+  ],
+  [
+   "This supplier won at least 60 % of the contracting office’s contracts of this business type in the signing year (10 or more contracts). Among rigged tenders 1.9 times as frequent as among the office’s other contracts. {a} points.",
+   "Este proveedor obtuvo al menos el 60 % de los contratos de la entidad contratante de este tipo de actividad en el año de firma (10 contratos o más). Entre las licitaciones amañadas, es 1,9 veces más frecuente que entre los demás contratos de la entidad. {a} puntos."
+  ],
+  [
+   "Awarded by restricted (제한경쟁) or nominated (지명경쟁) competition, which limits who may bid. Among rigged tenders 1.4 times as frequent as among the office’s other contracts. Restrictions are often lawful (region, licence, performance record). {a} points.",
+   "Adjudicado mediante competencia restringida (제한경쟁) o por invitación (지명경쟁), que limita quién puede presentar ofertas. Entre las licitaciones amañadas, es 1,4 veces más frecuente que entre los demás contratos de la entidad. Las restricciones suelen ser lícitas (región, licencia, historial de ejecución). {a} puntos."
   ],
   [
    "{a} contracting institutions. Search for one above to load its contracts.",
