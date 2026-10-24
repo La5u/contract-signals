@@ -42,7 +42,7 @@ The [preliminary verdict pilot](../research/calibration/label-calibration-plan.m
 
 ## Three distinct pieces of information
 
-1. **Heuristic index**: competition maximum + execution/duration maximum + transparency maximum (since v3.1), capped at 100. No summing of correlated signals within one family, no renormalization to the observed maximum or to coverage.
+1. **Heuristic index**: competition maximum + execution/duration maximum + transparency maximum (since v3.1), capped at 100. No summing of correlated signals within one family, no renormalization to the observed maximum or to coverage. South Korea (2026-10-24, stopgap until a joint model sets how much each check adds when others fire) splits its checks into three families: competition (two or three bids, bid dispersion, bid gap, restricted competition), price (award ≥ 95 % of the reserve price) and concentration (buyer share, supplier dependence, concentrated awards); the index is the sum of the three maxima, at most 36.7.
 2. **Declared financial stake**: amount and scope remain visible, searchable and sortable. No weight depends on a monetary tier. A declared amount is not necessarily paid; ceilings, variants and amendments are not summed.
 3. **Official finding**: badge, filter, dedicated sorting, source, scope and response remain accessible; **zero heuristic points for the finding itself**. A distinct fact explicitly recorded on the contract, such as a direct award, can still produce a signal. An aggregate audit dossier is not scored as an individual contract.
 

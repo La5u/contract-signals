@@ -14,7 +14,7 @@ A static explorer for published public-procurement records from France, Chile, C
 
 ## Use it
 
-Open **[contracts.lasu.dev](https://contracts.lasu.dev)**, or run it locally from this folder:
+Open **[contracts.lasu.dev](https://contracts.lasu.dev)** (live since **2026-09-26**, Cloudflare Pages; use this launch date wherever one is asked, e.g. data.go.kr use-case forms), or run it locally from this folder:
 
 ```sh
 python -m http.server 8000   # then open http://localhost:8000

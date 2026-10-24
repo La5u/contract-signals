@@ -669,7 +669,7 @@ function startExplorer() {
       for (const indicator of ordered) {
         const counts = !counted.has(indicator.family);
         counted.add(indicator.family);
-        const familyName = indicator.family === 'competition' ? 'competition' : indicator.family === 'transparency' ? 'transparency' : 'execution/duration';
+        const familyName = indicator.family === 'execution' ? 'execution/duration' : indicator.family;
         const badge = element('span', KIND_SHORT[indicator.kind] || indicator.kindLabel, `badge severity-${indicator.severity}${counts ? '' : ' not-counted'}`);
         badge.title = `${indicator.label} (this jurisdiction's check). Raw weight ${indicator.weight} (${BASIS_NOTE[indicator.basis]}). ${counts ? `Counts for the ${familyName} family.` : `Not added: a heavier ${familyName} signal already counts.`} ${indicator.explanation}`;
         badges.append(badge);
@@ -921,7 +921,7 @@ function startExplorer() {
       why.append(triggered);
     } else if (!assessment.excludedReason) line(why, breakdown.score == null ? 'Not assessed: no check could be evaluated.' : 'No threshold crossed in the evaluated checks.');
     if (breakdown.score != null) {
-      const parts = [['competition', breakdown.competition], ['execution', breakdown.execution], ['transparency', breakdown.transparency]].filter(([, v]) => v > 0);
+      const parts = Object.entries(breakdown.families).filter(([, v]) => v > 0);
       const summary = element('p', null, 'muted');
       if (parts.length) {
         summary.append(element('span', 'Index'), ` ${breakdown.score} = `);

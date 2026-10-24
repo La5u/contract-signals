@@ -421,9 +421,11 @@ function getIndicators(contract) {
 function getScoreBreakdown(contract) {
   const assessment = getAssessment(contract);
   const families = { competition: 0, execution: 0, transparency: 0 };
-  for (const r of assessment.checks) if (r.status === 'signal') families[r.family] = Math.max(families[r.family], r.weight);
-  const score = assessment.evaluated ? Math.round(Math.min(100, families.competition + families.execution + families.transparency) * 10) / 10 : null;
-  return { ...families, score, assessment };
+  // Other families (South Korea: price, concentration) are added when a check names them.
+  for (const r of assessment.checks) if (r.status === 'signal') families[r.family] = Math.max(families[r.family] || 0, r.weight);
+  const total = Object.values(families).reduce((sum, v) => sum + v, 0);
+  const score = assessment.evaluated ? Math.round(Math.min(100, total) * 10) / 10 : null;
+  return { ...families, families, score, assessment };
 }
 function getVigilanceScore(contract) { return getScoreBreakdown(contract).score; }
 
