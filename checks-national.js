@@ -9,45 +9,48 @@
 // research/calibration/korea-collusion-results.md); G3 and N4 controlled for contract size, rigged prices taken as
 // inflated x1.3 (research/calibration/korea-buyer-share-size-results.md). The B checks read the tender's bid opening
 // (개찰결과, tools/korea-bid-features.py); unknown when it was not found. Checks without points are not shown.
+// Families (2026-10-24, owner: stopgap until a joint model sets how much each check adds when others fire):
+// competition (bids and restricted competition: B2, B4, B5, K5), price (K6) and concentration (G3, G4, N4).
+// Only the heaviest signal of a family counts, so B5 does not add to B2 (B5 is mostly the few-bidders effect).
 const KONEPS_NOT_ASSESSED = 'Korean checks were not computed for this record: it is shown for browsing and is not assessed.';
 const KR_CHECK_ORDER = ['G2', 'G3', 'G4', 'G5', 'G6', 'N1', 'N2', 'N4', 'N5', 'U2', 'K1', 'K2', 'K3', 'K4', 'K5', 'K6',
   'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7'];
 const KR_NO_OPENING = 'The tender’s bid opening (개찰결과) was not found: not assessable.';
 const KR_CHECKS = [
-  ['B2', 'kr-few-bidders', 'Only two or three bids', 14.8,
+  ['B2', 'competition', 'kr-few-bidders', 'Only two or three bids', 14.8,
     'Two or three bids were opened in this tender (개찰결과). Among tenders the Fair Trade Commission found rigged it was 3 times as frequent as among the same contracting offices’ other contracts, also at equal contract value. Specialised or small markets often draw few bidders lawfully.',
     'One bid, or four or more bids, were opened.', KR_NO_OPENING],
-  ['K6', 'kr-award-near-reserve', 'Award at 95 % or more of the reserve price', 12.7,
+  ['K6', 'price', 'kr-award-near-reserve', 'Award at 95 % or more of the reserve price', 12.7,
     'The contract amount is at least 95 % of the reserve price (예정가격). Among tenders the Fair Trade Commission found rigged it was 2.5 times as frequent as among the same contracting offices’ other contracts, at equal contract value. Lawful awards also come close to the reserve price.',
     'The contract amount is below 95 % of the reserve price.', 'No reserve price or amount published: not assessable.'],
-  ['B5', 'kr-bid-gap', 'Large gap between the two lowest bids', 12.1,
+  ['B5', 'competition', 'kr-bid-gap', 'Large gap between the two lowest bids', 12.1,
     'The gap between the two lowest valid bids is large against the spread of the other valid bids (above the 90th percentile for this business type and year), the pattern cover bids placed above an agreed winner leave. Among rigged tenders 2.8 times as frequent as among the offices’ other contracts. It also arises by chance.',
     'The gap between the two lowest valid bids is within the usual range.', 'Fewer than three valid bids, or the bid opening (개찰결과) was not found: not assessable.'],
-  ['N4', 'kr-supplier-dependence', 'Supplier holds 25 % or more of the buyer’s yearly amount', 9.2,
+  ['N4', 'concentration', 'kr-supplier-dependence', 'Supplier holds 25 % or more of the buyer’s yearly amount', 9.2,
     'This supplier’s contracts make up at least 25 % of the contracting office’s contract amount for the signing year. Among rigged tenders 2 times as frequent as among the office’s other contracts, at equal contract value. A sole specialist supplier is often lawful.',
     'This supplier holds less than 25 % of the office’s yearly contract amount.', 'Supplier number or the office’s yearly total unknown: not assessable.'],
-  ['G3', 'kr-buyer-share', 'Large share of the buyer’s yearly procurement', 8.4,
+  ['G3', 'concentration', 'kr-buyer-share', 'Large share of the buyer’s yearly procurement', 8.4,
     'This contract alone is at least 5 % of the contracting office’s contract amount for its signing year. Among rigged tenders 1.9 times as frequent as among the office’s other contracts, at equal contract value. Large purchases are often lawful.',
     'Below 5 % of the office’s yearly contract amount.', 'The office’s yearly total is unknown: not assessable.'],
-  ['G4', 'kr-concentration', 'Concentrated awards within a business type', 7.7,
+  ['G4', 'concentration', 'kr-concentration', 'Concentrated awards within a business type', 7.7,
     'This supplier won at least 60 % of the contracting office’s contracts of this business type in the signing year (10 or more contracts). Among rigged tenders 1.9 times as frequent as among the office’s other contracts.',
     'The supplier holds less than 60 % of the office’s contracts of this type that year.', 'Fewer than 10 contracts of this type at the office that year, or no supplier number: not assessable.'],
-  ['B4', 'kr-bid-dispersion', 'Bid amounts unusually close together', 4.5,
+  ['B4', 'competition', 'kr-bid-dispersion', 'Bid amounts unusually close together', 4.5,
     'The valid bids are unusually close to one another (coefficient of variation below the 10th percentile for this business type and year). Among rigged tenders 1.7 times as frequent as among the offices’ other contracts. Korean bids cluster near the lower award limit by design, so this is a weak signal.',
     'The valid bids are spread as usual.', 'Fewer than three valid bids, or the bid opening (개찰결과) was not found: not assessable.'],
-  ['K5', 'kr-restricted-competition', 'Restricted or nominated competition', 3.7,
+  ['K5', 'competition', 'kr-restricted-competition', 'Restricted or nominated competition', 3.7,
     'Awarded by restricted (제한경쟁) or nominated (지명경쟁) competition, which limits who may bid. Among rigged tenders 1.4 times as frequent as among the office’s other contracts. Restrictions are often lawful (region, licence, performance record).',
     'Open competition or another method.', 'Contract method not published: not assessable.'],
 ];
 function getAssessmentKoneps(c) {
   const letters = typeof c.koreaChecks === 'string' && c.koreaChecks.length >= KR_CHECK_ORDER.length ? c.koreaChecks : null;
   if (!letters) return { checks: [], applicable: 0, evaluated: 0, unknown: 0, unknownApplicability: 0, notApplicable: 0, signals: 0, excludedReason: KONEPS_NOT_ASSESSED };
-  const checks = KR_CHECKS.map(([code, id, label, weight, signal, clear, unknown]) => {
+  const checks = KR_CHECKS.map(([code, family, id, label, weight, signal, clear, unknown]) => {
     const letter = letters[KR_CHECK_ORDER.indexOf(code)];
     const status = letter === 's' ? 'signal' : letter === 'c' ? 'clear' : 'unknown';
     const reason = status === 'signal' ? `${signal} ${weight} points.` : status === 'clear' ? clear : unknown;
     const severity = indicatorSeverity(status === 'signal' ? weight : 0);
-    return { id, label, family: 'competition', applicability: 'yes', status, weight: status === 'signal' ? weight : null,
+    return { id, label, family, applicability: 'yes', status, weight: status === 'signal' ? weight : null,
       reason, explanation: reason, severity: severity.id, severityLabel: severity.label };
   });
   return { checks, excludedReason: null };
