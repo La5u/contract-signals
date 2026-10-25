@@ -161,7 +161,7 @@ class AppServer:
                     pass
                 return answer, '\n'.join(errors + [f'timeout after {timeout} s'])
 
-    def run(self, work, prompt, model, effort, timeout):
+    def run(self, work, prompt, model, effort, timeout, required=('tenders.jsonl', 'meta.json'), missing=MISSING):
         res = self.request('thread/start', {'model': model, 'cwd': str(work), 'sandbox': 'workspace-write',
                                             'approvalPolicy': 'never', 'ephemeral': True})
         tid = res['thread']['id']
@@ -169,9 +169,9 @@ class AppServer:
         try:
             answer, err = self.turn(tid, prompt, effort, timeout)
             nudges = 0
-            while not err and nudges < 2 and not ((work / 'tenders.jsonl').exists() and (work / 'meta.json').exists()):
+            while not err and nudges < 2 and not all((work / f).exists() for f in required):
                 nudges += 1  # answered without writing the files: ask again in the same thread
-                answer, err = self.turn(tid, MISSING, effort, timeout)
+                answer, err = self.turn(tid, missing, effort, timeout)
             return answer, err, nudges
         finally:
             self.events.pop(tid, None)
