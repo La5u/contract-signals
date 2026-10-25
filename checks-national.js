@@ -10,19 +10,28 @@
 // inflated x1.3 (research/calibration/korea-buyer-share-size-results.md). The B checks read the tender's bid opening
 // (개찰결과, tools/korea-bid-features.py); unknown when it was not found. Checks without points are not shown.
 // Families (2026-10-24, owner: stopgap until a joint model sets how much each check adds when others fire):
-// competition (bids and restricted competition: B2, B4, B5, K5), price (K6) and concentration (G3, G4, N4).
+// competition (bids and restricted competition: B2, B4, B5, K5), price (B12 or K7) and concentration (G3, G4, N4).
 // Only the heaviest signal of a family counts, so B5 does not add to B2 (B5 is mostly the few-bidders effect).
+// Price slot (owner 2026-10-25, korea-collusion-results.md "One range per indicator, counter-ranges and two ranges"):
+// one price check per tender. Where the bid opening states a lower award limit, FLOOR-GAP (B12) scores the price and
+// PRICE-RATIO (K7) is out of scope, since both measure a high price. B12 clear (a win within 0.97 points of the floor)
+// carries negative points, the one-per-case value -10.9 rather than -27.7 until a joint model (owner's choice); they
+// offset the other families' points, and the index is floored at 0. K6 (>= 95 %) gave way to K7's chosen range.
 const KONEPS_NOT_ASSESSED = 'Korean checks were not computed for this record: it is shown for browsing and is not assessed.';
 const KR_CHECK_ORDER = ['G2', 'G3', 'G4', 'G5', 'G6', 'N1', 'N2', 'N4', 'N5', 'U2', 'K1', 'K2', 'K3', 'K4', 'K5', 'K6',
-  'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7'];
+  'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'K7', 'B12'];
 const KR_NO_OPENING = 'The tender’s bid opening (개찰결과) was not found: not assessable.';
 const KR_CHECKS = [
   ['B2', 'competition', 'kr-few-bidders', 'Only two or three bids', 14.8,
     'Two or three bids were opened in this tender (개찰결과). Among tenders the Fair Trade Commission found rigged it was 3 times as frequent as among the same contracting offices’ other contracts, also at equal contract value. Specialised or small markets often draw few bidders lawfully.',
     'One bid, or four or more bids, were opened.', KR_NO_OPENING],
-  ['K6', 'price', 'kr-award-near-reserve', 'Award at 95 % or more of the reserve price', 12.7,
-    'The contract amount is at least 95 % of the reserve price (예정가격). Among tenders the Fair Trade Commission found rigged it was 2.5 times as frequent as among the same contracting offices’ other contracts, at equal contract value. Lawful awards also come close to the reserve price.',
-    'The contract amount is below 95 % of the reserve price.', 'No reserve price or amount published: not assessable.'],
+  ['B12', 'price', 'kr-floor-gap', 'Winning bid well above the lower award limit', 17.8,
+    'The winning bid is at least 0.97 percentage points (of the reserve price) above the tender’s lower award limit (낙찰하한율), where Korean bids usually cluster. Among tenders the Fair Trade Commission found rigged it was 3.7 times as frequent as among the same contracting offices’ other contracts. A bidder may also simply price higher.',
+    'The winning bid is within 0.97 percentage points of the tender’s lower award limit (낙찰하한율), where competitive bids cluster. Rigged tenders were rarely this close to the floor, so this lowers the index by 10.9 points.',
+    'The bid opening (개찰결과) states no lower award limit, or was not found: not assessable.', -10.9],
+  ['K7', 'price', 'kr-award-near-reserve', 'Award at 92.2 % or more of the reserve price', 15.5,
+    'The contract amount is between 92.2 % and 100 % of the reserve price (예정가격). Among tenders the Fair Trade Commission found rigged it was 3.1 times as frequent as among the same contracting offices’ other contracts, also at equal contract value. Lawful awards also come close to the reserve price.',
+    'The contract amount is below 92.2 % of the reserve price, or above it.', 'No reserve price or amount published, or the tender states a lower award limit (the gap to it then scores the price): not assessable.'],
   ['B5', 'competition', 'kr-bid-gap', 'Large gap between the two lowest bids', 12.1,
     'The gap between the two lowest valid bids is large against the spread of the other valid bids (above the 90th percentile for this business type and year), the pattern cover bids placed above an agreed winner leave. Among rigged tenders 2.8 times as frequent as among the offices’ other contracts. It also arises by chance.',
     'The gap between the two lowest valid bids is within the usual range.', 'Fewer than three valid bids, or the bid opening (개찰결과) was not found: not assessable.'],
@@ -45,12 +54,19 @@ const KR_CHECKS = [
 function getAssessmentKoneps(c) {
   const letters = typeof c.koreaChecks === 'string' && c.koreaChecks.length >= KR_CHECK_ORDER.length ? c.koreaChecks : null;
   if (!letters) return { checks: [], applicable: 0, evaluated: 0, unknown: 0, unknownApplicability: 0, notApplicable: 0, signals: 0, excludedReason: KONEPS_NOT_ASSESSED };
-  const checks = KR_CHECKS.map(([code, family, id, label, weight, signal, clear, unknown]) => {
-    const letter = letters[KR_CHECK_ORDER.indexOf(code)];
-    const status = letter === 's' ? 'signal' : letter === 'c' ? 'clear' : 'unknown';
+  const letter = code => letters[KR_CHECK_ORDER.indexOf(code)];
+  const floorStated = letter('B12') === 's' || letter('B12') === 'c';
+  const checks = KR_CHECKS.map(([code, family, id, label, weight, signal, clear, unknown, clearWeight]) => {
+    if (code === 'K7' && floorStated) {
+      const reason = 'This tender states a lower award limit, so the gap to it scores the price instead (one price check per tender).';
+      return { id, label, family, applicability: 'no', status: 'not-applicable', weight: null, reason, explanation: reason, severity: indicatorSeverity(0).id, severityLabel: indicatorSeverity(0).label };
+    }
+    const l = letter(code);
+    const status = l === 's' ? 'signal' : l === 'c' ? 'clear' : 'unknown';
+    const points = status === 'signal' ? weight : status === 'clear' && clearWeight ? clearWeight : null;
     const reason = status === 'signal' ? `${signal} ${weight} points.` : status === 'clear' ? clear : unknown;
     const severity = indicatorSeverity(status === 'signal' ? weight : 0);
-    return { id, label, family, applicability: 'yes', status, weight: status === 'signal' ? weight : null,
+    return { id, label, family, applicability: 'yes', status, weight: points,
       reason, explanation: reason, severity: severity.id, severityLabel: severity.label };
   });
   return { checks, excludedReason: null };

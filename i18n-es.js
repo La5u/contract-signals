@@ -165,7 +165,7 @@ window.I18N_DICTS.es = {
   "Coverage and provenance (JSON)": "Cobertura y procedencia (JSON)",
   "Sources and how to verify": "Fuentes y cómo verificar",
   "Index and evidence labels": "Índice y etiquetas de evidencia",
-  "0 · no threshold crossed in evaluated checks": "0 · ningún umbral superado en las verificaciones evaluadas",
+  "0 · no threshold crossed in evaluated checks, or signals offset by evidence against": "0 · ningún umbral superado en las verificaciones evaluadas, o señales compensadas por evidencia en contra",
   "1–19 · low": "1–19 · baja",
   "20–39 · moderate": "20–39 · moderada",
   "40–69 · high": "40–69 · alta",
@@ -803,8 +803,16 @@ window.I18N_DICTS.es = {
   "Matching contracting institutions": "Entidades contratantes coincidentes",
   "No contracting institution matches.": "Ninguna entidad contratante coincide.",
   "Korean checks were not computed for this record: it is shown for browsing and is not assessed.": "Las verificaciones coreanas no se calcularon para este registro: se muestra para consulta y no se evalúa.",
-  "Award at 95 % or more of the reserve price": "Adjudicación al 95 % o más del precio de reserva",
-  "The contract amount is below 95 % of the reserve price.": "El importe del contrato es inferior al 95 % del precio de reserva.",
+  "No reserve price or amount published, or the tender states a lower award limit (the gap to it then scores the price): not assessable.": "Precio de reserva o importe no publicado, o la licitación indica un límite inferior de adjudicación (la distancia a este puntúa entonces el precio): no evaluable.",
+  "Signals offset by evidence against": "Señales compensadas por evidencia en contra",
+  "· evidence against": "· evidencia en contra",
+  "Award at 92.2 % or more of the reserve price": "Adjudicación al 92,2 % o más del precio de reserva",
+  "The contract amount is below 92.2 % of the reserve price, or above it.": "El importe del contrato es inferior al 92,2 % del precio de reserva, o superior a este.",
+  "Winning bid well above the lower award limit": "Oferta ganadora muy por encima del límite inferior de adjudicación",
+  "The winning bid is within 0.97 percentage points of the tender’s lower award limit (낙찰하한율), where competitive bids cluster. Rigged tenders were rarely this close to the floor, so this lowers the index by 10.9 points.": "La oferta ganadora está a menos de 0,97 puntos porcentuales del límite inferior de adjudicación de la licitación (낙찰하한율), donde se agrupan las ofertas competitivas. Las licitaciones amañadas rara vez estaban tan cerca del límite, por lo que esto resta 10,9 puntos al índice.",
+  "The bid opening (개찰결과) states no lower award limit, or was not found: not assessable.": "La apertura de ofertas (개찰결과) no indica límite inferior de adjudicación, o no se encontró: no evaluable.",
+  "This tender states a lower award limit, so the gap to it scores the price instead (one price check per tender).": "Esta licitación indica un límite inferior de adjudicación, así que la distancia a este puntúa el precio en su lugar (una sola verificación de precio por licitación).",
+  ", floored at 0": ", con mínimo 0",
   "No reserve price or amount published: not assessable.": "Precio de reserva o importe no publicado: no evaluable.",
   "Supplier holds 25 % or more of the buyer’s yearly amount": "El proveedor concentra el 25 % o más del importe anual del comprador",
   "This supplier holds less than 25 % of the office’s yearly contract amount.": "Este proveedor concentra menos del 25 % del importe anual de contratos de la entidad.",
@@ -1527,8 +1535,12 @@ window.I18N_DICTS.es = {
    "Firmado antes de {a}: es la fecha de su primera modificación en los datos."
   ],
   [
-   "The contract amount is at least 95 % of the reserve price (예정가격). Among tenders the Fair Trade Commission found rigged it was 2.5 times as frequent as among the same contracting offices’ other contracts, at equal contract value. Lawful awards also come close to the reserve price. {a} points.",
-   "El importe del contrato es al menos el 95 % del precio de reserva (예정가격). Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas, era 2,5 veces más frecuente que entre los demás contratos de las mismas entidades contratantes, a igual importe del contrato. Las adjudicaciones lícitas también se acercan al precio de reserva. {a} puntos."
+   "The contract amount is between 92.2 % and 100 % of the reserve price (예정가격). Among tenders the Fair Trade Commission found rigged it was 3.1 times as frequent as among the same contracting offices’ other contracts, also at equal contract value. Lawful awards also come close to the reserve price. {a} points.",
+   "El importe del contrato está entre el 92,2 % y el 100 % del precio de reserva (예정가격). Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas, era 3,1 veces más frecuente que entre los demás contratos de las mismas entidades contratantes, también a igual importe del contrato. Las adjudicaciones lícitas también se acercan al precio de reserva. {a} puntos."
+  ],
+  [
+   "The winning bid is at least 0.97 percentage points (of the reserve price) above the tender’s lower award limit (낙찰하한율), where Korean bids usually cluster. Among tenders the Fair Trade Commission found rigged it was 3.7 times as frequent as among the same contracting offices’ other contracts. A bidder may also simply price higher. {a} points.",
+   "La oferta ganadora está al menos 0,97 puntos porcentuales (del precio de reserva) por encima del límite inferior de adjudicación de la licitación (낙찰하한율), donde suelen agruparse las ofertas coreanas. Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas, era 3,7 veces más frecuente que entre los demás contratos de las mismas entidades contratantes. Un licitador también puede simplemente ofertar más alto. {a} puntos."
   ],
   [
    "This supplier’s contracts make up at least 25 % of the contracting office’s contract amount for the signing year. Among rigged tenders 2 times as frequent as among the office’s other contracts, at equal contract value. A sole specialist supplier is often lawful. {a} points.",
