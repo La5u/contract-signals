@@ -19,7 +19,7 @@ normalize = load('normalize_korea_opnstd', 'tools/normalize-korea-opnstd.py')
 site_checks = load('korea_site_checks', 'tools/korea-site-checks.py')
 build_site = load('build_korea_site', 'tools/build-korea-site.py')
 bid_features = load('korea_bid_features', 'tools/korea-bid-features.py')
-CHECKS = site_checks.ko.CHECKS
+CHECKS = site_checks.SITE_CHECKS  # the published letters (korea-label-checks.CHECKS up to B7, then K7 and B12)
 
 
 def version(no, ord_, signed, amount, buyer, supplier='1208100001', **extra):
@@ -86,6 +86,7 @@ class KoreaSite(unittest.TestCase):
         self.assertEqual(got['W']['G3 buyer share >= 5 %'], 's')
         self.assertEqual(got['W']['N4 supplier dependence >= 25 %'], 's')
         self.assertEqual(got['W']['K6 award >= 95 % of reserve'], 'c')
+        self.assertEqual(got['W']['K7 award 92.2-100 % of reserve, no floor'], 'c')
 
     def test_bid_checks_from_the_contracts_opening(self):
         def bid(notice, ord_, firm, amount, reason='정상', won='N', minute='10:00', rate='90.0'):
@@ -96,11 +97,14 @@ class KoreaSite(unittest.TestCase):
                 bid('N1', '001', 'a', 1000, won='Y', minute='10:01'), bid('N1', '001', 'b', 1001, minute='10:01'),
                 bid('N1', '001', 'c', 950, reason='서류미제출'), bid('N1', '001', 'd', 960, reason='시공실적미만'),
                 bid('N1', '001', 'e', 980, reason='낙찰하한선 미달'), bid('N1', '001', 'f', 1100)]
-        got = self.checks([version('X', 0, '2025-04-20', 1000, 'A', notice_no='N1', notice_ord='001'),
+        got = self.checks([version('X', 0, '2025-04-20', 1000, 'A', notice_no='N1', notice_ord='001', reserve_price=1050),
                            version('Y', 0, '2025-04-20', 1000, 'A', notice_no='N9')], bids)
         x = {k.split(' ')[0]: v for k, v in got['X'].items()}
         self.assertEqual([x[k] for k in ('B1', 'B2', 'B3', 'B6', 'B7')], ['c', 'c', 's', 's', 's'])
         self.assertIn(x['B4'], 'cs')
+        # Won at 90.0 % against a stated floor of 89.95 %: 0.05 points above it, the near-floor side. 1000 / 1050 = 95.2 %
+        # would put K7 in range, but the floor is stated, so FLOOR-GAP alone scores the price.
+        self.assertEqual((x['B12'], x['K7']), ('c', 'u'))
         self.assertEqual({v for k, v in got['Y'].items() if k.startswith('B')}, {'u'})
 
     def test_bid_features(self):

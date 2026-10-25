@@ -165,7 +165,7 @@ window.I18N_DICTS.fr = {
   "Coverage and provenance (JSON)": "Couverture et provenance (JSON)",
   "Sources and how to verify": "Sources et comment vérifier",
   "Index and evidence labels": "Indice et étiquettes de preuve",
-  "0 · no threshold crossed in evaluated checks": "0 · aucun seuil franchi dans les contrôles évalués",
+  "0 · no threshold crossed in evaluated checks, or signals offset by evidence against": "0 · aucun seuil franchi dans les contrôles évalués, ou signaux compensés par des éléments contraires",
   "1–19 · low": "1–19 · faible",
   "20–39 · moderate": "20–39 · modérée",
   "40–69 · high": "40–69 · élevée",
@@ -803,8 +803,16 @@ window.I18N_DICTS.fr = {
   "Matching contracting institutions": "Entités contractantes correspondantes",
   "No contracting institution matches.": "Aucune entité contractante ne correspond.",
   "Korean checks were not computed for this record: it is shown for browsing and is not assessed.": "Les contrôles coréens n’ont pas été calculés pour cette fiche : elle est affichée pour consultation et n’est pas évaluée.",
-  "Award at 95 % or more of the reserve price": "Attribution à 95 % ou plus du prix de réserve",
-  "The contract amount is below 95 % of the reserve price.": "Le montant du contrat est inférieur à 95 % du prix de réserve.",
+  "No reserve price or amount published, or the tender states a lower award limit (the gap to it then scores the price): not assessable.": "Prix de réserve ou montant non publié, ou l’appel d’offres indique un seuil inférieur d’attribution (l’écart à ce seuil note alors le prix) : non évaluable.",
+  "Signals offset by evidence against": "Signaux compensés par des éléments contraires",
+  "· evidence against": "· élément contraire",
+  "Award at 92.2 % or more of the reserve price": "Attribution à 92,2 % ou plus du prix de réserve",
+  "The contract amount is below 92.2 % of the reserve price, or above it.": "Le montant du contrat est inférieur à 92,2 % du prix de réserve, ou le dépasse.",
+  "Winning bid well above the lower award limit": "Offre gagnante nettement au-dessus du seuil inférieur d’attribution",
+  "The winning bid is within 0.97 percentage points of the tender’s lower award limit (낙찰하한율), where competitive bids cluster. Rigged tenders were rarely this close to the floor, so this lowers the index by 10.9 points.": "L’offre gagnante est à moins de 0,97 point de pourcentage du seuil inférieur d’attribution de l’appel d’offres (낙찰하한율), où se regroupent les offres concurrentielles. Les appels d’offres truqués étaient rarement aussi proches du seuil : l’indice perd donc 10,9 points.",
+  "The bid opening (개찰결과) states no lower award limit, or was not found: not assessable.": "L’ouverture des offres (개찰결과) n’indique pas de seuil inférieur d’attribution, ou est introuvable : non évaluable.",
+  "This tender states a lower award limit, so the gap to it scores the price instead (one price check per tender).": "Cet appel d’offres indique un seuil inférieur d’attribution : l’écart à ce seuil note le prix à la place (une seule vérification de prix par appel d’offres).",
+  ", floored at 0": ", ramené à 0",
   "No reserve price or amount published: not assessable.": "Prix de réserve ou montant non publié : non évaluable.",
   "Supplier holds 25 % or more of the buyer’s yearly amount": "Le fournisseur détient 25 % ou plus du montant annuel de l’acheteur",
   "This supplier holds less than 25 % of the office’s yearly contract amount.": "Ce fournisseur détient moins de 25 % du montant annuel des contrats de l’entité.",
@@ -1527,8 +1535,12 @@ window.I18N_DICTS.fr = {
    "Signé avant {a} : c’est la date de sa première modification dans les données."
   ],
   [
-   "The contract amount is at least 95 % of the reserve price (예정가격). Among tenders the Fair Trade Commission found rigged it was 2.5 times as frequent as among the same contracting offices’ other contracts, at equal contract value. Lawful awards also come close to the reserve price. {a} points.",
-   "Le montant du contrat atteint au moins 95 % du prix de réserve (예정가격). Parmi les appels d’offres jugés truqués par la Commission de la concurrence (KFTC), ce cas était 2,5 fois plus fréquent que parmi les autres contrats des mêmes entités contractantes, à montant égal. Les attributions licites sont aussi proches du prix de réserve. {a} points."
+   "The contract amount is between 92.2 % and 100 % of the reserve price (예정가격). Among tenders the Fair Trade Commission found rigged it was 3.1 times as frequent as among the same contracting offices’ other contracts, also at equal contract value. Lawful awards also come close to the reserve price. {a} points.",
+   "Le montant du contrat est compris entre 92,2 % et 100 % du prix de réserve (예정가격). Parmi les appels d’offres jugés truqués par la Commission de la concurrence (KFTC), ce cas était 3,1 fois plus fréquent que parmi les autres contrats des mêmes entités contractantes, à montant égal également. Les attributions licites sont aussi proches du prix de réserve. {a} points."
+  ],
+  [
+   "The winning bid is at least 0.97 percentage points (of the reserve price) above the tender’s lower award limit (낙찰하한율), where Korean bids usually cluster. Among tenders the Fair Trade Commission found rigged it was 3.7 times as frequent as among the same contracting offices’ other contracts. A bidder may also simply price higher. {a} points.",
+   "L’offre gagnante dépasse d’au moins 0,97 point de pourcentage (du prix de réserve) le seuil inférieur d’attribution de l’appel d’offres (낙찰하한율), où se regroupent d’ordinaire les offres coréennes. Parmi les appels d’offres jugés truqués par la Commission de la concurrence (KFTC), ce cas était 3,7 fois plus fréquent que parmi les autres contrats des mêmes entités contractantes. Un soumissionnaire peut aussi simplement proposer un prix plus élevé. {a} points."
   ],
   [
    "This supplier’s contracts make up at least 25 % of the contracting office’s contract amount for the signing year. Among rigged tenders 2 times as frequent as among the office’s other contracts, at equal contract value. A sole specialist supplier is often lawful. {a} points.",

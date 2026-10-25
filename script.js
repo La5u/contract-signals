@@ -545,7 +545,7 @@ function startExplorer() {
   }
   function scoreChip(c) {
     const breakdown = getScoreBreakdown(c);
-    const level = scoreLevel(breakdown.score, hasIncompleteData(c));
+    const level = scoreLevel(breakdown.score, hasIncompleteData(c), breakdown.assessment.signals);
     const chip = element('span', breakdown.score == null ? 'Not assessed' : `${breakdown.score} / 100`, `score-chip level-${level.id}`);
     chip.title = `${level.label} — editorial index, not a probability nor legal gravity.`;
     return chip;
@@ -920,12 +920,18 @@ function startExplorer() {
       }
       why.append(triggered);
     } else if (!assessment.excludedReason) line(why, breakdown.score == null ? 'Not assessed: no check could be evaluated.' : 'No threshold crossed in the evaluated checks.');
+    // Clear checks with negative points (South Korea's FLOOR-GAP): evidence against, shown with what it subtracts.
+    for (const r of assessment.checks.filter(r => r.status === 'clear' && r.weight < 0)) {
+      line(why, null, element('strong', r.label), element('span', ' · evidence against', 'muted'),
+        element('span', ` · ${r.weight} pts, ${BASIS_NOTE[r.basis]}`, 'muted'), element('p', briefReason(r.reason)));
+    }
     if (breakdown.score != null) {
-      const parts = Object.entries(breakdown.families).filter(([, v]) => v > 0);
+      const parts = Object.entries(breakdown.families).filter(([, v]) => v !== 0);
       const summary = element('p', null, 'muted');
       if (parts.length) {
         summary.append(element('span', 'Index'), ` ${breakdown.score} = `);
-        parts.forEach(([k, v], i) => summary.append(i ? ' + ' : '', element('span', k), ` ${v}`));
+        parts.forEach(([k, v], i) => summary.append(i ? (v < 0 ? ' − ' : ' + ') : v < 0 ? '−' : '', element('span', k), ` ${Math.round(Math.abs(v) * 10) / 10}`));
+        if (parts.reduce((t, [, v]) => t + v, 0) < 0) summary.append(', floored at 0');
         summary.append('. ');
       }
       summary.append(element('span', `${assessment.evaluated} of ${assessment.applicable} applicable checks evaluated.`));
@@ -1087,7 +1093,7 @@ function startExplorer() {
     for (const r of assessment.checks) {
       const item = element('li', null, `check-${r.status}`);
       item.append(element('strong', r.label), ' — ', element('span', states[r.status]));
-      if (r.status === 'signal' && r.weight != null) item.append(' · ', element('span', `${r.weight} pts, ${BASIS_NOTE[r.basis]}`));
+      if (r.weight != null && (r.status === 'signal' || r.weight < 0)) item.append(' · ', element('span', `${r.weight} pts, ${BASIS_NOTE[r.basis]}`));
       item.append('. ', element('span', briefReason(r.reason), 'muted'));
       checks.append(item);
     }

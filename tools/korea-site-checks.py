@@ -11,7 +11,7 @@ office's contracts are read together, so totals, concentration and the three-yea
 (N5 is unknown in the data's first three years). Contracts whose original version is missing get unknown checks.
 
 Writes ~/.cache/contract-signals/korea/site-checks.tsv: contract number, then one letter per check in
-korea-label-checks.CHECKS order (s signal, c clear, u unknown), for every contract (the full history stays local
+SITE_CHECKS order (korea-label-checks.CHECKS up to B7, then K7 and B12) (s signal, c clear, u unknown), for every contract (the full history stays local
 for tuning; tools/build-korea-site.py publishes only its period). Private; reads only.
 """
 import argparse
@@ -28,6 +28,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import load  # noqa: E402
 
 ko = load('korea_checks', 'tools/korea-label-checks.py')
+# The published letters: korea-label-checks.CHECKS up to B7, then its price slot (K7, B12, 2026-10-25), the order
+# tools/build-korea-site.py expects. Research checks (B8-B11, N6/N7, A*, UA-*, BID-*) stay out until each is decided.
+SITE_CHECKS = ko.CHECKS[:ko.CHECKS.index('B7 same-minute bids') + 1] + ko.PRICE_CHECKS
 COLS = ['cntrct_no', 'ord', 'signed', 'method', 'amount', 'total_amount', 'business_type', 'buyer_code', 'demand_code',
         'supplier_bizrno', 'notice_no', 'notice_ord', 'legal_ref', 'reserve_price', 'term_type']
 QUERY = (f'SELECT {", ".join("v." + c for c in COLS)} FROM a.attrib t JOIN versions v ON v.cntrct_no = t.cntrct_no '
@@ -63,7 +66,7 @@ def work(job):
                 checks = ko.build_checks(contracts, first_year, bids)
                 for no, c in contracts.items():
                     result = checks(c)
-                    out.write(no + '\t' + ''.join(LETTER[result[k]['status']] for k in ko.CHECKS) + '\n')
+                    out.write(no + '\t' + ''.join(LETTER[result[k]['status']] for k in SITE_CHECKS) + '\n')
                 written += len(contracts)
             if i % 1000 == 0:
                 print(f'{part.name}: {i}/{len(buyers)} offices, {written} contracts, {time.time() - started:.0f} s', flush=True)
@@ -111,7 +114,7 @@ def main(argv=None):
             written = sum(pool.map(work, jobs, chunksize=1))
     staged = args.out.with_suffix('.part')
     with staged.open('w') as out:
-        out.write('# ' + '\t'.join(['contract'] + ko.CHECKS) + '\n')
+        out.write('# ' + '\t'.join(['contract'] + SITE_CHECKS) + '\n')
         for part in parts:
             with part.open() as f:
                 for line in f:

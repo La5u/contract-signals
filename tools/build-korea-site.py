@@ -38,7 +38,7 @@ COLUMNS = ['contractNo', 'date', 'dateIsFirstChange', 'name', 'demand', 'supplie
 # KR_CHECK_ORDER in checks-national.js must be a prefix of this: it reads the letters by position, so new checks are
 # appended (the bid-level B checks were, 2026-10-22).
 CHECK_ORDER = ['G2', 'G3', 'G4', 'G5', 'G6', 'N1', 'N2', 'N4', 'N5', 'U2', 'K1', 'K2', 'K3', 'K4', 'K5', 'K6',
-               'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7']
+               'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'K7', 'B12']
 KINDS = ['corporation', 'individual', 'public-body', 'association', 'foreign', 'unknown']
 LINK = 'https://www.g2b.go.kr/link/FIUA027_01/single/?ctrtNo={}&ctrtChgOrd={}&prcmBsneSeCd={}&srchName=ctrtCrst&openUrl=Y'
 

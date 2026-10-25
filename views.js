@@ -225,7 +225,7 @@ function buildProfile(contracts, role, key) {
     const name = (other === 'supplier' ? (supplierNames(c)[0] || c.supplier) : c.buyer) || 'not published';
     const entry = counterparts.get(name) || { name, contracts: 0, flagged: 0 };
     entry.contracts++;
-    if (getVigilanceScore(c) > 0) entry.flagged++;
+    if (getIndicators(c).length) entry.flagged++;
     counterparts.set(name, entry);
   }
   const currencies = {};
@@ -238,7 +238,7 @@ function buildProfile(contracts, role, key) {
   const dates = rows.map(c => c.date).filter(Boolean).sort();
   const scores = rows.map(getVigilanceScore);
   return { role, key, name: role === 'buyer' ? rows[0].buyer : (supplierNames(rows[0])[0] || rows[0].supplier), 
-    ids: new Set(rows.map(c => c.id)), contracts: rows.length, assessed: scores.filter(x => x != null).length, flagged: scores.filter(x => x > 0).length,
+    ids: new Set(rows.map(c => c.id)), contracts: rows.length, assessed: scores.filter(x => x != null).length, flagged: rows.filter(c => getIndicators(c).length).length,
     firstDate: dates[0] || null, lastDate: dates[dates.length - 1] || null, kinds: rate(rows), baseline: rate(scope), scopeSize: scope.length,
     counterparts: [...counterparts.values()].sort((a, b) => b.contracts - a.contracts || b.flagged - a.flagged || a.name.localeCompare(b.name)).slice(0, 10), currencies };
 }

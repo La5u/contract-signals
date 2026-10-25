@@ -135,7 +135,7 @@ const KIND_OF_CHECK = {
   'secop2-buyer-share': 'buyer-share', 'ua-direct-contract': 'direct-award',
   'kr-award-near-reserve': 'award-near-reserve', 'kr-supplier-dependence': 'supplier-dependence', 'kr-buyer-share': 'buyer-share',
   'kr-concentration': 'concentration', 'kr-restricted-competition': 'restricted-competition',
-  'kr-few-bidders': 'few-bidders', 'kr-bid-gap': 'bid-pattern', 'kr-bid-dispersion': 'bid-pattern',
+  'kr-few-bidders': 'few-bidders', 'kr-bid-gap': 'bid-pattern', 'kr-bid-dispersion': 'bid-pattern', 'kr-floor-gap': 'award-near-reserve',
   'short-bidding-period': 'short-bidding-period', 'late-publication': 'late-publication', 'notice-late-change': 'late-notice-change',
 };
 function indicatorKind(id) {
@@ -162,8 +162,9 @@ function hasIncompleteData(contract) {
   const a = getAssessment(contract);
   return Boolean(a.excludedReason) || a.unknown > 0 || a.unknownApplicability > 0;
 }
-function scoreLevel(score, incomplete = false) {
+function scoreLevel(score, incomplete = false, signals = 0) {
   if (score == null) return { id: 'unknown', label: 'Not assessed' };
+  if (score === 0 && signals) return { id: 'none', label: 'Signals offset by evidence against' };
   if (score === 0) return incomplete ? { id: 'unknown', label: 'Partial data' } : { id: 'none', label: 'No signal triggered' };
   if (score < 20) return { id: 'low', label: 'Low vigilance' };
   if (score < 40) return { id: 'moderate', label: 'Moderate vigilance' };
@@ -198,7 +199,7 @@ const EDITORIAL_MAX = 30;
 const MEASURED_CHECKS = new Set(['ua-single-offer', 'ua-direct-award', 'ua-direct-contract', 'ua-better-bid-disqualified',
   'ua-contract-amendments', 'ua-term-extension', 'ua-buyer-share', 'secop2-buyer-share', 'secop2-repeated-plurality',
   'kr-award-near-reserve', 'kr-supplier-dependence', 'kr-buyer-share', 'kr-concentration', 'kr-restricted-competition',
-  'kr-few-bidders', 'kr-bid-gap', 'kr-bid-dispersion']);
+  'kr-few-bidders', 'kr-bid-gap', 'kr-bid-dispersion', 'kr-floor-gap']);
 const MEASURED_CHECKS_BY_COUNTRY = { ROU: new Set(['ted-repeated-direct', 'ted-concentration']) };
 function pointsBasis(c, id) {
   return MEASURED_CHECKS.has(id) || (c.dataFamily === 'ted' && MEASURED_CHECKS_BY_COUNTRY[c.country]?.has(id)) ? 'measured' : 'editorial';
@@ -423,8 +424,10 @@ function getScoreBreakdown(contract) {
   const families = { competition: 0, execution: 0, transparency: 0 };
   // Other families (South Korea: price, concentration) are added when a check names them.
   for (const r of assessment.checks) if (r.status === 'signal') families[r.family] = Math.max(families[r.family] || 0, r.weight);
+  // A clear check with negative points (South Korea's FLOOR-GAP) offsets its family's largest signal; the index stays >= 0.
+  for (const r of assessment.checks) if (r.status === 'clear' && r.weight < 0) families[r.family] = (families[r.family] || 0) + r.weight;
   const total = Object.values(families).reduce((sum, v) => sum + v, 0);
-  const score = assessment.evaluated ? Math.round(Math.min(100, total) * 10) / 10 : null;
+  const score = assessment.evaluated ? Math.round(Math.max(0, Math.min(100, total)) * 10) / 10 : null;
   return { ...families, families, score, assessment };
 }
 function getVigilanceScore(contract) { return getScoreBreakdown(contract).score; }
