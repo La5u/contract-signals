@@ -164,7 +164,7 @@ function hasIncompleteData(contract) {
 }
 function scoreLevel(score, incomplete = false, signals = 0) {
   if (score == null) return { id: 'unknown', label: 'Not assessed' };
-  if (score === 0 && signals) return { id: 'none', label: 'Signals offset by evidence against' };
+  if (score === 0 && signals) return { id: 'offset', label: 'Signals offset by evidence against' };
   if (score === 0) return incomplete ? { id: 'unknown', label: 'Partial data' } : { id: 'none', label: 'No signal triggered' };
   if (score < 20) return { id: 'low', label: 'Low vigilance' };
   if (score < 40) return { id: 'moderate', label: 'Moderate vigilance' };
