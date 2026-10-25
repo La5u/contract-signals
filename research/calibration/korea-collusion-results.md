@@ -444,3 +444,27 @@ Plan: `korea-labels-plan.md` sections "One range per continuous indicator", "Two
   failed the one-per-case check). The negative offsets the other site families (the index sums family maxima); the
   index is floored at 0. Site letters K7 and B12 (`korea-label-checks.PRICE_CHECKS`); audit's two ranges stay off the
   site, which scores collusion labels only. The joint model replaces this.
+
+## Index check: does the site's Korean index rank rigged tenders higher? 2026-10-25 (research; nothing adopted)
+
+`tools/korea-index-check.py` scores the decision set (contracting office, collusion) with the site's rules
+(checks-national.js KR_CHECKS, family maxima summed, floored at 0) and compares buyer-weighted shares per index band;
+95 % intervals from 500 buyer bootstraps. "Old" is the index before the price slot (`92d9595`: K6 12.7, no negative
+points). In-sample: the points were chosen on these labels. Output
+`~/.cache/contract-signals/korea/index-check-2026-10-25.{txt,json}`.
+
+| Set | AUC new / old | Index ≥ 20: rigged vs comparisons, ratio | Index ≥ 30 | Index ≥ 40 |
+|---|---|---|---|---|
+| All linked tenders: 721 rigged (139 offices), 409,522 comparisons | 0.773 / 0.738 | 71.8 % vs 9.9 %, 7.2 [5.4, 10.5] | 42.7 % vs 3.3 %, 13.2 [8.9, 20.9] | 24.5 % vs 1.8 %, 13.7 [7.7, 32.0] |
+| One per case: 102 rigged (50 offices) | 0.776 / 0.777 | 42.7 % vs 9.9 %, 4.3 [2.7, 6.5] | 28.2 % vs 3.3 %, 8.7 [4.9, 15.0] | 11.0 % vs 1.8 %, 6.1 [1.6, 16.5] |
+| Bid opening found: 612 rigged (122 offices), 76,201 comparisons | 0.696 / 0.658 | 80.9 % vs 22.5 %, 3.6 [2.9, 4.5] | 49.9 % vs 16.4 %, 3.0 [2.3, 4.1] | 28.3 % vs 7.4 %, 3.8 [2.3, 7.2] |
+
+- Index 0: 3.3 % of rigged tenders vs 47.9 % of comparisons (all linked tenders).
+- A bid opening is on file for 85.2 % of rigged tenders but 16.0 % of comparisons (buyer-weighted). Not a download
+  gap: rigged tenders were signed 2010-2019 (about 90 %), where day files are complete. Most comparisons have no
+  opening at all (only 175,433 of 409,522 are competitive tenders with a notice). Comparisons without an opening
+  cannot get the B points, so part of the overall separation is the contract type. Within rows with an opening the
+  index separates much less (AUC 0.696), and band 20–29.9 (ratio 5.2) beats 30–39.9 (2.4): families may overlap once
+  bid data is present. The "bid opening found" row is the fairer measure for competitive tenders.
+- Separately, for the site: bid openings 2021-01..2024-08 were mostly missing, so those contracts could not get B
+  points. Backfill `bids/backfill2021.sh` started 2026-10-25; it barely changes this check (few labels after 2019).
