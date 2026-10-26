@@ -73,7 +73,10 @@ STD_CHECKS = [f'BID-COUNT {lo}' if lo == hi else f'BID-COUNT {lo}+' if hi > 10**
 # PRICE-RATIO's chosen range and FLOOR-GAP's cut, as tools/korea-curves.py measures them. B12 is clear below the cut,
 # which carries FLOOR-GAP's negative points; unknown without a stated floor. K7 is unknown wherever the opening states a
 # floor, also when its winning rate is missing, so the two never both score. Appended last so site letters stay.
-PRICE_CHECKS = ['K7 award 92.2-100 % of reserve, no floor', 'B12 win >= 0.97 points above floor']
+# FLOOR-GAP's cut: 0.97 on 2026-10-25 (cross-validated 0.9672), 1.01 since 2026-10-26 (1.00926 once the 2021-2024
+# openings were backfilled; korea-collusion-results.md, "Rerun on the backfilled bid openings").
+FLOOR_GAP_CUT = 1.01
+PRICE_CHECKS = ['K7 award 92.2-100 % of reserve, no floor', f'B12 win >= {FLOOR_GAP_CUT} points above floor']
 CHECKS += BID_CHECKS + NOTICE_CHECKS + ROUND_CHECKS + UA_CHECKS + STD_CHECKS + PRICE_CHECKS
 NOTICE_THRESHOLDS = (100_000_000, 200_000_000, 300_000_000, 1_000_000_000, 5_000_000_000,
                      10_000_000_000, 20_000_000_000, 30_000_000_000)
@@ -323,14 +326,15 @@ def bid_checks(o, refs, history=None):
 
 
 def price_checks(c, o):
-    """PRICE-RATIO in [0.922, 1) where no floor is stated, and FLOOR-GAP >= 0.97; FLOOR-GAP is null exactly where
+    """PRICE-RATIO in [0.922, 1) where no floor is stated, and FLOOR-GAP >= FLOOR_GAP_CUT; FLOOR-GAP is null exactly where
     korea-curves.py's measure is, PRICE-RATIO also where the opening states a floor."""
     st = status
     floor = o is not None and bool(o['lower_rate'])
     ratio = c['amount'] / float(c['reserve']) if c['reserve'] and c['amount'] and float(c['reserve']) > 0 else None
     gap = None if not floor or not o['winner_rate'] else o['winner_rate'] - o['lower_rate']
-    return {'K7 award 92.2-100 % of reserve, no floor': st(None if ratio is None or floor else 0.922 <= ratio < 1),
-            'B12 win >= 0.97 points above floor': st(None if gap is None else gap >= 0.97)}
+    k7, b12 = PRICE_CHECKS
+    return {k7: st(None if ratio is None or floor else 0.922 <= ratio < 1),
+            b12: st(None if gap is None else gap >= FLOOR_GAP_CUT)}
 
 
 def notice_checks(n):

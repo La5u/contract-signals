@@ -24,12 +24,14 @@ from common import load  # noqa: E402
 
 ko = load('korea_checks', 'tools/korea-label-checks.py')
 
-# checks-national.js KR_CHECKS (2026-10-25): check name -> (family, points when signal).
-NEW = {'B2 two or three bids': ('competition', 14.8), 'B5 large first gap': ('competition', 12.1),
-       'B4 low bid dispersion': ('competition', 4.5), 'K5 restricted competition': ('competition', 3.7),
+# checks-national.js KR_CHECKS (2026-10-26): check name -> (family, points when signal).
+NEW = {'B2 two or three bids': ('competition', 12.1), 'B5 large first gap': ('competition', 11.4),
+       'B7 same-minute bids': ('competition', 2.5), 'B4 low bid dispersion': ('competition', 0.9),
+       'K5 restricted competition': ('competition', 3.7),
        'N4 supplier dependence >= 25 %': ('concentration', 9.2), 'G3 buyer share >= 5 %': ('concentration', 8.4),
        'G4 concentration': ('concentration', 7.7)}
-K6, K7, B12 = 'K6 award >= 95 % of reserve', 'K7 award 92.2-100 % of reserve, no floor', 'B12 win >= 0.97 points above floor'
+K6 = 'K6 award >= 95 % of reserve'
+K7, B12 = ko.PRICE_CHECKS
 BANDS = [(0, 0), (0.1, 19.9), (20, 29.9), (30, 39.9), (40, 100)]
 THRESHOLDS = [10, 20, 30, 40]
 
@@ -44,7 +46,7 @@ def index(checks, version):
         if st(K6) == 'signal':
             fam['price'] = 12.7
     elif st(B12) in ('signal', 'clear'):
-        fam['price'] = 17.8 if st(B12) == 'signal' else -10.9
+        fam['price'] = 18.0 if st(B12) == 'signal' else -11.0
     elif st(K7) == 'signal':
         fam['price'] = 15.5
     return round(max(0.0, min(100.0, sum(fam.values()))), 1)
