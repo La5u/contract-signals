@@ -135,7 +135,8 @@ const KIND_OF_CHECK = {
   'secop2-buyer-share': 'buyer-share', 'ua-direct-contract': 'direct-award',
   'kr-award-near-reserve': 'award-near-reserve', 'kr-supplier-dependence': 'supplier-dependence', 'kr-buyer-share': 'buyer-share',
   'kr-concentration': 'concentration', 'kr-restricted-competition': 'restricted-competition',
-  'kr-few-bidders': 'few-bidders', 'kr-bid-gap': 'bid-pattern', 'kr-bid-dispersion': 'bid-pattern', 'kr-floor-gap': 'award-near-reserve',
+  'kr-few-bidders': 'few-bidders', 'kr-bid-gap': 'bid-pattern', 'kr-bid-dispersion': 'bid-pattern', 'kr-same-minute': 'bid-pattern',
+  'kr-floor-gap': 'award-near-reserve',
   'short-bidding-period': 'short-bidding-period', 'late-publication': 'late-publication', 'notice-late-change': 'late-notice-change',
 };
 function indicatorKind(id) {
@@ -199,7 +200,7 @@ const EDITORIAL_MAX = 30;
 const MEASURED_CHECKS = new Set(['ua-single-offer', 'ua-direct-award', 'ua-direct-contract', 'ua-better-bid-disqualified',
   'ua-contract-amendments', 'ua-term-extension', 'ua-buyer-share', 'secop2-buyer-share', 'secop2-repeated-plurality',
   'kr-award-near-reserve', 'kr-supplier-dependence', 'kr-buyer-share', 'kr-concentration', 'kr-restricted-competition',
-  'kr-few-bidders', 'kr-bid-gap', 'kr-bid-dispersion', 'kr-floor-gap']);
+  'kr-few-bidders', 'kr-bid-gap', 'kr-bid-dispersion', 'kr-same-minute', 'kr-floor-gap']);
 const MEASURED_CHECKS_BY_COUNTRY = { ROU: new Set(['ted-repeated-direct', 'ted-concentration']) };
 function pointsBasis(c, id) {
   return MEASURED_CHECKS.has(id) || (c.dataFamily === 'ted' && MEASURED_CHECKS_BY_COUNTRY[c.country]?.has(id)) ? 'measured' : 'editorial';

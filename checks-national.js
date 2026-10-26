@@ -10,30 +10,32 @@
 // inflated x1.3 (research/calibration/korea-buyer-share-size-results.md). The B checks read the tender's bid opening
 // (개찰결과, tools/korea-bid-features.py); unknown when it was not found. Checks without points are not shown.
 // Families (2026-10-24, owner: stopgap until a joint model sets how much each check adds when others fire):
-// competition (bids and restricted competition: B2, B4, B5, K5), price (B12 or K7) and concentration (G3, G4, N4).
+// competition (bids and restricted competition: B2, B4, B5, B7, K5), price (B12 or K7) and concentration (G3, G4, N4).
 // Only the heaviest signal of a family counts, so B5 does not add to B2 (B5 is mostly the few-bidders effect).
 // Price slot (owner 2026-10-25, korea-collusion-results.md "One range per indicator, counter-ranges and two ranges"):
 // one price check per tender. Where the bid opening states a lower award limit, FLOOR-GAP (B12) scores the price and
-// PRICE-RATIO (K7) is out of scope, since both measure a high price. B12 clear (a win within 0.97 points of the floor)
-// carries negative points, the one-per-case value -10.9 rather than -27.7 until a joint model (owner's choice); they
+// PRICE-RATIO (K7) is out of scope, since both measure a high price. B12 clear (a win within 1.01 points of the floor)
+// carries negative points, the one-per-case value -11 rather than -27.7 until a joint model (owner's choice); they
 // offset the other families' points, and the index is floored at 0. K6 (>= 95 %) gave way to K7's chosen range.
+// 2026-10-26: rerun on the backfilled 2021-2024 bid openings: FLOOR-GAP cut 0.97 -> 1.01 (17.8 -> 18, -10.9 -> -11); the
+// competition checks take their measured points (B2 14.8 -> 12.1, B5 12.1 -> 11.4, B4 4.5 -> 0.9) and B7 enters with 2.5.
 const KONEPS_NOT_ASSESSED = 'Korean checks were not computed for this record: it is shown for browsing and is not assessed.';
 const KR_CHECK_ORDER = ['G2', 'G3', 'G4', 'G5', 'G6', 'N1', 'N2', 'N4', 'N5', 'U2', 'K1', 'K2', 'K3', 'K4', 'K5', 'K6',
   'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'K7', 'B12'];
 const KR_NO_OPENING = 'The tender’s bid opening (개찰결과) was not found: not assessable.';
 const KR_CHECKS = [
-  ['B2', 'competition', 'kr-few-bidders', 'Only two or three bids', 14.8,
-    'Two or three bids were opened in this tender (개찰결과). Among tenders the Fair Trade Commission found rigged it was 3 times as frequent as among the same contracting offices’ other contracts, also at equal contract value. Specialised or small markets often draw few bidders lawfully.',
+  ['B2', 'competition', 'kr-few-bidders', 'Only two or three bids', 12.1,
+    'Two or three bids were opened in this tender (개찰결과). Among tenders the Fair Trade Commission found rigged it was 2.5 times as frequent as among the same contracting offices’ other contracts, also at equal contract value. Specialised or small markets often draw few bidders lawfully.',
     'One bid, or four or more bids, were opened.', KR_NO_OPENING],
-  ['B12', 'price', 'kr-floor-gap', 'Winning bid well above the lower award limit', 17.8,
-    'The winning bid is at least 0.97 percentage points (of the reserve price) above the tender’s lower award limit (낙찰하한율), where Korean bids usually cluster. Among tenders the Fair Trade Commission found rigged it was 3.7 times as frequent as among the same contracting offices’ other contracts. A bidder may also simply price higher.',
-    'The winning bid is within 0.97 percentage points of the tender’s lower award limit (낙찰하한율), where competitive bids cluster. Rigged tenders were rarely this close to the floor, so this lowers the index by 10.9 points.',
-    'The bid opening (개찰결과) states no lower award limit, or was not found: not assessable.', -10.9],
+  ['B12', 'price', 'kr-floor-gap', 'Winning bid well above the lower award limit', 18,
+    'The winning bid is at least 1.01 percentage points (of the reserve price) above the tender’s lower award limit (낙찰하한율), where Korean bids usually cluster. Among tenders the Fair Trade Commission found rigged it was 3.7 times as frequent as among the same contracting offices’ other contracts. A bidder may also simply price higher.',
+    'The winning bid is within 1.01 percentage points of the tender’s lower award limit (낙찰하한율), where competitive bids cluster. Rigged tenders were rarely this close to the floor, so this lowers the index by 11 points.',
+    'The bid opening (개찰결과) states no lower award limit, or was not found: not assessable.', -11],
   ['K7', 'price', 'kr-award-near-reserve', 'Award at 92.2 % or more of the reserve price', 15.5,
     'The contract amount is between 92.2 % and 100 % of the reserve price (예정가격). Among tenders the Fair Trade Commission found rigged it was 3.1 times as frequent as among the same contracting offices’ other contracts, also at equal contract value. Lawful awards also come close to the reserve price.',
     'The contract amount is below 92.2 % of the reserve price, or above it.', 'No reserve price or amount published, or the tender states a lower award limit (the gap to it then scores the price): not assessable.'],
-  ['B5', 'competition', 'kr-bid-gap', 'Large gap between the two lowest bids', 12.1,
-    'The gap between the two lowest valid bids is large against the spread of the other valid bids (above the 90th percentile for this business type and year), the pattern cover bids placed above an agreed winner leave. Among rigged tenders 2.8 times as frequent as among the offices’ other contracts. It also arises by chance.',
+  ['B5', 'competition', 'kr-bid-gap', 'Large gap between the two lowest bids', 11.4,
+    'The gap between the two lowest valid bids is large against the spread of the other valid bids (above the 90th percentile for this business type and year), the pattern cover bids placed above an agreed winner leave. Among rigged tenders 2.5 times as frequent as among the offices’ other contracts. It also arises by chance.',
     'The gap between the two lowest valid bids is within the usual range.', 'Fewer than three valid bids, or the bid opening (개찰결과) was not found: not assessable.'],
   ['N4', 'concentration', 'kr-supplier-dependence', 'Supplier holds 25 % or more of the buyer’s yearly amount', 9.2,
     'This supplier’s contracts make up at least 25 % of the contracting office’s contract amount for the signing year. Among rigged tenders 2 times as frequent as among the office’s other contracts, at equal contract value. A sole specialist supplier is often lawful.',
@@ -44,8 +46,11 @@ const KR_CHECKS = [
   ['G4', 'concentration', 'kr-concentration', 'Concentrated awards within a business type', 7.7,
     'This supplier won at least 60 % of the contracting office’s contracts of this business type in the signing year (10 or more contracts). Among rigged tenders 1.9 times as frequent as among the office’s other contracts.',
     'The supplier holds less than 60 % of the office’s contracts of this type that year.', 'Fewer than 10 contracts of this type at the office that year, or no supplier number: not assessable.'],
-  ['B4', 'competition', 'kr-bid-dispersion', 'Bid amounts unusually close together', 4.5,
-    'The valid bids are unusually close to one another (coefficient of variation below the 10th percentile for this business type and year). Among rigged tenders 1.7 times as frequent as among the offices’ other contracts. Korean bids cluster near the lower award limit by design, so this is a weak signal.',
+  ['B7', 'competition', 'kr-same-minute', 'Bids submitted in the same minute', 2.5,
+    'At least two bids in this tender (2 to 20 bids) were submitted in the same minute, as when one party enters several bids. Among rigged tenders 1.5 times as frequent as among the offices’ other contracts. Bids also bunch lawfully before a deadline.',
+    'No two bids were submitted in the same minute, or the tender drew one bid or more than 20.', KR_NO_OPENING],
+  ['B4', 'competition', 'kr-bid-dispersion', 'Bid amounts unusually close together', 0.9,
+    'The valid bids are unusually close to one another (coefficient of variation below the 10th percentile for this business type and year). Among rigged tenders 1.3 times as frequent as among the offices’ other contracts. Korean bids cluster near the lower award limit by design, so this is a weak signal.',
     'The valid bids are spread as usual.', 'Fewer than three valid bids, or the bid opening (개찰결과) was not found: not assessable.'],
   ['K5', 'competition', 'kr-restricted-competition', 'Restricted or nominated competition', 3.7,
     'Awarded by restricted (제한경쟁) or nominated (지명경쟁) competition, which limits who may bid. Among rigged tenders 1.4 times as frequent as among the office’s other contracts. Restrictions are often lawful (region, licence, performance record).',
