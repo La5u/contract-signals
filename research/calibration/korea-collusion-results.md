@@ -468,3 +468,23 @@ points). In-sample: the points were chosen on these labels. Output
   bid data is present. The "bid opening found" row is the fairer measure for competitive tenders.
 - Separately, for the site: bid openings 2021-01..2024-08 were mostly missing, so those contracts could not get B
   points. Backfill `bids/backfill2021.sh` started 2026-10-25; it barely changes this check (few labels after 2019).
+
+### Rerun 2026-10-26: measured points, B7, backfilled bid openings
+
+Same check after `7c4fcc5`: points measured on the backfilled bid openings (B12 floor gap ≥ 1.01: +18, closer: −11;
+B2 12.1, B5 11.4, B4 0.9, B7 2.5) and the backfill, which raised the comparisons' opening share from 16.0 % to 28.5 %
+(rigged 85.2 %, unchanged). "Old" is still `92d9595`, now scored on the same backfilled openings. Output
+`~/.cache/contract-signals/korea/rerun-1026/index-check-final.{txt,json}`.
+
+| Set | AUC new / old | Index ≥ 20: rigged vs comparisons, ratio | Index ≥ 30 | Index ≥ 40 |
+|---|---|---|---|---|
+| All linked tenders: 721 rigged (139 offices), 409,522 comparisons | 0.761 / 0.691 | 70.7 % vs 11.3 %, 6.3 [4.8, 8.7] | 38.4 % vs 4.9 %, 7.8 [5.0, 13.0] | none |
+| One per case: 102 rigged (50 offices) | 0.763 / 0.700 | 42.2 % vs 11.3 %, 3.7 [2.3, 5.5] | 22.3 % vs 4.9 %, 4.5 [2.2, 8.4] | none |
+| Bid opening found: 612 rigged (122 offices), 143,875 comparisons | 0.712 / 0.644 | 79.7 % vs 21.9 %, 3.6 [2.9, 4.6] | 44.2 % vs 13.8 %, 3.2 [2.3, 4.6] | none |
+
+- The maximum is now 39.3, so no contract reaches 40. Index 0: 3.3 % of rigged tenders vs 49.5 % of comparisons.
+- Against the 2026-10-25 run the overall AUC falls (0.773 → 0.761) and the top band weakens (≥ 30: 13.2 → 7.8),
+  but that run had far fewer comparison openings; on the same data the new points beat the old ones in every set
+  (AUC +0.06 to +0.07). Within rows with an opening, AUC rises from 0.696 to 0.712.
+- Still not monotone where bids are on file: band 20–29.9 (ratio 4.4) beats 30–39.9 (3.2). The family maxima still
+  appear to overlap once bid data is present; the joint model is the fix.
