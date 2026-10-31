@@ -3,7 +3,7 @@
 # Chromium (BROWSER below); skip those with NO_BROWSER=1.
 set -e
 cd "$(dirname "$0")/.."
-BROWSER="browser korea-global"
+BROWSER="browser korea-top"
 for f in tests/*.cjs; do
   t=$(basename "$f" .cjs)
   case " $BROWSER " in *" $t "*) continue ;; esac

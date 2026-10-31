@@ -72,14 +72,48 @@ def floor_gap(c, ctx):
     return o['winner_rate'] - o['lower_rate']
 
 
+def group_measure(column):
+    """G1-G10 of tools/korea-group-measures.py (plan 2026-10-26) for the contract's opening, from --group."""
+    def measure(c, ctx):
+        o = ctx['opening'](c)
+        if o is None:
+            return None
+        row = ctx['group'].get((str(o['notice']), str(o['ord']).zfill(3)))
+        return row.get(column) if row else None
+    return measure
+
+
+GROUP_COLUMNS = {'G1-CO-BID': 'G1', 'G2-ROTATION': 'G2', 'G3-COVER': 'G3', 'G4-TURF': 'G4', 'G5-STABLE-GAP': 'G5',
+                 'G6-FUTILE': 'G6', 'G7-PICK-MATCH': 'G7', 'G9-SHARED-CONTACT': 'G9', 'G10-CONSORTIUM': 'G10',
+                 # Pairs (plan 2026-10-27), from tools/korea-group-pairs.py.
+                 'P1-COVER': 'P1', 'P2-COMPLEMENT': 'P2', 'P3-PLANNED-LOSERS': 'P3', 'P4-ONE-HAND': 'P4',
+                 'P5-ONE-OFFICE': 'P5', 'P6-PARTNERS': 'P6'}
+# Plan 2026-10-26: these rise or fall with the number of bidders; the bidder-count-controlled points are the decision.
+BIDDER_LIKE = {'G1-CO-BID', 'G2-ROTATION', 'G3-COVER', 'G5-STABLE-GAP', 'G6-FUTILE', 'G7-PICK-MATCH', 'G9-SHARED-CONTACT',
+               'P1-COVER', 'P2-COMPLEMENT', 'P3-PLANNED-LOSERS', 'P4-ONE-HAND', 'P5-ONE-OFFICE', 'P6-PARTNERS'}
+
 # name: (function, size-like). Size-like measures contain the contract amount: value-band control (plan 2026-10-25).
 MEASURES = {'PRICE-RATIO': (price_ratio, False), 'BUYER-SHARE': (buyer_share, True),
             'SUPPLIER-DEPENDENCE': (supplier_dependence, True), 'AMEND-PRICE': (amend_price, False),
-            'FLOOR-GAP': (floor_gap, False)}
-NEEDS_BIDS = {'FLOOR-GAP'}
+            'FLOOR-GAP': (floor_gap, False),
+            **{name: (group_measure(col), False) for name, col in GROUP_COLUMNS.items()}}
+NEEDS_BIDS = {'FLOOR-GAP', *GROUP_COLUMNS}
 
 
-def context(contracts, bids=None):
+def read_group(path):
+    """measures.tsv of tools/korea-group-measures.py -> {(notice, ord): {column: value}}; empty cells are unknown."""
+    out = {}
+    if not path:
+        return out
+    with open(path, encoding='utf-8') as f:
+        head = f.readline().rstrip('\n').split('\t')
+        for line in f:
+            v = line.rstrip('\n').split('\t')
+            out[(v[0], v[1])] = {k: float(x) for k, x in zip(head[2:], v[2:]) if x != ''}
+    return out
+
+
+def context(contracts, bids=None, group=None):
     """Buyer-year totals over original versions, as build_checks in korea-label-checks.py; the contract's opening
     (the B checks' choice, korea-label-checks.Bids.opening) when bids are given."""
     total, by_supplier = defaultdict(float), defaultdict(float)
@@ -89,14 +123,21 @@ def context(contracts, bids=None):
             if c['supplier']:
                 by_supplier[(c['buyer'], c['year'], c['supplier'])] += c['amount']
     opening = (lambda c: bids.opening(c['notice'], c.get('notice_ord', '')) if c['notice'] else None) if bids else (lambda c: None)
-    return {'total': total, 'by_supplier': by_supplier, 'opening': opening}
+    return {'total': total, 'by_supplier': by_supplier, 'opening': opening, 'group': group or {}}
 
 
-def make_checks(names, bids_path=None):
+def make_checks(names, bids_path=None, group_path=None):
     def make(contracts):
         bids = lc.Bids(bids_path, Path('/nonexistent')) if bids_path and NEEDS_BIDS & set(names) else None
-        ctx = context(contracts, bids)
-        return lambda c: {**{n: MEASURES[n][0](c, ctx) for n in names}, '_amount': c['amount']}
+        ctx = context(contracts, bids, read_group(group_path) if set(GROUP_COLUMNS) & set(names) else None)
+
+        def check(c):
+            out = {**{n: MEASURES[n][0](c, ctx) for n in names}, '_amount': c['amount']}
+            if bids:
+                o = ctx['opening'](c)
+                out['_bids'] = o['bids'] if o is not None else None
+            return out
+        return check
     return make
 
 
@@ -129,16 +170,29 @@ class Data:
         self.amount = amount
         self.band = np.array([bc.band(a / bc.OVERPRICING if l else a, bc.VALUE_EDGES) for a, l in zip(amount, self.lab)])
         self.mult = np.ones(len(self.x))
+        self.bidbin = np.array([bc.bidder_bin(r['checks'].get('_bids')) for r in rows if r['checks'][measure] is not None])
 
-    def size_reweight(self):
-        nband = len(bc.VALUE_EDGES) + 1
+    def reweight(self, strata, n):
+        """Comparisons reweighted to the labels' buyer-weighted mix over strata (ints < n); labels keep 1."""
         one = np.ones(len(self.x))
-        hl, _ = bw_hist(self, self.band, nband, self.lab, one)
-        hc, _ = bw_hist(self, self.band, nband, ~self.lab, one)
+        hl, _ = bw_hist(self, strata, n, self.lab, one)
+        hc, _ = bw_hist(self, strata, n, ~self.lab, one)
         pl, pc = hl / hl.sum(), hc / hc.sum()
         r = np.divide(pl, pc, out=np.zeros_like(pl), where=pc > 0)
-        self.mult = np.where(self.lab, 1.0, r[self.band])
+        self.mult = np.where(self.lab, 1.0, r[strata])
+        return pl, pc
+
+    def size_reweight(self):
+        pl, pc = self.reweight(self.band, len(bc.VALUE_EDGES) + 1)
         return {'label_bands': pl.round(3).tolist(), 'comparison_bands': pc.round(3).tolist()}
+
+    def bidder_reweight(self):
+        """Amendment 2026-10-26: bidder-like measures choose their range against comparisons with the labels' mix of
+        bidder-count bins (korea-bid-controls.py BIDDER_BINS), so the choice is made under the deciding control."""
+        names = sorted(set(self.bidbin))
+        idx = {b: i for i, b in enumerate(names)}
+        pl, pc = self.reweight(np.array([idx[b] for b in self.bidbin]), len(names))
+        return {'bins': names, 'labels': pl.round(3).tolist(), 'comparisons': pc.round(3).tolist()}
 
     def cells(self, edges):
         return np.searchsorted(edges, self.x, side='right')
@@ -346,6 +400,14 @@ def value_controlled(d, lo, hi, check):
     return bc.analyse(units, check, ['value'], pp.SEED)
 
 
+def bidders_controlled(d, lo, hi, check):
+    """The range rated with the bidder-count control of tools/korea-bid-controls.py (its BIDDER_BINS)."""
+    inr = (d.x >= lo) & (d.x < hi)
+    units = [(int(b), bool(l), float(w), 'signal' if s else 'clear', {'bidders': n})
+             for b, l, w, s, n in zip(d.buyer, d.lab, d.w, inr, d.bidbin)]
+    return bc.analyse(units, check, ['bidders'], pp.SEED)
+
+
 def fmt_x(v):
     return f'{v:.4g}' if abs(v) < 10 else f'{v:,.0f}'
 
@@ -405,6 +467,10 @@ def curve(rows, measure, size_like=False, two_range=(), counter=()):
     if sizes:
         print(f"\nSize-like: comparisons reweighted within buyer to the labels' value bands (labels / {bc.OVERPRICING}); "
               f"bands labels {sizes['label_bands']}, comparisons {sizes['comparison_bands']}")
+    bidmix = d.bidder_reweight() if measure in BIDDER_LIKE else None
+    if bidmix:
+        print(f"\nBidder-like (amendment 2026-10-26): range chosen against comparisons reweighted to the labels' bidder-count "
+              f"bins {bidmix['bins']}: labels {bidmix['labels']}, comparisons {bidmix['comparisons']}")
     pct = np.unique(np.quantile(d.comp_x, np.arange(1, 100) / 100))
     cell, ncell = d.cells(pct), len(pct) + 1
     bound = lambda i, lower: (-np.inf if i == 0 else float(pct[i - 1])) if lower else (np.inf if i == ncell else float(pct[i - 1]))
@@ -435,7 +501,7 @@ def curve(rows, measure, size_like=False, two_range=(), counter=()):
     out['range'] = {'cv_best': [lo, hi], 'cv_loss': float(m[ci, cj]), 'gain': gain_mean, 'gain_se': gain_se, 'accepted': accepted,
                     'folds': [[bound(i, True), bound(j, False)] for i, j in folds],
                     'bootstrap_lower_2.5_50_97.5': qlo.tolist(), 'bootstrap_upper_2.5_50_97.5': qhi.tolist(), 'bootstrap_open_lower': open_lo,
-                    'bootstrap_open_upper': open_hi, 'size_bands': sizes}
+                    'bootstrap_open_upper': open_hi, 'size_bands': sizes, 'bidder_mix': bidmix}
     verdict = 'accepted' if accepted else 'NOT accepted: no better than no split, 0 points'
     print(f'\nOne range (cross-validated): {measure} in {show(lo, hi)}; nested held-out gain over no split {gain_mean:.4f} '
           f'(SE {gain_se:.4f}): {verdict}; per training fold '
@@ -456,6 +522,15 @@ def curve(rows, measure, size_like=False, two_range=(), counter=()):
         print(f"\nValue-band control ({role}): observed {vc['observed']:.1f} / expected {vc['expected']:.1f}, "
               f"LR {vc['lr']:.2f} [{vc['lr_ci'][0]:.2f}, {vc['lr_ci'][1]:.2f}] -> {vc['points'] if accepted else 0:g} points{fell}"
               f"{'' if accepted else ' (range not accepted)'}")
+    if measure in GROUP_COLUMNS:
+        bcn = bidders_controlled(d, lo, hi, f'{measure} range')
+        out['range']['bidders_controlled'] = bcn
+        if bcn:
+            role = 'decision' if measure in BIDDER_LIKE else 'reported'
+            fell = f" ({bcn['fell_back']} labels fell back to no control)" if bcn['fell_back'] else ''
+            print(f"\nBidder-count control ({role}): observed {bcn['observed']:.1f} / expected {bcn['expected']:.1f}, "
+                  f"LR {bcn['lr']:.2f} [{bcn['lr_ci'][0]:.2f}, {bcn['lr_ci'][1]:.2f}] -> {bcn['points'] if accepted else 0:g} points{fell}"
+                  f"{'' if accepted else ' (range not accepted)'}")
     if measure in two_range:
         out['two_ranges'] = two_ranges(d, rows, measure, one_gain_by_fold)
     if measure in counter:
@@ -471,8 +546,9 @@ def main():
     p.add_argument('--family', choices=('collusion', 'corruption', 'both'), default='collusion')
     p.add_argument('--court-links', type=Path, default=lc.BASE / 'prec/extract/links.jsonl',
                    help='corruption labels in the court-matcher format (bai/links.jsonl for audit findings)')
-    p.add_argument('--bids', type=Path, default=lc.BASE / 'bid-features-2026-10-24.sqlite',
+    p.add_argument('--bids', type=Path, default=lc.BASE / 'bid-features-2026-10-28.sqlite',
                    help='tools/korea-bid-features.py output, for FLOOR-GAP')
+    p.add_argument('--group', type=Path, help='measures.tsv of tools/korea-group-measures.py, for G1-G10')
     p.add_argument('--two-ranges', default='', help='measures that also get the two-range test (plan 2026-10-25: audit PRICE-RATIO)')
     p.add_argument('--counter', default='', help='measures that also get a counter-range (plan 2026-10-25)')
     p.add_argument('--json', type=Path)
@@ -480,7 +556,7 @@ def main():
     names = args.measures.split(',')
     two = args.two_ranges.split(',') if args.two_ranges else ()
     counters = args.counter.split(',') if args.counter else ()
-    rows, key_col, _ = lc.prepare(args, make_checks(names, args.bids))
+    rows, key_col, _ = lc.prepare(args, make_checks(names, args.bids, args.group))
     every = lambda c: True
     sets = {'weighted, all linked tenders, all contracts (decision basis)': lambda: rows(every, True),
             'weighted, one per case, all contracts (robustness)': lambda: lc.one_per_case(rows(every, True))}

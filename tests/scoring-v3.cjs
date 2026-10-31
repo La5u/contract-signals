@@ -3,9 +3,18 @@ const ctx=vm.createContext({URL});require('../tools/engine.cjs').load(ctx);
 const run=(fn,...args)=>{ctx.args=args;return vm.runInContext(`${fn}(...args)`,ctx);};
 let checks=0;const check=(v,message)=>{assert.ok(v,message);checks++;};
 const base={id:'test',buyer:'Buyer',description:'Test',dataStatus:'verified',amount:null,offers:null,durationMonths:null,directAward:null};
-const score=c=>run('getVigilanceScore',c);
 const assessment=c=>run('getAssessment',c);
-const rule=(c,id)=>assessment(c).checks.find(r=>r.id===id);
+// Score 4.0: French checks were never measured on French labels; they borrow 0 points (single offer, direct award,
+// repeated awards, concentration, amount increase) or are context (late publication, long duration, short bidding
+// period), so the index of every assessed French record is 0 (×1.0). These tests keep checking the checks' own
+// logic through their check-file weights: score() is the 3.x family-max sum of checkWeight, index() the 4.0 index.
+const index=c=>run('getVigilanceScore',c);
+const score=c=>{const a=assessment(c);if(!a.evaluated)return null;const f={};
+ for(const r of a.checks){if(r.status==='signal')f[r.family]=Math.max(f[r.family]||0,r.checkWeight);if(r.status==='clear'&&r.weight<0)f[r.family]=(f[r.family]||0)+r.weight;}
+ return Math.round(Math.max(0,Math.min(100,Object.values(f).reduce((t,v)=>t+v,0)))*10)/10;};
+const rule=(c,id)=>{const r=assessment(c).checks.find(r=>r.id===id);return r&&r.status==='signal'?{...r,weight:r.checkWeight}:r;};
+check(index({...base,directAward:false,offers:1})===0&&assessment({...base,directAward:false,offers:1}).checks.find(r=>r.id==='single-bid').basis==='borrowed','4.0: French single bid borrows 0');
+check(index({...base,directAward:false})===0&&index(base)===null,'4.0: zero still requires an evaluated check');
 check(score(base)===null,'unknown is not zero');
 check(assessment(base).evaluated===0);
 check(score({...base,directAward:false})===0,'zero requires evaluated negative check');
@@ -104,7 +113,8 @@ check(run('selectContracts',[oneFamily,twoFamilies],{sort:'score-asc'}).map(r=>r
 const weaker=tie('a-weak',{directAward:false,offers:1,durationMonths:300});                    // competition 12 + execution 14 = 26
 const stronger=tie('z-strong',{directAward:true,amount:50000,publicationDate:'2024-05-01'});    // competition 18 + transparency 8 = 26
 check(score(weaker)===26&&score(stronger)===26);
-check(run('selectContracts',[weaker,stronger],{sort:'score'}).map(r=>r.id).join()==='z-strong,a-weak','same families: strongest single signal first');
+// 4.0: the strongest single signal is compared on index points; French signals carry none, so the id decides.
+check(run('selectContracts',[weaker,stronger],{sort:'score'}).map(r=>r.id).join()==='a-weak,z-strong','same families, no weight: id order');
 const twin=tie('a-twin',{directAward:true,amount:50000,publicationDate:'2024-05-01'});
 check(run('selectContracts',[stronger,twin],{sort:'score'}).map(r=>r.id).join()==='a-twin,z-strong','then id');
 const unknownRow=tie('0-unknown',{});
@@ -133,7 +143,9 @@ for(const file of datasets){
   check(pos===-1||sorted.slice(pos).every(r=>score(r)===null),'unknown last both directions');
  }
  check(run('selectContracts',rows,{assessment:'unevaluated'}).length===exp[0]);
- check(run('selectContracts',rows,{assessment:'zero'}).length===exp[1]);
+ // 4.0: no French signal carries weight, so every assessed record sits at ×1.0 and the zero filter holds the flagged ones too.
+ check(rows.every(r=>index(r)===null||index(r)===0));
+ check(run('selectContracts',rows,{assessment:'zero'}).length===exp[1]+exp[2]);
  check(run('selectContracts',rows,{flagged:true}).length===exp[2]);
  if(file==='contracts'){
   check(run('selectContracts',rows,{official:true}).length===8);

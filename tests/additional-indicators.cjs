@@ -21,9 +21,10 @@ const run = harness();
 const c = { id:'synthetic', dataFamily:'decp', dataStatus:'verified', buyer:'Synthetic', description:'Synthetic', supplierIds:[], indicatorEvidence:fixtures };
 const additional = run('getAdditionalIndicatorChecks', c);
 assert.deepEqual(Array.from(additional, r => r.weight), [8,8,8,8,8]);
-assert.equal(run('getScoreBreakdown',c).execution,8);
-assert.equal(run('getScoreBreakdown',c).competition,8);
-assert.equal(run('getVigilanceScore',c),16);
+// Score 4.0: the five evidence checks were never measured on labelled cases, so they are context with no weight.
+const scored = run('computeAssessment',c).checks.filter(r => Object.hasOwn(fixtures,r.id));
+assert.deepEqual(Array.from(scored, r => [r.checkWeight, r.weight, r.basis]), Array(5).fill([8,0,'context']));
+assert.equal(run('getVigilanceScore',c),0);
 for (const id of Object.keys(fixtures)) {
   assert.equal(run('selectContracts',[c],{indicator:id}).length,1);
   assert.equal(run('indicatorKind',id),id);

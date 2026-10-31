@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Research only: extract the rigged tenders of KFTC bid-rigging decisions with Sol, then check what it wrote.
+"""Research only: extract the rigged tenders of KFTC bid-rigging decisions with Terra, then check what it wrote.
 
 Input: ~/.cache/contract-signals/korea/ftc/images/<serial>/ (decision.txt + img*.png, tools/fetch-korea-kftc-images.py).
 Per decision, the files are copied to ftc/extract/<serial>/ and `sol -w -m <model> -C` that copy is asked to write meta.json and
 tenders.jsonl there (files, not its answer, so long tender lists are not cut). Tesseract cannot read the table grids;
-Sol reads the images. Resumable: decisions with a status.json are skipped (--redo-failed retries failed ones).
-Stops every worker when Sol reports its usage limit (exit 75); rerun after the reset.
+the model reads the images (Terra by default since 2026-10-27; the 2007+ decisions were read with Sol). Resumable: decisions with a status.json are skipped (--redo-failed retries failed ones).
+Stops every worker when Codex reports its usage limit (exit 75); rerun after the reset.
 
 `--backend app-server` (default) runs every worker's thread in one `codex app-server --stdio` process instead of a
 ~250 MB `codex exec` per worker, so many more can run at once; a thread that answers without writing the files is
@@ -378,7 +378,7 @@ def check(out):
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     parser.add_argument('--workers', type=int, default=4)
-    parser.add_argument('--model', default='gpt-6.1-sol', help='Codex model, e.g. gpt-6-luna')
+    parser.add_argument('--model', default='gpt-6.1-terra', help='Codex model, e.g. gpt-6.1-sol, gpt-6-luna')
     parser.add_argument('--backend', choices=['app-server', 'sol'], default='app-server')
     parser.add_argument('--effort', default='medium')
     parser.add_argument('--out', type=Path, default=BASE / 'extract')
@@ -411,7 +411,7 @@ def main():
     with ThreadPoolExecutor(args.workers) as pool:
         list(pool.map(task, todo))
     if stop.is_set():
-        sys.exit('stopped: Sol usage limit reached; rerun after the reset')
+        sys.exit('stopped: Codex usage limit reached; rerun after the reset')
     check(args.out)
 
 

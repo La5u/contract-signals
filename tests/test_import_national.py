@@ -38,6 +38,8 @@ class TedTests(unittest.TestCase):
                     rows, _ = ted.notice_rows(ted.COHORTS[key], pub, gzip.decompress((ted.raw_dir(key) / "notices" / f"{pub}.xml.gz").read_bytes()))
                     # "_listing" is the importer's internal republication key, removed before writing.
                     built.update({r["id"]: {k: v for k, v in r.items() if k != "_listing"} for r in rows})
+            if key == "romania":   # SEAP buyer-year totals, attached by the importer (score 3.9)
+                ted.seap_totals(list(built.values()))
             published = json.loads((ROOT / f"data/ted-{key}.json").read_text(encoding="utf-8"))
             for row in published:
                 self.assertEqual(row, built[row["id"]], row["id"])

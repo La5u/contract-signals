@@ -10,7 +10,9 @@ function tally(rows) {
     assert.equal(a.checks.length, 9);
     for (const c of a.checks) { checks[c.id] ??= {signal:0,clear:0,unknown:0,'not-applicable':0}; checks[c.id][c.status]++; }
     const s = run('getVigilanceScore', row);
-    if (s == null) notAssessed++; else if (s > 0) flagged++; else zero++;
+    // Score 4.0: Paraguayan signals borrow 0 points or are context, so flagged counts signals and every index is 0.
+    if (s == null) notAssessed++; else if (a.signals) flagged++; else zero++;
+    assert.ok(s == null || s === 0);
   }
   return { checks, flagged, zero, notAssessed };
 }
@@ -124,10 +126,11 @@ function commonRowChecks(rows, cov, start, end) {
 // Ley 7021/22 Art. 67 ceiling (score 3.3): the amount-increase check is anchored to the 20 % legal ceiling.
 {
   const all = [...run('prepareContracts',JSON.parse(fs.readFileSync('data/paraguay-dncp.json'))), ...run('prepareContracts',JSON.parse(fs.readFileSync('data/paraguay-dncp-3buyers.json')))];
-  const check = r => run('getAssessment',r).checks.find(c=>c.id==='dncp-amount-increase');
+  // Score 4.0: the check file's weight (checkWeight); in the index an amount increase borrows 0 (Ukraine, South Korea).
+  const check = r => { const c = run('getAssessment',r).checks.find(c=>c.id==='dncp-amount-increase'); return c.status === 'signal' ? {...c, weight: c.checkWeight, points: c.weight} : c; };
   const atCeiling = all.filter(r=>check(r).status==='signal');
   assert.equal(atCeiling.length, 10); // pilot 2 + three buyers 8 (6 x 20.00 %, 2 x 19.99 %): at the ceiling, none beyond
-  for (const r of atCeiling) assert.equal(check(r).weight,8);
+  for (const r of atCeiling) { assert.equal(check(r).weight,8); assert.equal(check(r).points,0); }
   // Bands on a synthetic row: below the near band, at it, at the ceiling, within rounding, beyond it, far beyond.
   const base = {dataFamily:'dncp',dataStatus:'verified',amount:1000,callPublishedDate:'2025-03-01',procedure:'x',procurementMethod:'open'};
   const at = pctv => check({...base,amendments:[{amount:pctv*10,currency:'PYG'}]});

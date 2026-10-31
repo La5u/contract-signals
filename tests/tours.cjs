@@ -28,7 +28,10 @@ check(run('selectContracts',rows,{sort:'publication'})[0].publicationDate==='202
 for(const group of ['buyer','supplier','sector','project'])check(run('arrangeGroups',rows,group).rows.length===66);
 check(rows.filter(r=>run('getVigilanceScore',r)===0).length===6);
 const corrected=rows.find(r=>r.noticeId==='25-127301');
-check(run('getVigilanceScore',{...corrected,noticeChange:{status:'signal',reason:'Synthetic complete pair'}})===5);
+// Score 4.0: a late notice change was never measured on labelled cases: a context signal (check weight 5), no weight.
+const changed={...corrected,noticeChange:{status:'signal',reason:'Synthetic complete pair'}};
+const changeCheck=run('getAssessment',changed).checks.find(r=>r.id==='notice-late-change');
+check(run('getVigilanceScore',changed)===0&&changeCheck.checkWeight===5&&changeCheck.basis==='context');
 check(run('getVigilanceScore',{...corrected,noticeChange:{status:'unknown'}})===null);
 check(corrected.noticeEvidence.references[0].matchedNoticeIds[0]==='25-119055');
 for(const mutate of [c=>c.noticeEvidence.awardCriteria[0].lotId='LOT-WRONG',c=>c.noticeEvidence.ted[0].noticeUuid='wrong',c=>c.noticeEvidence.documents[0].url='javascript:alert(1)',c=>c.noticeEvidence.ted[0].localFile='../../secret',c=>c.noticeEvidence.ted[0].version='999']){

@@ -15,7 +15,7 @@ function pageSummaryForCopy(rows, { dataset, page, totalPages, totalResults }) {
     lines.push(`[${index + 1}] ${c.id}`, `Buyer: ${c.buyer}`, `Supplier: ${c.supplier || 'not specified'}${names.length ? ` (current register name: ${names.join('; ')})` : ''}`,
       `Subject: ${c.description}`, `Date (source field; see record for meaning): ${c.date || 'unknown'}`,
       `Declared amount: ${c.amount == null ? 'unknown' : c.amount === 0 ? 'declared 0 (likely undisclosed)' : `${c.amount} ${recordCurrency(c) || '(currency unknown)'}`} (not an audited payment)`,
-      `Index: ${score == null ? 'Not assessed' : `${score}/100`} · Heuristic signals: ${signals.length ? signals.map(i => i.kindLabel).join('; ') : score == null ? 'not assessed' : 'none among assessed checks'}`,
+      `Index: ${formatMultiplier(score)} · Heuristic signals: ${signals.length ? signals.map(i => i.kindLabel).join('; ') : score == null ? 'not assessed' : 'none among assessed checks'}`,
       `Audit finding: ${c.officialFinding === true ? 'documented, separate from index' : 'not linked in this extract'} · Reported investigation: ${hasReportedInvestigation(c) ? 'reported at the time; current status unknown' : 'not linked in this extract'}`,
       `Record source: ${source || 'not available'}`);
     for (const link of verificationLinks(c)) if (link.url !== source && link.url !== safeSource(c.reportUrl)) lines.push(`Verify: ${link.label} · ${link.url}`);
@@ -76,104 +76,16 @@ function koreaRecords(meta, shard, buyer, rows = shard.buyers[buyer[0]] || []) {
       buyer: buyerName, buyerId: code, description: g('name') || g('contractNo'),
       supplier: supplier || null, supplierNamesPublished: supplier ? [supplier] : [], supplierIndividual: supplier ? [kind === 'individual'] : [],
       supplierIds: g('supplierBizrno') ? [{ id: g('supplierBizrno'), identifierType: 'KR-BRN' }] : [],
-      procedure: [method, type].filter(Boolean).join(' · ') || null, contractId: g('contractNo'), noticeId: g('noticeNo'),
+      businessType: type, procedure: [method, type].filter(Boolean).join(' · ') || null, contractId: g('contractNo'), noticeId: g('noticeNo'),
       date: g('date'), dateNote: g('dateIsFirstChange') ? `Signed before ${(meta.dataFrom || meta.period?.[0] || '').slice(0, 4)}: this is the date of its first change in the data.` : 'Contract date (계약체결일자).',
-      amount: typeof latest === 'number' ? latest : null, currency: 'KRW',
+      amount: typeof latest === 'number' && latest >= 0 ? latest : null, currency: 'KRW',
       amountBasis: original != null && original !== latest ? `Contract amount of the latest version in the period; the original contract was ${original} KRW (${versions} versions).` : 'Contract amount (계약금액) of the latest version in the period.',
-      notes: notes || null, source, sourceLabel: 'KONEPS (나라장터) contract page', koreaChecks: g('checks'),
+      offers: g('bids'), notes: notes || null, source, sourceLabel: 'KONEPS (나라장터) contract page', koreaChecks: g('checks'),
     };
   });
 }
-// A page is a bounded window in published shard/buyer/row order, NOT a global sort.
-// Later pages rescan from the start: no growing cursor history or retained shard cache.
-// A buyer too big for one file lists its shards (oldest contracts first) in a sixth entry.
+// A large buyer lists its shards, oldest contracts first, in a sixth entry.
 const koreaParts = buyer => Array.isArray(buyer[5]) ? buyer[5] : [buyer[4]];
-async function scanKoreaPage({ meta, buyers, fetchShard, predicate, offset = 0, limit = 50,
-  signal, progress = () => {}, yieldTask = () => new Promise(resolve => setTimeout(resolve, 0)) }) {
-  limit = Math.max(1, Math.min(200, Math.floor(limit) || 50));
-  offset = Math.max(0, Math.floor(offset) || 0);
-  const check = () => { if (signal?.aborted) { const e = new Error('Scan cancelled'); e.name = 'AbortError'; throw e; } };
-  const groups = new Map();
-  for (const b of buyers) for (const n of koreaParts(b)) {
-    if (!groups.has(n)) groups.set(n, []);
-    groups.get(n).push(b);
-  }
-  const rows = [];
-  let examined = 0, matches = 0, shards = 0;
-  for (const n of [...groups.keys()].sort((a, b) => a - b)) {
-    check();
-    const shard = await fetchShard(n, signal);
-    check();
-    for (const buyer of groups.get(n)) {
-      const raw = shard.buyers?.[buyer[0]];
-      if (!Array.isArray(raw) || (!buyer[5] && raw.length !== buyer[3])) throw new Error(`Incomplete shard ${n} for buyer ${buyer[0]}; retry after publication completes.`);
-      for (let i = 0; i < raw.length; i += 256) {
-        check();
-        const batch = prepareContracts(koreaRecords(meta, shard, buyer, raw.slice(i, i + 256)));
-        for (const c of batch) {
-          examined++;
-          if (!predicate(c)) continue;
-          matches++;
-          if (matches <= offset) continue;
-          if (rows.length === limit) return { rows, examined, matches, shards, hasMore: true, complete: false };
-          rows.push(c);
-        }
-        progress({ examined, matches, shards, retained: rows.length });
-        await yieldTask();
-        check();
-      }
-    }
-    shards++;
-  }
-  return { rows, examined, matches, shards, hasMore: false, complete: true };
-}
-
-// Bounded published-order union. Assess each ordinary collection in isolation.
-async function scanPublishedPage({ collections, loadCollection, korea, predicate, offset = 0, limit = 50,
-  signal, progress = () => {}, yieldTask = () => new Promise(resolve => setTimeout(resolve, 0)) }) {
-  limit = Math.max(1, Math.min(200, Math.floor(limit) || 50));
-  offset = Math.max(0, Math.floor(offset) || 0);
-  const rows = [];
-  let examined = 0, matches = 0;
-  const check = () => { if (signal?.aborted) { const e = new Error('Scan cancelled'); e.name = 'AbortError'; throw e; } };
-  const context = (c, key, label) => {
-    getAssessment(c); // Freeze source assessment before namespacing the display identifier.
-    c.collectionId = key; c.collectionLabel = label; c.originalId = c.id;
-    c.id = `${key}::${c.id}`;
-    return c;
-  };
-  for (const { key, label } of collections) {
-    check();
-    const records = prepareContracts(await loadCollection(key, signal));
-    check();
-    for (let i = 0; i < records.length; i++) {
-      const c = context(records[i], key, label);
-      examined++;
-      if (predicate(c)) {
-        matches++;
-        if (matches > offset) {
-          if (rows.length === limit) return { rows, examined, matches, hasMore: true, complete: false };
-          rows.push(c);
-        }
-      }
-      if (i % 256 === 255) {
-        progress({ examined, matches, retained: rows.length });
-        await yieldTask(); check();
-      }
-    }
-    progress({ examined, matches, retained: rows.length });
-    await yieldTask(); check();
-  }
-  const result = await scanKoreaPage({ ...await korea(signal), signal,
-    offset: Math.max(0, offset - matches), limit: Math.max(1, limit - rows.length),
-    predicate: c => predicate(context(c, 'korea', 'South Korea · KONEPS')),
-    progress: p => progress({ examined: examined + p.examined, matches: matches + p.matches,
-      retained: Math.min(limit, rows.length + p.retained) }), yieldTask });
-  const hasMore = rows.length === limit ? result.matches > 0 : result.hasMore;
-  if (rows.length < limit) rows.push(...result.rows);
-  return { rows, examined: examined + result.examined, matches: matches + result.matches,
-    hasMore, complete: !hasMore && result.complete };
-}
 
 function hashToViewState(hash) {
   const params = new URLSearchParams(String(hash || '').replace(/^#/, ''));
@@ -245,21 +157,20 @@ function buildProfile(contracts, role, key) {
 
 // Export the whole filtered view as flat records. Unknown stays empty, never zero.
 const EXPORT_CAVEAT = 'Published declarations and heuristic signals only. A flag is not proof of wrongdoing; zero or no label is not clearance. Declared amounts are not audited payments; never sum amounts across datasets or currencies. Current supplier names are a register snapshot, not historical names.';
-const EXPORT_COLUMNS = ['collectionId', 'collectionLabel', 'originalId', 'id', 'date', 'buyer', 'buyerId', 'supplier', 'supplierCurrentName', 'supplierIds', 'description', 'cpv', 'sector', 'procedure',
-  'amount', 'amountLow', 'amountHigh', 'amountVerification', 'currency', 'offers', 'durationMonths', 'index', 'indexStatus', 'signals', 'signalPoints', 'context', 'officialFinding', 'investigationReported', 'dataStatus', 'source', 'verifyUrls'];
+const EXPORT_COLUMNS = ['id', 'date', 'buyer', 'buyerId', 'supplier', 'supplierCurrentName', 'supplierIds', 'description', 'cpv', 'sector', 'procedure',
+  'amount', 'amountLow', 'amountHigh', 'amountVerification', 'currency', 'offers', 'durationMonths', 'index', 'multiplier', 'indexStatus', 'signals', 'signalPoints', 'context', 'officialFinding', 'investigationReported', 'dataStatus', 'source', 'verifyUrls'];
 
 function exportRecord(c) {
   const score = getVigilanceScore(c);
   return {
-    collectionId: c.collectionId ?? null, collectionLabel: c.collectionLabel ?? null, originalId: c.originalId ?? c.id,
     id: c.id, date: c.date ?? null, buyer: c.buyer, buyerId: c.buyerSiret || c.buyerNit || c.buyerId || null, supplier: exportSupplier(c),
     supplierCurrentName: supplierNames(c).join('; ') || null,
     supplierIds: (c.supplierIds || []).map(s => `${s.identifierType || 'identifier'} ${s.id}`).join('; ') || null,
     description: c.description, cpv: c.cpv ?? null, sector: getSector(c).label, procedure: c.procedure ?? null,
     amount: c.amount ?? null, amountLow: c.verification?.amountRange?.[0] ?? c.amount ?? null, amountHigh: c.verification?.amountRange?.[1] ?? c.amount ?? null,
     amountVerification: c.verification?.status ?? null, currency: c.amount == null ? null : recordCurrency(c), offers: c.offers ?? null, durationMonths: c.durationMonths ?? null,
-    index: score, indexStatus: score == null ? 'not assessed' : 'assessed', signals: getIndicators(c).map(i => i.kindLabel).join('; ') || null,
-    signalPoints: getIndicators(c).map(i => `${i.kindLabel}: ${i.weight} (${i.basis})`).join('; ') || null,
+    index: score, multiplier: score == null ? null : Math.round(indexMultiplier(score) * 100) / 100, indexStatus: score == null ? 'not assessed' : 'assessed', signals: getIndicators(c).map(i => i.kindLabel).join('; ') || null,
+    signalPoints: getIndicators(c).map(i => `${i.kindLabel}: ${i.weight} (${i.basis}${i.checkWeight !== i.weight && i.checkWeight != null ? `; check weight ${i.checkWeight} not used` : ''})`).join('; ') || null,
     context: contextLabels(c).map(l => l.short).join('; ') || null,
     officialFinding: c.officialFinding === true, investigationReported: hasReportedInvestigation(c), dataStatus: c.dataStatus,
     source: safeSource(c.processUrl) || safeSource(c.source) || null,

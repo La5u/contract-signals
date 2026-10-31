@@ -9,6 +9,8 @@ import sqlite3
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
+import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -61,8 +63,10 @@ class KoreaSite(unittest.TestCase):
                 bid_features.main(['--bids', str(self.dir / 'bids'), '--out', str(features), '--workers', '1'])
             site_checks.main(['--db', str(self.db), '--out', str(out), '--workers', '1', '--bids', str(features)])
         lines = out.read_text().splitlines()
-        self.assertEqual(lines[0], '# ' + '\t'.join(['contract'] + CHECKS))
-        return {no: dict(zip(CHECKS, letters)) for no, letters in (l.split('\t') for l in lines[1:])}
+        self.assertEqual(lines[0], '# ' + '\t'.join(['contract'] + CHECKS + ['bids']))
+        rows = [l.split('\t') for l in lines[1:]]
+        self.bids = {no: n for no, _, n in rows}  # bids opened in the tender, '' when the opening was not found
+        return {no: dict(zip(CHECKS, letters)) for no, letters, _ in rows}
 
     def build(self, *argv):
         with contextlib.redirect_stdout(io.StringIO()):
@@ -106,6 +110,7 @@ class KoreaSite(unittest.TestCase):
         # would put K7 in range, but the floor is stated, so FLOOR-GAP alone scores the price.
         self.assertEqual((x['B12'], x['K7']), ('c', 'u'))
         self.assertEqual({v for k, v in got['Y'].items() if k.startswith('B')}, {'u'})
+        self.assertEqual((self.bids['X'], self.bids['Y']), ('6', ''))  # the Offers column: every bid opened, '' without an opening
 
     def test_bid_features(self):
         rows = [{'bidprcAmt': a, 'dqlfctnRsn': '정상', 'sucsfYn': 'Y' if a == 100 else 'N', 'bidprcRt': '88',
@@ -121,6 +126,21 @@ class KoreaSite(unittest.TestCase):
         meta = json.loads((self.dir / 'site/meta.json').read_text())
         self.assertEqual(meta['period'], ['2024-09-01', '2025-03-01'])
         self.assertEqual(meta['contracts'], 1)
+        top = json.loads((self.dir / 'site/top.json').read_text())
+        self.assertEqual((top['count'], top['limit']), (1, 5000))
+        self.assertIn('top.json', ' '.join(meta['notes']))
+        self.assertEqual(meta['columns'][-2:], ['checks', 'bids'])
+
+    def test_failed_top_build_keeps_the_previous_one(self):
+        self.checks([version('C', 0, '2025-01-01', 100, 'A')])
+        (self.dir / 'site').mkdir()
+        (self.dir / 'site/meta.json').write_text('previous')
+        with patch.object(build_site.subprocess, 'run', side_effect=subprocess.CalledProcessError(1, 'node')) as run:
+            with self.assertRaises(subprocess.CalledProcessError):
+                self.build('--start', '2024-09-01')
+        self.assertEqual(run.call_args.args[0][0], 'node')
+        self.assertTrue(run.call_args.kwargs['check'])
+        self.assertEqual((self.dir / 'site/meta.json').read_text(), 'previous')
 
     def test_failed_build_keeps_the_previous_one(self):
         self.checks([version('C', 0, '2025-01-01', 100, 'A')])

@@ -5,15 +5,17 @@ require('../tools/engine.cjs').load(ctx);
 const run = (fn,...args) => {ctx.args=args;return vm.runInContext(`${fn}(...args)`,ctx);};
 
 function tally(rows) {
-  const checks = {}; let flagged = 0, zero = 0, notAssessed = 0;
+  const checks = {}; let flagged = 0, zero = 0, notAssessed = 0, weighted = 0;
   for (const row of rows) {
     const a = run('getAssessment', row);
-    assert.equal(a.checks.length, row.dataFamily === 'prozorro' ? 13 : 9);
+    assert.equal(a.checks.length, row.dataFamily === 'prozorro' ? 13 : row.dataFamily === 'ted' && row.country === 'ROU' ? 11 : 9);
     for (const c of a.checks) { checks[c.id] ??= {signal:0,clear:0,unknown:0,'not-applicable':0}; checks[c.id][c.status]++; }
     const s = run('getVigilanceScore', row);
-    if (s == null) notAssessed++; else if (s > 0) flagged++; else zero++;
+    // Score 4.0: a signal can carry no weight (measured at 0, borrowed 0 or never measured), so flagged and weighted differ.
+    if (s == null) notAssessed++; else if (a.signals) flagged++; else zero++;
+    if (s > 0) weighted++;
   }
-  return { checks: JSON.parse(JSON.stringify(checks)), counts: [flagged, zero, notAssessed] };
+  return { checks: JSON.parse(JSON.stringify(checks)), counts: [flagged, zero, notAssessed], weighted };
 }
 const load = f => run('prepareContracts', JSON.parse(fs.readFileSync(f)));
 const pick = (t, prefix) => Object.fromEntries(Object.entries(t.checks).filter(([k]) => k.startsWith(prefix)).map(([k, v]) => [k, [v.signal, v.clear, v.unknown, v['not-applicable']]]));
@@ -101,7 +103,8 @@ for (const [file, country, expected, counts] of [
   ['data/ted-portugal.json', 'PRT', { 'ted-single-offer': [63,319,43,63], 'ted-direct-award': [63,412,13,0], 'ted-repeated-single-offer': [20,42,44,382],
     'ted-repeated-direct': [35,25,16,412], 'ted-concentration': [0,234,254,0], 'late-publication': [11,477,0,0] }, [136,352,0]],
   ['data/ted-romania.json', 'ROU', { 'ted-single-offer': [125,186,6,4], 'ted-direct-award': [4,317,0,0], 'ted-repeated-single-offer': [42,70,19,190],
-    'ted-repeated-direct': [0,0,4,317], 'ted-concentration': [0,43,278,0], 'late-publication': [12,309,0,0] }, [138,183,0]],
+    'ted-repeated-direct': [0,0,4,317], 'ted-concentration': [0,43,278,0], 'late-publication': [12,309,0,0],
+    'ro-buyer-share': [14,206,101,0], 'ro-supplier-dependence': [0,193,128,0] }, [147,174,0]],
   ['data/ted-czechia.json', 'CZE', { 'ted-single-offer': [89,254,267,20], 'ted-direct-award': [20,344,266,0], 'ted-repeated-single-offer': [12,74,270,274],
     'ted-repeated-direct': [7,13,266,344], 'ted-concentration': [14,393,223,0], 'late-publication': [15,613,2,0] }, [135,495,0]],
 ]) {
@@ -115,8 +118,10 @@ for (const [file, country, expected, counts] of [
     for (const s of r.supplierIds) if (['NIF','CUI','ICO'].includes(s.identifierType)) assert.match(s.id, /^\d+$/);
   }
   const t = tally(rows);
-  assert.deepEqual({...pick(t, 'ted-'), ...pick(t, 'late-')}, expected);
+  assert.deepEqual({...pick(t, 'ted-'), ...pick(t, 'late-'), ...pick(t, 'ro-')}, expected);
   assert.deepEqual(t.counts, counts);
+  // Score 4.0: only Romania's buyer share (measured on its own labels) carries weight among TED rows.
+  assert.equal(t.weighted, country === 'ROU' ? 14 : 0);
   console.log(`TED ${country}: ${rows.length} lots, ${counts[0]} flagged.`);
 }
 
@@ -133,15 +138,38 @@ for (const [file, country, expected, counts] of [
   console.log('TED republished lots kept once, from the first notice.');
 }
 // v3.7: Romanian repeated awards without competition and concentration score a token point; other TED countries keep 18 and 12 at entry, capped at 30 (editorial maximum).
+// Score 4.0: those are the check files' weights (checkWeight); in the index Romania's are measured at 0 and Czechia borrows 0.
 {
   const withId = f => load(f).find(r => run('nationalSupplierIdentity', r));
   const ro = withId('data/ted-romania.json'), cz = withId('data/ted-czechia.json');
-  const weight = (row, id, fields) => run('getAssessment', { ...row, ...fields }).checks.find(c => c.id === id).weight;
+  const weight = (row, id, fields) => run('getAssessment', { ...row, ...fields }).checks.find(c => c.id === id).checkWeight;
+  const points = (row, id, fields) => run('getAssessment', { ...row, ...fields }).checks.find(c => c.id === id).weight;
   const repeated = { procedureDirect: true, nationalRepeatedDirect: { count: 10 } };
   const concentrated = { nationalConcentration: { category: '45', wins: 10, known: 10, total: 10, coverage: 1, share: 1, sufficient: true } };
   assert.equal(weight(ro, 'ted-repeated-direct', repeated), 1); assert.equal(weight(cz, 'ted-repeated-direct', repeated), 30);
   assert.equal(weight(ro, 'ted-concentration', concentrated), 1); assert.equal(weight(cz, 'ted-concentration', concentrated), 30);
   assert.equal(weight(ro, 'ted-direct-award', { procedureDirect: true }), 18);
+  for (const [row, id, fields] of [[ro, 'ted-repeated-direct', repeated], [cz, 'ted-repeated-direct', repeated], [ro, 'ted-concentration', concentrated], [cz, 'ted-concentration', concentrated], [ro, 'ted-direct-award', { procedureDirect: true }]])
+    assert.equal(points(row, id, fields), 0);
+}
+// v3.9: Romanian buyer share and supplier dependence against the buyer's SEAP total (2024 and 2025 loaded), size-controlled points.
+{
+  const rows = load('data/ted-romania.json');
+  const check = (row, id, fields) => run('getAssessment', { ...row, ...fields }).checks.find(c => c.id === id);
+  const ron = rows.find(r => r.seapYear && r.currency === 'RON' && r.amount && r.seapYear.supplierRon != null);
+  const total = ron.seapYear.totalRon, at = (share, supplier) => ({ amount: total * share, seapYear: { ...ron.seapYear, supplierRon: total * (supplier ?? 0) } });
+  assert.equal(check(ron, 'ro-buyer-share', at(0.05)).status, 'signal'); assert.equal(check(ron, 'ro-buyer-share', at(0.05)).weight, 2);
+  assert.equal(check(ron, 'ro-buyer-share', at(0.049)).status, 'clear');
+  assert.equal(check(ron, 'ro-buyer-share', { ...at(0.5), currency: 'EUR' }).status, 'unknown');
+  assert.equal(check(ron, 'ro-buyer-share', { seapYear: null }).status, 'unknown');
+  assert.equal(check(ron, 'ro-supplier-dependence', at(0.01, 0.25)).status, 'signal'); assert.equal(check(ron, 'ro-supplier-dependence', at(0.01, 0.25)).weight, 3.4);
+  assert.equal(check(ron, 'ro-supplier-dependence', at(0.01, 0.249)).status, 'clear');
+  assert.equal(check(ron, 'ro-supplier-dependence', { seapYear: { ...ron.seapYear, supplierRon: null } }).status, 'unknown');
+  assert.ok(rows.every(r => !r.seapYear || ['2024', '2025'].includes(r.seapYear.year)));
+  assert.equal(run('indicatorKind', 'ro-supplier-dependence'), 'supplier-dependence');
+  // Both sit in the competition family: the larger (3.4) counts; a single offer, measured at 0 in Romania, adds nothing.
+  const both = { ...at(0.5, 0.5), procedureDirect: false, offers: 1 };
+  assert.equal(run('getVigilanceScore', { ...ron, ...both }), 3.4);
 }
 
 // ---- United Kingdom (Find a Tender) ----

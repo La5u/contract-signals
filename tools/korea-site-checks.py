@@ -11,7 +11,8 @@ office's contracts are read together, so totals, concentration and the three-yea
 (N5 is unknown in the data's first three years). Contracts whose original version is missing get unknown checks.
 
 Writes ~/.cache/contract-signals/korea/site-checks.tsv: contract number, then one letter per check in
-SITE_CHECKS order (korea-label-checks.CHECKS up to B7, then K7 and B12) (s signal, c clear, u unknown), for every contract (the full history stays local
+SITE_CHECKS order (korea-label-checks.CHECKS up to B7, then K7 and B12) (s signal, c clear, u unknown), then the number of
+bids opened in its tender (empty when the opening was not found), for every contract (the full history stays local
 for tuning; tools/build-korea-site.py publishes only its period). Private; reads only.
 """
 import argparse
@@ -66,7 +67,10 @@ def work(job):
                 checks = ko.build_checks(contracts, first_year, bids)
                 for no, c in contracts.items():
                     result = checks(c)
-                    out.write(no + '\t' + ''.join(LETTER[result[k]['status']] for k in SITE_CHECKS) + '\n')
+                    # Bids opened in the tender, from the same opening the B checks read (empty when not found).
+                    opening = bids.opening(c['notice'], c.get('notice_ord', '')) if bids and c['notice'] and c['original'] else None
+                    n = '' if opening is None or opening['bids'] is None else str(opening['bids'])
+                    out.write(no + '\t' + ''.join(LETTER[result[k]['status']] for k in SITE_CHECKS) + '\t' + n + '\n')
                 written += len(contracts)
             if i % 1000 == 0:
                 print(f'{part.name}: {i}/{len(buyers)} offices, {written} contracts, {time.time() - started:.0f} s', flush=True)
@@ -80,7 +84,7 @@ def main(argv=None):
     p.add_argument('--db', type=Path, default=ko.BASE / 'opnstd.sqlite')
     p.add_argument('--out', type=Path, default=ko.BASE / 'site-checks.tsv')
     p.add_argument('--workers', type=int, default=os.cpu_count())
-    p.add_argument('--bids', type=Path, default=ko.BASE / 'bid-features.sqlite',
+    p.add_argument('--bids', type=Path, default=ko.BASE / 'bid-features-2026-10-28.sqlite',
                    help='tools/korea-bid-features.py output; without it the B checks are unknown')
     args = p.parse_args(argv)
     bids_path = args.bids if args.bids.exists() else None
@@ -114,7 +118,7 @@ def main(argv=None):
             written = sum(pool.map(work, jobs, chunksize=1))
     staged = args.out.with_suffix('.part')
     with staged.open('w') as out:
-        out.write('# ' + '\t'.join(['contract'] + SITE_CHECKS) + '\n')
+        out.write('# ' + '\t'.join(['contract'] + SITE_CHECKS + ['bids']) + '\n')
         for part in parts:
             with part.open() as f:
                 for line in f:

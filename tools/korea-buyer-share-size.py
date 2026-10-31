@@ -82,12 +82,18 @@ def main(argv=None):
     print('|---|---|---|---|---|---|')
     for check in CHECKS:
         res = {'unadjusted': pp.analyse(plain, check), 'size_standardised': size.standardise(plain, check, NAMES),
-               'size_standardised_inflation': dict(size.standardise(inflated, check, NAMES), inflation=size.INFLATION)}
+               'size_standardised_inflation': dict(size.standardise(inflated, check, NAMES) or {}, inflation=size.INFLATION),
+               'size_smooth': size.standardise_smooth(plain, check),
+               'size_smooth_inflation': dict(size.standardise_smooth(
+                   [dict(r, value=r['value'] and r['value'] / size.INFLATION) if 'combined' in r['groups'] else r
+                    for r in plain], check) or {}, inflation=size.INFLATION)}
         res['within_band'] = {b: pp.analyse([r for r in plain if r['band'] == b], check) for b in NAMES}
         out['checks'][check] = res
         print(size.line(f'{check} unadjusted', res['unadjusted']))
         print(size.line(f'{check} size-standardised', res['size_standardised']))
         print(size.line(f'{check} size-standardised, rigged values / {size.INFLATION} (points basis)', res['size_standardised_inflation']))
+        print(size.line(f'{check} smooth size control (no bands)', res['size_smooth']))
+        print(size.line(f'{check} smooth, rigged values / {size.INFLATION} (points basis)', res['size_smooth_inflation']))
         for b, r in res['within_band'].items():
             c, k = r['combined'], r['comparison']
             if c['buyers']:

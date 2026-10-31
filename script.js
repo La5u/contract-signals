@@ -64,19 +64,13 @@ function startExplorer() {
   let supplierProceedings = new Map();
   const FRENCH_LINK_DATASETS = new Set(['decp', 'boamp', 'tours', 'consultations']);
   let linkEvidenceStarted = false;
-  // South Korea: the buyer list loads with the dataset; one buyer's shard loads when it is chosen.
+  // South Korea: load the ranked subset, or a chosen buyer's shards.
   let koreaBuyer = '', koreaMeta = null, koreaBuyers = null;
-  let koreaScanController = null, koreaScanVersion = 0, koreaNationwide = false;
-  let koreaScanPage = 0, koreaScanResult = null, koreaScanMessage = '', koreaSnapshotKey = '';
-  const koreaScanPanel = document.querySelector('#korea-scan');
-  const koreaScanStatus = document.querySelector('#korea-scan-status');
-  const koreaScanNext = document.querySelector('#korea-scan-next');
-  const koreaScanPrevious = document.querySelector('#korea-scan-previous');
   const koreaPicker = document.querySelector('#korea-picker');
   const koreaSearch = document.querySelector('#korea-search');
   const koreaResults = document.querySelector('#korea-results');
   const koreaJson = (path, signal) => fetch(`${KOREA_BASE}/${path}`, { signal, cache: 'no-store' }).then(response => {
-    if (!response.ok) throw new Error(`${KOREA_BASE}/${path}: HTTP ${response.status}`);
+    if (!response.ok) throw Object.assign(new Error(`${KOREA_BASE}/${path}: HTTP ${response.status}`), { status: response.status });
     return response.json();
   });
   function koreaIndex() {
@@ -89,74 +83,7 @@ function startExplorer() {
   function koreaShard(n, signal) {
     return koreaJson(`s/${String(n).padStart(4, '0')}.json`, signal);
   }
-  function cancelKoreaScan(message = 'Filters changed. Scan again to apply the current filters.') {
-    koreaScanVersion++;
-    koreaScanController?.abort();
-    koreaScanController = null;
-    koreaScanResult = null;
-    koreaScanMessage = message;
-    if (koreaNationwide) {
-      contracts = []; selectionMemo = null; rowsForExport = []; pageRowsForCopy = [];
-      closeDetail({ restoreFocus: false });
-    }
-  }
-  async function startKoreaScan(wantedPage = 0) {
-    cancelKoreaScan('Scanning…');
-    const version = koreaScanVersion;
-    const controller = koreaScanController = new AbortController();
-    koreaScanPage = wantedPage;
-    const options = selectionOptions();
-    // Review notes are also snapshotted: subsequent edits require a new scan.
-    const reviewWanted = controls.review.value;
-    const reviewSnapshot = structuredClone(reviews);
-    const reviewPrefix = reviewScope() + '|';
-    const reviewPredicate = c => {
-      const mark = reviewSnapshot[c.collectionId ? `${c.collectionId}|${c.originalId}` : reviewPrefix + c.id]?.status || '';
-      return !reviewWanted || (reviewWanted === '@none' ? !mark : reviewWanted === '@any' ? Boolean(mark) : mark === reviewWanted);
-    };
-    koreaSnapshotKey = koreaFilterKey();
-    render();
-    try {
-      const scan = datasetSelect.value === 'global' ? scanPublishedPage : scanKoreaPage;
-      const result = await scan({ meta: koreaMeta, buyers: datasetSelect.value === 'global' ? [] : await koreaIndex(), fetchShard: koreaShard,
-        collections: Object.entries(datasets).filter(([key, value]) => key !== 'global' && !value.remote).map(([key, value]) => ({ key, label: `${key} · ${value.sources.publisher}` })),
-        loadCollection: async (key, signal) => {
-          const files = globalThis.DATASET_FILES?.[key] || [].concat(datasets[key].path);
-          const parts = [];
-          for (const file of files) {
-            const response = await fetch(file, { signal });
-            if (!response.ok) throw new Error(`${file}: HTTP ${response.status}`);
-            parts.push(await response.json());
-          }
-          return parts.flat();
-        },
-        korea: async () => { const buyers = await koreaIndex(); return { meta: koreaMeta, buyers, fetchShard: koreaShard }; },
-        offset: wantedPage * Math.min(200, pageSize), limit: Math.min(200, pageSize), signal: controller.signal,
-        predicate: c => reviewPredicate(c) && selectContracts([c], options).length > 0,
-        progress: p => { if (version === koreaScanVersion) {
-          koreaScanStatus.textContent = `Scanning: ${p.examined.toLocaleString()} records checked · ${p.matches.toLocaleString()} matches so far (partial) · ${p.retained} retained.`;
-        } }
-      });
-      if (version !== koreaScanVersion || controller.signal.aborted || !koreaNationwide) return;
-      koreaScanController = null;
-      koreaScanResult = result;
-      contracts = result.rows;
-      selectionMemo = null;
-      page = 0;
-      koreaScanMessage = `${datasetSelect.value === 'global' ? 'Collections scan' : 'Nationwide'} page ${wantedPage + 1}: ${result.rows.length} matches retained (page cap ${Math.min(200, pageSize)}). ${result.complete ? `${result.matches.toLocaleString()} total matches; scan complete.` : `At least ${result.matches.toLocaleString()} matches; count partial. More matches accessible with Next scan page.`} ${result.examined.toLocaleString()} records checked. Export covers this page only.`;
-      render();
-    } catch (error) {
-      if (version !== koreaScanVersion) return;
-      koreaScanController = null;
-      koreaScanMessage = error.name === 'AbortError' ? 'Scan cancelled. Scan again to restart.' : `Scan failed; no complete results: ${error.message}. Retry with Scan.`;
-      render();
-    }
-  }
   document.querySelector('#korea-all').addEventListener('click', () => chooseKoreaBuyer(''));
-  document.querySelector('#korea-scan-start').addEventListener('click', () => startKoreaScan());
-  document.querySelector('#korea-scan-cancel').addEventListener('click', () => { cancelKoreaScan('Scan cancelled. Scan again to restart.'); render(); });
-  koreaScanNext.addEventListener('click', () => startKoreaScan(koreaScanPage + 1));
-  koreaScanPrevious.addEventListener('click', () => startKoreaScan(Math.max(0, koreaScanPage - 1)));
   const koreaKey = text => String(text || '').toLowerCase().replace(/\s+/g, '');
   function showKoreaResults(buyers) {
     const wanted = koreaKey(koreaSearch.value);
@@ -177,6 +104,7 @@ function startExplorer() {
   }
   function chooseKoreaBuyer(code) {
     koreaBuyer = code;
+    if (!code) koreaSearch.value = '';
     pendingView = null;
     loadDataset();
   }
@@ -189,10 +117,18 @@ function startExplorer() {
     const buyer = koreaBuyer && buyers.find(b => b[0] === koreaBuyer);
     if (!buyer) {
       koreaBuyer = '';
-      koreaNationwide = true;
-      koreaScanPanel.hidden = false;
-      accept([]);
-      startKoreaScan();
+      try {
+        const top = await koreaJson('top.json');
+        if (version !== loadVersion) return;
+        const records = buyers.flatMap(b => koreaRecords(koreaMeta, top, b));
+        document.querySelector('#dataset-note').textContent = `The ${top.count.toLocaleString('en')} highest-scored of all ${koreaMeta.contracts.toLocaleString('en')} contracts; choose an institution to see all of its contracts.`;
+        accept(records);
+      } catch (error) {
+        if (version !== loadVersion) return;
+        if (error.status !== 404) throw error;
+        accept([]);
+        status.textContent = 'Choose a contracting institution.';
+      }
       return;
     }
     koreaSearch.value = buyer[1];
@@ -329,7 +265,7 @@ function startExplorer() {
     try { localStorage.setItem(REVIEW_STORE, JSON.stringify(reviews)); reviewStorageWorks = true; } catch { reviewStorageWorks = false; }
   }
   const reviewScope = () => usingLocalFile ? `local:${localFileIdentity}` : datasetSelect.value;
-  const reviewKey = c => c.collectionId ? `${c.collectionId}|${c.originalId}` : `${reviewScope()}|${c.id}`;
+  const reviewKey = c => `${reviewScope()}|${c.id}`;
   const reviewOf = c => reviews[reviewKey(c)] || null;
   function setReview(c, patch) {
     const key = reviewKey(c);
@@ -337,7 +273,6 @@ function startExplorer() {
     if (!entry.status && !entry.note?.trim()) delete reviews[key]; else reviews[key] = entry;
     saveReviews();
     renderReviewSummary();
-    if (koreaNationwide) render();
   }
   function reviewMatch(c) {
     const wanted = controls.review.value;
@@ -468,14 +403,6 @@ function startExplorer() {
 
   // Indicator list: only the checks this dataset runs, most frequent first, each with its count.
   function computeOverview() {
-    if (koreaNationwide) {
-      fillSelect(controls.indicator, [['', 'All indicators'], ...indicatorLabels].filter(([id], i) => id || i === 0));
-      for (const id of ['notice-context', 'legal', 'verification', 'official', 'adjudicated', 'investigation']) {
-        controls[id].closest('label').dataset.available = 'true';
-        if (controls[id].options) for (const option of controls[id].options) option.hidden = false;
-      }
-      return;
-    }
     const officialCount = contracts.filter(c => c.officialFinding === true).length;
     signalCounts = new Map();
     const present = new Set();
@@ -545,17 +472,15 @@ function startExplorer() {
   }
   function scoreChip(c) {
     const breakdown = getScoreBreakdown(c);
-    const level = scoreLevel(breakdown.score, hasIncompleteData(c), breakdown.assessment.signals);
-    const chip = element('span', breakdown.score == null ? 'Not assessed' : `${breakdown.score} / 100`, `score-chip level-${level.id}`);
-    chip.title = `${level.label} — editorial index, not a probability nor legal gravity.`;
+    const level = scoreLevel(breakdown.score, hasIncompleteData(c), breakdown.assessment.signals, breakdown.assessment.weighted);
+    const chip = element('span', formatMultiplier(breakdown.score), `score-chip level-${level.id}`);
+    chip.title = `${level.label}: how much more frequent such records are among proven cases than among the same buyers’ other contracts. Not a probability.`;
     return chip;
   }
   function selectionOptions() {
     return { country: controls['filter-country'].value, dateFrom: controls['date-from'].value, dateTo: controls['date-to'].value, buyer: controls['filter-buyer'].value, supplier: controls['filter-supplier'].value, procedure: controls['filter-procedure'].value, search: controls.search.value, minimum: Math.max(0, Number(controls.minimum.value) || 0), minScore: Number(controls['min-score'].value) || 0, flagged: controls.flagged.checked, official: controls.official.checked, adjudicated: controls.adjudicated.checked, investigation: controls.investigation.checked, indicator: controls.indicator.value, legal: controls.legal.value, noticeContext: controls['notice-context'].value, assessment: controls.assessment.value, sector: controls.sector.value, project: controls.project.value, verification: controls.verification.value, sort: controls.sort.value };
   }
-  function koreaFilterKey() { return JSON.stringify([selectionOptions(), controls.review.value, reviewsVersion, pageSize, controls['group-by'].value]); }
   function render() {
-    if (koreaNationwide && (koreaScanController || koreaScanResult) && koreaSnapshotKey !== koreaFilterKey()) cancelKoreaScan();
     syncSortHeaders();
     if (!loaded) return;
     // An active filter from a shared URL remains visible even when it matches no records.
@@ -574,9 +499,7 @@ function startExplorer() {
     const selectionKey = JSON.stringify([options, controls.review.value, controls['group-by'].value, reviewsVersion]);
     if (!selectionMemo || selectionMemo.records !== contracts || selectionMemo.profile !== activeProfile || selectionMemo.key !== selectionKey) {
       const pool = activeProfile ? contracts.filter(c => activeProfile.ids.has(c.id)) : contracts;
-      const filtered = koreaNationwide ? (datasetSelect.value === 'global'
-        ? [...new Set(contracts.map(c => c.collectionId))].flatMap(key => selectContracts(contracts.filter(c => c.collectionId === key), { sort: options.sort }))
-        : selectContracts(contracts, { sort: options.sort })) : selectContracts(controls.review.value ? pool.filter(reviewMatch) : pool, options);
+      const filtered = selectContracts(controls.review.value ? pool.filter(reviewMatch) : pool, options);
       selectionMemo = { records: contracts, profile: activeProfile, key: selectionKey, arrangement: arrangeGroups(filtered, controls['group-by'].value) };
     }
     const arrangement = selectionMemo.arrangement;
@@ -627,7 +550,6 @@ function startExplorer() {
       button.setAttribute('aria-controls', 'detail-panel');
       button.title = `${c.description} — open details, evidence and sources`;
       objectCell.append(button, element('small', c.buyer, 'mobile-buyer'));
-      if (c.collectionLabel) objectCell.append(element('small', `Collection: ${c.collectionLabel} · source record ${c.originalId}`, 'collection-context'));
       const mark = reviewOf(c)?.status;
       if (mark) objectCell.append(element('span', REVIEW_STATUSES[mark], `review-tag review-${mark}`));
       if (c.dataStatus !== 'verified') objectCell.append(element('small', provenance[c.dataStatus], 'provenance'));
@@ -659,7 +581,7 @@ function startExplorer() {
       }
       const sector = getSector(c);
       const sectorCell = element('td', sector.label);
-      sectorCell.append(element('small', c.cpv || 'unknown CPV', 'provenance'));
+      sectorCell.append(element('small', c.cpv || (sector.code.startsWith('kr-') ? 'business type, no CPV' : 'unknown CPV'), 'provenance'));
       row.append(objectCell, sectorCell, amountCell(c), element('td', c.offers ?? '—', 'numeric'));
       const badges = element('td');
       // Every signal is shown, heaviest first. Within a family only the
@@ -671,7 +593,15 @@ function startExplorer() {
         counted.add(indicator.family);
         const familyName = indicator.family === 'execution' ? 'execution/duration' : indicator.family;
         const badge = element('span', KIND_SHORT[indicator.kind] || indicator.kindLabel, `badge severity-${indicator.severity}${counts ? '' : ' not-counted'}`);
-        badge.title = `${indicator.label} (this jurisdiction's check). Raw weight ${indicator.weight} (${BASIS_NOTE[indicator.basis]}). ${counts ? `Counts for the ${familyName} family.` : `Not added: a heavier ${familyName} signal already counts.`} ${indicator.explanation}`;
+        badge.title = `${indicator.label} (this jurisdiction's check). ${indicator.weight} points (${indicator.pointsNote || BASIS_NOTE[indicator.basis]}). ${counts ? `Counts for the ${familyName} family.` : `Not added: a heavier ${familyName} signal already counts.`} ${indicator.explanation}`;
+        badges.append(badge);
+      }
+      // Evidence against (South Korea's FLOOR-GAP clear): shown on every row it lowers, not only where it reaches zero.
+      const against = getAssessment(c).checks.filter(r => r.status === 'clear' && r.weight < 0);
+      for (const r of against) {
+        const badge = element('span', null, 'badge offset');
+        badge.append(element('span', KIND_AGAINST_SHORT[r.id] || r.label), ` ${String(r.weight).replace('-', '−')} pts`);
+        badge.title = `Evidence against: ${r.weight} points subtracted from the index. ${r.reason}`;
         badges.append(badge);
       }
       for (const label of contextLabels(c)) {
@@ -680,16 +610,17 @@ function startExplorer() {
         badges.append(badge);
       }
       if (ordered.length) objectCell.append(element('small', `Signals: ${ordered.map(i => i.kindLabel).join(' · ')}`, 'mobile-signals'));
+      if (against.length) objectCell.append(element('small', `Against: ${against.map(r => `${r.label} (${r.weight} pts)`).join(' · ')}`, 'mobile-signals'));
       for (const label of contextLabels(c)) objectCell.append(element('small', `Context: ${label.short}`, 'mobile-signals context'));
       const breakdown = getScoreBreakdown(c);
       const assessment = breakdown.assessment;
       const scoreValue = breakdown.score;
-      if (!indicators.length) badges.append(element('span', '—', 'muted'));
+      if (!indicators.length && !against.length) badges.append(element('span', '—', 'muted'));
       const score = element('td', null, 'numeric');
       const coverageLabel = assessment.excludedReason ? 'Calculations excluded' : assessment.applicable ? `${assessment.signals} signal(s) · ${assessment.evaluated}/${assessment.applicable} known-applicable checks evaluated` : 'No check with established applicability';
       score.append(scoreChip(c));
       score.title = `${coverageLabel}. ${assessment.unknownApplicability} unknown applicability(ies). Open the row for details.`;
-      score.setAttribute('aria-label', `${scoreValue == null ? 'Index not assessed.' : `Heuristic index: ${scoreValue} out of 100.`} ${coverageLabel}. ${assessment.unknownApplicability} unknown applicabilities.`);
+      score.setAttribute('aria-label', `${scoreValue == null ? 'Index not assessed.' : `Index: ${formatMultiplier(scoreValue)} as frequent among proven cases.`} ${coverageLabel}. ${assessment.unknownApplicability} unknown applicabilities.`);
       row.append(badges, score);
       button.addEventListener('click', event => { event.stopPropagation(); toggleDetail(c.id); });
       row.addEventListener('click', () => { if (!window.getSelection()?.toString()) toggleDetail(c.id); });
@@ -727,15 +658,6 @@ function startExplorer() {
       pagination.hidden = true;
       copyPage.disabled = exportCsv.disabled = exportJson.disabled = true;
       return;
-    }
-    if (koreaNationwide) {
-      pagination.hidden = true;
-      koreaScanStatus.textContent = koreaScanMessage;
-      koreaScanNext.disabled = !koreaScanResult?.hasMore || Boolean(koreaScanController);
-      koreaScanPrevious.disabled = !koreaScanResult || koreaScanPage === 0 || Boolean(koreaScanController);
-      document.querySelector('#korea-scan-cancel').disabled = !koreaScanController;
-      status.textContent = koreaScanMessage;
-      document.querySelector('#completeness').textContent = 'Static scan: counts, sorting, grouping, copy and exports cover only the displayed scan page. Published collection/record order determines membership. Sorting is within each collection, never a cross-country risk or currency ranking. Collections may overlap; records are not unique contracts. No combined amount totals.';
     }
     writeView();
   }
@@ -804,7 +726,6 @@ function startExplorer() {
     const title = element('h2', c.description);
     title.id = 'detail-title';
     head.append(title);
-    if (c.collectionLabel) head.append(element('p', `Collection: ${c.collectionLabel} · source record ${c.originalId}. Assessment uses this source’s rules; not a cross-country ranking.`, 'collection-context'));
     const facts = element('dl', null, 'detail-facts');
     const fact = (label, ...values) => {
       if (!values.length || values[0] == null || values[0] === '') return;
@@ -812,7 +733,6 @@ function startExplorer() {
       const dd = element('dd'); dd.append(...values); box.append(dd); facts.append(box);
     };
     const profileButton = role => {
-      if (koreaNationwide) return []; // A page is not a complete buyer/supplier profile.
       if (!profileKey(c, role)) return [];
       const button = element('button', 'Profile', 'link-button profile-link');
       button.type = 'button';
@@ -915,7 +835,7 @@ function startExplorer() {
         const item = element('li', null, `severity-line severity-${signal.severity}`);
         const name = element('strong', signal.kindLabel);
         if (KIND_REFERENCES[signal.kind]) name.title = `Also known as ${KIND_REFERENCES[signal.kind]}`;
-        item.append(name, element('span', ` · ${signal.weight} pts, ${BASIS_NOTE[signal.basis]}`, 'muted'), ...(counts ? [] : [element('span', ' · not added (same family)', 'muted')]), element('p', briefReason(signal.explanation)));
+        item.append(name, element('span', ` · ${formatMultiplier(signal.weight)} (${signal.weight} pts), ${signal.pointsNote || BASIS_NOTE[signal.basis]}`, 'muted'), ...(counts ? [] : [element('span', ' · not added (same family)', 'muted')]), element('p', briefReason(signal.explanation)));
         triggered.append(item);
       }
       why.append(triggered);
@@ -929,7 +849,7 @@ function startExplorer() {
       const parts = Object.entries(breakdown.families).filter(([, v]) => v !== 0);
       const summary = element('p', null, 'muted');
       if (parts.length) {
-        summary.append(element('span', 'Index'), ` ${breakdown.score} = `);
+        summary.append(element('span', 'Index'), ` ${formatMultiplier(breakdown.score)} = 2^(${breakdown.score} / 10); points `);
         parts.forEach(([k, v], i) => summary.append(i ? (v < 0 ? ' − ' : ' + ') : v < 0 ? '−' : '', element('span', k), ` ${Math.round(Math.abs(v) * 10) / 10}`));
         if (parts.reduce((t, [, v]) => t + v, 0) < 0) summary.append(', floored at 0');
         summary.append('. ');
@@ -1093,7 +1013,7 @@ function startExplorer() {
     for (const r of assessment.checks) {
       const item = element('li', null, `check-${r.status}`);
       item.append(element('strong', r.label), ' — ', element('span', states[r.status]));
-      if (r.weight != null && (r.status === 'signal' || r.weight < 0)) item.append(' · ', element('span', `${r.weight} pts, ${BASIS_NOTE[r.basis]}`));
+      if (r.weight != null && (r.status === 'signal' || r.weight < 0)) item.append(' · ', element('span', `${r.weight} pts, ${r.pointsNote || BASIS_NOTE[r.basis]}`));
       item.append('. ', element('span', briefReason(r.reason), 'muted'));
       checks.append(item);
     }
@@ -1179,7 +1099,7 @@ function startExplorer() {
     if (searchIds.length) { const p = element('p', null, 'muted'); p.append(element('span', 'Search the portal for'), ` ${searchIds.map(([k, v]) => `${k} ${v}`).join(' · ')}`); verify.append(p); }
     sections.push(verify);
 
-    const printed = element('p', `${currentDatasetLabel}. Printed ${new Date().toISOString().slice(0, 10)} from ${location.href}. Index v${SCORE_VERSION}: an editorial review aid, not a finding. Review notes are the reviewer’s own.`, 'print-only');
+    const printed = element('p', `${currentDatasetLabel}. Printed ${new Date().toISOString().slice(0, 10)} from ${location.href}. Index v${SCORE_VERSION}: a multiplier of how frequent these signals are among proven cases, a review aid, not a finding. Review notes are the reviewer’s own.`, 'print-only');
     detailBody.replaceChildren(head, ...sections, printed);
   }
   function markOpenRow() {
@@ -1258,20 +1178,15 @@ function startExplorer() {
   });
 
   function accept(data, prepared = null) {
-    if (usingLocalFile && koreaNationwide) {
-      cancelKoreaScan('Local file loaded.');
-      koreaNationwide = false;
-      koreaScanPanel.hidden = true;
-      koreaPicker.hidden = true;
-    }
+    if (usingLocalFile) koreaPicker.hidden = true;
     if (previewing) setPreviewLock(false);
     contracts = prepared || prepareContracts(data);
     assessmentCache = new WeakMap();
     const sectors = [...new Map(contracts.map(c => { const s = getSector(c); return [s.code, s]; })).values()].sort((a, b) => a.code === 'unknown' ? 1 : b.code === 'unknown' ? -1 : a.label.localeCompare(b.label, 'en'));
-    fillSelect(controls.sector, [['', 'All sectors'], ...(koreaNationwide ? [...Object.entries(CPV_SECTORS), ['unknown', 'Sector not specified']] : sectors.map(s => [s.code, `${s.code === 'unknown' ? '' : s.code + ' · '}${s.label}`]))]);
+    fillSelect(controls.sector, [['', 'All sectors'], ...sectors.map(s => [s.code, `${s.code === 'unknown' ? '' : s.code + ' · '}${s.label}`])]);
     projectCatalog = new Map(contracts.filter(c => c.project).map(c => [c.project.id, c.project]));
-    fillSelect(controls.project, [['', 'All records'], ...(projectCatalog.size || koreaNationwide ? [['@documented', 'Documented projects only']] : []), ...[...projectCatalog.values()].map(p => [p.id, p.title])]);
-    controls.project.disabled = !koreaNationwide && projectCatalog.size === 0;
+    fillSelect(controls.project, [['', 'All records'], ...(projectCatalog.size ? [['@documented', 'Documented projects only']] : []), ...[...projectCatalog.values()].map(p => [p.id, p.title])]);
+    controls.project.disabled = projectCatalog.size === 0;
     computeOverview();
     const noteCounts = new Map();
     for (const c of contracts) for (const key of ['dateNote', 'amountBasis', 'notes', 'identifierNote', 'offersNote']) {
@@ -1312,7 +1227,6 @@ function startExplorer() {
   // fast typing, one character at a time, is filtered once it stops.
   let searchTimer = 0, lastSearchInput = -Infinity, lastSearchValue = '';
   function searchInput() {
-    if (koreaNationwide) { clearTimeout(searchTimer); refresh(); return; }
     const now = performance.now(), value = controls.search.value;
     const typed = Math.abs(value.length - lastSearchValue.length) === 1 && (value.startsWith(lastSearchValue) || lastSearchValue.startsWith(value));
     const immediate = !typed || now - lastSearchInput > 150;
@@ -1323,7 +1237,7 @@ function startExplorer() {
   Object.values(controls).forEach(control => control.addEventListener('input', control === controls.search ? searchInput : refresh));
   // Column headers sort too: first click descending (newest, largest, most), second ascending.
   // They drive the Sort control, so the link, page reset and export stay in step.
-  const SORT_PAIRS = { date: ['date', 'date-asc'], publication: ['publication', 'publication-asc'], amount: ['amount', 'amount-asc'], indicators: ['indicators', 'indicators-asc'], score: ['score', 'score-asc'], buyer: ['buyer', 'buyer-desc'], supplier: ['supplier', 'supplier-desc'], sector: ['sector', 'sector-desc'], offers: ['offers-desc', 'offers'], increase: ['increase'], official: ['official'], 'recent-signal': ['recent-signal'] };
+  const SORT_PAIRS = { date: ['date', 'date-asc'], publication: ['publication', 'publication-asc'], amount: ['amount', 'amount-asc'], indicators: ['indicators', 'indicators-asc'], score: ['score', 'score-asc'], priority: ['priority'], buyer: ['buyer', 'buyer-desc'], supplier: ['supplier', 'supplier-desc'], sector: ['sector', 'sector-desc'], offers: ['offers-desc', 'offers'], increase: ['increase'], official: ['official'], 'recent-signal': ['recent-signal'] };
   const sortField = document.querySelector('#sort-field');
   const sortDirection = document.querySelector('#sort-direction');
   function syncSortControl() {
@@ -1394,7 +1308,7 @@ function startExplorer() {
   copyPage.addEventListener('click', async () => {
     if (!loaded || !pageRowsForCopy.length) return;
     const copiedCount = pageRowsForCopy.length;
-    const text = pageSummaryForCopy(pageRowsForCopy, { dataset: currentDatasetLabel + (koreaNationwide ? ` · static scan page ${koreaScanPage + 1} ONLY; counts and sorting are page-local` : ''),
+    const text = pageSummaryForCopy(pageRowsForCopy, { dataset: currentDatasetLabel,
       page: page + 1, totalPages: Math.max(1, Math.ceil(totalResultsForCopy / pageSize)), totalResults: totalResultsForCopy });
     copyStatus.textContent = await copyText(text) ? `${copiedCount} record summaries copied with source links.` : 'Unable to copy. Serve over localhost or select the rows manually.';
     const original = 'Copy page';
@@ -1412,16 +1326,16 @@ function startExplorer() {
     link.remove();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
-  const exportName = extension => `contract-signals-${usingLocalFile ? 'local-file' : datasetSelect.value}${koreaNationwide ? '-scan-page-' + (koreaScanPage + 1) : ''}-${new Date().toISOString().slice(0, 10)}.${extension}`;
+  const exportName = extension => `contract-signals-${usingLocalFile ? 'local-file' : datasetSelect.value}-${new Date().toISOString().slice(0, 10)}.${extension}`;
   exportCsv.addEventListener('click', () => {
     if (!loaded || !rowsForExport.length) return;
     download(exportName('csv'), 'text/csv;charset=utf-8', '﻿' + rowsToCsv(rowsForExport));
-    copyStatus.textContent = `${rowsForExport.length} ${koreaNationwide ? 'scan-page records (not nationwide totals)' : 'filtered records'} exported as CSV.`;
+    copyStatus.textContent = `${rowsForExport.length} filtered records exported as CSV.`;
   });
   exportJson.addEventListener('click', () => {
     if (!loaded || !rowsForExport.length) return;
-    download(exportName('json'), 'application/json', rowsToJson(rowsForExport, { dataset: currentDatasetLabel + (koreaNationwide ? ` · scan page ${koreaScanPage + 1} ONLY; published-order membership, page-local sorting; not a nationwide export` : ''), view: viewStateToHash(currentView()), exportedAt: new Date().toISOString() }));
-    copyStatus.textContent = `${rowsForExport.length} ${koreaNationwide ? 'scan-page records (not nationwide totals)' : 'filtered records'} exported as JSON.`;
+    download(exportName('json'), 'application/json', rowsToJson(rowsForExport, { dataset: currentDatasetLabel, view: viewStateToHash(currentView()), exportedAt: new Date().toISOString() }));
+    copyStatus.textContent = `${rowsForExport.length} filtered records exported as JSON.`;
   });
   // Review notes travel as a JSON file the reviewer chooses to share; nothing is uploaded.
   const reviewStatus = document.querySelector('#review-status');
@@ -1565,9 +1479,6 @@ function startExplorer() {
     datasetSelection.sync();
     const selected = datasets[datasetSelect.value];
     invalidateImport();
-    cancelKoreaScan('Ready to scan.');
-    koreaNationwide = false;
-    koreaScanPanel.hidden = true;
     const version = ++loadVersion;
     activeProfile = null;
     loaded = false;
@@ -1599,15 +1510,6 @@ function startExplorer() {
     if (previewing) setPreviewLock(false);
     koreaPicker.hidden = !selected.remote;
     if (pendingView?.['korea-buyer'] != null && selected.remote) koreaBuyer = pendingView['korea-buyer'];
-    if (selected.remote === 'global') {
-      koreaPicker.hidden = true;
-      koreaNationwide = true;
-      koreaScanPanel.hidden = false;
-      document.querySelector('#coverage-link').hidden = true;
-      accept([]);
-      startKoreaScan();
-      return;
-    }
     if (selected.remote === 'korea') {
       try { await loadKorea(version); } catch (error) { if (version === loadVersion) fail(error); }
       return;

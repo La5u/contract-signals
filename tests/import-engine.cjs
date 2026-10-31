@@ -13,7 +13,8 @@ assert.ok(run('getAssessment', browsed).checks.every(c => !evidenceIds.includes(
 assert.equal(run('exportRecord', browsed).currency, null);
 assert.match(run('pageSummaryForCopy', [browsed], { dataset: 'Local', page: 1, totalPages: 1, totalResults: 1 }), /currency unknown/);
 const french = run('prepareContracts', importer.parse(text, { method: 'french' }).records)[0];
-assert.ok(run('getVigilanceScore', french) > 0);
+// Score 4.0: French signals borrow 0 points (single offer and direct award are no more frequent among proven cases elsewhere).
+assert.ok(run('getIndicators', french).length > 0 && run('getVigilanceScore', french) === 0);
 assert.equal(french.supplierContext, null);
 assert.equal(french.competitionContext, null);
 const unverified = run('prepareContracts', importer.parse('id,buyer,description,offers,directAward\nx,B,D,1,true', { method: 'french' }).records)[0];

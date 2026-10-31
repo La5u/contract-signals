@@ -177,7 +177,7 @@ def fetch_stage(client, sample, min_terms, seed):
 def ask(prompt, model, timeout, cwd):
     if model in CLAUDE:
         cmd = ['claude', '-p', '--model', model, *court.CLAUDE_LEAN]
-    elif model.startswith('opencode/'):
+    elif model.startswith(('opencode/', 'opencode-go/')):
         cmd = ['opencode', 'run', '--pure', '-m', model]
     else:  # Codex models (gpt-6-luna, gpt-6.1-sol) through `sol`, which prints only the final answer
         cmd = ['sol', '-e', 'low', '-m', model]

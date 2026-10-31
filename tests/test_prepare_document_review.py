@@ -84,7 +84,7 @@ const ctx=vm.createContext({URL});require('./tools/engine.cjs').load(ctx);
 const paths=JSON.parse(process.argv[1]),out={};
 for(const [key,path] of Object.entries(paths)) {
  ctx.rows=JSON.parse(fs.readFileSync(path,'utf8'));
- out[key]=vm.runInContext('prepareContracts(rows).map(c=>({id:c.id,score:getVigilanceScore(c),excluded:!!getAssessment(c).excludedReason,evaluated:getAssessment(c).evaluated}))',ctx);
+ out[key]=vm.runInContext('prepareContracts(rows).map(c=>({id:c.id,score:getVigilanceScore(c),excluded:!!getAssessment(c).excludedReason,evaluated:getAssessment(c).evaluated,signals:getAssessment(c).signals}))',ctx);
 }
 console.log(JSON.stringify(out));
 """
@@ -97,7 +97,7 @@ console.log(JSON.stringify(out));
                 index = {r['id']: r for r in actual[dataset]}
                 for original in self.datasets[dataset]:
                     score = index[original['id']]
-                    minimal = {'score': score['score'], 'assessment': {'excluded': score['excluded']}}
+                    minimal = {'score': score['score'], 'assessment': {'excluded': score['excluded'], 'signals': score['signals']}}
                     if (dataset, original['id']) not in used and m.eligible(stratum, original, minimal):
                         candidates.append((dataset, original['id']))
             self.assertEqual((row['dataset'], row['rowId']), min(candidates))
@@ -110,7 +110,9 @@ console.log(JSON.stringify(out));
     def test_zero_missing_conflict_and_document_semantics(self):
         rows = {r['stratum']: r for r in self.plan['rows']}
         self.assertGreater(rows['scored-flagged-positive']['published']['amount'], 0)
-        self.assertGreater(rows['scored-flagged-positive']['score'], 0)
+        # Score 4.0: French signals carry no weight, so a flagged record's index can be 0; it has a signal.
+        self.assertGreaterEqual(rows['scored-flagged-positive']['score'], 0)
+        self.assertGreater(rows['scored-flagged-positive']['assessment']['signals'], 0)
         self.assertGreater(rows['scored-zero-positive']['published']['amount'], 0)
         self.assertEqual(rows['scored-zero-positive']['score'], 0)
         self.assertEqual(rows['declared-zero']['published']['amount'], 0)
@@ -138,7 +140,7 @@ console.log(JSON.stringify(out));
                                       'source': 'https://evil.example/SECRET',
                                       'history': [{'supplierId': 'SECRET HISTORY'}],
                                       'sourceRowVariants': [{'secret': 'RAW SECRET'}]})
-            scores['boamp'][rid] = {'score': score, 'assessment': {'excluded': False}}
+            scores['boamp'][rid] = {'score': score, 'assessment': {'excluded': False, 'signals': 1}}
         rows, empty = m.select_rows(datasets, scores, {key: {} for key in datasets})
         self.assertEqual([r['rowId'] for r in rows], ['a'])
         self.assertEqual(len(empty), 5)

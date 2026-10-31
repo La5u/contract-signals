@@ -229,10 +229,6 @@ function prepareContracts(data) {
 }
 
 function groupInfo(contract, mode) {
-  if (contract.collectionId && mode) {
-    const info = groupInfo({ ...contract, collectionId: null }, mode);
-    return { key: `${contract.collectionId}::${info.key}`, label: `${contract.collectionLabel} · ${info.label}` };
-  }
   if (mode === 'sector') { const sector = getSector(contract); return { key: `sector:${sector.code}`, label: `${sector.code === 'unknown' ? '' : sector.code + ' · '}${sector.label}` }; }
   if (mode === 'buyer') return { key: `buyer:${contract.buyerSiret || normalize(contract.buyer)}`, label: contract.buyer + (contract.buyerSiret ? ` · ${contract.buyerSiret}` : ' · matched by name, to be verified') };
   if (mode === 'supplier') {
@@ -458,6 +454,8 @@ function selectContracts(contracts, { country = '', dateFrom = '', dateTo = '', 
   const scores = new Map();
   const increases = new Map();
   const scoreFor = c => { if (!scores.has(c)) scores.set(c, getVigilanceScore(c)); return scores.get(c); };
+  // Priority (score 4.0): the extra stake, (multiplier - 1) x amount; 0 without a weighted signal.
+  const priorityFor = c => scoreFor(c) == null || !(c.amount > 0) ? null : (indexMultiplier(scoreFor(c)) - 1) * c.amount;
   const increaseFor = c => {
     if (!increases.has(c)) { const change = getAmountEvolution(c); increases.set(c, change.status === 'available' ? change.percentage : null); }
     return increases.get(c);
@@ -495,15 +493,23 @@ function selectContracts(contracts, { country = '', dateFrom = '', dateTo = '', 
       (!indicator || (indicator === 'official-finding' ? c.officialFinding === true : getIndicators(c).some(i => i.kind === indicatorKind(indicator))));
   });
   const direction = ['score-asc', 'amount-asc', 'date-asc', 'publication-asc', 'indicators-asc', 'offers'].includes(sort) ? 1 : ['sector', 'sector-desc', 'buyer', 'buyer-desc', 'supplier', 'supplier-desc'].includes(sort) ? (sort.endsWith('-desc') ? -1 : 1) : -1;
-  const field = sort === 'recent-signal' ? 'recent-signal' : sort.startsWith('score') ? 'score' : sort.startsWith('amount') ? 'amount' : sort.startsWith('date') ? 'date' : sort.startsWith('indicators') ? 'indicators' : sort.startsWith('publication') ? 'publication' : sort.startsWith('sector') ? 'sector' : sort.startsWith('buyer') ? 'buyer' : sort.startsWith('supplier') ? 'supplier' : sort.startsWith('offers') ? 'offers' : sort;
-  const raw = c => field === 'recent-signal' ? (scoreFor(c) != null && getIndicators(c).length && c.date ? Date.parse(c.date) : null) : field === 'score' ? scoreFor(c) : field === 'amount' ? (c.amount > 0 ? c.amount : null) : field === 'date' ? (c.date ? Date.parse(c.date) : null) :
+  const field = sort === 'recent-signal' ? 'recent-signal' : sort.startsWith('score') ? 'score' : sort === 'priority' ? 'priority' : sort.startsWith('amount') ? 'amount' : sort.startsWith('date') ? 'date' : sort.startsWith('indicators') ? 'indicators' : sort.startsWith('publication') ? 'publication' : sort.startsWith('sector') ? 'sector' : sort.startsWith('buyer') ? 'buyer' : sort.startsWith('supplier') ? 'supplier' : sort.startsWith('offers') ? 'offers' : sort;
+  const raw = c => field === 'recent-signal' ? (scoreFor(c) != null && getIndicators(c).length && c.date ? Date.parse(c.date) : null) : field === 'score' ? scoreFor(c) : field === 'priority' ? priorityFor(c) : field === 'amount' ? (c.amount > 0 ? c.amount : null) : field === 'date' ? (c.date ? Date.parse(c.date) : null) :
     field === 'publication' ? (c.publicationDate ? Date.parse(c.publicationDate) : null) : field === 'sector' ? getSector(c).label : field === 'buyer' ? c.buyer : field === 'supplier' ? c.supplier :
     field === 'indicators' ? (scoreFor(c) == null ? null : getIndicators(c).length) :
     field === 'official' ? (c.officialFinding === true ? 1 : null) : field === 'offers' ? c.offers : field === 'increase' ? increaseFor(c) : null;
+  // Priority: rows with an extra stake first, the most frequent currency first (amounts are never compared across currencies).
+  const currencyRows = new Map();
+  if (field === 'priority') for (const c of filtered) { const cur = recordCurrency(c) || '(currency unknown)'; currencyRows.set(cur, (currencyRows.get(cur) || 0) + 1); }
   return filtered.sort((a, b) => {
     const av = raw(a), bv = raw(b);
     const nullOrder = av == null ? (bv == null ? 0 : 1) : bv == null ? -1 : 0;
     if (nullOrder) return nullOrder;
+    if (field === 'priority' && (av > 0) !== (bv > 0)) return av > 0 ? -1 : 1;
+    if (field === 'priority') {
+      const ac = recordCurrency(a) || '(currency unknown)', bc = recordCurrency(b) || '(currency unknown)';
+      if (ac !== bc) return (currencyRows.get(bc) - currencyRows.get(ac)) || collator.compare(ac, bc);
+    }
     // Amounts are never compared across currencies: group by currency, then amount.
     if (field === 'amount') {
       const ac = recordCurrency(a) || '(currency unknown)', bc = recordCurrency(b) || '(currency unknown)';

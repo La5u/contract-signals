@@ -58,14 +58,16 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--start', default='2024-09-01')
     parser.add_argument('--end', default='2026-09-01')
+    parser.add_argument('--out', type=Path, default=CACHE,
+                        help='folder for the week files (2000-2009 go to opnstd-contracts-pre2010, kept out of opnstd.sqlite)')
     parser.add_argument('--max-calls', type=int, default=9500, help='stop before the daily quota (10,000)')
     args = parser.parse_args()
     key = KEY_FILE.read_text().strip()
     opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
-    CACHE.mkdir(parents=True, exist_ok=True)
+    args.out.mkdir(parents=True, exist_ok=True)
     calls = 0
     for lo, hi in windows(date.fromisoformat(args.start), date.fromisoformat(args.end)):
-        target = CACHE / f'{lo}_{hi}.jsonl.gz'
+        target = args.out / f'{lo}_{hi}.jsonl.gz'
         if target.exists():
             continue
         # Paging is not stable on a live table: rows repeat, shift between pages, or are added

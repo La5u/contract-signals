@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Research only: find the federal contract numbers behind each US label case, one Sol thread per case.
+"""Research only: find the federal contract numbers behind each US label case, one Codex thread per case (Terra by default since 2026-10-27).
 
 Input: us-labels/sol-cases-1.tsv (case list, one row per case). For every case Sol searches the primary documents
 (plea agreements, informations, indictments, complaints, settlement agreements, OIG reports, GAO protest decisions,
@@ -92,7 +92,7 @@ def main():
     ap.add_argument('--out', type=Path, default=BASE / 'cases')
     ap.add_argument('--only', help='comma-separated case ids')
     ap.add_argument('--workers', type=int, default=8)
-    ap.add_argument('--model', default='gpt-6.1-sol')
+    ap.add_argument('--model', default='gpt-6.1-terra')
     ap.add_argument('--effort', default='medium')
     ap.add_argument('--timeout', type=int, default=1800)
     a = ap.parse_args()

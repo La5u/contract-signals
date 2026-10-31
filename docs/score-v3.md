@@ -1,6 +1,31 @@
-# Vigilance index 3.8 — active method
+# Vigilance index 4.0 — active method
 
-**An editorial sorting tool, not a probability, a measure of legal gravity or a certificate of regularity.** The existing data and PDFs are unchanged; the meaning of the score and some eligibility criteria deliberately change. A v2.1 30 must not be compared to a v3 30 as a real evolution of a contract.
+**A multiplier of how frequent a record's signals are among proven cases, not a probability, a measure of legal gravity or a certificate of regularity.** The existing data and PDFs are unchanged; the meaning of the score and some eligibility criteria deliberately change. A v2.1 30 must not be compared to a v3 30 as a real evolution of a contract.
+
+## 4.0 (29 October 2026): the index as a multiplier; only measured points count
+
+Adopted by the owner on 2026-10-29. Points were already 10 × log2 of a likelihood ratio, so the index is now shown as the multiplier **2^(points / 10)**: ×2 means records with these signals are twice as frequent among proven cases (convictions, competition-authority decisions) as among the same buyers' other contracts; 10 points = ×2, 20 = ×4, 30 = ×8. The 0–100 scale, its ceiling and the 20/40/70 bands are gone (40 and 70 meant ×16 and ×128, which no record reaches). Levels: below ×1.5, ×1.5–3, ×3–6, ×6 and more. It is not a probability: the base rate of corruption is unknown and proven cases are the ones prosecutors chose to pursue.
+
+A multiplier is only true for measured points, so editorial points no longer enter the index (`checkPoints` in `scoring.js`). Each signal takes the first of:
+
+1. **its country's own measurement**, on that country's labels, including checks that failed (`MEASURED_OVERRIDES`): Romania (Competition Council decisions, [final run](../research/calibration/romania-colombia-results-2026-10-15-audit.md)) single offer, direct award, repeated single offer, repeated direct award and concentration **0** (rarer or no more frequent among rigged procedures); Colombia (convictions, [results](../research/calibration/colombia-convictions-results.md)) plurality award (direct), concentration and repeated plurality awards **0**, term extension **1.2** (CO3). Checks already measured keep their points (Ukraine, Colombian and Romanian buyer share, Romanian supplier dependence, South Korea).
+2. **points borrowed from the countries that measured the same kind of check**, labelled “measured elsewhere”: the **lowest** value any labelled country measured (`MEASURED_KIND_POINTS`), because where countries disagree the check is not known to carry over. Single offer (Ukraine 1, Romania 0), direct award (Ukraine 10, Romania 0, Colombia 0), repeated awards, concentration (South Korea 7.7, Romania and Colombia 0), amount increase, contract amendments and better bid disqualified (0 in South Korea) all borrow **0**; term extension borrows 1.2 (Colombia).
+3. **nothing**: a check never measured on labelled cases (late publication, long duration, low competition rate, short bidding period, late notice change, the evidence-based checks) is shown as context and leaves the multiplier at ×1.0.
+
+This supersedes the rule that one country's evidence never moves another's points, for countries without labels only: a labelled country always uses its own measurement. Check files keep their editorial weights (`checkWeight`, shown as “not used” in exports) so the thresholds stay documented and testable.
+
+**Priority sort:** (multiplier − 1) × amount, the expected extra stake. Records without a weighted signal get 0; a large contract with a signal ranks above a small one with the same signal. As with the amount sort, rows are grouped by currency and amounts are never compared across currencies.
+
+Effect on the bundled data (records above ×1.0, before → after): Ukraine 118 → 118 (unchanged: every Ukrainian check was measured, its unmeasured repeated single offer borrows 0 and fired with others); Romania 147 → 14 (buyer share only); Colombia 279 → 66 (term extension ×1.09, buyer share ×1.39); France (DECP 346 + cities 231), Czechia 135, Portugal 136, United Kingdom 43, Chile 71, Paraguay 36 + 58 → **0**: their signals are still shown, as context, until their own labels are measured (France next, [france-labels-plan.md](../research/calibration/france-labels-plan.md)). South Korea is unchanged (all its checks are measured).
+
+## v3.9 (29 October 2026): Romanian buyer share and supplier dependence
+
+Adopted by the owner on 2026-10-29, after the SEAP buyer-year totals were fixed (each contract value once per buyer-year, values split among a contract's winners; [plan amendment 2026-10-28](../research/calibration/romania-bid-rigging-plan.md)). Like the other buyer-share checks, both were then controlled for contract size with the same rule as v3.8 (value bands at the comparisons' 50th–99th percentiles, rigged prices taken as inflated ×1.3; [amendment 2026-10-29](../research/calibration/romania-bid-rigging-plan.md), `tools/romania-buyer-share-size.py`). Competition Council decisions, weighted by appeal outcome, all procedures:
+
+- **`ro-buyer-share` (contract ≥ 5 % of the buyer's SEAP total for the year): 2 points.** 45 % of rigged procedures vs 19 % of the same buyers' other contracts, LR 1.94 unadjusted (7.9 points); at equal value 1.24 [0.97, 1.53] (1.0 point without the ×1.3 allowance).
+- **`ro-supplier-dependence` (the supplier holds ≥ 25 % of the buyer's SEAP total for the year): 3.4 points.** 34 % vs 12 %, LR 2.19 unadjusted (8.7 points); at equal value 1.42 [1.01, 1.87] (2.7 points without the allowance).
+- TED lists above-threshold awards only, so the denominators come from SEAP's contract exports (`data/romania-seap-totals.json`, `tools/build-romania-seap-totals.py`; 2024 and 2025, the years with all four quarterly exports; other years are unknown). Framework ceilings stay in the totals, counted once: the export has no call-off values. Both checks sit in the competition family, as in Ukraine and Colombia.
+- Effect on the bundled data: 14 Romanian lots fire the buyer share, 9 of them without another signal (positive scores 138 → 147, all new ones at 2 points); supplier dependence fires on none (the largest is 13 %).
 
 ## v3.8 (20 October 2026): buyer share controlled for contract size
 
