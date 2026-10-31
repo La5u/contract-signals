@@ -36,6 +36,16 @@ assert.equal(by['kr-award-near-reserve'].weight, null);
 assert.deepEqual(['kr-few-bidders', 'kr-supplier-dependence', 'kr-floor-gap'].map(id => by[id].family), ['competition', 'concentration', 'price']);
 assert.ok(checks.filter(r => r.id.startsWith('kr-')).every(r => r.basis === 'measured'));
 for (const id of Object.keys(by).filter(id => id.startsWith('kr-'))) assert.ok(run('indicatorKind', id), id);
+// FLOOR-GAP has its own kind, so its chip and filter do not read "near reserve price" (review 2026-10-29).
+assert.equal(run('indicatorKind', 'kr-floor-gap'), 'floor-gap');
+assert.notEqual(run('indicatorKind', 'kr-floor-gap'), run('indicatorKind', 'kr-award-near-reserve'));
+assert.match(run('checkPoints', prepared[0], by['kr-few-bidders']).note, /cautious bound/);
+// The business type stands in for the sector; the bid count fills Offers once the shards carry it.
+assert.deepEqual(JSON.parse(JSON.stringify(run('getSector', prepared[0]))), { code: 'kr-services', label: 'Services (용역)' });
+assert.equal(prepared[0].offers, null, 'shards built before the bids column: no offer count');
+const withBids = run('koreaRecords', { ...meta, columns: [...columns, 'bids'] }, { ...shard, buyers: { '3220000': [[...shard.buyers['3220000'][0], 3]] } },
+  ['3220000', '서울특별시 강남구', '지방자치단체', 1, 0])[0];
+assert.equal(withBids.offers, 3);
 const withLetters = (letters, i = 0) => run('prepareContracts', run('koreaRecords', meta, { ...shard, buyers: { '3220000': [[...shard.buyers['3220000'][0].slice(0, 19), letters]] } },
   ['3220000', '서울특별시 강남구', '지방자치단체', 1, 0]))[i];
 const base = 'csuuuccsucccccsscsuucuc';

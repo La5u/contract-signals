@@ -3,7 +3,7 @@
 
 Input: prec/extract/checked.jsonl (tools/extract-korea-court-rulings.py --check), bid openings in bids/bids/<type>/<day>
 (tools/fetch-korea-bid-results.py) and opnstd.sqlite `versions`. Only relevant rulings, public buyers and contracts
-from 2010 on (the KONEPS download) are matched; the same contract named under several findings is matched once.
+from 1995 on are matched (the contract API starts in 1995, bid openings in 2008-07); the same contract named under several findings is matched once.
 
 Routes, in order (the first that leaves exactly one notice wins):
 - `notice`: the ruling prints the notice number (KFTC matcher rule).
@@ -78,7 +78,7 @@ def load(path):
         for fi, f in enumerate(res.get('findings') or []):
             for c in f.get('contracts') or []:
                 year = contract_year(c)
-                if c.get('buyer_public') is False or not year or year < 2010:
+                if c.get('buyer_public') is False or not year or year < 1995:
                     continue
                 key = (re.sub(r'\W', '', c.get('buyer') or ''), re.sub(r'\W', '', c.get('contract_name') or ''),
                        c.get('contract_date'), c.get('amount'), c.get('supplier'))
@@ -197,7 +197,8 @@ def match_buyer_only(t, rows):
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     parser.add_argument('--rulings', type=Path, default=BASE / 'prec/extract/checked.jsonl')
-    parser.add_argument('--db', type=Path, default=BASE / 'opnstd.sqlite')
+    parser.add_argument('--db', type=Path, nargs='+', default=[BASE / 'opnstd.sqlite'],
+                        help='contract databases, e.g. also opnstd-pre2010.sqlite (2000-2009, kept apart from the checks)')
     parser.add_argument('--out', type=Path, default=BASE / 'prec/extract/links.jsonl')
     parser.add_argument('--days-out', type=Path, default=BASE / 'bids-court-days.txt',
                         help='opening days named by rulings, for fetch-korea-bid-results.py bids --days')
@@ -218,7 +219,12 @@ def main():
                     bid_hits[(t['serial'], t['i'])] = hit[0]
                     t['notice_no'] = hit[0]['notice_no']
                     t['notice_from_bids'] = True
-    rows, seen = km.scan(args.db, tenders)
+    rows, seen = defaultdict(list), 0
+    for db in args.db:
+        got, n = km.scan(db, tenders)
+        seen += n
+        for key, rs in got.items():
+            rows[key] += rs
     first = [km.match(t, rows) for t in tenders]
     # The buyer-only route keeps every contract of a tender's buyer in its years, so it runs only for the tenders the
     # other routes left open, in chunks: all at once ran out of memory on 5,838 audit contracts (2026-10-24).
@@ -226,7 +232,10 @@ def main():
     buyer_rows = {}
     for k in range(0, len(need), BUYER_CHUNK):
         part = need[k:k + BUYER_CHUNK]
-        got = scan_buyers(args.db, [tenders[ti] for ti in part])
+        got = defaultdict(list)
+        for db in args.db:
+            for j, rs in scan_buyers(db, [tenders[ti] for ti in part]).items():
+                got[j] += rs
         for j, ti in enumerate(part):
             if j in got:
                 buyer_rows[ti] = got[j]

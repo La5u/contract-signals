@@ -10,6 +10,7 @@ one letter per check, null when missing), and writes ~/.cache/contract-signals/k
               one file, [code, name, type, contracts, newest part, [parts oldest first]]
 - s/NNNN.json contracts of a run of buyers (by code), about 1.5 MB each, rows as arrays; a big buyer gets shards of
               its own (parts of about 8 MB, under the host's 25 MiB per file), each holding a run of its rows by date
+- top.json    the 5,000 highest-scored contracts in shard format, plus count and limit
 - _headers, robots.txt, index.html for the static host
 
 Only the fields the explorer shows are kept; the full record is linked on KONEPS (나라장터). Individual businesses
@@ -23,6 +24,7 @@ import argparse
 import json
 import shutil
 import sqlite3
+import subprocess
 import tempfile
 from itertools import groupby
 from datetime import datetime, timezone
@@ -34,7 +36,7 @@ SHARD_BYTES = 1_500_000
 PART_BYTES = 8_000_000
 COLUMNS = ['contractNo', 'date', 'dateIsFirstChange', 'name', 'demand', 'supplier', 'supplierBizrno', 'supplierKind',
            'originalAmount', 'latestAmount', 'versions', 'method', 'businessType', 'noticeNo', 'legalRef', 'joint',
-           'linkContract', 'linkChangeOrder', 'linkKind', 'checks']
+           'linkContract', 'linkChangeOrder', 'linkKind', 'checks', 'bids']
 # KR_CHECK_ORDER in checks-national.js must be a prefix of this: it reads the letters by position, so new checks are
 # appended (the bid-level B checks were, 2026-10-22).
 CHECK_ORDER = ['G2', 'G3', 'G4', 'G5', 'G6', 'N1', 'N2', 'N4', 'N5', 'U2', 'K1', 'K2', 'K3', 'K4', 'K5', 'K6',
@@ -46,7 +48,7 @@ QUERY = '''
 select c.cntrct_no, c.signed, c.first_date_seen, c.original_in_period, c.last_name, v.demand_name,
        c.last_supplier_name, c.last_supplier_bizrno, c.last_supplier_kind, c.original_amount, c.last_amount, c.versions_seen,
        c.last_method, c.last_business_type, c.last_notice_no, c.last_legal_ref, c.last_joint, v.contract_url,
-       c.last_buyer_code, c.last_buyer_name, c.last_buyer_type, k.letters, c.last_date_seen
+       c.last_buyer_code, c.last_buyer_name, c.last_buyer_type, k.letters, k.bids, c.last_date_seen
 from contracts c join versions v on v.cntrct_no = c.cntrct_no and v.ord = c.last_ord
 left join k.checks k on k.cntrct_no = c.cntrct_no
 where c.last_date_seen >= ?
@@ -84,13 +86,14 @@ def main(argv=None):
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     tmp = tempfile.TemporaryDirectory(dir=Path(args.out).parent)
     db.execute('attach ? as k', (str(Path(tmp.name) / 'checks.sqlite'),))
-    db.execute('create table k.checks (cntrct_no text primary key, letters text) without rowid')
+    db.execute('create table k.checks (cntrct_no text primary key, letters text, bids integer) without rowid')
     with open(args.checks, encoding='utf-8') as f:
         header = next(f).rstrip('\n').split('\t')
         order = [h.split(' ')[0] for h in header[1:]]
-        if order != CHECK_ORDER:
-            raise SystemExit(f'{args.checks}: checks {order}, expected {CHECK_ORDER}')
-        db.executemany('insert or replace into k.checks values (?, ?)', (line.rstrip('\n').split('\t') for line in f))
+        if order != CHECK_ORDER + ['bids']:
+            raise SystemExit(f'{args.checks}: columns {order}, expected {CHECK_ORDER} and bids')
+        rows = (line.rstrip('\n').split('\t') for line in f)
+        db.executemany('insert or replace into k.checks values (?, ?, ?)', ((no, letters, int(n) if n else None) for no, letters, n in rows))
     db.commit()
     # Built in a staging folder next to the output, which is replaced only once the build has passed its checks.
     final = Path(args.out)
@@ -106,7 +109,7 @@ def main(argv=None):
     def contract_row(r):
         nonlocal last_date
         (no, signed, first_seen, original_in, name, demand, supplier, bizrno, kind, original, latest, versions,
-         method, btype, notice, legal, joint, url, bcode, bname, btype_buyer, letters, last_seen) = r
+         method, btype, notice, legal, joint, url, bcode, bname, btype_buyer, letters, n_bids, last_seen) = r
         individual = kind == 'individual'
         date = signed or first_seen
         if last_seen:
@@ -116,7 +119,7 @@ def main(argv=None):
             no, date, 0 if signed else 1, name, demand, supplier, None if individual else bizrno,
             KINDS.index(kind) if kind in KINDS else KINDS.index('unknown'),
             original if original_in else None, latest, versions, index(methods, method), index(types, btype),
-            notice or None, legal, 1 if joint == 'Y' else 0, *link_parts(url, link_kinds), letters]
+            notice or None, legal, 1 if joint == 'Y' else 0, *link_parts(url, link_kinds), letters, n_bids]
 
     # Pack consecutive buyers (by code) into shards of about SHARD_BYTES; per-shard lists for demand and legal ground.
     # Rows are streamed one buyer at a time (the full history does not fit in memory).
@@ -176,9 +179,11 @@ def main(argv=None):
         'link': LINK, 'checkOrder': CHECK_ORDER,
         'notes': ['Contracts signed or changed in the period; one row per contract number, from its latest version. Original amount when the original contract is in the data (from dataFrom).',
                   'dateIsFirstChange = 1: the contract was signed before dataFrom; the date is its first change in the data.',
+                  'top.json: the 5,000 highest-scored contracts nationwide; score ties use larger amount, then contract number.',
                   'Older contracts stay local (tool testing and indicator tuning).',
                   'A buyer too big for one file has a sixth entry in buyers.json: its shards, oldest contracts first; the fifth entry is the newest part.',
                   'checks: one letter per check in checkOrder (s signal, c clear, u unknown), from tools/korea-site-checks.py; null when not computed.',
+                  'bids: bids opened in the tender (개찰결과) whose opening the B checks read; null when not found.',
                   'Individual businesses keep their published trade name; their business registration number is left out.',
                   'Officials, representatives, phone numbers, e-mails and street addresses are not included.'],
     }
@@ -202,6 +207,7 @@ def main(argv=None):
     if files > 20_000 or biggest.stat().st_size > 25 * 2 ** 20:
         raise SystemExit(f'over the Cloudflare Pages free limits (20,000 files, 25 MiB per file); {final} left as it was, '
                          f'build in {out}')
+    subprocess.run(['node', str(Path(__file__).with_name('build-korea-top.cjs')), str(out)], check=True)
     if final.exists():
         shutil.rmtree(final)
     out.rename(final)

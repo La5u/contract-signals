@@ -39,7 +39,7 @@ def main(argv=None):
     edges = [cmp_values[int(q * len(cmp_values))] for q in (0.2, 0.4, 0.6, 0.8)]
     names = [f'Q{i + 1}' for i in range(5)]
     band = lambda v: None if not v else names[bisect.bisect_right(edges, v)]
-    analysis = [dict(r, band=band(value_of[r['id']]), checks={CO4: r['checks'][CO4]}) for r in rows]
+    analysis = [dict(r, band=band(value_of[r['id']]), value=value_of[r['id']], checks={CO4: r['checks'][CO4]}) for r in rows]
     out = {'edges_cop': edges, 'unadjusted': pp.analyse(analysis, CO4), 'size_standardised': size.standardise(analysis, CO4, names)}
     out['within_band'] = {b: pp.analyse([r for r in analysis if r['band'] == b], CO4) for b in names}
     print(f"Comparison value quintile edges (COP): {[f'{e:,.0f}' for e in edges]}")
@@ -62,6 +62,11 @@ def main(argv=None):
     fine_k = [dict(r, band=None if not value_of[r['id']] else fine_names[bisect.bisect_right(fine_edges, value_of[r['id']] / k)]) if 'combined' in r['groups'] else r for r in fine]
     out['size_standardised_fine_inflation'] = dict(size.standardise(fine_k, CO4, fine_names), inflation=k)
     out['within_fine_band'] = {b: pp.analyse([r for r in fine if r['band'] == b], CO4) for b in fine_names}
+    out['size_smooth'] = size.standardise_smooth(analysis, CO4)
+    out['size_smooth_inflation'] = dict(size.standardise_smooth(
+        [dict(r, value=r['value'] and r['value'] / k) if 'combined' in r['groups'] else r for r in analysis], CO4), inflation=k)
+    print(size.line('CO4 smooth size control (no bands)', out['size_smooth']))
+    print(size.line(f'CO4 smooth, convicted values / {k} (points basis)', out['size_smooth_inflation']))
     print(f"\nSensitivity, finer top bands (COP edges at comparison percentiles {fine_q}): {[f'{e:,.0f}' for e in fine_edges]}")
     print(f"Convicted band mix: {out['size_standardised_fine']['band_mix_convicted']}")
     print(size.line('CO4 size-standardised, fine bands', out['size_standardised_fine']))

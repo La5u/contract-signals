@@ -19,7 +19,7 @@ const VERIFICATION_STATUSES = {
 const HISTORY_START = '2024-01-01';
 const HISTORY_END = '2025-12-31';
 
-const SCORE_VERSION = '3.8';
+const SCORE_VERSION = '4.0';
 
 const CPV_SECTORS = {
   '03': 'Agriculture and fisheries', '09': 'Energy and fuels', '14': 'Mining and minerals',
@@ -40,9 +40,13 @@ const CPV_SECTORS = {
   '92': 'Culture, leisure and sport', '98': 'Other services'
 };
 
+// South Korea publishes no CPV; its business type (업무구분) stands in as the sector.
+const KR_SECTORS = { '공사': ['kr-works', 'Works (공사)'], '용역': ['kr-services', 'Services (용역)'], '물품': ['kr-goods', 'Goods (물품)'], '외자': ['kr-foreign', 'Foreign procurement (외자)'] };
 function getSector(contract) {
   const code = /^\d{8}(?:-\d)?$/.test(contract.cpv || '') ? contract.cpv.slice(0, 2) : null;
-  return code && CPV_SECTORS[code] ? { code, label: CPV_SECTORS[code] } : { code: 'unknown', label: 'Sector not specified' };
+  if (code && CPV_SECTORS[code]) return { code, label: CPV_SECTORS[code] };
+  const kr = contract.dataFamily === 'koneps' && KR_SECTORS[contract.businessType];
+  return kr ? { code: kr[0], label: kr[1] } : { code: 'unknown', label: 'Sector not specified' };
 }
 
 function getSupplierIdentity(contract) {
@@ -92,6 +96,7 @@ const INDICATOR_KINDS = {
   'exclusivity': 'Exclusivity claim and comparable competitive wins',
   'buyer-share': 'Large share of the buyer’s yearly procurement',
   'award-near-reserve': 'Award close to the reserve price',
+  'floor-gap': 'Winning bid well above the lower award limit',
   'restricted-competition': 'Restricted or nominated competition',
   'supplier-dependence': 'Supplier holds a large share of the buyer’s yearly amount',
   'few-bidders': 'Only two or three bids',
@@ -107,9 +112,11 @@ const KIND_SHORT = {
   'term-extension': 'Term extended', 'late-publication': 'Late publication',
   'cap': 'Near applicable cap', 'execution': 'Payment / execution',
   'legalGround': 'Legal ground mismatch', 'unitPrice': 'Unit-price increase', 'exclusivity': 'Exclusivity context',
-  'buyer-share': 'Buyer share', 'award-near-reserve': 'Near reserve price', 'restricted-competition': 'Restricted competition',
+  'buyer-share': 'Buyer share', 'award-near-reserve': 'Near reserve price', 'floor-gap': 'Above award floor', 'restricted-competition': 'Restricted competition',
   'supplier-dependence': 'Supplier dependence', 'few-bidders': 'Two or three bids', 'bid-pattern': 'Bid pattern',
 };
+// Table chips for clear checks that subtract points (evidence against).
+const KIND_AGAINST_SHORT = { 'kr-floor-gap': 'Near award floor' };
 // Where a kind matches a red flag in a framework auditors already use (docs/indicators.md).
 const KIND_REFERENCES = {
   'contract-amendments': 'StateWatch/Prozorro risk indicator ARI 1-1 (three or more contract amendments)',
@@ -132,11 +139,11 @@ const KIND_OF_CHECK = {
   'amount-increase': 'amount-increase', 'dncp-amount-increase': 'amount-increase',
   'ua-contract-amendments': 'contract-amendments', 'ua-term-extension': 'term-extension', 'ua-buyer-share': 'buyer-share',
   'secop2-term-extension': 'term-extension', 'ua-better-bid-disqualified': 'disqualified-better-bid',
-  'secop2-buyer-share': 'buyer-share', 'ua-direct-contract': 'direct-award',
+  'secop2-buyer-share': 'buyer-share', 'ua-direct-contract': 'direct-award', 'ro-buyer-share': 'buyer-share', 'ro-supplier-dependence': 'supplier-dependence',
   'kr-award-near-reserve': 'award-near-reserve', 'kr-supplier-dependence': 'supplier-dependence', 'kr-buyer-share': 'buyer-share',
   'kr-concentration': 'concentration', 'kr-restricted-competition': 'restricted-competition',
   'kr-few-bidders': 'few-bidders', 'kr-bid-gap': 'bid-pattern', 'kr-bid-dispersion': 'bid-pattern', 'kr-same-minute': 'bid-pattern',
-  'kr-floor-gap': 'award-near-reserve',
+  'kr-floor-gap': 'floor-gap',
   'short-bidding-period': 'short-bidding-period', 'late-publication': 'late-publication', 'notice-late-change': 'late-notice-change',
 };
 function indicatorKind(id) {
@@ -163,14 +170,17 @@ function hasIncompleteData(contract) {
   const a = getAssessment(contract);
   return Boolean(a.excludedReason) || a.unknown > 0 || a.unknownApplicability > 0;
 }
-function scoreLevel(score, incomplete = false, signals = 0) {
+// Levels of the multiplier (score 4.0): below 1.5, 1.5-3, 3-6, 6 and more.
+function scoreLevel(score, incomplete = false, signals = 0, weighted = signals) {
   if (score == null) return { id: 'unknown', label: 'Not assessed' };
+  if (score === 0 && signals && !weighted) return { id: 'context', label: 'Signals without measured weight' };
   if (score === 0 && signals) return { id: 'offset', label: 'Signals offset by evidence against' };
   if (score === 0) return incomplete ? { id: 'unknown', label: 'Partial data' } : { id: 'none', label: 'No signal triggered' };
-  if (score < 20) return { id: 'low', label: 'Low vigilance' };
-  if (score < 40) return { id: 'moderate', label: 'Moderate vigilance' };
-  if (score < 70) return { id: 'high', label: 'High vigilance' };
-  return { id: 'extreme', label: 'Very high vigilance' };
+  const m = indexMultiplier(score);
+  if (m < 1.5) return { id: 'low', label: 'Slightly more frequent among proven cases' };
+  if (m < 3) return { id: 'moderate', label: 'More frequent among proven cases' };
+  if (m < 6) return { id: 'high', label: 'Much more frequent among proven cases' };
+  return { id: 'extreme', label: 'Far more frequent among proven cases' };
 }
 
 // Explicit published citations only; never used by scoring or identity matching.
@@ -195,17 +205,80 @@ function getLegalContext(contract) {
 // share, LR 8). v3.8 found that value was contract size (now 2.2 points); the cap is kept pending an owner
 // decision, although no measured check now scores above 11. Points from labelled cases are 10 x log2(LR).
 const EDITORIAL_MAX = 30;
-// Checks whose points come from labelled cases (court verdicts, competition-authority decisions); every other
-// check carries editorial points. Shown next to the points in the record panel, the badges and exports.
+// Checks whose points come from labelled cases (court verdicts, competition-authority decisions), with the
+// weight each check file gives them.
 const MEASURED_CHECKS = new Set(['ua-single-offer', 'ua-direct-award', 'ua-direct-contract', 'ua-better-bid-disqualified',
   'ua-contract-amendments', 'ua-term-extension', 'ua-buyer-share', 'secop2-buyer-share', 'secop2-repeated-plurality',
   'kr-award-near-reserve', 'kr-supplier-dependence', 'kr-buyer-share', 'kr-concentration', 'kr-restricted-competition',
   'kr-few-bidders', 'kr-bid-gap', 'kr-bid-dispersion', 'kr-same-minute', 'kr-floor-gap']);
-const MEASURED_CHECKS_BY_COUNTRY = { ROU: new Set(['ted-repeated-direct', 'ted-concentration']) };
-function pointsBasis(c, id) {
-  return MEASURED_CHECKS.has(id) || (c.dataFamily === 'ted' && MEASURED_CHECKS_BY_COUNTRY[c.country]?.has(id)) ? 'measured' : 'editorial';
+const MEASURED_CHECKS_BY_COUNTRY = { ROU: new Set(['ted-repeated-direct', 'ted-concentration', 'ro-buyer-share', 'ro-supplier-dependence']) };
+
+// Score 4.0 (owner, 2026-10-29): the index is a multiplier, 2^(points / 10). Points are 10 x log2 of a likelihood
+// ratio, so the multiplier says how much more frequent a record's signals are among proven cases than among the
+// same buyers' other contracts. Only measured points may enter it, so every signal takes the first of:
+// 1. its country's own measurement, from that country's labels (MEASURED_OVERRIDES, else MEASURED_CHECKS);
+// 2. points borrowed from the countries that measured the same kind of check (BORROWED_KIND_POINTS);
+// 3. none: never measured anywhere, the signal is context and the multiplier stays 1.
+// Labelled checks that earned no points on their own labels (LR at the 25th bootstrap percentile <= 1): the
+// editorial weight of the check file no longer counts. Romania: Competition Council decisions, final run of
+// research/calibration/romania-colombia-results-2026-10-15-audit.md; Colombia: convictions,
+// research/calibration/colombia-convictions-results.md (CO3 term extension 1.2 points).
+const MEASURED_OVERRIDES = {
+  ROU: { 'ted-single-offer': 0, 'ted-direct-award': 0, 'ted-repeated-single-offer': 0, 'ted-repeated-direct': 0, 'ted-concentration': 0 },
+  COL: { 'secop2-plurality-award': 0, 'secop2-concentration': 0, 'secop2-repeated-plurality': 0, 'secop2-term-extension': 1.2 },
+};
+// Points each labelled country measured for a kind of check, on its own labels. A country without its own
+// measurement borrows the lowest: where the countries disagree, the check is not known to carry over.
+// Kinds measured nowhere (late publication, long duration, low competition rate) are absent.
+const MEASURED_KIND_POINTS = {
+  'single-offer': { UKR: 1, ROU: 0 },
+  'direct-award': { UKR: 10, ROU: 0, COL: 0 },
+  'repeated-single-offer': { ROU: 0 },
+  'repeated-direct': { ROU: 0, COL: 0 },
+  'concentration': { KOR: 7.7, ROU: 0, COL: 0 },
+  'amount-increase': { UKR: 0, KOR: 0 },
+  'contract-amendments': { UKR: 4, KOR: 0 },
+  'term-extension': { UKR: 4, COL: 1.2 },
+  'disqualified-better-bid': { UKR: 4, KOR: 0 },
+  'buyer-share': { UKR: 2.2, ROU: 2, COL: 4.7, KOR: 8.4 },
+  'supplier-dependence': { KOR: 9.2, COL: 0 },
+};
+const BORROWED_KIND_POINTS = Object.fromEntries(Object.entries(MEASURED_KIND_POINTS).map(([kind, byCountry]) => {
+  const [from, points] = Object.entries(byCountry).reduce((low, x) => x[1] < low[1] ? x : low);
+  return [kind, { points, from, countries: Object.keys(byCountry) }];
+}));
+const COUNTRY_NAMES = { UKR: 'Ukraine', ROU: 'Romania', COL: 'Colombia', KOR: 'South Korea' };
+// Datasets whose records carry no country code.
+const FAMILY_COUNTRY = { secop2: 'COL', decp: 'FRA', boamp: 'FRA', dncp: 'PRY', koneps: 'KOR', prozorro: 'UKR' };
+function pointsCountry(c) { return c.country || FAMILY_COUNTRY[c.dataFamily] || null; }
+// { basis: measured | borrowed | context, points, note } for one check of one record.
+function checkPoints(c, r) {
+  const country = pointsCountry(c), override = MEASURED_OVERRIDES[country]?.[r.id];
+  const here = COUNTRY_NAMES[country] || 'this country';
+  if (override != null) return { basis: 'measured', points: override,
+    note: override > 0 ? `measured on ${here}’s labelled cases` : `measured on ${here}’s labelled cases: no more frequent among proven cases than among the same buyers’ other contracts, so no weight` };
+  if (MEASURED_CHECKS.has(r.id) || (c.dataFamily === 'ted' && MEASURED_CHECKS_BY_COUNTRY[country]?.has(r.id)))
+    return { basis: 'measured', points: r.weight, note: c.dataFamily === 'koneps' ? KR_POINTS_NOTE : `measured on ${here}’s labelled cases` };
+  const borrowed = BORROWED_KIND_POINTS[indicatorKind(r.id)];
+  if (borrowed) {
+    const names = borrowed.countries.map(x => COUNTRY_NAMES[x]).join(', ');
+    return { basis: 'borrowed', points: borrowed.points, note: borrowed.points > 0
+      ? `measured elsewhere (${names}); lowest value, from ${COUNTRY_NAMES[borrowed.from]}`
+      : `measured elsewhere (${names}): no more frequent among proven cases in ${COUNTRY_NAMES[borrowed.from]}, so no weight` };
+  }
+  return { basis: 'context', points: 0, note: 'never measured on labelled cases: context, no weight' };
 }
-const BASIS_NOTE = { measured: 'measured on labelled cases', editorial: 'editorial, not measured' };
+// South Korea's points are 10 x log2 of the shrunk ratio at the 25th percentile of buyer resamples (checks-national.js), so they sit
+// below 10 x log2 of the ratio each signal quotes.
+const KR_POINTS_NOTE = 'measured on South Korea’s labelled cases; points use a cautious bound (the ratio shrunk and taken at the 25th percentile of buyer resamples), so they are lower than the ratio quoted suggests';
+function pointsBasis(c, id) { return checkPoints(c, { id, weight: null }).basis; }
+const BASIS_NOTE = { measured: 'measured on labelled cases', borrowed: 'measured elsewhere', context: 'not measured: context, no weight', editorial: 'editorial, not measured' };
+// The index as a multiplier of how frequent such records are among proven cases; null when not assessed.
+function indexMultiplier(points) { return points == null ? null : 2 ** (points / 10); }
+function formatMultiplier(points) {
+  const m = indexMultiplier(points);
+  return m == null ? 'Not assessed' : `×${m < 10 ? m.toFixed(1) : Math.round(m)}`;
+}
 function graduated(value, start, end, low, high) {
   return Math.round((low + (high - low) * Math.min(1, Math.max(0, (value - start) / (end - start)))) * 10) / 10;
 }
@@ -344,14 +417,21 @@ function computeAssessment(c) {
   const browse = c.assessmentMode === 'browse';
   const base = browse ? { checks: [], excludedReason: 'Browse-only import: no jurisdiction or scoring eligibility has been established.' } : getAssessmentLocal(c);
   const checks = [...base.checks, ...(browse ? [] : [latePublicationCheck(c, base.excludedReason)]), ...getAdditionalIndicatorChecks(c, base.excludedReason)]
-    .map(r => ({ ...r, basis: pointsBasis(c, r.id) }));
+    .map(r => {
+      // Negative evidence (South Korea's FLOOR-GAP) and clear checks keep their own weights.
+      if (r.status !== 'signal') return { ...r, basis: pointsBasis(c, r.id) };
+      const p = checkPoints(c, r);
+      const severity = indicatorSeverity(p.points);
+      return { ...r, basis: p.basis, pointsNote: p.note, checkWeight: r.weight, weight: p.points, severity: severity.id, severityLabel: severity.label };
+    });
   return { ...base, checks,
     applicable: checks.filter(r => r.applicability === 'yes').length,
     evaluated: checks.filter(r => r.status === 'signal' || r.status === 'clear').length,
     unknown: checks.filter(r => r.applicability === 'yes' && r.status === 'unknown').length,
     unknownApplicability: checks.filter(r => r.applicability === 'unknown').length,
     notApplicable: checks.filter(r => r.status === 'not-applicable').length,
-    signals: checks.filter(r => r.status === 'signal').length };
+    signals: checks.filter(r => r.status === 'signal').length,
+    weighted: checks.filter(r => r.status === 'signal' && r.weight > 0).length };
 }
 
 function hasAdjudicatedCorruption(contract) {
@@ -425,11 +505,13 @@ function getScoreBreakdown(contract) {
   const families = { competition: 0, execution: 0, transparency: 0 };
   // Other families (South Korea: price, concentration) are added when a check names them.
   for (const r of assessment.checks) if (r.status === 'signal') families[r.family] = Math.max(families[r.family] || 0, r.weight);
-  // A clear check with negative points (South Korea's FLOOR-GAP) offsets its family's largest signal; the index stays >= 0.
+  // A clear check with negative points (South Korea's FLOOR-GAP) subtracts from the total: it is the only price check
+  // when it is clear (K7 is then out of scope), so its family holds just the negative points. The index stays >= 0.
   for (const r of assessment.checks) if (r.status === 'clear' && r.weight < 0) families[r.family] = (families[r.family] || 0) + r.weight;
   const total = Object.values(families).reduce((sum, v) => sum + v, 0);
-  const score = assessment.evaluated ? Math.round(Math.max(0, Math.min(100, total)) * 10) / 10 : null;
-  return { ...families, families, score, assessment };
+  // No ceiling since 4.0: the points add up to the log2 of the multiplier.
+  const score = assessment.evaluated ? Math.round(Math.max(0, total) * 10) / 10 : null;
+  return { ...families, families, score, multiplier: indexMultiplier(score), assessment };
 }
 function getVigilanceScore(contract) { return getScoreBreakdown(contract).score; }
 

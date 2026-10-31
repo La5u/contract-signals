@@ -152,7 +152,7 @@ window.I18N_DICTS.fr = {
   "Purchase sector, not the supplier’s NAF activity": "Secteur d’achat, pas l’activité NAF du fournisseur",
   "Declared financial stake; not necessarily an expense. Some checks use it (amount thresholds, a buyer’s yearly share)": "Enjeu financier déclaré ; pas nécessairement une dépense. Certains contrôles l’utilisent (seuils de montant, part annuelle d’un acheteur)",
   "Vigilance index": "Indice de vigilance",
-  "Vigilance scale, not a regularity measure": "Échelle de vigilance, pas une mesure de régularité",
+  "Multiplier scale, not a regularity measure": "Échelle du multiplicateur, pas une mesure de régularité",
   "How to read the results": "Comment lire les résultats",
   "Documented project dossier": "Dossier de projet documenté",
   "Buyer or supplier profile": "Profil d’acheteur ou de fournisseur",
@@ -827,11 +827,19 @@ window.I18N_DICTS.fr = {
   "The supplier holds less than 60 % of the office’s contracts of this type that year.": "Le fournisseur détient moins de 60 % des contrats de ce type de l’entité cette année-là.",
   "Fewer than 10 contracts of this type at the office that year, or no supplier number: not assessable.": "Moins de 10 contrats de ce type pour l’entité cette année-là, ou aucun numéro de fournisseur : non évaluable.",
   "Restricted or nominated competition": "Mise en concurrence restreinte ou sur invitation",
-  "Open competition or another method.": "Mise en concurrence ouverte ou autre méthode.",
-  "Contract method not published: not assessable.": "Méthode de passation non publiée : non évaluable.",
+  "Open competition or another method in the original contract (a later version may name another method).": "Mise en concurrence ouverte ou autre méthode dans le contrat initial (une version ultérieure peut indiquer une autre méthode).",
+  "Contract method not published, or the original contract is not in the data: not assessable.": "Méthode de passation non publiée, ou contrat initial absent des données : non évaluable.",
   "Award close to the reserve price": "Attribution proche du prix de réserve",
   "Supplier holds a large share of the buyer’s yearly amount": "Le fournisseur détient une part importante du montant annuel de l’acheteur",
   "Near reserve price": "Proche du prix de réserve",
+  "Above award floor": "Au-dessus du seuil d’attribution",
+  "Near award floor": "Près du seuil d’attribution",
+  "Works (공사)": "Travaux (공사)",
+  "Services (용역)": "Services (용역)",
+  "Goods (물품)": "Fournitures (물품)",
+  "Foreign procurement (외자)": "Achats à l’étranger (외자)",
+  "business type, no CPV": "type d’activité, sans CPV",
+  "measured on South Korea’s labelled cases; points use a cautious bound (the ratio shrunk and taken at the 25th percentile of buyer resamples), so they are lower than the ratio quoted suggests": "mesuré sur les cas étiquetés de la Corée du Sud ; les points utilisent une borne prudente (le rapport réduit, pris au 25e centile des rééchantillonnages par acheteur), donc plus bas que ne le suggère le rapport cité",
   "Restricted competition": "Mise en concurrence restreinte",
   "Supplier dependence": "Dépendance au fournisseur",
   "Only two or three bids": "Seulement deux ou trois offres",
@@ -849,9 +857,31 @@ window.I18N_DICTS.fr = {
   "Contract amount (계약금액) of the latest version in the period.": "Montant du contrat (계약금액) de la dernière version dans la période.",
   "Joint contract (공동계약).": "Contrat conjoint (공동계약).",
   "KONEPS (나라장터) contract page": "Page du contrat sur KONEPS (나라장터)",
-  "South Korea · KONEPS · every contracting institution, contracts dated September 2024–August 2026 (2.7 million). Browse all institutions with sequential static-file scans, or choose a buyer. Korean checks are not set yet: contracts are shown for browsing and are not assessed. Amounts in KRW; the full record is on KONEPS.": "Corée du Sud · KONEPS · toutes les entités contractantes, contrats datés de septembre 2024 à août 2026 (2,7 millions). Parcourez toutes les entités par lectures successives de fichiers statiques, ou choisissez un acheteur. Les contrôles coréens ne sont pas encore fixés : les contrats sont affichés pour consultation et ne sont pas évalués. Montants en KRW ; la fiche complète est sur KONEPS.",
-  "All published collections, not unique contracts: overlapping representations are retained. Source-specific assessments are not comparable risk rankings. No combined currency totals. Unknown is not zero. Minimum amount uses native currency, not conversion. Only one bounded scan page is retained.": "Toutes les collections publiées, pas des marchés uniques : les représentations qui se recoupent sont conservées. Les évaluations propres à chaque source ne sont pas des classements de risque comparables. Aucun total combiné entre devises. Inconnu n’est pas zéro. Le montant minimal utilise la devise d’origine, sans conversion. Une seule page de lecture bornée est conservée.",
-  "Ukraine · Prozorro · random sample of 3,500 completed open tenders (aboveThreshold) created June–August 2026, all buyers: 3,663 signed contracts. Per-tender checks only: repetition, concentration and buyer share need every tender of a buyer and are not assessed; amendments were not retrieved. Amounts in UAH, EUR or USD.": "Ukraine · Prozorro · échantillon aléatoire de 3 500 appels ouverts terminés (aboveThreshold) créés de juin à août 2026, tous acheteurs : 3 663 marchés signés. Contrôles par appel uniquement : la répétition, la concentration et la part de l’acheteur exigent tous les appels d’un acheteur et ne sont pas évaluées ; les modifications n’ont pas été récupérées. Montants en UAH, EUR ou USD."
+  "South Korea · KONEPS · amounts in KRW; full record on KONEPS.": "Corée du Sud · KONEPS · montants en KRW ; fiche complète sur KONEPS.",
+  "Most flagged · nationwide": "Les plus signalés · tout le pays",
+  "Choose a contracting institution.": "Choisissez une entité contractante.",
+  "Ukraine · Prozorro · random sample of 3,500 completed open tenders (aboveThreshold) created June–August 2026, all buyers: 3,663 signed contracts. Per-tender checks only: repetition, concentration and buyer share need every tender of a buyer and are not assessed; amendments were not retrieved. Amounts in UAH, EUR or USD.": "Ukraine · Prozorro · échantillon aléatoire de 3 500 appels ouverts terminés (aboveThreshold) créés de juin à août 2026, tous acheteurs : 3 663 marchés signés. Contrôles par appel uniquement : la répétition, la concentration et la part de l’acheteur exigent tous les appels d’un acheteur et ne sont pas évaluées ; les modifications n’ont pas été récupérées. Montants en UAH, EUR ou USD.",
+  "The index is a multiplier: ×2 means records with these signals are twice as frequent among proven cases (convictions, cartel decisions) as among the same buyers’ other contracts. It is not a probability. Only measured signals count; signals never measured on proven cases are shown as context with ×1.0. “Not assessed” means no applicable check could be evaluated. Missing values are shown as unknown.": "L’indice est un multiplicateur : ×2 signifie que les enregistrements présentant ces signaux sont deux fois plus fréquents parmi les cas avérés (condamnations, décisions sur des ententes) que parmi les autres marchés des mêmes acheteurs. Ce n’est pas une probabilité. Seuls les signaux mesurés comptent ; les signaux jamais mesurés sur des cas avérés sont affichés comme contexte, avec ×1.0. « Non évalué » signifie qu’aucun contrôle applicable n’a pu être évalué. Les valeurs manquantes sont indiquées comme inconnues.",
+  "Priority sorts by (multiplier − 1) × amount, the extra stake: a large contract with a signal comes before a small one with the same signal. Amounts are compared only within one currency.": "Priorité trie par (multiplicateur − 1) × montant, l’enjeu supplémentaire : un gros marché avec un signal passe avant un petit avec le même signal. Les montants ne sont comparés que dans une même devise.",
+  "×1.0 · no threshold crossed in evaluated checks": "×1.0 · aucun seuil franchi dans les contrôles évalués",
+  "×1.0 · signals without measured weight": "×1.0 · signaux sans poids mesuré",
+  "×1.0 · signals offset by evidence against": "×1.0 · signaux compensés par des éléments contraires",
+  "below ×1.5": "moins de ×1.5",
+  "×1.5–3": "×1.5–3",
+  "×3–6": "×3–6",
+  "×6 and more": "×6 et plus",
+  "×1.5+": "×1.5+",
+  "×2+": "×2+",
+  "×4+": "×4+",
+  "Priority (index × amount)": "Priorité (indice × montant)",
+  "Priority · extra stake first": "Priorité · enjeu supplémentaire d’abord",
+  "How much more frequent records with these signals are among proven cases than among the same buyers’ other contracts; not a probability": "Combien de fois plus fréquents sont les enregistrements présentant ces signaux parmi les cas avérés que parmi les autres marchés des mêmes acheteurs ; pas une probabilité",
+  "Signals without measured weight": "Signaux sans poids mesuré",
+  "Slightly more frequent among proven cases": "Un peu plus fréquent parmi les cas avérés",
+  "More frequent among proven cases": "Plus fréquent parmi les cas avérés",
+  "Much more frequent among proven cases": "Beaucoup plus fréquent parmi les cas avérés",
+  "Far more frequent among proven cases": "Bien plus fréquent parmi les cas avérés",
+  "never measured on labelled cases: context, no weight": "jamais mesuré sur des cas étiquetés : contexte, sans poids"
  },
  "patterns": [
   [
@@ -1617,6 +1647,54 @@ window.I18N_DICTS.fr = {
   [
    "Requesting institution (수요기관): {a}. Joint contract (공동계약).",
    "Entité demandeuse (수요기관) : {a}. Contrat conjoint (공동계약)."
+  ],
+  [
+   "{a}: how much more frequent such records are among proven cases than among the same buyers’ other contracts. Not a probability.",
+   "{a} : combien de fois plus fréquents sont ces enregistrements parmi les cas avérés que parmi les autres marchés des mêmes acheteurs. Pas une probabilité."
+  ],
+  [
+   "Evidence against: {a} points subtracted from the index. {b}",
+   "Élément à décharge : {a} points retranchés de l’indice. {b}"
+  ],
+  [
+   "Against: {a}",
+   "À décharge : {a}"
+  ],
+  [
+   "Index: {a} as frequent among proven cases.",
+   "Indice : {a} de fréquence parmi les cas avérés."
+  ],
+  [
+   "· {a} ({b} pts), {c}",
+   "· {a} ({b} pts), {c}"
+  ],
+  [
+   "{a} pts, {b}",
+   "{a} pts, {b}"
+  ],
+  [
+   " {a} = 2^({b} / 10); points ",
+   " {a} = 2^({b} / 10) ; points "
+  ],
+  [
+   "measured on {a}’s labelled cases",
+   "mesuré sur les cas étiquetés de {a}"
+  ],
+  [
+   "measured on {a}’s labelled cases: no more frequent among proven cases than among the same buyers’ other contracts, so no weight",
+   "mesuré sur les cas étiquetés de {a} : pas plus fréquent parmi les cas avérés que parmi les autres marchés des mêmes acheteurs, donc sans poids"
+  ],
+  [
+   "measured elsewhere ({a}); lowest value, from {b}",
+   "mesuré ailleurs ({a}) ; la valeur la plus basse, de {b}"
+  ],
+  [
+   "measured elsewhere ({a}): no more frequent among proven cases in {b}, so no weight",
+   "mesuré ailleurs ({a}) : pas plus fréquent parmi les cas avérés en {b}, donc sans poids"
+  ],
+  [
+   "The {a} highest-scored of all {b} contracts; choose an institution to see all of its contracts.",
+   "Les {a} marchés les mieux notés sur {b} ; choisissez une entité pour voir tous ses marchés."
   ]
  ]
 };

@@ -273,6 +273,20 @@ def notice_rows(cohort, pub, xml_bytes):
     return rows, excluded
 
 
+def seap_totals(rows):
+    """Romania: the buyer's SEAP contract total for the conclusion year and the supplier's part of it
+    (data/romania-seap-totals.json, tools/build-romania-seap-totals.py), for buyer share and supplier dependence.
+    Years without four quarterly SEAP exports get no entry: not assessable."""
+    totals = json.loads((ROOT / "data/romania-seap-totals.json").read_text(encoding="utf-8"))
+    cui = lambda s: re.sub(r"\D", "", str(s or "").upper().replace("RO", "")).lstrip("0")
+    for r in rows:
+        year = (r["date"] or "")[:4]
+        entry = totals["buyers"].get(cui(r["buyerId"]), {}).get(year)
+        ids = [cui(x["id"]) for x in r.get("supplierIds") or [] if x.get("identifierType") == "CUI"]
+        r["seapYear"] = None if not entry else {"year": year, "totalRon": entry["totalRon"],
+                                                "supplierRon": entry["suppliersRon"].get(ids[0], 0) if len(ids) == 1 else None}
+
+
 def offline(key):
     cohort, raw = COHORTS[key], raw_dir(key)
     manifest = json.loads((raw / "manifest.json").read_text(encoding="utf-8"))
@@ -319,6 +333,8 @@ def offline(key):
     conflicting = sorted(k for k, v in by_id.items() if len({json.dumps(x, sort_keys=True) for x in v}) > 1)
     rows = [v[0] for k, v in by_id.items() if k not in conflicting]
     rows.sort(key=lambda r: (r["publicationDate"] or "", r["id"]))
+    if key == "romania":
+        seap_totals(rows)
     (ROOT / f"data/ted-{key}.json").write_text(json.dumps(rows, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     coverage = {"source": SEARCH, "notices": "https://ted.europa.eu/en/notice/{publication-number}/xml", "license": LICENSE,
                 "attribution": "Publications Office of the European Union, TED (Tenders Electronic Daily)",

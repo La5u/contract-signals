@@ -1,5 +1,7 @@
 # United Kingdom method — Find a Tender checks (v3.0 framework)
 
+> **Score 4.0 (29 October 2026):** the index is now a multiplier, 2^(points / 10), and only measured points enter it ([score-v3.md](score-v3.md#40-29-october-2026-the-index-as-a-multiplier-only-measured-points-count)). The 0–100 scale, its cap and the 20/40/70 bands described below are gone; the weights below stay as the check files' editorial weights (shown as “not used”), which no longer count. Here: no UK labels yet; every check borrows the lowest points measured elsewhere (0) or is context, so every record is at ×1.0 (43 had a score before).
+
 **Checks for the Find a Tender cohort** (three buyer accounts, award releases 2024-09-01 → 2026-09-01). Same vigilance-index framework as [score-v3.md](score-v3.md): two families, family maxima, cap at 100, `null` = “Not assessed”, unknowns never counted as zero. The checks are those of the shared national engine used for Ukraine and TED ([score-ukraine.md](score-ukraine.md), [score-ted.md](score-ted.md)), read from the OCDS fields Find a Tender publishes. French, Colombian and Paraguayan rules are not applied. Amounts stay in the published currency (mostly GBP; embassies abroad also contract in EUR, USD, CHF, JPY and BGN) and are never converted.
 
 An editorial sorting tool, not a probability, not a measure of legal gravity, not a certificate of regularity.

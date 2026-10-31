@@ -97,6 +97,15 @@ def row_key(r):
     return (r.get('source'), r.get('contract_no'), r.get('notice_init'), r.get('notice_award'), r.get('winner_cui'), r.get('value_ron_num'))
 
 
+def value_key(r):
+    """One contract value as SEAP repeats it (per winner of a framework or consortium, per later contract number):
+    plan amendment 2026-10-28."""
+    n = digits(r.get('notice_award'))
+    if n:
+        return cui(r.get('buyer_cui')), n, str(r.get('lot') or ''), r.get('value_ron_num')
+    return cui(r.get('buyer_cui')), r.get('contract_no'), r.get('value_ron_num'), str(r.get('contract_date') or '')[:10]
+
+
 def procedure_key(o):
     return '|'.join(str(o.get(k) or '') for k in ('decision', 'buyer', 'subject', 'lot')) + '|' + ','.join(o.get('dates') or [])
 
@@ -175,6 +184,8 @@ def challenged(decisions, cases):
 def main():
     p = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     p.add_argument('--json')
+    p.add_argument('--rows', help='write the decision-rule rows (with contract values) as JSON, for tools/romania-buyer-share-size.py')
+    p.add_argument('--old-totals', action='store_true', help='count every SEAP copy of a contract value (the 2026-10-15 run)')
     p.add_argument('--annulled-weight', type=float, default=0.5, help='weight of decisions annulled at first instance with the appeal pending')
     args = p.parse_args()
     weight_of = lambda d: UPHELD_P if d in OPEN else args.annulled_weight if d in ANNULLED_UNDER_APPEAL else 1.0
@@ -277,17 +288,23 @@ def main():
     print('linked decisions:', sorted({v['decision'] for v in labelled.values()}))
     print('linking:', dict(report), '| challenged decisions:', {d: len(v) for d, v in chal.items() if v})
     members = set().union(*(v['members'] for v in labelled.values())) if labelled else set()
+    # Plan amendment 2026-10-28: each value key once per buyer-year (vkey None = every row counts, the old run).
+    vkey = (lambda i: None) if args.old_totals else (lambda i: (year_of(seap[i]),) + value_key(seap[i]))
+    labelled_keys = {vkey(i) for i in members} - {None}
     # Buyer-year totals and concentration (CPV division) over all SEAP rows of those buyers.
     buyers = {(cui(seap[i].get('buyer_cui')), year_of(seap[i])) for i in labelled}
     total, conc = Counter(), {}
     groups = defaultdict(Counter)
     for key in buyers:
+        seen = set()
         for i in by_buyer_year.get(key, []):
-            r = seap[i]
-            total[key] += r.get('value_ron_num') or 0
+            r, k = seap[i], vkey(i)
             w = cui(r.get('winner_cui'))
-            if w:
+            if k is None or k not in seen:
+                total[key] += r.get('value_ron_num') or 0
+            if w and (k is None or (k, w) not in seen):
                 groups[key + (str(r.get('cpv') or '')[:2],)][w] += 1
+            seen |= {k, (k, w)}
     for g, cnt in groups.items():
         n = sum(cnt.values())
         # Fewer than CONC_MIN identified contracts: not assessable (unknown), as in the explorer, never clear.
@@ -302,13 +319,23 @@ def main():
     pkey = lambda r: r.get('notice_init') or r.get('notice_award') or r.get('contract_no')
     singles, directs, years_with = defaultdict(set), defaultdict(set), defaultdict(set)
     value_by = Counter()
-    for r in seap:
+    winners_of = defaultdict(set)
+    for i, r in enumerate(seap):
+        if vkey(i) is not None and cui(r.get('winner_cui')):
+            winners_of[vkey(i)].add(cui(r.get('winner_cui')))
+    credited = set()
+    for i, r in enumerate(seap):
         b, w, y = cui(r.get('buyer_cui')), cui(r.get('winner_cui')), year_of(r)
         if not (b and w and y):
             continue
         proc, direct, purchase = kind(r)
         years_with[(b, w)].add(y)
-        value_by[(b, y, w)] += r.get('value_ron_num') or 0
+        k = vkey(i)
+        if k is None:
+            value_by[(b, y, w)] += r.get('value_ron_num') or 0
+        elif (k, w) not in credited:   # split equally among the value's winners
+            credited.add((k, w))
+            value_by[(b, y, w)] += (r.get('value_ron_num') or 0) / len(winners_of[k])
         if proc and not direct and not purchase and r.get('offers_num') == 1:
             singles[(b, w)].add((pkey(r), y))
         if direct:
@@ -344,23 +371,28 @@ def main():
                 '_offers': offers}
 
     def rows(keep, weighted=False):
-        out = []
+        out, emitted = [], set()
         for key in buyers:
             for i in by_buyer_year.get(key, []):
                 if i in members and i not in labelled:
                     continue
+                k = vkey(i)
+                if i not in labelled and k is not None and (k in labelled_keys or k in emitted):
+                    continue
+                emitted.add(k)
                 lab = labelled.get(i)
                 if lab and not keep(lab):
                     continue
                 c = checks(seap[i], key)
                 offers = c.pop('_offers')
+                value = seap[i].get('value_ron_num') or None
                 w = weight_of(lab['decision']) if lab and weighted else 1.0
                 if lab and w > 0:
                     out.append({'id': str(i), 'buyer': key[0], 'groups': ['collusion', 'combined'], 'decision': lab['decision'],
-                                'offers': offers, 'checks': c, **({'weight': w} if w < 1 else {})})
+                                'offers': offers, 'value': value, 'checks': c, **({'weight': w} if w < 1 else {})})
                 if not lab or w < 1:   # an ordinary contract, or the share of a doubtful label that is not one
                     out.append({'id': str(i), 'buyer': key[0], 'groups': ['comparison'], 'decision': None, 'offers': offers,
-                                'checks': c, **({'weight': 1 - w} if lab else {})})
+                                'value': value, 'checks': c, **({'weight': 1 - w} if lab else {})})
         return out
 
     def one_per_decision(rs):
@@ -380,6 +412,9 @@ def main():
     sets['weighted by appeal outcome, one per decision (decision basis until 2026-10-20)'] = one_per_decision(rows(lambda l: True, weighted=True))
     sets['weighted by appeal outcome, all procedures (decision rule, amendment 2026-10-20)'] = rows(lambda l: True, weighted=True)
     sets['all findings, 2+ offers (sensitivity)'] = [r for r in sets['all Council findings, all procedures'] if (r['offers'] or 0) >= 2]
+    if args.rows:
+        rule = 'weighted by appeal outcome, all procedures (decision rule, amendment 2026-10-20)'
+        Path(args.rows).write_text(json.dumps({'decision_rule': sets[rule]}, ensure_ascii=False, default=list) + '\n')
     out = {'linking': dict(report), 'challenged': chal, 'sets': {}}
     for name, rs in sets.items():
         pos = [r for r in rs if 'combined' in r['groups']]

@@ -1,7 +1,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),crypto=require('node:crypto');
 const hash=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
 const report=JSON.parse(fs.readFileSync('data/score-v3-review.json'));
-assert.equal(report.version,'3.8');
+assert.equal(report.version,'4.0');
 assert.equal(report.sourceCodeHashes.v3,crypto.createHash('sha256').update(require('../tools/engine.cjs').source()).digest('hex'));
 assert.equal(report.sourceCodeHashes.v21,hash('tools/legacy/scoring-v2.1.js'));
 for(const [name,d] of Object.entries(report.datasets)){

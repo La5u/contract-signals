@@ -2,7 +2,7 @@
 """Research only: read Korean court rulings (law.go.kr precedents) with Luna or Sol for corruption labels, then check them.
 
 Input: ~/.cache/contract-signals/korea/prec/decisions/<serial>.xml.gz (tools/fetch-korea-lawgokr.py --target prec).
-Rulings dated before 2010 (contracts before the KONEPS download), tax, family and patent cases, and rulings without
+Rulings dated before 1995 (2010, then 2000, until 2026-10-27), tax, family and patent cases, and rulings without
 procurement and public-sector terms (local pre-filter, see PROC) are skipped without a model.
 Per ruling, ruling.txt is written to prec/extract/<serial>/ and the model is asked to write result.json there: whether
 the ruling concerns a specific public contract or tender, the outcome, and every contract it names (buyer, name, dates,
@@ -110,15 +110,23 @@ def ruling_text(serial):
 # 대행계약 were added.
 PROC = re.compile(r'입찰|낙찰|수의계약|계약금액|공사|납품|용역|발주|조달')
 PUB = re.compile(r'시청|군청|구청|도청|[시군구]장|교육청|교육감|공사|공단|공기업|공공기관|지방자치단체|국가|조달청|청장|공무원|'
-                 r'한국\S+원|시설관리')
-ALWAYS = re.compile(r'담합|대행계약')
+                 r'한국\S+원|시설관리|'
+                 # added 2026-10-27 after reading the 84 rulings the pre-filter skipped (9 relevant, 3 usable)
+                 r'연구원|공정거래위원회|정부|국립|공공|부처|장관')
+ALWAYS = re.compile(r'담합|대행계약|들러리|입찰방해|입찰참가자격|알선수재|수뢰후부정처사')
+# Rulings from 1995 on (2010, then 2000, until 2026-10-27): they show the same tactics, and the PPS contract API
+# serves contracts from 1995 (35 strays 1991-1994, probed 2026-10-27), DAPA/LH from 2003/2007. Undated rulings
+# (placeholder 0001.01.01) are read too.
+SINCE = '1995'
+PREFILTER = True  # --no-prefilter: keep the date and kind limits, drop the keyword test (to measure what it misses)
 
 
 def selected(serial):
     meta, text = ruling_text(serial)
-    if meta['선고일자'][:4] < '2010' or meta['사건종류명'] in SKIP_KINDS:
+    year = meta['선고일자'][:4]
+    if (year.isdigit() and year != '0001' and year < SINCE) or meta['사건종류명'] in SKIP_KINDS:
         return False
-    return bool(ALWAYS.search(text)) or (len(PROC.findall(text)) >= 3 and bool(PUB.search(text)))
+    return not PREFILTER or bool(ALWAYS.search(text)) or (len(PROC.findall(text)) >= 3 and bool(PUB.search(text)))
 
 
 def pending(only, out, force):
@@ -129,14 +137,14 @@ def pending(only, out, force):
     for s in serials:
         if (out / s / 'status.json').exists() and not force:
             st = json.loads((out / s / 'status.json').read_text())
-            if st.get('ok') or st.get('skipped'):
+            if st.get('ok') or (st.get('skipped') and not selected(s)):  # skipped ones are retried if the rules widened
                 continue
         todo.append(s)
     return todo
 
 
 CLAUDE_MODELS = {'haiku', 'sonnet', 'opus'}
-STRONG = {'gpt-6.1-sol', 'sonnet', 'opus'}  # second readers: their results are not sent for another reading
+STRONG = {'gpt-6.1-sol', 'gpt-6.1-terra', 'sonnet', 'opus'}  # second readers: their results are not sent for another reading
 
 
 CLAUDE_INLINE_LIMIT = 120_000  # characters; longer rulings are cut, marked low confidence and go to a second reader
@@ -157,6 +165,9 @@ def run_claude(work, model, timeout):
     try:
         reply = json.loads(proc.stdout)
         out, err = reply.get('result') or '', '' if not reply.get('is_error') else str(reply.get('result'))[-1000:]
+        # tokens and the API-price equivalent of this run, for comparing readers' cost
+        (work / 'claude-usage.json').write_text(json.dumps({'model': model, 'usage': reply.get('usage'),
+                                                            'cost_usd': reply.get('total_cost_usd')}))
     except json.JSONDecodeError:
         out, err = proc.stdout, (proc.stderr or proc.stdout)[-1000:] or 'no reply'
     if re.search(r'usage limit|session limit|rate.?limit|limit reached', err, re.I):
@@ -223,7 +234,7 @@ def run_one(serial, model, effort, timeout, out):
         try:
             if model in CLAUDE_MODELS:
                 answer, err, nudges = run_claude(work, model, timeout)
-            elif model.startswith('opencode/'):
+            elif model.startswith(('opencode/', 'opencode-go/')):
                 answer, err, nudges = run_opencode(work, model, timeout)
             else:
                 answer, err, nudges = kftc.server.run(work, PROMPT, model, effort, timeout, ('result.json',), MISSING)
@@ -296,8 +307,8 @@ def check(out):
                 problems.append('many contracts (the fast models lump or miss them in long rulings)')
         row = {'serial': d.name, 'model': st.get('model'), 'problems': problems, 'result': res}
         rows.append(row)
-        # a second reading only where it can change a label: a public (or unclear) contract from 2010 on or unknown year
-        matters = res is None or any((c.get('year') or 9999) >= 2010 and c.get('buyer_public') is not False
+        # a second reading only where it can change a label: a public (or unclear) contract from 1995 on or unknown year
+        matters = res is None or any((c.get('year') or 9999) >= 1995 and c.get('buyer_public') is not False
                                      for f in res.get('findings') or [] for c in f.get('contracts') or [])
         if problems and matters and st.get('model') not in STRONG:
             to_sol.append(d.name)
@@ -314,7 +325,7 @@ def check(out):
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     parser.add_argument('--workers', type=int, default=16)
-    parser.add_argument('--model', default='gpt-6-luna', help='Codex model, haiku / sonnet / opus (claude -p), or opencode/<model> (opencode run, e.g. free models)')
+    parser.add_argument('--model', default='gpt-6-luna', help='Codex model, haiku / sonnet / opus (claude -p), or opencode/<model> / opencode-go/<model> (opencode run, e.g. free models)')
     parser.add_argument('--effort', default='medium')
     parser.add_argument('--out', type=Path, default=BASE / 'extract')
     parser.add_argument('--timeout', type=int, default=1800, help='seconds per ruling')
@@ -322,7 +333,10 @@ def main():
     parser.add_argument('--only', nargs='*')
     parser.add_argument('--force', action='store_true', help='redo rulings even if done')
     parser.add_argument('--check', action='store_true', help='only check existing output')
+    parser.add_argument('--no-prefilter', action='store_true', help='read rulings the keyword pre-filter would skip')
     args = parser.parse_args()
+    global PREFILTER
+    PREFILTER = not args.no_prefilter
     args.out.mkdir(parents=True, exist_ok=True)
     if args.check:
         return check(args.out)
@@ -330,7 +344,7 @@ def main():
         sys.exit('--only was given no rulings (an empty list would otherwise mean all of them)')
     todo = pending(set(args.only or []), args.out, args.force)[:args.limit]
     print(f'{len(todo)} rulings to read, {args.workers} workers, {args.model}', flush=True)
-    if todo and args.model not in CLAUDE_MODELS and not args.model.startswith('opencode/'):
+    if todo and args.model not in CLAUDE_MODELS and not args.model.startswith(('opencode/', 'opencode-go/')):
         kftc.server = kftc.AppServer()
     done, lock = 0, threading.Lock()
 

@@ -54,7 +54,7 @@ const KR_CHECKS = [
     'The valid bids are spread as usual.', 'Fewer than three valid bids, or the bid opening (개찰결과) was not found: not assessable.'],
   ['K5', 'competition', 'kr-restricted-competition', 'Restricted or nominated competition', 3.7,
     'Awarded by restricted (제한경쟁) or nominated (지명경쟁) competition, which limits who may bid. Among rigged tenders 1.4 times as frequent as among the office’s other contracts. Restrictions are often lawful (region, licence, performance record).',
-    'Open competition or another method.', 'Contract method not published: not assessable.'],
+    'Open competition or another method in the original contract (a later version may name another method).', 'Contract method not published, or the original contract is not in the data: not assessable.'],
 ];
 function getAssessmentKoneps(c) {
   const letters = typeof c.koreaChecks === 'string' && c.koreaChecks.length >= KR_CHECK_ORDER.length ? c.koreaChecks : null;
@@ -95,6 +95,14 @@ const UA_COMPLETE_YEARS = { 'prozorro-3buyers-2024-2026': new Set(['2025']) };
 // Random samples of tenders, not every tender of a buyer: repetition, concentration and buyer share are not assessable.
 const UA_SAMPLE_COHORTS = new Set(['prozorro-abovethreshold-2026-06-08']);
 const UA_SAMPLE_REASON = 'Random sample of tenders, not every tender of this buyer: not assessable.';
+// Romania (v3.9): buyer share (RO2) and supplier dependence (N4) from the Competition Council bid-rigging decisions,
+// at equal contract value with rigged prices taken as inflated x1.3 (LR at the 25th percentile 1.15 and 1.27;
+// unadjusted 1.73 and 1.83, mostly size): research/calibration/romania-bid-rigging-results.md, tools/romania-buyer-share-size.py.
+// TED lists above-threshold awards only, so the denominators are the buyer's SEAP contract totals (seapYear, from
+// data/romania-seap-totals.json via tools/import-ted-cohorts.py); years without four quarterly SEAP exports are unknown.
+const RO_POINTS = { buyerShare: 2, supplierDependence: 3.4 };
+const RO_BUYER_SHARE = 0.05, RO_SUPPLIER_DEPENDENCE = 0.25;
+const RO_NO_SEAP = 'No complete SEAP contract export for this buyer and year (2024 and 2025 are loaded): not assessable.';
 const UA_TERM_EXTENSION_TYPES = ['durationExtension', 'fiscalYearExtension'];
 const NATIONAL_FAMILIES = {
   // Ukraine v3.5: points from court verdicts and bid-rigging decisions (docs/score-ukraine.md). Other
@@ -168,6 +176,18 @@ function getAssessmentNational(c) {
   const k = c.nationalConcentration;
   add(`${p}-concentration`, 'Concentrated awards within a category', 'competition', supplier ? 'yes' : 'unknown', Boolean(k?.sufficient), k?.share >= 0.6,
     countryPoints ? countryPoints.concentration : graduated(k?.share || 0, 0.6, 1, 12, EDITORIAL_MAX), supplier && UA_SAMPLE_COHORTS.has(c.cohortId) ? UA_SAMPLE_REASON : k ? `Same buyer and category ${k.category}: ${k.wins}/${k.known} procedures won by this supplier, out of ${k.total} (${Math.round(k.coverage * 100)} % with an identified winner; lots of one procedure count once). Minimum 10 and 80 %; ${countryPoints ? `${countryPoints.concentration} point from 60 %, lowered from 12–40: in ${countryPoints.source} concentration was barely more frequent than among the same buyers' other contracts.` : 'from 12 points at 60 % to 30 at 100 %.'} ${k.sufficient ? '' : 'Insufficient sample or coverage: not assessed.'}` : 'Supplier identity or category unknown: applicability not established.');
+  if (c.dataFamily === 'ted' && c.country === 'ROU') {
+    const sy = c.seapYear, ron = c.currency === 'RON' && Number.isFinite(c.amount), share = sy && ron ? c.amount / sy.totalRon : null;
+    add('ro-buyer-share', 'Large share of the buyer’s yearly procurement', 'competition', 'yes', share != null, share >= RO_BUYER_SHARE, RO_POINTS.buyerShare,
+      !sy ? RO_NO_SEAP : !ron ? 'Amount not in RON: not compared with the buyer’s RON total (no currency conversion).' :
+      `${(share * 100).toFixed(1)} % of this buyer’s SEAP contract total for ${sy.year} (${Math.round(sy.totalRon).toLocaleString('en')} RON, framework ceilings counted once). ` +
+      (share >= RO_BUYER_SHARE ? `${RO_POINTS.buyerShare} points at 5 % or more: in procedures the Romanian Competition Council found rigged a contract this large relative to its buyer was about 1.9 times as frequent as in the same buyers’ other contracts, but at the same contract value only about 1.2 times: most of the difference is size. Large purchases are often lawful.` : 'Below the 5 % threshold.'));
+    const dep = sy && sy.supplierRon != null && sy.totalRon > 0 ? sy.supplierRon / sy.totalRon : null;
+    add('ro-supplier-dependence', 'Supplier holds 25 % or more of the buyer’s yearly amount', 'competition', supplier ? 'yes' : 'unknown', dep != null, dep >= RO_SUPPLIER_DEPENDENCE, RO_POINTS.supplierDependence,
+      !sy ? RO_NO_SEAP : sy.supplierRon == null ? 'Not exactly one supplier CUI published for this lot: not assessable.' :
+      `This supplier’s SEAP contracts with the buyer make up ${(dep * 100).toFixed(1)} % of the buyer’s ${sy.year} total (a contract with several winners split equally). ` +
+      (dep >= RO_SUPPLIER_DEPENDENCE ? `${RO_POINTS.supplierDependence} points at 25 % or more: in procedures the Romanian Competition Council found rigged it was about 2.2 times as frequent as in the same buyers’ other contracts, about 1.4 times at the same contract value. A sole specialist supplier is often lawful.` : 'Below the 25 % threshold.'));
+  }
   add('amount-increase', 'Relative increase in declared amount', 'execution', 'no', false, false, null, spec.outOfScope.increase);
   if (c.dataFamily === 'prozorro') {
     // Prozorro creates awards in ranking order: an unsuccessful award before the

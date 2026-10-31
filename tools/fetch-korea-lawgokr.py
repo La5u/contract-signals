@@ -40,7 +40,12 @@ TARGETS = {
         '관급공사 뇌물', '검수 뇌물', '부정한 청탁 공사 계약', '납품 비리', '방위사업 뇌물', '청탁금지법 계약',
         '직권남용 계약', '직권남용 입찰', '허위공문서작성 준공', '허위공문서작성 검수', '국고손실 계약', '횡령 관급',
         '사기 관급', '사기 납품 조달', '입찰 위조 실적', '적격심사 위조', '수의계약 분할', '지방계약법 수의계약',
-        '예정가격 누설', '기초금액 누설', '전자입찰 조작', '부정당업자', '입찰참가자격제한처분', '손해배상 담합 입찰')),
+        '예정가격 누설', '기초금액 누설', '전자입찰 조작', '부정당업자', '입찰참가자격제한처분', '손해배상 담합 입찰',
+        # added 2026-10-27: broad terms (hit counts 100-3,200 each); most hits are contract disputes, which the
+        # extraction pre-filter and the model reading drop
+        '입찰', '낙찰', '수의계약', '관급', '조달청', '예정가격', '계약 배임', '뇌물', '설계변경', '입찰참가자격',
+        '지방계약법', '국가계약법', '공사업자', '공사 뇌물', '납품 뇌물', '하도급 뇌물', '감리 뇌물',
+        '특정범죄가중처벌등에관한법률위반(뇌물)')),
     # court rulings on suits against KFTC orders (case-name search), for the finality of collusion labels
     'ftc-suits': ('prec', '판례일련번호', 1, ('시정명령', '과징금납부명령', '과징금부과처분')),
 }
@@ -87,6 +92,11 @@ def listing(opener, oc, delay, target):
     return found
 
 
+def dated_from(date, since):
+    """True when the date is on or after `since` (a year) or unknown: some rulings carry the placeholder 0001.01.01."""
+    return not date[:4].isdigit() or date[:4] == '0001' or date[:4] >= since
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--delay', type=float, default=2.0, help='seconds between requests')
@@ -107,7 +117,8 @@ def main():
         list_file.write_text(json.dumps(found, ensure_ascii=False, indent=1) + '\n')
     found = json.loads(list_file.read_text())
     todo = [s for s in found if re.fullmatch(r'\d+', s) and not (out / f'{s}.xml.gz').exists()
-            and (found[s].get('선고일자') or found[s].get('결정일자') or '')[:4] >= args.since and found[s].get('사건종류명') not in args.skip_kinds]
+            and dated_from(found[s].get('선고일자') or found[s].get('결정일자') or '', args.since)
+            and found[s].get('사건종류명') not in args.skip_kinds]
     print(f'{len(found)} decisions listed, {len(todo)} to fetch', flush=True)
     done, failed = [0], {'run': 0, 'all': 0}
     lock = threading.Lock()

@@ -43,7 +43,7 @@ for (const [key, rows] of Object.entries(input.datasets)) {
     return {id:c.id, score:call('getVigilanceScore', c), assessment:{
       evaluated:a.evaluated, applicable:a.applicable,
       unknownApplicability:a.unknownApplicability,
-      excluded:Boolean(a.excludedReason),
+      excluded:Boolean(a.excludedReason), signals:a.signals,
       checks:a.checks.map(r => ({id:r.id, status:r.status, applicability:r.applicability}))
     }};
   });
@@ -89,10 +89,12 @@ def positive(value):
 
 def eligible(stratum, row, scored):
     amount = row.get('amount')
+    # Flagged means a signal fired: since score 4.0 French signals carry no weight, so the index stays 0.
+    flagged = scored['assessment'].get('signals', 0) > 0
     if stratum == 'scored-flagged-positive':
-        return positive(amount) and positive(scored['score'])
+        return positive(amount) and scored['score'] is not None and flagged
     if stratum == 'scored-zero-positive':
-        return positive(amount) and scored['score'] == 0 and not scored['assessment']['excluded']
+        return positive(amount) and scored['score'] == 0 and not flagged and not scored['assessment']['excluded']
     if stratum == 'declared-zero':
         return type(amount) in (int, float) and amount == 0 and bool(official_urls(row))
     if stratum == 'missing-amount':

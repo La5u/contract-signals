@@ -8,8 +8,8 @@ const ctx = vm.createContext({ URL, URLSearchParams });
 require('../tools/engine.cjs').load(ctx);
 const catalogue = [...html.matchAll(/<option value="([^"]+)" data-country="([^"]+)">([^<]+)<\/option>/g)]
   .map(([, value, country, textContent]) => ({ value, dataset: { country }, textContent }));
-assert.equal(catalogue.length, 16);
-assert.equal(new Set(catalogue.map(option => option.value)).size, 16);
+assert.equal(catalogue.length, 15);
+assert.equal(new Set(catalogue.map(option => option.value)).size, 15);
 assert.match(html, /id="country"/);
 assert.match(html, /Source \/ cohort/);
 
@@ -36,7 +36,7 @@ function mount(initial = 'decp') {
   return { country, dataset, loads, selection };
 }
 const { country, dataset, loads, selection } = mount();
-assert.equal(country.options.length, 11, 'one entry per country plus the explicit published-collections scope');
+assert.equal(country.options.length, 10, 'one entry per country');
 assert.equal(country.value, 'France');
 assert.deepEqual(dataset.options.map(option => option.value), ['decp', 'tours', 'consultations', 'boamp']);
 dataset.change('tours');
@@ -65,6 +65,7 @@ for (const option of catalogue) {
 }
 assert.equal(loads.length, 5, 'URL sync must not trigger a second load');
 assert.equal(selection.selectDataset('nonexistent'), false);
+assert.equal(selection.selectDataset('global'), false);
 assert.equal(dataset.value, catalogue.at(-1).value);
 for (const alias of ['cities', 'all']) {
   selection.selectDataset(ctx.hashToViewState('#dataset=' + alias).dataset);

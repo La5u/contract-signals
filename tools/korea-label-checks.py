@@ -249,7 +249,7 @@ def contracts_from(versions, key_col):
 class Bids:
     """Bid features per opening (tools/korea-bid-features.py), looked up by notice."""
 
-    def __init__(self, path=BASE / 'bid-features.sqlite', history_path=None):
+    def __init__(self, path=BASE / 'bid-features-2026-10-28.sqlite', history_path=None):
         self.con = sqlite3.connect(f'file:{path}?mode=ro', uri=True)
         self.con.row_factory = sqlite3.Row
         self.refs = {(r['type'], r['year']): r for r in self.con.execute('SELECT * FROM refs')}
@@ -586,7 +586,7 @@ def main():
                    help='corruption labels in the court-matcher format (e.g. bai/links.jsonl for audit findings)')
     p.add_argument('--family', choices=('collusion', 'corruption', 'both'), default='collusion',
                    help='labels: KFTC bid rigging, court convictions (prec/extract/links.jsonl) or both (the plan\'s decision set)')
-    p.add_argument('--bids', type=Path, default=BASE / 'bid-features.sqlite', help='tools/korea-bid-features.py output; '
+    p.add_argument('--bids', type=Path, default=BASE / 'bid-features-2026-10-28.sqlite', help='tools/korea-bid-features.py output; '
                    'without it the B checks, N6 and N7 are unknown')
     p.add_argument('--history', type=Path, default=BASE / 'bid-history.sqlite',
                    help='tools/korea-bid-history.py output; without complete history B10/B11 are unknown')

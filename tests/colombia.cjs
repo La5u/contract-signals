@@ -63,14 +63,14 @@ for(const c of rows){
   check(JSON.stringify(a.checks.map(r=>r.id).sort())===JSON.stringify(EXPECTED_IDS));
   for(const r of a.checks){
     if(NA_FRENCH.includes(r.id)) check(r.status==='not-applicable');
-    if(r.status==='signal'){fires[r.id]=(fires[r.id]||0)+1;check(r.weight>0);}
+    if(r.status==='signal'){fires[r.id]=(fires[r.id]||0)+1;check(r.checkWeight>0&&r.weight>=0);}
     if(r.status!=='signal') check(r.weight==null);
   }
   const s=run('getVigilanceScore',c);
   scores.set(s,(scores.get(s)||0)+1);
   const ind=run('getIndicators',c);
   check(ind.every(i=>i.id.startsWith('secop2-')));
-  check((s===0&&ind.length===0)||(s>0&&ind.length>0)||(s==null&&ind.length===0));
+  check((s===0&&ind.every(i=>i.weight===0))||(s>0&&ind.some(i=>i.weight>0))||(s==null&&ind.length===0));
   if(s==null)nulls++;else if(s===0)zeros++;else positives++;
   if(ind.length)flagged++;
   if(a.unknown>0||a.unknownApplicability>0)partials++;
@@ -83,14 +83,17 @@ check(fires['secop2-long-duration']===39);
 check(fires['secop2-term-extension']===57);
 // Term extension: strictly above +100 % of the declared term, days added never inferred
 const ext=d=>run('getAssessment',{...rows[0],durationOriginal:'3 Mes(es)',daysAdded:d}).checks.find(r=>r.id==='secop2-term-extension');
-check(ext(91).status==='clear'&&ext(92).status==='signal'&&ext(92).weight===8.1);
-check(ext(Math.round(3*3*30.4375)).weight===30&&ext(10000).weight===30);
+check(ext(91).status==='clear'&&ext(92).status==='signal'&&ext(92).checkWeight===8.1);
+check(ext(Math.round(3*3*30.4375)).checkWeight===30&&ext(10000).checkWeight===30);
+// Score 4.0: measured on Colombian convictions (CO3), 1.2 points whatever the extension
+check(ext(92).weight===1.2&&ext(10000).weight===1.2&&ext(92).basis==='measured');
 check(ext(0).status==='clear'&&ext(null).status==='unknown');
 check(run('getAssessment',{...rows[0],durationOriginal:'7 Hora(s)',daysAdded:30}).checks.find(r=>r.id==='secop2-term-extension').status==='unknown');
-check(positives===279&&zeros===7281&&nulls===0&&flagged===279&&partials===4170);
-check(scores.get(18)===176&&!scores.has(36)&&scores.get(14)===1&&scores.get(4.7)===7&&scores.get(30)===6&&!scores.has(40)&&scores.get(10.3)===18);
+// Score 4.0: plurality awards and repeated plurality awards measured at 0 on Colombian convictions, long duration never measured
+check(positives===66&&zeros===7494&&nulls===0&&flagged===279&&partials===4170);
+check(scores.get(1.2)===57&&scores.get(4.7)===9&&scores.size===3);
 check(run('selectContracts',rows,{assessment:'unevaluated'}).length===0);
-check(run('selectContracts',rows,{assessment:'zero'}).length===7281);
+check(run('selectContracts',rows,{assessment:'zero'}).length===7494);
 check(run('selectContracts',rows,{assessment:"partial"}).length===4170);
 check(run('selectContracts',rows,{flagged:true}).length===279);
 check(run('selectContracts',rows,{indicator:'secop2-buyer-share'}).length===9);
@@ -116,8 +119,8 @@ check(share({...big,coBuyerShare:{...big.coBuyerShare,share:null}}).status==='un
 // The SECOP I total of 2025 is added to the denominator for MEN and Caldas only (Usaquén has none)
 check(rows.find(c=>c.buyerNit==='890801052'&&c.coBuyerShare.complete).coBuyerShare.secop1===37103760417);
 check(rows.find(c=>c.buyer==='ALCALDIA LOCAL DE USAQUEN'&&c.coBuyerShare.complete).coBuyerShare.secop1===0);
-// Repeated awards without plurality: a token point since v3.7 (rarer among convicted contracts)
-check(rows.filter(c=>run('getAssessment',c).checks.find(r=>r.id==='secop2-repeated-plurality').status==='signal').every(c=>run('getAssessment',c).checks.find(r=>r.id==='secop2-repeated-plurality').weight===1));
+// Repeated awards without plurality: rarer among convicted contracts, no weight since 4.0 (check weight 1)
+check(rows.filter(c=>run('getAssessment',c).checks.find(r=>r.id==='secop2-repeated-plurality').status==='signal').every(c=>{const r=run('getAssessment',c).checks.find(r=>r.id==='secop2-repeated-plurality');return r.weight===0&&r.checkWeight===1;}));
 // Sorting, grouping and the out-of-scope increase rule
 for(const sort of ['date','date-asc','amount','amount-asc','buyer','supplier','score'])check(run('selectContracts',rows,{sort}).length===7560);
 check(run('selectContracts',rows,{sort:'amount'})[0].amount>=run('selectContracts',rows,{sort:'amount'})[7559].amount);
@@ -139,8 +142,8 @@ check(loanRows.every(c=>rows.some(o=>o.contractId===c.secop2PublicCounterparty.a
 check(rows.filter(c=>c.secop2PublicCounterparty?.withheld==='community-body').length===130);
 check(rows.filter(c=>c.secop2PublicCounterparty?.withheld==='person-document').length===3);
 check(rows.filter(c=>c.secop2PublicCounterparty&&!c.secop2PublicCounterparty.labelled).every(c=>!run('selectContracts',[c],{legal:'co-public'}).length));
-check(publicRows.filter(c=>run('getVigilanceScore',c)>0).length===31);
+check(publicRows.filter(c=>run('getIndicators',c).length).length===31&&publicRows.filter(c=>run('getVigilanceScore',c)>0).length===24);
 for(const c of rows)check(run('getVigilanceScore',{...c,secop2PublicCounterparty:null})===run('getVigilanceScore',c));
 // A comodato with a community counterparty is never labelled, whatever its duration
 check(rows.filter(c=>c.contractType==='Comodato'&&/acci[oó]n comunal|^jac/i.test(c.supplier)).every(c=>!c.secop2PublicCounterparty));
-console.log(`${checks} Colombia SECOP II assertions passed: cohort integrity, join verification, per-buyer counts, liquidation, jurisdiction-specific indicators (176/15/0/39/57/9 fires, 279 flagged, 7,281 zero, 0 not assessed), parser units, filters, sorting, grouping and the public-to-public context label (442 rows, no score change).`);
+console.log(`${checks} Colombia SECOP II assertions passed: cohort integrity, join verification, per-buyer counts, liquidation, jurisdiction-specific indicators (176/15/0/39/57/9 fires, 279 flagged, 66 above ×1.0, 7,494 at ×1.0, 0 not assessed), parser units, filters, sorting, grouping and the public-to-public context label (442 rows, no score change).`);

@@ -92,7 +92,10 @@ def standardise(analysis, check=R1, names=NAMES, seed=pp.SEED):
         return pp.shrunk_lr(h1, n1, rate0 * n0, n0), h1, n1, rate0, n0, {b: round(mix[b] / n1, 3) for b in names}
 
     buyers = sorted({r['buyer'] for r in known})
-    lr, h1, n1, rate0, n0, mix = estimate(buyers)
+    first = estimate(buyers)
+    if first is None:
+        return None
+    lr, h1, n1, rate0, n0, mix = first
     import random
     rng = random.Random(f'{seed}-{check}-standardised')
     boot = sorted(x[0] for x in (estimate(rng.choices(buyers, k=len(buyers))) for _ in range(pp.BOOT)) if x and x[0])
@@ -101,6 +104,121 @@ def standardise(analysis, check=R1, names=NAMES, seed=pp.SEED):
     return {'combined': {'rate': round(h1 / n1, 3), 'buyers': n1, 'tender_hits': sum(r['checks'][check]['status'] == 'signal' for r in known if 'combined' in r['groups']),
                          'tenders': sum('combined' in r['groups'] for r in known)},
             'comparison': {'rate': round(rate0, 3), 'buyers': n0}, 'band_mix_convicted': mix,
+            'lr_shrunk': round(lr, 3), 'lr_ci': [round(q(0.025), 3), round(q(0.975), 3)], 'lr_confident': round(conf, 3),
+            'decision_points': pp.points(conf) if n1 >= pp.MIN_BUYERS else 0.0}
+
+
+GRID = 400                                        # log-value grid points for the smooth size control
+MASSES = (2, 5, 10, 20, 50, 100, 200, 500)  # adaptive kernel: comparison buyers' weight it must cover, searched
+
+
+def standardise_smooth(analysis, check=R1, seed=pp.SEED):
+    """A without value bands (plan amendment 2026-10-30): the comparisons' buyer-weighted signal rate as a smooth
+    function of log value (local-linear regression with a Gaussian kernel whose width at each value covers a set comparison weight, in buyers, so the
+    rate is defined everywhere; that weight chosen by leave-one-out likelihood on the comparisons), read at
+    each positive row's own value and averaged with the positives' buyer weights. Rows carry 'value' (positives
+    already divided by any inflation factor). Shrinkage, interval and decision quantile as in standardise()."""
+    import zlib
+    import numpy as np
+    known = [r for r in analysis if r.get('value') and r['value'] > 0 and
+             r['checks'][check]['status'] in ('signal', 'clear')]
+    if not any('combined' in r['groups'] for r in known) or not any('comparison' in r['groups'] for r in known):
+        return None
+    buyers = sorted({r['buyer'] for r in known})
+    bidx = {b: i for i, b in enumerate(buyers)}
+    logs = np.log([r['value'] for r in known])
+    lo, hi = logs.min(), logs.max()
+    cell = np.clip(((logs - lo) / (hi - lo or 1) * (GRID - 1)).round().astype(int), 0, GRID - 1)
+    centre = lo + np.arange(GRID) * (hi - lo) / (GRID - 1)
+    sides = {}
+    for g in ('combined', 'comparison'):
+        sel = [i for i, r in enumerate(known) if g in r['groups']]
+        per_buyer = Counter(known[i]['buyer'] for i in sel)
+        sides[g] = (np.array([bidx[known[i]['buyer']] for i in sel], int), cell[sel],
+                    np.array([1 / per_buyer[known[i]['buyer']] for i in sel]),
+                    np.array([known[i]['checks'][check]['status'] == 'signal' for i in sel], float))
+    dist = np.abs(centre[:, None] - centre[None, :])
+    near = np.argsort(dist, axis=1, kind='stable')
+    step = (hi - lo) / (GRID - 1) or 1.0
+    fixed_mass = np.bincount(sides['comparison'][1], sides['comparison'][2], GRID)
+    cum = np.cumsum(fixed_mass[near], axis=1)
+    def adaptive(m):
+        k = np.minimum((cum < m).sum(1), GRID - 1)
+        width = np.maximum(dist[np.arange(GRID), near[np.arange(GRID), k]], step)
+        return np.exp(-0.5 * (dist / width[:, None]) ** 2)
+    masses = [m for m in MASSES if m < fixed_mass.sum()] or [fixed_mass.sum() / 2]
+
+    def local_linear(Kh, mass, hits, own=None):
+        """Rate at every grid point by local-linear kernel regression (removes the bias a plain kernel average
+        has where comparisons are denser on one side); own = (cells, weights, hits) to leave out, giving the rate
+        at those rows without them."""
+        x = centre
+        s0, s1x, s2x = Kh @ mass, Kh @ (mass * x), Kh @ (mass * x * x)
+        t0, t1x = Kh @ hits, Kh @ (hits * x)
+        if own is None:
+            s1, s2, t1 = s1x - x * s0, s2x - 2 * x * s1x + x * x * s0, t1x - x * t0
+            out = (s2 * t0 - s1 * t1) / np.maximum(s0 * s2 - s1 * s1, 1e-300)
+            flat = t0 / np.maximum(s0, 1e-300)
+            return np.clip(np.where(s0 * s2 - s1 * s1 > 1e-12 * s0 * s0, out, flat), 0, 1)
+        c, w, y = own
+        xc = x[c]
+        a0, a1x, a2x, b0, b1x = s0[c] - w, s1x[c] - w * xc, s2x[c] - w * xc * xc, t0[c] - w * y, t1x[c] - w * y * xc
+        s1, s2, t1 = a1x - xc * a0, a2x - 2 * xc * a1x + xc * xc * a0, b1x - xc * b0
+        det = a0 * s2 - s1 * s1
+        out = (s2 * b0 - s1 * t1) / np.maximum(det, 1e-300)
+        flat = b0 / np.maximum(a0, 1e-300)
+        return np.clip(np.where(det > 1e-12 * a0 * a0, out, flat), 0, 1)
+    kernels = {m: adaptive(m) for m in masses}
+
+    # comparisons: as each buyer counts once inside each value band, here each row is weighted by 1 / its buyer's
+    # kernel-weighted number of rows near its value, so every buyer counts about once at every value it has
+    b0, c0, _, y0 = sides['comparison']
+    order = np.argsort(b0, kind='stable')
+    starts = np.flatnonzero(np.r_[True, np.diff(b0[order]) != 0])
+    def local_weights(Kh):
+        w = np.empty(len(b0))
+        for lo_, hi_ in zip(starts, np.r_[starts[1:], len(order)]):
+            idx = order[lo_:hi_]
+            u_, inv, cnt = np.unique(c0[idx], return_inverse=True, return_counts=True)
+            w[idx] = 1 / (Kh[np.ix_(u_, u_)] @ cnt)[inv]
+        return w
+    # width: leave-one-out Bernoulli likelihood of the comparison rows, each scored with its fixed buyer weight
+    # (1 / the buyer's rows) so that the widths are compared on the same footing
+    fixed = sides['comparison'][2]
+    def loo(h):
+        w0 = local_weights(kernels[h])
+        hits, mass = np.bincount(c0, w0 * y0, GRID), np.bincount(c0, w0, GRID)
+        rate = np.clip(local_linear(kernels[h], mass, hits, (c0, w0, y0)), 1e-6, 1 - 1e-6)
+        return float((fixed * (y0 * np.log(rate) + (1 - y0) * np.log(1 - rate))).sum())
+    width = max(masses, key=loo)
+    K = kernels[width]
+    w0 = local_weights(K)
+
+    def estimate(times):
+        b1, c1, w1, y1 = sides['combined']
+        t1 = times[b1]
+        n1 = float((times * np.isin(np.arange(len(buyers)), b1)).sum())
+        if not n1:
+            return None
+        h1 = float((t1 * w1 * y1).sum())
+        tc = times[b0]
+        rate_at = local_linear(K, np.bincount(c0, tc * w0, GRID), np.bincount(c0, tc * w0 * y0, GRID))
+        n0 = float((times * np.isin(np.arange(len(buyers)), b0)).sum())
+        if not n0:
+            return None
+        rate0 = float((t1 * w1 * rate_at[c1]).sum() / (t1 * w1).sum())
+        return pp.shrunk_lr(h1, n1, rate0 * n0, n0), h1, n1, rate0, n0
+
+    lr, h1, n1, rate0, n0 = estimate(np.ones(len(buyers)))
+    rng = np.random.default_rng(zlib.crc32(f'{seed}-{check}-smooth'.encode()))
+    boot = sorted(x[0] for x in (estimate(np.bincount(rng.integers(0, len(buyers), len(buyers)), minlength=len(buyers))
+                                          .astype(float)) for _ in range(pp.BOOT)) if x and x[0])
+    q = lambda f: boot[min(len(boot) - 1, int(f * len(boot)))]
+    conf = min(q(pp.CONFIDENT_Q), lr)
+    return {'combined': {'rate': round(h1 / n1, 3), 'buyers': int(n1),
+                         'tender_hits': sum(r['checks'][check]['status'] == 'signal' for r in known if 'combined' in r['groups']),
+                         'tenders': sum('combined' in r['groups'] for r in known)},
+            'comparison': {'rate': round(rate0, 3), 'buyers': int(n0)}, 'kernel_mass_buyers': width,
             'lr_shrunk': round(lr, 3), 'lr_ci': [round(q(0.025), 3), round(q(0.975), 3)], 'lr_confident': round(conf, 3),
             'decision_points': pp.points(conf) if n1 >= pp.MIN_BUYERS else 0.0}
 
@@ -122,6 +240,8 @@ def size_only(analysis, value_of):
 
 
 def line(name, res):
+    if not res or 'combined' not in res:
+        return f'| {name} | no evaluable rows | | | | |'
     c, k = res['combined'], res['comparison']
     ci = f"[{res['lr_ci'][0]:.2f}, {res['lr_ci'][1]:.2f}]" if res.get('lr_ci') else ''
     return (f"| {name} | {c['rate'] * 100:.0f}% ({c['tender_hits']}/{c['tenders']}, {c['buyers']} buyers) | "
@@ -143,12 +263,16 @@ def main(argv=None):
         raise SystemExit(f'cached listings do not replay the census: {len(tenders)} vs {len(saved["tenders"])} tenders')
     census = {'buyer_years': saved['buyer_years'], 'tenders': tenders}
     value_of = values(rows, census)
-    analysis = [dict(r, band=band(value_of[r['id']]), checks={R1: r['checks'][R1]}) for r in rel.census_rows(rows, census, {})]
+    analysis = [dict(r, band=band(value_of[r['id']]), value=value_of[r['id']], checks={R1: r['checks'][R1]})
+                for r in rel.census_rows(rows, census, {})]
 
     out = {'unadjusted': pp.analyse(analysis, R1)}
     out['size_standardised'] = standardise(analysis)
     inflated = [dict(r, band=band(None if value_of[r['id']] is None else value_of[r['id']] / INFLATION)) if 'combined' in r['groups'] else r for r in analysis]
     out['size_standardised_inflation'] = dict(standardise(inflated), inflation=INFLATION)
+    deflated = [dict(r, value=r['value'] and r['value'] / INFLATION) if 'combined' in r['groups'] else r for r in analysis]
+    out['size_smooth'] = standardise_smooth(analysis)
+    out['size_smooth_inflation'] = dict(standardise_smooth(deflated), inflation=INFLATION)
     out['size_standardised_halves'] = {h: standardise([r for r in analysis if cand.half(r['buyer']) == h]) for h in ('learn', 'check')}
     known = [r for r in analysis if r['band'] and r['checks'][R1]['status'] in ('signal', 'clear')]
     pos = dict(Counter(r['band'] for r in known if 'combined' in r['groups']))
@@ -168,6 +292,8 @@ def main(argv=None):
     print(line('R1 unadjusted', out['unadjusted']))
     print(line('R1 size-standardised (A)', out['size_standardised']))
     print(line(f'R1 size-standardised, convicted values / {INFLATION} (points basis)', out['size_standardised_inflation']))
+    print(line('R1 smooth size control (no bands)', out['size_smooth']))
+    print(line(f'R1 smooth size control, convicted values / {INFLATION} (points basis)', out['size_smooth_inflation']))
     for h, res in out['size_standardised_halves'].items():
         print(line(f'  A, {h} half', res))
     for b, res in out['within_band'].items():

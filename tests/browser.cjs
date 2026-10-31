@@ -21,7 +21,7 @@ const server=http.createServer((req,res)=>{
 (async()=>{
  await new Promise(resolve=>server.listen(Number(process.env.PORT)||0,'127.0.0.1',resolve));
  const base=`http://127.0.0.1:${server.address().port}`;
- const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||(fs.existsSync('/usr/bin/chromium')?'/usr/bin/chromium':undefined),headless:true,args:['--no-sandbox']});
+ const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||(fs.existsSync('/usr/bin/chromium')?'/usr/bin/chromium':undefined),headless:true,args:['--no-sandbox','--enable-gpu','--use-angle=gl-egl','--ignore-gpu-blocklist']});
  const page=await browser.newPage({locale:'en-GB',viewport:{width:1280,height:900}});
  await page.context().grantPermissions(['clipboard-read','clipboard-write']);
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
@@ -121,13 +121,16 @@ const server=http.createServer((req,res)=>{
  assert.match(await page.locator('#page-status').textContent(),/100 rows per page/);
  // Every signal is visible: no "+N more"; a second signal in the same family is marked as not added.
  assert.equal(await page.locator('.badge-extra').count(),0);
- const firstRow=page.locator('.contract-row').first();
- const firstSignals=await firstRow.locator('td:nth-child(8) .badge:not(.context)').count();
- assert.ok(firstSignals>=2,`top row shows ${firstSignals} signal chip(s)`);
- assert.match(await firstRow.locator('td:nth-child(8)').textContent(),/competition/);
  assert.ok(await page.locator('.badge.not-counted').count()>0);
  assert.match(await page.locator('.badge.not-counted').first().getAttribute('title'),/Not added/);
- assert.match(await firstRow.locator('td:nth-child(8)').textContent(),/Context: single-vendor software maintenance/);
+ // Score 4.0: French checks borrow no measured points, so every DECP row is at ×1 and the score sort no longer
+ // brings a given row to the top; an Ardèche software-maintenance award without competition is picked instead.
+ await page.selectOption('#indicator','direct-award');
+ const contextRow=page.locator('.contract-row',{hasText:'Context: single-vendor software maintenance'}).first();
+ const contextSignals=await contextRow.locator('td:nth-child(8) .badge:not(.context)').count();
+ assert.ok(contextSignals>=2,`software-maintenance row shows ${contextSignals} signal chip(s)`);
+ assert.match(await contextRow.locator('td:nth-child(8)').textContent(),/competition/);
+ await page.click('#clear-filters');
  await page.selectOption('#page-size','50');
  assert.equal(await page.locator('.contract-row').count(),50);
  await page.selectOption('#assessment','unevaluated');
@@ -148,8 +151,9 @@ const server=http.createServer((req,res)=>{
  // Reconciliation left no DECP contract unassessed: the filter shows none.
  assert.match(await page.locator('#status').textContent(),/^0 \/ 5286/);
  await page.selectOption('#assessment','zero');
- assert.match(await page.locator('#status').textContent(),/4709 \/ 5286/);
- assert.match(await page.locator('.contract-row').first().textContent(),/0 \/ 100/);
+ // Score 4.0: no French check has measured points, so every DECP row is at ×1.0.
+ assert.match(await page.locator('#status').textContent(),/5286 \/ 5286/);
+ assert.match(await page.locator('.contract-row').first().textContent(),/×1\.0/);
  await openRow(page,page.locator('.row-toggle').first());
  assert.equal(await page.locator('#detail-panel .assessment-checks li').count(),9);
  assert.match(await page.locator(panel).textContent(),/applicable checks evaluated/);
@@ -245,7 +249,7 @@ const server=http.createServer((req,res)=>{
  await page.selectOption('#dataset','tours');
  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('/ 66'));
  assert.equal(await page.locator('.contract-row').count(),50);
- assert.match(await page.locator('.contract-row').first().textContent(),/0 \/ 100/);
+ assert.match(await page.locator('.contract-row').first().textContent(),/×1\.0/);
  await page.locator('#pagination').scrollIntoViewIfNeeded();
  const toursPosition=await page.evaluate(()=>scrollY);
  await page.click('#next');assert.equal(await page.evaluate(()=>scrollY),toursPosition);
@@ -285,7 +289,7 @@ const server=http.createServer((req,res)=>{
  assert.match(await page.locator('.contract-row').first().textContent(),/Award without competition|Repeated awards without competition|Long declared duration|Term extended after award/);
  await page.uncheck('#flagged');
  await page.selectOption('#assessment','zero');
- assert.match(await page.locator('#status').textContent(),/7281 \/ 7560/);
+ assert.match(await page.locator('#status').textContent(),/7494 \/ 7560/);
  await page.selectOption('#assessment','');
  await page.selectOption('#indicator','direct-award');
  assert.match(await page.locator('#status').textContent(),/176 \/ 7560/);
@@ -408,8 +412,8 @@ const server=http.createServer((req,res)=>{
  const [csvDownload]=await Promise.all([linked.waitForEvent('download'),linked.click('#export-csv')]);
  assert.match(csvDownload.suggestedFilename(),/^contract-signals-decp-\d{4}-\d{2}-\d{2}\.csv$/);
  const csv=fs.readFileSync(await csvDownload.path(),'utf8');
- assert.ok(csv.startsWith('\ufeffcollectionId,collectionLabel,originalId,id,date,buyer,'));
- assert.equal(csv.split('\r\n').filter(line=>/^,,decp-/.test(line)).length,flaggedTotal);
+ assert.ok(csv.startsWith('\ufeffid,date,buyer,'));
+ assert.equal(csv.split('\r\n').filter(line=>/^decp-/.test(line)).length,flaggedTotal);
  const [jsonDownload]=await Promise.all([linked.waitForEvent('download'),linked.click('#export-json')]);
  const exported=JSON.parse(fs.readFileSync(await jsonDownload.path(),'utf8'));
  assert.equal(exported.count,flaggedTotal);assert.equal(exported.view,'#sort=date&flagged=1&size=25');
@@ -497,7 +501,7 @@ const server=http.createServer((req,res)=>{
  assert.match(await page.locator('.contract-row').first().textContent(),/not a conviction/);
  await page.evaluate(()=>{const el=document.querySelector('#official');el.checked=false;el.dispatchEvent(new Event('input',{bubbles:true}));});await page.evaluate(()=>{const el=document.querySelector('#sort');el.value='official';el.dispatchEvent(new Event('input',{bubbles:true}));});
  for(let i=0;i<8;i++)assert.match(await page.locator('.contract-row').nth(i).textContent(),/Official audit finding/);
- assert(!((await page.locator('body').textContent()).includes('null / 100')));
+ assert(!((await page.locator('body').textContent()).includes('×null')));
  // Mapped CSV preview is non-destructive, text is escaped, and currency stays unknown.
  await page.click('#open-import');
  await page.setInputFiles('#file',{name:'mapped.csv',mimeType:'text/csv',buffer:Buffer.from('key,owner,title,amount,directAward,dataStatus,date\nx,Council,<img src=x onerror=alert(1)>,150000,true,verified,2024-06-01')});
@@ -529,7 +533,7 @@ const server=http.createServer((req,res)=>{
  await page.waitForFunction(()=>!document.querySelector('#preview-import').disabled);
  await page.click('#preview-import');
  await page.click('#confirm-import');
- await page.waitForFunction(()=>document.querySelector('.contract-row').textContent.includes('18'));
+ await page.waitForFunction(()=>document.querySelector('.contract-row').textContent.includes('×1.0'));
  assert.doesNotMatch(await page.locator('.contract-row').textContent(),/Not assessed/);
  await page.click('#open-import');
  await page.setInputFiles('#file',{name:'bad.csv',mimeType:'text/csv',buffer:Buffer.from('id,buyer,description,amount\nx,B,D,broken')});
@@ -595,7 +599,8 @@ const server=http.createServer((req,res)=>{
   assert.equal(await lp.evaluate(()=>document.documentElement.lang),lang);
   assert.equal(await lp.locator('#lang').inputValue(),lang);
   assert.match(await lp.locator('label:has(#sort-field)').textContent(),new RegExp('^'+sort));
-  const row=lp.locator('.contract-row').first();
+  // Score 4.0 leaves every DECP row at ×1.0, so the row is found by its object rather than by its rank.
+  const row=lp.locator('.contract-row',{has:lp.locator('.row-toggle',{hasText:sourceObject})}).first();
   assert.equal(await row.locator('.row-toggle').textContent(),sourceObject);
   assert.match(await row.locator('td').nth(4).textContent(),new RegExp('^'+sector));
   assert.equal(await row.locator('td').nth(5).textContent(),amount);
@@ -682,8 +687,8 @@ const server=http.createServer((req,res)=>{
   const kr=await browser.newPage({locale:'en-GB',viewport:{width:1280,height:900}});
   const krErrors=[];kr.on('pageerror',e=>krErrors.push(e.message));
   await kr.goto(`${base}/#dataset=korea`);
-  // Without a chosen buyer the explorer starts the nationwide scan (since 2026-10-18); the buyer search stays available.
-  await kr.waitForFunction(()=>/^Nationwide page 1: /.test(document.querySelector('#status').textContent));
+  // The ranked subset loads by default; older hosts still offer the buyer picker.
+  await kr.waitForFunction(()=>/ results|Choose a contracting institution/.test(document.querySelector('#status').textContent));
   assert(await kr.locator('#korea-picker').isVisible());
   const buyers=JSON.parse(fs.readFileSync(path.join(process.cwd(),'korea-site','buyers.json'),'utf8'));
   const small=buyers.find(b=>b[3]>=5&&b[3]<=60);

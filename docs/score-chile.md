@@ -1,5 +1,7 @@
 # Chile method — Mercado Público checks (v3.0 framework)
 
+> **Score 4.0 (29 October 2026):** the index is now a multiplier, 2^(points / 10), and only measured points enter it ([score-v3.md](score-v3.md#40-29-october-2026-the-index-as-a-multiplier-only-measured-points-count)). The 0–100 scale, its cap and the 20/40/70 bands described below are gone; the weights below stay as the check files' editorial weights (shown as “not used”), which no longer count. Here: no Chilean labels yet; every check borrows the lowest points measured elsewhere (0) or is context, so every record is at ×1.0 (71 had a score before).
+
 **Checks for the Mercado Público cohort** (three purchasing units, licitaciones listed 2024-09 → 2026-08). Same vigilance-index framework as [score-v3.md](score-v3.md): two families, family maxima, cap at 100, `null` = “Not assessed”, unknowns never counted as zero. The checks are those of the shared national engine ([score-ukraine.md](score-ukraine.md), [score-ted.md](score-ted.md), [score-uk.md](score-uk.md)), read from the OCDS releases ChileCompra publishes. French, Colombian and Paraguayan rules are not applied. Amounts stay in CLP as published and are never converted; UTM bands in procedure names are Chilean monetary units, not points.
 
 An editorial sorting tool, not a probability, not a measure of legal gravity, not a certificate of regularity.

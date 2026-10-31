@@ -123,7 +123,7 @@ def report(rows, title, reps=500):
 def main():
     p = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     p.add_argument('--db', type=Path, default=ko.BASE / 'opnstd.sqlite')
-    p.add_argument('--bids', type=Path, default=ko.BASE / 'bid-features.sqlite')
+    p.add_argument('--bids', type=Path, default=ko.BASE / 'bid-features-2026-10-28.sqlite')
     p.add_argument('--json', type=Path)
     args = p.parse_args()
     args.buyer, args.family, args.court_links = 'contract', 'collusion', None

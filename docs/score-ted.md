@@ -1,5 +1,7 @@
 # Portugal, Romania and Czechia method — TED eForms checks (v3.0 framework)
 
+> **Score 4.0 (29 October 2026):** the index is now a multiplier, 2^(points / 10), and only measured points enter it ([score-v3.md](score-v3.md#40-29-october-2026-the-index-as-a-multiplier-only-measured-points-count)). The 0–100 scale, its cap and the 20/40/70 bands described below are gone; the weights below stay as the check files' editorial weights (shown as “not used”), which no longer count. Here: Romania uses its Competition Council measurements (single offer, direct award, repetition and concentration **0**; buyer share 2, supplier dependence 3.4 points), 14 lots above ×1.0 (was 147); Portugal and Czechia have no labels yet and borrow 0, so every record is at ×1.0 (136 and 135 had a score before).
+
 **Checks for the TED cohorts of Portugal, Romania and Czechia.** Same vigilance-index framework as [score-v3.md](score-v3.md): three families (competition, execution/duration and transparency, the last through late publication), family maxima, cap at 100, `null` = “Not assessed”, unknowns never counted as zero. The checks read only fields that EU eForms defines the same way in every member state (procedure code, the per-lot `tenders` statistic, buyer and winner identifiers, CPV). The countries are **separate cohorts**: their counts are never pooled, ranked or compared, and amounts are never converted (EUR for Portugal, RON or EUR for Romania, as published).
 
 An editorial sorting tool, not a probability, not a measure of legal gravity, not a certificate of regularity. A signal describes a published declaration; it is not a finding of irregularity.
@@ -12,7 +14,7 @@ TED publishes procedures **above the EU thresholds** only. Most national procure
 
 Written on 25 September 2026, before any notice of these cohorts was downloaded, and before any row was read. Weights reuse the French v3 ones where the concept is the same (single offer 12, award without competition 18, repetition and concentration curves), so that none was tuned on these results. Buyers are matched by published identifier and its spelling variants, never by name.
 
-## The eight checks
+## The checks
 
 | Check | ID | Family | Eligibility / trigger | Weight |
 | --- | --- | --- | --- | --- |
@@ -21,6 +23,8 @@ Written on 25 September 2026, before any notice of these cohorts was downloaded,
 | Repeated single-offer awards | `ted-repeated-single-offer` | Competition | This award is single-offer; same buyer and supplier (national number) in ≥3 distinct notices | **12 at 3 → 30 at 10** |
 | Repeated awards without competition | `ted-repeated-direct` | Competition | This award is `neg-wo-call`; same buyer and supplier in ≥3 distinct notices | **18 at 3 → 30 at 10**; Romania **1** since v3.7 |
 | Concentrated awards | `ted-concentration` | Competition | Same buyer and CPV division (2 digits); ≥10 distinct procedures with an identified winner, ≥80 % of procedures with a national supplier number, share ≥60 % | **12 at 60 % → 30 at 100 %**; Romania **1** since v3.7 |
+| Large share of the buyer's yearly procurement (Romania) | `ro-buyer-share` | Competition | RON contract amount ≥ 5 % of the buyer's SEAP contract total for the conclusion year (2024, 2025) | **2** (v3.9) |
+| Supplier dependence (Romania) | `ro-supplier-dependence` | Competition | Exactly one supplier CUI; its SEAP contracts with the buyer ≥ 25 % of the buyer's total for the conclusion year | **3.4** (v3.9) |
 | Amount increase | `amount-increase` | Execution | **Out of scope**: modification notices are separate and were not imported | — |
 | Short bidding period | `short-bidding-period` | Competition | **Out of scope**: the contract-notice chain was not imported | — |
 | Long declared duration | `long-contract` | Execution | **Out of scope**: no duration threshold validated for these jurisdictions | — |
@@ -54,6 +58,10 @@ Ministerul Finanțelor (national, CUI 4221306), Județul Cluj (regional, 4288110
 | `ted-repeated-single-offer` | 42 | 70 | 19 | 190 |
 | `ted-repeated-direct` | 0 | 0 | 4 | 317 |
 | `ted-concentration` | 0 | 43 | 278 | 0 |
+| `ro-buyer-share` | 14 | 206 | 101 | 0 |
+| `ro-supplier-dependence` | 0 | 193 | 128 | 0 |
+
+**v3.9 (approved 2026-10-29):** buyer share (2 points) and supplier dependence (3.4 points) against the buyer's SEAP contract total for the year, since TED lists only above-threshold awards (`data/romania-seap-totals.json`, attached to each lot as `seapYear` by the importer; 2024 and 2025, other years unknown). Points from Competition Council decisions at equal contract value; see [score-v3.md](score-v3.md#v39-29-october-2026-romanian-buyer-share-and-supplier-dependence). Unknown: lots outside 2024–2025 (97), EUR amounts (4) and, for dependence, lots without exactly one supplier CUI. 147 lots with a signal, 174 zero (was 138 / 183).
 
 **v3.7 (approved 2026-10-15):** on Romanian rows, repeated awards without competition and concentration score 1 point each. In Competition Council bid-rigging decisions (20 decisions, 17 buyers, one procedure per decision) repeated awards without competition were rarer than among the same buyers' other contracts (LR 0.38) and concentration barely more frequent (6 % vs 3 %, LR 1.09, fails the holdout); see [the results](../research/calibration/romania-colombia-results-2026-10-15-audit.md). Neither check fires in this cohort, so no score changes. Portugal and Czechia keep the editorial points.
 
@@ -106,6 +114,7 @@ The corrected leave-one-out publication median changes four Portugal scores and 
 
 ```sh
 python tools/import-ted-cohorts.py --cohort portugal --offline
+python tools/build-romania-seap-totals.py   # needs the normalised SEAP exports; output committed
 python tools/import-ted-cohorts.py --cohort romania --offline
 node tests/national.cjs
 ```

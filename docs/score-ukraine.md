@@ -1,5 +1,7 @@
 # Ukraine method — Prozorro checks (v3.7 framework)
 
+> **Score 4.0 (29 October 2026):** the index is now a multiplier, 2^(points / 10), and only measured points enter it ([score-v3.md](score-v3.md#40-29-october-2026-the-index-as-a-multiplier-only-measured-points-count)). The 0–100 scale, its cap and the 20/40/70 bands described below are gone; the weights below stay as the check files' editorial weights (shown as “not used”), which no longer count. Here: every Ukrainian check was measured on Ukrainian labels and keeps its points; the unmeasured repeated single offer borrows 0. 118 records above ×1.0 (unchanged).
+
 **Checks for the Prozorro cohort** (three buyers, tenders created 2024-09-01 → 2026-09-01). Same vigilance-index framework as [score-v3.md](score-v3.md): two families, family maxima, cap at 100, `null` = “Not assessed”, unknowns never counted as zero. Different checks and eligibility; French, Colombian and Paraguayan rules are not applied. Amounts stay in the published currency (UAH, sometimes EUR or USD) and are never converted.
 
 An editorial sorting tool, not a probability, not a measure of legal gravity, not a certificate of regularity. Wartime rules allow procurement exceptions and withheld publications: a missing record or bid is not evidence of anything, and a zero is not clearance.

@@ -3,15 +3,6 @@
 // as JSON: keep it JSON. path: the published files; web: the slimmer browser copies when they differ
 // (tools/build-web-data.py); remote: served from another host (coverage relative to it).
 globalThis.DATASETS = {
-  "global": {
-    "remote": "global",
-    "note": "All published collections, not unique contracts: overlapping representations are retained. Source-specific assessments are not comparable risk rankings. No combined currency totals. Unknown is not zero. Minimum amount uses native currency, not conversion. Only one bounded scan page is retained.",
-    "sources": {
-      "publisher": "Existing published registry collections (including KONEPS)",
-      "links": [],
-      "licence": "Each collection retains its own source and licence; select that collection for publication details."
-    }
-  },
   "tours": {
     "path": "data/tours-notices.json",
     "coverage": "data/tours-notices-coverage.json",
@@ -402,7 +393,7 @@ globalThis.DATASETS = {
       "reproduce": "python tools/fetch-korea-opnstd-contracts.py, tools/normalize-korea-opnstd.py, tools/build-korea-site.py",
       "collected": "Every contract published in the open-standard contract service with a contract or change date from 1 September 2024 to 1 September 2026, national download (all contracting institutions)."
     },
-    "note": "South Korea · KONEPS · every contracting institution, contracts dated September 2024–August 2026 (2.7 million). Browse all institutions with sequential static-file scans, or choose a buyer. Korean checks are not set yet: contracts are shown for browsing and are not assessed. Amounts in KRW; the full record is on KONEPS."
+    "note": "South Korea · KONEPS · amounts in KRW; full record on KONEPS."
   },
   "romania": {
     "path": "data/ted-romania.json",

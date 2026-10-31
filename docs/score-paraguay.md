@@ -1,5 +1,7 @@
 # Paraguay method — DNCP OCDS checks (v3.0 framework)
 
+> **Score 4.0 (29 October 2026):** the index is now a multiplier, 2^(points / 10), and only measured points enter it ([score-v3.md](score-v3.md#40-29-october-2026-the-index-as-a-multiplier-only-measured-points-count)). The 0–100 scale, its cap and the 20/40/70 bands described below are gone; the weights below stay as the check files' editorial weights (shown as “not used”), which no longer count. Here: no Paraguayan labels yet; every check borrows the lowest points measured elsewhere (0) or is context, so every record is at ×1.0 (36 + 58 had a score before).
+
 **Jurisdiction-specific checks for the Paraguayan DNCP cohorts.** Same vigilance-index framework as [score-v3.md](score-v3.md) and [score-colombia.md](score-colombia.md): two families, family maxima, cap at 100, `null` = “Not assessed”, unknowns never counted as zero. **Different checks, eligibility and thresholds.** French and Colombian rules are never applied to these rows.
 
 This is an editorial sorting tool, not a probability, not a measure of legal gravity and not a certificate of regularity. A signal describes a published declaration in one bounded cohort; it is not a finding of irregularity. No CPI, no country coefficient, no cross-country ranking, no currency conversion (PYG only).

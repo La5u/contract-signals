@@ -166,7 +166,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     p.add_argument('--db', type=Path, default=lc.BASE / 'opnstd.sqlite')
     p.add_argument('--buyer', choices=('contract', 'demand'), default='contract')
-    p.add_argument('--bids', type=Path, default=lc.BASE / 'bid-features-2026-10-24.sqlite')
+    p.add_argument('--bids', type=Path, default=lc.BASE / 'bid-features-2026-10-28.sqlite')
     p.add_argument('--history', type=Path, default=lc.BASE / 'bid-history.sqlite')
     p.add_argument('--checks', default='B,K6,K5,G3', help='comma-separated check prefixes to run')
     p.add_argument('--json', type=Path)
