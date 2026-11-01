@@ -384,5 +384,5 @@ Estimated accuracy per true class:
 
 Expected rulings: A1 273, A2 66, A3 471, C 667. Expected labelled links: A1 41, A2 17, A3 79, C 193; at p ≥ 0.9: 20, 9,
 41, 107. The estimated prior that a named contract is in DECP is 0.25 if signed and 0.38 if not stated, so linking, not
-reading, now limits the family. The 351 tribunal judgments Luna read as X have no second reading; Terra found no missed
-A or C among 569 X rulings, so they stay out.
+reading, now limits the family. The 351 tribunal judgments Luna read as X have no second reading. Of 703 rulings Luna
+read as X that Terra also read, Terra moved 3 (A1 2, A3 1), so at that rate those 351 hide about 1 or 2; they stay out.
