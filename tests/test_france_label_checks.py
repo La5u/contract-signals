@@ -73,5 +73,37 @@ class Measures(unittest.TestCase):
             con.close()
 
 
+class Rate(unittest.TestCase):
+    def test_synthetic_end_to_end(self):
+        import json
+        import subprocess
+        import sys
+        with tempfile.TemporaryDirectory() as directory:
+            tmp = Path(directory)
+            con = duckdb.connect()
+            con.execute("""COPY (SELECT 'u' || i || '-' || j uid, 'buyer' || i acheteur_id,
+                2023 AS "year", 100000.0 + j * 1000 montant, (j = 0) direct,
+                CASE WHEN j = 0 THEN 1 ELSE 2 END bid_count,
+                CASE WHEN j = 0 THEN 48 ELSE 12 END duree_mois
+                FROM range(12) t(i), range(2) s(j)) TO ? (FORMAT PARQUET)""", [str(tmp / 'measures.parquet')])
+            con.execute("""COPY (SELECT 'u' || i || '-' || j uid FROM range(12) t(i), range(2) s(j))
+                TO ? (FORMAT PARQUET)""", [str(tmp / 'measures-supplier.parquet')])
+            con.close()
+            links = [dict(ruling=f'r{i}', **{'class':'A1'}, class_probability=1, uid=f'u{i}-0', probability=1) for i in range(12)]
+            finality = [dict(ruling=f'r{i}', status='upheld', w=1) for i in range(12)]
+            for name, records in [('links.jsonl', links), ('finality.jsonl', finality)]:
+                (tmp / name).write_text(''.join(json.dumps(x) + '\n' for x in records))
+            subprocess.run([sys.executable, str(ROOT / 'tools/france-label-checks.py'), '--rate',
+                '--measures-dir', str(tmp), '--links', str(tmp / 'links.jsonl'),
+                '--finality', str(tmp / 'finality.jsonl'), '--family', 'irregular-award',
+                '--out', str(tmp / 'out')], check=True, capture_output=True, text=True)
+            result = json.loads((tmp / 'out/rate-irregular-award.json').read_text())
+            direct = next(x for x in result['sections']['main'] if x['check'] == 'DIRECT')
+            self.assertEqual(direct['combined']['buyers'], 12)
+            self.assertEqual(direct['combined']['rate'], 1)
+            self.assertEqual(direct['comparison']['rate'], 0)
+            self.assertTrue((tmp / 'out/rate-irregular-award.txt').exists())
+
+
 if __name__ == '__main__':
     unittest.main()
