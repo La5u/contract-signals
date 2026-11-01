@@ -54,7 +54,24 @@ def load_readings(base):
     return reads, terra
 
 
-def run(base, links_path, out):
+def load_effects(directory):
+    effects = {}
+    path = directory / 'checked.jsonl'
+    if not path.exists():
+        return effects
+    with path.open() as f:
+        for line in f:
+            row = json.loads(line)
+            result = row.get('result')
+            if (row.get('earlier') and row.get('later') and not row.get('problems')
+                    and isinstance(result, dict) and result.get('same_case') in {'yes', 'no'}
+                    and result.get('effect') in {'confirmed', 'reversed', 'partly_reversed', 'not_examined'}
+                    and result.get('earlier_final_after_this') in {'yes', 'no'}):
+                effects[row['earlier'], row['later']] = result
+    return effects
+
+
+def run(base, links_path, out, effects_dir=None):
     out.mkdir(parents=True, exist_ok=True)
     links = {}
     with links_path.open() as f:
@@ -66,6 +83,7 @@ def run(base, links_path, out):
                     raise ValueError(f'conflicting classes for {rid}')
                 links[rid] = row
     reads, terra = load_readings(base)
+    effects = load_effects(effects_dir) if effects_dir is not None else None
     corpus, numbers = {}, defaultdict(set)
     for path in (base / 'rulings').glob('*/*.xml'):
         rid = path.stem
@@ -151,15 +169,39 @@ def run(base, links_path, out):
             refs = db.execute('select later, group_concat(how, "; ") from refs where earlier = ? group by later', (rid,)).fetchall()
             refs.sort(key=lambda x: (corpus[x[0]][0]['date'], x[0]))
             details = [{'ruling': x, 'how': how, 'class': later_class(x)} for x, how in refs]
+            if effects is not None:
+                for d in details:
+                    d['effect_reading'] = effects.get((rid, d['ruling']))
             unresolved = [d['ruling'] for d in details if d['class'] not in CLASSES]
-            unread.update(x for x in unresolved if not reads.get(x))
+            if effects is not None:
+                unresolved = [d['ruling'] for d in details if d['effect_reading'] is None]
+                unread.update(unresolved)
+            else:
+                unread.update(x for x in unresolved if not reads.get(x))
             if rid not in corpus:
                 status, weight, reason = 'pending', (0.91 if meta['level'] == 'TA' else 0.85), 'ruling XML missing from corpus'
             elif meta['level'] == 'CE':
                 status, weight, reason = 'final', 1, 'Conseil d’État ruling'
-            elif details and unresolved:
+            elif effects is not None and details and unresolved:
+                status, weight, reason = 'pending', (0.91 if meta['level'] == 'TA' else 0.85), 'later ruling requires effect review'
+            elif effects is not None and details and any(d['effect_reading']['same_case'] == 'yes' for d in details):
+                relevant = [d for d in details if d['effect_reading']['same_case'] == 'yes']
+                last = relevant[-1]
+                effect = last['effect_reading']
+                substantive = next((d['effect_reading']['effect'] for d in reversed(relevant)
+                                    if d['effect_reading']['effect'] != 'not_examined'), None)
+                if effect['effect'] == 'not_examined' and effect['earlier_final_after_this'] != 'yes':
+                    status, weight = 'pending', (0.91 if meta['level'] == 'TA' else 0.85)
+                elif substantive == 'reversed':
+                    status, weight = 'overturned', 0
+                elif substantive == 'confirmed' or (substantive is None and effect['earlier_final_after_this'] == 'yes'):
+                    status, weight = 'upheld_by_later', 1
+                else:
+                    status, weight = 'pending', (0.91 if meta['level'] == 'TA' else 0.85)
+                reason = f"later ruling {last['ruling']} effect {effect['effect']}; earlier final: {effect['earlier_final_after_this']}"
+            elif effects is None and details and unresolved:
                 status, weight, reason = 'pending', (0.91 if meta['level'] == 'TA' else 0.85), 'later ruling requires review: unread, disputed or class X'
-            elif details:
+            elif effects is None and details:
                 last = details[-1]
                 same = (last['class'] == 'C') == (link['class'] == 'C')
                 status, weight = ('upheld_by_later', 1) if same else ('overturned', 0)
@@ -193,8 +235,9 @@ def main():
     p.add_argument('--base', type=Path, default=BASE)
     p.add_argument('--links', type=Path)
     p.add_argument('--out', type=Path, default=BASE / 'finality-2026-11-01')
+    p.add_argument('--effects', type=Path, help='directory containing checked pairwise appeal-effect readings')
     a = p.parse_args()
-    run(a.base, a.links or a.base / 'links-2026-11-01/links.jsonl', a.out)
+    run(a.base, a.links or a.base / 'links-2026-11-01/links.jsonl', a.out, a.effects)
 
 
 if __name__ == '__main__':
