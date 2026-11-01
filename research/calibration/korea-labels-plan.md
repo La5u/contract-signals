@@ -329,3 +329,93 @@ Per [indicator-standard.md](indicator-standard.md), kind 3. Tool: `tools/korea-c
   largest positive points + most negative counter points, floored at 0.
 - **First tested:** FLOOR-GAP and PRICE-RATIO, collusion family; court and audit reported.
 - **Court and audit stay separate families** (owner 2026-10-25), each with its own ranges and points.
+
+## Group and placement indicators, fixed 2026-10-26 (owner: "test all 10"; no rate of any of them had been computed)
+
+Seen before: B7 same-minute bids (2.5 points, on the site), B9 shared CEO, B10 rotation and B11 repeated quote pair
+(no points), the bidder-count controls of 2026-10-24, and, for fixing these rules, only field lists and value
+vocabularies (rejection reasons, time format: `bidprcTm` is HH:MM, so a finer submission-time check than B7 is not
+possible and the owner's indicator 8 is B7 itself, not retested). Tools: `tools/korea-group-measures.py` (G1–G6),
+`tools/fetch-korea-group-inputs.py` (G7, G9, G10 inputs); rated with `tools/korea-curves.py`.
+
+**Notation.** Target T: the opening the B checks use (same choice, same coverage). D: its demand institution
+(`dmndInsttCd`). w: its single winner (unknown when the opening has no or several winners). R: T's other bidders
+(every bid row, rejected ones included, as in B10). W: openings at D with opening date within 365 days either side
+of T's, excluding every order of T's own notice. Known only where bid-history coverage holds (`complete_days` of
+`korea-bid-history.py`: the whole 731-day window covered). For a firm f, O_f = the openings of W where f bid,
+n_f = |O_f|, N = |W|; n_wr = |O_w ∩ O_r|; "won" = the opening's single winner.
+
+| ID | Measure (continuous unless stated) |
+| --- | --- |
+| G1 CO-BID | max over r in R of n_wr / (n_w · n_r / N + 1): how much more often the winner meets its most frequent rival at D than their activity predicts. 0 when R is empty or N = 0. |
+| G2 ROTATION | Group g = {w} ∪ {r in R : n_wr ≥ 3}. M = openings of W ∪ {T} where at least two members of g bid and a member of g won. 1 − (largest member's wins in M) / \|M\|; 0 when g = {w} or \|M\| < 3. High = the group's wins are shared out. |
+| G3 COVER | max over r in R that bid in at least 3 openings of W and won none of them, of the share of O_r won by w. 0 when no such r. High = a rival that never wins at D and keeps losing to this winner. |
+| G4 TURF | Winner's bids nationwide with opening date within 365 days either side, T excluded: (its wins at D ÷ its wins anywhere) − (its bids at D ÷ its bids anywhere); 0 when it won nothing else. High = it wins at this buyer and loses elsewhere (allocation by buyer). |
+| G5 STABLE-GAP | Over r in R with n_wr ≥ 2 and both bid rates known in at least 3 of the openings in O_w ∩ O_r plus T: the population standard deviation of (r's rate − w's rate), percentage points; minimum over such r. Coded 1,000 ("no repeated pair") when none qualifies. Low = the two firms' bids move together. |
+| G6 FUTILE | Share of R whose bid could not win: rejected as above the reserve (예가초과) or below the lower limit (낙찰하한선 미달). Unknown when R is empty. Other rejections stay with B6. |
+| G7 PICK-MATCH | Share of R (bidders with both 복수예비가격 picks, `drwtNo1`/`drwtNo2`, getOpengResultListInfoOpengCompt) whose unordered pick pair equals w's. Unknown without w's picks or without R. |
+| G9 SHARED-CONTACT (yes/no) | Openings of 2–20 bids: two bidders with different business numbers share a telephone number (digits only, at least 8) or an address (road address + detail, spaces removed). Contacts: KONEPS firm registry (UsrInfoService `getPrcrmntCorpBasicInfo02`: telephone, fax, address; current registration, so closed firms are missing), else the open-standard contracts' winner address and telephone. Contacts held by more than 3 business numbers in that table are left out (shared offices, associations), as in B9. Unknown unless at least 2 bidders have contacts. |
+| G10 CONSORTIUM (yes/no) | w and some r in R are both members of one joint contract (계약정보서비스 `corpList`, two or more members) signed within 365 days either side of T. Unknown where the contract download does not cover the window. |
+
+**Comparisons for G7 and G9** (one call per opening or firm on the development quota): every labelled opening, and the
+comparison openings whose SHA-256 of `korea-group-sample:<notice>-<ord>` falls in the lowest 5 % (fixed now).
+
+**Rating.** Continuous measures: one range [a, b), case-folded, gated against "no split", as in "One range per
+continuous indicator" (2026-10-25); yes/no ones by the decision rule. Families: collusion is the decision basis, court
+and audit reported. G1, G2, G3, G5, G6, G7 and G9 rise or fall mechanically with the number of bidders (cartel
+tenders have few), so each is also rated with the bidder-count control of `korea-bid-controls.py`
+(its `BIDDER_BINS`); the **bidder-count-controlled points are the decision**, the raw ones are reported.
+G4 is also rated with the value-band control. Nothing goes on the site without the owner's decision.
+
+**Amendment 2026-10-26, 22:50 (after the first G1–G7 ratings).** The range for G1, G2, G3, G5, G6, G7 and G9 was chosen
+on raw values and only rated under the bidder-count control afterwards, so the choice followed the bidder count (cartel
+tenders have few bidders) and the deciding control then removed it. From now on, for these measures the
+cross-validated range, its nested gate against no split and its bootstrap are computed against comparisons reweighted
+to the labels' buyer-weighted mix of bidder-count bins (`BIDDER_BINS`), as size-like measures already are for value
+bands; points still come from the bidder-count control. Same rule for every bidder-like measure and family; G4 and
+G10 unchanged. A post-hoc threshold scan run before this amendment (diagnostic, `/tmp/gscan/out.txt`) suggested
+G6 = 1, G3 ≥ 0.29 and G5 < 0.085 pp; those thresholds are not used.
+
+**Pairs, fixed 2026-10-27 ~02:30 (owner: "test only the pairs which logically/intuitively make sense").** Seen
+before fixing: G1–G10 rated singly (0 points each), the court G10 fold breakdown; no pair had been computed. Six pairs,
+each one collusion mechanism that needs both parts:
+
+| ID | Pair | Mechanism |
+| --- | --- | --- |
+| P1 | G1 × G3 | Cover bidding: the winner's regular rival at this buyer never wins and keeps losing to it. |
+| P2 | G1 × G5 | Complementary bids: regular rivals whose bid rates move together. |
+| P3 | G1 × G6 | Planned losers: the winner meets its rivals unusually often and their bids could not win. |
+| P4 | G5 × G7 | One hand prepares several bids: identical reserve-price picks and a stable bid gap. |
+| P5 | G7 × G9 | One office: bidders sharing a telephone or address also chose identical picks. |
+| P6 | G1 × G10 | Partners posing as rivals: consortium partners within a year who also meet unusually often at this buyer. |
+
+Not paired: G2 (already built on the frequent co-bidders of G1), G4 (allocation across buyers, a different scheme).
+**Score.** Each continuous member becomes its oriented percentile rank among all target openings where it is known
+(mid-rank, label-blind; high = suspicious: G1, G3, G6, G7 high, G5 low, G5's 1,000 "no repeated pair" lowest). A pair's
+score is the smaller of its two ranks ("both unusual"); with a yes/no member (G9, G10) it is the other member's rank
+where the flag is yes, else 0. Unknown if either member is unknown. The members are maxima/minima over rivals and may
+refer to different rivals (accepted: the per-rival link is not stored). Tool `tools/korea-group-pairs.py` →
+`group/measures-pairs.tsv`. **Rating** as the single G checks after the 22:50 amendment: all six are bidder-like
+(range, gate and bootstrap against bidder-count-reweighted comparisons; bidder-count-controlled points decide);
+collusion decides, court and audit reported. Six tests: a single pass near the gate is reported as possibly chance.
+
+**Amendment 2026-10-27 ~12:50: pairs on the same rival (owner: fix the gap).** Seen before fixing: the pair ratings
+above (`group/rate19-*`, 0 points for collusion). Their members are maxima/minima over rivals, so P1–P4 and P6 could
+join one rival's G1 with another rival's G3, G5, G6 or G7, which is not the mechanism. From now on each pair is scored
+per rival r of T and the pair's score is the maximum over r:
+
+| ID | Score for rival r |
+| --- | --- |
+| P1 | smaller of R1(g1_r) and R3(g3_r) |
+| P2 | smaller of R1(g1_r) and R5(g5_r) |
+| P3 | R1(g1_r) where r's bid was futile (G6 reasons), else 0 |
+| P4 | R5(g5_r) where r's picks equal w's, else 0 |
+| P5 | yes/no: r shares a contact with w (G9 keys) and r's picks equal w's |
+| P6 | R1(g1_r) where w and r are members of one joint contract within 365 days (G10 rule), else 0 |
+
+g1_r, g3_r and g5_r are G1, G3 and G5 for that one rival (g3_r 0 when r does not qualify, g5_r 1,000). R1, R3, R5 are
+oriented mid-rank percentiles among all (target, rival) rows where the value is known (label-blind). Unknown: P1–P3
+where G1 is unknown; P4, P5 where no rival has the inputs (P5: picks of both and contacts of both); P6 where G10 is
+unknown. P5 now looks only at winner–rival pairs (G9 looked at any two bidders). Per-rival values come from a history
+rebuild (`korea-group-measures.py history`, table `group_rivals`) and `assemble` (`group/rivals.tsv.gz`); rating
+unchanged (bidder-like, collusion decides). The earlier version is kept as `korea-group-pairs.py --any-rival`.
