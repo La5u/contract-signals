@@ -3,7 +3,10 @@ from pathlib import Path
 import tempfile
 import unittest
 
-import duckdb
+try:
+    import duckdb
+except ImportError:
+    raise unittest.SkipTest('France checks need optional duckdb')
 
 spec = importlib.util.spec_from_file_location('france_labels', Path(__file__).resolve().parents[1] / 'tools/france-label-checks.py')
 module = importlib.util.module_from_spec(spec)
