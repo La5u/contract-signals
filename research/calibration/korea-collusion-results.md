@@ -488,3 +488,120 @@ B2 12.1, B5 11.4, B4 0.9, B7 2.5) and the backfill, which raised the comparisons
   (AUC +0.06 to +0.07). Within rows with an opening, AUC rises from 0.696 to 0.712.
 - Still not monotone where bids are on file: band 20–29.9 (ratio 4.4) beats 30–39.9 (3.2). The family maxima still
   appear to overlap once bid data is present; the joint model is the fix.
+
+## Group indicators G1–G7, 2026-10-26 (plan "Group and placement indicators"; research, nothing adopted)
+
+Rated with `tools/korea-curves.py --group group/measures.tsv` (one cross-validated range, gated against no split;
+bidder-count-controlled points decide for G1–G3 and G5–G7, value-band for G4). Output
+`~/.cache/contract-signals/korea/group/rate17-{collusion,court,audit}.{txt,json}`. G9 and G10 wait for their downloads.
+G1–G5 are known only where the 731-day bid history is complete (84,870 of 262,935 target openings); G7's comparisons
+are the fixed 5 % sample.
+
+Collusion (decision basis), all linked tenders:
+
+| Check | Labelled (cases) | Range | Accepted | Value-band | Bidder-count (decision) |
+|---|---|---|---|---|---|
+| G1 CO-BID | 380 (62) | < 6.23 | no | 0 | 0 |
+| G2 ROTATION | 380 (62) | < 0.80 | no | 0 | 0 |
+| G3 COVER | 380 (62) | < 0.017 | no | 0 | 0 |
+| G4 TURF | 380 (62) | −0.001 to 0.199 | no | 0 (decision) | 0 |
+| G5 STABLE-GAP | 380 (62) | ≥ 0.84 pp | yes | 7.8 | 1.5 |
+| G6 FUTILE | 586 (78) | < 3 % | yes | 8.8 | 0.1 |
+| G7 PICK-MATCH | 532 (62) | < 0.4 % | yes | 4.1 | 0.1 |
+
+- Every accepted range is at the "nothing suspicious" end (wide gap, no futile bids, no matching picks), against the
+  stated direction: the signature of few bidders. Controlling for the number of bidders leaves almost nothing; G5's
+  1.5 points point the wrong way. One per case agrees (accepted ranges the same, controlled points 0–0.6).
+- Court (49 tenders, 14 cases; 34–37 with a value) and audit (761 tenders, 182 cases; 94–167 with a value): no range
+  accepted for any of G1–G7; 0 points throughout. The chosen ranges are narrow and move between folds.
+- Conclusion: none of G1–G7 adds anything beyond the bidder count on these labels.
+
+### Rerun under the bidder-count amendment, 2026-10-26 23:20
+
+Plan amendment 2026-10-26 22:50: for the bidder-like checks the range, gate and bootstrap are chosen against
+comparisons reweighted to the labels' bidder-count mix. Output `group/rate17b-{collusion,court,audit}.{txt,json}`.
+
+| Collusion | Range chosen | Nested gain (SE) | Bidder-count control, LR [95 %] | Points |
+|---|---|---|---|---|
+| G1 CO-BID | < 6.23 | −0.018 (0.032) | 1.16 [1.10, 1.21] | 0 |
+| G2 ROTATION | < 0.91 | −0.050 (0.067) | 1.01 [1.01, 1.01] | 0 |
+| G3 COVER | < 0.017 | −0.003 (0.002) | 1.03 [0.97, 1.09] | 0 |
+| G5 STABLE-GAP | ≥ 0.84 pp | −0.007 (0.019) | 1.13 [1.05, 1.22] | 0 |
+| G6 FUTILE | ≥ 0.9 | −0.003 (0.009) | 1.39 [0.94, 1.94] | 0 |
+| G7 PICK-MATCH | ≥ 0.145 | −0.008 (0.011) | 0.48 [0.15, 0.99] | 0 |
+
+- No range passes the gate in any family; G4 unchanged (0). G6 now picks the expected end (nearly all rivals futile,
+  as the diagnostic scan suggested), with LR 1.39 under the control, but its held-out gain is not above zero.
+- G5–G7 passed the gate before only on their "few bidders" ends; with that removed, nothing is left.
+- Conclusion unchanged: G1–G7 earn 0 points on Korean labels.
+
+## Group indicators G9 and G10, 2026-10-27 01:45 (same plan and amendment; research, nothing adopted)
+
+Rated after the firm-contact (G9) and consortium (G10, 계약정보서비스 `corpList`, 14,584 items) downloads finished;
+`korea-group-measures.py assemble` rebuilt `group/measures.tsv` (G1–G7 counts unchanged; old table kept as
+`measures-g1g7.tsv`). Output `group/rate18-{collusion,court,audit}.{txt,json}`. G9 is bidder-like (bidder-count
+control decides); G10 is not (value-band decides).
+
+| Family, decision basis | Check | Labelled (cases) | Range | Hit rate labelled / comparisons | Nested gain (SE) | Controlled LR [95 %] | Points |
+|---|---|---|---|---|---|---|---|
+| Collusion | G9 SHARED-CONTACT | 541 (79) | no shared contact | 99.3 % / 97.1 % | −0.004 (0.005) | 1.01 [1.00, 1.02] | 0 |
+| Collusion | G10 CONSORTIUM | 552 (76) | no consortium | 95.9 % / 91.6 % | −0.010 (0.007) | 1.05 [1.02, 1.08] | 0 |
+| Court | G9 SHARED-CONTACT | 27 (6) | no shared contact | 100 % / 96.9 % | −0.004 (0.003) | 1.02 [1.01, 1.04] | 0 |
+| Court | G10 CONSORTIUM | 37 (11) | consortium | 40.4 % / 14.2 % | 0.016 (0.066) | 1.34 [0.82, 2.05] | 0 |
+| Audit | G9 SHARED-CONTACT | 98 (54) | no shared contact | 94.1 % / 93.8 % | −0.005 (0.003) | 1.00 [0.95, 1.04] | 0 |
+| Audit | G10 CONSORTIUM | 105 (51) | consortium | 15.7 % / 12.7 % | −0.002 (0.004) | 1.04 [0.56, 1.58] | 0 |
+
+- Collusion: both checks point the wrong way. Rigged openings have fewer shared contacts (0.7 % against 2.9 %) and
+  fewer winner–rival consortia (4.1 % against 8.4 %) than comparisons; neither range beats no split.
+- Court: consortium ties are three times as common in convicted tenders (40 % against 14 %; bidder-count LR 2.56
+  [1.39, 4.19], reported), but on 11 cases from 18 buyers the held-out gain is 0.016 ± 0.066, so not accepted.
+- Audit: decision basis not accepted. One per case (robustness, 36 cases) accepts G10's consortium end at 5.8 points
+  (value-band; bidder-count 12.5) and G9's "no shared contact" end at 0.3; the decision basis does not, so 0.
+- Conclusion: G9 and G10 earn 0 points in all three families, like G1–G7. G10's corruption-side lead (court, audit
+  one per case) is worth retesting if more court cases are labelled.
+
+## Pairs P1–P6, 2026-10-27 (plan "Pairs, fixed 2026-10-27"; research, nothing adopted)
+
+Six logically motivated pairs, score = smaller of the two oriented percentile ranks (`tools/korea-group-pairs.py` →
+`group/measures-pairs.tsv`), rated like the single G checks after the bidder-count amendment. Output
+`group/rate19-{collusion,court,audit}.{txt,json}`.
+
+| Collusion, decision basis | Labelled (cases) | Range chosen | Hit rate labelled / comparisons | Nested gain (SE) | Bidder-count LR | Points |
+|---|---|---|---|---|---|---|
+| P1 COVER (G1 × G3) | 380 | < 0.69 | 98.2 % / 87.9 % | −0.010 (0.020) | 1.06 | 0 |
+| P2 COMPLEMENT (G1 × G5) | 380 | < 0.66 | 97.7 % / 56.1 % | 0.026 (0.030) | 1.17 | 0 |
+| P3 PLANNED-LOSERS (G1 × G6) | 374 | < 0.82 | 99.8 % / 93.7 % | −0.027 (0.034) | 1.03 | 0 |
+| P4 ONE-HAND (G5 × G7) | 342 | < 0.87 | 99.7 % / 93.6 % | 0.002 (0.037) | 1.02 | 0 |
+| P5 ONE-OFFICE (G7 × G9) | 478 | < 0.36 | 99.2 % / 97.1 % | −0.010 (0.010) | 1.02 | 0 |
+| P6 PARTNERS (G1 × G10) | 374 | < 0.68 | 99.9 % / 95.5 % | −0.016 (0.016) | 1.04 | 0 |
+
+- Collusion: no pair passes the gate, and every chosen range is the "not both unusual" end, against the stated
+  direction (the few-bidders signature again). One per case accepts P1 and P2 at that same end (0.8 and 1.9
+  bidder-controlled points): not a sign of collusion.
+- Court (13–17 buyers): only P1 passes, on a middle range [0.43, 0.85) rather than the "both unusual" top, with gain
+  0.036 ± 0.034 (just over the gate) and 1.7 points; one per case does not confirm. One pass in 18 decision tests near
+  the gate: probably chance. Reported only.
+- Audit: none passes on the decision basis. One per case accepts P6 [0.24, max) (consortium partners; 13.4
+  bidder-controlled, 6.8 value-band) — the same G10 consortium lead as alone — and P5 at 0.5.
+- Conclusion: the pairs add nothing for collusion. The consortium tie (G10, P6) keeps showing on the corruption side
+  (court and audit, one per case) but never on the decision basis; worth retesting with more court cases.
+
+## Court and audit rerun with the court-linked bid days, 2026-10-28 (research; nothing adopted)
+
+`~/.local/share/contract-signals/korea-court-days-rerun.sh`: bids and CEO hashes downloaded for every opening day the
+court rulings name (wider search, Terra settling the disputed rulings), bid features rebuilt
+(`bid-features-2026-10-28.sqlite`), then the court and audit ratings rerun into `korea/rerun-1028/` (the 2026-10-26 run
+kept in `rerun-1026/` for comparison).
+
+- **Court:** 51 linked notices in 16 cases (was 49 in 14), 25 buyer-years. Every decision is unchanged; points move by
+  0.3 or less (decision basis: N4 supplier dependence 13.7 → 13.5, G3 buyer share 7.4 → 7.2, K5 restricted
+  competition 5.3 → 5.1, B8 exact floor hit 1.2 → 1.3, B3 0.2 → 0.3). The bid-level checks still rest on 7–11
+  labelled buyers, so the new opening days added bids but no new labelled buyers.
+- **Audit:** same 763 notices in 182 cases; B1 single bid 7.7 → 7.9, B12 (now cut at 1.01 points above the floor,
+  was 0.97) 6.9 → 7.1, B5 2.6 → 2.7, bid count 1 7.6 → 7.8. No decision changes.
+- **Why the court family stays small:** of 833 contracts named in 317 relevant rulings, 92 link and 719 do not.
+  The unmatched ones are mostly from before KONEPS's bid openings (2000–2009: 452) and at buyers that procure outside
+  KONEPS: Korea Gas (61), military units and the defence ministry (≈ 80, D2B), KEPCO (24), rail (24), housing and
+  road corporations (26); 57 have no buyer in the ruling. Relinking against the 1995–2009 contracts added about 20
+  links. More court labels need those buyers' own bidding systems (KEPCO, KOGAS, KORAIL, D2B; ALIO lists public
+  institutions' contracts), not more KONEPS downloads.
