@@ -861,10 +861,12 @@ function startExplorer() {
       fact('Pricing', [c.pricing, c.termType].filter(Boolean).join(' · '));
       if (c.totalAmount != null) fact('Total contract amount', krw(c.totalAmount), element('small', ' all years', 'muted'));
       fact('Supplier region', c.supplierRegion);
-      if (Array.isArray(c.amountChanges) && c.amountChanges.length > 1) {
+      // Only the versions that changed the amount; the count of all versions follows.
+      const steps = (Array.isArray(c.amountChanges) ? c.amountChanges : []).filter((v, i, all) => !i || v[1] !== all[i - 1][1]);
+      if (steps.length > 1) {
         const list = element('ol', null, 'amount-changes');
-        for (const [date, amount] of c.amountChanges) list.append(element('li', `${date || '—'} · ${amount == null ? '—' : krw(amount)}`));
-        fact('Amount at each version', list);
+        for (const [date, amount] of steps) list.append(element('li', `${date || '—'} · ${amount == null ? '—' : krw(amount)}`));
+        fact('Amount changes', list, element('small', `${c.amountChanges.length} versions in all`, 'muted'));
       }
     }
     if (c.durationMonths != null || c.durationOriginal) fact('Duration', ...(c.durationMonths != null ? [`${c.durationMonths} `, element('span', 'months')] : [c.durationOriginal]));
