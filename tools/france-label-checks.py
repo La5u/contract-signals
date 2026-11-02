@@ -302,6 +302,22 @@ def rate(measures_dir, links_path, finality_path, family, out):
         'SIGN-DATE weekend':'sign_weekend', 'NEW-SUPPLIER':'new_supplier', 'FRAMEWORK':'framework',
         'CONSORTIUM':'consortium', 'SUBCONTRACTING':'subcontracting', 'SUPPLIER-TYPE':'supplier_type_other',
         'ROUND-NUMBERS A3/A4':'round_amount'}
+    def round_increase(pct):
+        # A1 on final vs signed amount: a whole-percent rise of at least 1 %, not a ratio p/q with q <= 9.
+        if pct is None or not math.isfinite(pct):
+            return None
+        step = pct - 100
+        if step < 1 - 1e-6 or abs(step - round(step)) > 1e-6:
+            return False
+        ratio = round(pct) / 100
+        return not any(abs(ratio * q - round(ratio * q)) < 1e-9 for q in range(1, 10))
+    def closed_24m(c):
+        # Ceased within 24 months; only contracts notified at least 24 months before the SIRENE extract.
+        if c.get('closure_censored') is None or c.get('observable_months') is None or c['observable_months'] < 24:
+            return None
+        return not c['closure_censored'] and c['months_to_closure'] <= 24
+    derived = {'ROUND-NUMBERS A1': lambda c: round_increase(c.get('amend_price_pct')),
+               'SUPPLIER-CLOSED': closed_24m}
     # Count indicators are discrete bins, evaluated against every other known count.
     counts = {'BID-COUNT': ('bid_count', [(1,2),(2,3),(3,4),(4,6),(6,11),(11,None)]),
               'AMEND-COUNT': ('amend_count_24m', [(0,1),(1,2),(2,3),(3,5),(5,None)]),
@@ -345,6 +361,8 @@ def rate(measures_dir, links_path, finality_path, family, out):
             for name, col in binary.items():
                 v = c.get(col)
                 ch[name] = None if v is None else bool(v)
+            for name, f in derived.items():
+                ch[name] = f(c)
             for name, (col, bins) in counts.items():
                 v = c.get(col)
                 for lo, hi in bins:
@@ -354,7 +372,7 @@ def rate(measures_dir, links_path, finality_path, family, out):
                 ch[f'SUPPLIER-CATEGORY {cat}'] = None if category is None else category == cat
             rows.append({'id':c['uid'], 'buyer':c['acheteur_id'], 'case':best['ruling'] if best else None,
                          'groups':[group], 'weight':w, 'checks':ch})
-        names = list(numeric) + list(binary) + [f'{n} {lo}-{hi if hi is not None else "+"}' for n, (_, bins) in counts.items() for lo, hi in bins] + [f'SUPPLIER-CATEGORY {x}' for x in ('PME','ETI','GE','MICRO')]
+        names = list(numeric) + list(binary) + list(derived) + [f'{n} {lo}-{hi if hi is not None else "+"}' for n, (_, bins) in counts.items() for lo, hi in bins] + [f'SUPPLIER-CATEGORY {x}' for x in ('PME','ETI','GE','MICRO')]
         if variant == 'DIRECT outside A2': names = ['DIRECT']
         if variant == 'BID-COUNT non-ousted actions': names = [n for n in names if n.startswith('BID-COUNT ')]
         results = []
@@ -411,7 +429,7 @@ def rate(measures_dir, links_path, finality_path, family, out):
         sections[variant] = results
     # Explicitly identify unavailable measures rather than silently omitting them.
     sections['unavailable'] = [{'check':x, 'skip':'required measure is not present in the measures files'} for x in
-        ('ROUND-NUMBERS A1/A2', 'ROUND-NUMBERS A5/A6', 'ROUND-NUMBERS A7', 'SUPPLIER-CLOSED')]
+        ('ROUND-NUMBERS A2', 'ROUND-NUMBERS A5/A6 (DECP has no budget field)', 'ROUND-NUMBERS A7')]
     out.mkdir(parents=True, exist_ok=True)
     data = {'family':family, 'value_band_edges_eur':edges, 'sections':sections}
     (out / f'rate-{family}.json').write_text(json.dumps(data, indent=2, ensure_ascii=False, allow_nan=False) + '\n')
