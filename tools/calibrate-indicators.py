@@ -16,11 +16,12 @@ KINDS = ['single-offer', 'direct-award', 'repeated-single-offer', 'repeated-dire
          'low-competition-rate', 'concentration', 'disqualified-better-bid',
          'short-bidding-period', 'late-notice-change', 'long-duration', 'amount-increase',
          'term-extension', 'late-publication', 'cap', 'execution', 'legalGround', 'unitPrice', 'exclusivity', 'contract-amendments',
-         'buyer-share', 'award-near-reserve', 'restricted-competition', 'supplier-dependence', 'few-bidders', 'bid-pattern', 'floor-gap']
+         'buyer-share', 'award-near-reserve', 'restricted-competition', 'supplier-dependence', 'few-bidders', 'bid-pattern', 'floor-gap',
+         'one-valid-bid', 'floor-hit']
 FAMILIES = (['competition'] * 9 + ['execution'] * 3 + ['transparency'] + ['execution'] * 2 + ['competition', 'execution', 'competition']
-            + ['execution'] + ['competition'] * 7)
+            + ['execution'] + ['competition'] * 9)
 # Representative site constants / graduated maxima; proxy, not actual data scores.
-POINTS = np.array([12, 18, 40, 60, 40, 40, 12, 40, 5, 40, 40, 40, 16, 20, 10, 5, 3, 1, 8, 30, 12.7, 3.7, 9.2, 14.8, 12.1, 18])
+POINTS = np.array([12, 18, 40, 60, 40, 40, 12, 40, 5, 40, 40, 40, 16, 20, 10, 5, 3, 1, 8, 30, 12.7, 3.7, 9.2, 14.8, 12.1, 18, 0, 0])  # one-valid-bid, floor-hit: on the site, no points (2026-11-02)
 CAPS = np.array([60., 40., 16.])
 FAMILY_NAMES = ['competition', 'execution', 'transparency']
 N = len(KINDS)
