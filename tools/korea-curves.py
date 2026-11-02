@@ -122,7 +122,7 @@ def context(contracts, bids=None, group=None):
             total[(c['buyer'], c['year'])] += c['amount']
             if c['supplier']:
                 by_supplier[(c['buyer'], c['year'], c['supplier'])] += c['amount']
-    opening = (lambda c: bids.opening(c['notice'], c.get('notice_ord', '')) if c['notice'] else None) if bids else (lambda c: None)
+    opening = (lambda c: bids.opening(c['notice'], c.get('notice_ord', ''), c.get('supplier')) if c['notice'] else None) if bids else (lambda c: None)
     return {'total': total, 'by_supplier': by_supplier, 'opening': opening, 'group': group or {}}
 
 

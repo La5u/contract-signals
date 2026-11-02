@@ -10,16 +10,22 @@ bids) and writes ~/.cache/contract-signals/korea/bid-features.sqlite:
   (two lowest valid amounts' gap / spread of the other valid amounts; both null under three valid bids), bids lower
   than the winner's excluded for another reason than 정상 / 낙찰하한선 미달, whether two bids share a minute,
   whether distinct bidders share a CEO hash held by at most three business numbers across all CEO files.
+  A notice whose rows carry several reserve prices (예정가격) is a tender split into lots, published under one notice
+  number without a lot field: each reserve price is one lot (lot 1, 2, … by first row; 0 when not split), and rows
+  without a reserve price are left out of a split notice. winners lists every winner as [business number digits,
+  bid rate], so a contract takes its own supplier's lot and rate (korea-label-checks.py Bids.opening).
 - `refs`: per business type and year, the 10th percentile of cv and the 90th of rd (B4, B5 thresholds).
 - `notices`: latest order per notice from bids/opnstd-notices; dates, business type, status and estimated price.
 
-Only derived numbers; no bidder identity leaves the private cache. tools/korea-label-checks.py reads this file.
+Only derived numbers and the winners' business numbers (the contracts' own suppliers, public in the contract data);
+no losing bidder's identity is kept. tools/korea-label-checks.py reads this file.
 """
 import argparse
 import contextlib
 import gzip
 import json
 import os
+import re
 import sqlite3
 import statistics
 from collections import defaultdict
@@ -30,7 +36,7 @@ BASE = Path(os.environ.get('XDG_CACHE_HOME', str(Path.home() / '.cache'))) / 'co
 VALID = '정상'
 LOSING = ('정상', '낙찰하한선 미달')
 COLS = ['notice', 'ord', 'day', 'type', 'year', 'bids', 'valid', 'winner', 'winner_rate', 'lower_rate', 'cv', 'rd', 'dq_lower',
-        'same_minute', 'shared_ceo']
+        'same_minute', 'shared_ceo', 'lot', 'winners']
 CEO_DIR = BASE / 'bids/ceos'
 RARE_CEOS = set()
 
@@ -62,7 +68,9 @@ def features(rows):
     stamps = [(r.get('bidprcDate'), r.get('bidprcTm')) for r in rows if r.get('bidprcDate') and r.get('bidprcTm')]
     return {'bids': len(rows), 'valid': len(valid), 'winner': w is not None, 'winner_rate': number(w.get('bidprcRt')) if w else None,
             'lower_rate': number(rows[0].get('sucsfLwstlmtRt')), 'cv': cv, 'rd': rd, 'dq_lower': dq_lower,
-            'same_minute': len(stamps) != len(set(stamps))}
+            'same_minute': len(stamps) != len(set(stamps)),
+            'winners': json.dumps([[re.sub(r'\D', '', r.get('bidprcCorpBizrno') or ''), number(r.get('bidprcRt'))] for r in winners])
+                       if winners else None}
 
 
 def rare_ceos(files):
@@ -111,11 +119,21 @@ def read_day(path):
     ceos = shared_ceos(CEO_DIR / path.parent.name / path.name)
     out = []
     for (notice, ord_), rows in groups.items():
-        f = features(rows)
-        f['shared_ceo'] = ceos.get((notice, ord_))
-        out.append((notice, ord_, day, rows[0].get('bsnsDivNm') or path.parent.name, int(day[:4]),
-                    *(f[c] for c in COLS[5:])))
+        for lot, lot_rows in lots(rows):
+            f = features(lot_rows)
+            f['shared_ceo'] = ceos.get((notice, ord_))
+            f['lot'] = lot
+            out.append((notice, ord_, day, rows[0].get('bsnsDivNm') or path.parent.name, int(day[:4]),
+                        *(f[c] for c in COLS[5:])))
     return out
+
+
+def lots(rows):
+    """[(lot, rows)]: one entry (lot 0) unless the rows carry several reserve prices, then one per reserve price."""
+    reserves = list(dict.fromkeys(r['rsrvtnPrce'] for r in rows if r.get('rsrvtnPrce')))
+    if len(reserves) < 2:
+        return [(0, rows)]
+    return [(i, [r for r in rows if r.get('rsrvtnPrce') == v]) for i, v in enumerate(reserves, 1)]
 
 
 def percentile(values, q):
@@ -154,7 +172,7 @@ def main(argv=None):
     staged = args.out.with_suffix('.part')
     staged.unlink(missing_ok=True)
     db = sqlite3.connect(staged)
-    db.execute(f'CREATE TABLE openings ({", ".join(COLS)}, PRIMARY KEY (notice, ord, day)) WITHOUT ROWID')
+    db.execute(f'CREATE TABLE openings ({", ".join(COLS)}, PRIMARY KEY (notice, ord, day, lot)) WITHOUT ROWID')
     db.execute('CREATE TABLE refs (type, year, cv_p10, rd_p90, openings, PRIMARY KEY (type, year))')
     cvs, rds = defaultdict(list), defaultdict(list)
     init_ceos(args.ceos, hashes)

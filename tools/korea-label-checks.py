@@ -254,6 +254,7 @@ class Bids:
         self.con.row_factory = sqlite3.Row
         self.refs = {(r['type'], r['year']): r for r in self.con.execute('SELECT * FROM refs')}
         self.has_notices = bool(self.con.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='notices'").fetchone())
+        self.has_lots = any(r[1] == 'lot' for r in self.con.execute('PRAGMA table_info(openings)'))
         history_path = Path(history_path) if history_path is not None else Path(path).with_name('bid-history.sqlite')
         self.history_con = sqlite3.connect(f'file:{history_path}?mode=ro', uri=True) if history_path.exists() else None
         self.history_integer_keys = False
@@ -266,13 +267,22 @@ class Bids:
                 self.history_con.close()
                 self.history_con = None
 
-    def opening(self, notice, notice_ord):
-        """The contract's opening: same order as its notice_ord, else the latest with a winner, else the latest."""
-        rows = self.con.execute('SELECT * FROM openings WHERE notice = ? ORDER BY day, ord', (notice,)).fetchall()
+    def opening(self, notice, notice_ord, supplier=None):
+        """The contract's opening: same order as its notice_ord, else the latest with a winner, else the latest.
+        With the contract's supplier (business number), the lot that supplier won is preferred, and the winner rate
+        is that supplier's own bid rate: a notice may hold several lots, and an opening several winners."""
+        rows = self.con.execute('SELECT * FROM openings WHERE notice = ? ORDER BY day, ord' +
+                                (', lot' if self.has_lots else ''), (notice,)).fetchall()
         if not rows:
             return None
         same = [r for r in rows if r['ord'] == notice_ord]
         pool = same or rows
+        digits = re.sub(r'\D', '', supplier or '')
+        if digits and self.has_lots:
+            for r in reversed(pool):
+                rate = next((w[1] for w in json.loads(r['winners'] or '[]') if w[0] == digits), False)
+                if rate is not False:
+                    return {**dict(r), 'winner_rate': rate}
         won = [r for r in pool if r['winner']]
         return (won or pool)[-1]
 
@@ -473,7 +483,7 @@ def build_checks(contracts, first_year=None, bids=None, budgets=None):
     def checks(c):
         if not c.get('original', True):
             return {k: STATUS['unknown'] for k in CHECKS}
-        opening = bids.opening(c['notice'], c.get('notice_ord', '')) if bids and c['notice'] else None
+        opening = bids.opening(c['notice'], c.get('notice_ord', ''), c.get('supplier')) if bids and c['notice'] else None
         return {**contract_checks(c), **bid_checks(opening, bids.refs if bids else {}, bids.history(opening) if bids else None),
                 **notice_checks(bids.notice(c['notice']) if bids and c['notice'] else None),
                 **round_checks(c, budgets.get(c['notice']) if budgets and c['notice'] else None),

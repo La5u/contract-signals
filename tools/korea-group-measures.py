@@ -72,7 +72,7 @@ def targets(args):
         def make(contracts):
             bids = lc.Bids(args.bids, Path('/nonexistent'))
             def check(c):
-                o = bids.opening(c['notice'], c.get('notice_ord', '')) if c['notice'] else None
+                o = bids.opening(c['notice'], c.get('notice_ord', ''), c.get('supplier')) if c['notice'] else None
                 return {'open': (str(o['notice']), ord3(o['ord']), dt.date.fromisoformat(o['day']).toordinal())
                         if o is not None else None}
             return check

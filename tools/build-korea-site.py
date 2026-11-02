@@ -115,6 +115,14 @@ order by c.last_buyer_code, coalesce(c.signed, c.first_date_seen), c.cntrct_no
 '''
 
 
+def load_label_checks():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location('korea_label_checks', Path(__file__).with_name('korea-label-checks.py'))
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 def index(values, value):
     if value is None:
         return None
@@ -168,23 +176,21 @@ def main(argv=None):
     (out / 's').mkdir(parents=True)
 
     methods, types, link_kinds, pricings, term_types = [], [], [], [], []
-    bids_db = sqlite3.connect(f'file:{args.bids}?mode=ro', uri=True) if args.bids.exists() else None
+    bids_db = args.bids if args.bids.exists() else None
+    bids = load_label_checks().Bids(args.bids) if bids_db else None
     if bids_db is None:
         print(f'{args.bids} missing: no bid ratios', flush=True)
 
-    def opening_rates(notice, notice_ord):
-        # The contract's opening as tools/korea-label-checks.py Bids.opening picks it: the notice's own order,
-        # else the latest with a winner, else the latest. 0 in the source means not published.
+    def opening_rates(notice, notice_ord, supplier):
+        # The contract's opening as tools/korea-label-checks.py Bids.opening picks it: the lot its supplier won (with
+        # that supplier's own bid rate), else the notice's own order, else the latest with a winner, else the latest.
+        # 0 in the source means not published.
         if bids_db is None or not notice:
             return None, None
-        rows = bids_db.execute('select ord, winner, winner_rate, lower_rate from openings where notice = ? order by day, ord',
-                               (notice,)).fetchall()
-        pool = [r for r in rows if r[0] == notice_ord] or rows
-        won = [r for r in pool if r[1]]
-        if not pool:
+        o = bids.opening(notice, notice_ord, supplier)
+        if o is None:
             return None, None
-        _, _, rate, lower = (won or pool)[-1]
-        return (rate or None), (lower or None)
+        return (o['winner_rate'] or None), (o['lower_rate'] or None)
 
     def changes(no, n):
         # Amount at each version (계약변경차수), only for changed contracts: [[date, amount], ...] by order.
@@ -202,7 +208,7 @@ def main(argv=None):
         (no, signed, first_seen, original_in, name, demand, supplier, bizrno, kind, original, latest, versions,
          method, btype, notice, legal, joint, url, bcode, bname, btype_buyer, letters, n_bids, last_seen,
          notice_ord, pricing, term_type, total, region, opening, notice_name) = r
-        rate, lower = opening_rates(notice, notice_ord)
+        rate, lower = opening_rates(notice, notice_ord, bizrno)
         individual = kind == 'individual'
         date = signed or first_seen
         if last_seen:
