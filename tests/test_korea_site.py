@@ -63,7 +63,7 @@ class KoreaSite(unittest.TestCase):
                 bid_features.main(['--bids', str(self.dir / 'bids'), '--out', str(features), '--workers', '1'])
             site_checks.main(['--db', str(self.db), '--out', str(out), '--workers', '1', '--bids', str(features)])
         lines = out.read_text().splitlines()
-        self.assertEqual(lines[0], '# ' + '\t'.join(['contract'] + CHECKS + ['bids']))
+        self.assertEqual(lines[0], '# ' + '\t'.join(['contract'] + site_checks.HEADER + ['bids']))
         rows = [l.split('\t') for l in lines[1:]]
         self.bids = {no: n for no, _, n in rows}  # bids opened in the tender, '' when the opening was not found
         return {no: dict(zip(CHECKS, letters)) for no, letters, _ in rows}

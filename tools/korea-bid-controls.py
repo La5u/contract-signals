@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Research only: Korean checks against KFTC-rigged tenders, controlled for bidder count, value, business type,
+"""Research only: Korean checks against labelled tenders (KFTC bid rigging or court convictions), controlled for bidder count, value, business type,
 period and winner size.
 
 Same labels, buyer modes, label weights and comparisons as tools/korea-label-checks.py (decision set "weighted, all
@@ -14,7 +14,11 @@ mean expected hit; LR = observed / expected, shrunk by 10 buyers towards 1; poin
 Factors: bidder count of the contract's opening (none without one), value band (labelled amounts divided by 1.3,
 owner rule 2026-10-20: rigged contracts are assumed overpriced), business type, period (2008-12, 2013-16, 2017-19,
 2020+), buyer (within-buyer model: the label's own buyer's comparisons only), winner size (supplier's original contract value with every buyer in the three previous years, opnstd
-`contracts`; it includes the cartel's own awards, so it can over-control).
+`contracts`; it includes the cartel's own awards, so it can over-control), price slot (the tender's K7 and B12
+results: whether a check adds to the price slot or repeats it).
+
+2026-11-02: labels, weights and comparisons now come from korea-label-checks.prepare(), so `--family corruption`
+controls the court-conviction labels the same way.
 """
 import argparse
 import importlib.util
@@ -48,6 +52,9 @@ MODELS = {
     'bidders x value x type x winner size': ['bidders', 'value', 'type', 'winner'],
     'value x type x period x winner size (no bidders)': ['value', 'type', 'period', 'winner'],
     'within buyer: buyer x bidders x value': ['buyer', 'bidders', 'value'],
+    # 2026-11-02: does a price check add anything once the price slot (K7 / B12) has scored? (UA-C9 vs K7)
+    'price slot (K7 x B12)': ['price'],
+    'price slot x value x type': ['price', 'value', 'type'],
 }
 
 
@@ -158,7 +165,7 @@ def analyse(units, check, factors, rng_seed):
     conf = min(q(pp.CONFIDENT_Q), lr)
     return {'observed': round(O, 2), 'expected': round(E, 2), 'buyers': n_lab_buyers, 'tenders': len(labels),
             'fell_back': fell_back, 'lr': round(lr, 3), 'lr_ci': [round(q(0.025), 3), round(q(0.975), 3)],
-            'lr_confident': round(conf, 3),
+            'lr_confident': round(conf, 3), 'lr_q75': round(max(q(1 - pp.CONFIDENT_Q), lr), 3),  # cautious bound for a counter-range
             'points': pp.points(conf) if n_lab_buyers >= pp.MIN_BUYERS else 0.0}
 
 
@@ -166,68 +173,73 @@ def main():
     p = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     p.add_argument('--db', type=Path, default=lc.BASE / 'opnstd.sqlite')
     p.add_argument('--buyer', choices=('contract', 'demand'), default='contract')
+    p.add_argument('--family', choices=('collusion', 'corruption', 'both'), default='collusion',
+                   help='labels as in korea-label-checks.py: KFTC bid rigging, court convictions, or both')
+    p.add_argument('--court-links', type=Path, default=lc.BASE / 'prec/extract/links.jsonl')
     p.add_argument('--bids', type=Path, default=lc.BASE / 'bid-features-2026-10-28.sqlite')
     p.add_argument('--history', type=Path, default=lc.BASE / 'bid-history.sqlite')
-    p.add_argument('--checks', default='B,K6,K5,G3', help='comma-separated check prefixes to run')
+    p.add_argument('--checks', default='B,K5,K6,K7,G3,G5,N4,UA-C1,UA-C2,UA-C9,UA-C11',
+                   help='comma-separated check prefixes to run (B also covers BID-COUNT and BID-VALID)')
+    p.add_argument('--clear', default='', help='comma-separated check prefixes also rated on their clear side '
+                   '(a counter-range: B12 clear carries negative points)')
     p.add_argument('--json', type=Path)
     args = p.parse_args()
 
-    labels = lc.load_labels()
-    fin_path = lc.BASE / 'ftc-suits/finality.json'
-    finality = json.loads(fin_path.read_text()) if fin_path.exists() else {}
-    versions, key_col = lc.scan(args.db, labels, args.buyer)
-    contracts = lc.contracts_from(versions, key_col)
-    del versions
     bids = lc.Bids(args.bids, args.history)
-    checks = lc.build_checks(contracts, bids=bids)
-    members, reps = set(), {}
-    for lab in labels.values():
-        cs = [contracts[n] for n in lab['contracts'] if n in contracts]
-        members |= {c['no'] for c in cs}
-        cs = [c for c in cs if c['original']]
-        if cs:
-            rep = max(cs, key=lambda c: (c['amount'], c['no']))
-            reps.setdefault(rep['no'], lab)
-    weight = lambda case: lc.WEIGHTS[(finality.get(case) or {}).get('status', 'none')]
-    buyer_years = {(contracts[n]['buyer'], contracts[n]['year']) for n in reps}
-    pool = [c for c in contracts.values() if (c['buyer'], c['year']) in buyer_years and c['original']
-            and not (c['no'] in members and c['no'] not in reps)]
-    print(f'{len(reps)} labelled contracts, {len(pool) - len(reps)} comparisons ({key_col})', flush=True)
+    k7, b12 = lc.PRICE_CHECKS
 
-    sizes = supplier_values(args.db, {c['supplier'] for c in pool if c['supplier']})
-    wanted = [k for k in lc.CHECKS if any(k.startswith(x + ' ') or k.split(' ')[0].startswith(x) for x in args.checks.split(','))]
+    def make_checks(contracts):
+        base = lc.build_checks(contracts, bids=bids)
+        return lambda c: {**base(c), '_c': c}
+
+    # Same labels, weights, buyer-years and comparisons as the decision set of korea-label-checks.py.
+    rows, key_col, _ = lc.prepare(args, make_checks)
+    rs = rows(lambda c: True, True)
+    print(f"{sum('combined' in r['groups'] for r in rs)} labelled rows, {sum('comparison' in r['groups'] for r in rs)} "
+          f'comparisons ({key_col})', flush=True)
+
+    pool = {r['checks']['_c']['no']: r['checks']['_c'] for r in rs}
+    sizes = supplier_values(args.db, {c['supplier'] for c in pool.values() if c['supplier']})
+    pick = lambda prefixes: [k for k in lc.CHECKS if prefixes and any(k.startswith(x + ' ') or k.split(' ')[0].startswith(x)
+                                                                       for x in prefixes.split(','))]
+    wanted, clear_side = pick(args.checks), pick(args.clear)
+    flip = {'signal': 'clear', 'clear': 'signal', 'unknown': 'unknown'}
     per_check = defaultdict(list)
     profile = defaultdict(Counter)
-    for c in pool:
-        lab = reps.get(c['no'])
-        o = bids.opening(c['notice'], c.get('notice_ord', ''), c.get('supplier')) if c['notice'] else None
-        amount = c['amount'] / OVERPRICING if lab else c['amount']
-        prior = sum(sizes.get((c['supplier'], c['year'] - k), 0) for k in (1, 2, 3)) if c['supplier'] else 0
-        strata = {'bidders': bidder_bin(o['bids'] if o else None), 'value': band(amount, VALUE_EDGES),
-                  'type': c['business'] or '', 'period': period(c['year']), 'winner': band(prior, SIZE_EDGES),
-                  'buyer': c['buyer']}
-        ch = checks(c)
-        w = weight(lab['case']) if lab else 1.0
+    strata_of = {}
+    for r in rs:
+        c, ch = r['checks']['_c'], r['checks']
+        lab = 'combined' in r['groups']
+        key = (c['no'], lab)
+        if key not in strata_of:
+            o = bids.opening(c['notice'], c.get('notice_ord', ''), c.get('supplier')) if c['notice'] else None
+            amount = c['amount'] / OVERPRICING if lab else c['amount']
+            prior = sum(sizes.get((c['supplier'], c['year'] - k), 0) for k in (1, 2, 3)) if c['supplier'] else 0
+            strata_of[key] = {'bidders': bidder_bin(o['bids'] if o else None), 'value': band(amount, VALUE_EDGES),
+                              'type': c['business'] or '', 'period': period(c['year']), 'winner': band(prior, SIZE_EDGES),
+                              'buyer': c['buyer'],
+                              # The price slot's own result (K7 where no floor is stated, else B12): a check that
+                              # keeps points within it adds to the price slot rather than repeating it.
+                              'price': ch[k7]['status'][0] + ch[b12]['status'][0]}
+            if o:
+                for f in ('bidders', 'value', 'winner'):
+                    profile[(f, 'labelled' if lab else 'comparison')][strata_of[key][f]] += 1
+        strata = strata_of[key]
         for k in wanted:
-            st = ch[k]['status']
-            if lab and w > 0:
-                per_check[k].append((c['buyer'], True, w, st, strata))
-            if not lab or w < 1:
-                per_check[k].append((c['buyer'], False, 1 - w if lab else 1.0, st, strata))
-        if o:
-            for f in ('bidders', 'value', 'winner'):
-                profile[(f, 'rigged' if lab else 'comparison')][strata[f]] += 1
-    print('\nProfile of contracts with an opening (share of rigged / comparison):')
+            per_check[k].append((c['buyer'], lab, r.get('weight', 1.0), ch[k]['status'], strata))
+        for k in clear_side:
+            per_check[f'{k} (clear)'].append((c['buyer'], lab, r.get('weight', 1.0), flip[ch[k]['status']], strata))
+    print('\nProfile of contracts with an opening (share of labelled / comparison):')
     for f in ('bidders', 'value', 'winner'):
-        r, k = profile[(f, 'rigged')], profile[(f, 'comparison')]
-        tr, tk = sum(r.values()), sum(k.values())
+        r, k = profile[(f, 'labelled')], profile[(f, 'comparison')]
+        tr, tk = sum(r.values()) or 1, sum(k.values()) or 1
         keys = sorted(set(r) | set(k), key=lambda x: (isinstance(x, str) and x != 'none' and int(x.split('-')[0]), str(x)))
         print(f'  {f}: ' + ', '.join(f'{x}: {r[x] / tr * 100:.0f}/{k[x] / tk * 100:.0f}' for x in keys))
 
-    out = {'buyer': key_col, 'models': {}}
+    out = {'buyer': key_col, 'family': args.family, 'models': {}}
     print('\n| Check | ' + ' | '.join(MODELS) + ' |')
     print('|---|' + '---|' * len(MODELS))
-    for k in wanted:
+    for k in wanted + [f'{k} (clear)' for k in clear_side]:
         cellsout = []
         for name, factors in MODELS.items():
             res = analyse(per_check[k], k, factors, pp.SEED)

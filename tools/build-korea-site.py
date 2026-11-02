@@ -45,7 +45,10 @@ COLUMNS = ['contractNo', 'date', 'dateIsFirstChange', 'name', 'demand', 'supplie
 # KR_CHECK_ORDER in checks-national.js must be a prefix of this: it reads the letters by position, so new checks are
 # appended (the bid-level B checks were, 2026-10-22).
 CHECK_ORDER = ['G2', 'G3', 'G4', 'G5', 'G6', 'N1', 'N2', 'N4', 'N5', 'U2', 'K1', 'K2', 'K3', 'K4', 'K5', 'K6',
-               'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'K7', 'B12']
+               'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'K7', 'B12',
+               # 2026-11-02 (tools/korea-site-checks.py SITE_EXTRA): exactly two bids, one valid bid, and the checks the
+               # court-conviction labels rate (B8 exact floor hit, UA-C11 price increase).
+               'BC2', 'BV1', 'B8', 'C11']
 KINDS = ['corporation', 'individual', 'public-body', 'association', 'foreign', 'unknown']
 LINK = 'https://www.g2b.go.kr/link/FIUA027_01/single/?ctrtNo={}&ctrtChgOrd={}&prcmBsneSeCd={}&srchName=ctrtCrst&openUrl=Y'
 
