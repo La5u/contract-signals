@@ -25,21 +25,26 @@ assert.deepEqual(JSON.parse(JSON.stringify(person.supplierIndividual)), [true]);
 assert.match(person.dateNote, /first change in the data/);
 assert.equal(person.notes, 'Requesting institution (수요기관): 서울특별시 강남구 보건소. Joint contract (공동계약).');
 const prepared = run('prepareContracts', rows);
-// G3, N4, K5, K6, K7 and B2 signal, G4 and B4 unknown, B5 clear, B12 clear (win near the stated floor). Families:
-// competition B2 12, concentration N4 9.2, price B12 -11 (K7 out of scope: the tender states a floor; K6 not scored).
+// G3, N4, K5, K6, K7 and B2 signal, G4 and B4 unknown, B5 clear, B12 clear (win near the stated floor); BC2-C11 are
+// missing (a file built before 2026-11-02), so unknown. Bid rigging: concentration N4 9.2, price B12 -11 -> 0 (floored);
+// corruption: N4 10.1. The record's index is the higher one.
 const checks = run('computeAssessment', prepared[0]).checks;
 const by = Object.fromEntries(checks.map(r => [r.id, r]));
-assert.equal(run('getVigilanceScore', prepared[0]), 10.2);
-assert.deepEqual(['kr-few-bidders', 'kr-supplier-dependence', 'kr-buyer-share', 'kr-restricted-competition', 'kr-floor-gap'].map(id => by[id].weight), [12, 9.2, 8.4, 3.7, -11]);
-assert.deepEqual(['kr-concentration', 'kr-bid-dispersion', 'kr-bid-gap', 'kr-floor-gap', 'kr-award-near-reserve'].map(id => by[id].status), ['unknown', 'unknown', 'clear', 'clear', 'not-applicable']);
+const bd = run('getScoreBreakdown', prepared[0]);
+assert.equal(bd.score, 10.1); assert.equal(bd.mainIndex, 'corruption');
+assert.deepEqual([bd.indices.rigging.score, bd.indices.corruption.score], [0, 10.1]);
+assert.deepEqual(JSON.parse(JSON.stringify(by['kr-supplier-dependence'].weights)), { rigging: 9.2, corruption: 10.1 });
+assert.deepEqual(['kr-supplier-dependence', 'kr-buyer-share', 'kr-floor-gap'].map(id => by[id].weight), [10.1, 8.4, -11]);
+assert.deepEqual(['kr-two-bids', 'kr-concentration', 'kr-bid-gap', 'kr-floor-gap', 'kr-award-near-reserve'].map(id => by[id].status), ['unknown', 'unknown', 'clear', 'clear', 'not-applicable']);
+assert.ok(!by['kr-restricted-competition'], 'checks without points under either index are not shown');
 assert.equal(by['kr-award-near-reserve'].weight, null);
-assert.deepEqual(['kr-few-bidders', 'kr-supplier-dependence', 'kr-floor-gap'].map(id => by[id].family), ['competition', 'concentration', 'price']);
+assert.deepEqual(['kr-two-bids', 'kr-supplier-dependence', 'kr-floor-gap'].map(id => by[id].family), ['competition', 'concentration', 'price']);
 assert.ok(checks.filter(r => r.id.startsWith('kr-')).every(r => r.basis === 'measured'));
 for (const id of Object.keys(by).filter(id => id.startsWith('kr-'))) assert.ok(run('indicatorKind', id), id);
 // FLOOR-GAP has its own kind, so its chip and filter do not read "near reserve price" (review 2026-10-29).
 assert.equal(run('indicatorKind', 'kr-floor-gap'), 'floor-gap');
 assert.notEqual(run('indicatorKind', 'kr-floor-gap'), run('indicatorKind', 'kr-award-near-reserve'));
-assert.match(run('checkPoints', prepared[0], by['kr-few-bidders']).note, /cautious bound/);
+assert.match(run('checkPoints', prepared[0], by['kr-supplier-dependence']).note, /cautious bound/);
 // The business type stands in for the sector; the bid count fills Offers once the shards carry it.
 assert.deepEqual(JSON.parse(JSON.stringify(run('getSector', prepared[0]))), { code: 'kr-services', label: 'Services (용역)' });
 assert.equal(prepared[0].offers, null, 'shards built before the bids column: no offer count');
@@ -49,17 +54,16 @@ assert.equal(withBids.offers, 3);
 const withLetters = (letters, i = 0) => run('prepareContracts', run('koreaRecords', meta, { ...shard, buyers: { '3220000': [[...shard.buyers['3220000'][0].slice(0, 19), letters]] } },
   ['3220000', '서울특별시 강남구', '지방자치단체', 1, 0]))[i];
 const base = 'csuuuccsucccccsscsuucuc';
-assert.equal(run('getVigilanceScore', withLetters(base + 'ss')), 39.5, 'win well above the floor: B12 18.3, K7 out of scope');
-assert.equal(run('getVigilanceScore', withLetters(base + 'su')), 36.7, 'no stated floor: K7 15.5 scores the price');
-assert.equal(run('getVigilanceScore', withLetters(base + 'cu')), 21.2, 'no floor, below 92.2 %: no price points');
+const rig = letters => run('getScoreBreakdown', withLetters(letters)).indices.rigging.score;
+assert.equal(rig(base + 'ss' + 'suuu'), 26.2, 'two bids 11.6 + win well above the floor 5.4 + N4 9.2; K7 out of scope');
+assert.equal(rig(base + 'su' + 'suuu'), 24.2, 'no stated floor: K7 3.4 scores the price');
+assert.equal(rig(base + 'cu' + 'suuu'), 20.8, 'no floor, below 92.2 %: no price points');
 assert.equal(run('getVigilanceScore', withLetters('c'.repeat(23) + 'cc')), 0, 'negative points alone: the index is floored at 0');
-assert.equal(run('getVigilanceScore', withLetters('c'.repeat(22) + 'suu')), 2.8, 'B7 same-minute bids alone: 2.8 (2026-11-02)');
-// K5 alone (3.7) offset by B12 (-11): index 0, yet a signal, labelled as offset rather than "no signal".
-const offset = withLetters('c'.repeat(14) + 's' + 'c'.repeat(8) + 'cc');
+// B5 alone (2.7) offset by B12 (-11): index 0, yet a signal, labelled as offset rather than "no signal".
+const offset = withLetters('c'.repeat(20) + 's' + 'cc' + 'cc');
 assert.equal(run('getVigilanceScore', offset), 0);
 assert.equal(run('getIndicators', offset).length, 1);
 assert.equal(run('scoreLevel', 0, false, run('getScoreBreakdown', offset).assessment.signals).label, 'Signals offset by evidence against');
-assert.equal(run('getVigilanceScore', withLetters(base + 'scsss')), 10.2, 'letters of checks appended later are ignored');
 assert.equal(run('getVigilanceScore', withLetters(base)), null, 'a row from a build without the price slot is not assessed');
 assert.equal(run('getVigilanceScore', prepared[1]), null, 'a row without computed checks is not assessed');
 assert.match(run('computeAssessment', prepared[1]).excludedReason, /not computed for this record/);

@@ -99,7 +99,9 @@ const INDICATOR_KINDS = {
   'floor-gap': 'Winning bid well above the lower award limit',
   'restricted-competition': 'Restricted or nominated competition',
   'supplier-dependence': 'Supplier holds a large share of the buyer’s yearly amount',
-  'few-bidders': 'Only two or three bids',
+  'few-bidders': 'Few bids (exactly two)',
+  'one-valid-bid': 'Only one valid bid among several',
+  'floor-hit': 'Winning bid exactly at the lower award limit',
   'bid-pattern': 'Unusual pattern of bid amounts',
 };
 // Short names for the table chips; the full name is in the tooltip, the filter and the record panel.
@@ -113,7 +115,7 @@ const KIND_SHORT = {
   'cap': 'Near applicable cap', 'execution': 'Payment / execution',
   'legalGround': 'Legal ground mismatch', 'unitPrice': 'Unit-price increase', 'exclusivity': 'Exclusivity context',
   'buyer-share': 'Buyer share', 'award-near-reserve': 'Near reserve price', 'floor-gap': 'Above award floor', 'restricted-competition': 'Restricted competition',
-  'supplier-dependence': 'Supplier dependence', 'few-bidders': 'Two or three bids', 'bid-pattern': 'Bid pattern',
+  'supplier-dependence': 'Supplier dependence', 'few-bidders': 'Two bids', 'one-valid-bid': 'One valid bid', 'floor-hit': 'At award floor', 'bid-pattern': 'Bid pattern',
 };
 // Table chips for clear checks that subtract points (evidence against).
 const KIND_AGAINST_SHORT = { 'kr-floor-gap': 'Near award floor' };
@@ -142,7 +144,8 @@ const KIND_OF_CHECK = {
   'secop2-buyer-share': 'buyer-share', 'ua-direct-contract': 'direct-award', 'ro-buyer-share': 'buyer-share', 'ro-supplier-dependence': 'supplier-dependence',
   'kr-award-near-reserve': 'award-near-reserve', 'kr-supplier-dependence': 'supplier-dependence', 'kr-buyer-share': 'buyer-share',
   'kr-concentration': 'concentration', 'kr-restricted-competition': 'restricted-competition',
-  'kr-few-bidders': 'few-bidders', 'kr-bid-gap': 'bid-pattern', 'kr-bid-dispersion': 'bid-pattern', 'kr-same-minute': 'bid-pattern',
+  'kr-two-bids': 'few-bidders', 'kr-one-valid-bid': 'one-valid-bid', 'kr-exact-floor': 'floor-hit',
+  'kr-price-increase': 'amount-increase', 'kr-amendments': 'contract-amendments', 'kr-bid-gap': 'bid-pattern', 'kr-bid-dispersion': 'bid-pattern', 'kr-same-minute': 'bid-pattern',
   'kr-floor-gap': 'floor-gap',
   'short-bidding-period': 'short-bidding-period', 'late-publication': 'late-publication', 'notice-late-change': 'late-notice-change',
 };
@@ -210,7 +213,8 @@ const EDITORIAL_MAX = 30;
 const MEASURED_CHECKS = new Set(['ua-single-offer', 'ua-direct-award', 'ua-direct-contract', 'ua-better-bid-disqualified',
   'ua-contract-amendments', 'ua-term-extension', 'ua-buyer-share', 'secop2-buyer-share', 'secop2-repeated-plurality',
   'kr-award-near-reserve', 'kr-supplier-dependence', 'kr-buyer-share', 'kr-concentration', 'kr-restricted-competition',
-  'kr-few-bidders', 'kr-bid-gap', 'kr-bid-dispersion', 'kr-same-minute', 'kr-floor-gap']);
+  'kr-two-bids', 'kr-one-valid-bid', 'kr-bid-gap', 'kr-bid-dispersion', 'kr-same-minute', 'kr-floor-gap', 'kr-exact-floor',
+  'kr-price-increase', 'kr-amendments']);
 const MEASURED_CHECKS_BY_COUNTRY = { ROU: new Set(['ted-repeated-direct', 'ted-concentration', 'ro-buyer-share', 'ro-supplier-dependence']) };
 
 // Score 4.0 (owner, 2026-10-29): the index is a multiplier, 2^(points / 10). Points are 10 x log2 of a likelihood
@@ -500,18 +504,31 @@ function supplierProceedingNote(x) {
 function getIndicators(contract) {
   return getAssessment(contract).checks.filter(r => r.status === 'signal').map(r => ({ ...r, kind: indicatorKind(r.id), kindLabel: INDICATOR_KINDS[indicatorKind(r.id)] || r.label }));
 }
-function getScoreBreakdown(contract) {
-  const assessment = getAssessment(contract);
+// One index from the checks' points (weightOf: a check's points under that index).
+function indexTotals(assessment, weightOf) {
   const families = { competition: 0, execution: 0, transparency: 0 };
   // Other families (South Korea: price, concentration) are added when a check names them.
-  for (const r of assessment.checks) if (r.status === 'signal') families[r.family] = Math.max(families[r.family] || 0, r.weight);
+  for (const r of assessment.checks) if (r.status === 'signal') families[r.family] = Math.max(families[r.family] || 0, weightOf(r) || 0);
   // A clear check with negative points (South Korea's FLOOR-GAP) subtracts from the total: it is the only price check
   // when it is clear (K7 is then out of scope), so its family holds just the negative points. The index stays >= 0.
-  for (const r of assessment.checks) if (r.status === 'clear' && r.weight < 0) families[r.family] = (families[r.family] || 0) + r.weight;
+  for (const r of assessment.checks) if (r.status === 'clear' && weightOf(r) < 0) families[r.family] = (families[r.family] || 0) + weightOf(r);
   const total = Object.values(families).reduce((sum, v) => sum + v, 0);
   // No ceiling since 4.0: the points add up to the log2 of the multiplier.
   const score = assessment.evaluated ? Math.round(Math.max(0, total) * 10) / 10 : null;
-  return { ...families, families, score, multiplier: indexMultiplier(score), assessment };
+  return { families, score };
+}
+// South Korea has two indices (bid rigging, corruption; checks-national.js KR_INDICES): each check carries its points
+// per index (weights), each index is computed alone, and the record's score is the higher one (mainIndex).
+function getScoreBreakdown(contract) {
+  const assessment = getAssessment(contract);
+  if (!assessment.indices) {
+    const { families, score } = indexTotals(assessment, r => r.weight);
+    return { ...families, families, score, multiplier: indexMultiplier(score), assessment };
+  }
+  const indices = Object.fromEntries(assessment.indices.map(i => [i, indexTotals(assessment, r => r.weights ? r.weights[i] : r.weight)]));
+  const mainIndex = assessment.indices.reduce((a, i) => (indices[i].score ?? -1) > (indices[a].score ?? -1) ? i : a);
+  const { families, score } = indices[mainIndex];
+  return { ...families, families, score, multiplier: indexMultiplier(score), assessment, indices, mainIndex };
 }
 function getVigilanceScore(contract) { return getScoreBreakdown(contract).score; }
 

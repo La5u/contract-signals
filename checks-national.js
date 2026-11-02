@@ -4,79 +4,133 @@
 
 // South Korea (KONEPS). Each contract's checks are computed when the static files are built
 // (tools/korea-site-checks.py) by the calibration's own code (tools/korea-label-checks.py), one letter per check
-// in KR_CHECK_ORDER (letters for checks appended later are ignored): s signal, c clear, u unknown. Points: 10 x log2 of the LR at the 25th percentile, KFTC
-// bid-rigging decisions against the same contracting offices' other contracts (decision rule of 2026-10-20,
-// research/calibration/korea-collusion-results.md); G3 and N4 controlled for contract size, rigged prices taken as
-// inflated x1.3 (research/calibration/korea-buyer-share-size-results.md). The B checks read the tender's bid opening
-// (개찰결과, tools/korea-bid-features.py); unknown when it was not found. Checks without points are not shown.
-// Families (2026-10-24, owner: stopgap until a joint model sets how much each check adds when others fire):
-// competition (bids and restricted competition: B2, B4, B5, B7, K5), price (B12 or K7) and concentration (G3, G4, N4).
-// Only the heaviest signal of a family counts, so B5 does not add to B2 (B5 is mostly the few-bidders effect).
-// Price slot (owner 2026-10-25, korea-collusion-results.md "One range per indicator, counter-ranges and two ranges"):
-// one price check per tender. Where the bid opening states a lower award limit, FLOOR-GAP (B12) scores the price and
-// PRICE-RATIO (K7) is out of scope, since both measure a high price. B12 clear (a win within 1.01 points of the floor)
-// carries negative points, the one-per-case value -11 rather than -27.7 until a joint model (owner's choice); they
-// offset the other families' points, and the index is floored at 0. K6 (>= 95 %) gave way to K7's chosen range.
-// 2026-10-26: rerun on the backfilled 2021-2024 bid openings: FLOOR-GAP cut 0.97 -> 1.01 (17.8 -> 18, -10.9 -> -11); the
-// competition checks take their measured points (B2 14.8 -> 12.1, B5 12.1 -> 11.4, B4 4.5 -> 0.9) and B7 enters with 2.5.
-// 2026-11-02: lots of one notice split by reserve price and each contract's own winner (tools/korea-bid-features.py):
-// B2 12.1 -> 12, B5 11.4 -> 11.9, B4 0.9 -> 1.1, B7 2.5 -> 2.8, B12 18 -> 18.3; court labels unchanged.
+// in KR_CHECK_ORDER: s signal, c clear, u unknown. Points: 10 x log2 of the LR at the 25th percentile of buyer
+// resamples, labelled tenders against the same contracting offices' other contracts (decision rule of 2026-10-20).
+// The B checks read the tender's bid opening (개찰결과, tools/korea-bid-features.py); unknown when it was not found.
+// Checks without points under either index are not shown.
+// 2026-11-02 (owner): two indices, bid rigging (KFTC decisions) and corruption (court convictions), and controlled
+// points throughout (research/calibration/korea-collusion-results.md, "Controlled points and two indices"):
+// - bid count (BC2, exactly two bids; it replaces B2 two or three) controlled for value, business type, period and
+//   winner size, not for itself (tools/korea-bid-controls.py);
+// - every other bid and price check also for the bid count, so it adds only what the bid count does not already say
+//   (B5 11.9 -> 2.7, B12 18.3 -> 5.4, K7 11.5 -> 3.4; B4, B7, K5 and one valid bid of several (BV1) -> 0);
+// - concentration (G3, G4, N4) at equal contract value, rigged prices taken as inflated x1.3
+//   (tools/korea-buyer-share-size.py): G3 8.4, G4 11.2, N4 9.2; corruption N4 10.1, the only court-label check left.
+// Families (owner 2026-10-24, stopgap until a joint model): competition, price (B12 or K7), concentration, execution;
+// within an index only the heaviest signal of a family counts. Price slot (owner 2026-10-25): where the bid opening
+// states a lower award limit, FLOOR-GAP (B12, cut 1.01 points) scores the price and K7 is out of scope. B12 clear
+// carries negative points (one-per-case value, until a joint model); each index is floored at 0.
 const KONEPS_NOT_ASSESSED = 'Korean checks were not computed for this record: it is shown for browsing and is not assessed.';
+// Letters by position. The first 25 are in every built file; BC2, BV1, B8 and C11 were appended 2026-11-02 (files built
+// before then lack them, so those checks read as unknown).
 const KR_CHECK_ORDER = ['G2', 'G3', 'G4', 'G5', 'G6', 'N1', 'N2', 'N4', 'N5', 'U2', 'K1', 'K2', 'K3', 'K4', 'K5', 'K6',
-  'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'K7', 'B12'];
+  'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'K7', 'B12', 'BC2', 'BV1', 'B8', 'C11'];
+const KR_BASE_LETTERS = 25;
 const KR_NO_OPENING = 'The tender’s bid opening (개찰결과) was not found: not assessable.';
+// Two indices (owner 2026-11-02): bid rigging, from Fair Trade Commission decisions (rewards: KFTC), and corruption,
+// from court convictions tied to a contract (rewards: ACRC). Each check has its points per index (0: measured, no
+// weight; none: not rated on those labels); each index sums its own family maxima, and the record's index is the higher.
+const KR_INDICES = { rigging: 'bid rigging', corruption: 'corruption' };
+const KR_EVIDENCE = {
+  rigging: (ratio, how) => `Among tenders the Fair Trade Commission found rigged it was ${ratio} times as frequent as among the same contracting offices’ other contracts${how ? `, ${how}` : ''}.`,
+  corruption: (ratio, how) => `Among contracts tied to corruption convictions it was ${ratio} times as frequent as among the same offices’ other contracts${how ? `, ${how}` : ''}.`,
+};
+// points: { index: points }; ratio: { index: [shrunk LR as quoted, how it was controlled] }.
 const KR_CHECKS = [
-  ['B2', 'competition', 'kr-few-bidders', 'Only two or three bids', 12,
-    'Two or three bids were opened in this tender (개찰결과). Among tenders the Fair Trade Commission found rigged it was 2.5 times as frequent as among the same contracting offices’ other contracts, also at equal contract value. Specialised or small markets often draw few bidders lawfully.',
-    'One bid, or four or more bids, were opened.', KR_NO_OPENING],
-  ['B12', 'price', 'kr-floor-gap', 'Winning bid well above the lower award limit', 18.3,
-    'The winning bid is at least 1.01 percentage points (of the reserve price) above the tender’s lower award limit (낙찰하한율), where Korean bids usually cluster. Among tenders the Fair Trade Commission found rigged it was 3.8 times as frequent as among the same contracting offices’ other contracts. A bidder may also simply price higher.',
-    'The winning bid is within 1.01 percentage points of the tender’s lower award limit (낙찰하한율), where competitive bids cluster. Rigged tenders were rarely this close to the floor, so this lowers the index by 11 points.',
-    'The bid opening (개찰결과) states no lower award limit, or was not found: not assessable.', -11],
-  ['K7', 'price', 'kr-award-near-reserve', 'Award at 92.2 % or more of the reserve price', 15.5,
-    'The contract amount is between 92.2 % and 100 % of the reserve price (예정가격). Among tenders the Fair Trade Commission found rigged it was 3.1 times as frequent as among the same contracting offices’ other contracts, also at equal contract value. Lawful awards also come close to the reserve price.',
-    'The contract amount is below 92.2 % of the reserve price, or above it.', 'No reserve price or amount published, or the tender states a lower award limit (the gap to it then scores the price): not assessable.'],
-  ['B5', 'competition', 'kr-bid-gap', 'Large gap between the two lowest bids', 11.9,
-    'The gap between the two lowest valid bids is large against the spread of the other valid bids (above the 90th percentile for this business type and year), the pattern cover bids placed above an agreed winner leave. Among rigged tenders 2.6 times as frequent as among the offices’ other contracts. It also arises by chance.',
-    'The gap between the two lowest valid bids is within the usual range.', 'Fewer than three valid bids, or the bid opening (개찰결과) was not found: not assessable.'],
-  ['N4', 'concentration', 'kr-supplier-dependence', 'Supplier holds 25 % or more of the buyer’s yearly amount', 9.2,
-    'This supplier’s contracts make up at least 25 % of the contracting office’s contract amount for the signing year. Among rigged tenders 2 times as frequent as among the office’s other contracts, at equal contract value. A sole specialist supplier is often lawful.',
-    'This supplier holds less than 25 % of the office’s yearly contract amount.', 'Supplier number or the office’s yearly total unknown: not assessable.'],
-  ['G3', 'concentration', 'kr-buyer-share', 'Large share of the buyer’s yearly procurement', 8.4,
-    'This contract alone is at least 5 % of the contracting office’s contract amount for its signing year. Among rigged tenders 1.9 times as frequent as among the office’s other contracts, at equal contract value. Large purchases are often lawful.',
-    'Below 5 % of the office’s yearly contract amount.', 'The office’s yearly total is unknown: not assessable.'],
-  ['G4', 'concentration', 'kr-concentration', 'Concentrated awards within a business type', 7.7,
-    'This supplier won at least 60 % of the contracting office’s contracts of this business type in the signing year (10 or more contracts). Among rigged tenders 1.9 times as frequent as among the office’s other contracts.',
-    'The supplier holds less than 60 % of the office’s contracts of this type that year.', 'Fewer than 10 contracts of this type at the office that year, or no supplier number: not assessable.'],
-  ['B7', 'competition', 'kr-same-minute', 'Bids submitted in the same minute', 2.8,
-    'At least two bids in this tender (2 to 20 bids) were submitted in the same minute, as when one party enters several bids. Among rigged tenders 1.5 times as frequent as among the offices’ other contracts. Bids also bunch lawfully before a deadline.',
-    'No two bids were submitted in the same minute, or the tender drew one bid or more than 20.', KR_NO_OPENING],
-  ['B4', 'competition', 'kr-bid-dispersion', 'Bid amounts unusually close together', 1.1,
-    'The valid bids are unusually close to one another (coefficient of variation below the 10th percentile for this business type and year). Among rigged tenders 1.3 times as frequent as among the offices’ other contracts. Korean bids cluster near the lower award limit by design, so this is a weak signal.',
-    'The valid bids are spread as usual.', 'Fewer than three valid bids, or the bid opening (개찰결과) was not found: not assessable.'],
-  ['K5', 'competition', 'kr-restricted-competition', 'Restricted or nominated competition', 3.7,
-    'Awarded by restricted (제한경쟁) or nominated (지명경쟁) competition, which limits who may bid. Among rigged tenders 1.4 times as frequent as among the office’s other contracts. Restrictions are often lawful (region, licence, performance record).',
-    'Open competition or another method in the original contract (a later version may name another method).', 'Contract method not published, or the original contract is not in the data: not assessable.'],
+  { code: 'BC2', family: 'competition', id: 'kr-two-bids', label: 'Exactly two bids',
+    points: { rigging: 11.6, corruption: 0 }, ratio: { rigging: ['2.4', 'at equal contract value, business type, period and winner size'] },
+    signal: 'Exactly two bids were opened in this tender (개찰결과).', caveat: 'Specialised or small markets often draw few bidders lawfully.',
+    clear: 'One bid, or three or more bids, were opened.', unknown: KR_NO_OPENING },
+  { code: 'BV1', family: 'competition', id: 'kr-one-valid-bid', label: 'Only one valid bid among several',
+    points: { rigging: 0, corruption: 0 }, ratio: {},
+    signal: 'Two or more bids were opened but only one was valid (the others rejected or invalid), as when cover bids are entered to be thrown out.',
+    caveat: 'Bids are also rejected for honest mistakes.',
+    clear: 'One bid, or more than one valid bid.', unknown: 'The bid opening (개찰결과) was not found or does not say which bids were valid: not assessable.' },
+  { code: 'B12', family: 'price', id: 'kr-floor-gap', label: 'Winning bid well above the lower award limit',
+    points: { rigging: 5.4 }, ratio: { rigging: ['1.5', 'at equal numbers of bids, contract value, business type and period'] }, clearPoints: { rigging: -11 },
+    signal: 'The winning bid is at least 1.01 percentage points (of the reserve price) above the tender’s lower award limit (낙찰하한율), where Korean bids usually cluster.',
+    caveat: 'A bidder may also simply price higher.',
+    clear: 'The winning bid is within 1.01 percentage points of the tender’s lower award limit (낙찰하한율), where competitive bids cluster. Rigged tenders were rarely this close to the floor, so this lowers the bid-rigging index by 11 points.',
+    unknown: 'The bid opening (개찰결과) states no lower award limit, or was not found: not assessable.' },
+  { code: 'K7', family: 'price', id: 'kr-award-near-reserve', label: 'Award at 92.2 % or more of the reserve price',
+    points: { rigging: 3.4, corruption: 0 }, ratio: { rigging: ['1.4', 'at equal numbers of bids, contract value, business type and period'] },
+    signal: 'The contract amount is between 92.2 % and 100 % of the reserve price (예정가격).', caveat: 'Lawful awards also come close to the reserve price.',
+    clear: 'The contract amount is below 92.2 % of the reserve price, or above it.', unknown: 'No reserve price or amount published, or the tender states a lower award limit (the gap to it then scores the price): not assessable.' },
+  { code: 'B8', family: 'price', id: 'kr-exact-floor', label: 'Winning bid exactly at the lower award limit',
+    points: { rigging: 0, corruption: 0 }, ratio: {},
+    signal: 'The winning bid is within 0.01 percentage points of the tender’s lower award limit (낙찰하한율), as when the winner knows the reserve price in advance.',
+    caveat: 'Many bidders aim at the floor, and some land on it by chance.',
+    clear: 'The winning bid is not at the lower award limit.', unknown: 'The bid opening (개찰결과) states no lower award limit, or was not found: not assessable.' },
+  { code: 'B5', family: 'competition', id: 'kr-bid-gap', label: 'Large gap between the two lowest bids',
+    points: { rigging: 2.7, corruption: 0 }, ratio: { rigging: ['1.4', 'at equal numbers of bids, contract value, business type and period'] },
+    signal: 'The gap between the two lowest valid bids is large against the spread of the other valid bids (above the 90th percentile for this business type and year), the pattern cover bids placed above an agreed winner leave.',
+    caveat: 'It also arises by chance.',
+    clear: 'The gap between the two lowest valid bids is within the usual range.', unknown: 'Fewer than three valid bids, or the bid opening (개찰결과) was not found: not assessable.' },
+  { code: 'N4', family: 'concentration', id: 'kr-supplier-dependence', label: 'Supplier holds 25 % or more of the buyer’s yearly amount',
+    points: { rigging: 9.2, corruption: 10.1 }, ratio: { rigging: ['2', 'at equal contract value'], corruption: ['2.6', 'at equal contract value'] },
+    signal: 'This supplier’s contracts make up at least 25 % of the contracting office’s contract amount for the signing year.', caveat: 'A sole specialist supplier is often lawful.',
+    clear: 'This supplier holds less than 25 % of the office’s yearly contract amount.', unknown: 'Supplier number or the office’s yearly total unknown: not assessable.' },
+  { code: 'G3', family: 'concentration', id: 'kr-buyer-share', label: 'Large share of the buyer’s yearly procurement',
+    points: { rigging: 8.4, corruption: 0 }, ratio: { rigging: ['1.9', 'at equal contract value'] },
+    signal: 'This contract alone is at least 5 % of the contracting office’s contract amount for its signing year.', caveat: 'Large purchases are often lawful.',
+    clear: 'Below 5 % of the office’s yearly contract amount.', unknown: 'The office’s yearly total is unknown: not assessable.' },
+  { code: 'G4', family: 'concentration', id: 'kr-concentration', label: 'Concentrated awards within a business type',
+    points: { rigging: 11.2, corruption: 0 }, ratio: { rigging: ['2.4', 'at equal contract value'] },
+    signal: 'This supplier won at least 60 % of the contracting office’s contracts of this business type in the signing year (10 or more contracts).', caveat: '',
+    clear: 'The supplier holds less than 60 % of the office’s contracts of this type that year.', unknown: 'Fewer than 10 contracts of this type at the office that year, or no supplier number: not assessable.' },
+  { code: 'K5', family: 'competition', id: 'kr-restricted-competition', label: 'Restricted or nominated competition',
+    points: { rigging: 0, corruption: 0 }, ratio: {},
+    signal: 'Awarded by restricted (제한경쟁) or nominated (지명경쟁) competition, which limits who may bid.', caveat: 'Restrictions are often lawful (region, licence, performance record).',
+    clear: 'Open competition or another method in the original contract (a later version may name another method).', unknown: 'Contract method not published, or the original contract is not in the data: not assessable.' },
+  { code: 'C11', family: 'execution', id: 'kr-price-increase', label: 'Contract price increased',
+    points: { rigging: 0, corruption: 0 }, ratio: {},
+    signal: 'A later version of the contract raised its amount (within two years of signing).', caveat: 'Prices also rise lawfully with added work or indexation.',
+    clear: 'No price increase in the two years after signing.', unknown: 'A long-term contract (장기계속, yearly tranches), or signed less than two years ago with no increase so far: not assessable.' },
+  { code: 'G5', family: 'execution', id: 'kr-amendments', label: 'Three or more contract changes',
+    points: { rigging: 0, corruption: 0 }, ratio: {},
+    signal: 'The contract was changed three or more times within two years of signing.', caveat: 'Long works are often amended lawfully.',
+    clear: 'Fewer than three changes in the two years after signing.', unknown: 'A long-term contract (장기계속, yearly tranches), or signed less than two years ago with fewer than three changes so far: not assessable.' },
+  { code: 'B7', family: 'competition', id: 'kr-same-minute', label: 'Bids submitted in the same minute',
+    points: { rigging: 0, corruption: 0 }, ratio: {},
+    signal: 'At least two bids in this tender (2 to 20 bids) were submitted in the same minute, as when one party enters several bids.', caveat: 'Bids also bunch lawfully before a deadline.',
+    clear: 'No two bids were submitted in the same minute, or the tender drew one bid or more than 20.', unknown: KR_NO_OPENING },
+  { code: 'B4', family: 'competition', id: 'kr-bid-dispersion', label: 'Bid amounts unusually close together',
+    points: { rigging: 0, corruption: 0 }, ratio: {},
+    signal: 'The valid bids are unusually close to one another (coefficient of variation below the 10th percentile for this business type and year).', caveat: 'Korean bids cluster near the lower award limit by design, so this is a weak signal.',
+    clear: 'The valid bids are spread as usual.', unknown: 'Fewer than three valid bids, or the bid opening (개찰결과) was not found: not assessable.' },
 ];
+// Points of a check under each index: { rigging, corruption } (0 where not rated).
+const krPoints = (k, status) => Object.fromEntries(Object.keys(KR_INDICES).map(i =>
+  [i, status === 'signal' ? k.points[i] || 0 : status === 'clear' ? k.clearPoints?.[i] || 0 : 0]));
+function krSignalReason(k) {
+  const evidence = Object.keys(KR_INDICES).filter(i => k.points[i] > 0 && k.ratio[i]).map(i => KR_EVIDENCE[i](...k.ratio[i]));
+  const pts = Object.entries(KR_INDICES).filter(([i]) => k.points[i] > 0).map(([i, name]) => `${name} ${k.points[i]}`).join(', ');
+  return [k.signal, ...evidence, k.caveat, `Points: ${pts}.`].filter(Boolean).join(' ');
+}
 function getAssessmentKoneps(c) {
-  const letters = typeof c.koreaChecks === 'string' && c.koreaChecks.length >= KR_CHECK_ORDER.length ? c.koreaChecks : null;
+  const letters = typeof c.koreaChecks === 'string' && c.koreaChecks.length >= KR_BASE_LETTERS ? c.koreaChecks : null;
   if (!letters) return { checks: [], applicable: 0, evaluated: 0, unknown: 0, unknownApplicability: 0, notApplicable: 0, signals: 0, excludedReason: KONEPS_NOT_ASSESSED };
-  const letter = code => letters[KR_CHECK_ORDER.indexOf(code)];
+  const letter = code => letters[KR_CHECK_ORDER.indexOf(code)] || 'u';
   const floorStated = letter('B12') === 's' || letter('B12') === 'c';
-  const checks = KR_CHECKS.map(([code, family, id, label, weight, signal, clear, unknown, clearWeight]) => {
+  // Only checks with points under some index are shown.
+  const shown = KR_CHECKS.filter(k => Object.values(k.points).some(p => p > 0));
+  const checks = shown.map(k => {
+    const { code, family, id, label } = k;
     if (code === 'K7' && floorStated) {
       const reason = 'This tender states a lower award limit, so the gap to it scores the price instead (one price check per tender).';
-      return { id, label, family, applicability: 'no', status: 'not-applicable', weight: null, reason, explanation: reason, severity: indicatorSeverity(0).id, severityLabel: indicatorSeverity(0).label };
+      return { id, label, family, applicability: 'no', status: 'not-applicable', weight: null, weights: null, reason, explanation: reason, severity: indicatorSeverity(0).id, severityLabel: indicatorSeverity(0).label };
     }
     const l = letter(code);
     const status = l === 's' ? 'signal' : l === 'c' ? 'clear' : 'unknown';
-    const points = status === 'signal' ? weight : status === 'clear' && clearWeight ? clearWeight : null;
-    const reason = status === 'signal' ? `${signal} ${weight} points.` : status === 'clear' ? clear : unknown;
-    const severity = indicatorSeverity(status === 'signal' ? weight : 0);
-    return { id, label, family, applicability: 'yes', status, weight: points,
+    const weights = krPoints(k, status);
+    const top = Math.max(...Object.values(weights)), low = Math.min(...Object.values(weights));
+    const points = status === 'signal' ? top : status === 'clear' && low < 0 ? low : null;
+    const reason = status === 'signal' ? krSignalReason(k) : status === 'clear' ? k.clear : k.unknown;
+    const severity = indicatorSeverity(status === 'signal' ? top : 0);
+    return { id, label, family, applicability: 'yes', status, weight: points, weights,
       reason, explanation: reason, severity: severity.id, severityLabel: severity.label };
   });
-  return { checks, excludedReason: null };
+  return { checks, excludedReason: null, indices: Object.keys(KR_INDICES) };
 }
 
 // Ukraine (Prozorro) and Portugal/Romania (TED eForms): one engine, per-family

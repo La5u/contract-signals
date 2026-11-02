@@ -549,6 +549,10 @@ function startExplorer() {
     for (const line of rest) if (line) cell.append(element('small', line, 'provenance'));
     return cell;
   }
+  // South Korea: both indices, e.g. "rigging ×4.2 · corruption ×1.0".
+  function indexPair(breakdown) {
+    return Object.entries(breakdown.indices).map(([i, b]) => `${i === 'rigging' ? 'rigging' : i} ${formatMultiplier(b.score)}`).join(' · ');
+  }
   function scoreChip(c) {
     const breakdown = getScoreBreakdown(c);
     const level = scoreLevel(breakdown.score, hasIncompleteData(c), breakdown.assessment.signals, breakdown.assessment.weighted);
@@ -700,6 +704,7 @@ function startExplorer() {
       const score = element('td', null, 'numeric col-index');
       const coverageLabel = assessment.excludedReason ? 'Calculations excluded' : assessment.applicable ? `${assessment.signals} signal(s) · ${assessment.evaluated}/${assessment.applicable} known-applicable checks evaluated` : 'No check with established applicability';
       score.append(scoreChip(c));
+      if (breakdown.indices) score.append(element('small', indexPair(breakdown), 'provenance'));
       score.title = `${coverageLabel}. ${assessment.unknownApplicability} unknown applicability(ies). Open the row for details.`;
       score.setAttribute('aria-label', `${scoreValue == null ? 'Index not assessed.' : `Index: ${formatMultiplier(scoreValue)} as frequent among proven cases.`} ${coverageLabel}. ${assessment.unknownApplicability} unknown applicabilities.`);
       row.append(badges, score);
@@ -933,7 +938,10 @@ function startExplorer() {
         const item = element('li', null, `severity-line severity-${signal.severity}`);
         const name = element('strong', signal.kindLabel);
         if (KIND_REFERENCES[signal.kind]) name.title = `Also known as ${KIND_REFERENCES[signal.kind]}`;
-        item.append(name, element('span', ` · ${formatMultiplier(signal.weight)} (${signal.weight} pts), ${signal.pointsNote || BASIS_NOTE[signal.basis]}`, 'muted'), ...(counts ? [] : [element('span', ' · not added (same family)', 'muted')]), element('p', briefReason(signal.explanation)));
+        const pts = signal.weights
+          ? Object.entries(signal.weights).filter(([, v]) => v > 0).map(([i, v]) => `${KR_INDICES[i]} ${v} pts`).join(', ')
+          : `${formatMultiplier(signal.weight)} (${signal.weight} pts)`;
+        item.append(name, element('span', ` · ${pts}, ${signal.pointsNote || BASIS_NOTE[signal.basis]}`, 'muted'), ...(counts || signal.weights ? [] : [element('span', ' · not added (same family)', 'muted')]), element('p', briefReason(signal.explanation)));
         triggered.append(item);
       }
       why.append(triggered);
@@ -941,17 +949,23 @@ function startExplorer() {
     // Clear checks with negative points (South Korea's FLOOR-GAP): evidence against, shown with what it subtracts.
     for (const r of assessment.checks.filter(r => r.status === 'clear' && r.weight < 0)) {
       line(why, null, element('strong', r.label), element('span', ' · evidence against', 'muted'),
-        element('span', ` · ${r.weight} pts, ${BASIS_NOTE[r.basis]}`, 'muted'), element('p', briefReason(r.reason)));
+        element('span', ` · ${r.weights ? Object.entries(r.weights).filter(([, v]) => v < 0).map(([i, v]) => `${KR_INDICES[i]} ${v} pts`).join(', ') : `${r.weight} pts`}, ${BASIS_NOTE[r.basis]}`, 'muted'), element('p', briefReason(r.reason)));
     }
     if (breakdown.score != null) {
-      const parts = Object.entries(breakdown.families).filter(([, v]) => v !== 0);
       const summary = element('p', null, 'muted');
-      if (parts.length) {
-        summary.append(element('span', 'Index'), ` ${formatMultiplier(breakdown.score)} = 2^(${breakdown.score} / 10); points `);
+      // South Korea: each index on its own line part; only the heaviest signal of a family counts within an index.
+      const indexLines = breakdown.indices
+        ? Object.entries(breakdown.indices).map(([i, b]) => [`${KR_INDICES[i][0].toUpperCase()}${KR_INDICES[i].slice(1)} index`, b])
+        : [['Index', breakdown]];
+      for (const [name, b] of indexLines) {
+        const parts = Object.entries(b.families).filter(([, v]) => v !== 0);
+        if (!parts.length) { if (breakdown.indices) summary.append(element('span', name), ' ×1.0, no points. '); continue; }
+        summary.append(element('span', name), ` ${formatMultiplier(b.score)} = 2^(${b.score} / 10); points `);
         parts.forEach(([k, v], i) => summary.append(i ? (v < 0 ? ' − ' : ' + ') : v < 0 ? '−' : '', element('span', k), ` ${Math.round(Math.abs(v) * 10) / 10}`));
         if (parts.reduce((t, [, v]) => t + v, 0) < 0) summary.append(', floored at 0');
         summary.append('. ');
       }
+      if (breakdown.indices) summary.append('The higher index sets the record’s index and order. ');
       summary.append(element('span', `${assessment.evaluated} of ${assessment.applicable} applicable checks evaluated.`));
       if (assessment.unknownApplicability) summary.append(' ', element('span', `${assessment.unknownApplicability} with unknown applicability.`));
       why.append(summary);
