@@ -55,6 +55,15 @@ MODELS = {
     # 2026-11-02: does a price check add anything once the price slot (K7 / B12) has scored? (UA-C9 vs K7)
     'price slot (K7 x B12)': ['price'],
     'price slot x value x type': ['price', 'value', 'type'],
+    # 2026-11-02: control only for the bid count the site scores (exactly two bids or not), so a check loses only what
+    # BC2 already gives; the 15 bidder bins also took away the 4-5 and 11+ bid evidence that the site never scores.
+    'two bids': ['two'],
+    'two bids x value x type x period': ['two', 'value', 'type', 'period'],
+    # Sol's review 2026-11-02: baseline controls without any bid count for the competition checks, and for the price
+    # checks the baseline plus the competition family's realised state (BC2 and B5, the two competition checks with
+    # points), which is what the site's family sum has already scored.
+    'value x type x period': ['value', 'type', 'period'],
+    'competition state (BC2 x B5) x value x type x period': ['comp', 'value', 'type', 'period'],
 }
 
 
@@ -217,7 +226,8 @@ def main():
             prior = sum(sizes.get((c['supplier'], c['year'] - k), 0) for k in (1, 2, 3)) if c['supplier'] else 0
             strata_of[key] = {'bidders': bidder_bin(o['bids'] if o else None), 'value': band(amount, VALUE_EDGES),
                               'type': c['business'] or '', 'period': period(c['year']), 'winner': band(prior, SIZE_EDGES),
-                              'buyer': c['buyer'],
+                              'buyer': c['buyer'], 'two': ch['BID-COUNT 2']['status'][0],
+                              'comp': ch['BID-COUNT 2']['status'][0] + ch['B5 large first gap']['status'][0],
                               # The price slot's own result (K7 where no floor is stated, else B12): a check that
                               # keeps points within it adds to the price slot rather than repeating it.
                               'price': ch[k7]['status'][0] + ch[b12]['status'][0]}

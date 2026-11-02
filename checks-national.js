@@ -10,12 +10,15 @@
 // Checks without points under either index are not shown.
 // 2026-11-02 (owner): two indices, bid rigging (KFTC decisions) and corruption (court convictions), and controlled
 // points throughout (research/calibration/korea-collusion-results.md, "Controlled points and two indices"):
-// - bid count (BC2, exactly two bids; it replaces B2 two or three) controlled for value, business type, period and
-//   winner size, not for itself (tools/korea-bid-controls.py);
-// - every other bid and price check also for the bid count, so it adds only what the bid count does not already say
-//   (B5 11.9 -> 2.7, B12 18.3 -> 5.4, K7 11.5 -> 3.4; B4, B7, K5 and one valid bid of several (BV1) -> 0);
-// - concentration (G3, G4, N4) at equal contract value, rigged prices taken as inflated x1.3
-//   (tools/korea-buyer-share-size.py): G3 8.4, G4 11.2, N4 9.2; corruption N4 10.1, the only court-label check left.
+// - competition checks at equal contract value, business type and period (tools/korea-bid-controls.py): BC2 exactly
+//   two bids 11.8 (it replaces B2 two or three), one valid bid of several (BV1) 8.4, B5 7.3; B4, B7, K5 -> 0. They
+//   share one family, so only the heaviest counts and none is controlled for another;
+// - price checks (B12, K7) also for what the competition family has scored (BC2 and B5 signal/clear), so they add
+//   only what it does not already say: B12 18.3 -> 6.7, K7 11.4 -> 3.0. A control for the full bid count (15 bins)
+//   gave B12 5.4 and B5 2.7, but it also took the 4-5 and 11+ bid evidence that no check scores (Sol's review);
+// - concentration (G3, G4, N4) at equal contract value, rigged prices taken as inflated x1.3, shares recomputed with
+//   the deflated amount (tools/korea-buyer-share-size.py): G3 6.8, G4 11.2, N4 9.1; corruption N4 10.1, B8 exact
+//   floor 1.3 (at equal value, type and period).
 // Families (owner 2026-10-24, stopgap until a joint model): competition, price (B12 or K7), concentration, execution;
 // within an index only the heaviest signal of a family counts. Price slot (owner 2026-10-25): where the bid opening
 // states a lower award limit, FLOOR-GAP (B12, cut 1.01 points) scores the price and K7 is out of scope. B12 clear
@@ -38,40 +41,40 @@ const KR_EVIDENCE = {
 // points: { index: points }; ratio: { index: [shrunk LR as quoted, how it was controlled] }.
 const KR_CHECKS = [
   { code: 'BC2', family: 'competition', id: 'kr-two-bids', label: 'Exactly two bids',
-    points: { rigging: 11.6, corruption: 0 }, ratio: { rigging: ['2.4', 'at equal contract value, business type, period and winner size'] },
+    points: { rigging: 11.8, corruption: 0 }, ratio: { rigging: ['2.4', 'at equal contract value, business type and period'] },
     signal: 'Exactly two bids were opened in this tender (개찰결과).', caveat: 'Specialised or small markets often draw few bidders lawfully.',
     clear: 'One bid, or three or more bids, were opened.', unknown: KR_NO_OPENING },
   { code: 'BV1', family: 'competition', id: 'kr-one-valid-bid', label: 'Only one valid bid among several',
-    points: { rigging: 0, corruption: 0 }, ratio: {},
+    points: { rigging: 8.4, corruption: 0 }, ratio: { rigging: ['2', 'at equal contract value, business type and period'] },
     signal: 'Two or more bids were opened but only one was valid (the others rejected or invalid), as when cover bids are entered to be thrown out.',
     caveat: 'Bids are also rejected for honest mistakes.',
     clear: 'One bid, or more than one valid bid.', unknown: 'The bid opening (개찰결과) was not found or does not say which bids were valid: not assessable.' },
   { code: 'B12', family: 'price', id: 'kr-floor-gap', label: 'Winning bid well above the lower award limit',
-    points: { rigging: 5.4 }, ratio: { rigging: ['1.5', 'at equal numbers of bids, contract value, business type and period'] }, clearPoints: { rigging: -11 },
+    points: { rigging: 6.7 }, ratio: { rigging: ['1.6', 'at equal contract value, business type, period and bid-count result (exactly two bids, large gap between the two lowest)'] }, clearPoints: { rigging: -11 },
     signal: 'The winning bid is at least 1.01 percentage points (of the reserve price) above the tender’s lower award limit (낙찰하한율), where Korean bids usually cluster.',
     caveat: 'A bidder may also simply price higher.',
     clear: 'The winning bid is within 1.01 percentage points of the tender’s lower award limit (낙찰하한율), where competitive bids cluster. Rigged tenders were rarely this close to the floor, so this lowers the bid-rigging index by 11 points.',
     unknown: 'The bid opening (개찰결과) states no lower award limit, or was not found: not assessable.' },
   { code: 'K7', family: 'price', id: 'kr-award-near-reserve', label: 'Award at 92.2 % or more of the reserve price',
-    points: { rigging: 3.4, corruption: 0 }, ratio: { rigging: ['1.4', 'at equal numbers of bids, contract value, business type and period'] },
+    points: { rigging: 3, corruption: 0 }, ratio: { rigging: ['1.3', 'at equal contract value, business type, period and bid-count result (exactly two bids, large gap between the two lowest)'] },
     signal: 'The contract amount is between 92.2 % and 100 % of the reserve price (예정가격).', caveat: 'Lawful awards also come close to the reserve price.',
     clear: 'The contract amount is below 92.2 % of the reserve price, or above it.', unknown: 'No reserve price or amount published, or the tender states a lower award limit (the gap to it then scores the price): not assessable.' },
   { code: 'B8', family: 'price', id: 'kr-exact-floor', label: 'Winning bid exactly at the lower award limit',
-    points: { rigging: 0, corruption: 0 }, ratio: {},
+    points: { rigging: 0, corruption: 1.3 }, ratio: { corruption: ['1.2', 'at equal contract value, business type and period'] },
     signal: 'The winning bid is within 0.01 percentage points of the tender’s lower award limit (낙찰하한율), as when the winner knows the reserve price in advance.',
     caveat: 'Many bidders aim at the floor, and some land on it by chance.',
     clear: 'The winning bid is not at the lower award limit.', unknown: 'The bid opening (개찰결과) states no lower award limit, or was not found: not assessable.' },
   { code: 'B5', family: 'competition', id: 'kr-bid-gap', label: 'Large gap between the two lowest bids',
-    points: { rigging: 2.7, corruption: 0 }, ratio: { rigging: ['1.4', 'at equal numbers of bids, contract value, business type and period'] },
+    points: { rigging: 7.3, corruption: 0 }, ratio: { rigging: ['1.9', 'at equal contract value, business type and period'] },
     signal: 'The gap between the two lowest valid bids is large against the spread of the other valid bids (above the 90th percentile for this business type and year), the pattern cover bids placed above an agreed winner leave.',
     caveat: 'It also arises by chance.',
     clear: 'The gap between the two lowest valid bids is within the usual range.', unknown: 'Fewer than three valid bids, or the bid opening (개찰결과) was not found: not assessable.' },
   { code: 'N4', family: 'concentration', id: 'kr-supplier-dependence', label: 'Supplier holds 25 % or more of the buyer’s yearly amount',
-    points: { rigging: 9.2, corruption: 10.1 }, ratio: { rigging: ['2', 'at equal contract value'], corruption: ['2.6', 'at equal contract value'] },
+    points: { rigging: 9.1, corruption: 10.1 }, ratio: { rigging: ['2', 'at equal contract value'], corruption: ['2.6', 'at equal contract value'] },
     signal: 'This supplier’s contracts make up at least 25 % of the contracting office’s contract amount for the signing year.', caveat: 'A sole specialist supplier is often lawful.',
     clear: 'This supplier holds less than 25 % of the office’s yearly contract amount.', unknown: 'Supplier number or the office’s yearly total unknown: not assessable.' },
   { code: 'G3', family: 'concentration', id: 'kr-buyer-share', label: 'Large share of the buyer’s yearly procurement',
-    points: { rigging: 8.4, corruption: 0 }, ratio: { rigging: ['1.9', 'at equal contract value'] },
+    points: { rigging: 6.8, corruption: 0 }, ratio: { rigging: ['1.7', 'at equal contract value'] },
     signal: 'This contract alone is at least 5 % of the contracting office’s contract amount for its signing year.', caveat: 'Large purchases are often lawful.',
     clear: 'Below 5 % of the office’s yearly contract amount.', unknown: 'The office’s yearly total is unknown: not assessable.' },
   { code: 'G4', family: 'concentration', id: 'kr-concentration', label: 'Concentrated awards within a business type',

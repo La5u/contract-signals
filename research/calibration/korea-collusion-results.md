@@ -649,3 +649,55 @@ rule: the bid count is scored once); concentration at equal contract value (size
 - Two indices on the site (owner: corruption pays more, so show it apart): each check carries points per index,
   each index sums its family maxima, the record's index is the higher one. Bid rigging now tops out near 28 points
   (×7) instead of about 45 (×22): the difference was the few-bidders effect counted in three families.
+
+### Matched controls and size fixes, 2026-11-02 late (owner: "u sure u didnt over correct?"; adopted for the site)
+
+The first controlled points (above) stratified every bid and price check on the full bid count (15 bins). The site
+scores only one bid-count fact, exactly two bids (BC2), so the 15 bins also took away evidence no check scores
+(4-5 bids are 1.7 times as frequent among rigged tenders, 11+ bids 8 times rarer). Sol's review (GPT, read-only,
+same day) agreed and set the rule now used: each check is controlled for the baseline (contract value, business type,
+period) and for what the site has already scored before it, and no more.
+
+- Competition checks (BC2, BV1, B5, B4, B7, K5): baseline only. They share a family (only the heaviest counts), so
+  none is controlled for another. B5 needs three valid bids and never fires with BC2.
+- Price checks (B12, K7): baseline plus the competition family's realised state (BC2 and B5, signal/clear/unknown).
+- Concentration (G3, N4, G4): size standardisation, rigged contracts deflated x1.3. Two fixes from the same review:
+  the deflated amount now also recomputes the G3 and N4 shares (before, only the value band moved), and the
+  standardisation applies the label weights as pp.weighted does (they were ignored; every collusion weight is 1, so
+  only the court labels change).
+
+`tools/korea-bid-controls.py` (models "value x type x period", "competition state (BC2 x B5) x value x type x
+period", "two bids x value x type x period"), `tools/korea-buyer-share-size.py`; outputs in
+`~/.cache/contract-signals/korea/prep-1102/controls2-*`, `size2-*`.
+
+Bid rigging, LR shrunk / points (25th percentile of buyer resamples):
+
+| Check | Raw | 15 bid-count bins x baseline (was on site) | Exactly two bids x baseline | Baseline | Competition state x baseline | Site now |
+|---|---|---|---|---|---|---|
+| BC2 exactly two bids | 3.22 / 15.6 | — | — | 2.44 / 11.8 | — | **11.8** |
+| BV1 one valid bid of 2+ | 2.87 / 13.4 | 1.08 / 0 | 1.16 / 0.5 | 2.02 / 8.4 | 1.16 / 0.5 | **8.4** |
+| B5 large first gap | 2.63 / 11.7 | 1.41 / 2.7 | 1.92 / 7.3 | 1.92 / 7.3 | — | **7.3** |
+| B7, B4, K5 | 2.7, 1.1, 3.7 | 0 | 0 | 0, 0, 0.1 | 0 | 0 |
+| B12 above floor | 3.82 / 18.3 | 1.50 / 5.4 | 1.70 / 7.2 | 2.31 / 11.4 | 1.64 / 6.7 | **6.7** |
+| K7 near reserve | 2.40 / 11.4 | 1.37 / 3.4 | 1.33 / 3.0 | 1.67 / 6.5 | 1.32 / 3.0 | **3.0** |
+| UA-C9 >= 98 % of reserve | 1.81 / 7.2 | 1.21 / 1.6 | 1.16 / 1.1 | 1.38 / 3.4 | 1.16 / 1.0 | out (one range per indicator) |
+
+Concentration, size-standardised with rigged values / 1.3 (banded; smooth kernel in brackets): G3 1.70 / 6.8 (8.4),
+N4 2.02 / 9.1 (9.5), G4 2.37 / 11.2 (12.2). G3 fell from 8.4 because recomputing the share at the deflated amount
+moves 12 of 84 rigged hits below 5 %.
+
+Corruption (court labels, 51 tenders in 16 cases): N4 size-standardised 2.60 / 10.1 (unchanged with the weights);
+B8 exact floor hit, baseline 1.19 / 1.3 (raw 1.67 / 5.2), now on the site; K5, G3, UA-C11, G5 and the price checks
+stay at 0 under the baseline.
+
+B12 clear stays at -11 (one-per-case value). The controlled clear-side ratio is lower still (0.18, 75th percentile
+0.20, about -23 points); -11 is kept as the cautious choice until a joint model.
+
+Bid-rigging maximum: 11.8 + 6.7 + 11.2 = 29.7 (×8.1).
+
+Known limits from the review, not changed: concentration uses the signing year's totals including later contracts
+(prospective use needs lagged totals); the points resampling does not repeat the cut and range selection (FLOOR-GAP
+folds 0.87-1.12); buyer resampling ignores cartels spanning offices; sparse cells fall back to coarser strata (the
+"coarser" counts in the tool output); the -11 comes from a different weighting than the positive points. Literature
+screens not yet tried here: skewness and kurtosis of bids, coalition-subset screens (Huber and Imhof), conditional
+entry and bidding tests (Conley and Decarolis), outsider-entry price breaks (OECD 2025).
