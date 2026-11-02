@@ -302,7 +302,7 @@ def main(argv=None):
     total = sum(f.stat().st_size for f in out.rglob('*') if f.is_file())
     files = sum(1 for f in out.rglob('*') if f.is_file())
     biggest = max((out / 's').iterdir(), key=lambda f: f.stat().st_size)
-    split = sum(1 for b in ordered if len(b) > 5)
+    split = sum(1 for b in ordered if len(b) > 5 and b[5])
     print(f'{meta["contracts"]:,} contracts {meta["period"][0]}..{meta["period"][1]}, {meta["buyers"]:,} buyers ({split} split), '
           f'{n} shards; {files} files, {total / 1e6:.0f} MB; largest {biggest.name} {biggest.stat().st_size / 1e6:.1f} MB → {final}')
     if files > 20_000 or biggest.stat().st_size > 25 * 2 ** 20:
