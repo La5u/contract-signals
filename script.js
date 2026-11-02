@@ -497,8 +497,8 @@ function startExplorer() {
   // In the table a range takes two lines (low, then “– high”), so it never runs into the next column.
   function amountCell(c) {
     const range = c.verification?.amountRange;
-    if (!Array.isArray(range)) return element('td', formatAmount(c), 'numeric');
-    const cell = element('td', null, 'numeric amount-range');
+    if (!Array.isArray(range)) return element('td', formatAmount(c), 'numeric col-amount');
+    const cell = element('td', null, 'numeric amount-range col-amount');
     cell.title = 'Sources disagree on the amount: range of the published values';
     // Whole units keep each line inside narrow columns; the record panel keeps the exact amounts.
     const options = moneyFor(c).resolvedOptions();
@@ -663,7 +663,7 @@ function startExplorer() {
       const sector = getSector(c);
       const sectorCell = element('td', sector.label);
       if (!sector.code.startsWith('kr-')) sectorCell.append(element('small', c.cpv || 'unknown CPV', 'provenance'));
-      row.append(objectCell, sectorCell, procedureCell(c), amountCell(c), element('td', c.offers ?? '—', 'numeric'), extraCell(c));
+      row.append(objectCell, sectorCell, procedureCell(c), amountCell(c), element('td', c.offers ?? '—', 'numeric col-offers'), extraCell(c));
       const badges = element('td', null, 'col-signals');
       // Every signal is shown, heaviest first. Within a family only the
       // heaviest counts; the others are marked as not added to the index.
