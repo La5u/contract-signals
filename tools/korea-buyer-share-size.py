@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Research only: are the Korean size-related checks (G3 buyer share, N4 supplier dependence) more than size?
 
-Same rows as the decision rule in tools/korea-label-checks.py (all linked KFTC-rigged tenders, weighted by court
-outcome, buyer = contracting office). Size control as for Ukraine and Colombia (research/calibration/
+Same rows as the decision rule in tools/korea-label-checks.py (all linked labelled tenders, weighted by court
+outcome, buyer = contracting office; `--family corruption` for the court-conviction labels, 2026-11-02). Size control as for Ukraine and Colombia (research/calibration/
 bias-controls-plan.md): the comparisons' rate in each value band, weighted by the rigged contracts' band mix
 (direct standardisation, tools/ukraine-buyer-share-size.py). Bands fixed before this ran: the Colombian scheme,
 comparison-value percentiles 50/80/90/95/98/99 (KRW, original contract amount). Points basis: rigged contracts
@@ -22,53 +22,37 @@ from common import load  # noqa: E402
 ko = load('korea_checks', 'tools/korea-label-checks.py')
 size = load('ua_size', 'tools/ukraine-buyer-share-size.py')
 pp = size.pp
-CHECKS = ['G3 buyer share >= 5 %', 'N4 supplier dependence >= 25 %', 'K6 award >= 95 % of reserve', 'B2 two or three bids',
-          'B4 low bid dispersion', 'B5 large first gap']
+CHECKS = ['G3 buyer share >= 5 %', 'N4 supplier dependence >= 25 %', 'G4 concentration', 'K5 restricted competition',
+          'K6 award >= 95 % of reserve', 'B2 two or three bids', 'B4 low bid dispersion', 'B5 large first gap',
+          'BID-COUNT 2', 'BID-VALID only one valid of 2+', 'B8 exact floor hit', 'B9 shared CEO', 'G5 3+ changes',
+          'UA-C11 price increase', *ko.PRICE_CHECKS]
 QUANTILES = (0.5, 0.8, 0.9, 0.95, 0.98, 0.99)
 NAMES = ['<p50', 'p50-80', 'p80-90', 'p90-95', 'p95-98', 'p98-99', '>=p99']
 
 
-def decision_rows(db, bids_path=None):
-    """The rows of 'weighted, all linked tenders, all contracts' in korea-label-checks.py, with each contract's value."""
-    labels = ko.load_labels()
-    fin_path = ko.BASE / 'ftc-suits/finality.json'
-    finality = json.loads(fin_path.read_text()) if fin_path.exists() else {}
-    versions, key_col = ko.scan(db, labels, 'contract')
-    contracts = ko.contracts_from(versions, key_col)
-    checks = ko.build_checks(contracts, bids=ko.Bids(bids_path) if bids_path and bids_path.exists() else None)
-    members, reps = set(), {}
-    for lab in labels.values():
-        cs = [contracts[n] for n in lab['contracts'] if n in contracts]
-        members |= {c['no'] for c in cs}
-        cs = [c for c in cs if c['original']]  # as korea-label-checks.py: amendment-only records are no label
-        if cs:
-            reps.setdefault(max(cs, key=lambda c: (c['amount'], c['no']))['no'], lab)
-    status = lambda case: (finality.get(case) or {}).get('status', 'none')
-    buyer_years = {(contracts[n]['buyer'], contracts[n]['year']) for n in reps}
-    out = []
-    for c in contracts.values():
-        if (c['buyer'], c['year']) not in buyer_years or not c['original']:
-            continue
-        lab = reps.get(c['no'])
-        if c['no'] in members and not lab:
-            continue
-        w = ko.WEIGHTS[status(lab['case'])] if lab else 1.0
-        ch = checks(c)
-        base = {'id': c['no'], 'buyer': c['buyer'], 'value': c['amount'] or None, 'checks': ch}
-        if lab and w > 0:
-            out.append(dict(base, groups=['collusion', 'combined'], **({'weight': w} if w < 1 else {})))
-        if not lab or w < 1:
-            out.append(dict(base, groups=['comparison'], **({'weight': 1 - w} if lab else {})))
-    return out
+def decision_rows(db, bids_path=None, family='collusion', court_links=None):
+    """The rows of 'weighted, all linked tenders, all contracts' in korea-label-checks.py (its prepare(), so the
+    labels, weights and comparisons are the same), with each contract's value."""
+    args = argparse.Namespace(db=db, buyer='contract', family=family,
+                              court_links=court_links or ko.BASE / 'prec/extract/links.jsonl')
+
+    def make_checks(contracts):
+        base = ko.build_checks(contracts, bids=ko.Bids(bids_path) if bids_path and bids_path.exists() else None)
+        return lambda c: {**base(c), '_value': c['amount'] or None}
+
+    rows, _, _ = ko.prepare(args, make_checks)
+    return [dict(r, value=r['checks']['_value']) for r in rows(lambda c: True, True)]
 
 
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     p.add_argument('--db', type=Path, default=ko.BASE / 'opnstd.sqlite')
-    p.add_argument('--bids', type=Path, default=ko.BASE / 'bid-features.sqlite')
+    p.add_argument('--bids', type=Path, default=ko.BASE / 'bid-features-2026-11-02.sqlite')
+    p.add_argument('--family', choices=('collusion', 'corruption', 'both'), default='collusion')
+    p.add_argument('--court-links', type=Path, default=ko.BASE / 'prec/extract/links.jsonl')
     p.add_argument('--json')
     args = p.parse_args(argv)
-    rows = decision_rows(args.db, args.bids)
+    rows = decision_rows(args.db, args.bids, args.family, args.court_links)
     values = sorted(r['value'] for r in rows if 'comparison' in r['groups'] and r['value'])
     edges = [values[int(q * len(values))] for q in QUANTILES]
     band = lambda v: None if not v else NAMES[bisect.bisect_right(edges, v)]

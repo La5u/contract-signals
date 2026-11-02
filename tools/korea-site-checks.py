@@ -11,7 +11,7 @@ office's contracts are read together, so totals, concentration and the three-yea
 (N5 is unknown in the data's first three years). Contracts whose original version is missing get unknown checks.
 
 Writes ~/.cache/contract-signals/korea/site-checks.tsv: contract number, then one letter per check in
-SITE_CHECKS order (korea-label-checks.CHECKS up to B7, then K7 and B12) (s signal, c clear, u unknown), then the number of
+SITE_CHECKS order (korea-label-checks.CHECKS up to B7, then K7 and B12, then SITE_EXTRA) (s signal, c clear, u unknown), then the number of
 bids opened in its tender (empty when the opening was not found), for every contract (the full history stays local
 for tuning; tools/build-korea-site.py publishes only its period). Private; reads only.
 """
@@ -30,8 +30,16 @@ from common import load  # noqa: E402
 
 ko = load('korea_checks', 'tools/korea-label-checks.py')
 # The published letters: korea-label-checks.CHECKS up to B7, then its price slot (K7, B12, 2026-10-25), the order
-# tools/build-korea-site.py expects. Research checks (B8-B11, N6/N7, A*, UA-*, BID-*) stay out until each is decided.
-SITE_CHECKS = ko.CHECKS[:ko.CHECKS.index('B7 same-minute bids') + 1] + ko.PRICE_CHECKS
+# tools/build-korea-site.py expects. Other research checks (B11, N6/N7, A*, the other UA-* and BID-*) stay out.
+# 2026-11-02 appended (old letter strings stay readable by position): exactly two bids and one valid bid (B2 split), and
+# the checks the court-conviction labels rate (corruption index). Each gets a short site code in the header. B9 shared
+# CEO and B10 rotation also earn corruption points but cannot be assessed in the published period: the bidders' CEO
+# names stop in 2018 (Data Hub exports) and the bid history in 2019.
+SITE_EXTRA = [('BC2', 'BID-COUNT 2'), ('BV1', 'BID-VALID only one valid of 2+'), ('B8', 'B8 exact floor hit'),
+              ('C11', 'UA-C11 price increase')]
+SITE_CHECKS = ko.CHECKS[:ko.CHECKS.index('B7 same-minute bids') + 1] + ko.PRICE_CHECKS + [k for _, k in SITE_EXTRA]
+HEADER = (ko.CHECKS[:ko.CHECKS.index('B7 same-minute bids') + 1] + ko.PRICE_CHECKS
+          + [k if k.split(' ')[0] == code else f'{code} {k}' for code, k in SITE_EXTRA])
 COLS = ['cntrct_no', 'ord', 'signed', 'method', 'amount', 'total_amount', 'business_type', 'buyer_code', 'demand_code',
         'supplier_bizrno', 'notice_no', 'notice_ord', 'legal_ref', 'reserve_price', 'term_type']
 QUERY = (f'SELECT {", ".join("v." + c for c in COLS)} FROM a.attrib t JOIN versions v ON v.cntrct_no = t.cntrct_no '
@@ -118,7 +126,7 @@ def main(argv=None):
             written = sum(pool.map(work, jobs, chunksize=1))
     staged = args.out.with_suffix('.part')
     with staged.open('w') as out:
-        out.write('# ' + '\t'.join(['contract'] + SITE_CHECKS + ['bids']) + '\n')
+        out.write('# ' + '\t'.join(['contract'] + HEADER + ['bids']) + '\n')
         for part in parts:
             with part.open() as f:
                 for line in f:

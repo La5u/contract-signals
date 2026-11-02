@@ -406,6 +406,13 @@ def extended(periods):
     return None
 
 
+def seen(fired, window_complete):
+    """A change check (G5, G6, UA-C11): a signal as soon as the change is in the data; clear only once the two-year
+    window has passed without it, else unknown (2026-11-02: before, any contract younger than two years was unknown,
+    which left every contract on the site unknown)."""
+    return True if fired else False if window_complete else None
+
+
 def ua_checks(c, o):
     st = status
     window = c['window_complete'] and not c['long_term']
@@ -413,7 +420,7 @@ def ua_checks(c, o):
         'UA-C1 exactly two bids': st(None if o is None else o['bids'] == 2),
         'UA-C2 only one valid bid': st(None if o is None or o['valid'] is None else o['bids'] >= 2 and o['valid'] == 1),
         'UA-C9 award >= 98 % of reserve': st(None if not c['reserve'] or not c['amount'] else c['amount'] >= 0.98 * float(c['reserve'])),
-        'UA-C11 price increase': st(None if not window else bool(c.get('steps'))),
+        'UA-C11 price increase': st(None if c['long_term'] else seen(bool(c.get('steps')), window)),
         'UA-C12 term extension': st(None if not window else extended(c.get('periods'))),
         'UA-C13 amount cut': st(None if not window else c.get('cuts', 0) > 0),
         'UA-C15 individual supplier': st(None if c.get('kind') in (None, 'unknown') else c['kind'] == 'individual'),
@@ -499,8 +506,8 @@ def build_checks(contracts, first_year=None, bids=None, budgets=None):
             'G2 private contract': st(private),
             'G3 buyer share >= 5 %': st(None if not total[key] else c['amount'] / total[key] >= 0.05),
             'G4 concentration': st(None if not s or n < 10 else g[s] / n >= 0.6),
-            'G5 3+ changes': st(None if not c['window_complete'] or c['long_term'] else c['changes'] >= 3),
-            'G6 amount increase > 20 %': st(None if not c['amount'] or not c['window_complete'] or c['long_term'] else c['last_amount'] > 1.2 * c['amount']),
+            'G5 3+ changes': st(None if c['long_term'] else seen(c['changes'] >= 3, c['window_complete'])),
+            'G6 amount increase > 20 %': st(None if not c['amount'] or c['long_term'] else seen(c['last_amount'] > 1.2 * c['amount'], c['window_complete'])),
             'N1 December signature': st(c['date'].month == 12),
             'N2 weekend signature': st(c['date'].weekday() >= 5),
             'N4 supplier dependence >= 25 %': st(None if not s or not total[key] else value_by[key + (s,)] / total[key] >= 0.25),
