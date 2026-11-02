@@ -167,7 +167,6 @@ window.I18N_DICTS.fr = {
   "Index and evidence labels": "Indice et étiquettes de preuve",
   "0 · no threshold crossed in evaluated checks": "0 · aucun seuil franchi dans les contrôles évalués",
   "0 · signals offset by evidence against": "0 · signaux compensés par des éléments contraires",
-  "South Korea: index at most 39.3": "Corée du Sud : indice de 39,3 au plus",
   "Bids submitted in the same minute": "Offres déposées dans la même minute",
   "No two bids were submitted in the same minute, or the tender drew one bid or more than 20.": "Aucune offre n’a été déposée dans la même minute qu’une autre, ou l’appel d’offres a reçu une seule offre ou plus de 20.",
   "1–19 · low": "1–19 · faible",
@@ -813,7 +812,6 @@ window.I18N_DICTS.fr = {
   "Award at 92.2 % or more of the reserve price": "Attribution à 92,2 % ou plus du prix de réserve",
   "The contract amount is below 92.2 % of the reserve price, or above it.": "Le montant du contrat est inférieur à 92,2 % du prix de réserve, ou le dépasse.",
   "Winning bid well above the lower award limit": "Offre gagnante nettement au-dessus du seuil inférieur d’attribution",
-  "The winning bid is within 1.01 percentage points of the tender’s lower award limit (낙찰하한율), where competitive bids cluster. Rigged tenders were rarely this close to the floor, so this lowers the index by 11 points.": "L’offre gagnante est à moins de 1,01 point de pourcentage du seuil inférieur d’attribution de l’appel d’offres (낙찰하한율), où se regroupent les offres concurrentielles. Les appels d’offres truqués étaient rarement aussi proches du seuil : l’indice perd donc 11 points.",
   "The bid opening (개찰결과) states no lower award limit, or was not found: not assessable.": "L’ouverture des offres (개찰결과) n’indique pas de seuil inférieur d’attribution, ou est introuvable : non évaluable.",
   "This tender states a lower award limit, so the gap to it scores the price instead (one price check per tender).": "Cet appel d’offres indique un seuil inférieur d’attribution : l’écart à ce seuil note le prix à la place (une seule vérification de prix par appel d’offres).",
   ", floored at 0": ", ramené à 0",
@@ -842,8 +840,6 @@ window.I18N_DICTS.fr = {
   "measured on South Korea’s labelled cases; points use a cautious bound (the ratio shrunk and taken at the 25th percentile of buyer resamples), so they are lower than the ratio quoted suggests": "mesuré sur les cas étiquetés de la Corée du Sud ; les points utilisent une borne prudente (le rapport réduit, pris au 25e centile des rééchantillonnages par acheteur), donc plus bas que ne le suggère le rapport cité",
   "Restricted competition": "Mise en concurrence restreinte",
   "Supplier dependence": "Dépendance au fournisseur",
-  "Only two or three bids": "Seulement deux ou trois offres",
-  "One bid, or four or more bids, were opened.": "Une offre, ou quatre offres ou plus, ont été ouvertes.",
   "The tender’s bid opening (개찰결과) was not found: not assessable.": "L’ouverture des offres (개찰결과) de l’appel d’offres est introuvable : non évaluable.",
   "Large gap between the two lowest bids": "Grand écart entre les deux offres les plus basses",
   "The gap between the two lowest valid bids is within the usual range.": "L’écart entre les deux offres valides les plus basses est dans la norme.",
@@ -851,7 +847,6 @@ window.I18N_DICTS.fr = {
   "Bid amounts unusually close together": "Montants des offres inhabituellement proches",
   "The valid bids are spread as usual.": "Les offres valides ont une dispersion habituelle.",
   "Unusual pattern of bid amounts": "Profil inhabituel des montants des offres",
-  "Two or three bids": "Deux ou trois offres",
   "Bid pattern": "Profil des offres",
   "Contract date (계약체결일자).": "Date du contrat (계약체결일자).",
   "Contract amount (계약금액) of the latest version in the period.": "Montant du contrat (계약금액) de la dernière version dans la période.",
@@ -881,7 +876,23 @@ window.I18N_DICTS.fr = {
   "More frequent among proven cases": "Plus fréquent parmi les cas avérés",
   "Much more frequent among proven cases": "Beaucoup plus fréquent parmi les cas avérés",
   "Far more frequent among proven cases": "Bien plus fréquent parmi les cas avérés",
-  "never measured on labelled cases: context, no weight": "jamais mesuré sur des cas étiquetés : contexte, sans poids"
+  "never measured on labelled cases: context, no weight": "jamais mesuré sur des cas étiquetés : contexte, sans poids",
+  "Exactly two bids": "Exactement deux offres",
+  "One bid, or three or more bids, were opened.": "Une offre, ou trois offres ou plus, ont été ouvertes.",
+  "Only one valid bid among several": "Une seule offre valide parmi plusieurs",
+  "One bid, or more than one valid bid.": "Une seule offre, ou plus d’une offre valide.",
+  "The bid opening (개찰결과) was not found or does not say which bids were valid: not assessable.": "L’ouverture des offres (개찰결과) est introuvable ou n’indique pas quelles offres étaient valides : non évaluable.",
+  "Winning bid exactly at the lower award limit": "Offre gagnante exactement au seuil inférieur d’attribution",
+  "The winning bid is not at the lower award limit.": "L’offre gagnante n’est pas au seuil inférieur d’attribution.",
+  "The winning bid is within 1.01 percentage points of the tender’s lower award limit (낙찰하한율), where competitive bids cluster. Rigged tenders were rarely this close to the floor, so this lowers the bid-rigging index by 11 points.": "L’offre gagnante est à moins de 1,01 point de pourcentage du seuil inférieur d’attribution de l’appel d’offres (낙찰하한율), où se regroupent les offres concurrentielles. Les appels d’offres truqués étaient rarement aussi proches du seuil : l’indice d’entente sur les offres perd donc 11 points.",
+  "Few bids (exactly two)": "Peu d’offres (exactement deux)",
+  "Two bids": "Deux offres",
+  "One valid bid": "Une offre valide",
+  "At award floor": "Au seuil d’attribution",
+  "Bid rigging index": "Indice d’entente sur les offres",
+  "Corruption index": "Indice de corruption",
+  "×1.0, no points.": "×1.0, sans points.",
+  "The higher index sets the record’s index and order.": "L’indice le plus élevé fixe l’indice et le rang de la fiche."
  },
  "patterns": [
   [
@@ -1569,46 +1580,6 @@ window.I18N_DICTS.fr = {
    "Signé avant {a} : c’est la date de sa première modification dans les données."
   ],
   [
-   "The contract amount is between 92.2 % and 100 % of the reserve price (예정가격). Among tenders the Fair Trade Commission found rigged it was 3.1 times as frequent as among the same contracting offices’ other contracts, also at equal contract value. Lawful awards also come close to the reserve price. {a} points.",
-   "Le montant du contrat est compris entre 92,2 % et 100 % du prix de réserve (예정가격). Parmi les appels d’offres jugés truqués par la Commission de la concurrence (KFTC), ce cas était 3,1 fois plus fréquent que parmi les autres contrats des mêmes entités contractantes, à montant égal également. Les attributions licites sont aussi proches du prix de réserve. {a} points."
-  ],
-  [
-   "The winning bid is at least 1.01 percentage points (of the reserve price) above the tender’s lower award limit (낙찰하한율), where Korean bids usually cluster. Among tenders the Fair Trade Commission found rigged it was 3.7 times as frequent as among the same contracting offices’ other contracts. A bidder may also simply price higher. {a} points.",
-   "L’offre gagnante dépasse d’au moins 1,01 point de pourcentage (du prix de réserve) le seuil inférieur d’attribution de l’appel d’offres (낙찰하한율), où se regroupent d’ordinaire les offres coréennes. Parmi les appels d’offres jugés truqués par la Commission de la concurrence (KFTC), ce cas était 3,7 fois plus fréquent que parmi les autres contrats des mêmes entités contractantes. Un soumissionnaire peut aussi simplement proposer un prix plus élevé. {a} points."
-  ],
-  [
-   "This supplier’s contracts make up at least 25 % of the contracting office’s contract amount for the signing year. Among rigged tenders 2 times as frequent as among the office’s other contracts, at equal contract value. A sole specialist supplier is often lawful. {a} points.",
-   "Les contrats de ce fournisseur représentent au moins 25 % du montant des contrats de l’entité contractante pour l’année de signature. Parmi les appels d’offres truqués, ce cas est 2 fois plus fréquent que parmi les autres contrats de l’entité, à montant égal. Le recours à un fournisseur spécialisé unique est souvent licite. {a} points."
-  ],
-  [
-   "This contract alone is at least 5 % of the contracting office’s contract amount for its signing year. Among rigged tenders 1.9 times as frequent as among the office’s other contracts, at equal contract value. Large purchases are often lawful. {a} points.",
-   "Ce contrat représente à lui seul au moins 5 % du montant des contrats de l’entité contractante pour son année de signature. Parmi les appels d’offres truqués, ce cas est 1,9 fois plus fréquent que parmi les autres contrats de l’entité, à montant égal. Les gros achats sont souvent licites. {a} points."
-  ],
-  [
-   "This supplier won at least 60 % of the contracting office’s contracts of this business type in the signing year (10 or more contracts). Among rigged tenders 1.9 times as frequent as among the office’s other contracts. {a} points.",
-   "Ce fournisseur a remporté au moins 60 % des contrats de l’entité contractante de ce type d’activité pendant l’année de signature (10 contrats ou plus). Parmi les appels d’offres truqués, ce cas est 1,9 fois plus fréquent que parmi les autres contrats de l’entité. {a} points."
-  ],
-  [
-   "Awarded by restricted (제한경쟁) or nominated (지명경쟁) competition, which limits who may bid. Among rigged tenders 1.4 times as frequent as among the office’s other contracts. Restrictions are often lawful (region, licence, performance record). {a} points.",
-   "Attribué par mise en concurrence restreinte (제한경쟁) ou sur invitation (지명경쟁), ce qui limite les candidats admis à soumissionner. Parmi les appels d’offres truqués, ce cas est 1,4 fois plus fréquent que parmi les autres contrats de l’entité. Les restrictions sont souvent licites (région, licence, références d’exécution). {a} points."
-  ],
-  [
-   "Two or three bids were opened in this tender (개찰결과). Among tenders the Fair Trade Commission found rigged it was 2.5 times as frequent as among the same contracting offices’ other contracts, also at equal contract value. Specialised or small markets often draw few bidders lawfully. {a} points.",
-   "Deux ou trois offres ont été ouvertes dans cet appel d’offres (개찰결과). Parmi les appels d’offres jugés truqués par la Commission de la concurrence (KFTC), ce cas était 2,5 fois plus fréquent que parmi les autres contrats des mêmes entités contractantes, y compris à montant égal. Les marchés spécialisés ou petits attirent souvent peu de soumissionnaires de façon licite. {a} points."
-  ],
-  [
-   "The gap between the two lowest valid bids is large against the spread of the other valid bids (above the 90th percentile for this business type and year), the pattern cover bids placed above an agreed winner leave. Among rigged tenders 2.5 times as frequent as among the offices’ other contracts. It also arises by chance. {a} points.",
-   "L’écart entre les deux offres valides les plus basses est grand par rapport à la dispersion des autres offres valides (au-delà du 90e centile pour ce type d’activité et cette année), le profil que laissent des offres de couverture placées au-dessus d’un gagnant convenu. Parmi les appels d’offres truqués, ce cas est 2,5 fois plus fréquent que parmi les autres contrats des entités. Il arrive aussi par hasard. {a} points."
-  ],
-  [
-   "At least two bids in this tender (2 to 20 bids) were submitted in the same minute, as when one party enters several bids. Among rigged tenders 1.5 times as frequent as among the offices’ other contracts. Bids also bunch lawfully before a deadline. {a} points.",
-   "Au moins deux offres de cet appel d’offres (2 à 20 offres) ont été déposées dans la même minute, comme lorsqu’une seule partie dépose plusieurs offres. Parmi les appels d’offres truqués, ce cas est 1,5 fois plus fréquent que parmi les autres contrats des entités. Les offres se regroupent aussi de façon licite avant l’échéance. {a} points."
-  ],
-  [
-   "The valid bids are unusually close to one another (coefficient of variation below the 10th percentile for this business type and year). Among rigged tenders 1.3 times as frequent as among the offices’ other contracts. Korean bids cluster near the lower award limit by design, so this is a weak signal. {a} points.",
-   "Les offres valides sont inhabituellement proches les unes des autres (coefficient de variation sous le 10e centile pour ce type d’activité et cette année). Parmi les appels d’offres truqués, ce cas est 1,3 fois plus fréquent que parmi les autres contrats des entités. Par construction, les offres coréennes se regroupent près du seuil inférieur d’attribution : c’est donc un signal faible. {a} points."
-  ],
-  [
    "{a} contracting institutions. Search for one above to load its contracts.",
    "{a} entités contractantes. Recherchez-en une ci-dessus pour charger ses contrats."
   ],
@@ -1695,6 +1666,58 @@ window.I18N_DICTS.fr = {
   [
    "The {a} highest-scored of all {b} contracts; choose an institution to see all of its contracts.",
    "Les {a} marchés les mieux notés sur {b} ; choisissez une entité pour voir tous ses marchés."
+  ],
+  [
+   "Exactly two bids were opened in this tender (개찰결과). Among tenders the Fair Trade Commission found rigged it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value, business type and period. Specialised or small markets often draw few bidders lawfully. Points: bid rigging {b}.",
+   "Exactement deux offres ont été ouvertes dans cet appel d’offres (개찰결과). Parmi les appels d’offres jugés truqués par la Commission de la concurrence (KFTC), ce cas était {a} fois plus fréquent que parmi les autres contrats des mêmes entités contractantes, à montant, type d’activité et période égaux. Les marchés spécialisés ou petits attirent souvent peu de soumissionnaires de façon licite. Points : entente sur les offres {b}."
+  ],
+  [
+   "Two or more bids were opened but only one was valid (the others rejected or invalid), as when cover bids are entered to be thrown out. Among tenders the Fair Trade Commission found rigged it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value, business type and period. Bids are also rejected for honest mistakes. Points: bid rigging {b}.",
+   "Deux offres ou plus ont été ouvertes mais une seule était valide (les autres rejetées ou non valides), comme lorsque des offres de couverture sont déposées pour être écartées. Parmi les appels d’offres jugés truqués par la Commission de la concurrence (KFTC), ce cas était {a} fois plus fréquent que parmi les autres contrats des mêmes entités contractantes, à montant, type d’activité et période égaux. Des offres sont aussi rejetées pour des erreurs de bonne foi. Points : entente sur les offres {b}."
+  ],
+  [
+   "The winning bid is at least 1.01 percentage points (of the reserve price) above the tender’s lower award limit (낙찰하한율), where Korean bids usually cluster. Among tenders the Fair Trade Commission found rigged it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value, business type, period and bid-count result (exactly two bids, large gap between the two lowest). A bidder may also simply price higher. Points: bid rigging {b}.",
+   "L’offre gagnante dépasse d’au moins 1,01 point de pourcentage (du prix de réserve) le seuil inférieur d’attribution de l’appel d’offres (낙찰하한율), où se regroupent d’ordinaire les offres coréennes. Parmi les appels d’offres jugés truqués par la Commission de la concurrence (KFTC), ce cas était {a} fois plus fréquent que parmi les autres contrats des mêmes entités contractantes, à montant, type d’activité, période et résultat du décompte des offres (exactement deux offres, grand écart entre les deux plus basses) égaux. Un soumissionnaire peut aussi simplement proposer un prix plus élevé. Points : entente sur les offres {b}."
+  ],
+  [
+   "The contract amount is between 92.2 % and 100 % of the reserve price (예정가격). Among tenders the Fair Trade Commission found rigged it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value, business type, period and bid-count result (exactly two bids, large gap between the two lowest). Lawful awards also come close to the reserve price. Points: bid rigging {b}.",
+   "Le montant du contrat est compris entre 92,2 % et 100 % du prix de réserve (예정가격). Parmi les appels d’offres jugés truqués par la Commission de la concurrence (KFTC), ce cas était {a} fois plus fréquent que parmi les autres contrats des mêmes entités contractantes, à montant, type d’activité, période et résultat du décompte des offres (exactement deux offres, grand écart entre les deux plus basses) égaux. Les attributions licites sont aussi proches du prix de réserve. Points : entente sur les offres {b}."
+  ],
+  [
+   "The winning bid is within 0.01 percentage points of the tender’s lower award limit (낙찰하한율), as when the winner knows the reserve price in advance. Among contracts tied to corruption convictions it was {a} times as frequent as among the same offices’ other contracts, at equal contract value, business type and period. Many bidders aim at the floor, and some land on it by chance. Points: corruption {b}.",
+   "L’offre gagnante est à moins de 0,01 point de pourcentage du seuil inférieur d’attribution de l’appel d’offres (낙찰하한율), comme lorsque l’attributaire connaît d’avance le prix de réserve. Parmi les contrats liés à des condamnations pour corruption, ce cas était {a} fois plus fréquent que parmi les autres contrats des mêmes entités, à montant, type d’activité et période égaux. Beaucoup de soumissionnaires visent le seuil, et certains l’atteignent par hasard. Points : corruption {b}."
+  ],
+  [
+   "The gap between the two lowest valid bids is large against the spread of the other valid bids (above the 90th percentile for this business type and year), the pattern cover bids placed above an agreed winner leave. Among tenders the Fair Trade Commission found rigged it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value, business type and period. It also arises by chance. Points: bid rigging {b}.",
+   "L’écart entre les deux offres valides les plus basses est grand par rapport à la dispersion des autres offres valides (au-delà du 90e centile pour ce type d’activité et cette année), le profil que laissent des offres de couverture placées au-dessus d’un gagnant convenu. Parmi les appels d’offres jugés truqués par la Commission de la concurrence (KFTC), ce cas était {a} fois plus fréquent que parmi les autres contrats des mêmes entités contractantes, à montant, type d’activité et période égaux. Il arrive aussi par hasard. Points : entente sur les offres {b}."
+  ],
+  [
+   "This supplier’s contracts make up at least 25 % of the contracting office’s contract amount for the signing year. Among tenders the Fair Trade Commission found rigged it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value. Among contracts tied to corruption convictions it was {b} times as frequent as among the same offices’ other contracts, at equal contract value. A sole specialist supplier is often lawful. Points: bid rigging {c}, corruption {d}.",
+   "Les contrats de ce fournisseur représentent au moins 25 % du montant des contrats de l’entité contractante pour l’année de signature. Parmi les appels d’offres jugés truqués par la Commission de la concurrence (KFTC), ce cas était {a} fois plus fréquent que parmi les autres contrats des mêmes entités contractantes, à montant égal. Parmi les contrats liés à des condamnations pour corruption, ce cas était {b} fois plus fréquent que parmi les autres contrats des mêmes entités, à montant égal. Le recours à un fournisseur spécialisé unique est souvent licite. Points : entente sur les offres {c}, corruption {d}."
+  ],
+  [
+   "This contract alone is at least 5 % of the contracting office’s contract amount for its signing year. Among tenders the Fair Trade Commission found rigged it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value. Large purchases are often lawful. Points: bid rigging {b}.",
+   "Ce contrat représente à lui seul au moins 5 % du montant des contrats de l’entité contractante pour son année de signature. Parmi les appels d’offres jugés truqués par la Commission de la concurrence (KFTC), ce cas était {a} fois plus fréquent que parmi les autres contrats des mêmes entités contractantes, à montant égal. Les gros achats sont souvent licites. Points : entente sur les offres {b}."
+  ],
+  [
+   "This supplier won at least 60 % of the contracting office’s contracts of this business type in the signing year (10 or more contracts). Among tenders the Fair Trade Commission found rigged it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value. Points: bid rigging {b}.",
+   "Ce fournisseur a remporté au moins 60 % des contrats de l’entité contractante de ce type d’activité pendant l’année de signature (10 contrats ou plus). Parmi les appels d’offres jugés truqués par la Commission de la concurrence (KFTC), ce cas était {a} fois plus fréquent que parmi les autres contrats des mêmes entités contractantes, à montant égal. Points : entente sur les offres {b}."
+  ],
+  [
+   "· bid rigging {a} pts, {b}",
+   "· entente sur les offres {a} pts, {b}"
+  ],
+  [
+   "· corruption {a} pts, {b}",
+   "· corruption {a} pts, {b}"
+  ],
+  [
+   "· bid rigging {a} pts, corruption {b} pts, {c}",
+   "· entente sur les offres {a} pts, corruption {b} pts, {c}"
+  ],
+  [
+   "rigging {a} · corruption {b}",
+   "entente {a} · corruption {b}"
   ]
  ]
 };

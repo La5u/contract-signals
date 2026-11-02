@@ -61,21 +61,26 @@ def standardise(analysis, check=R1, names=NAMES, seed=pp.SEED):
     for r in known:
         for g in per:
             if g in r['groups']:
-                per[g][r['buyer']][r['band']].append(r['checks'][check]['status'] == 'signal')
+                per[g][r['buyer']][r['band']].append((r['checks'][check]['status'] == 'signal', r.get('weight', 1)))
 
     def estimate(drawn):
-        # positives: each buyer weight 1 over its rows (as pp.weighted); band mix from the same weights
+        # positives as pp.weighted: a buyer counts with the largest label weight of its rows, spread over its rows by
+        # their weights (2026-11-02: label weights were ignored here before; every weight 1 gives the old result);
+        # band mix from the same weights
         h1 = n1 = 0.0
         mix = defaultdict(float)
         for b in drawn:
             bands = per['combined'].get(b)
             if not bands:
                 continue
-            k = sum(len(v) for v in bands.values())
-            h1 += sum(sum(v) for v in bands.values()) / k
-            n1 += 1
+            k = sum(w for v in bands.values() for _, w in v)
+            if not k:
+                continue
+            bw = max(w for v in bands.values() for _, w in v)
+            h1 += bw * sum(w * h for v in bands.values() for h, w in v) / k
+            n1 += bw
             for band_, v in bands.items():
-                mix[band_] += len(v) / k
+                mix[band_] += bw * sum(w for _, w in v) / k
         hits, n = defaultdict(float), defaultdict(float)
         n0 = 0
         for b in drawn:
@@ -84,7 +89,7 @@ def standardise(analysis, check=R1, names=NAMES, seed=pp.SEED):
                 continue
             n0 += 1
             for band_, v in bands.items():
-                hits[band_] += sum(v) / len(v)
+                hits[band_] += sum(h for h, _ in v) / len(v)
                 n[band_] += 1
         if not n1 or not n0:
             return None
@@ -131,11 +136,22 @@ def standardise_smooth(analysis, check=R1, seed=pp.SEED):
     cell = np.clip(((logs - lo) / (hi - lo or 1) * (GRID - 1)).round().astype(int), 0, GRID - 1)
     centre = lo + np.arange(GRID) * (hi - lo) / (GRID - 1)
     sides = {}
+    # Each buyer counts with the largest label weight of its rows, spread over them by weight (pp.weighted; label
+    # weights were ignored here before 2026-11-02, every weight 1 gives the old result).
+    buyer_weight = np.zeros(len(buyers))
     for g in ('combined', 'comparison'):
         sel = [i for i, r in enumerate(known) if g in r['groups']]
-        per_buyer = Counter(known[i]['buyer'] for i in sel)
+        wt = lambda i: known[i].get('weight', 1) if g == 'combined' else 1
+        per_buyer, top = Counter(), Counter()
+        for i in sel:
+            per_buyer[known[i]['buyer']] += wt(i)
+            top[known[i]['buyer']] = max(top[known[i]['buyer']], wt(i))
+        if g == 'combined':
+            for b, v in top.items():
+                buyer_weight[bidx[b]] = v
         sides[g] = (np.array([bidx[known[i]['buyer']] for i in sel], int), cell[sel],
-                    np.array([1 / per_buyer[known[i]['buyer']] for i in sel]),
+                    np.array([top[known[i]['buyer']] * wt(i) / per_buyer[known[i]['buyer']] if per_buyer[known[i]['buyer']] else 0
+                              for i in sel]),
                     np.array([known[i]['checks'][check]['status'] == 'signal' for i in sel], float))
     dist = np.abs(centre[:, None] - centre[None, :])
     near = np.argsort(dist, axis=1, kind='stable')
@@ -197,7 +213,7 @@ def standardise_smooth(analysis, check=R1, seed=pp.SEED):
     def estimate(times):
         b1, c1, w1, y1 = sides['combined']
         t1 = times[b1]
-        n1 = float((times * np.isin(np.arange(len(buyers)), b1)).sum())
+        n1 = float((times * buyer_weight).sum())
         if not n1:
             return None
         h1 = float((t1 * w1 * y1).sum())

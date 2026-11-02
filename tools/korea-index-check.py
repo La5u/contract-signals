@@ -4,7 +4,7 @@
 Research only (owner 2026-10-25: "run the check" before investigating leads). Each check was calibrated alone; the
 index adds family maxima, which assumes the families are separate evidence. This scores the calibration's own label
 and comparison rows (tools/korea-label-checks.py prepare(), collusion family, contracting office) with the site's rules
-(checks-national.js KR_CHECKS, scoring.js getScoreBreakdown) and reports, per index band, the share of rigged tenders
+(checks-national.js KR_CHECKS read live, scoring.js indexTotals), bid-rigging index and reports, per index band, the share of rigged tenders
 against the share of comparisons, buyer-weighted as the calibration weights rates, with buyer-bootstrap intervals.
 
 In-sample: the points were chosen on these labels, so the separation is optimistic. Rigged tenders more often have a
@@ -16,6 +16,7 @@ without an opening cannot get, so the bands are also reported within rows whose 
 import argparse
 import json
 import random
+import subprocess
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -23,32 +24,49 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import load  # noqa: E402
 
 ko = load('korea_checks', 'tools/korea-label-checks.py')
+site = load('korea_site_checks', 'tools/korea-site-checks.py')
+ROOT = Path(__file__).resolve().parent.parent
 
-# checks-national.js KR_CHECKS (2026-10-26): check name -> (family, points when signal).
-NEW = {'B2 two or three bids': ('competition', 12.1), 'B5 large first gap': ('competition', 11.4),
-       'B7 same-minute bids': ('competition', 2.5), 'B4 low bid dispersion': ('competition', 0.9),
-       'K5 restricted competition': ('competition', 3.7),
-       'N4 supplier dependence >= 25 %': ('concentration', 9.2), 'G3 buyer share >= 5 %': ('concentration', 8.4),
-       'G4 concentration': ('concentration', 7.7)}
-K6 = 'K6 award >= 95 % of reserve'
+READ_JS = ("const vm = require('vm'), fs = require('fs'); console.log(JSON.stringify(vm.runInContext("
+           "fs.readFileSync(process.argv[1], 'utf8') + ';({KR_CHECKS: KR_CHECKS.map(k => ({code: k.code, family: k.family, "
+           "points: k.points, clearPoints: k.clearPoints || {}})), KR_CHECK_ORDER})', vm.createContext({}))));")
+
+
+def site_points(index='rigging'):
+    """The live points of one index from checks-national.js: check name -> (family, signal points, clear points)."""
+    js = json.loads(subprocess.run(['node', '-e', READ_JS, str(ROOT / 'checks-national.js')], check=True,
+                                   capture_output=True, text=True).stdout)
+    name = dict(zip(js['KR_CHECK_ORDER'], site.SITE_CHECKS))
+    return {name[k['code']]: (k['family'], k['points'].get(index, 0), k['clearPoints'].get(index, 0))
+            for k in js['KR_CHECKS']}
+
+
+# Raw (uncontrolled) points of 2026-10-26, for comparison: check name -> (family, signal points, clear points).
+OLD = {'B2 two or three bids': ('competition', 12.1, 0), 'B5 large first gap': ('competition', 11.4, 0),
+       'B7 same-minute bids': ('competition', 2.5, 0), 'B4 low bid dispersion': ('competition', 0.9, 0),
+       'K5 restricted competition': ('competition', 3.7, 0),
+       'N4 supplier dependence >= 25 %': ('concentration', 9.2, 0), 'G3 buyer share >= 5 %': ('concentration', 8.4, 0),
+       'G4 concentration': ('concentration', 7.7, 0), ko.PRICE_CHECKS[1]: ('price', 18.0, -11.0),
+       ko.PRICE_CHECKS[0]: ('price', 15.5, 0)}
 K7, B12 = ko.PRICE_CHECKS
 BANDS = [(0, 0), (0.1, 19.9), (20, 29.9), (30, 39.9), (40, 100)]
 THRESHOLDS = [10, 20, 30, 40]
 
 
-def index(checks, version):
+def index(checks, points):
+    """scoring.js indexTotals for one index: per family the heaviest signal, plus any negative clear points; K7 is
+    out of scope where B12 is assessable (the bid opening states a lower award limit); floored at 0."""
     st = lambda k: checks[k]['status']
+    floor = st(B12) in ('signal', 'clear')
     fam = defaultdict(float)
-    for k, (f, w) in NEW.items():
+    for k, (f, w, neg) in points.items():
+        if k == K7 and floor:
+            continue
         if st(k) == 'signal':
             fam[f] = max(fam[f], w)
-    if version == 'old':  # 92d9595: K6 >= 95 % 12.7 in the price family, no negative points
-        if st(K6) == 'signal':
-            fam['price'] = 12.7
-    elif st(B12) in ('signal', 'clear'):
-        fam['price'] = 18.0 if st(B12) == 'signal' else -11.0
-    elif st(K7) == 'signal':
-        fam['price'] = 15.5
+    for k, (f, w, neg) in points.items():
+        if st(k) == 'clear' and neg < 0:
+            fam[f] += neg
     return round(max(0.0, min(100.0, sum(fam.values()))), 1)
 
 
@@ -95,8 +113,8 @@ def report(rows, title, reps=500):
     buyers_c = sorted({r['buyer'] for r in rows if 'comparison' in r['groups']})
     rnd = random.Random(1)
     draws = [([rnd.choice(buyers_l) for _ in buyers_l], [rnd.choice(buyers_c) for _ in buyers_c]) for _ in range(reps)]
-    for version in ('new', 'old'):
-        key = version  # rows keep both: r['new'], r['old']
+    for version in ('site', 'old'):
+        key = version  # rows keep both: r['site'], r['old']
         for r in rows:
             r['score'] = r[key]
         print(f'Index {version}: AUC {auc(rows):.3f} (chance 0.5)\n')
@@ -123,7 +141,7 @@ def report(rows, title, reps=500):
 def main():
     p = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     p.add_argument('--db', type=Path, default=ko.BASE / 'opnstd.sqlite')
-    p.add_argument('--bids', type=Path, default=ko.BASE / 'bid-features-2026-10-28.sqlite')
+    p.add_argument('--bids', type=Path, default=ko.BASE / 'bid-features-2026-11-02.sqlite')
     p.add_argument('--json', type=Path)
     args = p.parse_args()
     args.buyer, args.family, args.court_links = 'contract', 'collusion', None
@@ -133,9 +151,11 @@ def main():
 
     rows_of, _, _ = ko.prepare(args, make_checks)
     rows = rows_of(lambda c: True, True)
+    live = site_points()
+    print('Site points (bid rigging):', {k: v[1:] for k, v in live.items() if v[1] or v[2]})
     for r in rows:  # keep only what the index needs, then drop the full check dicts
-        r['new'], r['old'] = index(r['checks'], 'new'), index(r['checks'], 'old')
-        r['score'] = r['new']
+        r['site'], r['old'] = index(r['checks'], live), index(r['checks'], OLD)
+        r['score'] = r['site']
         r['opening'] = r['checks']['B2 two or three bids']['status'] in ('signal', 'clear')
         del r['checks']
     sets = {'all linked tenders (decision rule)': rows,

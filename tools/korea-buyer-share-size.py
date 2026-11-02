@@ -38,10 +38,38 @@ def decision_rows(db, bids_path=None, family='collusion', court_links=None):
 
     def make_checks(contracts):
         base = ko.build_checks(contracts, bids=ko.Bids(bids_path) if bids_path and bids_path.exists() else None)
-        return lambda c: {**base(c), '_value': c['amount'] or None}
+        # The yearly totals behind G3 and N4, as build_checks() sums them (original contracts only), so that deflate()
+        # can recompute both shares with a rigged contract's amount taken as inflated.
+        total, by_supplier = Counter(), Counter()
+        for c in contracts.values():
+            if c.get('original', True):
+                total[(c['buyer'], c['year'])] += c['amount']
+                if c['supplier']:
+                    by_supplier[(c['buyer'], c['year'], c['supplier'])] += c['amount']
+        return lambda c: {**base(c), '_value': c['amount'] or None,
+                          '_shares': (c['amount'], total[(c['buyer'], c['year'])],
+                                      by_supplier[(c['buyer'], c['year'], c['supplier'])] if c['supplier'] else None)}
 
     rows, _, _ = ko.prepare(args, make_checks)
     return [dict(r, value=r['checks']['_value']) for r in rows(lambda c: True, True)]
+
+
+def deflate(r, factor):
+    """A rigged row as if its price were not inflated: value / factor, and G3 and N4 recomputed with that amount in
+    the office's yearly total (Sol's review, 2026-11-02: only the band moved before, the share signals kept the
+    inflated amount). The office's other rigged contracts are not known, so they stay as published."""
+    a, total, supplier = r['checks']['_shares']
+    if not a or not total:
+        return dict(r, value=r['value'] and r['value'] / factor)
+    a2 = a / factor
+    t2 = total - a + a2
+    ch = dict(r['checks'])
+    g3, n4 = 'G3 buyer share >= 5 %', 'N4 supplier dependence >= 25 %'
+    if ch[g3]['status'] in ('signal', 'clear'):
+        ch[g3] = ko.status(a2 / t2 >= 0.05)
+    if supplier is not None and ch[n4]['status'] in ('signal', 'clear'):
+        ch[n4] = ko.status((supplier - a + a2) / t2 >= 0.25)
+    return dict(r, value=r['value'] / factor, checks=ch)
 
 
 def main(argv=None):
@@ -57,7 +85,8 @@ def main(argv=None):
     edges = [values[int(q * len(values))] for q in QUANTILES]
     band = lambda v: None if not v else NAMES[bisect.bisect_right(edges, v)]
     plain = [dict(r, band=band(r['value'])) for r in rows]
-    inflated = [dict(r, band=band(r['value'] and r['value'] / size.INFLATION)) if 'combined' in r['groups'] else r for r in plain]
+    deflated = [deflate(r, size.INFLATION) if 'combined' in r['groups'] else r for r in plain]
+    inflated = [dict(r, band=band(r['value'])) for r in deflated]
     out = {'edges_krw': edges, 'quantiles': QUANTILES, 'checks': {}}
     print(f"{sum('combined' in r['groups'] for r in rows)} rigged rows, {sum('comparison' in r['groups'] for r in rows)} comparisons")
     print(f"Comparison value edges (KRW) at {QUANTILES}: {[f'{e:,.0f}' for e in edges]}")
@@ -68,9 +97,7 @@ def main(argv=None):
         res = {'unadjusted': pp.analyse(plain, check), 'size_standardised': size.standardise(plain, check, NAMES),
                'size_standardised_inflation': dict(size.standardise(inflated, check, NAMES) or {}, inflation=size.INFLATION),
                'size_smooth': size.standardise_smooth(plain, check),
-               'size_smooth_inflation': dict(size.standardise_smooth(
-                   [dict(r, value=r['value'] and r['value'] / size.INFLATION) if 'combined' in r['groups'] else r
-                    for r in plain], check) or {}, inflation=size.INFLATION)}
+               'size_smooth_inflation': dict(size.standardise_smooth(deflated, check) or {}, inflation=size.INFLATION)}
         res['within_band'] = {b: pp.analyse([r for r in plain if r['band'] == b], check) for b in NAMES}
         out['checks'][check] = res
         print(size.line(f'{check} unadjusted', res['unadjusted']))
