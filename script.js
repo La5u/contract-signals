@@ -85,16 +85,52 @@ function startExplorer() {
   }
   document.querySelector('#korea-all').addEventListener('click', () => chooseKoreaBuyer(''));
   const koreaKey = text => String(text || '').toLowerCase().replace(/\s+/g, '');
+  // Facet rows, as on carboncost.me: type, its subcategories, province, its cities. Each row counts contracts
+  // under the other rows' choices; buyer[6] is [province, city, subcategory] or null.
+  const koreaFacet = { type: '', sub: '', region: '', city: '' };
+  const koreaFacetValue = {
+    type: b => b[2] || 'Other', sub: b => b[6]?.[2] || 'Other',
+    region: b => b[6]?.[0] || 'Unknown', city: b => b[6]?.[1] || 'Other'
+  };
+  const koreaFacetRows = { type: '#korea-type', sub: '#korea-sub', region: '#korea-region', city: '#korea-city' };
+  const koreaParent = { sub: 'type', city: 'region' };
+  const koreaMatches = (b, skip) => Object.keys(koreaFacet).every(k => k === skip || !koreaFacet[k] || koreaFacetValue[k](b) === koreaFacet[k]);
+  function renderKoreaFacets(buyers) {
+    for (const [key, selector] of Object.entries(koreaFacetRows)) {
+      const row = document.querySelector(selector);
+      const parent = koreaParent[key];
+      const totals = new Map();
+      if (!parent || koreaFacet[parent]) for (const b of buyers) if (koreaMatches(b, key)) {
+        const v = koreaFacetValue[key](b);
+        totals.set(v, (totals.get(v) || 0) + b[3]);
+      }
+      row.hidden = totals.size < 2 && !koreaFacet[key];
+      const button = (value, label, count) => {
+        const item = element('button', label, value === koreaFacet[key] ? 'on' : '');
+        item.type = 'button';
+        if (count !== undefined) item.append(element('span', count.toLocaleString('en'), 'muted'));
+        item.addEventListener('click', () => {
+          koreaFacet[key] = value === koreaFacet[key] ? '' : value;
+          for (const [child, p] of Object.entries(koreaParent)) if (p === key) koreaFacet[child] = '';
+          showKoreaResults(buyers);
+        });
+        return item;
+      };
+      row.replaceChildren(button('', 'All'), ...[...totals].sort((a, b) => b[1] - a[1]).map(([v, n]) => button(v, v, n)));
+    }
+  }
   function showKoreaResults(buyers) {
+    renderKoreaFacets(buyers);
     const wanted = koreaKey(koreaSearch.value);
     const found = [];
     for (const b of buyers) {
-      if (!wanted || koreaKey(b[1]).includes(wanted) || b[0].startsWith(wanted)) found.push(b);
+      if (koreaMatches(b) && (!wanted || koreaKey(b[1]).includes(wanted) || b[0].startsWith(wanted))) found.push(b);
       if (found.length >= 30) break;
     }
     koreaResults.replaceChildren(...found.map(b => {
       const item = element('li');
-      const button = element('button', `${b[1]} · ${b[2] || 'institution'} · ${b[3]} contracts`, 'link-button');
+      const short = koreaFacet.region && b[1].startsWith(koreaFacet.region + ' ') ? b[1].slice(koreaFacet.region.length + 1) : b[1];
+      const button = element('button', `${short} · ${b[3].toLocaleString('en')} contracts`, 'link-button');
       button.type = 'button';
       button.addEventListener('click', () => chooseKoreaBuyer(b[0]));
       item.append(button);

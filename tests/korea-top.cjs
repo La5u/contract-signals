@@ -72,6 +72,8 @@ async function browserTests() {
     assert.equal(await page.locator('#korea-all').textContent(),'Most flagged · nationwide');
     assert.match(await page.locator('#dataset-note').textContent(),/3 highest-scored of all 8 contracts/);
     assert.equal(await page.locator('#korea-scan').count(),0);
+    assert.ok(await page.locator('#korea-type button').count() >= 2,'type row'); // no places in the fixture: province row hidden
+    assert.equal(await page.locator('#korea-region').isHidden(),true);
     const renderer = await page.evaluate(()=>{
       const gl = document.createElement('canvas').getContext('webgl');
       const ext = gl?.getExtension('WEBGL_debug_renderer_info');
