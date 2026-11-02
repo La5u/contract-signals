@@ -6,8 +6,10 @@ adds each contract's precomputed checks from ~/.cache/contract-signals/korea/sit
 one letter per check, null when missing), and writes ~/.cache/contract-signals/korea/site/:
 
 - meta.json   source, licence, period, counts, code lists shared by every shard, column order
-- buyers.json one entry per contracting institution: [code, name, type, contracts, shard] or, for a buyer too big for
-              one file, [code, name, type, contracts, newest part, [parts oldest first]]
+- buyers.json one entry per contracting institution: [code, name, type, contracts, shard, parts, place], parts null or,
+              for a buyer too big for one file, its shards oldest first (shard is then the newest part); place is
+              [province, city or district, subcategory] from ~/.cache/contract-signals/korea/institutions
+              (tools/fetch-korea-institutions.py), null where unknown
 - s/NNNN.json contracts of a run of buyers (by code), about 1.5 MB each, rows as arrays; a big buyer gets shards of
               its own (parts of about 8 MB, under the host's 25 MiB per file), each holding a run of its rows by date
 - top.json    the 5,000 highest-scored contracts in shard format, plus count and limit
@@ -44,6 +46,59 @@ CHECK_ORDER = ['G2', 'G3', 'G4', 'G5', 'G6', 'N1', 'N2', 'N4', 'N5', 'U2', 'K1',
 KINDS = ['corporation', 'individual', 'public-body', 'association', 'foreign', 'unknown']
 LINK = 'https://www.g2b.go.kr/link/FIUA027_01/single/?ctrtNo={}&ctrtChgOrd={}&prcmBsneSeCd={}&srchName=ctrtCrst&openUrl=Y'
 
+# Province names as they stand today; the registry keeps the names in force when an institution last changed.
+PROVINCES = {'강원도': '강원특별자치도', '전라북도': '전북특별자치도', '전라남도': '전남광주통합특별시',
+             '광주광역시': '전남광주통합특별시', '제주도': '제주특별자치도'}
+PROVINCE_NAMES = {'서울특별시', '부산광역시', '대구광역시', '인천광역시', '대전광역시', '울산광역시', '세종특별자치시', '경기도',
+                  '강원특별자치도', '충청북도', '충청남도', '전북특별자치도', '전남광주통합특별시', '경상북도', '경상남도',
+                  '제주특별자치도', *PROVINCES}
+
+
+def places(path):
+    """code -> [province, city or district, subcategory] from the latest registry entry of each institution."""
+    latest = {}
+    if path.exists():
+        with path.open(encoding='utf-8') as f:
+            for line in f:
+                r = json.loads(line)
+                if r.get('code') and (r['code'] not in latest or (r.get('changed') or '') >= (latest[r['code']].get('changed') or '')):
+                    latest[r['code']] = r
+    out = {}
+    for code, r in latest.items():
+        words = (r.get('region') or '').split()
+        province = words[0] if words and words[0] in PROVINCE_NAMES else None
+        city = words[1] if province and len(words) > 1 and words[1][-1:] in ('시', '군', '구') else None
+        out[code] = [PROVINCES.get(province, province), city, r.get('type1') or r.get('type2')]
+    return out
+
+
+def name_place(name):
+    """Province and city from the institution's name, for codes missing from the registry."""
+    words = name.split()
+    for province in sorted(PROVINCE_NAMES, key=len, reverse=True):
+        if words and words[0].startswith(province):
+            city = words[1] if len(words) > 1 and words[1][-1:] in ('시', '군', '구') else None
+            return [PROVINCES.get(province, province), city, None]
+    return None
+
+
+def with_places(buyers, institutions):
+    registry = places(institutions)
+    for b in buyers:
+        del b[6:]
+        b.extend([None] * (6 - len(b)))
+        b.append(registry.get(b[0]) or name_place(b[1]))
+
+
+def add_places(path, institutions):
+    buyers = json.loads(path.read_text(encoding='utf-8'))
+    with_places(buyers, institutions)
+    tmp = path.with_suffix('.tmp')
+    tmp.write_text(json.dumps(buyers, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
+    tmp.replace(path)
+    print(f'{sum(b[6] is not None for b in buyers)} of {len(buyers)} buyers placed')
+
+
 QUERY = '''
 select c.cntrct_no, c.signed, c.first_date_seen, c.original_in_period, c.last_name, v.demand_name,
        c.last_supplier_name, c.last_supplier_bizrno, c.last_supplier_kind, c.original_amount, c.last_amount, c.versions_seen,
@@ -77,10 +132,14 @@ def main(argv=None):
     p.add_argument('--db', default=str(BASE / 'opnstd.sqlite'))
     p.add_argument('--out', default=str(BASE / 'site'))
     p.add_argument('--checks', default=str(BASE / 'site-checks.tsv'))
+    p.add_argument('--institutions', type=Path, default=BASE / 'institutions/institutions.jsonl')
     p.add_argument('--start', default='2024-09-01',
                    help='publish contracts signed or changed from this date; older ones stay local (testing, tuning)')
     p.add_argument('--origin', default='https://contracts.lasu.dev', help='the explorer allowed to read the files (CORS)')
+    p.add_argument('--places-only', action='store_true', help="only rewrite the places in OUT's buyers.json")
     args = p.parse_args(argv)
+    if args.places_only:
+        return add_places(Path(args.out) / 'buyers.json', args.institutions)
     db = sqlite3.connect(f'file:{args.db}?mode=ro', uri=True)
     # The checks go into a temporary database joined to the query, so 2.7 million of them are not held in memory.
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
@@ -167,6 +226,7 @@ def main(argv=None):
         shutil.rmtree(out)
         raise SystemExit(f'no contracts signed or changed from {args.start}; {final} left as it was')
     built = datetime.now(timezone.utc).isoformat(timespec='seconds')
+    with_places(buyers.values(), args.institutions)
     ordered = sorted(buyers.values(), key=lambda b: -b[3])
     (out / 'buyers.json').write_text(json.dumps(ordered, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
     meta = {

@@ -132,6 +132,12 @@ main { max-width: 1480px; margin: 0 auto; padding: 14px 24px 32px; }
 .korea-picker[hidden] { display: none; }
 .korea-picker > button { justify-self: start; }
 .korea-picker label { display: grid; gap: 4px; }
+.korea-facet { display: flex; gap: 2px 14px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; padding: 3px 0; border-top: 1px solid var(--line, #ddd); }
+.korea-facet[hidden] { display: none; }
+.korea-facet button { background: none; border: 0; padding: 0; color: var(--ink); font: inherit; cursor: pointer; }
+.korea-facet button:hover { background: none; text-decoration: underline; }
+.korea-facet button.on { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.korea-facet .muted { margin-left: 4px; font-weight: 400; }
 .korea-results { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 14px; max-height: 9.5em; overflow-y: auto; }
 .notice-box { border-left: 4px solid var(--mod-fg); background: var(--surface-2); padding: 4px 14px; margin-top: 12px; font-size: 13px; }
 
