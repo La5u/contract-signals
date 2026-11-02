@@ -17,7 +17,7 @@ assert.equal(rows.length, 2);
 const [corp, person] = rows;
 assert.equal(corp.id, 'koneps-A1'); assert.equal(corp.dataFamily, 'koneps'); assert.equal(corp.currency, 'KRW'); assert.equal(corp.amount, 1200);
 assert.deepEqual(JSON.parse(JSON.stringify(corp.supplierIds)), [{ id: '215-87-29444', identifierType: 'KR-BRN' }]);
-assert.match(corp.amountBasis, /original contract was 1000 KRW \(2 versions\)/);
+assert.match(corp.amountBasis, /original contract was ₩1,000 \(2 versions\)/);
 assert.equal(corp.notes, 'Legal ground cited: 지방계약법 제25조제1항5호다목.');   // demand = buyer: not repeated
 assert.equal(corp.source, 'https://www.g2b.go.kr/link/FIUA027_01/single/?ctrtNo=A1_1&ctrtChgOrd=02&prcmBsneSeCd=%EC%A1%B0070003&srchName=ctrtCrst&openUrl=Y');
 assert.deepEqual(JSON.parse(JSON.stringify(person.supplierIds)), []);

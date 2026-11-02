@@ -79,7 +79,7 @@ function koreaRecords(meta, shard, buyer, rows = shard.buyers[buyer[0]] || []) {
       businessType: type, procedure: [method, type].filter(Boolean).join(' · ') || null, contractId: g('contractNo'), noticeId: g('noticeNo'),
       date: g('date'), dateNote: g('dateIsFirstChange') ? `Signed before ${(meta.dataFrom || meta.period?.[0] || '').slice(0, 4)}: this is the date of its first change in the data.` : 'Contract date (계약체결일자).',
       amount: typeof latest === 'number' && latest >= 0 ? latest : null, currency: 'KRW',
-      amountBasis: original != null && original !== latest ? `Contract amount of the latest version in the period; the original contract was ${original} KRW (${versions} versions).` : 'Contract amount (계약금액) of the latest version in the period.',
+      amountBasis: original != null && original !== latest ? `Contract amount of the latest version in the period; the original contract was ₩${original.toLocaleString('en')} (${versions} versions).` : 'Contract amount (계약금액) of the latest version in the period.',
       offers: g('bids'), notes: notes || null, source, sourceLabel: 'KONEPS (나라장터) contract page', koreaChecks: g('checks'),
     };
   });

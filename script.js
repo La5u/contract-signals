@@ -617,7 +617,7 @@ function startExplorer() {
       }
       const sector = getSector(c);
       const sectorCell = element('td', sector.label);
-      sectorCell.append(element('small', c.cpv || (sector.code.startsWith('kr-') ? 'business type, no CPV' : 'unknown CPV'), 'provenance'));
+      if (!sector.code.startsWith('kr-')) sectorCell.append(element('small', c.cpv || 'unknown CPV', 'provenance'));
       row.append(objectCell, sectorCell, amountCell(c), element('td', c.offers ?? '—', 'numeric'));
       const badges = element('td');
       // Every signal is shown, heaviest first. Within a family only the
@@ -1219,7 +1219,7 @@ function startExplorer() {
     contracts = prepared || prepareContracts(data);
     assessmentCache = new WeakMap();
     const sectors = [...new Map(contracts.map(c => { const s = getSector(c); return [s.code, s]; })).values()].sort((a, b) => a.code === 'unknown' ? 1 : b.code === 'unknown' ? -1 : a.label.localeCompare(b.label, 'en'));
-    fillSelect(controls.sector, [['', 'All sectors'], ...sectors.map(s => [s.code, `${s.code === 'unknown' ? '' : s.code + ' · '}${s.label}`])]);
+    fillSelect(controls.sector, [['', 'All sectors'], ...sectors.map(s => [s.code, `${s.code === 'unknown' || s.code.startsWith('kr-') ? '' : s.code + ' · '}${s.label}`])]);
     projectCatalog = new Map(contracts.filter(c => c.project).map(c => [c.project.id, c.project]));
     fillSelect(controls.project, [['', 'All records'], ...(projectCatalog.size ? [['@documented', 'Documented projects only']] : []), ...[...projectCatalog.values()].map(p => [p.id, p.title])]);
     controls.project.disabled = projectCatalog.size === 0;
@@ -1298,7 +1298,19 @@ function startExplorer() {
     controls.sort.dispatchEvent(new Event('input'));
   });
   const sortHeaders = [...document.querySelectorAll('th[data-sort-key]')];
+  // Korea classifies purchases by business type (업무구분), not CPV: the sector column, filter, sort and grouping say so.
+  function syncSectorLabels() {
+    const name = datasetSelect.value === 'korea' ? 'Business type' : 'CPV sector';
+    const header = document.querySelector('th[data-sort-key="sector"]');
+    header.querySelector('button').textContent = name;
+    header.title = datasetSelect.value === 'korea' ? 'KONEPS business type (업무구분): goods, services, works…' : 'Purchase sector, not the supplier’s NAF activity';
+    const label = controls.sector.closest('label').firstChild;
+    if (label.nodeType === Node.TEXT_NODE) label.textContent = name;
+    for (const option of document.querySelectorAll('#sort-field option[value="sector"], #group-by option[value="sector"]')) option.textContent = name;
+    for (const [value, order] of [['sector', 'A–Z'], ['sector-desc', 'Z–A']]) document.querySelector(`#sort option[value="${value}"]`).textContent = `${name} · ${order}`;
+  }
   function syncSortHeaders() {
+    syncSectorLabels();
     syncSortControl();
     for (const th of sortHeaders) {
       const [desc, asc] = SORT_PAIRS[th.dataset.sortKey];
