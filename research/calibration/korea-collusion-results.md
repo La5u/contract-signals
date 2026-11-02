@@ -701,3 +701,15 @@ folds 0.87-1.12); buyer resampling ignores cartels spanning offices; sparse cell
 "coarser" counts in the tool output); the -11 comes from a different weighting than the positive points. Literature
 screens not yet tried here: skewness and kurtosis of bids, coalition-subset screens (Huber and Imhof), conditional
 entry and bidding tests (Conley and Decarolis), outsider-entry price breaks (OECD 2025).
+
+Index check with these points (`tools/korea-index-check.py`, now reading the live points from checks-national.js;
+in-sample; "old" = the raw points of 2026-10-26, B12 18 / K7 15.5):
+
+| Set | AUC site | AUC old | Index >= 20, rigged vs comparisons (ratio), site | same, old |
+|---|---|---|---|---|
+| All 721 linked tenders | 0.795 | 0.785 | 30.2 % vs 3.30 % (9.1 [5.3, 19.0]) | 71.1 % vs 11.42 % (6.2) |
+| One per case (102) | 0.810 | 0.767 | 20.0 % vs 3.30 % (6.1 [2.6, 13.5]) | 44.0 % vs 11.42 % (3.9) |
+| Bid opening found (612) | 0.750 | 0.740 | 34.8 % vs 8.23 % (4.2) | 80.2 % vs 21.78 % (3.7) |
+
+Controlled points rank rigged tenders slightly better than the raw ones and concentrate them more at the top; index 0
+holds 6.4 % of rigged tenders and 61 % of comparisons.
