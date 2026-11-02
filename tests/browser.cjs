@@ -84,10 +84,10 @@ const server=http.createServer((req,res)=>{
  assert.ok(indicatorOptions.includes('single-offer')&&!indicatorOptions.includes('term-extension')&&!indicatorOptions.includes('disqualified-better-bid'),'indicator list is scoped to the kinds this dataset runs');
  assert.match(await page.locator('#indicator option[value="direct-award"]').textContent(),/ · 175$/);
  await page.evaluate(()=>{const sort=document.querySelector('#sort');sort.value='offers';sort.dispatchEvent(new Event('input',{bubbles:true}));});
- let offerCounts=await page.locator('.contract-row').evaluateAll(rows=>rows.map(row=>Number(row.children[6].textContent.trim())).filter(Number.isFinite));
+ let offerCounts=await page.locator('.contract-row').evaluateAll(rows=>rows.map(row=>Number(row.querySelector('td.col-offers').textContent.trim())).filter(Number.isFinite));
  assert.ok(offerCounts.length>1&&offerCounts.every((n,i)=>!i||offerCounts[i-1]<=n),'historical sort=offers URL semantics remain ascending');
  await page.evaluate(()=>{const sort=document.querySelector('#sort');sort.value='offers-desc';sort.dispatchEvent(new Event('input',{bubbles:true}));});
- offerCounts=await page.locator('.contract-row').evaluateAll(rows=>rows.map(row=>Number(row.children[6].textContent.trim())).filter(Number.isFinite));
+ offerCounts=await page.locator('.contract-row').evaluateAll(rows=>rows.map(row=>Number(row.querySelector('td.col-offers').textContent.trim())).filter(Number.isFinite));
  assert.ok(offerCounts.length>1&&offerCounts.every((n,i)=>!i||offerCounts[i-1]>=n),'offers-desc sorts actual offer counts descending');
  await page.evaluate(()=>{const sort=document.querySelector('#sort');sort.value='score';sort.dispatchEvent(new Event('input',{bubbles:true}));});
  await page.selectOption('#sort-field','amount');
@@ -603,7 +603,7 @@ const server=http.createServer((req,res)=>{
   const row=lp.locator('.contract-row',{has:lp.locator('.row-toggle',{hasText:sourceObject})}).first();
   assert.equal(await row.locator('.row-toggle').textContent(),sourceObject);
   assert.match(await row.locator('td').nth(4).textContent(),new RegExp('^'+sector));
-  assert.equal(await row.locator('td').nth(5).textContent(),amount);
+  assert.equal(await row.locator('td.col-amount').textContent(),amount);
   assert.match(await row.locator('.mobile-signals').first().textContent(),signals);
   await openRow(lp,row.locator('.row-toggle'));
   assert.doesNotMatch(await lp.locator(panel).textContent(),/Buyer: |Declared increase of /);
