@@ -605,3 +605,47 @@ kept in `rerun-1026/` for comparison).
   road corporations (26); 57 have no buyer in the ruling. Relinking against the 1995–2009 contracts added about 20
   links. More court labels need those buyers' own bidding systems (KEPCO, KOGAS, KORAIL, D2B; ALIO lists public
   institutions' contracts), not more KONEPS downloads.
+
+## Controlled points and two indices, 2026-11-02 (owner: "fix" items 1-8; adopted for the site)
+
+Bid features with a notice's lots split by reserve price (`bid-features-2026-11-02.sqlite`). Runs:
+`~/.local/share/contract-signals/korea-prep-1102.sh`, outputs `~/.cache/contract-signals/korea/prep-1102/`
+(`checks-*`, `controls-*` from `tools/korea-bid-controls.py`, now on `korea-label-checks.prepare()` so `--family
+corruption` works; `size-*` from `tools/korea-buyer-share-size.py`, same; `ranges-*` from `tools/korea-curves.py`).
+Change checks (G5, G6, UA-C11) now signal as soon as the change is in the data and are unknown only while the
+two-year window is open without one; before, every contract on the site (signed from 2024-09) was unknown.
+
+**Rule.** Each check takes its points controlled for everything but itself: the bid count (BC2, exactly two bids)
+at equal value band (labels / 1.3), business type, period and winner size; every other bid and price check also at
+equal bid count (`bidders x value x type x period`), so it adds only what the bid count does not already say (chain
+rule: the bid count is scored once); concentration at equal contract value (size-standardised, labels / 1.3, as
+2026-10-20). Points: 10 x log2 of the LR at the 25th percentile, as before.
+
+| Check | Bid rigging, raw | Bid rigging, controlled (site) | Corruption, raw | Corruption, controlled (site) |
+|---|---|---|---|---|
+| BC2 exactly two bids (replaces B2 two or three) | 15.6 | **11.6** (LR 2.42) | 0 | 0 |
+| BV1 only one valid bid of 2+ | 13.5 | 0 (LR 1.08 at equal bid count) | 0 | 0 |
+| B5 large first gap | 11.9 | **2.7** | 0 | 0 |
+| B4 dispersion / B7 same minute / K5 restricted | 1.1 / 2.8 / 3.7 | 0 / 0 / 0 | 0 / 0 / 7.1 | 0 / 0 / 0 |
+| B12 floor gap ≥ 1.01 | 18.3 | **5.4** (LR 1.50) | 0 | 0 |
+| K7 award [92.2 %, 100 %) of reserve, no floor | 11.5 | **3.4** (LR 1.37) | 0 | 0 |
+| G3 buyer share ≥ 5 % | 8.2 | **8.4** | 6 | 0 (size LR 1.09) |
+| G4 concentration | 7.7 | **11.2** | 0 | 0 |
+| N4 supplier dependence ≥ 25 % | 5.6 | **9.2** | 11.6 | **10.1** (19 offices) |
+| B8 exact floor hit / UA-C11 price increase / G5 3+ changes | 0 | 0 | 5.1 / 3.2 / 1 | 0 (bid count or size) |
+
+- B12 clear (win within 1.01 points of the floor, `--clear B12`): raw LR 0.141 (−26.9 at the 75th percentile),
+  controlled 0.189 (−22.1). Controls barely move it, so the site keeps −11, the one-per-case value (owner 2026-10-25;
+  one per case on these bids: −11.1 at its own cut 1.116).
+- Cuts unchanged: FLOOR-GAP's cross-validated cut is 0.977 (decision set) and 1.116 (one per case), folds 0.871-1.116;
+  1.01 stays. PRICE-RATIO's range stays [0.9221, 1).
+- **UA-C9 (award ≥ 98 % of reserve) against K7:** not wholly redundant. Within the price slot (strata = K7 and B12
+  results) its LR is 1.62 (5.7 points); adding value and type 1.28 (2.3); with every control 1.21 (1.6). It is a
+  second range of the same award ratio, which the one-range rule admits only where it clearly helps: left out.
+- **A5 round budget (21.3 points raw):** 27 of its 36 labelled hits are one case (결정 2018-060, 27 schools, each budget
+  exactly 40,000,000 KRW); without it 9/526 = 1.7 % against 5 % of comparisons. Not a signal; stays out.
+- Corruption labels (51 tenders, 16 cases, 19 offices) keep only N4 once controlled. B9 shared CEO (8.8 raw) and B10
+  rotation (1.8 raw) are not on the site: CEO names stop in 2018 and the bid history in 2019, before the site's period.
+- Two indices on the site (owner: corruption pays more, so show it apart): each check carries points per index,
+  each index sums its family maxima, the record's index is the higher one. Bid rigging now tops out near 28 points
+  (×7) instead of about 45 (×22): the difference was the few-bidders effect counted in three families.
