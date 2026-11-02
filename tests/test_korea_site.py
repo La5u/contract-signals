@@ -71,7 +71,7 @@ class KoreaSite(unittest.TestCase):
     def build(self, *argv):
         with contextlib.redirect_stdout(io.StringIO()):
             build_site.main(['--db', str(self.db), '--out', str(self.dir / 'site'),
-                             '--checks', str(self.dir / 'site-checks.tsv'), *argv])
+                             '--checks', str(self.dir / 'site-checks.tsv'), '--bids', str(self.dir / 'bid-features.sqlite'), *argv])
 
     def test_contract_that_changed_office_is_scored_with_its_first_office(self):
         # 100 of the office's 10,000 in 2020: a 1 % share, although its latest version names another office.
@@ -111,6 +111,13 @@ class KoreaSite(unittest.TestCase):
         self.assertEqual((x['B12'], x['K7']), ('c', 'u'))
         self.assertEqual({v for k, v in got['Y'].items() if k.startswith('B')}, {'u'})
         self.assertEqual((self.bids['X'], self.bids['Y']), ('6', ''))  # the Offers column: every bid opened, '' without an opening
+        # The bid-ratio column: winning bid and lower award limit of the same opening, % of the reserve price.
+        self.build('--start', '2024-09-01')
+        meta = json.loads((self.dir / 'site/meta.json').read_text())
+        col = {k: i for i, k in enumerate(meta['columns'])}
+        rows = {r[0]: r for f in (self.dir / 'site/s').iterdir() for b in json.loads(f.read_text())['buyers'].values() for r in b}
+        self.assertEqual((rows['X'][col['winnerRate']], rows['X'][col['lowerRate']]), (90.0, 89.95))
+        self.assertEqual((rows['Y'][col['winnerRate']], rows['Y'][col['changes']]), (None, None))
 
     def test_bid_features(self):
         rows = [{'bidprcAmt': a, 'dqlfctnRsn': '정상', 'sucsfYn': 'Y' if a == 100 else 'N', 'bidprcRt': '88',
@@ -129,7 +136,8 @@ class KoreaSite(unittest.TestCase):
         top = json.loads((self.dir / 'site/top.json').read_text())
         self.assertEqual((top['count'], top['limit']), (1, 5000))
         self.assertIn('top.json', ' '.join(meta['notes']))
-        self.assertEqual(meta['columns'][-2:], ['checks', 'bids'])
+        self.assertEqual(meta['columns'][19:21], ['checks', 'bids'])
+        self.assertEqual(meta['columns'][-1], 'changes')
 
     def test_failed_top_build_keeps_the_previous_one(self):
         self.checks([version('C', 0, '2025-01-01', 100, 'A')])
