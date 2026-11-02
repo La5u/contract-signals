@@ -119,6 +119,22 @@ class KoreaSite(unittest.TestCase):
         self.assertEqual((rows['X'][col['winnerRate']], rows['X'][col['lowerRate']]), (90.0, 89.95))
         self.assertEqual((rows['Y'][col['winnerRate']], rows['Y'][col['changes']]), (None, None))
 
+    def test_lots_of_one_notice_are_split_by_reserve_price(self):
+        # One notice, two lots (reserve 1000 and 2000) and no lot field: the contract takes the lot its supplier won.
+        def bid(firm, amount, reserve, won='N', rate='90.0'):
+            return {'bidNtceNo': 'N2', 'bidNtceOrd': '000', 'bsnsDivNm': '물품', 'sucsfLwstlmtRt': '87.745', 'rsrvtnPrce': reserve,
+                    'bidprcCorpBizrno': firm, 'bidprcAmt': str(amount), 'bidprcRt': rate, 'bidprcDate': '2025-04-14',
+                    'bidprcTm': '10:00', 'sucsfYn': won, 'dqlfctnRsn': '정상'}
+        bids = [bid('1111111111', 900, '1000', won='Y', rate='90.0'), bid('2222222222', 950, '1000'), bid('3333333333', 960, '1000'),
+                bid('1208100001', 1900, '2000', won='Y', rate='95.0'), bid('2222222222', 1950, '2000')]
+        self.checks([version('L', 0, '2025-04-20', 1900, 'A', notice_no='N2', notice_ord='000')], bids)
+        self.assertEqual(self.bids['L'], '2')  # the lot's own two bids, not all five
+        self.build('--start', '2024-09-01')
+        meta = json.loads((self.dir / 'site/meta.json').read_text())
+        col = {k: i for i, k in enumerate(meta['columns'])}
+        rows = {r[0]: r for f in (self.dir / 'site/s').iterdir() for b in json.loads(f.read_text())['buyers'].values() for r in b}
+        self.assertEqual(rows['L'][col['winnerRate']], 95.0)
+
     def test_bid_features(self):
         rows = [{'bidprcAmt': a, 'dqlfctnRsn': '정상', 'sucsfYn': 'Y' if a == 100 else 'N', 'bidprcRt': '88',
                  'sucsfLwstlmtRt': '87.745', 'bidprcDate': '2025-01-01', 'bidprcTm': t} for a, t in ((100, '1'), (110, '2'), (120, '3'))]

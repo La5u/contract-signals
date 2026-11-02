@@ -68,7 +68,7 @@ def work(job):
                 for no, c in contracts.items():
                     result = checks(c)
                     # Bids opened in the tender, from the same opening the B checks read (empty when not found).
-                    opening = bids.opening(c['notice'], c.get('notice_ord', '')) if bids and c['notice'] and c['original'] else None
+                    opening = bids.opening(c['notice'], c.get('notice_ord', ''), c.get('supplier')) if bids and c['notice'] and c['original'] else None
                     n = '' if opening is None or opening['bids'] is None else str(opening['bids'])
                     out.write(no + '\t' + ''.join(LETTER[result[k]['status']] for k in SITE_CHECKS) + '\t' + n + '\n')
                 written += len(contracts)

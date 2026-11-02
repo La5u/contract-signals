@@ -200,7 +200,7 @@ def main():
     profile = defaultdict(Counter)
     for c in pool:
         lab = reps.get(c['no'])
-        o = bids.opening(c['notice'], c.get('notice_ord', '')) if c['notice'] else None
+        o = bids.opening(c['notice'], c.get('notice_ord', ''), c.get('supplier')) if c['notice'] else None
         amount = c['amount'] / OVERPRICING if lab else c['amount']
         prior = sum(sizes.get((c['supplier'], c['year'] - k), 0) for k in (1, 2, 3)) if c['supplier'] else 0
         strata = {'bidders': bidder_bin(o['bids'] if o else None), 'value': band(amount, VALUE_EDGES),
