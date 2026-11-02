@@ -20,7 +20,6 @@ import heapq
 import os
 import sqlite3
 import sys
-import tempfile
 import time
 from collections import defaultdict
 from multiprocessing import Pool
@@ -55,15 +54,37 @@ GROUP BY v.cntrct_no HAVING min(v.buyer_code) IS NOT NULL
 LETTER = {'signal': 's', 'clear': 'c', 'unknown': 'u'}
 
 
+def resume_point(part):
+    """(offices already written, byte length of the part file through the last of them). Each office is followed by a
+    line in <part>.done naming it and the part's length after it, so a killed or failed run resumes after the last
+    complete office; a half-written office is cut off."""
+    done = part.with_name(part.name + '.done')
+    offices, length = set(), 0
+    if part.exists() and done.exists():
+        for line in done.read_text().splitlines():
+            office, _, size = line.partition('\t')
+            if size.isdigit():
+                offices.add(office)
+                length = int(size)
+    return offices, length
+
+
 def work(job):
-    """One worker: its offices, one at a time, into its own part file."""
+    """One worker: its offices, one at a time, into its own part file; resumes after the last complete office."""
     db, attrib, part, buyers, first_year, bids_path = job
     bids = ko.Bids(bids_path) if bids_path else None
     con = sqlite3.connect(f'file:{db}?mode=ro', uri=True)
     con.execute('ATTACH ? AS a', (f'file:{attrib}?mode=ro',))
     written, started = 0, time.time()
-    with open(part, 'w') as out:
+    finished, length = resume_point(part)
+    if finished:
+        print(f'{part.name}: resuming after {len(finished)} offices', flush=True)
+    with open(part, 'a' if finished else 'w') as out, open(part.with_name(part.name + '.done'), 'a' if finished else 'w') as log:
+        out.truncate(length)
+        out.seek(length)
         for i, buyer in enumerate(buyers, 1):
+            if buyer in finished:
+                continue
             versions = defaultdict(list)
             for rec in con.execute(QUERY, (buyer,)):
                 versions[rec[0]].append(dict(zip(COLS, rec)))
@@ -80,6 +101,9 @@ def work(job):
                     n = '' if opening is None or opening['bids'] is None else str(opening['bids'])
                     out.write(no + '\t' + ''.join(LETTER[result[k]['status']] for k in SITE_CHECKS) + '\t' + n + '\n')
                 written += len(contracts)
+            out.flush()
+            log.write(f'{buyer}\t{out.tell()}\n')
+            log.flush()
             if i % 1000 == 0:
                 print(f'{part.name}: {i}/{len(buyers)} offices, {written} contracts, {time.time() - started:.0f} s', flush=True)
     con.close()
@@ -100,23 +124,36 @@ def main(argv=None):
         print(f'{args.bids} missing: bid-level checks unknown', flush=True)
     con = sqlite3.connect(f'file:{args.db}?mode=ro', uri=True)
     first_year = int(con.execute('SELECT min(signed) FROM versions').fetchone()[0][:4])
-    tmp = tempfile.TemporaryDirectory(dir=args.out.parent)
-    attrib = Path(tmp.name) / 'attrib.sqlite'
-    con.execute('ATTACH ? AS a', (str(attrib),))
-    con.execute('CREATE TABLE a.attrib (buyer TEXT, cntrct_no TEXT, PRIMARY KEY (buyer, cntrct_no)) WITHOUT ROWID')
+    # The attribution is kept next to the output until the run completes, so a resumed run skips it.
+    attrib = args.out.with_name(args.out.name + '.attrib.sqlite')
     started = time.time()
-    con.execute(ATTRIBUTE)
-    con.commit()
-    sizes = con.execute('SELECT buyer, count(*) FROM a.attrib GROUP BY buyer').fetchall()
+    if attrib.exists():
+        con.execute('ATTACH ? AS a', (f'file:{attrib}?mode=ro',))
+        print('offices attribution reused', flush=True)
+    else:
+        staging = attrib.with_name(attrib.name + '.part')
+        staging.unlink(missing_ok=True)
+        con.execute('ATTACH ? AS a', (str(staging),))
+        con.execute('CREATE TABLE a.attrib (buyer TEXT, cntrct_no TEXT, PRIMARY KEY (buyer, cntrct_no)) WITHOUT ROWID')
+        con.execute(ATTRIBUTE)
+        con.commit()
+        con.execute('DETACH a')
+        staging.rename(attrib)
+        con.execute('ATTACH ? AS a', (f'file:{attrib}?mode=ro',))
+        print(f'offices attributed in {time.time() - started:.0f} s', flush=True)
+    sizes = con.execute('SELECT buyer, count(*) FROM a.attrib GROUP BY buyer ORDER BY buyer').fetchall()
     con.close()
-    print(f'offices attributed in {time.time() - started:.0f} s', flush=True)
     # Biggest offices first, each to the least-loaded worker, so the workers finish at about the same time.
     heap = [(0, i, []) for i in range(args.workers)]
-    for buyer, n in sorted(sizes, key=lambda s: -s[1]):
+    for buyer, n in sorted(sizes, key=lambda s: (-s[1], s[0])):  # fixed order: a resumed run gives each worker the same offices
         load_, i, buyers = heapq.heappop(heap)
         buyers.append(buyer)
         heapq.heappush(heap, (load_ + n, i, buyers))
     parts = [args.out.with_suffix(f'.part{i}') for i in range(args.workers)]
+    logs = sorted(args.out.parent.glob(args.out.stem + '.part*.done'))
+    if logs and len(logs) != args.workers:
+        raise SystemExit(f'{len(logs)} resumable part files from an earlier run with another --workers: rerun with '
+                         f'--workers {len(logs)}, or delete {args.out.stem}.part* to start over')
     jobs = [(args.db, attrib, parts[i], buyers, first_year, bids_path) for _, i, buyers in sorted(heap, key=lambda h: h[1])]
     print(f'{len(sizes)} offices, {sum(n for _, n in sizes)} contracts, {args.workers} workers', flush=True)
     if args.workers == 1:
@@ -131,9 +168,11 @@ def main(argv=None):
             with part.open() as f:
                 for line in f:
                     out.write(line)
-            part.unlink()
     staged.rename(args.out)
-    tmp.cleanup()
+    for part in parts:
+        part.unlink()
+        part.with_name(part.name + '.done').unlink(missing_ok=True)
+    attrib.unlink()
     print(f'{written} contracts with checks -> {args.out}')
 
 

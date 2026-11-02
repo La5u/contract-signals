@@ -143,6 +143,35 @@ class KoreaSite(unittest.TestCase):
         self.assertAlmostEqual(f['rd'], 10 / 7.0710678, places=5)
         self.assertAlmostEqual(f['cv'], 8.1649658 / 110, places=6)
 
+    def test_resumes_after_the_last_complete_office(self):
+        """A killed run resumes after its last complete office: a half-written office is cut off, none is repeated."""
+        vs = [version(f'C{i}', 0, '2024-01-01', 100, b) for i, b in enumerate('AABBC')]
+        full = self.checks(vs)
+        out = self.dir / 'site-checks.tsv'
+        out.unlink()
+        argv = ['--db', str(self.db), '--out', str(out), '--workers', '1', '--bids', str(self.dir / 'none.sqlite')]
+        real = site_checks.ko.build_checks
+        calls = []
+
+        def dies_on_second_office(*a, **k):
+            calls.append(1)
+            if len(calls) == 2:
+                part = out.with_suffix('.part0')
+                part.write_text(part.read_text() + 'HALF\tline\n')  # an office cut off mid-write
+                raise KeyboardInterrupt
+            return real(*a, **k)
+        site_checks.ko.build_checks = dies_on_second_office
+        try:
+            with contextlib.redirect_stdout(io.StringIO()), self.assertRaises(KeyboardInterrupt):
+                site_checks.main(argv)
+        finally:
+            site_checks.ko.build_checks = real
+        with contextlib.redirect_stdout(io.StringIO()):
+            site_checks.main(argv)
+        rows = [l.split('\t')[0] for l in out.read_text().splitlines()[1:]]
+        self.assertEqual(sorted(rows), sorted(full))
+        self.assertEqual(list(self.dir.glob('site-checks.part*')) + list(self.dir.glob('*.attrib.sqlite')), [])
+
     def test_period_ends_at_the_latest_change(self):
         self.checks([version('C', 0, '2020-01-01', 100, 'A'), version('C', 1, '2025-03-01', 120, 'A')])
         self.build('--start', '2024-09-01')
