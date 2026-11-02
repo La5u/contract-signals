@@ -197,22 +197,27 @@ main { max-width: 1480px; margin: 0 auto; padding: 14px 24px 32px; }
   background: var(--surface); border: 1px solid var(--line-strong);
 }
 table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
-.main-table { table-layout: fixed; min-width: 960px; }
+.main-table { table-layout: fixed; min-width: 1100px; }
 caption { text-align: left; color: var(--ink-3); padding: 0 0 10px; }
 th {
   position: sticky; top: 0; z-index: 2; background: var(--surface-2); text-align: left;
   font-size: 11.5px; font-weight: 650; color: var(--ink-2); white-space: nowrap; box-shadow: 0 1px 0 var(--line-strong);
 }
 th, td { padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
-.main-table > thead > tr > th:nth-child(1) { width: 8%; }
-.main-table > thead > tr > th:nth-child(2) { width: 12%; }
-.main-table > thead > tr > th:nth-child(3) { width: 12%; }
-.main-table > thead > tr > th:nth-child(4) { width: 26%; }
-.main-table > thead > tr > th:nth-child(5) { width: 9%; }
-.main-table > thead > tr > th:nth-child(6) { width: 10%; }
-.main-table > thead > tr > th:nth-child(7) { width: 5%; }
-.main-table > thead > tr > th:nth-child(8) { width: 14%; }
-.main-table > thead > tr > th:nth-child(9) { width: 4.5rem; }
+.main-table > thead > tr > th:nth-child(1) { width: 7%; }
+.main-table > thead > tr > th:nth-child(2) { width: 11%; }
+.main-table > thead > tr > th:nth-child(3) { width: 11%; }
+.main-table > thead > tr > th:nth-child(4) { width: 21%; }
+.main-table > thead > tr > th:nth-child(5) { width: 8%; }
+.main-table > thead > tr > th.col-procedure { width: 9%; }
+.main-table > thead > tr > th:nth-child(7) { width: 9%; }
+.main-table > thead > tr > th:nth-child(8) { width: 5%; }
+.main-table > thead > tr > th.col-extra { width: 7%; }
+.main-table > thead > tr > th.col-signals { width: 12%; }
+.main-table > thead > tr > th.col-index { width: 4.5rem; }
+.main-table.no-extra .col-extra { display: none; }
+.amount-changes { margin: 0; padding-left: 1.4em; font-variant-numeric: tabular-nums; }
+.col-procedure .procedure-name { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
 .numeric { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .amount-range span { display: block; }
 .contract-row { cursor: pointer; }
@@ -248,7 +253,7 @@ th, td { padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align
 .badge { padding: 2px 6px; margin: 0 3px 3px 0; border: 1px solid transparent; }
 button.badge { font: inherit; font-size: 11px; font-weight: 650; cursor: pointer; text-align: left; }
 button.badge:hover { border-color: currentColor; }
-.contract-row td:nth-child(8) .badge { display: block; width: fit-content; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.contract-row td.col-signals .badge { display: block; width: fit-content; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .badge.not-counted { opacity: .7; border-style: dashed; border-color: currentColor; }
 .badge.offset { color: var(--none-fg); background: var(--none-bg); border: 1px dashed currentColor; font-weight: 500; }
 .badge.context { color: var(--unk-fg); background: var(--unk-bg); border: 1px dotted currentColor; font-weight: 500; }
@@ -390,13 +395,9 @@ footer { margin-top: 28px; border-top: 1px solid var(--line); padding-top: 16px;
   .main-table { min-width: 0; table-layout: fixed; }
   .main-table > thead > tr > th:nth-child(1) { width: 80px; }
   .main-table > thead > tr > th:nth-child(4) { width: auto; }
-  .main-table > thead > tr > th:nth-child(9) { width: 82px; }
-  .main-table > thead > tr > th:nth-child(2), .main-table > thead > tr > th:nth-child(3),
-  .main-table > thead > tr > th:nth-child(5), .main-table > thead > tr > th:nth-child(6),
-  .main-table > thead > tr > th:nth-child(7), .main-table > thead > tr > th:nth-child(8),
-  .contract-row > td:nth-child(2), .contract-row > td:nth-child(3),
-  .contract-row > td:nth-child(5), .contract-row > td:nth-child(6),
-  .contract-row > td:nth-child(7), .contract-row > td:nth-child(8) { display: none; }
+  .main-table > thead > tr > th.col-index { width: 82px; }
+  .main-table > thead > tr > th:not(:nth-child(1)):not(:nth-child(4)):not(.col-index),
+  .contract-row > td:not(:nth-child(1)):not(:nth-child(4)):not(:last-child) { display: none; }
   .mobile-buyer { display: block; color: var(--ink-3); font-size: 11px; margin-top: 3px; }
   .mobile-signals { display: block; color: var(--high-fg); font-size: 11px; margin-top: 3px; }
   .mobile-signals.context { color: var(--unk-fg); }

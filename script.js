@@ -506,6 +506,49 @@ function startExplorer() {
     cell.append(element('span', whole.format(range[0])), element('span', `– ${whole.format(range[1])}`));
     return cell;
   }
+  // Procedure as published, and whether it is competitive or direct where the data says so.
+  function procedureCell(c) {
+    const cell = element('td', null, 'col-procedure');
+    const name = (c.dataFamily === 'koneps' ? c.procedureMethod : c.procedure) || '—';
+    cell.append(element('span', name, 'procedure-name'));
+    cell.title = name;
+    // KONEPS methods: 수의계약 (negotiated with one firm) is direct; the 경쟁 methods are competitive.
+    const korean = c.dataFamily === 'koneps' && c.procedureMethod ? (/수의/.test(c.procedureMethod) ? true : /경쟁/.test(c.procedureMethod) ? false : null) : null;
+    const direct = c.directAward ?? c.procedureDirect ?? korean;
+    if (direct === true || direct === false) cell.append(element('small', direct ? 'direct award' : 'competitive', 'provenance'));
+    return cell;
+  }
+  // One column whose content depends on the country: the figure its data adds that the shared columns lack.
+  const percent = v => `${Number(v).toLocaleString('en', { maximumFractionDigits: 3 })} %`;
+  const EXTRA_COLUMNS = {
+    koneps: { header: 'Bid ratio', title: 'Winning bid as a % of the reserve price (예정가격); below it, the lower award limit (낙찰하한율). From the bid opening (개찰결과).',
+      value: c => c.winnerRate == null ? null : [percent(c.winnerRate), c.lowerRate == null ? null : `floor ${percent(c.lowerRate)}`] },
+    decp: { header: 'Duration', title: 'Declared duration; below it, the declared amount change where the published history allows it.',
+      value: c => { const e = getAmountEvolution(c); return [c.durationMonths == null ? null : `${c.durationMonths} months`, e.status === 'available' ? `${e.percentage >= 0 ? '+' : ''}${e.percentage.toFixed(1)} % amount` : null]; } },
+    prozorro: { header: 'Changes', title: 'Published contract changes (Prozorro)', value: c => c.contractChanges == null ? null : [String(c.contractChanges), c.contractChangeTypes?.length ? c.contractChangeTypes.join(', ') : null] },
+    secop2: { header: 'Days added', title: 'Days added to the contract term (SECOP II)', value: c => c.daysAdded == null ? null : [String(c.daysAdded)] },
+    dncp: { header: 'Amendments', title: 'Published contract amendments (DNCP)', value: c => c.amendmentCount == null ? null : [String(c.amendmentCount)] },
+  };
+  EXTRA_COLUMNS.boamp = EXTRA_COLUMNS.decp;
+  let extraColumn = null;
+  function syncExtraColumn() {
+    // The dataset's main source decides (France mixes DECP with a few audit dossiers).
+    const counts = new Map();
+    for (const c of contracts) counts.set(c.dataFamily, (counts.get(c.dataFamily) || 0) + 1);
+    const main = [...counts].sort((a, b) => b[1] - a[1])[0]?.[0];
+    extraColumn = EXTRA_COLUMNS[main] || null;
+    const th = document.querySelector('.main-table th.col-extra');
+    th.textContent = extraColumn?.header || '';
+    th.title = extraColumn?.title || '';
+    th.closest('table').classList.toggle('no-extra', !extraColumn);
+  }
+  function extraCell(c) {
+    const cell = element('td', null, 'numeric col-extra');
+    const [first, ...rest] = (extraColumn && extraColumn.value(c)) || [];
+    cell.append(first ?? '—');
+    for (const line of rest) if (line) cell.append(element('small', line, 'provenance'));
+    return cell;
+  }
   function scoreChip(c) {
     const breakdown = getScoreBreakdown(c);
     const level = scoreLevel(breakdown.score, hasIncompleteData(c), breakdown.assessment.signals, breakdown.assessment.weighted);
@@ -578,7 +621,9 @@ function startExplorer() {
       const dateCell = element('td', formatDate(c));
       if (c.noticeEvidence) dateCell.append(element('small', 'BOAMP publication', 'provenance'));
       if (c.dataFamily === 'dncp') dateCell.append(element('small', 'Contract-period start · not signature', 'provenance'));
-      row.append(dateCell, element('td', c.buyer), supplierCell);
+      const buyerCell = element('td', c.buyer);
+      if (c.requestingInstitution) buyerCell.append(element('small', `for ${c.requestingInstitution}`, 'provenance'));
+      row.append(dateCell, buyerCell, supplierCell);
       const objectCell = element('td');
       const button = element('button', c.description, 'row-toggle');
       button.type = 'button';
@@ -618,8 +663,8 @@ function startExplorer() {
       const sector = getSector(c);
       const sectorCell = element('td', sector.label);
       if (!sector.code.startsWith('kr-')) sectorCell.append(element('small', c.cpv || 'unknown CPV', 'provenance'));
-      row.append(objectCell, sectorCell, amountCell(c), element('td', c.offers ?? '—', 'numeric'));
-      const badges = element('td');
+      row.append(objectCell, sectorCell, procedureCell(c), amountCell(c), element('td', c.offers ?? '—', 'numeric'), extraCell(c));
+      const badges = element('td', null, 'col-signals');
       // Every signal is shown, heaviest first. Within a family only the
       // heaviest counts; the others are marked as not added to the index.
       const counted = new Set();
@@ -652,7 +697,7 @@ function startExplorer() {
       const assessment = breakdown.assessment;
       const scoreValue = breakdown.score;
       if (!indicators.length && !against.length) badges.append(element('span', '—', 'muted'));
-      const score = element('td', null, 'numeric');
+      const score = element('td', null, 'numeric col-index');
       const coverageLabel = assessment.excludedReason ? 'Calculations excluded' : assessment.applicable ? `${assessment.signals} signal(s) · ${assessment.evaluated}/${assessment.applicable} known-applicable checks evaluated` : 'No check with established applicability';
       score.append(scoreChip(c));
       score.title = `${coverageLabel}. ${assessment.unknownApplicability} unknown applicability(ies). Open the row for details.`;
@@ -807,6 +852,21 @@ function startExplorer() {
     else if (!c.noticeEvidence || offers != null) fact('Offers', offers == null ? '—' : String(offers));
     const procedureKind = NATIONAL_FAMILIES[c.dataFamily] ? (c.procedureDirect === true ? 'without competition' : c.procedureDirect === false ? 'competitive' : 'not classified') : null;
     fact('Procedure', [c.procedure || '—', c.procedureCode].filter(Boolean).join(' · '), ...(procedureKind ? [' · ', element('span', procedureKind)] : []));
+    if (c.dataFamily === 'koneps') {
+      const krw = v => moneyFor(c).format(v);
+      fact('Requesting institution', c.requestingInstitution);
+      if (c.winnerRate != null) fact('Bid ratio', `${percent(c.winnerRate)} of the reserve price`, ...(c.lowerRate != null ? [element('small', ` · lower award limit ${percent(c.lowerRate)}`, 'muted')] : []));
+      fact('Bids opened', c.openingDate);
+      fact('Tender notice', c.noticeName);
+      fact('Pricing', [c.pricing, c.termType].filter(Boolean).join(' · '));
+      if (c.totalAmount != null) fact('Total contract amount', krw(c.totalAmount), element('small', ' all years', 'muted'));
+      fact('Supplier region', c.supplierRegion);
+      if (Array.isArray(c.amountChanges) && c.amountChanges.length > 1) {
+        const list = element('ol', null, 'amount-changes');
+        for (const [date, amount] of c.amountChanges) list.append(element('li', `${date || '—'} · ${amount == null ? '—' : krw(amount)}`));
+        fact('Amount at each version', list);
+      }
+    }
     if (c.durationMonths != null || c.durationOriginal) fact('Duration', ...(c.durationMonths != null ? [`${c.durationMonths} `, element('span', 'months')] : [c.durationOriginal]));
     fact('Index', scoreChip(c));
     head.append(facts);
@@ -1311,6 +1371,7 @@ function startExplorer() {
   }
   function syncSortHeaders() {
     syncSectorLabels();
+    syncExtraColumn();
     syncSortControl();
     for (const th of sortHeaders) {
       const [desc, asc] = SORT_PAIRS[th.dataset.sortKey];

@@ -38,7 +38,10 @@ SHARD_BYTES = 1_500_000
 PART_BYTES = 8_000_000
 COLUMNS = ['contractNo', 'date', 'dateIsFirstChange', 'name', 'demand', 'supplier', 'supplierBizrno', 'supplierKind',
            'originalAmount', 'latestAmount', 'versions', 'method', 'businessType', 'noticeNo', 'legalRef', 'joint',
-           'linkContract', 'linkChangeOrder', 'linkKind', 'checks', 'bids']
+           'linkContract', 'linkChangeOrder', 'linkKind', 'checks', 'bids',
+           # Appended 2026-11-02 for the record panel and the bid-ratio column (readers use the names, not positions).
+           'winnerRate', 'lowerRate', 'pricing', 'termType', 'totalAmount', 'supplierRegion', 'openingDate', 'noticeName',
+           'changes']
 # KR_CHECK_ORDER in checks-national.js must be a prefix of this: it reads the letters by position, so new checks are
 # appended (the bid-level B checks were, 2026-10-22).
 CHECK_ORDER = ['G2', 'G3', 'G4', 'G5', 'G6', 'N1', 'N2', 'N4', 'N5', 'U2', 'K1', 'K2', 'K3', 'K4', 'K5', 'K6',
@@ -103,7 +106,8 @@ QUERY = '''
 select c.cntrct_no, c.signed, c.first_date_seen, c.original_in_period, c.last_name, v.demand_name,
        c.last_supplier_name, c.last_supplier_bizrno, c.last_supplier_kind, c.original_amount, c.last_amount, c.versions_seen,
        c.last_method, c.last_business_type, c.last_notice_no, c.last_legal_ref, c.last_joint, v.contract_url,
-       c.last_buyer_code, c.last_buyer_name, c.last_buyer_type, k.letters, k.bids, c.last_date_seen
+       c.last_buyer_code, c.last_buyer_name, c.last_buyer_type, k.letters, k.bids, c.last_date_seen,
+       v.notice_ord, v.pricing, v.term_type, v.total_amount, v.supplier_region, v.opening_date, v.notice_name
 from contracts c join versions v on v.cntrct_no = c.cntrct_no and v.ord = c.last_ord
 left join k.checks k on k.cntrct_no = c.cntrct_no
 where c.last_date_seen >= ?
@@ -136,6 +140,8 @@ def main(argv=None):
     p.add_argument('--start', default='2024-09-01',
                    help='publish contracts signed or changed from this date; older ones stay local (testing, tuning)')
     p.add_argument('--origin', default='https://contracts.lasu.dev', help='the explorer allowed to read the files (CORS)')
+    p.add_argument('--bids', type=Path, default=BASE / 'bid-features-2026-10-28.sqlite',
+                   help='bid openings (tools/korea-bid-features.py): winning bid and lower award limit, %% of the reserve price')
     p.add_argument('--places-only', action='store_true', help="only rewrite the places in OUT's buyers.json")
     args = p.parse_args(argv)
     if args.places_only:
@@ -161,14 +167,42 @@ def main(argv=None):
         shutil.rmtree(out)
     (out / 's').mkdir(parents=True)
 
-    methods, types, link_kinds = [], [], []
+    methods, types, link_kinds, pricings, term_types = [], [], [], [], []
+    bids_db = sqlite3.connect(f'file:{args.bids}?mode=ro', uri=True) if args.bids.exists() else None
+    if bids_db is None:
+        print(f'{args.bids} missing: no bid ratios', flush=True)
+
+    def opening_rates(notice, notice_ord):
+        # The contract's opening as tools/korea-label-checks.py Bids.opening picks it: the notice's own order,
+        # else the latest with a winner, else the latest. 0 in the source means not published.
+        if bids_db is None or not notice:
+            return None, None
+        rows = bids_db.execute('select ord, winner, winner_rate, lower_rate from openings where notice = ? order by day, ord',
+                               (notice,)).fetchall()
+        pool = [r for r in rows if r[0] == notice_ord] or rows
+        won = [r for r in pool if r[1]]
+        if not pool:
+            return None, None
+        _, _, rate, lower = (won or pool)[-1]
+        return (rate or None), (lower or None)
+
+    def changes(no, n):
+        # Amount at each version (계약변경차수), only for changed contracts: [[date, amount], ...] by order.
+        if not n or n < 2:
+            return None
+        seen = {}
+        for ord_, signed, amount in db.execute('select ord, signed, amount from versions where cntrct_no = ? order by ord', (no,)):
+            seen.setdefault(ord_, [signed, amount])
+        return list(seen.values()) if len(seen) > 1 else None
     buyers = {}
     last_date = None  # the period's end: the latest signature or change selected, not the latest displayed date
 
     def contract_row(r):
         nonlocal last_date
         (no, signed, first_seen, original_in, name, demand, supplier, bizrno, kind, original, latest, versions,
-         method, btype, notice, legal, joint, url, bcode, bname, btype_buyer, letters, n_bids, last_seen) = r
+         method, btype, notice, legal, joint, url, bcode, bname, btype_buyer, letters, n_bids, last_seen,
+         notice_ord, pricing, term_type, total, region, opening, notice_name) = r
+        rate, lower = opening_rates(notice, notice_ord)
         individual = kind == 'individual'
         date = signed or first_seen
         if last_seen:
@@ -178,7 +212,10 @@ def main(argv=None):
             no, date, 0 if signed else 1, name, demand, supplier, None if individual else bizrno,
             KINDS.index(kind) if kind in KINDS else KINDS.index('unknown'),
             original if original_in else None, latest, versions, index(methods, method), index(types, btype),
-            notice or None, legal, 1 if joint == 'Y' else 0, *link_parts(url, link_kinds), letters, n_bids]
+            notice or None, legal, 1 if joint == 'Y' else 0, *link_parts(url, link_kinds), letters, n_bids,
+            rate, lower, index(pricings, pricing), index(term_types, term_type), total if total and total != latest else None,
+            None if individual else region, opening, notice_name if notice_name and notice_name != name else None,
+            changes(no, versions)]
 
     # Pack consecutive buyers (by code) into shards of about SHARD_BYTES; per-shard lists for demand and legal ground.
     # Rows are streamed one buyer at a time (the full history does not fit in memory).
@@ -235,7 +272,7 @@ def main(argv=None):
         'dataFrom': data_from,
         'source': 'Public Procurement Service (조달청), open-standard contract data (공공데이터 개방표준 계약정보), data.go.kr',
         'licence': 'data.go.kr: 이용허락범위 제한 없음 (no restriction on use); source attribution given',
-        'columns': COLUMNS, 'methods': methods, 'businessTypes': types, 'supplierKinds': KINDS, 'linkKinds': link_kinds,
+        'columns': COLUMNS, 'methods': methods, 'businessTypes': types, 'supplierKinds': KINDS, 'linkKinds': link_kinds, 'pricings': pricings, 'termTypes': term_types,
         'link': LINK, 'checkOrder': CHECK_ORDER,
         'notes': ['Contracts signed or changed in the period; one row per contract number, from its latest version. Original amount when the original contract is in the data (from dataFrom).',
                   'dateIsFirstChange = 1: the contract was signed before dataFrom; the date is its first change in the data.',
@@ -244,6 +281,10 @@ def main(argv=None):
                   'A buyer too big for one file has a sixth entry in buyers.json: its shards, oldest contracts first; the fifth entry is the newest part.',
                   'checks: one letter per check in checkOrder (s signal, c clear, u unknown), from tools/korea-site-checks.py; null when not computed.',
                   'bids: bids opened in the tender (개찰결과) whose opening the B checks read; null when not found.',
+                  'winnerRate, lowerRate: winning bid and lower award limit (낙찰하한율), % of the reserve price, from the same opening; null when not published.',
+                  'pricing, termType: indexes into pricings (총액/단가) and termTypes (단기/장기/계속비). totalAmount: total contract amount of a multi-year contract, when it differs.',
+                  'supplierRegion: the supplier\'s registered region (not for individuals). noticeName: tender notice title when it differs from the contract name.',
+                  'changes: [date, amount] at each contract version, for contracts with more than one version in the data.',
                   'Individual businesses keep their published trade name; their business registration number is left out.',
                   'Officials, representatives, phone numbers, e-mails and street addresses are not included.'],
     }

@@ -127,9 +127,9 @@ const server=http.createServer((req,res)=>{
  // brings a given row to the top; an Ardèche software-maintenance award without competition is picked instead.
  await page.selectOption('#indicator','direct-award');
  const contextRow=page.locator('.contract-row',{hasText:'Context: single-vendor software maintenance'}).first();
- const contextSignals=await contextRow.locator('td:nth-child(8) .badge:not(.context)').count();
+ const contextSignals=await contextRow.locator('td.col-signals .badge:not(.context)').count();
  assert.ok(contextSignals>=2,`software-maintenance row shows ${contextSignals} signal chip(s)`);
- assert.match(await contextRow.locator('td:nth-child(8)').textContent(),/competition/);
+ assert.match(await contextRow.locator('td.col-signals').textContent(),/competition/);
  await page.click('#clear-filters');
  await page.selectOption('#page-size','50');
  assert.equal(await page.locator('.contract-row').count(),50);
