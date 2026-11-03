@@ -854,6 +854,10 @@ window.I18N_DICTS.fr = {
   "KONEPS (나라장터) contract page": "Page du contrat sur KONEPS (나라장터)",
   "South Korea · KONEPS · amounts in KRW; full record on KONEPS.": "Corée du Sud · KONEPS · montants en KRW ; fiche complète sur KONEPS.",
   "Most flagged · nationwide": "Les plus signalés · tout le pays",
+  "Institution type": "Type d’entité",
+  "Kind": "Catégorie",
+  "Province": "Province",
+  "City or district": "Ville ou district",
   "Choose a contracting institution.": "Choisissez une entité contractante.",
   "Ukraine · Prozorro · random sample of 3,500 completed open tenders (aboveThreshold) created June–August 2026, all buyers: 3,663 signed contracts. Per-tender checks only: repetition, concentration and buyer share need every tender of a buyer and are not assessed; amendments were not retrieved. Amounts in UAH, EUR or USD.": "Ukraine · Prozorro · échantillon aléatoire de 3 500 appels ouverts terminés (aboveThreshold) créés de juin à août 2026, tous acheteurs : 3 663 marchés signés. Contrôles par appel uniquement : la répétition, la concentration et la part de l’acheteur exigent tous les appels d’un acheteur et ne sont pas évaluées ; les modifications n’ont pas été récupérées. Montants en UAH, EUR ou USD.",
   "The index is a multiplier: ×2 means records with these signals are twice as frequent among proven cases (convictions, cartel decisions) as among the same buyers’ other contracts. It is not a probability. Only measured signals count; signals never measured on proven cases are shown as context with ×1.0. “Not assessed” means no applicable check could be evaluated. Missing values are shown as unknown.": "L’indice est un multiplicateur : ×2 signifie que les enregistrements présentant ces signaux sont deux fois plus fréquents parmi les cas avérés (condamnations, décisions sur des ententes) que parmi les autres marchés des mêmes acheteurs. Ce n’est pas une probabilité. Seuls les signaux mesurés comptent ; les signaux jamais mesurés sur des cas avérés sont affichés comme contexte, avec ×1.0. « Non évalué » signifie qu’aucun contrôle applicable n’a pu être évalué. Les valeurs manquantes sont indiquées comme inconnues.",
@@ -1662,6 +1666,10 @@ window.I18N_DICTS.fr = {
   [
    "measured elsewhere ({a}): no more frequent among proven cases in {b}, so no weight",
    "mesuré ailleurs ({a}) : pas plus fréquent parmi les cas avérés en {b}, donc sans poids"
+  ],
+  [
+   "{s}: {a} of the {b} highest-scored contracts nationwide; choose an institution to see all of its contracts.",
+   "{s} : {a} des {b} marchés les mieux notés du pays ; choisissez une entité pour voir tous ses marchés."
   ],
   [
    "The {a} highest-scored of all {b} contracts; choose an institution to see all of its contracts.",

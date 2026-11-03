@@ -132,12 +132,16 @@ main { max-width: 1480px; margin: 0 auto; padding: 14px 24px 32px; }
 .korea-picker[hidden] { display: none; }
 .korea-picker > button { justify-self: start; }
 .korea-picker label { display: grid; gap: 4px; }
-.korea-facet { display: flex; gap: 2px 14px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; padding: 3px 0; border-top: 1px solid var(--line, #ddd); }
+.korea-facet { display: flex; align-items: baseline; gap: 2px 14px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; padding: 3px 0; border-top: 1px solid var(--line, #ddd); }
 .korea-facet[hidden] { display: none; }
 .korea-facet button { background: none; border: 0; padding: 0; color: var(--ink); font: inherit; cursor: pointer; }
 .korea-facet button:hover { background: none; text-decoration: underline; }
 .korea-facet button.on { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 .korea-facet .muted { margin-left: 4px; font-weight: 400; }
+.korea-facet .facet-label { flex: none; width: 9.5em; color: var(--ink-3); font-size: 12px; }
+.korea-facet.child { border-top-style: dotted; }
+.korea-facet.child .facet-label { padding-left: 1em; }
+.korea-facet.child .facet-label::before { content: '↳ '; }
 .korea-results { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 14px; max-height: 9.5em; overflow-y: auto; }
 .notice-box { border-left: 4px solid var(--mod-fg); background: var(--surface-2); padding: 4px 14px; margin-top: 12px; font-size: 13px; }
 
@@ -197,27 +201,23 @@ main { max-width: 1480px; margin: 0 auto; padding: 14px 24px 32px; }
   background: var(--surface); border: 1px solid var(--line-strong);
 }
 table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
-.main-table { table-layout: fixed; min-width: 1100px; }
+.main-table { table-layout: auto; min-width: 1100px; }
 caption { text-align: left; color: var(--ink-3); padding: 0 0 10px; }
 th {
   position: sticky; top: 0; z-index: 2; background: var(--surface-2); text-align: left;
   font-size: 11.5px; font-weight: 650; color: var(--ink-2); white-space: nowrap; box-shadow: 0 1px 0 var(--line-strong);
 }
 th, td { padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
-.main-table > thead > tr > th:nth-child(1) { width: 7%; }
-.main-table > thead > tr > th:nth-child(2) { width: 11%; }
-.main-table > thead > tr > th:nth-child(3) { width: 11%; }
-.main-table > thead > tr > th:nth-child(4) { width: 21%; }
-.main-table > thead > tr > th:nth-child(5) { width: 8%; }
-.main-table > thead > tr > th.col-procedure { width: 9%; }
-.main-table > thead > tr > th:nth-child(7) { width: 9%; }
-.main-table > thead > tr > th:nth-child(8) { width: 5%; }
-.main-table > thead > tr > th.col-extra { width: 7%; }
-.main-table > thead > tr > th.col-signals { width: 12%; }
-.main-table > thead > tr > th.col-index { width: 4.5rem; }
+/* Desktop: every column is only as wide as its content needs. The short columns (date, procedure, amount, offers,
+   bid ratio, signals, index) shrink to their content (width: 1% with no wrapping); the free-text columns share the rest. */
+.main-table > thead > tr > th:nth-child(1), .main-table > thead > tr > th.col-procedure, .main-table > thead > tr > th.numeric,
+.main-table > thead > tr > th.col-signals { width: 1%; }
+.contract-row > td.col-procedure, .contract-row > td.numeric, .contract-row > td.col-signals { white-space: nowrap; }
+.contract-row > td.col-extra .provenance, .contract-row > td.col-index .provenance, .contract-row > td.col-procedure .provenance { white-space: nowrap; }
+.col-procedure .procedure-name { display: block; max-width: 16em; overflow: hidden; text-overflow: ellipsis; }
+.col-index .index-line { display: block; }
 .main-table.no-extra .col-extra { display: none; }
 .amount-changes { margin: 0; padding-left: 1.4em; font-variant-numeric: tabular-nums; }
-.col-procedure .procedure-name { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
 .numeric { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .amount-range span { display: block; }
 .contract-row { cursor: pointer; }

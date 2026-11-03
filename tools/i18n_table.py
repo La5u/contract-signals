@@ -1197,6 +1197,10 @@ EXACT += [
     ("KONEPS (나라장터) contract page", "Página del contrato en KONEPS (나라장터)", "Page du contrat sur KONEPS (나라장터)"),
     ("South Korea · KONEPS · amounts in KRW; full record on KONEPS.", "Corea del Sur · KONEPS · importes en KRW; registro completo en KONEPS.", "Corée du Sud · KONEPS · montants en KRW ; fiche complète sur KONEPS."),
     ("Most flagged · nationwide", "Más señalados · todo el país", "Les plus signalés · tout le pays"),
+    ("Institution type", "Tipo de entidad", "Type d’entité"),
+    ("Kind", "Clase", "Catégorie"),
+    ("Province", "Provincia", "Province"),
+    ("City or district", "Ciudad o distrito", "Ville ou district"),
     ("Choose a contracting institution.", "Elija una entidad contratante.", "Choisissez une entité contractante."),
     ("Ukraine · Prozorro · random sample of 3,500 completed open tenders (aboveThreshold) created June–August 2026, all buyers: 3,663 signed contracts. Per-tender checks only: repetition, concentration and buyer share need every tender of a buyer and are not assessed; amendments were not retrieved. Amounts in UAH, EUR or USD.",
      "Ucrania · Prozorro · muestra aleatoria de 3.500 licitaciones abiertas concluidas (aboveThreshold) creadas de junio a agosto de 2026, todos los compradores: 3.663 contratos firmados. Solo verificaciones por licitación: la repetición, la concentración y la cuota del comprador necesitan todas las licitaciones de un comprador y no se evalúan; las modificaciones no se obtuvieron. Importes en UAH, EUR o USD.",
@@ -1263,6 +1267,7 @@ PATTERNS += [
 ]
 
 PATTERNS += [
+    ("{s}: {a} of the {b} highest-scored contracts nationwide; choose an institution to see all of its contracts.", "{s}: {a} de los {b} contratos con mayor puntuación del país; elija una entidad para ver todos sus contratos.", "{s} : {a} des {b} marchés les mieux notés du pays ; choisissez une entité pour voir tous ses marchés."),
     ("The {a} highest-scored of all {b} contracts; choose an institution to see all of its contracts.", "Los {a} contratos con mayor puntuación de un total de {b}; elija una entidad para ver todos sus contratos.", "Les {a} marchés les mieux notés sur {b} ; choisissez une entité pour voir tous ses marchés."),
 ]
 

@@ -78,22 +78,40 @@ def places(path):
     return out
 
 
-def name_place(name):
-    """Province and city from the institution's name, for codes missing from the registry."""
+def place_stems(registry):
+    """Short place names found inside institution names ('인천' in 인천지방조달청, '서산' in 서산지청), each mapped to
+    [province, city]. Province stems first; a city stem must belong to one province only (중구 is in six)."""
+    stems = {}
+    for province in PROVINCE_NAMES:
+        stem = province[:2] if province[:2] not in ('경상', '전라', '충청') else None
+        if stem:
+            stems.setdefault(stem, set()).add((PROVINCES.get(province, province), None))
+    for place in registry.values():
+        if place[0] and place[1] and len(place[1]) >= 3:
+            stems.setdefault(place[1][:-1], set()).add((place[0], place[1]))
+    return {s: list(next(iter(v))) for s, v in stems.items() if len(v) == 1 and len(s) >= 2}
+
+
+def name_place(name, stems=None):
+    """Province and city from the institution's name, for codes missing from the registry: a province name at the
+    start, else the most specific place stem inside its words (city before province)."""
     words = name.split()
     for province in sorted(PROVINCE_NAMES, key=len, reverse=True):
         if words and words[0].startswith(province):
             city = words[1] if len(words) > 1 and words[1][-1:] in ('시', '군', '구') else None
             return [PROVINCES.get(province, province), city, None]
-    return None
+    found = [stems[w[:n]] for w in reversed(words) for n in (3, 2) if stems and w[:n] in stems]
+    found.sort(key=lambda p: p[1] is None)
+    return [*found[0], None] if found else None
 
 
 def with_places(buyers, institutions):
     registry = places(institutions)
+    stems = place_stems(registry)
     for b in buyers:
         del b[6:]
         b.extend([None] * (6 - len(b)))
-        b.append(registry.get(b[0]) or name_place(b[1]))
+        b.append(registry.get(b[0]) or name_place(b[1], stems))
 
 
 def add_places(path, institutions):
