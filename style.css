@@ -138,8 +138,11 @@ main { max-width: 1480px; margin: 0 auto; padding: 14px 24px 32px; }
 .korea-facet button:hover { background: none; text-decoration: underline; }
 .korea-facet button.on { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 .korea-facet .muted { margin-left: 4px; font-weight: 400; }
-.korea-facet .facet-label { flex: none; width: 9.5em; color: var(--ink-3); font-size: 12px; }
-.korea-facet.child { border-top-style: dotted; }
+.korea-facet .facet-label { flex: none; width: 9.5em; color: var(--ink); font-size: 12px; font-weight: 700; }
+/* Two separate hierarchies (type → kind, province → city): each starts under a bold rule, its child row hangs under it. */
+.korea-facet:not(.child) { border-top: 2px solid var(--ink-2); margin-top: 6px; padding-top: 5px; }
+.korea-facet.child { border-top: 1px dotted var(--line-strong); margin-top: -6px; }
+.korea-facet.child .facet-label { font-weight: 400; color: var(--ink-2); }
 .korea-facet.child .facet-label { padding-left: 1em; }
 .korea-facet.child .facet-label::before { content: '↳ '; }
 .korea-results { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 14px; max-height: 9.5em; overflow-y: auto; }
