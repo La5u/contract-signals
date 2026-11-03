@@ -854,6 +854,10 @@ window.I18N_DICTS.es = {
   "KONEPS (나라장터) contract page": "Página del contrato en KONEPS (나라장터)",
   "South Korea · KONEPS · amounts in KRW; full record on KONEPS.": "Corea del Sur · KONEPS · importes en KRW; registro completo en KONEPS.",
   "Most flagged · nationwide": "Más señalados · todo el país",
+  "Institution type": "Tipo de entidad",
+  "Kind": "Clase",
+  "Province": "Provincia",
+  "City or district": "Ciudad o distrito",
   "Choose a contracting institution.": "Elija una entidad contratante.",
   "Ukraine · Prozorro · random sample of 3,500 completed open tenders (aboveThreshold) created June–August 2026, all buyers: 3,663 signed contracts. Per-tender checks only: repetition, concentration and buyer share need every tender of a buyer and are not assessed; amendments were not retrieved. Amounts in UAH, EUR or USD.": "Ucrania · Prozorro · muestra aleatoria de 3.500 licitaciones abiertas concluidas (aboveThreshold) creadas de junio a agosto de 2026, todos los compradores: 3.663 contratos firmados. Solo verificaciones por licitación: la repetición, la concentración y la cuota del comprador necesitan todas las licitaciones de un comprador y no se evalúan; las modificaciones no se obtuvieron. Importes en UAH, EUR o USD.",
   "The index is a multiplier: ×2 means records with these signals are twice as frequent among proven cases (convictions, cartel decisions) as among the same buyers’ other contracts. It is not a probability. Only measured signals count; signals never measured on proven cases are shown as context with ×1.0. “Not assessed” means no applicable check could be evaluated. Missing values are shown as unknown.": "El índice es un multiplicador: ×2 significa que los registros con estas señales son el doble de frecuentes entre los casos probados (condenas, decisiones sobre cárteles) que entre los demás contratos de los mismos compradores. No es una probabilidad. Solo cuentan las señales medidas; las señales nunca medidas en casos probados se muestran como contexto con ×1.0. «No evaluado» significa que no se pudo evaluar ninguna comprobación aplicable. Los valores ausentes se muestran como desconocidos.",
@@ -1662,6 +1666,10 @@ window.I18N_DICTS.es = {
   [
    "measured elsewhere ({a}): no more frequent among proven cases in {b}, so no weight",
    "medida en otros países ({a}): no más frecuente entre los casos probados en {b}, sin peso"
+  ],
+  [
+   "{s}: {a} of the {b} highest-scored contracts nationwide; choose an institution to see all of its contracts.",
+   "{s}: {a} de los {b} contratos con mayor puntuación del país; elija una entidad para ver todos sus contratos."
   ],
   [
    "The {a} highest-scored of all {b} contracts; choose an institution to see all of its contracts.",

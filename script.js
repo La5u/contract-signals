@@ -65,7 +65,7 @@ function startExplorer() {
   const FRENCH_LINK_DATASETS = new Set(['decp', 'boamp', 'tours', 'consultations']);
   let linkEvidenceStarted = false;
   // South Korea: load the ranked subset, or a chosen buyer's shards.
-  let koreaBuyer = '', koreaMeta = null, koreaBuyers = null;
+  let koreaBuyer = '', koreaMeta = null, koreaBuyers = null, koreaTop = null;
   const koreaPicker = document.querySelector('#korea-picker');
   const koreaSearch = document.querySelector('#korea-search');
   const koreaResults = document.querySelector('#korea-results');
@@ -85,8 +85,8 @@ function startExplorer() {
   }
   document.querySelector('#korea-all').addEventListener('click', () => chooseKoreaBuyer(''));
   const koreaKey = text => String(text || '').toLowerCase().replace(/\s+/g, '');
-  // Facet rows, as on carboncost.me: type, its subcategories, province, its cities. Each row counts contracts
-  // under the other rows' choices; buyer[6] is [province, city, subcategory] or null.
+  // Facet rows, as on carboncost.me: type, its subcategories, province, its cities. Two independent hierarchies
+  // (type → kind, province → city) that combine; each row counts contracts under the other rows' choices; buyer[6] is [province, city, subcategory] or null.
   const koreaFacet = { type: '', sub: '', region: '', city: '' };
   const koreaFacetValue = {
     type: b => b[2] || 'Other', sub: b => b[6]?.[2] || 'Other',
@@ -94,6 +94,7 @@ function startExplorer() {
   };
   const koreaFacetRows = { type: '#korea-type', sub: '#korea-sub', region: '#korea-region', city: '#korea-city' };
   const koreaParent = { sub: 'type', city: 'region' };
+  const KOREA_FACET_LABELS = { type: 'Institution type', sub: 'Kind', region: 'Province', city: 'City or district' };
   const koreaMatches = (b, skip) => Object.keys(koreaFacet).every(k => k === skip || !koreaFacet[k] || koreaFacetValue[k](b) === koreaFacet[k]);
   function renderKoreaFacets(buyers) {
     for (const [key, selector] of Object.entries(koreaFacetRows)) {
@@ -113,10 +114,14 @@ function startExplorer() {
           koreaFacet[key] = value === koreaFacet[key] ? '' : value;
           for (const [child, p] of Object.entries(koreaParent)) if (p === key) koreaFacet[child] = '';
           showKoreaResults(buyers);
+          // The nationwide view follows the rows: it shows the highest-scored contracts within the selection.
+          if (!koreaBuyer) loadDataset();
         });
         return item;
       };
-      row.replaceChildren(button('', 'All'), ...[...totals].sort((a, b) => b[1] - a[1]).map(([v, n]) => button(v, v, n)));
+      // Each row is labelled; a child row (kind under type, city under province) is indented under its parent.
+      row.classList.toggle('child', Boolean(parent));
+      row.replaceChildren(element('span', KOREA_FACET_LABELS[key], 'facet-label'), button('', 'All'), ...[...totals].sort((a, b) => b[1] - a[1]).map(([v, n]) => button(v, v, n)));
     }
   }
   function showKoreaResults(buyers) {
@@ -154,10 +159,15 @@ function startExplorer() {
     if (!buyer) {
       koreaBuyer = '';
       try {
-        const top = await koreaJson('top.json');
+        koreaTop ||= koreaJson('top.json').catch(error => { koreaTop = null; throw error; });
+        const top = await koreaTop;
         if (version !== loadVersion) return;
-        const records = buyers.flatMap(b => koreaRecords(koreaMeta, top, b));
-        document.querySelector('#dataset-note').textContent = `The ${top.count.toLocaleString('en')} highest-scored of all ${koreaMeta.contracts.toLocaleString('en')} contracts; choose an institution to see all of its contracts.`;
+        const chosen = Object.values(koreaFacet).some(Boolean) ? buyers.filter(b => koreaMatches(b)) : buyers;
+        const records = chosen.flatMap(b => koreaRecords(koreaMeta, top, b));
+        const scope = Object.values(koreaFacet).filter(Boolean).join(' · ');
+        document.querySelector('#dataset-note').textContent = scope
+          ? `${scope}: ${records.length.toLocaleString('en')} of the ${top.count.toLocaleString('en')} highest-scored contracts nationwide; choose an institution to see all of its contracts.`
+          : `The ${top.count.toLocaleString('en')} highest-scored of all ${koreaMeta.contracts.toLocaleString('en')} contracts; choose an institution to see all of its contracts.`;
         accept(records);
       } catch (error) {
         if (version !== loadVersion) return;
@@ -519,7 +529,9 @@ function startExplorer() {
     return cell;
   }
   // One column whose content depends on the country: the figure its data adds that the shared columns lack.
-  const percent = v => `${Number(v).toLocaleString('en', { maximumFractionDigits: 3 })} %`;
+  // Always three decimals, as KONEPS publishes them: floors such as 87.995 % are exact legal rates, and a winning
+  // ratio a few thousandths above its floor is what the floor checks look at, so rounding would hide both.
+  const percent = v => `${Number(v).toLocaleString('en', { minimumFractionDigits: 3, maximumFractionDigits: 3 })} %`;
   const EXTRA_COLUMNS = {
     koneps: { header: 'Bid ratio', title: 'Winning bid as a % of the reserve price (예정가격); below it, the lower award limit (낙찰하한율). From the bid opening (개찰결과).',
       value: c => c.winnerRate == null ? null : [percent(c.winnerRate), c.lowerRate == null ? null : `floor ${percent(c.lowerRate)}`] },
@@ -548,10 +560,6 @@ function startExplorer() {
     cell.append(first ?? '—');
     for (const line of rest) if (line) cell.append(element('small', line, 'provenance'));
     return cell;
-  }
-  // South Korea: both indices, e.g. "rigging ×4.2 · corruption ×1.0".
-  function indexPair(breakdown) {
-    return Object.entries(breakdown.indices).map(([i, b]) => `${i === 'rigging' ? 'rigging' : i} ${formatMultiplier(b.score)}`).join(' · ');
   }
   function scoreChip(c) {
     const breakdown = getScoreBreakdown(c);
@@ -704,7 +712,12 @@ function startExplorer() {
       const score = element('td', null, 'numeric col-index');
       const coverageLabel = assessment.excludedReason ? 'Calculations excluded' : assessment.applicable ? `${assessment.signals} signal(s) · ${assessment.evaluated}/${assessment.applicable} known-applicable checks evaluated` : 'No check with established applicability';
       score.append(scoreChip(c));
-      if (breakdown.indices) score.append(element('small', indexPair(breakdown), 'provenance'));
+      // One line per index, so "corruption" never breaks mid-word in the narrow column.
+      if (breakdown.indices) {
+        const lines = element('small', null, 'provenance');
+        for (const [i, b] of Object.entries(breakdown.indices)) lines.append(element('span', `${i === 'rigging' ? 'rigging' : i} ${formatMultiplier(b.score)}`, 'index-line'));
+        score.append(lines);
+      }
       score.title = `${coverageLabel}. ${assessment.unknownApplicability} unknown applicability(ies). Open the row for details.`;
       score.setAttribute('aria-label', `${scoreValue == null ? 'Index not assessed.' : `Index: ${formatMultiplier(scoreValue)} as frequent among proven cases.`} ${coverageLabel}. ${assessment.unknownApplicability} unknown applicabilities.`);
       row.append(badges, score);
