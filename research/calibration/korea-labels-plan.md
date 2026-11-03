@@ -419,3 +419,22 @@ where G1 is unknown; P4, P5 where no rival has the inputs (P5: picks of both and
 unknown. P5 now looks only at winner–rival pairs (G9 looked at any two bidders). Per-rival values come from a history
 rebuild (`korea-group-measures.py history`, table `group_rivals`) and `assemble` (`group/rivals.tsv.gz`); rating
 unchanged (bidder-like, collusion decides). The earlier version is kept as `korea-group-pairs.py --any-rival`.
+
+## Young winner, bid level, last submission, fast signature, fixed 2026-11-03 (owner: "sure" to these four; no rate of any had been computed)
+
+Seen before: every G/P result above (G7 picks, G9 shared contact, G10 consortium, B7 same-minute: 0 points), K6 and
+UA-C9 (award close to the reserve: points), Ukraine R3 young winner and C8 fast signature (no points there). Same
+targets T, w, R, label families (collusion, court, audit), one CV-chosen range per measure, bidder-count and
+value-band controls, and decision rule as the group indicators; rated with `tools/korea-curves.py`. Tool for the
+measures: `tools/korea-new-measures.py` (writes `group/measures-y.tsv`, joined on T).
+
+| ID | Measure (continuous) |
+| --- | --- |
+| Y1 YOUNG-WINNER | Days from w's business opening date (`opened`, UsrInfoService `getPrcrmntCorpBasicInfo02`, `group/firms.jsonl`) to T's opening date. Unknown when w is not found in the registry (closed firms are missing, a known bias against old cases) or the opening date is after T. Low = young firm. |
+| Y2 BID-LEVEL | Median bid rate (% of the reserve price) over every bid of T with a known rate, rejected bids included. High = all bids sit near the reserve (cover bids not trying to win). Unknown with fewer than 2 rates. Correlates with K6 (winner's own rate); its controlled LR is reported next to K6's. |
+| Y3 LAST-SUBMISSION | Minutes from w's bid submission (`bidprcDt`/`bidprcTm`, minute resolution) to the bid deadline (`bidClseDt`), and as a yes/no variant whether w's submission minute is the latest among all bids of T (ties count as yes). Unknown without both times. Low = submitted at the last moment (leaked prices). |
+| Y4 FAST-SIGNATURE | Days from T's opening date to the date of the contract it produced (open-standard contract `cntrctCnclsDate` of the linked contract, first version). Unknown without a linked contract; negative values are reported, not rated. Low = signed unusually fast. |
+
+Expected, stated in advance: Y1 and Y3 matter more on the corruption side (court, audit) than for cartels; Y2 for
+collusion; Y4 mostly reflects procedure type and business type, so it is rated within business type. Nothing goes on
+the site without the owner.
