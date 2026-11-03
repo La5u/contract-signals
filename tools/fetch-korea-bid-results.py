@@ -52,7 +52,10 @@ from datetime import date, timedelta
 from pathlib import Path
 
 BASE = 'https://apis.data.go.kr/1230000/as/ScsbidInfoService/'
-NOTICE_BASE = 'https://apis.data.go.kr/1230000/ad/BidPublicInfoService/'
+# Version 02 since 2026-11-03 (data.go.kr notice NOTICE_0000000005128; the old URL stops 90 days later): every
+# operation takes a '02' suffix. The fields moved to separate operations (joint-contract regions, sub-trades,
+# document links) are not kept here.
+NOTICE_BASE = 'https://apis.data.go.kr/1230000/ad/BidPublicInfoService02/'
 NOTICE_DROP = ('Ofcl', 'exctvNm', 'crdtrNm', 'DocUrl', 'FileNm')   # substrings of dropped notice fields
 OPEN_STANDARD = 'https://apis.data.go.kr/1230000/ao/PubDataOpnStdService/getDataSetOpnStdScsbidInfo'
 OPEN_STANDARD_NOTICES = 'https://apis.data.go.kr/1230000/ao/PubDataOpnStdService/getDataSetOpnStdBidPblancInfo'
@@ -91,7 +94,7 @@ class Api:
             self.calls[operation] = self.calls.get(operation, 0) + 1
         query = urllib.parse.urlencode(dict(serviceKey=self.key, type='json', numOfRows=ROWS, **params))
         url = (OPEN_STANDARD if operation == 'openStandard' else OPEN_STANDARD_NOTICES if operation == 'openStandardNotices' else
-               f'{NOTICE_BASE}{operation}' if operation.startswith('getBidPblanc') else f'{BASE}{operation}')
+               f'{NOTICE_BASE}{operation}02' if operation.startswith('getBidPblanc') else f'{BASE}{operation}')
         for attempt in range(8):
             try:
                 body = self.opener.open(f'{url}?{query}', timeout=180).read().decode('utf-8', 'replace')
