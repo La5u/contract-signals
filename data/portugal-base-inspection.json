@@ -1,0 +1,1387 @@
+{
+  "schemaVersion": 1,
+  "inspectedAt": "2026-09-30T12:50:12.715913+00:00",
+  "scope": "ZIP directory plus first 64 KiB of each JSON member; at most three initial records per year. Not representative and not the selected-buyer cohort.",
+  "limits": {
+    "maxPrefixBytesPerArchive": 65536,
+    "maxSampleRowsPerArchive": 3,
+    "networkRequests": 0
+  },
+  "archiveProvenance": "data/portugal-base-downloads.json",
+  "archives": [
+    {
+      "year": 2024,
+      "filename": "contratos2024.zip",
+      "memberCount": 1,
+      "jsonMember": "Contratos2024.json",
+      "compressedMemberBytes": 44570178,
+      "uncompressedMemberBytes": 384159940,
+      "prefixBytesRead": 65536,
+      "sampleRows": 3,
+      "fields": [
+        {
+          "field": "Ano",
+          "types": [
+            "int"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "json-number"
+          ],
+          "zeroSampleRows": 0
+        },
+        {
+          "field": "ContratEcologico",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        },
+        {
+          "field": "CritMateriais",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        },
+        {
+          "field": "DescrAcordoQuadro",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 0,
+          "shapes": [
+            "empty"
+          ]
+        },
+        {
+          "field": "Lotes",
+          "types": [
+            "NoneType"
+          ],
+          "nonemptySampleRows": 0,
+          "shapes": [
+            "empty"
+          ],
+          "zeroSampleRows": 0
+        },
+        {
+          "field": "NUTs",
+          "types": [
+            "NoneType"
+          ],
+          "nonemptySampleRows": 0,
+          "shapes": [
+            "empty"
+          ],
+          "zeroSampleRows": 0
+        },
+        {
+          "field": "Observacoes",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 0,
+          "shapes": [
+            "empty"
+          ]
+        },
+        {
+          "field": "PrecoTotalEfetivo",
+          "types": [
+            "float"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "json-number"
+          ],
+          "zeroSampleRows": 2
+        },
+        {
+          "field": "ProcedimentoCentralizado",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        },
+        {
+          "field": "TipoAnuncio",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 1,
+          "shapes": [
+            "empty",
+            "str"
+          ]
+        },
+        {
+          "field": "TipoCriterioAdjudicacao",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        },
+        {
+          "field": "adjudicante",
+          "types": [
+            "list"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": [],
+          "nifNameShapedStringItems": 3
+        },
+        {
+          "field": "adjudicatarioPMEs",
+          "types": [
+            "NoneType",
+            "list"
+          ],
+          "nonemptySampleRows": 1,
+          "shapes": [
+            "empty",
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": [],
+          "nifNameShapedStringItems": 0
+        },
+        {
+          "field": "adjudicatarios",
+          "types": [
+            "list"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": [],
+          "nifNameShapedStringItems": 4
+        },
+        {
+          "field": "concorrentes",
+          "types": [
+            "list"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": [],
+          "nifNameShapedStringItems": 6
+        },
+        {
+          "field": "cpv",
+          "types": [
+            "list"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": []
+        },
+        {
+          "field": "dataCelebracaoContrato",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "DD/MM/YYYY-shaped text"
+          ]
+        },
+        {
+          "field": "dataDecisaoAdjudicacao",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "DD/MM/YYYY-shaped text"
+          ]
+        },
+        {
+          "field": "dataFechoContrato",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 1,
+          "shapes": [
+            "DD/MM/YYYY-shaped text",
+            "empty"
+          ]
+        },
+        {
+          "field": "dataPublicacao",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "DD/MM/YYYY-shaped text"
+          ]
+        },
+        {
+          "field": "descContrato",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        },
+        {
+          "field": "fundamentAjusteDireto",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 0,
+          "shapes": [
+            "empty"
+          ]
+        },
+        {
+          "field": "fundamentacao",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        },
+        {
+          "field": "idINCM",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 1,
+          "shapes": [
+            "digit-only text",
+            "empty"
+          ]
+        },
+        {
+          "field": "idcontrato",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "digit-only text"
+          ]
+        },
+        {
+          "field": "idprocedimento",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "digit-only text"
+          ]
+        },
+        {
+          "field": "justifNReducEscrContrato",
+          "types": [
+            "NoneType"
+          ],
+          "nonemptySampleRows": 0,
+          "shapes": [
+            "empty"
+          ],
+          "zeroSampleRows": 0
+        },
+        {
+          "field": "linkPecasProc",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 2,
+          "shapes": [
+            "empty",
+            "str"
+          ]
+        },
+        {
+          "field": "localExecucao",
+          "types": [
+            "list"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": []
+        },
+        {
+          "field": "nAnuncio",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 1,
+          "shapes": [
+            "empty",
+            "str"
+          ]
+        },
+        {
+          "field": "numAcordoQuadro",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 0,
+          "shapes": [
+            "empty"
+          ]
+        },
+        {
+          "field": "objectoContrato",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        },
+        {
+          "field": "prazoExecucao",
+          "types": [
+            "int"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "json-number"
+          ],
+          "zeroSampleRows": 0
+        },
+        {
+          "field": "precoBaseProcedimento",
+          "types": [
+            "float"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "json-number"
+          ],
+          "zeroSampleRows": 1
+        },
+        {
+          "field": "precoContratual",
+          "types": [
+            "float"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "json-number"
+          ],
+          "zeroSampleRows": 1
+        },
+        {
+          "field": "regime",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        },
+        {
+          "field": "tipoContrato",
+          "types": [
+            "list"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": []
+        },
+        {
+          "field": "tipoFimContrato",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 1,
+          "shapes": [
+            "empty",
+            "str"
+          ]
+        },
+        {
+          "field": "tipoprocedimento",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        }
+      ]
+    },
+    {
+      "year": 2025,
+      "filename": "contratos2025.zip",
+      "memberCount": 1,
+      "jsonMember": "Contratos2025.json",
+      "compressedMemberBytes": 55274444,
+      "uncompressedMemberBytes": 437904158,
+      "prefixBytesRead": 65536,
+      "sampleRows": 3,
+      "fields": [
+        {
+          "field": "Ano",
+          "types": [
+            "int"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "json-number"
+          ],
+          "zeroSampleRows": 0
+        },
+        {
+          "field": "ContratEcologico",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        },
+        {
+          "field": "CritMateriais",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        },
+        {
+          "field": "DescrAcordoQuadro",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 0,
+          "shapes": [
+            "empty"
+          ]
+        },
+        {
+          "field": "Lotes",
+          "types": [
+            "NoneType"
+          ],
+          "nonemptySampleRows": 0,
+          "shapes": [
+            "empty"
+          ],
+          "zeroSampleRows": 0
+        },
+        {
+          "field": "NUTs",
+          "types": [
+            "NoneType",
+            "list"
+          ],
+          "nonemptySampleRows": 2,
+          "shapes": [
+            "empty",
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": []
+        },
+        {
+          "field": "Observacoes",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 0,
+          "shapes": [
+            "empty"
+          ]
+        },
+        {
+          "field": "PrecoTotalEfetivo",
+          "types": [
+            "float"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "json-number"
+          ],
+          "zeroSampleRows": 2
+        },
+        {
+          "field": "ProcedimentoCentralizado",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        },
+        {
+          "field": "TipoAnuncio",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 1,
+          "shapes": [
+            "empty",
+            "str"
+          ]
+        },
+        {
+          "field": "TipoCriterioAdjudicacao",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 2,
+          "shapes": [
+            "empty",
+            "str"
+          ]
+        },
+        {
+          "field": "adjudicante",
+          "types": [
+            "list"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": [],
+          "nifNameShapedStringItems": 3
+        },
+        {
+          "field": "adjudicatarioPMEs",
+          "types": [
+            "NoneType",
+            "list"
+          ],
+          "nonemptySampleRows": 1,
+          "shapes": [
+            "empty",
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": [],
+          "nifNameShapedStringItems": 0
+        },
+        {
+          "field": "adjudicatarios",
+          "types": [
+            "list"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": [],
+          "nifNameShapedStringItems": 3
+        },
+        {
+          "field": "concorrentes",
+          "types": [
+            "NoneType",
+            "list"
+          ],
+          "nonemptySampleRows": 2,
+          "shapes": [
+            "empty",
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": [],
+          "nifNameShapedStringItems": 9
+        },
+        {
+          "field": "cpv",
+          "types": [
+            "list"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": []
+        },
+        {
+          "field": "dataCelebracaoContrato",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 2,
+          "shapes": [
+            "DD/MM/YYYY-shaped text",
+            "empty"
+          ]
+        },
+        {
+          "field": "dataDecisaoAdjudicacao",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 2,
+          "shapes": [
+            "DD/MM/YYYY-shaped text",
+            "empty"
+          ]
+        },
+        {
+          "field": "dataFechoContrato",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 1,
+          "shapes": [
+            "DD/MM/YYYY-shaped text",
+            "empty"
+          ]
+        },
+        {
+          "field": "dataPublicacao",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "DD/MM/YYYY-shaped text"
+          ]
+        },
+        {
+          "field": "descContrato",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        },
+        {
+          "field": "fundamentAjusteDireto",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 1,
+          "shapes": [
+            "empty",
+            "str"
+          ]
+        },
+        {
+          "field": "fundamentacao",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 2,
+          "shapes": [
+            "empty",
+            "str"
+          ]
+        },
+        {
+          "field": "idINCM",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 1,
+          "shapes": [
+            "digit-only text",
+            "empty"
+          ]
+        },
+        {
+          "field": "idcontrato",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "digit-only text"
+          ]
+        },
+        {
+          "field": "idprocedimento",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "digit-only text"
+          ]
+        },
+        {
+          "field": "justifNReducEscrContrato",
+          "types": [
+            "NoneType"
+          ],
+          "nonemptySampleRows": 0,
+          "shapes": [
+            "empty"
+          ],
+          "zeroSampleRows": 0
+        },
+        {
+          "field": "linkPecasProc",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 2,
+          "shapes": [
+            "empty",
+            "str"
+          ]
+        },
+        {
+          "field": "localExecucao",
+          "types": [
+            "list"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": []
+        },
+        {
+          "field": "nAnuncio",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 1,
+          "shapes": [
+            "empty",
+            "str"
+          ]
+        },
+        {
+          "field": "numAcordoQuadro",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 0,
+          "shapes": [
+            "empty"
+          ]
+        },
+        {
+          "field": "objectoContrato",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        },
+        {
+          "field": "prazoExecucao",
+          "types": [
+            "int"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "json-number"
+          ],
+          "zeroSampleRows": 1
+        },
+        {
+          "field": "precoBaseProcedimento",
+          "types": [
+            "float"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "json-number"
+          ],
+          "zeroSampleRows": 1
+        },
+        {
+          "field": "precoContratual",
+          "types": [
+            "float"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "json-number"
+          ],
+          "zeroSampleRows": 0
+        },
+        {
+          "field": "regime",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        },
+        {
+          "field": "tipoContrato",
+          "types": [
+            "list"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": []
+        },
+        {
+          "field": "tipoFimContrato",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 0,
+          "shapes": [
+            "empty"
+          ]
+        },
+        {
+          "field": "tipoprocedimento",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        }
+      ]
+    },
+    {
+      "year": 2026,
+      "filename": "contratos2026.zip",
+      "memberCount": 1,
+      "jsonMember": "Contratos2026.json",
+      "compressedMemberBytes": 42232433,
+      "uncompressedMemberBytes": 320855087,
+      "prefixBytesRead": 65536,
+      "sampleRows": 3,
+      "fields": [
+        {
+          "field": "Ano",
+          "types": [
+            "int"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "json-number"
+          ],
+          "zeroSampleRows": 0
+        },
+        {
+          "field": "ContratEcologico",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        },
+        {
+          "field": "CritMateriais",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        },
+        {
+          "field": "DescrAcordoQuadro",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 0,
+          "shapes": [
+            "empty"
+          ]
+        },
+        {
+          "field": "Lotes",
+          "types": [
+            "NoneType",
+            "list"
+          ],
+          "nonemptySampleRows": 1,
+          "shapes": [
+            "empty",
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": []
+        },
+        {
+          "field": "NUTs",
+          "types": [
+            "NoneType",
+            "list"
+          ],
+          "nonemptySampleRows": 2,
+          "shapes": [
+            "empty",
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": []
+        },
+        {
+          "field": "Observacoes",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 0,
+          "shapes": [
+            "empty"
+          ]
+        },
+        {
+          "field": "PrecoTotalEfetivo",
+          "types": [
+            "float"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "json-number"
+          ],
+          "zeroSampleRows": 3
+        },
+        {
+          "field": "ProcedimentoCentralizado",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        },
+        {
+          "field": "TipoAnuncio",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 2,
+          "shapes": [
+            "empty",
+            "str"
+          ]
+        },
+        {
+          "field": "TipoCriterioAdjudicacao",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        },
+        {
+          "field": "adjudicante",
+          "types": [
+            "list"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": [],
+          "nifNameShapedStringItems": 3
+        },
+        {
+          "field": "adjudicatarioPMEs",
+          "types": [
+            "list"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": [],
+          "nifNameShapedStringItems": 0
+        },
+        {
+          "field": "adjudicatarios",
+          "types": [
+            "list"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": [],
+          "nifNameShapedStringItems": 4
+        },
+        {
+          "field": "concorrentes",
+          "types": [
+            "NoneType",
+            "list"
+          ],
+          "nonemptySampleRows": 1,
+          "shapes": [
+            "empty",
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": [],
+          "nifNameShapedStringItems": 2
+        },
+        {
+          "field": "cpv",
+          "types": [
+            "list"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": []
+        },
+        {
+          "field": "dataCelebracaoContrato",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "DD/MM/YYYY-shaped text"
+          ]
+        },
+        {
+          "field": "dataDecisaoAdjudicacao",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "DD/MM/YYYY-shaped text"
+          ]
+        },
+        {
+          "field": "dataFechoContrato",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 0,
+          "shapes": [
+            "empty"
+          ]
+        },
+        {
+          "field": "dataPublicacao",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "DD/MM/YYYY-shaped text"
+          ]
+        },
+        {
+          "field": "descContrato",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        },
+        {
+          "field": "fundamentAjusteDireto",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 0,
+          "shapes": [
+            "empty"
+          ]
+        },
+        {
+          "field": "fundamentacao",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        },
+        {
+          "field": "idINCM",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 2,
+          "shapes": [
+            "digit-only text",
+            "empty"
+          ]
+        },
+        {
+          "field": "idcontrato",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "digit-only text"
+          ]
+        },
+        {
+          "field": "idprocedimento",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "digit-only text"
+          ]
+        },
+        {
+          "field": "justifNReducEscrContrato",
+          "types": [
+            "NoneType",
+            "list"
+          ],
+          "nonemptySampleRows": 1,
+          "shapes": [
+            "empty",
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": []
+        },
+        {
+          "field": "linkPecasProc",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 2,
+          "shapes": [
+            "empty",
+            "str"
+          ]
+        },
+        {
+          "field": "localExecucao",
+          "types": [
+            "list"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": []
+        },
+        {
+          "field": "nAnuncio",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 2,
+          "shapes": [
+            "empty",
+            "str"
+          ]
+        },
+        {
+          "field": "numAcordoQuadro",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 0,
+          "shapes": [
+            "empty"
+          ]
+        },
+        {
+          "field": "objectoContrato",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        },
+        {
+          "field": "prazoExecucao",
+          "types": [
+            "int"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "json-number"
+          ],
+          "zeroSampleRows": 0
+        },
+        {
+          "field": "precoBaseProcedimento",
+          "types": [
+            "float"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "json-number"
+          ],
+          "zeroSampleRows": 0
+        },
+        {
+          "field": "precoContratual",
+          "types": [
+            "float"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "json-number"
+          ],
+          "zeroSampleRows": 0
+        },
+        {
+          "field": "regime",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        },
+        {
+          "field": "tipoContrato",
+          "types": [
+            "list"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "list"
+          ],
+          "listItemTypes": [
+            "str"
+          ],
+          "listObjectFields": []
+        },
+        {
+          "field": "tipoFimContrato",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 0,
+          "shapes": [
+            "empty"
+          ]
+        },
+        {
+          "field": "tipoprocedimento",
+          "types": [
+            "str"
+          ],
+          "nonemptySampleRows": 3,
+          "shapes": [
+            "str"
+          ]
+        }
+      ]
+    }
+  ]
+}

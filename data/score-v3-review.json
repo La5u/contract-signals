@@ -1,0 +1,485 @@
+{
+  "version": "4.0",
+  "generatedAt": "2026-11-03T14:29:03.431Z",
+  "sourceCodeHashes": {
+    "v21": "7055ce9a7cf02702232bb7dcb91a3858579c440e31e967a8adbb6f2ab13b6c87",
+    "v3": "54fc37d11d8fd3262415494ad3c6fb47e6702f9ec3b4187a264eb4acd7019ba9"
+  },
+  "interpretation": "Editorial triage, not probability. Threshold eligibility is not statistical calibration. Null is unevaluated, not a negative. Official findings are separate evidence. No target fraction of flagged contracts.",
+  "coverageDefinition": "evaluated/applicable-known checks plus separately displayed unknown-applicability checks; no normalization by missingness",
+  "changes": [
+    "Amounts do not amplify scores; direct awards and direct repetition include all amounts.",
+    "Amount evolution uses comparable relative increase >20%, no EUR50000 threshold.",
+    "Single-bid rule requires explicitly competitive procedure, not presumed from missing directAward.",
+    "All initial/modification conflicts, duplicate DECP identifiers, unverified dossiers excluded; aggregate audits not individual scoring units.",
+    "Official findings removed from heuristic points, still available as evidence/filter/sort."
+  ],
+  "sensitivityMethod": "Diagnostic reweighting of competition/execution by 0.8/1.2 and 1.2/0.8 (transparency unchanged). Same eligibility, maxima and cap. Spearman uses average ranks for ties, positive baseline scores only, null/zero excluded. Top-20 uses id tie-break solely for reproducibility; ties at cutoff reported. Not validation against ground truth.",
+  "reviewMethod": "Queues selected by SHA256(id), two per signal/zero/unevaluated stratum per dataset. This is a reproducible reading queue, NOT completed human review or labelled ground truth.",
+  "datasets": {
+    "contracts": {
+      "rows": 3010,
+      "inputSha256": "a02b90a427d9310ec57b6b2a7b18c21d9c999f8ebba0542835c7161a6cdf6400",
+      "officialFindings": 8,
+      "v21": {
+        "positive": 284,
+        "zero": 2726
+      },
+      "v3": {
+        "positive": 0,
+        "zero": 2998,
+        "unevaluated": 12,
+        "excluded": 0,
+        "indicators": {
+          "single-bid": 241,
+          "direct-award": 19,
+          "late-publication": 185,
+          "long-contract": 8
+        },
+        "meanEvaluatedChecks": 2.67
+      },
+      "transitions": {
+        "positiveToZero": 275,
+        "positiveToUnevaluated": 9,
+        "zeroToPositive": 0
+      },
+      "sensitivity": {
+        "competitionLower": {
+          "multipliers": {
+            "competition": 0.8,
+            "execution": 1.2
+          },
+          "spearmanPositiveOnly": null,
+          "positiveRows": 0,
+          "topK": 0,
+          "topKOverlap": 0,
+          "baselineCutoff": null,
+          "baselineCutoffTies": 0,
+          "scenarioCutoffTies": 0
+        },
+        "executionLower": {
+          "multipliers": {
+            "competition": 1.2,
+            "execution": 0.8
+          },
+          "spearmanPositiveOnly": null,
+          "positiveRows": 0,
+          "topK": 0,
+          "topKOverlap": 0,
+          "baselineCutoff": null,
+          "baselineCutoffTies": 0,
+          "scenarioCutoffTies": 0
+        }
+      },
+      "reviewQueue": [
+        {
+          "stratum": "zero",
+          "id": "boamp-25-15690-lot-0001",
+          "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-15690",
+          "oldScore": 0,
+          "v3Score": 0,
+          "signals": [],
+          "evaluated": 2,
+          "applicableKnown": 5,
+          "unknownApplicability": 3,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "zero",
+          "id": "boamp-25-24560-lot-0006",
+          "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-24560",
+          "oldScore": 0,
+          "v3Score": 0,
+          "signals": [],
+          "evaluated": 2,
+          "applicableKnown": 5,
+          "unknownApplicability": 3,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "unevaluated",
+          "id": "boamp-25-34509-lot-0001",
+          "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-34509",
+          "oldScore": 0,
+          "v3Score": null,
+          "signals": [],
+          "evaluated": 0,
+          "applicableKnown": 4,
+          "unknownApplicability": 5,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "unevaluated",
+          "id": "boamp-25-39977-lot-0001",
+          "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-39977",
+          "oldScore": 30,
+          "v3Score": null,
+          "signals": [],
+          "evaluated": 0,
+          "applicableKnown": 4,
+          "unknownApplicability": 2,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        }
+      ]
+    },
+    "decp-history": {
+      "rows": 2997,
+      "inputSha256": "80543b398f8d590157972eb52c0812ff483f13124e2fdf3d3c59120cbddee89e",
+      "officialFindings": 0,
+      "v21": {
+        "positive": 837,
+        "zero": 2160
+      },
+      "v3": {
+        "positive": 0,
+        "zero": 2997,
+        "unevaluated": 0,
+        "excluded": 0,
+        "indicators": {
+          "single-bid": 139,
+          "late-publication": 46,
+          "direct-award": 118,
+          "supplier-concentration": 10,
+          "long-contract": 2,
+          "repeated-direct-award": 31,
+          "repeated-single-bid": 9,
+          "amount-increase": 19
+        },
+        "meanEvaluatedChecks": 3.74
+      },
+      "transitions": {
+        "positiveToZero": 837,
+        "positiveToUnevaluated": 0,
+        "zeroToPositive": 0
+      },
+      "sensitivity": {
+        "competitionLower": {
+          "multipliers": {
+            "competition": 0.8,
+            "execution": 1.2
+          },
+          "spearmanPositiveOnly": null,
+          "positiveRows": 0,
+          "topK": 0,
+          "topKOverlap": 0,
+          "baselineCutoff": null,
+          "baselineCutoffTies": 0,
+          "scenarioCutoffTies": 0
+        },
+        "executionLower": {
+          "multipliers": {
+            "competition": 1.2,
+            "execution": 0.8
+          },
+          "spearmanPositiveOnly": null,
+          "positiveRows": 0,
+          "topK": 0,
+          "topKOverlap": 0,
+          "baselineCutoff": null,
+          "baselineCutoffTies": 0,
+          "scenarioCutoffTies": 0
+        }
+      },
+      "reviewQueue": [
+        {
+          "stratum": "zero",
+          "id": "decp-21750001600019-2025S00624",
+          "source": "https://www.data.gouv.fr/datasets/donnees-essentielles-de-la-commande-publique-consolidees-format-tabulaire",
+          "oldScore": 8,
+          "v3Score": 0,
+          "signals": [],
+          "evaluated": 3,
+          "applicableKnown": 5,
+          "unknownApplicability": 4,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "zero",
+          "id": "decp-21750001600019-2025T03045",
+          "source": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272025T03045%27&limit=100",
+          "oldScore": 0,
+          "v3Score": 0,
+          "signals": [],
+          "evaluated": 3,
+          "applicableKnown": 4,
+          "unknownApplicability": 3,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        }
+      ]
+    },
+    "decp-cities": {
+      "rows": 2289,
+      "inputSha256": "6fad886084537beacf0be219c612a5ad704869a08ff7fc36d87abfc14fc66e04",
+      "officialFindings": 0,
+      "v21": {
+        "positive": 499,
+        "zero": 1790
+      },
+      "v3": {
+        "positive": 0,
+        "zero": 2289,
+        "unevaluated": 0,
+        "excluded": 0,
+        "indicators": {
+          "single-bid": 98,
+          "long-contract": 6,
+          "direct-award": 57,
+          "late-publication": 66,
+          "repeated-direct-award": 6,
+          "amount-increase": 3,
+          "repeated-single-bid": 11
+        },
+        "meanEvaluatedChecks": 3.26
+      },
+      "transitions": {
+        "positiveToZero": 499,
+        "positiveToUnevaluated": 0,
+        "zeroToPositive": 0
+      },
+      "sensitivity": {
+        "competitionLower": {
+          "multipliers": {
+            "competition": 0.8,
+            "execution": 1.2
+          },
+          "spearmanPositiveOnly": null,
+          "positiveRows": 0,
+          "topK": 0,
+          "topKOverlap": 0,
+          "baselineCutoff": null,
+          "baselineCutoffTies": 0,
+          "scenarioCutoffTies": 0
+        },
+        "executionLower": {
+          "multipliers": {
+            "competition": 1.2,
+            "execution": 0.8
+          },
+          "spearmanPositiveOnly": null,
+          "positiveRows": 0,
+          "topK": 0,
+          "topKOverlap": 0,
+          "baselineCutoff": null,
+          "baselineCutoffTies": 0,
+          "scenarioCutoffTies": 0
+        }
+      },
+      "reviewQueue": [
+        {
+          "stratum": "zero",
+          "id": "decp-21440109300015-2025VN00008801",
+          "source": "https://www.data.gouv.fr/datasets/marches-publics-conclus-en-2024-par-la-ville-de-nantes",
+          "oldScore": 0,
+          "v3Score": 0,
+          "signals": [],
+          "evaluated": 3,
+          "applicableKnown": 5,
+          "unknownApplicability": 3,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "zero",
+          "id": "decp-21380185500015-2025A-4",
+          "source": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721380185500015%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27+AND+id%3D%272025A%27&limit=100&order_by=datenotification+asc%2Cid+asc",
+          "oldScore": 0,
+          "v3Score": 0,
+          "signals": [],
+          "evaluated": 2,
+          "applicableKnown": 4,
+          "unknownApplicability": 3,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        }
+      ]
+    },
+    "consultations": {
+      "rows": 10,
+      "inputSha256": "3bacd53cad545018ca51720273f639f535fdc7951059ee05d9b7fbf8231c3680",
+      "officialFindings": 0,
+      "v21": {
+        "positive": 0,
+        "zero": 10
+      },
+      "v3": {
+        "positive": 0,
+        "zero": 0,
+        "unevaluated": 10,
+        "excluded": 0,
+        "indicators": {},
+        "meanEvaluatedChecks": 0
+      },
+      "transitions": {
+        "positiveToZero": 0,
+        "positiveToUnevaluated": 0,
+        "zeroToPositive": 0
+      },
+      "sensitivity": {
+        "competitionLower": {
+          "multipliers": {
+            "competition": 0.8,
+            "execution": 1.2
+          },
+          "spearmanPositiveOnly": null,
+          "positiveRows": 0,
+          "topK": 0,
+          "topKOverlap": 0,
+          "baselineCutoff": null,
+          "baselineCutoffTies": 0,
+          "scenarioCutoffTies": 0
+        },
+        "executionLower": {
+          "multipliers": {
+            "competition": 1.2,
+            "execution": 0.8
+          },
+          "spearmanPositiveOnly": null,
+          "positiveRows": 0,
+          "topK": 0,
+          "topKOverlap": 0,
+          "baselineCutoff": null,
+          "baselineCutoffTies": 0,
+          "scenarioCutoffTies": 0
+        }
+      },
+      "reviewQueue": [
+        {
+          "stratum": "unevaluated",
+          "id": "boamp-consultation-25-12212",
+          "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-12212",
+          "oldScore": 0,
+          "v3Score": null,
+          "signals": [],
+          "evaluated": 0,
+          "applicableKnown": 0,
+          "unknownApplicability": 0,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "unevaluated",
+          "id": "boamp-consultation-25-12216",
+          "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-12216",
+          "oldScore": 0,
+          "v3Score": null,
+          "signals": [],
+          "evaluated": 0,
+          "applicableKnown": 0,
+          "unknownApplicability": 0,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        }
+      ]
+    },
+    "tours-notices": {
+      "rows": 66,
+      "inputSha256": "a029071945d3a7928afc7a02fc479f039f0deb84c584464a6f884e448e48c294",
+      "officialFindings": 0,
+      "v21": {
+        "positive": 0,
+        "zero": 66
+      },
+      "v3": {
+        "positive": 0,
+        "zero": 6,
+        "unevaluated": 60,
+        "excluded": 0,
+        "indicators": {},
+        "meanEvaluatedChecks": 0.09
+      },
+      "transitions": {
+        "positiveToZero": 0,
+        "positiveToUnevaluated": 0,
+        "zeroToPositive": 0
+      },
+      "sensitivity": {
+        "competitionLower": {
+          "multipliers": {
+            "competition": 0.8,
+            "execution": 1.2
+          },
+          "spearmanPositiveOnly": null,
+          "positiveRows": 0,
+          "topK": 0,
+          "topKOverlap": 0,
+          "baselineCutoff": null,
+          "baselineCutoffTies": 0,
+          "scenarioCutoffTies": 0
+        },
+        "executionLower": {
+          "multipliers": {
+            "competition": 1.2,
+            "execution": 0.8
+          },
+          "spearmanPositiveOnly": null,
+          "positiveRows": 0,
+          "topK": 0,
+          "topKOverlap": 0,
+          "baselineCutoff": null,
+          "baselineCutoffTies": 0,
+          "scenarioCutoffTies": 0
+        }
+      },
+      "reviewQueue": [
+        {
+          "stratum": "zero",
+          "id": "tours-notice-25-127197-LOT-0003",
+          "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-127197",
+          "oldScore": 0,
+          "v3Score": 0,
+          "signals": [],
+          "evaluated": 1,
+          "applicableKnown": 1,
+          "unknownApplicability": 1,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "zero",
+          "id": "tours-notice-25-127197-LOT-0001",
+          "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-127197",
+          "oldScore": 0,
+          "v3Score": 0,
+          "signals": [],
+          "evaluated": 1,
+          "applicableKnown": 1,
+          "unknownApplicability": 1,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "unevaluated",
+          "id": "tours-notice-25-53171-LOT-0001",
+          "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-53171",
+          "oldScore": 0,
+          "v3Score": null,
+          "signals": [],
+          "evaluated": 0,
+          "applicableKnown": 1,
+          "unknownApplicability": 0,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        },
+        {
+          "stratum": "unevaluated",
+          "id": "tours-notice-25-72872-LOT-0001",
+          "source": "https://www.boamp.fr/pages/avis/?q=idweb:25-72872",
+          "oldScore": 0,
+          "v3Score": null,
+          "signals": [],
+          "evaluated": 0,
+          "applicableKnown": 1,
+          "unknownApplicability": 0,
+          "excludedReason": null,
+          "reviewStatus": "queued-not-ground-truth"
+        }
+      ]
+    }
+  }
+}

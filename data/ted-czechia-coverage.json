@@ -1,0 +1,332 @@
+{
+ "source": "https://api.ted.europa.eu/v3/notices/search",
+ "notices": "https://ted.europa.eu/en/notice/{publication-number}/xml",
+ "license": "TED notices may be freely reused, for commercial or non-commercial purposes (Commission Decision 2011/833/EU; https://ted.europa.eu/en/legal-notice).",
+ "attribution": "Publications Office of the European Union, TED (Tenders Electronic Daily)",
+ "cohort": {
+  "cohortId": "ted-czechia-2024-2026",
+  "country": "CZE",
+  "buyers": [
+   {
+    "id": "00006947",
+    "name": "Ministerstvo financí",
+    "level": "national"
+   },
+   {
+    "id": "70890692",
+    "name": "Moravskoslezský kraj",
+    "level": "regional"
+   },
+   {
+    "id": "00845451",
+    "name": "Statutární město Ostrava",
+    "level": "municipal"
+   }
+  ],
+  "window": {
+   "startInclusive": "20240901",
+   "endExclusive": "20260901",
+   "basis": "TED publication date"
+  },
+  "selection": "One buyer per level, announced on 2026-09-26 before any notice XML was downloaded: from TED search totals of a candidate list (Ministries of the Interior, Defence, Health, Justice and Finance; the South Moravian, Moravian-Silesian, Vysočina, Olomouc and Plzeň regions; Brno, Ostrava, Plzeň, Olomouc and Prague), the largest at most 500 notices per level; Prague left out as both region and city. Never by indicator results.",
+  "identity": "Buyers matched by published identifier and its spelling variants (bare, country-prefixed, spaced), never by name."
+ },
+ "retrieval": {
+  "startedAt": "2026-09-26T18:40:20.489626+00:00",
+  "finishedAt": "2026-09-26T19:05:30.479805+00:00",
+  "queries": [
+   {
+    "buyerId": "00006947",
+    "query": "buyer-country=CZE AND notice-type=can-standard AND publication-date>=20240901 AND publication-date<20260901 AND organisation-identifier-buyer IN ('00006947' 'CZ 00006947' 'CZ-00006947' 'CZ00006947')",
+    "searchTotal": 257
+   },
+   {
+    "buyerId": "70890692",
+    "query": "buyer-country=CZE AND notice-type=can-standard AND publication-date>=20240901 AND publication-date<20260901 AND organisation-identifier-buyer IN ('70890692' 'CZ 70890692' 'CZ-70890692' 'CZ70890692')",
+    "searchTotal": 195
+   },
+   {
+    "buyerId": "00845451",
+    "query": "buyer-country=CZE AND notice-type=can-standard AND publication-date>=20240901 AND publication-date<20260901 AND organisation-identifier-buyer IN ('00845451' 'CZ 00845451' 'CZ-00845451' 'CZ00845451')",
+    "searchTotal": 214
+   }
+  ],
+  "rawDirectory": "data/ted-czechia/raw"
+ },
+ "counts": {
+  "notices": 661,
+  "retainedLots": 630,
+  "excludedResults": {
+   "several or no winning tender/contract references": 122
+  },
+  "lotsWithAnotherLeadBuyer": 11,
+  "conflictingLotIdsExcluded": 1,
+  "relistedLotsExcluded": 44,
+  "relistedLotsWithChangedValues": [
+   {
+    "id": "ted-599864-2024-lot-0001",
+    "firstListing": "ted-598931-2024-lot-0001",
+    "fields": [
+     "amount",
+     "offers"
+    ]
+   },
+   {
+    "id": "ted-668770-2024-lot-0001",
+    "firstListing": "ted-665583-2024-lot-0001",
+    "fields": [
+     "amount",
+     "currency"
+    ]
+   },
+   {
+    "id": "ted-16996-2025-lot-0007",
+    "firstListing": "ted-634747-2024-lot-0007",
+    "fields": [
+     "amount",
+     "currency"
+    ]
+   },
+   {
+    "id": "ted-39224-2025-lot-0002",
+    "firstListing": "ted-629417-2024-lot-0002",
+    "fields": [
+     "amount"
+    ]
+   },
+   {
+    "id": "ted-39224-2025-lot-0003",
+    "firstListing": "ted-629417-2024-lot-0003",
+    "fields": [
+     "amount"
+    ]
+   },
+   {
+    "id": "ted-93392-2025-lot-0007",
+    "firstListing": "ted-634747-2024-lot-0007",
+    "fields": [
+     "amount",
+     "currency"
+    ]
+   },
+   {
+    "id": "ted-226187-2025-lot-0007",
+    "firstListing": "ted-634747-2024-lot-0007",
+    "fields": [
+     "amount",
+     "currency"
+    ]
+   },
+   {
+    "id": "ted-285652-2025-lot-0001",
+    "firstListing": "ted-750032-2024-lot-0001",
+    "fields": [
+     "offers"
+    ]
+   },
+   {
+    "id": "ted-458838-2025-lot-0001",
+    "firstListing": "ted-455531-2025-lot-0001",
+    "fields": [
+     "amount",
+     "offers"
+    ]
+   },
+   {
+    "id": "ted-488741-2025-lot-0002",
+    "firstListing": "ted-629417-2024-lot-0002",
+    "fields": [
+     "amount"
+    ]
+   },
+   {
+    "id": "ted-488741-2025-lot-0003",
+    "firstListing": "ted-629417-2024-lot-0003",
+    "fields": [
+     "amount"
+    ]
+   },
+   {
+    "id": "ted-492887-2025-lot-0007",
+    "firstListing": "ted-634747-2024-lot-0007",
+    "fields": [
+     "amount"
+    ]
+   },
+   {
+    "id": "ted-657416-2025-lot-0001",
+    "firstListing": "ted-457130-2025-lot-0001",
+    "fields": [
+     "amount"
+    ]
+   },
+   {
+    "id": "ted-657753-2025-lot-0001",
+    "firstListing": "ted-657709-2025-lot-0001",
+    "fields": [
+     "amount",
+     "offers"
+    ]
+   },
+   {
+    "id": "ted-658881-2025-lot-0001",
+    "firstListing": "ted-401603-2025-lot-0001",
+    "fields": [
+     "amount"
+    ]
+   },
+   {
+    "id": "ted-661981-2025-lot-0001",
+    "firstListing": "ted-455531-2025-lot-0001",
+    "fields": [
+     "amount"
+    ]
+   },
+   {
+    "id": "ted-665270-2025-lot-0001",
+    "firstListing": "ted-457723-2025-lot-0001",
+    "fields": [
+     "amount"
+    ]
+   },
+   {
+    "id": "ted-670468-2025-lot-0001",
+    "firstListing": "ted-455531-2025-lot-0001",
+    "fields": [
+     "amount",
+     "offers"
+    ]
+   },
+   {
+    "id": "ted-695154-2025-lot-0007",
+    "firstListing": "ted-634747-2024-lot-0007",
+    "fields": [
+     "amount"
+    ]
+   },
+   {
+    "id": "ted-771124-2025-lot-0001",
+    "firstListing": "ted-644843-2024-lot-0001",
+    "fields": [
+     "offers"
+    ]
+   },
+   {
+    "id": "ted-808805-2025-lot-0001",
+    "firstListing": "ted-68913-2025-lot-0001",
+    "fields": [
+     "offers"
+    ]
+   },
+   {
+    "id": "ted-817659-2025-lot-0001",
+    "firstListing": "ted-644843-2024-lot-0001",
+    "fields": [
+     "offers"
+    ]
+   },
+   {
+    "id": "ted-11901-2026-lot-0001",
+    "firstListing": "ted-331330-2025-lot-0001",
+    "fields": [
+     "amount"
+    ]
+   },
+   {
+    "id": "ted-11901-2026-lot-0002",
+    "firstListing": "ted-331330-2025-lot-0002",
+    "fields": [
+     "amount"
+    ]
+   },
+   {
+    "id": "ted-18527-2026-lot-0001",
+    "firstListing": "ted-401603-2025-lot-0001",
+    "fields": [
+     "amount"
+    ]
+   },
+   {
+    "id": "ted-33970-2026-lot-0001",
+    "firstListing": "ted-31224-2026-lot-0001",
+    "fields": [
+     "amount",
+     "offers"
+    ]
+   },
+   {
+    "id": "ted-74949-2026-lot-0007",
+    "firstListing": "ted-634747-2024-lot-0007",
+    "fields": [
+     "amount"
+    ]
+   },
+   {
+    "id": "ted-303976-2026-lot-0007",
+    "firstListing": "ted-634747-2024-lot-0007",
+    "fields": [
+     "amount"
+    ]
+   },
+   {
+    "id": "ted-311902-2026-lot-0001",
+    "firstListing": "ted-55902-2026-lot-0001",
+    "fields": [
+     "amount"
+    ]
+   },
+   {
+    "id": "ted-447614-2026-lot-0007",
+    "firstListing": "ted-634747-2024-lot-0007",
+    "fields": [
+     "amount"
+    ]
+   },
+   {
+    "id": "ted-506432-2026-lot-0001",
+    "firstListing": "ted-401603-2025-lot-0001",
+    "fields": [
+     "amount"
+    ]
+   },
+   {
+    "id": "ted-511144-2026-lot-0001",
+    "firstListing": "ted-331330-2025-lot-0001",
+    "fields": [
+     "amount"
+    ]
+   },
+   {
+    "id": "ted-511144-2026-lot-0002",
+    "firstListing": "ted-331330-2025-lot-0002",
+    "fields": [
+     "amount"
+    ]
+   },
+   {
+    "id": "ted-529643-2026-lot-0002",
+    "firstListing": "ted-275106-2026-lot-0002",
+    "fields": [
+     "amount"
+    ]
+   }
+  ],
+  "withOffers": 629,
+  "withAmount": 615,
+  "currencies": [
+   "CZK",
+   "EUR"
+  ]
+ },
+ "limitations": [
+  "TED publishes procedures above the EU thresholds only; most national procurement is not here.",
+  "Contract modification notices are separate TED notices and were not imported: no amount-increase check.",
+  "Offers are the 'tenders' statistic published per lot; admissibility is not assessed.",
+  "A lot listed again in a later award notice of the same procedure under the same contract reference and conclusion date is kept once, from its first publication; changed values in later listings are counted, not applied.",
+  "Amounts are in the published currency, never converted or summed across currencies."
+ ],
+ "reproduce": [
+  "python tools/import-ted-cohorts.py --cohort czechia --offline",
+  "python tools/import-ted-cohorts.py --cohort czechia --download"
+ ]
+}

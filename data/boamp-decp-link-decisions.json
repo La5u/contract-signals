@@ -1,0 +1,518 @@
+{
+  "schemaVersion": 1,
+  "inputHashes": {
+    "data/contracts.json": "a02b90a427d9310ec57b6b2a7b18c21d9c999f8ebba0542835c7161a6cdf6400",
+    "data/decp-history.json": "80543b398f8d590157972eb52c0812ff483f13124e2fdf3d3c59120cbddee89e",
+    "data/decp-cities.json": "6fad886084537beacf0be219c612a5ad704869a08ff7fc36d87abfc14fc66e04",
+    "data/boamp-raw.json.gz": "e6839c41712d0001c33d200efc9fd31042b280a7dc5f1ac0601ca6acd1f66f9d"
+  },
+  "reviewer": "assistant-assisted",
+  "rowHashConvention": "SHA-256 of UTF-8 JSON for the complete normalized row, sort_keys=true, separators=(comma,colon), ensure_ascii=false; boampRowSha256 uses data/contracts.json, decpRowSha256 uses the indicated DECP dataset.",
+  "evidenceConvention": "source is a repository file; path is an exact zero-based JSON Pointer. For decode entries, gunzip source first, resolve decode.path in its JSON, parse that JSON string, then resolve path in the decoded object. expected is the complete nonpersonal source scalar, not an excerpt. Public acquisition ledger pointers identify retained extracts, not newly fetched response bodies.",
+  "decisions": [
+    {
+      "boampId": "boamp-25-21317-lot-0001",
+      "decpId": "decp-21750001600019-2024S05079",
+      "disposition": "dismissed-notice-lot-candidate",
+      "reason": "Reject this investigation lead for LOT-0001: its explicit result/contract/tender chain declares 20242024S05075; the sibling 20242024S05079 belongs to LOT-0003 / CON-0003 / TEN-0003. DECP 2024S05079 is not literally either long reference. This corrects an unsupported notice-lot candidate mapping, not an exact DECP crosswalk or proof of different legal contracts. No authoritative schema transformation permits repeated-year removal; no replacement link is confirmed.",
+      "reviewer": "assistant-assisted",
+      "replacementLinkConfirmed": false,
+      "boampRowSha256": "c7c1b8560648a6bfd541af9bcd913a2c1dbec0ed1ac92d5b0f22d7875addf216",
+      "decpRowSha256": "1ac797a8b732650df4154d0a8107e698206c3356b27f817536a6d0ecd49e20f8",
+      "sourceUrls": {
+        "boamp": "https://www.boamp.fr/pages/avis/?q=idweb:25-21317",
+        "decp": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+id%3D%272024S05079%27&limit=100",
+        "tedXML": "https://ted.europa.eu/en/notice/126421-2025/xml"
+      },
+      "evidence": [
+        {
+          "source": "data/contracts.json",
+          "path": "/1679/id",
+          "expected": "boamp-25-21317-lot-0001"
+        },
+        {
+          "source": "data/contracts.json",
+          "path": "/1679/buyerSiret",
+          "expected": "21750001600019"
+        },
+        {
+          "source": "data/contracts.json",
+          "path": "/1679/contractId",
+          "expected": "CON-0001"
+        },
+        {
+          "source": "data/contracts.json",
+          "path": "/1679/lotId",
+          "expected": "LOT-0001"
+        },
+        {
+          "source": "data/contracts.json",
+          "path": "/1679/description",
+          "expected": "Maintenance des systèmes, robots et outillages de production horticole de la ville de Paris en 3 lots — Maintenance des systèmes de fonctionnement des environnements de production horticole, dont le système d'arrosage"
+        },
+        {
+          "source": "data/decp-history.json",
+          "path": "/583/id",
+          "expected": "decp-21750001600019-2024S05079"
+        },
+        {
+          "source": "data/decp-history.json",
+          "path": "/583/buyerSiret",
+          "expected": "21750001600019"
+        },
+        {
+          "source": "data/decp-history.json",
+          "path": "/583/contractId",
+          "expected": "2024S05079"
+        },
+        {
+          "source": "data/decp-history.json",
+          "path": "/583/lotId",
+          "expected": null
+        },
+        {
+          "source": "data/decp-history.json",
+          "path": "/583/description",
+          "expected": "Maintenance des systèmes, robots et outillages de production horticole de la ville de Paris en 3 lots - Maintenance et amélioration des installations de gestion climatique des serres du centre de production horticole de la ville de Paris"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/records/2322/idweb",
+          "expected": "25-21317"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/cbc:ID/#text",
+          "decode": {
+            "path": "/records/2322/donnees",
+            "format": "json-string"
+          },
+          "expected": "CON-0001"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/efac:ContractReference/cbc:ID",
+          "decode": {
+            "path": "/records/2322/donnees",
+            "format": "json-string"
+          },
+          "expected": "20242024S05075"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/efac:LotTender/cbc:ID",
+          "decode": {
+            "path": "/records/2322/donnees",
+            "format": "json-string"
+          },
+          "expected": "TEN-0001"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/0/efac:TenderLot/cbc:ID",
+          "decode": {
+            "path": "/records/2322/donnees",
+            "format": "json-string"
+          },
+          "expected": "LOT-0001"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/0/efac:SettledContract/cbc:ID",
+          "decode": {
+            "path": "/records/2322/donnees",
+            "format": "json-string"
+          },
+          "expected": "CON-0001"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/0/efac:LotTender/cbc:ID",
+          "decode": {
+            "path": "/records/2322/donnees",
+            "format": "json-string"
+          },
+          "expected": "TEN-0001"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/0/efac:TenderLot/cbc:ID",
+          "decode": {
+            "path": "/records/2322/donnees",
+            "format": "json-string"
+          },
+          "expected": "LOT-0001"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/1/cbc:ID/#text",
+          "decode": {
+            "path": "/records/2322/donnees",
+            "format": "json-string"
+          },
+          "expected": "CON-0003"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/1/efac:ContractReference/cbc:ID",
+          "decode": {
+            "path": "/records/2322/donnees",
+            "format": "json-string"
+          },
+          "expected": "20242024S05079"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/1/efac:LotTender/cbc:ID",
+          "decode": {
+            "path": "/records/2322/donnees",
+            "format": "json-string"
+          },
+          "expected": "TEN-0003"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/1/efac:TenderLot/cbc:ID",
+          "decode": {
+            "path": "/records/2322/donnees",
+            "format": "json-string"
+          },
+          "expected": "LOT-0003"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/1/efac:SettledContract/cbc:ID",
+          "decode": {
+            "path": "/records/2322/donnees",
+            "format": "json-string"
+          },
+          "expected": "CON-0003"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/1/efac:LotTender/cbc:ID",
+          "decode": {
+            "path": "/records/2322/donnees",
+            "format": "json-string"
+          },
+          "expected": "TEN-0003"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/1/efac:TenderLot/cbc:ID",
+          "decode": {
+            "path": "/records/2322/donnees",
+            "format": "json-string"
+          },
+          "expected": "LOT-0002"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/0/cac:ProcurementProject/cbc:ID",
+          "decode": {
+            "path": "/records/2322/donnees",
+            "format": "json-string"
+          },
+          "expected": "Lot 1"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/0/cac:ProcurementProject/cbc:Name/#text",
+          "decode": {
+            "path": "/records/2322/donnees",
+            "format": "json-string"
+          },
+          "expected": "Maintenance des systèmes de fonctionnement des environnements de production horticole, dont le système d'arrosage"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/2/cac:ProcurementProject/cbc:ID",
+          "decode": {
+            "path": "/records/2322/donnees",
+            "format": "json-string"
+          },
+          "expected": "Lot 3"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/2/cac:ProcurementProject/cbc:Name/#text",
+          "decode": {
+            "path": "/records/2322/donnees",
+            "format": "json-string"
+          },
+          "expected": "Maintenance et amélioration des installations de gestion climatique des serres du centre de production horticole de la ville de Paris"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/0/cbc:ID/#text",
+          "decode": {
+            "path": "/records/2322/donnees",
+            "format": "json-string"
+          },
+          "expected": "LOT-0001"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/2/cbc:ID/#text",
+          "decode": {
+            "path": "/records/2322/donnees",
+            "format": "json-string"
+          },
+          "expected": "LOT-0003"
+        }
+      ]
+    },
+    {
+      "boampId": "boamp-25-34782-lot-0003",
+      "decpId": "decp-21440109300015-2025F00012",
+      "disposition": "dismissed-notice-lot-candidate",
+      "reason": "Reject this investigation lead for technical LOT-0003: it is printed Lot 2, LAVERIE, with reference 2024-88480; DECP 2025F00012 describes CUISSON, the scope of technical LOT-0002 / printed Lot 1 with reference 2024-88470. The buyer export's 2024_88478 is neither notice reference. These explicit notice-lot/scope distinctions oppose the candidate mapping but do not supply an exact DECP crosswalk or prove different legal contracts. No authoritative identifier transformation or replacement link is confirmed.",
+      "reviewer": "assistant-assisted",
+      "replacementLinkConfirmed": false,
+      "boampRowSha256": "c8366073b8199fb2cd4140e20a6f16a1715280425c2725b68336ab139ae5cfdc",
+      "decpRowSha256": "0213e11210f095f1b4c023889532508b459d398e071f12fafdfa0845aae9de68",
+      "sourceUrls": {
+        "boamp": "https://www.boamp.fr/pages/avis/?q=idweb:25-34782",
+        "decp": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721440109300015%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27+AND+id%3D%272025F00012%27&limit=100&order_by=datenotification+asc%2Cid+asc",
+        "buyerExport": "https://data.nantesmetropole.fr/api/explore/v2.1/catalog/datasets/244400404_marches-publics-conclus-2025-nantes/exports/json"
+      },
+      "evidence": [
+        {
+          "source": "data/contracts.json",
+          "path": "/151/id",
+          "expected": "boamp-25-34782-lot-0003"
+        },
+        {
+          "source": "data/contracts.json",
+          "path": "/151/buyerSiret",
+          "expected": "21440109300015"
+        },
+        {
+          "source": "data/contracts.json",
+          "path": "/151/contractId",
+          "expected": "CON-0002"
+        },
+        {
+          "source": "data/contracts.json",
+          "path": "/151/lotId",
+          "expected": "LOT-0003"
+        },
+        {
+          "source": "data/contracts.json",
+          "path": "/151/description",
+          "expected": "FOURNITURE DE MATÉRIEL PROFESSIONNEL POUR CUISINE — Matériel de cuisine \" LAVERIE \""
+        },
+        {
+          "source": "data/decp-cities.json",
+          "path": "/1512/id",
+          "expected": "decp-21440109300015-2025F00012"
+        },
+        {
+          "source": "data/decp-cities.json",
+          "path": "/1512/buyerSiret",
+          "expected": "21440109300015"
+        },
+        {
+          "source": "data/decp-cities.json",
+          "path": "/1512/contractId",
+          "expected": "2025F00012"
+        },
+        {
+          "source": "data/decp-cities.json",
+          "path": "/1512/lotId",
+          "expected": null
+        },
+        {
+          "source": "data/decp-cities.json",
+          "path": "/1512/description",
+          "expected": "AC_Cuisine_blanchisserie - Matériel de cuisine « CUISSON»"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/records/5331/idweb",
+          "expected": "25-34782"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/cbc:ID/#text",
+          "decode": {
+            "path": "/records/5331/donnees",
+            "format": "json-string"
+          },
+          "expected": "CON-0001"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/efac:ContractReference/cbc:ID",
+          "decode": {
+            "path": "/records/5331/donnees",
+            "format": "json-string"
+          },
+          "expected": "2024-88470"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/efac:LotTender/cbc:ID",
+          "decode": {
+            "path": "/records/5331/donnees",
+            "format": "json-string"
+          },
+          "expected": "TEN-0001"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/0/efac:TenderLot/cbc:ID",
+          "decode": {
+            "path": "/records/5331/donnees",
+            "format": "json-string"
+          },
+          "expected": "LOT-0002"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/0/efac:SettledContract/cbc:ID",
+          "decode": {
+            "path": "/records/5331/donnees",
+            "format": "json-string"
+          },
+          "expected": "CON-0001"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/0/efac:LotTender/cbc:ID",
+          "decode": {
+            "path": "/records/5331/donnees",
+            "format": "json-string"
+          },
+          "expected": "TEN-0001"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/0/efac:TenderLot/cbc:ID",
+          "decode": {
+            "path": "/records/5331/donnees",
+            "format": "json-string"
+          },
+          "expected": "LOT-0002"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/1/cbc:ID/#text",
+          "decode": {
+            "path": "/records/5331/donnees",
+            "format": "json-string"
+          },
+          "expected": "CON-0002"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/1/efac:ContractReference/cbc:ID",
+          "decode": {
+            "path": "/records/5331/donnees",
+            "format": "json-string"
+          },
+          "expected": "2024-88480"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/1/efac:LotTender/cbc:ID",
+          "decode": {
+            "path": "/records/5331/donnees",
+            "format": "json-string"
+          },
+          "expected": "TEN-0002"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/1/efac:TenderLot/cbc:ID",
+          "decode": {
+            "path": "/records/5331/donnees",
+            "format": "json-string"
+          },
+          "expected": "LOT-0003"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/1/efac:SettledContract/cbc:ID",
+          "decode": {
+            "path": "/records/5331/donnees",
+            "format": "json-string"
+          },
+          "expected": "CON-0002"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotResult/1/efac:LotTender/cbc:ID",
+          "decode": {
+            "path": "/records/5331/donnees",
+            "format": "json-string"
+          },
+          "expected": "TEN-0002"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:LotTender/1/efac:TenderLot/cbc:ID",
+          "decode": {
+            "path": "/records/5331/donnees",
+            "format": "json-string"
+          },
+          "expected": "LOT-0003"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/0/cac:ProcurementProject/cbc:ID",
+          "decode": {
+            "path": "/records/5331/donnees",
+            "format": "json-string"
+          },
+          "expected": "Lot 1"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/0/cac:ProcurementProject/cbc:Name/#text",
+          "decode": {
+            "path": "/records/5331/donnees",
+            "format": "json-string"
+          },
+          "expected": "Matériel de cuisine \" CUISSON\""
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/1/cac:ProcurementProject/cbc:ID",
+          "decode": {
+            "path": "/records/5331/donnees",
+            "format": "json-string"
+          },
+          "expected": "Lot 2"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/1/cac:ProcurementProject/cbc:Name/#text",
+          "decode": {
+            "path": "/records/5331/donnees",
+            "format": "json-string"
+          },
+          "expected": "Matériel de cuisine \" LAVERIE \""
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/0/cbc:ID/#text",
+          "decode": {
+            "path": "/records/5331/donnees",
+            "format": "json-string"
+          },
+          "expected": "LOT-0002"
+        },
+        {
+          "source": "data/boamp-raw.json.gz",
+          "path": "/EFORMS/ContractAwardNotice/cac:ProcurementProjectLot/1/cbc:ID/#text",
+          "decode": {
+            "path": "/records/5331/donnees",
+            "format": "json-string"
+          },
+          "expected": "LOT-0003"
+        }
+      ]
+    }
+  ]
+}

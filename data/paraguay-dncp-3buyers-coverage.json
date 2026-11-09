@@ -1,0 +1,138 @@
+{
+ "source": "https://www.contrataciones.gov.py/datos/api/v3/doc",
+ "portal": "https://www.contrataciones.gov.py/licitaciones/",
+ "license": "CC BY 4.0",
+ "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+ "attribution": "Dirección Nacional de Contrataciones Públicas (DNCP), Paraguay",
+ "cohort": {
+  "buyers": [
+   {
+    "buyerId": "DNCP-SICP-CODE-20",
+    "name": "Ministerio de Obras Públicas y Comunicaciones (MOPC)",
+    "level": "national"
+   },
+   {
+    "buyerId": "DNCP-SICP-CODE-81",
+    "name": "Gobierno Departamental de Central",
+    "level": "departmental"
+   },
+   {
+    "buyerId": "DNCP-SICP-CODE-108",
+    "name": "Municipalidad de Asunción",
+    "level": "municipal"
+   }
+  ],
+  "cohortId": "dncp-3buyers-2024-2026",
+  "selection": "One buyer per government level (national, departmental, municipal), announced on 2026-09-25 before downloading contract records. Chosen by level and a manually reviewable process count (search totals 149, 95 and 97 at announcement); the Ministerio de Educación y Ciencias (3,517 processes) was set aside for volume. Indicator results were not consulted.",
+  "window": {
+   "startInclusive": "2024-09-01",
+   "endExclusive": "2026-09-01",
+   "basis": "tipo_fecha=publicacion_llamado (call publication, NOT contract signature)"
+  }
+ },
+ "retrieval": {
+  "startedAt": "2026-09-25T09:36:19.936689+00:00",
+  "finishedAt": "2026-09-25T09:47:28.097147+00:00",
+  "queries": [
+   {
+    "buyerId": "DNCP-SICP-CODE-20",
+    "queryUrl": "https://www.contrataciones.gov.py/datos/api/v3/doc/search/processes?page=1&items_per_page=50&parties.identifier.id=20&fecha_desde=2024-09-01&fecha_hasta=2026-08-31&tipo_fecha=publicacion_llamado",
+    "totalItemsAtDownload": 149,
+    "pages": [
+     {
+      "file": "search-20-001.json",
+      "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/search/processes?page=1&items_per_page=50&parties.identifier.id=20&fecha_desde=2024-09-01&fecha_hasta=2026-08-31&tipo_fecha=publicacion_llamado"
+     },
+     {
+      "file": "search-20-002.json",
+      "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/search/processes?page=2&items_per_page=50&parties.identifier.id=20&fecha_desde=2024-09-01&fecha_hasta=2026-08-31&tipo_fecha=publicacion_llamado"
+     },
+     {
+      "file": "search-20-003.json",
+      "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/search/processes?page=3&items_per_page=50&parties.identifier.id=20&fecha_desde=2024-09-01&fecha_hasta=2026-08-31&tipo_fecha=publicacion_llamado"
+     }
+    ]
+   },
+   {
+    "buyerId": "DNCP-SICP-CODE-81",
+    "queryUrl": "https://www.contrataciones.gov.py/datos/api/v3/doc/search/processes?page=1&items_per_page=50&parties.identifier.id=81&fecha_desde=2024-09-01&fecha_hasta=2026-08-31&tipo_fecha=publicacion_llamado",
+    "totalItemsAtDownload": 95,
+    "pages": [
+     {
+      "file": "search-81-001.json",
+      "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/search/processes?page=1&items_per_page=50&parties.identifier.id=81&fecha_desde=2024-09-01&fecha_hasta=2026-08-31&tipo_fecha=publicacion_llamado"
+     },
+     {
+      "file": "search-81-002.json",
+      "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/search/processes?page=2&items_per_page=50&parties.identifier.id=81&fecha_desde=2024-09-01&fecha_hasta=2026-08-31&tipo_fecha=publicacion_llamado"
+     }
+    ]
+   },
+   {
+    "buyerId": "DNCP-SICP-CODE-108",
+    "queryUrl": "https://www.contrataciones.gov.py/datos/api/v3/doc/search/processes?page=1&items_per_page=50&parties.identifier.id=108&fecha_desde=2024-09-01&fecha_hasta=2026-08-31&tipo_fecha=publicacion_llamado",
+    "totalItemsAtDownload": 97,
+    "pages": [
+     {
+      "file": "search-108-001.json",
+      "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/search/processes?page=1&items_per_page=50&parties.identifier.id=108&fecha_desde=2024-09-01&fecha_hasta=2026-08-31&tipo_fecha=publicacion_llamado"
+     },
+     {
+      "file": "search-108-002.json",
+      "url": "https://www.contrataciones.gov.py/datos/api/v3/doc/search/processes?page=2&items_per_page=50&parties.identifier.id=108&fecha_desde=2024-09-01&fecha_hasta=2026-08-31&tipo_fecha=publicacion_llamado"
+     }
+    ]
+   }
+  ],
+  "recordUrlTemplate": "https://www.contrataciones.gov.py/datos/api/v3/doc/ocds/record/{ocid}",
+  "rawDirectory": "data/paraguay-dncp-3buyers/raw"
+ },
+ "counts": {
+  "searchProcesses": 339,
+  "searchProcessesByBuyer": [
+   {
+    "buyerId": "DNCP-SICP-CODE-20",
+    "searchProcesses": 149
+   },
+   {
+    "buyerId": "DNCP-SICP-CODE-81",
+    "searchProcesses": 95
+   },
+   {
+    "buyerId": "DNCP-SICP-CODE-108",
+    "searchProcesses": 97
+   }
+  ],
+  "processesWithoutSingleCohortBuyer": 1,
+  "processesWithoutSingleCohortBuyerOcids": [
+   "ocds-03ad3f-471760"
+  ],
+  "recordsWithEligibleContracts": 211,
+  "publishedContractsInFullRecords": 326,
+  "retainedContracts": 293,
+  "excludedContractEntries": 33,
+  "excludedBudgetOnlyEntries": 21,
+  "excludedEntriesThatAreAmendmentRecords": 12,
+  "releasesInFullRecords": 656,
+  "publishedContractAmendmentEntries": 12,
+  "retainedWithSignedDocumentUrl": 293,
+  "retainedWithoutSignatureDate": 285,
+  "retainedWithPortalAwardPage": 293,
+  "retainedWithTendererCount": 277,
+  "retainedWithComplaintRecorded": 17
+ },
+ "limitations": [
+  "Calls published during the fixed window, not contracts signed during that window; later awards/contracts may appear in full records.",
+  "Search pagination is checked against one observed total but the API does not promise an immutable snapshot; national completeness is unverified. The search API caps totals at 10,000, so only bounded per-buyer queries are used.",
+  "Only contracts with explicit awardID, one identified award supplier, and PYG contract value are retained; excluded counts are reported. Budget-only entries (no contract ID, only implementation.financialProgress) are not contracts. Excluded entries also include the separate contract entries the source publishes for amount amendments; the amendment itself stays attached to its parent contract.",
+  "The source's contractSigned document links are not a manual review of document contents; signatures, legal status and payments are not independently audited.",
+  "Amendment and release counts are context, not a reconstructed value history; source versions can be incomplete.",
+  "Paraguayan checks are editorial (docs/score-paraguay.md); French and Colombian rules are never applied.",
+  "A few buyers are not a country sample; no cross-country score or currency comparison."
+ ],
+ "reproduce": [
+  "python tools/import-paraguay-dncp.py --cohort 3buyers --download",
+  "python tools/import-paraguay-dncp.py --cohort 3buyers --offline",
+  "node tests/paraguay.cjs"
+ ]
+}

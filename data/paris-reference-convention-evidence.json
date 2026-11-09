@@ -1,0 +1,686 @@
+{
+  "schemaVersion": 1,
+  "scope": "Public-only research annotation, not a link artifact. No normalization or promotion.",
+  "repositorySnapshot": {
+    "literalFullReferenceScan": {
+      "references": [
+        "20242024S05075",
+        "20242024S05079",
+        "2025F026480000",
+        "2025F026500000",
+        "2025HA0001GR",
+        "2025S015900000",
+        "2025S029150000"
+      ],
+      "scope": "Every scalar field of every retained row for the exact Paris buyer",
+      "hits": {
+        "feed": [],
+        "ministry": []
+      }
+    },
+    "sourceHashes": {
+      "data/decp-feeds-raw.json.gz": "58a17d104540b29e734052dfdb1e9f12afd1bc6fa914e2852a9b76b0cfcda922",
+      "data/decp-history-raw.json.gz": "d759bfaf97d468aa95fa15b4f0b7e657739ceb052b1b8f8afc731e1ad32b419e",
+      "data/boamp-raw.json.gz": "e6839c41712d0001c33d200efc9fd31042b280a7dc5f1ac0601ca6acd1f66f9d",
+      "research/public-link-observations.json": "a32df914852eb743533ba078e2ed9dd65a51c89794fa4a901a0d98f4c94ccf25"
+    },
+    "snapshotTimes": {
+      "feed": "2026-10-04T12:23:23+00:00",
+      "ministry": "2026-09-25T12:03:30.277162+00:00",
+      "boamp": "2026-09-25T12:05:56.859285+00:00"
+    },
+    "feedProvenance": {
+      "dataset_id": "608c055b35eb4e6ee20eb325",
+      "dataset_title": "Données essentielles de la commande publique consolidées (format tabulaire)",
+      "dataset_page": "https://www.data.gouv.fr/datasets/donnees-essentielles-de-la-commande-publique-consolidees-format-tabulaire",
+      "publisher": "Colmo",
+      "licence": "lov2",
+      "resource_url": "https://static.data.gouv.fr/resources/donnees-essentielles-de-la-commande-publique-consolidees-format-tabulaire/20261004-051839/decp.parquet",
+      "resource_last_modified": "2026-10-04T05:18:55.397000+00:00",
+      "sha256": "cf74340145074271320e8bc92de37711d4df0974844e635d87184217555784ee",
+      "retrieved_at": "2026-10-04T12:23:23+00:00"
+    },
+    "ministryQueries": [
+      {
+        "url": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27&limit=100&offset=600&order_by=datenotification+asc%2Cid+asc",
+        "buyerSiret": "21750001600019",
+        "offset": 600,
+        "count": 100,
+        "total": 2395
+      },
+      {
+        "url": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27&limit=100&offset=1400&order_by=datenotification+asc%2Cid+asc",
+        "buyerSiret": "21750001600019",
+        "offset": 1400,
+        "count": 100,
+        "total": 2395
+      },
+      {
+        "url": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27&limit=100&offset=1500&order_by=datenotification+asc%2Cid+asc",
+        "buyerSiret": "21750001600019",
+        "offset": 1500,
+        "count": 100,
+        "total": 2395
+      },
+      {
+        "url": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records?where=acheteur_id%3D%2721750001600019%27+AND+datenotification+%3E%3D+%272024-01-01%27+AND+datenotification+%3C+%272026-01-01%27&limit=100&offset=1600&order_by=datenotification+asc%2Cid+asc",
+        "buyerSiret": "21750001600019",
+        "offset": 1600,
+        "count": 100,
+        "total": 2395
+      }
+    ],
+    "pairs": [
+      {
+        "pair": 1,
+        "boampId": "boamp-25-21317-lot-0001",
+        "decpId": "decp-21750001600019-2024S05075",
+        "rawNoticePointer": "data/boamp-raw.json.gz#/records/2322",
+        "decodedReferencePointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/efac:ContractReference/cbc:ID",
+        "publishedReference": "20242024S05075",
+        "decpContractId": "2024S05075",
+        "literalReferenceComponents": [
+          "20242024S05075"
+        ],
+        "feedShortIdRows": [
+          {
+            "pointer": "/records/4139",
+            "fields": {
+              "id": "2024S05075",
+              "acheteur_id": "21750001600019",
+              "uid": "217500016000192024S05075_50530000",
+              "sourceDataset": "atexo_maximilien",
+              "sourceFile": "https://www.data.gouv.fr/datasets/67272093922b37b9b2f1b653/#/resources/ed3d8ced-fdb6-41e1-933d-c0a15984ad16"
+            }
+          }
+        ],
+        "feedExactFullReferenceHits": [],
+        "ministryShortIdRows": [
+          {
+            "pointer": "/records/634",
+            "fields": {
+              "id": "2024S05075",
+              "acheteur_id": "21750001600019",
+              "source": "ATEXO"
+            }
+          },
+          {
+            "pointer": "/records/635",
+            "fields": {
+              "id": "2024S05075",
+              "acheteur_id": "21750001600019",
+              "source": "ATEXO"
+            }
+          }
+        ],
+        "ministryExactFullReferenceHits": [],
+        "linkageSufficient": false,
+        "basis": "No exact full-reference-to-DECP-ID crosswalk in retained rows; no stripping rule assumed."
+      },
+      {
+        "pair": 2,
+        "boampId": "boamp-25-21317-lot-0001",
+        "decpId": "decp-21750001600019-2024S05079",
+        "rawNoticePointer": "data/boamp-raw.json.gz#/records/2322",
+        "decodedReferencePointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/efac:ContractReference/cbc:ID",
+        "publishedReference": "20242024S05075",
+        "decpContractId": "2024S05079",
+        "literalReferenceComponents": [
+          "20242024S05075"
+        ],
+        "feedShortIdRows": [
+          {
+            "pointer": "/records/4141",
+            "fields": {
+              "id": "2024S05079",
+              "acheteur_id": "21750001600019",
+              "uid": "217500016000192024S05079_50530000",
+              "sourceDataset": "atexo_maximilien",
+              "sourceFile": "https://www.data.gouv.fr/datasets/67272093922b37b9b2f1b653/#/resources/ed3d8ced-fdb6-41e1-933d-c0a15984ad16"
+            }
+          }
+        ],
+        "feedExactFullReferenceHits": [],
+        "ministryShortIdRows": [
+          {
+            "pointer": "/records/638",
+            "fields": {
+              "id": "2024S05079",
+              "acheteur_id": "21750001600019",
+              "source": "ATEXO"
+            }
+          },
+          {
+            "pointer": "/records/639",
+            "fields": {
+              "id": "2024S05079",
+              "acheteur_id": "21750001600019",
+              "source": "ATEXO"
+            }
+          }
+        ],
+        "ministryExactFullReferenceHits": [],
+        "linkageSufficient": false,
+        "basis": "No exact full-reference-to-DECP-ID crosswalk in retained rows; no stripping rule assumed."
+      },
+      {
+        "pair": 3,
+        "boampId": "boamp-25-21329-lot-0001",
+        "decpId": "decp-21750001600019-2025S01590",
+        "rawNoticePointer": "data/boamp-raw.json.gz#/records/2325",
+        "decodedReferencePointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/efac:ContractReference/cbc:ID",
+        "publishedReference": "2025S015900000 / 2025HA0001GR",
+        "decpContractId": "2025S01590",
+        "literalReferenceComponents": [
+          "2025S015900000",
+          "2025HA0001GR"
+        ],
+        "feedShortIdRows": [
+          {
+            "pointer": "/records/5139",
+            "fields": {
+              "id": "2025S01590",
+              "acheteur_id": "21750001600019",
+              "uid": "217500016000192025S01590_72267000",
+              "sourceDataset": "atexo_maximilien",
+              "sourceFile": "https://www.data.gouv.fr/datasets/67272093922b37b9b2f1b653/#/resources/ef2d35a1-a6d6-4301-badf-bd7f59ee0e0b"
+            }
+          }
+        ],
+        "feedExactFullReferenceHits": [],
+        "ministryShortIdRows": [
+          {
+            "pointer": "/records/1464",
+            "fields": {
+              "id": "2025S01590",
+              "acheteur_id": "21750001600019",
+              "source": "ATEXO"
+            }
+          }
+        ],
+        "ministryExactFullReferenceHits": [],
+        "linkageSufficient": false,
+        "basis": "No exact full-reference-to-DECP-ID crosswalk in retained rows; no stripping rule assumed."
+      },
+      {
+        "pair": 4,
+        "boampId": "boamp-25-34782-lot-0003",
+        "decpId": "decp-21440109300015-2025F00012",
+        "rawNoticePointer": "data/boamp-raw.json.gz#/records/5331",
+        "decodedReferencePointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/1/efac:ContractReference/cbc:ID",
+        "publishedReference": "2024-88480",
+        "decpContractId": "2025F00012",
+        "linkageSufficient": false,
+        "basis": "Outside Paris convention scope; no new Nantes bridge investigated."
+      },
+      {
+        "pair": 5,
+        "boampId": "boamp-25-34782-lot-0003",
+        "decpId": "decp-21440109300015-2025F00013",
+        "rawNoticePointer": "data/boamp-raw.json.gz#/records/5331",
+        "decodedReferencePointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/1/efac:ContractReference/cbc:ID",
+        "publishedReference": "2024-88480",
+        "decpContractId": "2025F00013",
+        "linkageSufficient": false,
+        "basis": "Outside Paris convention scope; no new Nantes bridge investigated."
+      },
+      {
+        "pair": 6,
+        "boampId": "boamp-25-34782-lot-0006",
+        "decpId": "decp-21440109300015-2025F00016-1",
+        "rawNoticePointer": "data/boamp-raw.json.gz#/records/5331",
+        "decodedReferencePointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/4/efac:ContractReference/cbc:ID",
+        "publishedReference": "2024-88486",
+        "decpContractId": "2025F00016",
+        "linkageSufficient": false,
+        "basis": "Outside Paris convention scope; no new Nantes bridge investigated."
+      },
+      {
+        "pair": 7,
+        "boampId": "boamp-25-37616-lot-0001",
+        "decpId": "decp-21750001600019-2025F02650",
+        "rawNoticePointer": "data/boamp-raw.json.gz#/records/5981",
+        "decodedReferencePointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/efac:ContractReference/cbc:ID",
+        "publishedReference": "2025F026500000",
+        "decpContractId": "2025F02650",
+        "literalReferenceComponents": [
+          "2025F026500000"
+        ],
+        "feedShortIdRows": [
+          {
+            "pointer": "/records/4909",
+            "fields": {
+              "id": "2025F02650",
+              "acheteur_id": "21750001600019",
+              "uid": "217500016000192025F02650_22200000",
+              "sourceDataset": "atexo_maximilien",
+              "sourceFile": "https://www.data.gouv.fr/datasets/67272093922b37b9b2f1b653/#/resources/ef2d35a1-a6d6-4301-badf-bd7f59ee0e0b"
+            }
+          }
+        ],
+        "feedExactFullReferenceHits": [],
+        "ministryShortIdRows": [
+          {
+            "pointer": "/records/1589",
+            "fields": {
+              "id": "2025F02650",
+              "acheteur_id": "21750001600019",
+              "source": "ATEXO"
+            }
+          }
+        ],
+        "ministryExactFullReferenceHits": [],
+        "linkageSufficient": false,
+        "basis": "No exact full-reference-to-DECP-ID crosswalk in retained rows; no stripping rule assumed."
+      },
+      {
+        "pair": 8,
+        "boampId": "boamp-25-45958-lot-0005",
+        "decpId": "decp-21750001600019-2025S02915",
+        "rawNoticePointer": "data/boamp-raw.json.gz#/records/7653",
+        "decodedReferencePointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/4/efac:ContractReference/cbc:ID",
+        "publishedReference": "2025S029150000",
+        "decpContractId": "2025S02915",
+        "literalReferenceComponents": [
+          "2025S029150000"
+        ],
+        "feedShortIdRows": [
+          {
+            "pointer": "/records/5197",
+            "fields": {
+              "id": "2025S02915",
+              "acheteur_id": "21750001600019",
+              "uid": "217500016000192025S02915_90911200",
+              "sourceDataset": "atexo_maximilien",
+              "sourceFile": "https://www.data.gouv.fr/datasets/67272093922b37b9b2f1b653/#/resources/ef2d35a1-a6d6-4301-badf-bd7f59ee0e0b"
+            }
+          }
+        ],
+        "feedExactFullReferenceHits": [],
+        "ministryShortIdRows": [
+          {
+            "pointer": "/records/1615",
+            "fields": {
+              "id": "2025S02915",
+              "acheteur_id": "21750001600019",
+              "source": "ATEXO"
+            }
+          }
+        ],
+        "ministryExactFullReferenceHits": [],
+        "linkageSufficient": false,
+        "basis": "No exact full-reference-to-DECP-ID crosswalk in retained rows; no stripping rule assumed."
+      },
+      {
+        "pair": 9,
+        "boampId": "boamp-25-47556-lot-0001",
+        "decpId": "decp-21750001600019-2025F02648",
+        "rawNoticePointer": "data/boamp-raw.json.gz#/records/8022",
+        "decodedReferencePointer": "/EFORMS/ContractAwardNotice/ext:UBLExtensions/ext:UBLExtension/ext:ExtensionContent/efext:EformsExtension/efac:NoticeResult/efac:SettledContract/0/efac:ContractReference/cbc:ID",
+        "publishedReference": "2025F026480000",
+        "decpContractId": "2025F02648",
+        "literalReferenceComponents": [
+          "2025F026480000"
+        ],
+        "feedShortIdRows": [
+          {
+            "pointer": "/records/4907",
+            "fields": {
+              "id": "2025F02648",
+              "acheteur_id": "21750001600019",
+              "uid": "217500016000192025F02648_39370000",
+              "sourceDataset": "atexo_maximilien",
+              "sourceFile": "https://www.data.gouv.fr/datasets/67272093922b37b9b2f1b653/#/resources/ef2d35a1-a6d6-4301-badf-bd7f59ee0e0b"
+            }
+          }
+        ],
+        "feedExactFullReferenceHits": [],
+        "ministryShortIdRows": [
+          {
+            "pointer": "/records/1689",
+            "fields": {
+              "id": "2025F02648",
+              "acheteur_id": "21750001600019",
+              "source": "ATEXO"
+            }
+          }
+        ],
+        "ministryExactFullReferenceHits": [],
+        "linkageSufficient": false,
+        "basis": "No exact full-reference-to-DECP-ID crosswalk in retained rows; no stripping rule assumed."
+      }
+    ],
+    "automaticNormalizationAuthorized": false
+  },
+  "liveRequests": [
+    {
+      "attempt": 1,
+      "url": "https://www.data.gouv.fr/api/1/datasets/67272093922b37b9b2f1b653/",
+      "startedAt": "2026-10-11T10:09:03.841282+00:00",
+      "finishedAt": "2026-10-11T10:09:03.954674+00:00",
+      "httpStatus": "200",
+      "curlExit": 0,
+      "failure": null,
+      "bodyBytes": 14444,
+      "bodySha256": "90cfa6e6a83224b3e6bba2a6900a9c6e90650670f08da106049671492eb0fd71",
+      "complete": true
+    },
+    {
+      "attempt": 2,
+      "url": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides",
+      "startedAt": "2026-10-11T10:09:03.986520+00:00",
+      "finishedAt": "2026-10-11T10:09:04.080008+00:00",
+      "httpStatus": "200",
+      "curlExit": 0,
+      "failure": null,
+      "bodyBytes": 3827,
+      "bodySha256": "bac1a8af30c690894920984b6f9eb770e1437765711c1a072b2fd9e98fcb15cf",
+      "complete": true
+    },
+    {
+      "attempt": 3,
+      "url": "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets?where=search%28%22march%C3%A9s%22%29&limit=20",
+      "startedAt": "2026-10-11T10:09:20.917023+00:00",
+      "finishedAt": "2026-10-11T10:09:21.238664+00:00",
+      "httpStatus": "200",
+      "curlExit": 0,
+      "failure": null,
+      "bodyBytes": 256400,
+      "bodySha256": "8ac504cc0ce1a9f80b7d711fd26eddafa00ba570e674eb0b9d64a314652ffc8d",
+      "complete": true
+    },
+    {
+      "attempt": 4,
+      "url": "https://schema.data.gouv.fr/139bercy/format-commande-publique/",
+      "startedAt": "2026-10-11T10:09:33.475225+00:00",
+      "finishedAt": "2026-10-11T10:09:33.586446+00:00",
+      "httpStatus": "200",
+      "curlExit": 0,
+      "failure": null,
+      "bodyBytes": 117362,
+      "bodySha256": "94f52a7224b4789583a3c212f23bba11bfd82f97f4cff34a13c4c299cb6d175b",
+      "complete": true
+    },
+    {
+      "attempt": 5,
+      "url": "https://raw.githubusercontent.com/139bercy/format-commande-publique/2.0.2/_index.md",
+      "startedAt": "2026-10-11T10:09:52.599943+00:00",
+      "finishedAt": "2026-10-11T10:09:52.848972+00:00",
+      "httpStatus": "200",
+      "curlExit": 0,
+      "failure": null,
+      "bodyBytes": 15930,
+      "bodySha256": "235037781166d88256095f6b531161c9cb1544405f2585c1e4daf7b49fdb13da",
+      "complete": true
+    },
+    {
+      "attempt": 6,
+      "url": "https://api.github.com/repos/139bercy/format-commande-publique/git/trees/2.0.2?recursive=1",
+      "startedAt": "2026-10-11T10:09:52.874299+00:00",
+      "finishedAt": "2026-10-11T10:09:53.207188+00:00",
+      "httpStatus": "200",
+      "curlExit": 0,
+      "failure": null,
+      "bodyBytes": 6589,
+      "bodySha256": "68b7a41fed7ee993c9fd4c3828321071d57a5a7bf6a392ff258ef7e28e19edf7",
+      "complete": true
+    },
+    {
+      "attempt": 7,
+      "url": "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/liste-des-marches-de-la-collectivite-parisienne/records?select=num_marche%2Cannee_de_notification&where=num_marche%3D%2720242024S05075%27+OR+num_marche%3D%272024S05075%27+OR+num_marche%3D%2720242024S05079%27+OR+num_marche%3D%272024S05079%27+OR+num_marche%3D%272025F026480000%27+OR+num_marche%3D%272025F02648%27+OR+num_marche%3D%272025F026500000%27+OR+num_marche%3D%272025F02650%27+OR+num_marche%3D%272025S029150000%27+OR+num_marche%3D%272025S02915%27+OR+num_marche%3D%272025S015900000%27+OR+num_marche%3D%272025S01590%27+OR+num_marche%3D%272025HA0001GR%27&limit=100",
+      "startedAt": "2026-10-11T10:09:53.250577+00:00",
+      "finishedAt": "2026-10-11T10:09:53.432388+00:00",
+      "httpStatus": "200",
+      "curlExit": 0,
+      "failure": null,
+      "bodyBytes": 433,
+      "bodySha256": "dbebb02945f3dabf3977757cf6777003b6f577d998e8b12bc84afb2b72570442",
+      "complete": true
+    },
+    {
+      "attempt": 8,
+      "url": "https://raw.githubusercontent.com/139bercy/format-commande-publique/2.0.2/schema_decp_v2.0.2.json",
+      "startedAt": "2026-10-11T10:09:58.607917+00:00",
+      "finishedAt": "2026-10-11T10:09:58.856115+00:00",
+      "httpStatus": "200",
+      "curlExit": 0,
+      "failure": null,
+      "bodyBytes": 51194,
+      "bodySha256": "7e04e0bf1818befabd5d17c8b0078063bc7d03e3fcf5c464b3f7d6e68d85f9bd",
+      "complete": true
+    }
+  ],
+  "liveScalars": [
+    {
+      "attempt": 1,
+      "pointer": "/description",
+      "value": "Données essentielles du profil acheteur GIP Maximilien",
+      "scalarSha256": "5c5bdbe2f131763e758190508bafbc3bafdc3632c486aaa4957facbab428dffc"
+    },
+    {
+      "attempt": 1,
+      "pointer": "/license",
+      "value": "notspecified",
+      "scalarSha256": "2b87126c7373d57595d991e667f25470ea70acb7e113a2258715b190d76d695b"
+    },
+    {
+      "attempt": 1,
+      "pointer": "/schema",
+      "value": null,
+      "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "attempt": 1,
+      "pointer": "/organization/name",
+      "value": "ATEXO - DECP",
+      "scalarSha256": "0f7f9efe73cfa10639f4b9d4e501a49536140c815dd179a31533e5267d773b2f"
+    },
+    {
+      "attempt": 1,
+      "pointer": "/resources/4/id",
+      "value": "ed3d8ced-fdb6-41e1-933d-c0a15984ad16",
+      "scalarSha256": "300bb5d45815f08e0b01c5e0fbcd7e139f23981997036b0742dbb22e1cf75115"
+    },
+    {
+      "attempt": 1,
+      "pointer": "/resources/4/title",
+      "value": "decp-2024.json",
+      "scalarSha256": "e4c322b1b2944df9dd6aad8c52ef242e043d8dc3bb4dac5cc9688dbd4834a459"
+    },
+    {
+      "attempt": 1,
+      "pointer": "/resources/4/filesize",
+      "value": 13098029,
+      "scalarSha256": "112625598884d5c8c0b18d65345adb4dc85a6db189a7314ed7dcb62d5eefede2"
+    },
+    {
+      "attempt": 1,
+      "pointer": "/resources/4/url",
+      "value": "https://static.data.gouv.fr/resources/donnees-essentielles-du-profil-acheteur-gip-maximilien/20261010-230446/decp-2024.json",
+      "scalarSha256": "0a3cdf5e889052d40c9779581dec7f7e9140483d8451d5b27b106e6250875cec"
+    },
+    {
+      "attempt": 1,
+      "pointer": "/resources/4/schema",
+      "value": null,
+      "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "attempt": 1,
+      "pointer": "/resources/6/id",
+      "value": "ef2d35a1-a6d6-4301-badf-bd7f59ee0e0b",
+      "scalarSha256": "c74533225659e517fe814fa456c4e22e2b204cb6d7ee51f509dadc5e40685b1c"
+    },
+    {
+      "attempt": 1,
+      "pointer": "/resources/6/title",
+      "value": "decp-2025.json",
+      "scalarSha256": "cc5b32310e4b8917a6a2504f83c7eae0f39fe9a5232ddd6df08ed643b6c40eea"
+    },
+    {
+      "attempt": 1,
+      "pointer": "/resources/6/filesize",
+      "value": 12373486,
+      "scalarSha256": "f3366d4139f12a58468637028cde09af01cb98dfef6961ebd365528133c3a4a1"
+    },
+    {
+      "attempt": 1,
+      "pointer": "/resources/6/url",
+      "value": "https://static.data.gouv.fr/resources/donnees-essentielles-du-profil-acheteur-gip-maximilien/20261011-000449/decp-2025.json",
+      "scalarSha256": "a901f7d46027f515794e19574bfdd5e8282ded8b007ca8adec52f779e99215df"
+    },
+    {
+      "attempt": 1,
+      "pointer": "/resources/6/schema",
+      "value": null,
+      "scalarSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "attempt": 2,
+      "pointer": "/fields/0",
+      "value": {
+        "name": "id",
+        "description": "Numéro d'identification unique de marché public ",
+        "annotations": {},
+        "label": "id",
+        "type": "text"
+      },
+      "scalarSha256": "901ecb7b0b169e00c00ded5029cc60b798581ed9ae481ad7cae2a569a004a47e"
+    },
+    {
+      "attempt": 3,
+      "pointer": "/total_count",
+      "value": 20,
+      "scalarSha256": "f5ca38f748a1d6eaf726b8a42fb575c3c71f1864a8143301782de13da2d9202b"
+    },
+    {
+      "attempt": 3,
+      "pointer": "/results/5/dataset_id",
+      "value": "liste-des-marches-de-la-collectivite-parisienne",
+      "scalarSha256": "ad20b13310b0ed2f679713930b1a9f6240e011fa1963586a4f99a8e7320bfa0e"
+    },
+    {
+      "attempt": 3,
+      "pointer": "/results/5/metas/default/description",
+      "excerpt": "N° Marché — Numéro national de recensement du marché",
+      "basis": "HTML table cell text; full body hash in liveRequests"
+    },
+    {
+      "attempt": 3,
+      "pointer": "/results/5/metas/default/license",
+      "value": "Open Database License (ODbL)",
+      "scalarSha256": "f484cc8c188520c9164d99c0ee446c18f12ac9842613ea81731b7fce7141152f"
+    },
+    {
+      "attempt": 3,
+      "pointer": "/results/5/metas/default/modified",
+      "value": "2026-09-16T09:15:26+00:00",
+      "scalarSha256": "c7a6ce7668961b1d328d8186c24cb864e6ea508095e0a8f4019e684683ce6c1c"
+    },
+    {
+      "attempt": 7,
+      "pointer": "/total_count",
+      "value": 6,
+      "scalarSha256": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683"
+    },
+    {
+      "attempt": 7,
+      "pointer": "/results/0/num_marche",
+      "value": "20242024S05079",
+      "scalarSha256": "092fc7e99a4e8260e7a1ba75dab9e92bd2e39cb92e73794ec9f7c8ee67ee69c5"
+    },
+    {
+      "attempt": 7,
+      "pointer": "/results/0/annee_de_notification",
+      "value": "2024",
+      "scalarSha256": "8f3008b4f18b0c7f7c8ebb754933773996fb7208aca1aedeb00ad8e5c64e776f"
+    },
+    {
+      "attempt": 7,
+      "pointer": "/results/1/num_marche",
+      "value": "20242024S05075",
+      "scalarSha256": "f0b05825def36b9208fc173490538e37db6494ebf1859dcc37768513c447caac"
+    },
+    {
+      "attempt": 7,
+      "pointer": "/results/1/annee_de_notification",
+      "value": "2024",
+      "scalarSha256": "8f3008b4f18b0c7f7c8ebb754933773996fb7208aca1aedeb00ad8e5c64e776f"
+    },
+    {
+      "attempt": 7,
+      "pointer": "/results/2/num_marche",
+      "value": "2025S029150000",
+      "scalarSha256": "3fa559d149c8cc753a1323acd4abc292b8dd31cffae338019d37581de533a4a0"
+    },
+    {
+      "attempt": 7,
+      "pointer": "/results/2/annee_de_notification",
+      "value": "2025",
+      "scalarSha256": "10f785c6e4f662128181cf1aa7b39172a90d34faa840224dcb8a717019a21224"
+    },
+    {
+      "attempt": 7,
+      "pointer": "/results/3/num_marche",
+      "value": "2025F026480000",
+      "scalarSha256": "ff36c23735a8c42c9267b9ead3e6f39e3ce20b5d5640d62f679659e27b15053f"
+    },
+    {
+      "attempt": 7,
+      "pointer": "/results/3/annee_de_notification",
+      "value": "2025",
+      "scalarSha256": "10f785c6e4f662128181cf1aa7b39172a90d34faa840224dcb8a717019a21224"
+    },
+    {
+      "attempt": 7,
+      "pointer": "/results/4/num_marche",
+      "value": "2025S015900000",
+      "scalarSha256": "da6d1cba3115b5003735efb70021a2b695aa31e5474b14d07e2d2c189ce3ef34"
+    },
+    {
+      "attempt": 7,
+      "pointer": "/results/4/annee_de_notification",
+      "value": "2025",
+      "scalarSha256": "10f785c6e4f662128181cf1aa7b39172a90d34faa840224dcb8a717019a21224"
+    },
+    {
+      "attempt": 7,
+      "pointer": "/results/5/num_marche",
+      "value": "2025F026500000",
+      "scalarSha256": "859b7cc5a372f643f27b8edfd84412d22e7b134807339aeb600a641335deecfd"
+    },
+    {
+      "attempt": 7,
+      "pointer": "/results/5/annee_de_notification",
+      "value": "2025",
+      "scalarSha256": "10f785c6e4f662128181cf1aa7b39172a90d34faa840224dcb8a717019a21224"
+    },
+    {
+      "attempt": 8,
+      "pointer": "/definitions/marche/definitions/IdentifiantMarche",
+      "value": {
+        "title": "Identifiant de marché",
+        "type": "string",
+        "maxLength": 16,
+        "minLength": 1,
+        "description": "L'identifiant de marché est un numéro d'ordre interne propre à l'acheteur public (1 à 16 caractères). Les caractères spéciaux suivants sont à éviter autant que possible : &, \", \\, <, espace, virgule, point virgule."
+      },
+      "scalarSha256": "ef97c33bb42118cc9189481c520bd5d1b033a35ce21de53a5b9c2aa6ee2b766c"
+    }
+  ],
+  "liveDocumentFindings": [
+    {
+      "attempt": 4,
+      "locator": "Description des schémas de données essentielles; version 2.0.2 link",
+      "finding": "Version 2.0 applies to publication from 2024-01-01; links 139bercy version 2.0.2."
+    },
+    {
+      "attempt": 5,
+      "locator": "line 9, Les marchés publics / id",
+      "excerpt": "id : numéro d’identification unique du marché public. Un numéro interne (1 caractère minimum à 16 caractères maximum) propre au système d’information de l’acheteur",
+      "finding": "No Paris repeated-year or four-zero equivalence rule."
+    }
+  ],
+  "unfetchedResourcesReason": "Atexo 2024 and 2025 resource metadata declares 13098029 and 12373486 bytes, exceeding 2 MiB ceiling; no body request, range sampling, redirects or workaround attempted.",
+  "rightsBasis": "docs/data-sources.md: retained Ministry DECP and BOAMP LO 2.0; retained Colmo consolidation lov2, not direct buyer export. Live Atexo metadata says notspecified, not LO 2.0. New Paris metadata inspected separately; no attachment/privacy clearance inferred."
+}

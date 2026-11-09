@@ -1,0 +1,98 @@
+{
+ "source": "https://public-api.prozorro.gov.ua/api/2.5",
+ "discovery": "https://prozorro.gov.ua/api/search/tenders (prozorro.gov.ua site search, used only to list tender IDs)",
+ "license": "Prozorro open-data reuse terms: copying, publishing, distribution and commercial reuse permitted with source attribution (https://prozorro.gov.ua/openprocurement). No named licence is stated there; do not infer CC BY for API records from a separate data.gov.ua catalogue entry.",
+ "attribution": "Prozorro, Ministry of Economy of Ukraine / State enterprise Prozorro",
+ "cohort": {
+  "cohortId": "prozorro-3buyers-2024-2026",
+  "buyers": [
+   {
+    "code": "00012925",
+    "name": "Міністерство охорони здоров'я України",
+    "level": "national"
+   },
+   {
+    "code": "20089290",
+    "name": "Вінницька обласна державна адміністрація (апарат)",
+    "level": "regional"
+   },
+   {
+    "code": "26510514",
+    "name": "Дніпровська міська рада",
+    "level": "municipal"
+   }
+  ],
+  "window": {
+   "startInclusive": "2024-09-01",
+   "endExclusive": "2026-09-01",
+   "basis": "official record dateCreated"
+  },
+  "selection": "One buyer per level, announced on 2026-09-25 before any tender record was downloaded; chosen by level and a reviewable tender count, outside occupied or front-line oblasts; never by indicator results."
+ },
+ "retrieval": {
+  "startedAt": "2026-09-25T21:26:04.793512+00:00",
+  "finishedAt": "2026-09-25T21:38:58.878003+00:00",
+  "buyers": [
+   {
+    "code": "00012925",
+    "searchUrl": "https://prozorro.gov.ua/api/search/tenders?buyer%5B%5D=00012925",
+    "searchTotal": 689,
+    "listedTenderIDs": 689,
+    "inWindowByTenderID": 247
+   },
+   {
+    "code": "20089290",
+    "searchUrl": "https://prozorro.gov.ua/api/search/tenders?buyer%5B%5D=20089290",
+    "searchTotal": 500,
+    "listedTenderIDs": 500,
+    "inWindowByTenderID": 134
+   },
+   {
+    "code": "26510514",
+    "searchUrl": "https://prozorro.gov.ua/api/search/tenders?buyer%5B%5D=26510514",
+    "searchTotal": 869,
+    "listedTenderIDs": 869,
+    "inWindowByTenderID": 161
+   }
+  ],
+  "rawDirectory": "data/prozorro/raw"
+ },
+ "counts": {
+  "tendersInWindow": 526,
+  "tendersOutsideWindowByDateCreated": 0,
+  "tendersWithAnotherBuyer": 16,
+  "procedureTypes": {
+   "reporting": 424,
+   "aboveThreshold": 44,
+   "requestForProposal": 31,
+   "belowThreshold": 17,
+   "priceQuotation": 9,
+   "aboveThresholdEU": 1
+  },
+  "retainedContracts": 488,
+  "excludedContracts": {
+   "contract not signed (cancelled)": 3,
+   "contract not signed (pending)": 5
+  },
+  "withOffers": 64,
+  "withContractChanges": 488,
+  "withoutContractChanges": 0,
+  "currencies": [
+   "EUR",
+   "UAH",
+   "USD"
+  ]
+ },
+ "limitations": [
+  "Three buyers, not a country sample; wartime rules allow exceptions and withheld publications.",
+  "Direct-contract reports (reporting): offer/direct-award checks are out of scope; concentration remains assessable.",
+  "Amendment counts come only from retrieved contracting-module records; missing records remain unknown. The count does not assess legality or comparable amount/duration changes.",
+  "Three exact contract API links checked in a separate dated sample; published change counts are context only, not a comparable amount/duration history.",
+  "Amounts are in the published currency, never converted or summed across currencies."
+ ],
+ "reproduce": [
+  "python tools/import-prozorro.py --offline",
+  "python tools/import-prozorro.py --download",
+  "python tools/import-prozorro.py --contract-changes"
+ ]
+}

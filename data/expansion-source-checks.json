@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 1,
+  "checks": [
+    {
+      "id": "portugal-base-open-data",
+      "url": "https://www.base.gov.pt/Base4/pt/dados-abertos/",
+      "country": "Portugal",
+      "checkedAt": "2026-09-30T09:44:04.220856+00:00",
+      "status": 404,
+      "outcome": "HTTP failure or redirect; not followed or retried"
+    },
+    {
+      "id": "portugal-catalogue",
+      "url": "https://dados.gov.pt/api/1/datasets/?q=contratos&page_size=3",
+      "country": "Portugal",
+      "checkedAt": "2026-09-30T09:44:10.269247+00:00",
+      "status": 200,
+      "contentType": "application/json",
+      "bytesRead": 71072,
+      "truncated": false,
+      "capturedPrefixSha256": "db46f9b663e5b32317d09ca257011f47e597789391930e6921639fc6ec9561b3",
+      "datasets": [
+        {
+          "title": "Contratos Públicos na Saúde",
+          "page": "https://dados.gov.pt/datasets/contratos-publicos-na-saude-2",
+          "license": "cc-by",
+          "publisher": "IMPIC - Instituto Dos Mercados Públicos, do Imobiliário e da Construção"
+        },
+        {
+          "title": "Contratos Públicos na Saúde",
+          "page": "https://dados.gov.pt/datasets/contratos-publicos-na-saude-1",
+          "license": "notspecified",
+          "publisher": "IMPIC - Instituto Dos Mercados Públicos, do Imobiliário e da Construção"
+        },
+        {
+          "title": "Contratos Públicos - Portal Base - IMPIC - Contratos de 2012 a 2026",
+          "page": "https://dados.gov.pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026",
+          "license": "other-pd",
+          "publisher": "IMPIC - Instituto Dos Mercados Públicos, do Imobiliário e da Construção"
+        }
+      ]
+    },
+    {
+      "id": "indonesia-lkpp-data",
+      "url": "https://data.lkpp.go.id/",
+      "country": "Indonesia",
+      "checkedAt": "2026-09-30T09:44:12.973550+00:00",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bytesRead": 13050,
+      "truncated": false,
+      "capturedPrefixSha256": "b4c877fc91c7dafbf0f6a01aee86a0468a12250a95d862f9bc8e2aa22f35cfe6",
+      "pageTitle": "Welcome - LKPP",
+      "note": "Landing-page availability is not evidence of a records API, licence or completeness."
+    },
+    {
+      "id": "indonesia-sirup",
+      "url": "https://sirup.lkpp.go.id/sirup/home",
+      "country": "Indonesia",
+      "checkedAt": "2026-09-30T09:44:15.887605+00:00",
+      "status": null,
+      "outcome": "Network failure; not retried",
+      "errorType": "URLError"
+    },
+    {
+      "id": "russia-eis",
+      "url": "https://zakupki.gov.ru/epz/main/public/home.html",
+      "country": "Russia",
+      "checkedAt": "2026-09-30T09:44:17.924135+00:00",
+      "status": null,
+      "outcome": "Network failure; not retried",
+      "errorType": "URLError"
+    },
+    {
+      "id": "portugal-contract-dataset",
+      "url": "https://dados.gov.pt/api/1/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/",
+      "country": "Portugal",
+      "checkedAt": "2026-09-30T09:46:07.911589+00:00",
+      "status": 200,
+      "contentType": "application/json",
+      "bytesRead": 45985,
+      "truncated": false,
+      "capturedPrefixSha256": "83848e35462d9de46df61d8bc13f6e254eb7512af452d9c27d13be6f63522dd9",
+      "datasets": [
+        {
+          "title": "Contratos Públicos - Portal Base - IMPIC - Contratos de 2012 a 2026",
+          "page": "https://dados.gov.pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026",
+          "license": "other-pd",
+          "publisher": "IMPIC - Instituto Dos Mercados Públicos, do Imobiliário e da Construção",
+          "resources": [
+            {
+              "title": "contratos2026.zip",
+              "format": "zip",
+              "url": "https://dados.gov.pt/s/resources/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/20260927-090427-eb50032c/contratos2026.zip",
+              "filesize": 42232603
+            },
+            {
+              "title": "contratos2026.xlsx",
+              "format": "xlsx",
+              "url": "https://dados.gov.pt/s/resources/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/20260927-114212-aad89161/contratos2026.xlsx",
+              "filesize": 49075037
+            },
+            {
+              "title": "contratos2012.xlsx",
+              "format": "xlsx",
+              "url": "https://dados.gov.pt/s/resources/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/20260927-113949-7f44b280/contratos2012.xlsx",
+              "filesize": 16965913
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "indonesia-lkpp-catalogue",
+      "url": "https://data.lkpp.go.id/api/3/action/package_search?q=pengadaan&rows=3",
+      "country": "Indonesia",
+      "checkedAt": "2026-09-30T09:46:10.283356+00:00",
+      "status": 200,
+      "contentType": "application/json;charset=utf-8",
+      "bytesRead": 12142,
+      "truncated": false,
+      "capturedPrefixSha256": "6208ceae5fb127bd4f1cc1a29589d8a121091c98db54571dab44337154a34bb5",
+      "datasets": [
+        {
+          "title": "Indeks Kinerja Pengadaan",
+          "page": null,
+          "license": "",
+          "publisher": "pusdatin",
+          "resources": [
+            {
+              "title": "Indeks Kinerja Pengadaan 2025.xlsx",
+              "format": "XLSX",
+              "url": "https://data.lkpp.go.id/dataset/73497008-c6ab-4a54-b4bd-be26c0635052/resource/49e1640e-dfec-4cec-9570-38e34da83c74/download/indeks-kinerja-pengadaan-2025.xlsx",
+              "filesize": null
+            },
+            {
+              "title": "Indeks Kinerja Pengadaan 2025.csv",
+              "format": "CSV",
+              "url": "https://data.lkpp.go.id/dataset/73497008-c6ab-4a54-b4bd-be26c0635052/resource/5b67d21b-dbb4-4459-bf44-27ae88abda1b/download/indeks-kinerja-pengadaan-2025.csv",
+              "filesize": null
+            },
+            {
+              "title": "Indeks Kinerja Pengadaan 2025.json",
+              "format": "JSON",
+              "url": "https://data.lkpp.go.id/dataset/73497008-c6ab-4a54-b4bd-be26c0635052/resource/0ccb856d-253a-4a9c-96c0-fe4c3ab37ed2/download/indeks-kinerja-pengadaan-2025.json",
+              "filesize": null
+            }
+          ]
+        },
+        {
+          "title": "Jumlah Norma, Standar, Prosedur dan Kriteria Pengadaan Berkelanjutan dalam Pengadaan Barang/Jasa Pemerintah",
+          "page": null,
+          "license": "",
+          "publisher": "pusdatin",
+          "resources": [
+            {
+              "title": "Jumlah Norma, Standar, Prosedur dan Kriteria Pengadaan Berkelanjutan dalam Pengadaan Barang/Jasa Pemerintah Tahunan 2024",
+              "format": "XLSX",
+              "url": null,
+              "availabilityNote": "Catalogue resource points to a private-network address; not retained or fetched.",
+              "filesize": null
+            }
+          ]
+        },
+        {
+          "title": "Indeks Penerapan Tata Kelola Pengadaan",
+          "page": null,
+          "license": "",
+          "publisher": "pusdatin",
+          "resources": [
+            {
+              "title": "Indeks Penerapan Tata Kelola Pengadaan 2025.xlsx",
+              "format": "XLSX",
+              "url": "https://data.lkpp.go.id/dataset/235ddf41-6937-43db-a838-dc67316a6fdf/resource/48eb05d2-8179-4050-ac78-1d44c89b681f/download/indeks-penerapan-tata-kelola-pengadaan-2025.xlsx",
+              "filesize": null
+            },
+            {
+              "title": "Indeks Penerapan Tata Kelola Pengadaan 2025.csv",
+              "format": "CSV",
+              "url": "https://data.lkpp.go.id/dataset/235ddf41-6937-43db-a838-dc67316a6fdf/resource/3400f377-669d-4644-ae8f-b270bac170a5/download/indeks-penerapan-tata-kelola-pengadaan-2025.csv",
+              "filesize": null
+            },
+            {
+              "title": "Indeks Penerapan Tata Kelola Pengadaan 2025.json",
+              "format": "JSON",
+              "url": "https://data.lkpp.go.id/dataset/235ddf41-6937-43db-a838-dc67316a6fdf/resource/816e33a1-5556-403e-9f0a-ab119c4f22d0/download/indeks-penerapan-tata-kelola-pengadaan-2025.json",
+              "filesize": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
