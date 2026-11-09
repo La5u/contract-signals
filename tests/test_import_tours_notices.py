@@ -8,11 +8,13 @@ ROOT = Path(__file__).parents[1]
 spec = importlib.util.spec_from_file_location('tours', ROOT/'tools/import-tours-notices.py')
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
-RAW = json.loads((ROOT/'data/tours-notices/raw/api-records.json').read_text())
+RAW_PATH = ROOT/'data/tours-notices/raw/api-records.json'  # private snapshot, not in git
+RAW = json.loads(RAW_PATH.read_text()) if RAW_PATH.exists() else []
 
 def record(rid): return next(r for r in RAW if r['idweb']==rid)
 def root(rid): return mod.root_notice(record(rid))[1]
 
+@unittest.skipUnless(RAW, 'raw snapshot is private (not in git)')
 class ToursNoticeParsing(unittest.TestCase):
     def test_buyer_role_is_not_name_or_supplier(self):
         bs=mod.buyers(root('25-102354'))

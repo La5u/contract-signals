@@ -96,7 +96,7 @@ The browser test needs Playwright **1.58.2**, installed outside the project: `np
 
 BOAMP-published dataset content is documented under Licence Ouverte 2.0 based on DILA's legal notice and official data.gouv.fr dataset records; null licence fields in the BOAMP API catalogue do not undo that dataset-level evidence. Third-party attachment/content scope and privacy questions remain. The documented Annuaire business dataset supports LO 2.0 for the project's limited supplier name/status/identifier enrichment, not every API field. Retained source evidence: [docs/source-rights-evidence.json](docs/source-rights-evidence.json). See [docs/data-sources.md](docs/data-sources.md) and [personal-data inventory](docs/personal-data.md).
 
-Every dataset can be rebuilt offline from its raw snapshot:
+Every dataset can be rebuilt offline from its raw snapshot. The snapshots are kept privately, not in Git or on the site, because they hold contact details and names of people (2026-11-09); without them, the importers fetch again from the source:
 
 | Dataset | Rebuild |
 | --- | --- |

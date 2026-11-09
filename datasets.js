@@ -23,7 +23,7 @@ globalThis.DATASETS = {
         ]
       ],
       "licence": "BOAMP: Licence Ouverte 2.0 (DILA legal notice and data.gouv.fr); TED legal notice applies. See docs/data-sources.md for scope.",
-      "raw": "data/tours-notices/raw/",
+      "raw": "private copy, not published (holds contact details and names of people)",
       "reproduce": "python tools/import-tours-notices.py --offline",
       "collected": "BOAMP notices matched by the buyer’s exact SIRET, TED XML matched by UUID and version."
     },
@@ -45,7 +45,7 @@ globalThis.DATASETS = {
         ]
       ],
       "licence": "Licence Ouverte 2.0 (DILA legal notice and official data.gouv.fr records); incorporated third-party material may have separate rights.",
-      "raw": "data/consultations-raw.json",
+      "raw": "private copy, not published (holds contact details and names of people)",
       "reproduce": "python tools/import-consultations.py --offline",
       "collected": "The first 10 initial BOAMP calls published on 3 February 2025, by identifier order."
     },
@@ -90,7 +90,7 @@ globalThis.DATASETS = {
         ]
       ],
       "licence": "Licence Ouverte v2.0 (Etalab) for every source",
-      "raw": "data/decp-history-raw.json.gz, data/decp-cities-raw.json, data/decp-feeds-raw.json.gz, data/city-portals-raw.json.gz",
+      "raw": "private copy, not published (holds contact details and names of people)",
       "reproduce": "python tools/import-decp-paris-ardeche.py --offline && python tools/import-decp-cities.py --offline && python tools/build-decp-france-coverage.py",
       "collected": "Every DECP row for eight pre-selected buyer SIRETs (Ville de Paris, Département de l’Ardèche and six municipalities), notified 2024–2025, reconciled with the buyers’ own feeds and open-data lists. Three rows of the Paris 13 November dossier carry hand-curated fields."
     },
@@ -116,7 +116,7 @@ globalThis.DATASETS = {
         ]
       ],
       "licence": "BOAMP: Licence Ouverte 2.0 (DILA legal notice and data.gouv.fr); CRC reports quoted with links.",
-      "raw": "data/boamp-raw.json.gz",
+      "raw": "private copy, not published (holds contact details and names of people)",
       "reproduce": "python tools/import-boamp-sample.py --offline",
       "collected": "All 8,386 BOAMP award notices published February–April 2025; 3,000 unambiguous lots kept by SHA-256 order of their identifier. The two Mauges lots and eight CRC audit dossiers are documented by hand."
     },
@@ -145,7 +145,7 @@ globalThis.DATASETS = {
         ]
       ],
       "licence": "CC BY-SA 4.0",
-      "raw": "data/colombia-secop2/raw/",
+      "raw": "private copy, not published (holds contact details and names of people)",
       "reproduce": "python tools/import-colombia-secop2.py --offline",
       "collected": "Every SECOP II contract of three buyers announced before download, signed 2024-09-01 → 2026-09-01."
     },
@@ -171,7 +171,7 @@ globalThis.DATASETS = {
         ]
       ],
       "licence": "CC BY 4.0",
-      "raw": "data/paraguay-dncp/raw/",
+      "raw": "private copy, not published (holds contact details and names of people)",
       "reproduce": "python tools/import-paraguay-dncp.py --cohort fernando --offline",
       "collected": "Every process of the buyer whose call was published 2024-09-01 → 2025-09-01, then each full OCDS record by OCID."
     },
@@ -197,7 +197,7 @@ globalThis.DATASETS = {
         ]
       ],
       "licence": "CC BY 4.0",
-      "raw": "data/paraguay-dncp-3buyers/raw/ (records gzipped, exact response bytes)",
+      "raw": "private copy, not published (holds contact details and names of people)",
       "reproduce": "python tools/import-paraguay-dncp.py --cohort 3buyers --offline",
       "collected": "Every process of three buyers announced before download (one per government level) whose call was published 2024-09-01 → 2026-09-01, then each full OCDS record by OCID."
     },
@@ -259,7 +259,7 @@ globalThis.DATASETS = {
         ]
       ],
       "licence": "Prozorro open-data reuse terms: redistribution, including commercial reuse, permitted with source attribution; no named licence for API records",
-      "raw": "data/prozorro/raw/ (official records gzipped, exact response bytes)",
+      "raw": "private copy, not published (holds contact details and names of people)",
       "reproduce": "python tools/import-prozorro.py --offline",
       "collected": "Search-discovered tenders for three preselected buyers, created 2024-09-01 → 2026-09-01, checked against the official API buyer field. Search completeness is not established; see docs/ukraine-audit.md."
     },
@@ -285,7 +285,7 @@ globalThis.DATASETS = {
         ]
       ],
       "licence": "CC0 1.0 (declared in every release package)",
-      "raw": "data/chile-mp/raw/ (monthly listings, prefix map, tender and award releases gzipped, exact response bytes)",
+      "raw": "private copy, not published (holds contact details and names of people)",
       "reproduce": "python tools/import-chilecompra.py --offline",
       "collected": "Every licitación of three purchasing units announced before download (one per level), listed 2024-09 → 2026-08, chosen from a map of all 4,582 purchasing-unit prefixes."
     },
@@ -311,7 +311,7 @@ globalThis.DATASETS = {
         ]
       ],
       "licence": "Open Government Licence v3.0",
-      "raw": "data/uk-fts/raw/ (compact award index and full notices, gzipped exact response bytes)",
+      "raw": "private copy, not published (holds contact details and names of people)",
       "reproduce": "python tools/import-find-a-tender.py --offline",
       "collected": "Every award notice of three buyer accounts announced before download (one per level), released 2024-09-01 → 2026-09-01, chosen from a compact index of all 33,457 award releases in the window."
     },
@@ -337,7 +337,7 @@ globalThis.DATASETS = {
         ]
       ],
       "licence": "Free reuse, commercial or not (Commission Decision 2011/833/EU)",
-      "raw": "data/ted-portugal/raw/ (official eForms XML gzipped)",
+      "raw": "private copy, not published (holds contact details and names of people)",
       "reproduce": "python tools/import-ted-cohorts.py --cohort portugal --offline",
       "collected": "Every TED award notice (can-standard) of three buyers announced before download, published 2024-09-01 → 2026-09-01, matched by identifier and its spelling variants."
     },
@@ -363,7 +363,7 @@ globalThis.DATASETS = {
         ]
       ],
       "licence": "Free reuse, commercial or not (Commission Decision 2011/833/EU)",
-      "raw": "data/ted-czechia/raw/ (official eForms XML gzipped)",
+      "raw": "private copy, not published (holds contact details and names of people)",
       "reproduce": "python tools/import-ted-cohorts.py --cohort czechia --offline",
       "collected": "Every TED award notice (can-standard) of three buyers announced before download, published 2024-09-01 → 2026-09-01, matched by IČO and its spelling variants."
     },
@@ -389,6 +389,22 @@ globalThis.DATASETS = {
         ]
       ],
       "licence": "data.go.kr: no restriction on use (이용허락범위 제한 없음); source attributed",
+      "attribution": "출처: 조달청 (Public Procurement Service), 공공데이터포털 data.go.kr",
+      "apis": [
+        ["site", "조달청_공공데이터개방표준서비스", "15058815", "Contracts, change orders and every bidder's offer: the table, offers, bid ratios and award floors"],
+        ["site", "조달청_나라장터 사용자정보서비스", "15129466", "Contracting institutions: institution type, province and city filters"],
+        ["research", "조달청_나라장터 낙찰정보서비스", "15129397", "Bid openings: reserve-price picks, submission times and evaluation scores of each bidder"],
+        ["research", "조달청_나라장터 입찰공고정보서비스", "15129394", "Bid notices and their change history: deadlines, eligibility and estimated prices"],
+        ["research", "조달청_나라장터 계약정보서비스", "15129427", "Contract terms, completion dates, change history and consortium members"],
+        ["research", "조달청_나라장터 사전규격정보서비스", "15129437", "Advance specifications and the objections filed against them"],
+        ["research", "조달청_나라장터 발주계획현황서비스", "15129462", "Procurement plans published before the tender"],
+        ["research", "조달청_나라장터 가격정보현황서비스", "15129415", "Surveyed unit prices of works materials, for price benchmarks"],
+        ["research", "조달청_나라장터 쇼핑몰정보서비스", "15129471", "Shopping-mall delivery requests: call-offs under framework and multiple-award contracts"],
+        ["research", "조달청_조달데이터허브 입찰·특정품목 조달 내역", "15050832", "Every bidder of every opening since 2010 and item-level call-offs (also 15050835)"],
+        ["research", "방위사업청_입찰결과·계약정보", "15158417", "Defence procurement bids and contracts outside KONEPS (also 15158419)"],
+        ["research", "한국토지주택공사_계약현황정보", "15159010", "LH contracts outside KONEPS"],
+        ["research", "한국가스공사_입찰정보", "15157366", "KOGAS bids outside KONEPS"]
+      ],
       "raw": "private cache (weekly API responses); published files: tools/build-korea-site.py",
       "reproduce": "python tools/fetch-korea-opnstd-contracts.py, tools/normalize-korea-opnstd.py, tools/build-korea-site.py",
       "collected": "Every contract published in the open-standard contract service with a contract or change date from 1 September 2024 to 1 September 2026, national download (all contracting institutions)."
@@ -415,7 +431,7 @@ globalThis.DATASETS = {
         ]
       ],
       "licence": "Free reuse, commercial or not (Commission Decision 2011/833/EU)",
-      "raw": "data/ted-romania/raw/ (official eForms XML gzipped)",
+      "raw": "private copy, not published (holds contact details and names of people)",
       "reproduce": "python tools/import-ted-cohorts.py --cohort romania --offline",
       "collected": "Every TED award notice (can-standard) of three buyers announced before download, published 2024-09-01 → 2026-09-01, matched by identifier and its spelling variants."
     },

@@ -71,7 +71,7 @@ const bp = run('buildProfile', decp, 'buyer', run('profileKey', ardeche, 'buyer'
 assert.equal(bp.contracts, decp.filter(c => c.buyerSiret === ardeche.buyerSiret).length);
 assert.ok(bp.flagged <= bp.assessed && bp.assessed <= bp.contracts);
 assert.ok(!('total' in bp) && Object.values(bp.currencies).every(v => 'largest' in v && !('sum' in v)));
-const person = co.find(c => c.supplierIds[0]?.id.startsWith('masked-'));
+const person = co.find(c => c.supplierIds[0]?.id.startsWith('individual #'));
 const sp = run('buildProfile', co, 'supplier', run('profileKey', person, 'supplier'));
 assert.ok(sp.contracts >= 1 && sp.ids.has(person.id));
 assert.equal(run('profileKey', {...person, datasetKey:'colombia'}, 'supplier').split('|')[0], 'colombia');

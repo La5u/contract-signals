@@ -69,12 +69,9 @@ const server=http.createServer((req,res)=>{
  assert.equal(await page.locator('#advanced-filters').getAttribute('open'),'');
  for(const id of ['#flagged','#indicator','#assessment','#sort-field','#sort-direction','#group-by','#page-size'])assert.equal(await page.locator(id).isVisible(),true,id+' visible on desktop');
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'desktop layout must not overflow the page');
- // The sidebar collapses on desktop, the table takes the width, and the choice is remembered.
- const tableWidth=async()=>page.locator('.table-wrap').evaluate(el=>el.getBoundingClientRect().width);
- const sidebarTableWidth=await tableWidth();
+ // The filters sit above the table (2026-11-03) and collapse; the choice is remembered.
  await page.click('#advanced-filters > summary');
  assert.equal(await page.locator('#advanced-filters').getAttribute('open'),null);
- assert.ok(await tableWidth()>sidebarTableWidth+150,'collapsed filters give the table the width');
  // The toggle event saves the choice asynchronously: wait for it rather than racing it.
  await page.waitForFunction(()=>localStorage.getItem('contract-signals-filters')==='closed');
  await page.click('#advanced-filters > summary');
@@ -425,7 +422,6 @@ const server=http.createServer((req,res)=>{
  assert.equal(await linked.locator('#search').inputValue(),profile.siren);
  const supplierCell=await linked.locator('.contract-row td:nth-child(3)').first().textContent();
  assert.ok(supplierCell.startsWith(profile.name),supplierCell);
- assert.match(supplierCell,/SIRET \d{14}/);
  // A link with open=<id> opens that record; j/k step through the results.
  const cityRecord=cityData.find(c=>c.id)?.id;
  await linked.evaluate(id=>{location.hash='#dataset=cities&open='+encodeURIComponent(id);},cityRecord);

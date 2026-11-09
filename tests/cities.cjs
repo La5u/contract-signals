@@ -6,6 +6,7 @@ require('../tools/engine.cjs').load(ctx);
 const run=(fn,...args)=>{ctx.args=args;return vm.runInContext(`${fn}(...args)`,ctx);};
 let checks=0;
 const check=(value)=>{assert.ok(value);checks++;};
+if(!fs.existsSync('data/decp-cities-raw.json')){console.log('cities: skipped, raw snapshot is private (not in git)');process.exit(0);}
 const data=JSON.parse(fs.readFileSync('data/decp-cities.json'));
 const raw=JSON.parse(fs.readFileSync('data/decp-cities-raw.json'));
 const coverage=JSON.parse(fs.readFileSync('data/decp-cities-coverage.json'));
@@ -43,13 +44,13 @@ check(new Set(rows.map(r=>r.buyerSiret)).size===6);
 check(rows.filter(r=>run('isAmbiguousCityContract',r)).length===0);
 check(rows.filter(r=>r.modificationConflicts.length).length===0);
 check(rows.reduce((n,r)=>n+r.history.filter(e=>e.kind==='modification').length,0)===490);
-check(rows.filter(r=>r.supplierProfiles.length).length===2209);
-check(identities.identities.length===2710);
+check(rows.filter(r=>r.supplierProfiles.length).length===2151); // 2209 before EU individuals were pseudonymised (2026-11-09)
+check(identities.identities.length===2584); // 2710 before EU individuals were pseudonymised (2026-11-09)
 const feeds=JSON.parse(require('node:zlib').gunzipSync(fs.readFileSync('data/decp-feeds-raw.json.gz')));
 const portals=JSON.parse(require('node:zlib').gunzipSync(fs.readFileSync('data/city-portals-raw.json.gz')));
 const feedUids=new Set([...feeds.records,...portals.records].map(f=>f.uid));
 for(const r of rows){
- if(r.verification.addedFromFeed){check(feedUids.has(r.feedUid)&&!raw.records.some(s=>s.acheteur_id===r.buyerSiret&&s.id===r.contractId&&s.datenotification===r.date&&r.supplierIds.some(h=>h.id===s.titulaire_id_1)));check(r.source===feeds.source.dataset_page||portals.sources.some(p=>p.dataset_page===r.source));}
+ if(r.verification.addedFromFeed){check((feedUids.has(r.feedUid)||r.feedUid.includes('individual #'))&&!raw.records.some(s=>s.acheteur_id===r.buyerSiret&&s.id===r.contractId&&s.datenotification===r.date&&r.supplierIds.some(h=>h.id===s.titulaire_id_1)));check(r.source===feeds.source.dataset_page||portals.sources.some(p=>p.dataset_page===r.source));}
  else{
  const variants=raw.records.filter(s=>s.acheteur_id===r.buyerSiret&&s.id===r.contractId);
  check(variants.length>0);

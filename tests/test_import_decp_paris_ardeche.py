@@ -8,12 +8,16 @@ ROOT = Path(__file__).parents[1]
 spec = importlib.util.spec_from_file_location("import_paris", ROOT / "tools/import-decp-paris-ardeche.py")
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
+pspec = importlib.util.spec_from_file_location("pseudo", ROOT / "tools/pseudonymise-eu-individuals.py")
+pseudo = importlib.util.module_from_spec(pspec)
+pspec.loader.exec_module(pseudo)  # published rows carry EU individuals pseudonymised (2026-11-09)
 
 
+@unittest.skipUnless(mod.RAW.exists(), "raw snapshot is private (not in git)")
 class ParisArdecheRebuildTests(unittest.TestCase):
     def test_published_file_is_what_the_importer_produces(self):
         raw = json.loads(gzip.decompress(mod.RAW.read_bytes()))
-        rows = {r["id"]: r for r in mod.build(raw)[0]}
+        rows = {r["id"]: r for r in pseudo.pseudonymise(mod.build(raw)[0])}
         published = json.loads((ROOT / "data/decp-history.json").read_text(encoding="utf-8"))
         curated = json.loads(mod.CURATED.read_text(encoding="utf-8"))["rows"]
         self.assertEqual(len(rows), len(published))

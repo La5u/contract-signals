@@ -8,8 +8,12 @@ ROOT = Path(__file__).parents[1]
 spec = importlib.util.spec_from_file_location("import_boamp", ROOT / "tools/import-boamp-sample.py")
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
+pspec = importlib.util.spec_from_file_location("pseudo", ROOT / "tools/pseudonymise-eu-individuals.py")
+pseudo = importlib.util.module_from_spec(pspec)
+pspec.loader.exec_module(pseudo)  # published rows carry EU individuals pseudonymised (2026-11-09)
 
 
+@unittest.skipUnless(mod.RAW.exists(), "raw snapshot is private (not in git)")
 class BoampRebuildTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -26,7 +30,7 @@ class BoampRebuildTests(unittest.TestCase):
     def test_published_sample_is_what_the_importer_produces(self):
         published = [r for r in json.loads((ROOT / "data/contracts.json").read_text(encoding="utf-8"))
                      if r.get("dataFamily") == "boamp" and not r["id"].startswith("boamp-25-846-")]
-        self.assertEqual(published, self.sample)
+        self.assertEqual(published, pseudo.pseudonymise(self.sample))
 
     def test_foreign_numbers_are_not_french_identifiers(self):
         row = next(r for r in self.sample if r["id"] == "boamp-25-39677-lot-0001")  # Dutch company, 14-digit number

@@ -23,6 +23,8 @@ enters the repository (memory note korea-hosting; HANDOFF).
     python tools/build-korea-site.py [--db PATH] [--out DIR] [--origin https://contracts.lasu.dev]
 """
 import argparse
+import hashlib
+import hmac
 import json
 import shutil
 import sqlite3
@@ -34,6 +36,8 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
 BASE = Path.home() / '.cache/contract-signals/korea'
+PSEUDONYM_KEY = Path.home() / '.config/contract-signals/pseudonym.key'
+PRIVATE_NAMES = Path(__file__).resolve().parents[1] / 'data/private/korea-individuals.json'
 SHARD_BYTES = 1_500_000
 PART_BYTES = 8_000_000
 COLUMNS = ['contractNo', 'date', 'dateIsFirstChange', 'name', 'demand', 'supplier', 'supplierBizrno', 'supplierKind',
@@ -58,6 +62,42 @@ PROVINCES = {'강원도': '강원특별자치도', '전라북도': '전북특별
 PROVINCE_NAMES = {'서울특별시', '부산광역시', '대구광역시', '인천광역시', '대전광역시', '울산광역시', '세종특별자치시', '경기도',
                   '강원특별자치도', '충청북도', '충청남도', '전북특별자치도', '전남광주통합특별시', '경상북도', '경상남도',
                   '제주특별자치도', *PROVINCES}
+
+
+def individual_code(bizrno, name):
+    """Keyed pseudonym of a sole trader, the same as tools/pseudonymise-eu-individuals.py makes: contracts stay linked."""
+    return 'individual #' + hmac.new(PSEUDONYM_KEY.read_bytes(), f'KR{bizrno or name}'.encode(), hashlib.sha256).hexdigest()[:12]
+
+
+def write_private(people):
+    PRIVATE_NAMES.parent.mkdir(exist_ok=True)
+    PRIVATE_NAMES.write_text(json.dumps({c: {'country': 'KR', 'names': sorted(v[0]), 'ids': sorted(v[1])} for c, v in people.items()},
+                                        ensure_ascii=False), encoding='utf-8')
+
+
+def pseudonymise_site(out, db_path):
+    """Replace the sole traders' names in an already built site; real names go to the git-ignored private file only."""
+    db = sqlite3.connect(f'file:{db_path}?mode=ro', uri=True)
+    who = {no: (b, n) for no, b, n in db.execute("select cntrct_no, last_supplier_bizrno, last_supplier_name from contracts where last_supplier_kind = 'individual'")}
+    meta = json.loads((out / 'meta.json').read_text(encoding='utf-8'))
+    no, name, kind = (meta['columns'].index(k) for k in ('contractNo', 'supplier', 'supplierKind'))
+    individual, people, changed = meta['supplierKinds'].index('individual'), {}, 0
+    for path in [*sorted((out / 's').glob('*.json')), out / 'top.json']:
+        shard = json.loads(path.read_text(encoding='utf-8'))
+        for rows in shard['buyers'].values():
+            for r in rows:
+                if r[kind] == individual and r[name] and (r[no] in who or not r[name].startswith('individual #')):
+                    bizrno, real = who.get(r[no], (None, r[name]))
+                    code = individual_code(bizrno, real or r[name])
+                    v = people.setdefault(code, (set(), set()))
+                    v[0].add(real or r[name])
+                    if bizrno:
+                        v[1].add(bizrno)
+                    r[name] = code
+                    changed += 1
+        path.write_text(json.dumps(shard, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
+    write_private(people)
+    print(f'{changed} rows, {len(people)} individuals -> {PRIVATE_NAMES}')
 
 
 def places(path):
@@ -171,8 +211,11 @@ def main(argv=None):
     p.add_argument('--origin', default='https://contracts.lasu.dev', help='the explorer allowed to read the files (CORS)')
     p.add_argument('--bids', type=Path, default=BASE / 'bid-features-2026-10-28.sqlite',
                    help='bid openings (tools/korea-bid-features.py): winning bid and lower award limit, %% of the reserve price')
+    p.add_argument('--pseudonymise-only', action='store_true', help="only replace sole traders' names in OUT's files")
     p.add_argument('--places-only', action='store_true', help="only rewrite the places in OUT's buyers.json")
     args = p.parse_args(argv)
+    if args.pseudonymise_only:
+        return pseudonymise_site(Path(args.out), args.db)
     if args.places_only:
         return add_places(Path(args.out) / 'buyers.json', args.institutions)
     db = sqlite3.connect(f'file:{args.db}?mode=ro', uri=True)
@@ -224,6 +267,8 @@ def main(argv=None):
     buyers = {}
     last_date = None  # the period's end: the latest signature or change selected, not the latest displayed date
 
+    people = {}
+
     def contract_row(r):
         nonlocal last_date
         (no, signed, first_seen, original_in, name, demand, supplier, bizrno, kind, original, latest, versions,
@@ -231,6 +276,12 @@ def main(argv=None):
          notice_ord, pricing, term_type, total, region, opening, notice_name) = r
         rate, lower = opening_rates(notice, notice_ord, bizrno)
         individual = kind == 'individual'
+        if individual and supplier:
+            person = people.setdefault(individual_code(bizrno, supplier), (set(), set()))
+            person[0].add(supplier)
+            if bizrno:
+                person[1].add(bizrno)
+            supplier = individual_code(bizrno, supplier)
         date = signed or first_seen
         if last_seen:
             last_date = max(last_date or last_seen, last_seen)
@@ -336,6 +387,8 @@ def main(argv=None):
         raise SystemExit(f'over the Cloudflare Pages free limits (20,000 files, 25 MiB per file); {final} left as it was, '
                          f'build in {out}')
     subprocess.run(['node', str(Path(__file__).with_name('build-korea-top.cjs')), str(out)], check=True)
+    if Path(args.out) == BASE / 'site':  # never from a test's or trial's output folder
+        write_private(people)
     if final.exists():
         shutil.rmtree(final)
     out.rename(final)

@@ -1,5 +1,5 @@
-// Interface translation (Spanish, French). No build step: dictionaries are plain scripts
-// (i18n-es.js, i18n-fr.js); prefetch.js loads only the one for the chosen language, before this file.
+// Interface translation (Spanish, French, Korean). No build step: dictionaries are plain scripts
+// (i18n-es.js, i18n-fr.js, i18n-ko.js); prefetch.js loads only the one for the chosen language, before this file.
 //
 // Only interface text is translated: a text node is replaced when it matches an English
 // interface string exactly, or a full-sentence pattern whose {slots} capture data values.
@@ -7,8 +7,8 @@
 // text), so source evidence — descriptions, justifications, names — is never altered.
 (function () {
   const dicts = (typeof window !== 'undefined' && window.I18N_DICTS) || {};
-  const NAMES = { en: 'English', es: 'Español', fr: 'Français' };
-  const LOCALES = { en: 'en-IE', es: 'es-ES', fr: 'fr-FR' };
+  const NAMES = { en: 'English', es: 'Español', fr: 'Français', ko: '한국어' };
+  const LOCALES = { en: 'en-IE', es: 'es-ES', fr: 'fr-FR', ko: 'ko-KR' };
   const known = code => typeof code === 'string' && Object.hasOwn(NAMES, code);
 
   // prefetch.js (loaded first) chooses the language: ?lang=, the saved choice, then the browser's languages.
@@ -109,7 +109,8 @@
       try { localStorage.setItem('contract-signals-lang', select.value); } catch { /* storage unavailable */ }
       const url = new URL(location.href);
       if (select.value === 'en') url.searchParams.delete('lang'); else url.searchParams.set('lang', select.value);
-      location.href = url.toString();
+      // With a saved language and no ?lang= the address may not change, and then nothing would reload.
+      if (url.href === location.href) location.reload(); else location.href = url.href;
     });
   }
 

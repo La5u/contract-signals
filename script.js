@@ -40,6 +40,22 @@ function startExplorer() {
     const coverage = element('li'); const coverageLink = element('a', 'Extraction details (JSON)'); coverageLink.href = selected.coverage; coverage.append(coverageLink); list.append(coverage);
     const documentation = element('li'); const documentationLink = element('a', 'Source documentation'); documentationLink.href = 'docs/data-sources.md'; documentation.append(documentationLink); list.append(documentation);
     body.append(list);
+    // Open APIs (data.go.kr): what this view shows, then what the research behind its indicators reads.
+    if (s.apis) {
+      for (const [role, heading] of [['site', 'Open APIs shown on this site'], ['research', 'Open APIs used in the research behind the indicators']]) {
+        const apis = s.apis.filter(a => a[0] === role);
+        if (!apis.length) continue;
+        body.append(element('h4', heading));
+        const apiList = element('ul', '', 'source-apis');
+        for (const [, name, id, use] of apis) {
+          const item = element('li');
+          item.append(sourceLink(`https://www.data.go.kr/data/${id}/openapi.do`, `${name} (${id})`), ' — ', element('span', use));
+          apiList.append(item);
+        }
+        body.append(apiList);
+      }
+    }
+    if (s.attribution) body.append(element('p', s.attribution, 'attribution'));
   }
   const provenance = { verified: 'Documented · public source', unverified: 'To verify · research lead', synthetic: 'Fictional · pedagogical comparison' };
   const uiLocale = typeof i18nLocale === 'function' ? i18nLocale() : 'en-IE';
@@ -67,6 +83,13 @@ function startExplorer() {
   // South Korea: load the ranked subset, or a chosen buyer's shards.
   let koreaBuyer = '', koreaMeta = null, koreaBuyers = null, koreaTop = null;
   const koreaPicker = document.querySelector('#korea-picker');
+  // The institution box (under the province rows) and the type filter (in the advanced filters) show with the picker.
+  function setKoreaPicker(on) {
+    koreaPicker.hidden = !on;
+    document.querySelector('#korea-search-wrap').hidden = !on;
+    document.querySelector('#korea-type-filter').hidden = !on;
+    if (!on) document.querySelector('#korea-results').hidden = true;
+  }
   const koreaSearch = document.querySelector('#korea-search');
   const koreaResults = document.querySelector('#korea-results');
   const koreaJson = (path, signal) => fetch(`${KOREA_BASE}/${path}`, { signal, cache: 'no-store' }).then(response => {
@@ -83,21 +106,33 @@ function startExplorer() {
   function koreaShard(n, signal) {
     return koreaJson(`s/${String(n).padStart(4, '0')}.json`, signal);
   }
-  document.querySelector('#korea-all').addEventListener('click', () => chooseKoreaBuyer(''));
   const koreaKey = text => String(text || '').toLowerCase().replace(/\s+/g, '');
-  // Facet rows, as on carboncost.me: type, its subcategories, province, its cities. Two independent hierarchies
-  // (type → kind, province → city) that combine; each row counts contracts under the other rows' choices; buyer[6] is [province, city, subcategory] or null.
+  // Province and city as rows (city appears once a province is chosen); institution type, with its kinds indented
+  // under it, as one dropdown next to the institution search. All choices combine; each list counts contracts under
+  // the other choices. buyer[6] is [province, city, kind] or null.
   const koreaFacet = { type: '', sub: '', region: '', city: '' };
   const koreaFacetValue = {
     type: b => b[2] || 'Other', sub: b => b[6]?.[2] || 'Other',
     region: b => b[6]?.[0] || 'Unknown', city: b => b[6]?.[1] || 'Other'
   };
-  const koreaFacetRows = { type: '#korea-type', sub: '#korea-sub', region: '#korea-region', city: '#korea-city' };
   const koreaParent = { sub: 'type', city: 'region' };
-  const KOREA_FACET_LABELS = { type: 'Institution type', sub: 'Kind', region: 'Province', city: 'City or district' };
-  const koreaMatches = (b, skip) => Object.keys(koreaFacet).every(k => k === skip || !koreaFacet[k] || koreaFacetValue[k](b) === koreaFacet[k]);
+  const KOREA_ROWS = { region: ['#korea-region', 'Province'], city: ['#korea-city', 'City or district'] };
+  const koreaTypeSelect = document.querySelector('#korea-type');
+  const SEP = '\u001f';
+  const koreaMatches = (b, skip) => Object.keys(koreaFacet).every(k => (Array.isArray(skip) ? skip.includes(k) : k === skip) || !koreaFacet[k] || koreaFacetValue[k](b) === koreaFacet[k]);
+  let koreaFacetBuyers = [];
+  function koreaFacetChanged() {
+    showKoreaResults(koreaFacetBuyers);
+    // The nationwide view follows the choices: the highest-scored contracts within the selection.
+    if (!koreaBuyer) loadDataset();
+  }
+  koreaTypeSelect.addEventListener('change', () => {
+    [koreaFacet.type, koreaFacet.sub = ''] = koreaTypeSelect.value.split(SEP);
+    koreaFacetChanged();
+  });
   function renderKoreaFacets(buyers) {
-    for (const [key, selector] of Object.entries(koreaFacetRows)) {
+    koreaFacetBuyers = buyers;
+    for (const [key, [selector, label]] of Object.entries(KOREA_ROWS)) {
       const row = document.querySelector(selector);
       const parent = koreaParent[key];
       const totals = new Map();
@@ -105,28 +140,42 @@ function startExplorer() {
         const v = koreaFacetValue[key](b);
         totals.set(v, (totals.get(v) || 0) + b[3]);
       }
-      row.hidden = totals.size < 2 && !koreaFacet[key];
-      const button = (value, label, count) => {
-        const item = element('button', label, value === koreaFacet[key] ? 'on' : '');
+      row.hidden = Boolean(parent) && !koreaFacet[parent];
+      const button = (value, text, count) => {
+        const item = element('button', text, value === koreaFacet[key] ? 'on' : '');
         item.type = 'button';
         if (count !== undefined) item.append(element('span', count.toLocaleString('en'), 'muted'));
         item.addEventListener('click', () => {
           koreaFacet[key] = value === koreaFacet[key] ? '' : value;
           for (const [child, p] of Object.entries(koreaParent)) if (p === key) koreaFacet[child] = '';
-          showKoreaResults(buyers);
-          // The nationwide view follows the rows: it shows the highest-scored contracts within the selection.
-          if (!koreaBuyer) loadDataset();
+          koreaFacetChanged();
         });
         return item;
       };
-      // Each row is labelled; a child row (kind under type, city under province) is indented under its parent.
-      row.classList.toggle('child', Boolean(parent));
-      row.replaceChildren(element('span', KOREA_FACET_LABELS[key], 'facet-label'), button('', 'All'), ...[...totals].sort((a, b) => b[1] - a[1]).map(([v, n]) => button(v, v, n)));
+      row.replaceChildren(element('span', label, 'facet-label'), button('', 'All'), ...[...totals].sort((a, b) => b[1] - a[1]).map(([v, n]) => button(v, v, n)));
     }
+    // Types, each followed by its kinds, counted under the province and city choices.
+    const types = new Map();
+    for (const b of buyers) if (koreaMatches(b, ['type', 'sub'])) {
+      const t = koreaFacetValue.type(b), k = koreaFacetValue.sub(b);
+      if (!types.has(t)) types.set(t, { n: 0, kinds: new Map() });
+      const entry = types.get(t);
+      entry.n += b[3];
+      entry.kinds.set(k, (entry.kinds.get(k) || 0) + b[3]);
+    }
+    const options = [['', 'All types']];
+    for (const [t, { n, kinds }] of [...types].sort((a, b) => b[1].n - a[1].n)) {
+      options.push([t, `${t} · ${n.toLocaleString('en')}`]);
+      if (kinds.size > 1) for (const [k, m] of [...kinds].sort((a, b) => b[1] - a[1])) options.push([t + SEP + k, `\u00a0\u00a0\u00a0↳ ${k} · ${m.toLocaleString('en')}`]);
+    }
+    fillSelect(koreaTypeSelect, options);
+    koreaTypeSelect.value = koreaFacet.sub ? koreaFacet.type + SEP + koreaFacet.sub : koreaFacet.type;
   }
   function showKoreaResults(buyers) {
     renderKoreaFacets(buyers);
     const wanted = koreaKey(koreaSearch.value);
+    // The list appears only while typing a name that is not the chosen institution's.
+    koreaResults.hidden = !wanted || (koreaBuyer && koreaSearch.value === buyers.find(b => b[0] === koreaBuyer)?.[1]);
     const found = [];
     for (const b of buyers) {
       if (koreaMatches(b) && (!wanted || koreaKey(b[1]).includes(wanted) || b[0].startsWith(wanted))) found.push(b);
@@ -149,9 +198,12 @@ function startExplorer() {
     pendingView = null;
     loadDataset();
   }
-  koreaSearch.addEventListener('input', () => koreaIndex().then(showKoreaResults).catch(() => {}));
+  koreaSearch.addEventListener('input', () => {
+    if (!koreaSearch.value.trim() && koreaBuyer) { chooseKoreaBuyer(''); return; }
+    koreaIndex().then(showKoreaResults).catch(() => {});
+  });
   async function loadKorea(version) {
-    koreaPicker.hidden = false;
+    setKoreaPicker(true);
     const buyers = await koreaIndex();
     if (version !== loadVersion) return;
     showKoreaResults(buyers);
@@ -233,7 +285,7 @@ function startExplorer() {
   });
   // These new navigation labels live here because the shared dictionaries are generated
   // separately. Existing country names and cohort labels use the normal i18n observer.
-  const selectionLabels = { en: ['Country', 'Source / cohort'], fr: ['Pays', 'Source / cohorte'], es: ['País', 'Fuente / cohorte'] };
+  const selectionLabels = { en: ['Country', 'Source / cohort'], fr: ['Pays', 'Source / cohorte'], es: ['País', 'Fuente / cohorte'], ko: ['국가', '출처 / 코호트'] };
   const selectionLanguage = uiLocale.slice(0, 2);
   const [countryLabel, sourceLabel] = selectionLabels[selectionLanguage] || selectionLabels.en;
   document.querySelector('#country-label').textContent = countryLabel;
@@ -519,7 +571,7 @@ function startExplorer() {
   // Procedure as published, and whether it is competitive or direct where the data says so.
   function procedureCell(c) {
     const cell = element('td', null, 'col-procedure');
-    const name = (c.dataFamily === 'koneps' ? c.procedureMethod : c.procedure) || '—';
+    const name = (c.dataFamily === 'koneps' ? c.procedureMethod : c.procedure) || '';
     cell.append(element('span', name, 'procedure-name'));
     cell.title = name;
     // KONEPS methods: 수의계약 (negotiated with one firm) is direct; the 경쟁 methods are competitive.
@@ -527,6 +579,21 @@ function startExplorer() {
     const direct = c.directAward ?? c.procedureDirect ?? korean;
     if (direct === true || direct === false) cell.append(element('small', direct ? 'direct award' : 'competitive', 'provenance'));
     return cell;
+  }
+  // A name kept to one short line; the whole of it is in the tooltip and the record panel.
+  function clipped(text, full) {
+    const span = element('span', text, 'clip');
+    span.title = full;
+    return span;
+  }
+  // Months up to 2 years, years from there.
+  function durationParts(months) {
+    return months < 24 ? [`${months} `, element('span', 'months')] : [`${Number((months / 12).toFixed(1)).toLocaleString(uiLocale)} `, element('span', 'years')];
+  }
+  function durationSpan(months) {
+    const span = element('span');
+    span.append(...durationParts(months));
+    return span;
   }
   // One column whose content depends on the country: the figure its data adds that the shared columns lack.
   // Always three decimals, as KONEPS publishes them: floors such as 87.995 % are exact legal rates, and a winning
@@ -536,10 +603,10 @@ function startExplorer() {
     koneps: { header: 'Bid ratio', title: 'Winning bid as a % of the reserve price (예정가격); below it, the lower award limit (낙찰하한율). From the bid opening (개찰결과).',
       value: c => c.winnerRate == null ? null : [percent(c.winnerRate), c.lowerRate == null ? null : `floor ${percent(c.lowerRate)}`] },
     decp: { header: 'Duration', title: 'Declared duration; below it, the declared amount change where the published history allows it.',
-      value: c => { const e = getAmountEvolution(c); return [c.durationMonths == null ? null : `${c.durationMonths} months`, e.status === 'available' ? `${e.percentage >= 0 ? '+' : ''}${e.percentage.toFixed(1)} % amount` : null]; } },
-    prozorro: { header: 'Changes', title: 'Published contract changes (Prozorro)', value: c => c.contractChanges == null ? null : [String(c.contractChanges), c.contractChangeTypes?.length ? c.contractChangeTypes.join(', ') : null] },
-    secop2: { header: 'Days added', title: 'Days added to the contract term (SECOP II)', value: c => c.daysAdded == null ? null : [String(c.daysAdded)] },
-    dncp: { header: 'Amendments', title: 'Published contract amendments (DNCP)', value: c => c.amendmentCount == null ? null : [String(c.amendmentCount)] },
+      value: c => { const e = getAmountEvolution(c); return [c.durationMonths == null ? null : durationSpan(c.durationMonths), e.status === 'available' ? `${e.percentage >= 0 ? '+' : ''}${e.percentage.toFixed(1)} % amount` : null]; } },
+    prozorro: { header: 'Changes', title: 'Published contract changes (Prozorro)', value: c => !c.contractChanges ? null : [String(c.contractChanges), c.contractChangeTypes?.length ? c.contractChangeTypes.join(', ') : null] },
+    secop2: { header: 'Days added', title: 'Days added to the contract term (SECOP II)', value: c => !c.daysAdded ? null : [String(c.daysAdded)] },
+    dncp: { header: 'Amendments', title: 'Published contract amendments (DNCP)', value: c => !c.amendmentCount ? null : [String(c.amendmentCount)] },
   };
   EXTRA_COLUMNS.boamp = EXTRA_COLUMNS.decp;
   let extraColumn = null;
@@ -549,6 +616,16 @@ function startExplorer() {
     for (const c of contracts) counts.set(c.dataFamily, (counts.get(c.dataFamily) || 0) + 1);
     const main = [...counts].sort((a, b) => b[1] - a[1])[0]?.[0];
     extraColumn = EXTRA_COLUMNS[main] || null;
+    if (extraColumn && !contracts.some(c => extraColumn.value(c)?.some(Boolean))) extraColumn = null;
+    // A column appears only if this dataset has something to put in it.
+    const table = document.querySelector('.main-table');
+    table.classList.toggle('no-sector', !contracts.some(c => getSector(c).code !== 'unknown'));
+    table.classList.toggle('no-offers', !contracts.some(c => c.offers != null));
+    table.classList.toggle('no-procedure', !contracts.some(c => c.procedure || c.procedureMethod));
+    // Paraguay publishes the start of the contract period, not the signature: said once, in the header.
+    const dateHeader = document.querySelector('.main-table th[data-sort-key="date"]');
+    dateHeader.querySelector('button').textContent = main === 'dncp' ? 'Period start' : 'Date';
+    dateHeader.title = main === 'dncp' ? 'Contract-period start · not signature' : '';
     const th = document.querySelector('.main-table th.col-extra');
     th.textContent = extraColumn?.header || '';
     th.title = extraColumn?.title || '';
@@ -557,7 +634,7 @@ function startExplorer() {
   function extraCell(c) {
     const cell = element('td', null, 'numeric col-extra');
     const [first, ...rest] = (extraColumn && extraColumn.value(c)) || [];
-    cell.append(first ?? '—');
+    cell.append(first ?? '');
     for (const line of rest) if (line) cell.append(element('small', line, 'provenance'));
     return cell;
   }
@@ -628,12 +705,15 @@ function startExplorer() {
       const row = element('tr', null, 'contract-row');
       row.dataset.id = c.id;
       const names = supplierNames(c);
-      const supplierCell = element('td', names.length ? names.join(' / ') : c.supplier || '—');
-      if (names.length && c.supplier) supplierCell.append(element('small', c.supplier, 'provenance'));
+      // One short line per party: the first name, “+N” for the other members; everything else is in the record panel.
+      const parties = names.length ? names : String(c.supplier || '').split(' / ').filter(Boolean);
+      const supplierCell = element('td', null, 'col-party');
+      supplierCell.append(clipped(parties[0] || '', parties.join(' / ')));
+      if (parties.length > 1) supplierCell.append(element('small', ` +${parties.length - 1}`, 'muted'));
       const dateCell = element('td', formatDate(c));
       if (c.noticeEvidence) dateCell.append(element('small', 'BOAMP publication', 'provenance'));
-      if (c.dataFamily === 'dncp') dateCell.append(element('small', 'Contract-period start · not signature', 'provenance'));
-      const buyerCell = element('td', c.buyer);
+      const buyerCell = element('td', null, 'col-party');
+      buyerCell.append(clipped(c.buyer || '', c.buyer || ''));
       if (c.requestingInstitution) buyerCell.append(element('small', `for ${c.requestingInstitution}`, 'provenance'));
       row.append(dateCell, buyerCell, supplierCell);
       const objectCell = element('td');
@@ -673,9 +753,8 @@ function startExplorer() {
         objectCell.append(badge);
       }
       const sector = getSector(c);
-      const sectorCell = element('td', sector.label);
-      if (!sector.code.startsWith('kr-')) sectorCell.append(element('small', c.cpv || 'unknown CPV', 'provenance'));
-      row.append(objectCell, sectorCell, procedureCell(c), amountCell(c), element('td', c.offers ?? '—', 'numeric col-offers'), extraCell(c));
+      const sectorCell = element('td', sector.code === 'unknown' ? '' : sector.label, 'col-sector');
+      row.append(objectCell, sectorCell, procedureCell(c), amountCell(c), element('td', c.offers ?? '', 'numeric col-offers'), extraCell(c));
       const badges = element('td', null, 'col-signals');
       // Every signal is shown, heaviest first. Within a family only the
       // heaviest counts; the others are marked as not added to the index.
@@ -712,12 +791,6 @@ function startExplorer() {
       const score = element('td', null, 'numeric col-index');
       const coverageLabel = assessment.excludedReason ? 'Calculations excluded' : assessment.applicable ? `${assessment.signals} signal(s) · ${assessment.evaluated}/${assessment.applicable} known-applicable checks evaluated` : 'No check with established applicability';
       score.append(scoreChip(c));
-      // One line per index, so "corruption" never breaks mid-word in the narrow column.
-      if (breakdown.indices) {
-        const lines = element('small', null, 'provenance');
-        for (const [i, b] of Object.entries(breakdown.indices)) lines.append(element('span', `${i === 'rigging' ? 'rigging' : i} ${formatMultiplier(b.score)}`, 'index-line'));
-        score.append(lines);
-      }
       score.title = `${coverageLabel}. ${assessment.unknownApplicability} unknown applicability(ies). Open the row for details.`;
       score.setAttribute('aria-label', `${scoreValue == null ? 'Index not assessed.' : `Index: ${formatMultiplier(scoreValue)} as frequent among proven cases.`} ${coverageLabel}. ${assessment.unknownApplicability} unknown applicabilities.`);
       row.append(badges, score);
@@ -737,7 +810,7 @@ function startExplorer() {
       fragment.append(row);
     }
     body.replaceChildren(fragment);
-    const active = FILTER_VALUES.filter(id => controls[id].value && controls[id].value !== '0').length + VIEW_FLAGS.filter(id => controls[id].checked).length;
+    const active = FILTER_VALUES.filter(id => controls[id].value && controls[id].value !== '0').length + VIEW_FLAGS.filter(id => controls[id].checked).length + (koreaFacet.type && !koreaPicker.hidden ? 1 : 0);
     document.querySelector('#advanced-count').textContent = active ? `· ${active} active` : '';
     document.querySelector('#clear-filters').disabled = !active;
     const signals = visible.filter(c => getIndicators(c).length).length;
@@ -854,6 +927,10 @@ function startExplorer() {
     else supplier.append(supplierName);
     const supplierIdText = ids.map(s => { const shown = displayIdentifier(s); return s.siren && !shown.includes(s.siren) ? `${shown} · SIREN ${s.siren}` : shown; }).join(' / ');
     if (supplierIdText && (names.length || !supplierIdText.includes(supplierName))) supplier.append(element('small', ` ${supplierIdText}`, 'muted'));
+    for (const p of c.privateIdentities || []) {
+      const details = [...(p.names || []).slice(1), ...(p.ids || []), ...(p.addresses || [])].join(' · ');
+      if (details) supplier.append(element('small', ` private: ${details}`, 'muted'));
+    }
     const joint = jointOfferNote(c);
     if (joint) supplier.append(element('small', joint, 'provenance'));
     for (const p of c.supplierProfiles || []) {
@@ -887,7 +964,7 @@ function startExplorer() {
         fact('Amount changes', list, element('small', `${c.amountChanges.length} versions in all`, 'muted'));
       }
     }
-    if (c.durationMonths != null || c.durationOriginal) fact('Duration', ...(c.durationMonths != null ? [`${c.durationMonths} `, element('span', 'months')] : [c.durationOriginal]));
+    if (c.durationMonths != null || c.durationOriginal) fact('Duration', ...(c.durationMonths != null ? durationParts(c.durationMonths) : [c.durationOriginal]));
     fact('Index', scoreChip(c));
     head.append(facts);
     const documentsBase = datasets[datasetSelect.value]?.documents;
@@ -951,10 +1028,8 @@ function startExplorer() {
         const item = element('li', null, `severity-line severity-${signal.severity}`);
         const name = element('strong', signal.kindLabel);
         if (KIND_REFERENCES[signal.kind]) name.title = `Also known as ${KIND_REFERENCES[signal.kind]}`;
-        const pts = signal.weights
-          ? Object.entries(signal.weights).filter(([, v]) => v > 0).map(([i, v]) => `${KR_INDICES[i]} ${v} pts`).join(', ')
-          : `${formatMultiplier(signal.weight)} (${signal.weight} pts)`;
-        item.append(name, element('span', ` · ${pts}, ${signal.pointsNote || BASIS_NOTE[signal.basis]}`, 'muted'), ...(counts || signal.weights ? [] : [element('span', ' · not added (same family)', 'muted')]), element('p', briefReason(signal.explanation)));
+        const pts = `${formatMultiplier(signal.weight)} (${signal.weight} pts)`;
+        item.append(name, element('span', ` · ${pts}, ${signal.pointsNote || BASIS_NOTE[signal.basis]}`, 'muted'), ...(counts ? [] : [element('span', ' · not added (same family)', 'muted')]), element('p', briefReason(signal.explanation)));
         triggered.append(item);
       }
       why.append(triggered);
@@ -962,23 +1037,17 @@ function startExplorer() {
     // Clear checks with negative points (South Korea's FLOOR-GAP): evidence against, shown with what it subtracts.
     for (const r of assessment.checks.filter(r => r.status === 'clear' && r.weight < 0)) {
       line(why, null, element('strong', r.label), element('span', ' · evidence against', 'muted'),
-        element('span', ` · ${r.weights ? Object.entries(r.weights).filter(([, v]) => v < 0).map(([i, v]) => `${KR_INDICES[i]} ${v} pts`).join(', ') : `${r.weight} pts`}, ${BASIS_NOTE[r.basis]}`, 'muted'), element('p', briefReason(r.reason)));
+        element('span', ` · ${r.weight} pts, ${BASIS_NOTE[r.basis]}`, 'muted'), element('p', briefReason(r.reason)));
     }
     if (breakdown.score != null) {
       const summary = element('p', null, 'muted');
-      // South Korea: each index on its own line part; only the heaviest signal of a family counts within an index.
-      const indexLines = breakdown.indices
-        ? Object.entries(breakdown.indices).map(([i, b]) => [`${KR_INDICES[i][0].toUpperCase()}${KR_INDICES[i].slice(1)} index`, b])
-        : [['Index', breakdown]];
-      for (const [name, b] of indexLines) {
-        const parts = Object.entries(b.families).filter(([, v]) => v !== 0);
-        if (!parts.length) { if (breakdown.indices) summary.append(element('span', name), ' ×1.0, no points. '); continue; }
-        summary.append(element('span', name), ` ${formatMultiplier(b.score)} = 2^(${b.score} / 10); points `);
+      const parts = Object.entries(breakdown.families).filter(([, v]) => v !== 0);
+      if (parts.length) {
+        summary.append(element('span', 'Index'), ` ${formatMultiplier(breakdown.score)} = 2^(${breakdown.score} / 10); points `);
         parts.forEach(([k, v], i) => summary.append(i ? (v < 0 ? ' − ' : ' + ') : v < 0 ? '−' : '', element('span', k), ` ${Math.round(Math.abs(v) * 10) / 10}`));
         if (parts.reduce((t, [, v]) => t + v, 0) < 0) summary.append(', floored at 0');
         summary.append('. ');
       }
-      if (breakdown.indices) summary.append('The higher index sets the record’s index and order. ');
       summary.append(element('span', `${assessment.evaluated} of ${assessment.applicable} applicable checks evaluated.`));
       if (assessment.unknownApplicability) summary.append(' ', element('span', `${assessment.unknownApplicability} with unknown applicability.`));
       why.append(summary);
@@ -1302,10 +1371,39 @@ function startExplorer() {
     else if (openId && event.key === 'k') { event.preventDefault(); stepDetail(-1); }
   });
 
+  // Local view only: the real names and addresses behind the pseudonyms come from data/private/individuals.json, which is
+  // git-ignored and never deployed. The file is asked for on localhost only.
+  let privateIdentities = null;
+  function revealPrivate(list) {
+    if (!privateIdentities) return;
+    for (const c of list) {
+      if (typeof c.supplier !== 'string' || !c.supplier.includes('individual #')) continue;
+      const found = [];
+      const reveal = text => text.replace(/individual #[0-9a-f]{12}/g, code => {
+        const person = privateIdentities[code];
+        if (person && !found.includes(person)) found.push(person);
+        return person?.names?.[0] || code;
+      });
+      c.supplier = reveal(c.supplier);
+      if (Array.isArray(c.supplierNamesPublished)) c.supplierNamesPublished = c.supplierNamesPublished.map(n => typeof n === 'string' ? reveal(n) : n);
+      if (found.length) c.privateIdentities = found;
+    }
+  }
+  if (['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)) {
+    Promise.all(['individuals', 'korea-individuals'].map(f => fetch(`data/private/${f}.json`).then(r => r.ok ? r.json() : {}).catch(() => ({})))).then(maps => {
+      const map = Object.assign({}, ...maps);
+      if (!Object.keys(map).length) return;
+      privateIdentities = map;
+      revealPrivate(contracts);
+      render();
+    }).catch(() => {});
+  }
+
   function accept(data, prepared = null) {
-    if (usingLocalFile) koreaPicker.hidden = true;
+    if (usingLocalFile) setKoreaPicker(false);
     if (previewing) setPreviewLock(false);
     contracts = prepared || prepareContracts(data);
+    revealPrivate(contracts);
     assessmentCache = new WeakMap();
     const sectors = [...new Map(contracts.map(c => { const s = getSector(c); return [s.code, s]; })).values()].sort((a, b) => a.code === 'unknown' ? 1 : b.code === 'unknown' ? -1 : a.label.localeCompare(b.label, 'en'));
     fillSelect(controls.sector, [['', 'All sectors'], ...sectors.map(s => [s.code, `${s.code === 'unknown' || s.code.startsWith('kr-') ? '' : s.code + ' · '}${s.label}`])]);
@@ -1419,7 +1517,11 @@ function startExplorer() {
   });
   controls.sort.addEventListener('input', syncSortHeaders);
   syncSortHeaders();
-  document.querySelector('#clear-filters').addEventListener('click', () => { activeProfile = null; clearFilters(); refresh(); });
+  document.querySelector('#clear-filters').addEventListener('click', () => {
+    activeProfile = null; clearFilters();
+    if (koreaFacet.type) { koreaFacet.type = koreaFacet.sub = ''; koreaFacetChanged(); }
+    refresh();
+  });
   pageSizeSelect.addEventListener('change', () => {
     const nextSize = Number(pageSizeSelect.value);
     if (!PAGE_SIZES.includes(nextSize)) return;
@@ -1646,7 +1748,7 @@ function startExplorer() {
     status.textContent = 'Loading data…';
     if (FRENCH_LINK_DATASETS.has(datasetSelect.value)) loadLinkEvidence();
     if (previewing) setPreviewLock(false);
-    koreaPicker.hidden = !selected.remote;
+    setKoreaPicker(Boolean(selected.remote));
     if (pendingView?.['korea-buyer'] != null && selected.remote) koreaBuyer = pendingView['korea-buyer'];
     if (selected.remote === 'korea') {
       try { await loadKorea(version); } catch (error) { if (version === loadVersion) fail(error); }

@@ -26,17 +26,16 @@ assert.match(person.dateNote, /first change in the data/);
 assert.equal(person.notes, 'Requesting institution (수요기관): 서울특별시 강남구 보건소. Joint contract (공동계약).');
 const prepared = run('prepareContracts', rows);
 // G3, N4, K5, K6, K7 and B2 signal, G4 and B4 unknown, B5 clear, B12 clear (win near the stated floor); BC2-C11 are
-// missing (a file built before 2026-11-02), so unknown. Bid rigging: concentration N4 9.1, price B12 -11 -> 0 (floored);
-// corruption: N4 10.1. The record's index is the higher one.
+// missing (a file built before 2026-11-02), so unknown. One index (2026-11-03): concentration N4 10.3 (G3 7 in the
+// same family), price B12 -11 -> 0 (floored).
 const checks = run('computeAssessment', prepared[0]).checks;
 const by = Object.fromEntries(checks.map(r => [r.id, r]));
 const bd = run('getScoreBreakdown', prepared[0]);
-assert.equal(bd.score, 10.1); assert.equal(bd.mainIndex, 'corruption');
-assert.deepEqual([bd.indices.rigging.score, bd.indices.corruption.score], [0, 10.1]);
-assert.deepEqual(JSON.parse(JSON.stringify(by['kr-supplier-dependence'].weights)), { rigging: 9.1, corruption: 10.1 });
-assert.deepEqual(['kr-supplier-dependence', 'kr-buyer-share', 'kr-floor-gap'].map(id => by[id].weight), [10.1, 6.8, -11]);
+assert.equal(bd.score, 0); assert.equal(bd.indices, undefined);
+assert.deepEqual(['kr-supplier-dependence', 'kr-buyer-share', 'kr-floor-gap'].map(id => by[id].weight), [10.3, 7, -11]);
 assert.deepEqual(['kr-two-bids', 'kr-concentration', 'kr-bid-gap', 'kr-floor-gap', 'kr-award-near-reserve'].map(id => by[id].status), ['unknown', 'unknown', 'clear', 'clear', 'not-applicable']);
-assert.ok(!by['kr-restricted-competition'], 'checks without points under either index are not shown');
+assert.ok(!by['kr-exact-floor'], 'B8 has no points since the indices merged');
+assert.ok(!by['kr-restricted-competition'], 'checks without points are not shown');
 assert.equal(by['kr-award-near-reserve'].weight, null);
 assert.deepEqual(['kr-two-bids', 'kr-supplier-dependence', 'kr-floor-gap'].map(id => by[id].family), ['competition', 'concentration', 'price']);
 assert.ok(checks.filter(r => r.id.startsWith('kr-')).every(r => r.basis === 'measured'));
@@ -54,12 +53,12 @@ assert.equal(withBids.offers, 3);
 const withLetters = (letters, i = 0) => run('prepareContracts', run('koreaRecords', meta, { ...shard, buyers: { '3220000': [[...shard.buyers['3220000'][0].slice(0, 19), letters]] } },
   ['3220000', '서울특별시 강남구', '지방자치단체', 1, 0]))[i];
 const base = 'csuuuccsucccccsscsuucuc';
-const rig = letters => run('getScoreBreakdown', withLetters(letters)).indices.rigging.score;
-assert.equal(rig(base + 'ss' + 'suuu'), 27.6, 'two bids 11.8 + win well above the floor 6.7 + N4 9.1; K7 out of scope');
-assert.equal(rig(base + 'su' + 'suuu'), 23.9, 'no stated floor: K7 3 scores the price');
-assert.equal(rig(base + 'cu' + 'suuu'), 20.9, 'no floor, below 92.2 %: no price points');
+const rig = letters => run('getVigilanceScore', withLetters(letters));
+assert.equal(rig(base + 'ss' + 'suuu'), 28.6, 'two bids 11.7 + win well above the floor 6.6 + N4 10.3; K7 out of scope');
+assert.equal(rig(base + 'su' + 'suuu'), 25, 'no stated floor: K7 3 scores the price');
+assert.equal(rig(base + 'cu' + 'suuu'), 22, 'no floor, below 92.2 %: no price points');
 assert.equal(run('getVigilanceScore', withLetters('c'.repeat(23) + 'cc')), 0, 'negative points alone: the index is floored at 0');
-// B5 alone (7.3) offset by B12 (-11): index 0, yet a signal, labelled as offset rather than "no signal".
+// B5 alone (6.6) offset by B12 (-11): index 0, yet a signal, labelled as offset rather than "no signal".
 const offset = withLetters('c'.repeat(20) + 's' + 'cc' + 'cc');
 assert.equal(run('getVigilanceScore', offset), 0);
 assert.equal(run('getIndicators', offset).length, 1);

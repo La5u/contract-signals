@@ -54,6 +54,8 @@ window.I18N_DICTS.es = {
   "Ukraine · Health / Vinnytsia / Dnipro — contracts · Prozorro": "Ucrania · Salud / Vínnytsia / Dnipró — contratos · Prozorro",
   "Search": "Buscar",
   "Buyer, supplier, subject, ID…": "Comprador, proveedor, objeto, identificador…",
+  "Search buyer, supplier, subject, ID…": "Buscar comprador, proveedor, objeto, identificador…",
+  "Institution name or code": "Nombre o código de la entidad",
   "Sort": "Ordenar",
   "Index · descending": "Índice · descendente",
   "Index · ascending": "Índice · ascendente",
@@ -632,6 +634,7 @@ window.I18N_DICTS.es = {
   "Period start": "Inicio del período",
   "Published": "Publicado",
   "months": "meses",
+  "years": "años",
   "competitive": "competitivo",
   "without competition": "sin competencia",
   "not classified": "sin clasificar",
@@ -730,6 +733,7 @@ window.I18N_DICTS.es = {
   "Dataset file": "Archivo de datos",
   "JSON, CSV or OCDS. Files stay in your browser.": "JSON, CSV u OCDS. Los archivos permanecen en su navegador.",
   "Format guide": "Guía de formato",
+  "Privacy and legal notice": "Privacidad y aviso legal",
   "Review notes": "Notas de revisión",
   "Manage notes": "Gestionar notas",
   "Notes stay in this browser. Shared links do not include them. Exported notes are plain text.": "Las notas permanecen en este navegador. Los enlaces compartidos no las incluyen. Las notas exportadas son texto sin cifrar.",
@@ -801,8 +805,8 @@ window.I18N_DICTS.es = {
   "No bid count published for this lot: offers unknown, never zero.": "Sin número de ofertas publicado para este lote: ofertas desconocidas, nunca cero.",
   "South Korea": "Corea del Sur",
   "every contracting institution (choose one) — contracts · KONEPS": "todas las entidades contratantes (elija una) — contratos · KONEPS",
+  "Name or code, e.g. 서울특별시 or 1230000; empty = most flagged": "Nombre o código, p. ej. 서울특별시 o 1230000; vacío = los más señalados",
   "Contracting institution": "Entidad contratante",
-  "Name or code, e.g. 서울특별시 or 1230000": "Nombre o código, p. ej. 서울특별시 o 1230000",
   "Matching contracting institutions": "Entidades contratantes coincidentes",
   "No contracting institution matches.": "Ninguna entidad contratante coincide.",
   "Korean checks were not computed for this record: it is shown for browsing and is not assessed.": "Las verificaciones coreanas no se calcularon para este registro: se muestra para consulta y no se evalúa.",
@@ -840,6 +844,25 @@ window.I18N_DICTS.es = {
   "measured on South Korea’s labelled cases; points use a cautious bound (the ratio shrunk and taken at the 25th percentile of buyer resamples), so they are lower than the ratio quoted suggests": "medida en los casos etiquetados de Corea del Sur; los puntos usan una cota prudente (la razón contraída y tomada en el percentil 25 de remuestreos por comprador), por lo que son menores de lo que sugiere la razón citada",
   "Restricted competition": "Competencia restringida",
   "Supplier dependence": "Dependencia del proveedor",
+  "Repeat single offer": "Oferta única repetida",
+  "Repeat direct": "Directa repetida",
+  "Low competition": "Poca competencia",
+  "Bid disqualified": "Oferta descalificada",
+  "Short period": "Plazo corto",
+  "Late change": "Cambio tardío",
+  "Price increase": "Aumento de precio",
+  "Amendments": "Modificaciones",
+  "Near cap": "Cerca del tope",
+  "Execution": "Ejecución",
+  "Legal ground": "Base legal",
+  "Unit price": "Precio unitario",
+  "Exclusivity": "Exclusividad",
+  "Near reserve": "Cerca de la reserva",
+  "Above floor": "Sobre el umbral",
+  "Restricted": "Restringida",
+  "Dependence": "Dependencia",
+  "At floor": "En el umbral",
+  "Near floor": "Cerca del umbral",
   "The tender’s bid opening (개찰결과) was not found: not assessable.": "No se encontró la apertura de ofertas (개찰결과) de la licitación: no evaluable.",
   "Large gap between the two lowest bids": "Gran diferencia entre las dos ofertas más bajas",
   "The gap between the two lowest valid bids is within the usual range.": "La diferencia entre las dos ofertas válidas más bajas está dentro de lo habitual.",
@@ -855,9 +878,9 @@ window.I18N_DICTS.es = {
   "South Korea · KONEPS · amounts in KRW; full record on KONEPS.": "Corea del Sur · KONEPS · importes en KRW; registro completo en KONEPS.",
   "Most flagged · nationwide": "Más señalados · todo el país",
   "Institution type": "Tipo de entidad",
-  "Kind": "Clase",
   "Province": "Provincia",
   "City or district": "Ciudad o distrito",
+  "All types": "Todos los tipos",
   "Choose a contracting institution.": "Elija una entidad contratante.",
   "Ukraine · Prozorro · random sample of 3,500 completed open tenders (aboveThreshold) created June–August 2026, all buyers: 3,663 signed contracts. Per-tender checks only: repetition, concentration and buyer share need every tender of a buyer and are not assessed; amendments were not retrieved. Amounts in UAH, EUR or USD.": "Ucrania · Prozorro · muestra aleatoria de 3.500 licitaciones abiertas concluidas (aboveThreshold) creadas de junio a agosto de 2026, todos los compradores: 3.663 contratos firmados. Solo verificaciones por licitación: la repetición, la concentración y la cuota del comprador necesitan todas las licitaciones de un comprador y no se evalúan; las modificaciones no se obtuvieron. Importes en UAH, EUR o USD.",
   "The index is a multiplier: ×2 means records with these signals are twice as frequent among proven cases (convictions, cartel decisions) as among the same buyers’ other contracts. It is not a probability. Only measured signals count; signals never measured on proven cases are shown as context with ×1.0. “Not assessed” means no applicable check could be evaluated. Missing values are shown as unknown.": "El índice es un multiplicador: ×2 significa que los registros con estas señales son el doble de frecuentes entre los casos probados (condenas, decisiones sobre cárteles) que entre los demás contratos de los mismos compradores. No es una probabilidad. Solo cuentan las señales medidas; las señales nunca medidas en casos probados se muestran como contexto con ×1.0. «No evaluado» significa que no se pudo evaluar ninguna comprobación aplicable. Los valores ausentes se muestran como desconocidos.",
@@ -888,15 +911,49 @@ window.I18N_DICTS.es = {
   "The bid opening (개찰결과) was not found or does not say which bids were valid: not assessable.": "No se encontró la apertura de ofertas (개찰결과) o no indica qué ofertas eran válidas: no evaluable.",
   "Winning bid exactly at the lower award limit": "Oferta ganadora justo en el límite inferior de adjudicación",
   "The winning bid is not at the lower award limit.": "La oferta ganadora no está en el límite inferior de adjudicación.",
-  "The winning bid is within 1.01 percentage points of the tender’s lower award limit (낙찰하한율), where competitive bids cluster. Rigged tenders were rarely this close to the floor, so this lowers the bid-rigging index by 11 points.": "La oferta ganadora está a menos de 1,01 puntos porcentuales del límite inferior de adjudicación de la licitación (낙찰하한율), donde se agrupan las ofertas competitivas. Las licitaciones amañadas rara vez estaban tan cerca del límite, por lo que esto resta 11 puntos al índice de manipulación de ofertas.",
+  "The winning bid is within 1.01 percentage points of the tender’s lower award limit (낙찰하한율), where competitive bids cluster. Rigged tenders were rarely this close to the floor, so this lowers the index by 11 points.": "La oferta ganadora está a menos de 1,01 puntos porcentuales del límite inferior de adjudicación de la licitación (낙찰하한율), donde se agrupan las ofertas competitivas. Las licitaciones amañadas rara vez estaban tan cerca del límite, por lo que esto resta 11 puntos al índice.",
   "Few bids (exactly two)": "Pocas ofertas (exactamente dos)",
   "Two bids": "Dos ofertas",
   "One valid bid": "Una oferta válida",
   "At award floor": "En el umbral de adjudicación",
-  "Bid rigging index": "Índice de manipulación de ofertas",
-  "Corruption index": "Índice de corrupción",
-  "×1.0, no points.": "×1.0, sin puntos.",
-  "The higher index sets the record’s index and order.": "El índice más alto fija el índice y el orden del registro."
+  "Open APIs shown on this site": "API abiertas mostradas en este sitio",
+  "Open APIs used in the research behind the indicators": "API abiertas usadas en la investigación detrás de los indicadores",
+  "Contracts, change orders and every bidder's offer: the table, offers, bid ratios and award floors": "Contratos, modificaciones y la oferta de cada licitador: la tabla, las ofertas, los porcentajes de oferta y los umbrales de adjudicación",
+  "Contracting institutions: institution type, province and city filters": "Entidades contratantes: filtros de tipo de entidad, provincia y ciudad",
+  "Bid openings: reserve-price picks, submission times and evaluation scores of each bidder": "Aperturas de ofertas: elecciones de precios de reserva, horas de presentación y puntuaciones de cada licitador",
+  "Bid notices and their change history: deadlines, eligibility and estimated prices": "Anuncios de licitación y su historial de cambios: plazos, requisitos y precios estimados",
+  "Contract terms, completion dates, change history and consortium members": "Plazos contractuales, fechas de finalización, historial de cambios y miembros de consorcios",
+  "Advance specifications and the objections filed against them": "Especificaciones previas y las objeciones presentadas contra ellas",
+  "Procurement plans published before the tender": "Planes de compras publicados antes de la licitación",
+  "Surveyed unit prices of works materials, for price benchmarks": "Precios unitarios relevados de materiales de obra, como referencia de precios",
+  "Shopping-mall delivery requests: call-offs under framework and multiple-award contracts": "Pedidos del centro comercial en línea: compras derivadas de acuerdos marco y contratos con varios adjudicatarios",
+  "Every bidder of every opening since 2010 and item-level call-offs (also 15050835)": "Cada licitador de cada apertura desde 2010 y pedidos por artículo (también 15050835)",
+  "Defence procurement bids and contracts outside KONEPS (also 15158419)": "Licitaciones y contratos de defensa fuera de KONEPS (también 15158419)",
+  "LH contracts outside KONEPS": "Contratos de LH fuera de KONEPS",
+  "KOGAS bids outside KONEPS": "Licitaciones de KOGAS fuera de KONEPS",
+  "All": "Todos",
+  "All countries": "Todos los países",
+  "Amount changes": "Cambios de importe",
+  "Bid ratio": "Porcentaje de oferta",
+  "Bids opened": "Apertura de ofertas",
+  "Business type": "Tipo de contrato",
+  "Business type · A–Z": "Tipo de contrato · A–Z",
+  "Business type · Z–A": "Tipo de contrato · Z–A",
+  "Buyer name or ID contains": "El nombre o ID del comprador contiene",
+  "Supplier name contains": "El nombre del proveedor contiene",
+  "Procedure contains": "El procedimiento contiene",
+  "Data files used (separate host)": "Archivos de datos usados (servidor aparte)",
+  "Pricing": "Forma de precio",
+  "Record country": "País del registro",
+  "Record date from": "Fecha del registro desde",
+  "Record date to": "Fecha del registro hasta",
+  "Supplier region": "Región del proveedor",
+  "Tender notice": "Anuncio de licitación",
+  "direct award": "adjudicación directa",
+  "concentration": "concentración",
+  "price": "precio",
+  "all contracting institutions — contracts · KONEPS": "todas las entidades contratantes — contratos · KONEPS",
+  "Dates are inclusive and use each source’s displayed record date, not a universal signature date. Records with unknown dates do not match an active date range. Coverage remains limited to published snapshots.": "Las fechas son inclusivas y usan la fecha de registro mostrada por cada fuente, no una fecha de firma universal. Los registros con fecha desconocida no coinciden con un rango de fechas activo. La cobertura se limita a las instantáneas publicadas."
  },
  "patterns": [
   [
@@ -1676,56 +1733,64 @@ window.I18N_DICTS.es = {
    "Los {a} contratos con mayor puntuación de un total de {b}; elija una entidad para ver todos sus contratos."
   ],
   [
-   "Exactly two bids were opened in this tender (개찰결과). Among tenders the Fair Trade Commission found rigged it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value, business type and period. Specialised or small markets often draw few bidders lawfully. Points: bid rigging {b}.",
-   "En esta licitación se abrieron exactamente dos ofertas (개찰결과). Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas, era {a} veces más frecuente que entre los demás contratos de las mismas entidades contratantes, a igual importe del contrato, tipo de actividad y periodo. Los mercados especializados o pequeños suelen atraer pocos licitadores de forma lícita. Puntos: manipulación de ofertas {b}."
+   "Exactly two bids were opened in this tender (개찰결과). Among tenders the Fair Trade Commission found rigged and contracts tied to corruption convictions it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value, business type and period. Specialised or small markets often draw few bidders lawfully.",
+   "En esta licitación se abrieron exactamente dos ofertas (개찰결과). Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas y los contratos vinculados a condenas por corrupción, era {a} veces más frecuente que entre los demás contratos de las mismas entidades contratantes, a igual importe del contrato, tipo de actividad y periodo. Los mercados especializados o pequeños suelen atraer pocos licitadores de forma lícita."
   ],
   [
-   "Two or more bids were opened but only one was valid (the others rejected or invalid), as when cover bids are entered to be thrown out. Among tenders the Fair Trade Commission found rigged it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value, business type and period. Bids are also rejected for honest mistakes. Points: bid rigging {b}.",
-   "Se abrieron dos o más ofertas pero solo una era válida (las demás rechazadas o no válidas), como cuando se presentan ofertas de cobertura para que se descarten. Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas, era {a} veces más frecuente que entre los demás contratos de las mismas entidades contratantes, a igual importe del contrato, tipo de actividad y periodo. Las ofertas también se rechazan por errores de buena fe. Puntos: manipulación de ofertas {b}."
+   "Two or more bids were opened but only one was valid (the others rejected or invalid), as when cover bids are entered to be thrown out. Among tenders the Fair Trade Commission found rigged and contracts tied to corruption convictions it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value, business type and period. Bids are also rejected for honest mistakes.",
+   "Se abrieron dos o más ofertas pero solo una era válida (las demás rechazadas o no válidas), como cuando se presentan ofertas de cobertura para que se descarten. Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas y los contratos vinculados a condenas por corrupción, era {a} veces más frecuente que entre los demás contratos de las mismas entidades contratantes, a igual importe del contrato, tipo de actividad y periodo. Las ofertas también se rechazan por errores de buena fe."
   ],
   [
-   "The winning bid is at least 1.01 percentage points (of the reserve price) above the tender’s lower award limit (낙찰하한율), where Korean bids usually cluster. Among tenders the Fair Trade Commission found rigged it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value, business type, period and bid-count result (exactly two bids, large gap between the two lowest). A bidder may also simply price higher. Points: bid rigging {b}.",
-   "La oferta ganadora está al menos 1,01 puntos porcentuales (del precio de reserva) por encima del límite inferior de adjudicación de la licitación (낙찰하한율), donde suelen agruparse las ofertas coreanas. Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas, era {a} veces más frecuente que entre los demás contratos de las mismas entidades contratantes, a igual importe del contrato, tipo de actividad, periodo y resultado del recuento de ofertas (exactamente dos ofertas, gran diferencia entre las dos más bajas). Un licitador también puede simplemente ofertar más alto. Puntos: manipulación de ofertas {b}."
+   "The winning bid is at least 1.01 percentage points (of the reserve price) above the tender’s lower award limit (낙찰하한율), where Korean bids usually cluster. Among tenders the Fair Trade Commission found rigged and contracts tied to corruption convictions it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value, business type, period and bid-count result (exactly two bids, large gap between the two lowest). A bidder may also simply price higher.",
+   "La oferta ganadora está al menos 1,01 puntos porcentuales (del precio de reserva) por encima del límite inferior de adjudicación de la licitación (낙찰하한율), donde suelen agruparse las ofertas coreanas. Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas y los contratos vinculados a condenas por corrupción, era {a} veces más frecuente que entre los demás contratos de las mismas entidades contratantes, a igual importe del contrato, tipo de actividad, periodo y resultado del recuento de ofertas (exactamente dos ofertas, gran diferencia entre las dos más bajas). Un licitador también puede simplemente ofertar más alto."
   ],
   [
-   "The contract amount is between 92.2 % and 100 % of the reserve price (예정가격). Among tenders the Fair Trade Commission found rigged it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value, business type, period and bid-count result (exactly two bids, large gap between the two lowest). Lawful awards also come close to the reserve price. Points: bid rigging {b}.",
-   "El importe del contrato está entre el 92,2 % y el 100 % del precio de reserva (예정가격). Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas, era {a} veces más frecuente que entre los demás contratos de las mismas entidades contratantes, a igual importe del contrato, tipo de actividad, periodo y resultado del recuento de ofertas (exactamente dos ofertas, gran diferencia entre las dos más bajas). Las adjudicaciones lícitas también se acercan al precio de reserva. Puntos: manipulación de ofertas {b}."
+   "The contract amount is between 92.2 % and 100 % of the reserve price (예정가격). Among tenders the Fair Trade Commission found rigged and contracts tied to corruption convictions it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value, business type, period and bid-count result (exactly two bids, large gap between the two lowest). Lawful awards also come close to the reserve price.",
+   "El importe del contrato está entre el 92,2 % y el 100 % del precio de reserva (예정가격). Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas y los contratos vinculados a condenas por corrupción, era {a} veces más frecuente que entre los demás contratos de las mismas entidades contratantes, a igual importe del contrato, tipo de actividad, periodo y resultado del recuento de ofertas (exactamente dos ofertas, gran diferencia entre las dos más bajas). Las adjudicaciones lícitas también se acercan al precio de reserva."
   ],
   [
-   "The winning bid is within 0.01 percentage points of the tender’s lower award limit (낙찰하한율), as when the winner knows the reserve price in advance. Among contracts tied to corruption convictions it was {a} times as frequent as among the same offices’ other contracts, at equal contract value, business type and period. Many bidders aim at the floor, and some land on it by chance. Points: corruption {b}.",
-   "La oferta ganadora está a menos de 0,01 puntos porcentuales del límite inferior de adjudicación de la licitación (낙찰하한율), como cuando el adjudicatario conoce de antemano el precio de reserva. Entre los contratos vinculados a condenas por corrupción, era {a} veces más frecuente que entre los demás contratos de las mismas entidades, a igual importe del contrato, tipo de actividad y periodo. Muchos licitadores apuntan al límite y algunos lo alcanzan por azar. Puntos: corrupción {b}."
+   "The gap between the two lowest valid bids is large against the spread of the other valid bids (above the 90th percentile for this business type and year), the pattern cover bids placed above an agreed winner leave. Among tenders the Fair Trade Commission found rigged and contracts tied to corruption convictions it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value, business type and period. It also arises by chance.",
+   "La diferencia entre las dos ofertas válidas más bajas es grande respecto a la dispersión de las demás ofertas válidas (por encima del percentil 90 para este tipo de actividad y año), el patrón que dejan las ofertas de cobertura situadas por encima de un ganador pactado. Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas y los contratos vinculados a condenas por corrupción, era {a} veces más frecuente que entre los demás contratos de las mismas entidades contratantes, a igual importe del contrato, tipo de actividad y periodo. También ocurre por azar."
   ],
   [
-   "The gap between the two lowest valid bids is large against the spread of the other valid bids (above the 90th percentile for this business type and year), the pattern cover bids placed above an agreed winner leave. Among tenders the Fair Trade Commission found rigged it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value, business type and period. It also arises by chance. Points: bid rigging {b}.",
-   "La diferencia entre las dos ofertas válidas más bajas es grande respecto a la dispersión de las demás ofertas válidas (por encima del percentil 90 para este tipo de actividad y año), el patrón que dejan las ofertas de cobertura situadas por encima de un ganador pactado. Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas, era {a} veces más frecuente que entre los demás contratos de las mismas entidades contratantes, a igual importe del contrato, tipo de actividad y periodo. También ocurre por azar. Puntos: manipulación de ofertas {b}."
+   "This supplier’s contracts make up at least 25 % of the contracting office’s contract amount for the signing year. Among tenders the Fair Trade Commission found rigged and contracts tied to corruption convictions it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value. A sole specialist supplier is often lawful.",
+   "Los contratos de este proveedor representan al menos el 25 % del importe de contratos de la entidad contratante en el año de firma. Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas y los contratos vinculados a condenas por corrupción, era {a} veces más frecuente que entre los demás contratos de las mismas entidades contratantes, a igual importe del contrato. Tener un único proveedor especializado suele ser lícito."
   ],
   [
-   "This supplier’s contracts make up at least 25 % of the contracting office’s contract amount for the signing year. Among tenders the Fair Trade Commission found rigged it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value. Among contracts tied to corruption convictions it was {b} times as frequent as among the same offices’ other contracts, at equal contract value. A sole specialist supplier is often lawful. Points: bid rigging {c}, corruption {d}.",
-   "Los contratos de este proveedor representan al menos el 25 % del importe de contratos de la entidad contratante en el año de firma. Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas, era {a} veces más frecuente que entre los demás contratos de las mismas entidades contratantes, a igual importe del contrato. Entre los contratos vinculados a condenas por corrupción, era {b} veces más frecuente que entre los demás contratos de las mismas entidades, a igual importe del contrato. Tener un único proveedor especializado suele ser lícito. Puntos: manipulación de ofertas {c}, corrupción {d}."
+   "This contract alone is at least 5 % of the contracting office’s contract amount for its signing year. Among tenders the Fair Trade Commission found rigged and contracts tied to corruption convictions it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value. Large purchases are often lawful.",
+   "Este contrato por sí solo representa al menos el 5 % del importe de contratos de la entidad contratante en su año de firma. Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas y los contratos vinculados a condenas por corrupción, era {a} veces más frecuente que entre los demás contratos de las mismas entidades contratantes, a igual importe del contrato. Las compras grandes suelen ser lícitas."
   ],
   [
-   "This contract alone is at least 5 % of the contracting office’s contract amount for its signing year. Among tenders the Fair Trade Commission found rigged it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value. Large purchases are often lawful. Points: bid rigging {b}.",
-   "Este contrato por sí solo representa al menos el 5 % del importe de contratos de la entidad contratante en su año de firma. Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas, era {a} veces más frecuente que entre los demás contratos de las mismas entidades contratantes, a igual importe del contrato. Las compras grandes suelen ser lícitas. Puntos: manipulación de ofertas {b}."
+   "This supplier won at least 60 % of the contracting office’s contracts of this business type in the signing year (10 or more contracts). Among tenders the Fair Trade Commission found rigged and contracts tied to corruption convictions it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value.",
+   "Este proveedor obtuvo al menos el 60 % de los contratos de la entidad contratante de este tipo de actividad en el año de firma (10 contratos o más). Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas y los contratos vinculados a condenas por corrupción, era {a} veces más frecuente que entre los demás contratos de las mismas entidades contratantes, a igual importe del contrato."
   ],
   [
-   "This supplier won at least 60 % of the contracting office’s contracts of this business type in the signing year (10 or more contracts). Among tenders the Fair Trade Commission found rigged it was {a} times as frequent as among the same contracting offices’ other contracts, at equal contract value. Points: bid rigging {b}.",
-   "Este proveedor obtuvo al menos el 60 % de los contratos de la entidad contratante de este tipo de actividad en el año de firma (10 contratos o más). Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas, era {a} veces más frecuente que entre los demás contratos de las mismas entidades contratantes, a igual importe del contrato. Puntos: manipulación de ofertas {b}."
+   "{a} versions in all",
+   "{a} versiones en total"
   ],
   [
-   "· bid rigging {a} pts, {b}",
-   "· manipulación de ofertas {a} pts, {b}"
+   "{a} % of the reserve price",
+   "{a} % del precio de reserva"
   ],
   [
-   "· corruption {a} pts, {b}",
-   "· corrupción {a} pts, {b}"
+   "floor {a} %",
+   "umbral {a} %"
   ],
   [
-   "· bid rigging {a} pts, corruption {b} pts, {c}",
-   "· manipulación de ofertas {a} pts, corrupción {b} pts, {c}"
+   "· lower award limit {a} %",
+   "· umbral inferior de adjudicación {a} %"
   ],
   [
-   "rigging {a} · corruption {b}",
-   "manipulación {a} · corrupción {b}"
+   "↳ Other · {a}",
+   "↳ Otros · {a}"
+  ],
+  [
+   "Contract amount of the latest version in the period; the original contract was {a} ({b} versions).",
+   "Importe del contrato en su última versión del periodo; el contrato original era de {a} ({b} versiones)."
+  ],
+  [
+   "Contract {a} · Buyer {b} · KR-BRN {c}",
+   "Contrato {a} · Comprador {b} · KR-BRN {c}"
   ]
  ]
 };

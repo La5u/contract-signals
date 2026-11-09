@@ -41,19 +41,8 @@
       <p class="tagline">Explore published procurement records.</p>
     </div>
   </div>
-  <div class="topbar-actions">
-    <label class="lang-selector">Language <select id="lang" aria-label="Interface language"></select></label>
-    <button id="help-button" type="button" class="ghost" aria-haspopup="dialog">Help</button>
-    <button id="theme-toggle" type="button" class="ghost" aria-label="Colour theme: automatic" title="Colour theme: automatic">Theme: <span id="theme-label">Auto</span></button>
-  </div>
-</header>
-<main>
-  <div class="intro">
-    <p>Explore published public procurement records from several countries and see risk signals, all in your browser.</p>
-    <p>A signal is a reason to look, not proof.</p>
-  </div>
-  <section class="primary-controls" aria-label="Explore contracts">
-    <label class="country-selector"><span id="country-label" data-no-i18n>Country</span>
+  <div class="topbar-sources">
+    <label class="country-selector"><span id="country-label" class="visually-hidden" data-no-i18n>Country</span>
       <select id="country"></select>
     </label>
     <label class="dataset-selector"><span id="source-label" data-no-i18n>Source / cohort</span>
@@ -75,26 +64,23 @@
         <option value="ukraineSample" data-country="Ukraine">🇺🇦 open tenders Jun–Aug 2026, random sample — contracts · Prozorro</option>
       </select>
     </label>
+  </div>
+  <div class="topbar-actions">
+    <label class="lang-selector">Language <select id="lang" aria-label="Interface language"></select></label>
+<button id="open-import" type="button" class="link-button">Import a dataset</button>
+    <button id="help-button" type="button" class="ghost" aria-haspopup="dialog">Help</button>
+    <button id="theme-toggle" type="button" class="ghost" aria-label="Colour theme: automatic" title="Colour theme: automatic">Theme: <span id="theme-label">Auto</span></button>
+  </div>
+</header>
+<main>
+  <section class="primary-controls" aria-label="Explore contracts">
     <div id="korea-picker" class="korea-picker" hidden>
-      <button id="korea-all" type="button">Most flagged · nationwide</button>
-      <nav id="korea-type" class="korea-facet" aria-label="Institution type"></nav>
-      <nav id="korea-sub" class="korea-facet" aria-label="Subcategory" hidden></nav>
       <nav id="korea-region" class="korea-facet" aria-label="Province"></nav>
-      <nav id="korea-city" class="korea-facet" aria-label="City or district" hidden></nav>
-      <label>Or choose one contracting institution<input id="korea-search" type="search" placeholder="Name or code, e.g. 서울특별시 or 1230000" autocomplete="off"></label>
-      <ul id="korea-results" class="korea-results" aria-label="Matching contracting institutions"></ul>
+      <nav id="korea-city" class="korea-facet child" aria-label="City or district" hidden></nav>
     </div>
-    <label class="search">Search<input id="search" type="search" placeholder="Buyer, supplier, subject, ID…" autocomplete="off">
-    </label>
-    <label class="checkbox basic-signal-filter"><input id="flagged" type="checkbox">Signals only</label>
-    <button id="open-import" type="button" class="link-button">Import a dataset</button>
   </section>
-  <section id="file-help" class="notice-box" hidden>
-    <p>Your browser may block automatic loading of a local file. Open <code id="file-path">data/decp-history.json</code> with the file picker in the filter panel, or serve this folder with <code>python -m http.server 8000</code>.</p>
-  </section>
-
-  <section class="overview" aria-label="Dataset overview">
-    <div class="dataset-links">
+  <div class="picker-row" aria-label="Dataset overview">
+    <label id="korea-search-wrap" class="korea-search-label" hidden><span class="visually-hidden">Contracting institution</span><input id="korea-search" type="search" placeholder="Institution name or code" title="Name or code, e.g. 서울특별시 or 1230000; empty = most flagged" autocomplete="off"></label>
     <details class="dataset-details">
       <summary>Dataset</summary>
       <dl id="dataset-dates" class="dataset-note"></dl>
@@ -108,10 +94,6 @@
       <summary>Sources</summary>
       <div id="sources-body" class="dataset-note"></div>
     </details>
-    </div>
-  </section>
-
-  <div class="workspace">
     <details class="filter-panel" id="advanced-filters">
       <summary><span class="filter-toggle-label">Advanced filters</span> <span id="advanced-count" class="count-pill"></span></summary>
       <section class="controls" aria-label="Filters">
@@ -124,6 +106,7 @@
         </fieldset>
         <fieldset>
           <legend>Contract</legend>
+          <label id="korea-type-filter" hidden>Institution type<select id="korea-type"></select></label>
           <label>Record country<select id="filter-country"><option value="">All countries</option><option value="FRA">France</option><option value="CHL">Chile</option><option value="COL">Colombia</option><option value="PRY">Paraguay</option><option value="PRT">Portugal</option><option value="ROU">Romania</option><option value="CZE">Czechia</option><option value="UKR">Ukraine</option><option value="GBR">United Kingdom</option><option value="KOR">South Korea</option></select></label>
           <label>Record date from<input id="date-from" type="date"></label>
           <label>Record date to<input id="date-to" type="date"></label>
@@ -151,30 +134,40 @@
         <button id="clear-filters" type="button" class="reset-button">Reset filters</button>
       </section>
     </details>
+  </div>
+  <ul id="korea-results" class="korea-results" aria-label="Matching contracting institutions" hidden></ul>
+  <section id="file-help" class="notice-box" hidden>
+    <p>Your browser may block automatic loading of a local file. Open <code id="file-path">data/decp-history.json</code> with the file picker in the filter panel, or serve this folder with <code>python -m http.server 8000</code>.</p>
+  </section>
+
+
+  <div class="workspace">
 
     <section class="results" id="results" aria-label="Results" tabindex="-1">
       <section id="project-panel" class="project-panel" aria-label="Documented project dossier" hidden></section>
       <section id="profile-panel" class="project-panel profile-panel" aria-label="Buyer or supplier profile" hidden></section>
       <div class="results-bar">
-        <p id="status" role="status" aria-live="polite">Loading data…</p>
         <div class="toolbar">
+          <label class="search"><span class="visually-hidden">Search</span><input id="search" type="search" placeholder="Search buyer, supplier, subject, ID…" autocomplete="off"></label>
+          <label class="checkbox basic-signal-filter"><input id="flagged" type="checkbox">Signals only</label>
           <label class="inline-label">Sort<select id="sort-field"><option value="score">Index</option><option value="priority">Priority (index × amount)</option><option value="amount">Amount</option><option value="date">Date</option><option value="publication">Publication date</option><option value="sector">CPV sector</option><option value="buyer">Buyer</option><option value="supplier">Supplier</option><option value="offers">Offers</option><option value="indicators">Signals</option><option value="increase">Amount increase (%)</option><option value="official">Official findings first</option><option value="recent-signal" hidden>Signals · newest first</option></select></label>
           <button id="sort-direction" type="button" class="ghost small" aria-label="Sort descending">↓</button>
           <select id="sort" hidden aria-label="Sort state"><option value="score">Index · descending</option><option value="score-asc">Index · ascending</option><option value="priority">Priority · extra stake first</option><option value="official">Official findings first · outside the index</option><option value="amount">Amount · descending</option><option value="amount-asc">Amount · ascending</option><option value="recent-signal">Signals · newest first</option><option value="date">Date · newest first</option><option value="date-asc">Date · oldest first</option><option value="publication">Notice publication · newest first</option><option value="publication-asc">Notice publication · oldest first</option><option value="sector">CPV sector · A–Z</option><option value="sector-desc">CPV sector · Z–A</option><option value="buyer">Buyer · A–Z</option><option value="buyer-desc">Buyer · Z–A</option><option value="supplier">Supplier · A–Z</option><option value="supplier-desc">Supplier · Z–A</option><option value="offers">Offers · ascending</option><option value="offers-desc">Offers · descending</option><option value="increase">Amount increase (%) · descending</option><option value="indicators">Indicators · most signals first</option><option value="indicators-asc">Indicators · fewest signals first</option></select>
           <label class="inline-label">Group<select id="group-by"><option value="">No grouping</option><option value="project">Documented project</option><option value="sector">CPV sector</option><option value="buyer">Buyer</option><option value="supplier">Supplier (SIREN)</option></select></label>
-          <p class="export-actions" role="group" aria-label="Export all filtered records">
-            <span class="export-label">Export</span>
-            <button id="export-csv" type="button" disabled title="Export all filtered results as CSV.">CSV</button>
-            <button id="export-json" type="button" disabled title="Export all filtered results as JSON.">JSON</button>
-            <button id="copy-page" type="button" title="Copy this page with source URLs.">Copy page</button>
-          </p>
         </div>
+        <p id="status" role="status" aria-live="polite">Loading data…</p>
+        <p class="export-actions" role="group" aria-label="Export all filtered records">
+          <span class="export-label">Export</span>
+          <button id="export-csv" type="button" disabled title="Export all filtered results as CSV.">CSV</button>
+          <button id="export-json" type="button" disabled title="Export all filtered results as JSON.">JSON</button>
+          <button id="copy-page" type="button" title="Copy this page with source URLs.">Copy page</button>
+        </p>
       </div>
       <span id="copy-status" class="visually-hidden" role="status" aria-live="polite"></span>
       <div class="table-wrap" tabindex="0" role="region" aria-label="Contracts table, horizontal scrolling possible">
         <table class="main-table">
           <caption class="visually-hidden">Contracts and documented records — select a subject to open its details, evidence and sources.</caption>
-          <thead><tr><th scope="col" data-sort-key="date"><button type="button" class="sort-header">Date</button></th><th scope="col" data-sort-key="buyer"><button type="button" class="sort-header">Buyer</button></th><th scope="col" data-sort-key="supplier"><button type="button" class="sort-header">Supplier</button></th><th scope="col">Subject</th><th scope="col" data-sort-key="sector" title="Purchase sector, not the supplier’s NAF activity"><button type="button" class="sort-header">CPV sector</button></th><th scope="col" class="col-procedure" title="Award procedure as published; below it, competitive or direct where the data says">Procedure</th><th scope="col" class="numeric" data-sort-key="amount" title="Declared financial stake; not necessarily an expense. Some checks use it (amount thresholds, a buyer’s yearly share)"><button type="button" class="sort-header">Declared amount</button></th><th scope="col" class="numeric" data-sort-key="offers"><button type="button" class="sort-header">Offers</button></th><th scope="col" class="col-extra numeric"></th><th scope="col" class="col-signals" data-sort-key="indicators"><button type="button" class="sort-header">Signals</button></th><th scope="col" class="numeric col-index" data-sort-key="score" title="How much more frequent records with these signals are among proven cases than among the same buyers’ other contracts; not a probability"><button type="button" class="sort-header">Index</button></th></tr></thead>
+          <thead><tr><th scope="col" data-sort-key="date"><button type="button" class="sort-header">Date</button></th><th scope="col" data-sort-key="buyer"><button type="button" class="sort-header">Buyer</button></th><th scope="col" data-sort-key="supplier"><button type="button" class="sort-header">Supplier</button></th><th scope="col">Subject</th><th scope="col" class="col-sector" data-sort-key="sector" title="Purchase sector, not the supplier’s NAF activity"><button type="button" class="sort-header">CPV sector</button></th><th scope="col" class="col-procedure" title="Award procedure as published; below it, competitive or direct where the data says">Procedure</th><th scope="col" class="numeric" data-sort-key="amount" title="Declared financial stake; not necessarily an expense. Some checks use it (amount thresholds, a buyer’s yearly share)"><button type="button" class="sort-header">Declared amount</button></th><th scope="col" class="numeric col-offers" data-sort-key="offers"><button type="button" class="sort-header">Offers</button></th><th scope="col" class="col-extra numeric"></th><th scope="col" class="col-signals" data-sort-key="indicators"><button type="button" class="sort-header">Signals</button></th><th scope="col" class="numeric col-index" data-sort-key="score" title="How much more frequent records with these signals are among proven cases than among the same buyers’ other contracts; not a probability"><button type="button" class="sort-header">Index</button></th></tr></thead>
           <tbody id="contracts"></tbody>
         </table>
       </div>
@@ -189,7 +182,7 @@
     </section>
   </div>
 
-  <footer>No account or analytics. Imported files stay in your browser.</footer>
+  <footer><p>Explore published public procurement records from several countries and see risk signals, all in your browser.</p><p>A signal is a reason to look, not proof.</p><p>No account or analytics. Imported files stay in your browser.</p><p><a href="privacy.html">Privacy and legal notice</a></p></footer>
   <noscript><p>Enable JavaScript to load and explore the data.</p></noscript>
 </main>
 

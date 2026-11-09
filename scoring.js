@@ -53,6 +53,7 @@ function getSupplierIdentity(contract) {
   const ids = [...new Set((contract.supplierIds || []).map(s => {
     if (s.identifierType === 'SIRET' && /^\d{14}$/.test(s.id)) return s.id.slice(0, 9);
     if (s.identifierType === 'SIREN' && /^\d{9}$/.test(s.id)) return s.id;
+    if (s.identifierType === 'pseudonym' && /^individual #[0-9a-f]{12}$/.test(s.id)) return s.id;
     return null;
   }).filter(Boolean))];
   return (contract.supplierIds || []).length === 1 && ids.length === 1 ? ids[0] : null;
@@ -106,19 +107,19 @@ const INDICATOR_KINDS = {
 };
 // Short names for the table chips; the full name is in the tooltip, the filter and the record panel.
 const KIND_SHORT = {
-  'single-offer': 'Single offer', 'direct-award': 'No competition', 'repeated-single-offer': 'Repeated single offer',
-  'repeated-direct': 'Repeated no competition', 'low-competition-rate': 'Low competition rate', 'concentration': 'Concentration',
-  'disqualified-better-bid': 'Better bid disqualified', 'short-bidding-period': 'Short bidding period',
-  'late-notice-change': 'Late notice change', 'long-duration': 'Long duration', 'amount-increase': 'Amount increase',
-  'contract-amendments': 'Contract amendments',
+  'single-offer': 'Single offer', 'direct-award': 'No competition', 'repeated-single-offer': 'Repeat single offer',
+  'repeated-direct': 'Repeat direct', 'low-competition-rate': 'Low competition', 'concentration': 'Concentration',
+  'disqualified-better-bid': 'Bid disqualified', 'short-bidding-period': 'Short period',
+  'late-notice-change': 'Late change', 'long-duration': 'Long duration', 'amount-increase': 'Price increase',
+  'contract-amendments': 'Amendments',
   'term-extension': 'Term extended', 'late-publication': 'Late publication',
-  'cap': 'Near applicable cap', 'execution': 'Payment / execution',
-  'legalGround': 'Legal ground mismatch', 'unitPrice': 'Unit-price increase', 'exclusivity': 'Exclusivity context',
-  'buyer-share': 'Buyer share', 'award-near-reserve': 'Near reserve price', 'floor-gap': 'Above award floor', 'restricted-competition': 'Restricted competition',
-  'supplier-dependence': 'Supplier dependence', 'few-bidders': 'Two bids', 'one-valid-bid': 'One valid bid', 'floor-hit': 'At award floor', 'bid-pattern': 'Bid pattern',
+  'cap': 'Near cap', 'execution': 'Execution',
+  'legalGround': 'Legal ground', 'unitPrice': 'Unit price', 'exclusivity': 'Exclusivity',
+  'buyer-share': 'Buyer share', 'award-near-reserve': 'Near reserve', 'floor-gap': 'Above floor', 'restricted-competition': 'Restricted',
+  'supplier-dependence': 'Dependence', 'few-bidders': 'Two bids', 'one-valid-bid': 'One valid bid', 'floor-hit': 'At floor', 'bid-pattern': 'Bid pattern',
 };
 // Table chips for clear checks that subtract points (evidence against).
-const KIND_AGAINST_SHORT = { 'kr-floor-gap': 'Near award floor' };
+const KIND_AGAINST_SHORT = { 'kr-floor-gap': 'Near floor' };
 // Where a kind matches a red flag in a framework auditors already use (docs/indicators.md).
 const KIND_REFERENCES = {
   'contract-amendments': 'StateWatch/Prozorro risk indicator ARI 1-1 (three or more contract amendments)',
@@ -157,10 +158,10 @@ function indicatorKind(id) {
 }
 
 // Natural persons' national ID numbers are pseudonymised at import (tools/personal_ids.py).
-function isMaskedId(id) { return typeof id === 'string' && id.startsWith('masked-'); }
+function isMaskedId(id) { return typeof id === 'string' && (id.startsWith('masked-') || id.startsWith('individual #')); }
 function displayIdentifier(s) {
   const type = s.identifierType || 'Identifier';
-  return isMaskedId(s.id) ? `${type} (a person's ID number, not republished here; pseudonym ${s.id.slice(7, 15)})` : `${type} ${s.id}`;
+  return isMaskedId(s.id) ? `${s.id.startsWith('individual #') ? 'Individual' : type} (identifier not republished here; ${s.id.startsWith('individual #') ? s.id : `pseudonym ${s.id.slice(7, 15)}`})` : `${type} ${s.id}`;
 }
 
 function indicatorSeverity(weight) {
@@ -517,18 +518,10 @@ function indexTotals(assessment, weightOf) {
   const score = assessment.evaluated ? Math.round(Math.max(0, total) * 10) / 10 : null;
   return { families, score };
 }
-// South Korea has two indices (bid rigging, corruption; checks-national.js KR_INDICES): each check carries its points
-// per index (weights), each index is computed alone, and the record's score is the higher one (mainIndex).
 function getScoreBreakdown(contract) {
   const assessment = getAssessment(contract);
-  if (!assessment.indices) {
-    const { families, score } = indexTotals(assessment, r => r.weight);
-    return { ...families, families, score, multiplier: indexMultiplier(score), assessment };
-  }
-  const indices = Object.fromEntries(assessment.indices.map(i => [i, indexTotals(assessment, r => r.weights ? r.weights[i] : r.weight)]));
-  const mainIndex = assessment.indices.reduce((a, i) => (indices[i].score ?? -1) > (indices[a].score ?? -1) ? i : a);
-  const { families, score } = indices[mainIndex];
-  return { ...families, families, score, multiplier: indexMultiplier(score), assessment, indices, mainIndex };
+  const { families, score } = indexTotals(assessment, r => r.weight);
+  return { ...families, families, score, multiplier: indexMultiplier(score), assessment };
 }
 function getVigilanceScore(contract) { return getScoreBreakdown(contract).score; }
 

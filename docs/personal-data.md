@@ -44,6 +44,16 @@ Owner decision, for every country (Portugal BASE, South Korea and later sources)
 
 Still dropped at load: personal identifiers (individual tax numbers), representatives' and officials' names, phones, e-mails and street addresses, and unsuccessful bidders' names. This is not anonymisation: the names are public at the source and in the data files.
 
+"Dropped at load" applies only to what is published (the site, the repository, its data files). Private raw downloads and private tables in the cache keep every field as the source returns it, including officials', CEOs', objectors' and other people's names, telephone numbers, e-mails and addresses (owner 2026-11-04). These fields link records for finding connections and support private investigations. If they ever reach the site, it is at most as keyed-HMAC IDs whose secret stays outside the repository. Korea example: `opnstd.sqlite` (it feeds the site) leaves them out, and the private `opnstd-links.sqlite` (tools/korea-opnstd-links.py) holds them.
+
+## Individuals pseudonymised in every country, raw snapshots private (owner 2026-11-09)
+
+Replaces the 2026-10-16 rule: a supplier identified as an individual appears under a keyed pseudonym, `individual #<12 hex>` (HMAC-SHA256 of country and identifier; key `~/.config/contract-signals/pseudonym.key`, outside the repository). `tools/pseudonymise-eu-individuals.py` (`find`, `details`, `apply`) detects them and rewrites `data/` and `research/labels/`; Korea is done by `tools/build-korea-site.py`. Detection: France Sirene category 1000, Czechia ARES forms, Portugal NIF ranges, Colombia/Paraguay/Chile/Ukraine source identifier types, Korea `individual` kind. Limits: UK and Romania have no such identifier, French rows without SIREN only by wording, so a sole trader can still slip through (fix on objection).
+
+The real names, identifiers and addresses are in `data/private/individuals.json` and `data/private/korea-individuals.json` (git-ignored, never deployed). `script.js` reads them on localhost only.
+
+Raw source snapshots (`data/*/raw/`, `data/*-raw.json*`) are no longer in Git or on the site: they held contact details and names of people. They stay locally (git-ignored) for rebuilds and tests; tests that need them skip without them. Older commits still contain them. The site's privacy and legal notice is `privacy.html`.
+
 ## Wider inventory by source (schema and field-presence risk)
 
 | Source and checked-in files | Personal-data indicators and scope | Evidence status / limitation |

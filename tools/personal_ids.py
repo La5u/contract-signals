@@ -19,7 +19,7 @@ PARAGUAY_COMPANY_RUC_FROM = 80_000_000   # Paraguayan company RUCs start at 80 m
 
 def is_personal(identifier_type, identifier):
     value = str(identifier or "")
-    if value.startswith("masked-"):
+    if value.startswith(("masked-", "individual #")):
         return False
     if identifier_type in PERSON_DOCUMENT_TYPES:
         return True

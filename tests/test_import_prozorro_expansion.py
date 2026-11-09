@@ -13,6 +13,7 @@ ua = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(ua)
 
 
+@unittest.skipUnless(any((ROOT / 'data/prozorro/raw/records').glob('*.json.gz')), 'raw snapshot is private (not in git)')
 class ExpansionTests(unittest.TestCase):
     def fixture(self, directory):
         pilot = json.loads((ROOT / 'data/prozorro.json').read_bytes())[0]

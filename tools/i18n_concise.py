@@ -27,6 +27,7 @@ EXACT = [
     ("Dataset file", "Archivo de datos", "Fichier de données"),
     ("JSON, CSV or OCDS. Files stay in your browser.", "JSON, CSV u OCDS. Los archivos permanecen en su navegador.", "JSON, CSV ou OCDS. Les fichiers restent dans votre navigateur."),
     ("Format guide", "Guía de formato", "Guide du format"),
+    ("Privacy and legal notice", "Privacidad y aviso legal", "Confidentialité et mentions légales"),
     ("Review notes", "Notas de revisión", "Notes de suivi"),
     ("Manage notes", "Gestionar notas", "Gérer les notes"),
     ("Notes stay in this browser. Shared links do not include them. Exported notes are plain text.", "Las notas permanecen en este navegador. Los enlaces compartidos no las incluyen. Las notas exportadas son texto sin cifrar.", "Les notes restent dans ce navigateur. Les liens partagés ne les incluent pas. Les notes exportées sont en texte non chiffré."),

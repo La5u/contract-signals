@@ -69,11 +69,10 @@ async function browserTests() {
     const base = `http://127.0.0.1:${server.address().port}`;
     await page.goto(base+'/#dataset=korea');
     await page.waitForFunction(()=>document.querySelector('#status').textContent.startsWith('3 / 3 results'));
-    assert.equal(await page.locator('#korea-all').textContent(),'Most flagged · nationwide');
     assert.match(await page.locator('#dataset-note').textContent(),/3 highest-scored of all 8 contracts/);
     assert.equal(await page.locator('#korea-scan').count(),0);
-    assert.ok(await page.locator('#korea-type button').count() >= 2,'type row'); // no places in the fixture: province row hidden
-    assert.equal(await page.locator('#korea-region').isHidden(),true);
+    assert.ok(await page.locator('#korea-type option').count() >= 2,'type dropdown');
+    assert.equal(await page.locator('#korea-city').isHidden(),true); // shown once a province is chosen
     const renderer = await page.evaluate(()=>{
       const gl = document.createElement('canvas').getContext('webgl');
       const ext = gl?.getExtension('WEBGL_debug_renderer_info');
@@ -95,13 +94,16 @@ async function browserTests() {
     await page.reload();
     await page.waitForFunction(()=>document.querySelector('#status').textContent === 'Choose a contracting institution.');
     assert.equal(await page.locator('#korea-picker').isVisible(),true);
+    assert.equal(await page.locator('#korea-results').isHidden(),true); // the list appears only while typing
+    await page.fill('#korea-search','Alpha');
     await page.locator('#korea-results button').first().click();
     await page.waitForFunction(()=>document.querySelector('#status').textContent.startsWith('4 / 4 results'));
     // A delayed subset response cannot replace a buyer chosen while it loads.
     missing = false; delay = true;
     const request = page.waitForRequest('**/top.json');
-    await page.locator('#korea-all').click();
+    await page.fill('#korea-search',''); // empty search = most flagged nationwide
     await request;
+    await page.fill('#korea-search','Alpha');
     await page.locator('#korea-results button').first().click();
     await page.waitForFunction(()=>document.querySelector('#status').textContent.startsWith('4 / 4 results'));
     release();

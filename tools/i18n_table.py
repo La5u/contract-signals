@@ -59,6 +59,8 @@ EXACT = [
     ("Ukraine · Health / Vinnytsia / Dnipro — contracts · Prozorro", "Ucrania · Salud / Vínnytsia / Dnipró — contratos · Prozorro", "Ukraine · Santé / Vinnytsia / Dnipro — contrats · Prozorro"),
     ("Search", "Buscar", "Rechercher"),
     ("Buyer, supplier, subject, ID…", "Comprador, proveedor, objeto, identificador…", "Acheteur, fournisseur, objet, identifiant…"),
+    ("Search buyer, supplier, subject, ID…", "Buscar comprador, proveedor, objeto, identificador…", "Rechercher acheteur, fournisseur, objet, identifiant…"),
+    ("Institution name or code", "Nombre o código de la entidad", "Nom ou code de l’entité"),
     ("Sort", "Ordenar", "Trier"),
     ("Index · descending", "Índice · descendente", "Indice · décroissant"),
     ("Index · ascending", "Índice · ascendente", "Indice · croissant"),
@@ -822,7 +824,7 @@ _NEW_EXACT = [
     ("All contracts of this buyer in the dataset", "Todos los contratos de este comprador en el conjunto de datos", "Tous les marchés de cet acheteur dans le jeu de données"),
     ("All contracts of this supplier in the dataset", "Todos los contratos de este proveedor en el conjunto de datos", "Tous les marchés de ce titulaire dans le jeu de données"),
     ("Amount", "Importe", "Montant"), ("Procedure", "Procedimiento", "Procédure"), ("Duration", "Duración", "Durée"), ("Period start", "Inicio del período", "Début de période"),
-    ("Published", "Publicado", "Publié"), ("months", "meses", "mois"),
+    ("Published", "Publicado", "Publié"), ("months", "meses", "mois"), ("years", "años", "ans"),
     ("competitive", "competitivo", "concurrentielle"), ("without competition", "sin competencia", "sans mise en concurrence"), ("not classified", "sin clasificar", "non classée"),
     ("active", "activa", "active"), ("ceased", "cesada", "cessée"), ("status unknown", "estado desconocido", "état inconnu"), ("in the register on", "en el registro el", "au registre le"),
     ("Note (stays in this browser)", "Nota (permanece en este navegador)", "Note (reste dans ce navigateur)"),
@@ -1142,8 +1144,8 @@ PATTERNS += [
 EXACT += [
     ("South Korea", "Corea del Sur", "Corée du Sud"),
     ("every contracting institution (choose one) — contracts · KONEPS", "todas las entidades contratantes (elija una) — contratos · KONEPS", "toutes les entités contractantes (en choisir une) — contrats · KONEPS"),
+    ("Name or code, e.g. 서울특별시 or 1230000; empty = most flagged", "Nombre o código, p. ej. 서울특별시 o 1230000; vacío = los más señalados", "Nom ou code, p. ex. 서울특별시 ou 1230000 ; vide = les plus signalés"),
     ("Contracting institution", "Entidad contratante", "Entité contractante"),
-    ("Name or code, e.g. 서울특별시 or 1230000", "Nombre o código, p. ej. 서울특별시 o 1230000", "Nom ou code, p. ex. 서울특별시 ou 1230000"),
     ("Matching contracting institutions", "Entidades contratantes coincidentes", "Entités contractantes correspondantes"),
     ("No contracting institution matches.", "Ninguna entidad contratante coincide.", "Aucune entité contractante ne correspond."),
     ("Korean checks were not computed for this record: it is shown for browsing and is not assessed.",
@@ -1183,6 +1185,25 @@ EXACT += [
      "mesuré sur les cas étiquetés de la Corée du Sud ; les points utilisent une borne prudente (le rapport réduit, pris au 25e centile des rééchantillonnages par acheteur), donc plus bas que ne le suggère le rapport cité"),
     ("Restricted competition", "Competencia restringida", "Mise en concurrence restreinte"),
     ("Supplier dependence", "Dependencia del proveedor", "Dépendance au fournisseur"),
+    ("Repeat single offer", "Oferta única repetida", "Offre unique répétée"),
+    ("Repeat direct", "Directa repetida", "Gré à gré répété"),
+    ("Low competition", "Poca competencia", "Peu de concurrence"),
+    ("Bid disqualified", "Oferta descalificada", "Offre écartée"),
+    ("Short period", "Plazo corto", "Délai court"),
+    ("Late change", "Cambio tardío", "Modification tardive"),
+    ("Price increase", "Aumento de precio", "Hausse de prix"),
+    ("Amendments", "Modificaciones", "Avenants"),
+    ("Near cap", "Cerca del tope", "Près du plafond"),
+    ("Execution", "Ejecución", "Exécution"),
+    ("Legal ground", "Base legal", "Base légale"),
+    ("Unit price", "Precio unitario", "Prix unitaire"),
+    ("Exclusivity", "Exclusividad", "Exclusivité"),
+    ("Near reserve", "Cerca de la reserva", "Près de la réserve"),
+    ("Above floor", "Sobre el umbral", "Au-dessus du seuil"),
+    ("Restricted", "Restringida", "Restreinte"),
+    ("Dependence", "Dependencia", "Dépendance"),
+    ("At floor", "En el umbral", "Au seuil"),
+    ("Near floor", "Cerca del umbral", "Près du seuil"),
     ("The tender’s bid opening (개찰결과) was not found: not assessable.", "No se encontró la apertura de ofertas (개찰결과) de la licitación: no evaluable.", "L’ouverture des offres (개찰결과) de l’appel d’offres est introuvable : non évaluable."),
     ("Large gap between the two lowest bids", "Gran diferencia entre las dos ofertas más bajas", "Grand écart entre les deux offres les plus basses"),
     ("The gap between the two lowest valid bids is within the usual range.", "La diferencia entre las dos ofertas válidas más bajas está dentro de lo habitual.", "L’écart entre les deux offres valides les plus basses est dans la norme."),
@@ -1198,9 +1219,9 @@ EXACT += [
     ("South Korea · KONEPS · amounts in KRW; full record on KONEPS.", "Corea del Sur · KONEPS · importes en KRW; registro completo en KONEPS.", "Corée du Sud · KONEPS · montants en KRW ; fiche complète sur KONEPS."),
     ("Most flagged · nationwide", "Más señalados · todo el país", "Les plus signalés · tout le pays"),
     ("Institution type", "Tipo de entidad", "Type d’entité"),
-    ("Kind", "Clase", "Catégorie"),
     ("Province", "Provincia", "Province"),
     ("City or district", "Ciudad o distrito", "Ville ou district"),
+    ("All types", "Todos los tipos", "Tous les types"),
     ("Choose a contracting institution.", "Elija una entidad contratante.", "Choisissez une entité contractante."),
     ("Ukraine · Prozorro · random sample of 3,500 completed open tenders (aboveThreshold) created June–August 2026, all buyers: 3,663 signed contracts. Per-tender checks only: repetition, concentration and buyer share need every tender of a buyer and are not assessed; amendments were not retrieved. Amounts in UAH, EUR or USD.",
      "Ucrania · Prozorro · muestra aleatoria de 3.500 licitaciones abiertas concluidas (aboveThreshold) creadas de junio a agosto de 2026, todos los compradores: 3.663 contratos firmados. Solo verificaciones por licitación: la repetición, la concentración y la cuota del comprador necesitan todas las licitaciones de un comprador y no se evalúan; las modificaciones no se obtuvieron. Importes en UAH, EUR o USD.",
@@ -1271,18 +1292,12 @@ PATTERNS += [
     ("The {a} highest-scored of all {b} contracts; choose an institution to see all of its contracts.", "Los {a} contratos con mayor puntuación de un total de {b}; elija una entidad para ver todos sus contratos.", "Les {a} marchés les mieux notés sur {b} ; choisissez une entité pour voir tous ses marchés."),
 ]
 
-# South Korea, two indices and controlled points (2026-11-02). A signal's reason is built by checks-national.js
-# krSignalReason: the fact, one evidence sentence per index with its ratio, the caveat, then "Points: …". Ratios and
-# points are slots, so a recalibration keeps the translation (numbers stay as published).
-_KR_IDX = {"rigging": ("bid rigging", "manipulación de ofertas", "entente sur les offres"), "corruption": ("corruption", "corrupción", "corruption")}
-_KR_EVID = {
-    "rigging": ("Among tenders the Fair Trade Commission found rigged it was {r} times as frequent as among the same contracting offices’ other contracts, {h}.",
-                "Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas, era {r} veces más frecuente que entre los demás contratos de las mismas entidades contratantes, {h}.",
-                "Parmi les appels d’offres jugés truqués par la Commission de la concurrence (KFTC), ce cas était {r} fois plus fréquent que parmi les autres contrats des mêmes entités contractantes, {h}."),
-    "corruption": ("Among contracts tied to corruption convictions it was {r} times as frequent as among the same offices’ other contracts, {h}.",
-                   "Entre los contratos vinculados a condenas por corrupción, era {r} veces más frecuente que entre los demás contratos de las mismas entidades, {h}.",
-                   "Parmi les contrats liés à des condamnations pour corruption, ce cas était {r} fois plus fréquent que parmi les autres contrats des mêmes entités, {h}."),
-}
+# South Korea, one index and controlled points (2026-11-03). A signal's reason is built by checks-national.js
+# krSignalReason: the fact, the evidence sentence with its ratio, then the caveat. The ratio is a slot, so a
+# recalibration keeps the translation (numbers stay as published).
+_KR_EVID = ("Among tenders the Fair Trade Commission found rigged and contracts tied to corruption convictions it was {r} times as frequent as among the same contracting offices’ other contracts, {h}.",
+            "Entre las licitaciones que la Comisión de Comercio Justo declaró amañadas y los contratos vinculados a condenas por corrupción, era {r} veces más frecuente que entre los demás contratos de las mismas entidades contratantes, {h}.",
+            "Parmi les appels d’offres jugés truqués par la Commission de la concurrence (KFTC) et les contrats liés à des condamnations pour corruption, ce cas était {r} fois plus fréquent que parmi les autres contrats des mêmes entités contractantes, {h}.")
 _KR_HOW = {
     "at equal contract value": ("a igual importe del contrato", "à montant égal"),
     "at equal contract value, business type and period": ("a igual importe del contrato, tipo de actividad y periodo", "à montant, type d’activité et période égaux"),
@@ -1290,46 +1305,41 @@ _KR_HOW = {
         ("a igual importe del contrato, tipo de actividad, periodo y resultado del recuento de ofertas (exactamente dos ofertas, gran diferencia entre las dos más bajas)",
          "à montant, type d’activité, période et résultat du décompte des offres (exactement deux offres, grand écart entre les deux plus basses) égaux"),
 }
-# code: (indices with points, ((index, how), ...), (signal en, es, fr), (caveat en, es, fr))
+# (how it was controlled, (signal en, es, fr), (caveat en, es, fr))
 _KR_SIGNALS = [
-    (("rigging",), (("rigging", "at equal contract value, business type and period"),),
+    ("at equal contract value, business type and period",
      ("Exactly two bids were opened in this tender (개찰결과).", "En esta licitación se abrieron exactamente dos ofertas (개찰결과).", "Exactement deux offres ont été ouvertes dans cet appel d’offres (개찰결과)."),
      ("Specialised or small markets often draw few bidders lawfully.", "Los mercados especializados o pequeños suelen atraer pocos licitadores de forma lícita.", "Les marchés spécialisés ou petits attirent souvent peu de soumissionnaires de façon licite.")),
-    (("rigging",), (("rigging", "at equal contract value, business type and period"),),
+    ("at equal contract value, business type and period",
      ("Two or more bids were opened but only one was valid (the others rejected or invalid), as when cover bids are entered to be thrown out.",
       "Se abrieron dos o más ofertas pero solo una era válida (las demás rechazadas o no válidas), como cuando se presentan ofertas de cobertura para que se descarten.",
       "Deux offres ou plus ont été ouvertes mais une seule était valide (les autres rejetées ou non valides), comme lorsque des offres de couverture sont déposées pour être écartées."),
      ("Bids are also rejected for honest mistakes.", "Las ofertas también se rechazan por errores de buena fe.", "Des offres sont aussi rejetées pour des erreurs de bonne foi.")),
-    (("rigging",), (("rigging", "at equal contract value, business type, period and bid-count result (exactly two bids, large gap between the two lowest)"),),
+    ("at equal contract value, business type, period and bid-count result (exactly two bids, large gap between the two lowest)",
      ("The winning bid is at least 1.01 percentage points (of the reserve price) above the tender’s lower award limit (낙찰하한율), where Korean bids usually cluster.",
       "La oferta ganadora está al menos 1,01 puntos porcentuales (del precio de reserva) por encima del límite inferior de adjudicación de la licitación (낙찰하한율), donde suelen agruparse las ofertas coreanas.",
       "L’offre gagnante dépasse d’au moins 1,01 point de pourcentage (du prix de réserve) le seuil inférieur d’attribution de l’appel d’offres (낙찰하한율), où se regroupent d’ordinaire les offres coréennes."),
      ("A bidder may also simply price higher.", "Un licitador también puede simplemente ofertar más alto.", "Un soumissionnaire peut aussi simplement proposer un prix plus élevé.")),
-    (("rigging",), (("rigging", "at equal contract value, business type, period and bid-count result (exactly two bids, large gap between the two lowest)"),),
+    ("at equal contract value, business type, period and bid-count result (exactly two bids, large gap between the two lowest)",
      ("The contract amount is between 92.2 % and 100 % of the reserve price (예정가격).", "El importe del contrato está entre el 92,2 % y el 100 % del precio de reserva (예정가격).",
       "Le montant du contrat est compris entre 92,2 % et 100 % du prix de réserve (예정가격)."),
      ("Lawful awards also come close to the reserve price.", "Las adjudicaciones lícitas también se acercan al precio de reserva.", "Les attributions licites sont aussi proches du prix de réserve.")),
-    (("corruption",), (("corruption", "at equal contract value, business type and period"),),
-     ("The winning bid is within 0.01 percentage points of the tender’s lower award limit (낙찰하한율), as when the winner knows the reserve price in advance.",
-      "La oferta ganadora está a menos de 0,01 puntos porcentuales del límite inferior de adjudicación de la licitación (낙찰하한율), como cuando el adjudicatario conoce de antemano el precio de reserva.",
-      "L’offre gagnante est à moins de 0,01 point de pourcentage du seuil inférieur d’attribution de l’appel d’offres (낙찰하한율), comme lorsque l’attributaire connaît d’avance le prix de réserve."),
-     ("Many bidders aim at the floor, and some land on it by chance.", "Muchos licitadores apuntan al límite y algunos lo alcanzan por azar.", "Beaucoup de soumissionnaires visent le seuil, et certains l’atteignent par hasard.")),
-    (("rigging",), (("rigging", "at equal contract value, business type and period"),),
+    ("at equal contract value, business type and period",
      ("The gap between the two lowest valid bids is large against the spread of the other valid bids (above the 90th percentile for this business type and year), the pattern cover bids placed above an agreed winner leave.",
       "La diferencia entre las dos ofertas válidas más bajas es grande respecto a la dispersión de las demás ofertas válidas (por encima del percentil 90 para este tipo de actividad y año), el patrón que dejan las ofertas de cobertura situadas por encima de un ganador pactado.",
       "L’écart entre les deux offres valides les plus basses est grand par rapport à la dispersion des autres offres valides (au-delà du 90e centile pour ce type d’activité et cette année), le profil que laissent des offres de couverture placées au-dessus d’un gagnant convenu."),
      ("It also arises by chance.", "También ocurre por azar.", "Il arrive aussi par hasard.")),
-    (("rigging", "corruption"), (("rigging", "at equal contract value"), ("corruption", "at equal contract value")),
+    ("at equal contract value",
      ("This supplier’s contracts make up at least 25 % of the contracting office’s contract amount for the signing year.",
       "Los contratos de este proveedor representan al menos el 25 % del importe de contratos de la entidad contratante en el año de firma.",
       "Les contrats de ce fournisseur représentent au moins 25 % du montant des contrats de l’entité contractante pour l’année de signature."),
      ("A sole specialist supplier is often lawful.", "Tener un único proveedor especializado suele ser lícito.", "Le recours à un fournisseur spécialisé unique est souvent licite.")),
-    (("rigging",), (("rigging", "at equal contract value"),),
+    ("at equal contract value",
      ("This contract alone is at least 5 % of the contracting office’s contract amount for its signing year.",
       "Este contrato por sí solo representa al menos el 5 % del importe de contratos de la entidad contratante en su año de firma.",
       "Ce contrat représente à lui seul au moins 5 % du montant des contrats de l’entité contractante pour son année de signature."),
      ("Large purchases are often lawful.", "Las compras grandes suelen ser lícitas.", "Les gros achats sont souvent licites.")),
-    (("rigging",), (("rigging", "at equal contract value"),),
+    ("at equal contract value",
      ("This supplier won at least 60 % of the contracting office’s contracts of this business type in the signing year (10 or more contracts).",
       "Este proveedor obtuvo al menos el 60 % de los contratos de la entidad contratante de este tipo de actividad en el año de firma (10 contratos o más).",
       "Ce fournisseur a remporté au moins 60 % des contrats de l’entité contractante de ce type d’activité pendant l’année de signature (10 contrats ou plus)."),
@@ -1337,24 +1347,12 @@ _KR_SIGNALS = [
 ]
 
 
-def _kr_reason(indices, evidence, signal, caveat, lang):
-    slots = iter("abcd")
-    ev = []
-    for idx, how in evidence:
-        h = how if lang == 0 else _KR_HOW[how][lang - 1]
-        ev.append(_KR_EVID[idx][lang].format(r="{" + next(slots) + "}", h=h))
-    pts = ", ".join(f"{_KR_IDX[i][lang]} {{{next(slots)}}}" for i in indices)
-    head = ("Points: ", "Puntos: ", "Points : ")[lang]
-    return " ".join(x for x in [signal[lang], *ev, caveat[lang], f"{head}{pts}."] if x)
+def _kr_reason(how, signal, caveat, lang):
+    h = how if lang == 0 else _KR_HOW[how][lang - 1]
+    return " ".join(x for x in [signal[lang], _KR_EVID[lang].format(r="{a}", h=h), caveat[lang]] if x)
 
 
 PATTERNS += [tuple(_kr_reason(*k, lang) for lang in range(3)) for k in _KR_SIGNALS]
-PATTERNS += [
-    ("· bid rigging {a} pts, {b}", "· manipulación de ofertas {a} pts, {b}", "· entente sur les offres {a} pts, {b}"),
-    ("· corruption {a} pts, {b}", "· corrupción {a} pts, {b}", "· corruption {a} pts, {b}"),
-    ("· bid rigging {a} pts, corruption {b} pts, {c}", "· manipulación de ofertas {a} pts, corrupción {b} pts, {c}", "· entente sur les offres {a} pts, corruption {b} pts, {c}"),
-    ("rigging {a} · corruption {b}", "manipulación {a} · corrupción {b}", "entente {a} · corruption {b}"),
-]
 EXACT += [
     ("Exactly two bids", "Exactamente dos ofertas", "Exactement deux offres"),
     ("One bid, or three or more bids, were opened.", "Se abrió una oferta, o tres o más.", "Une offre, ou trois offres ou plus, ont été ouvertes."),
@@ -1365,14 +1363,69 @@ EXACT += [
      "L’ouverture des offres (개찰결과) est introuvable ou n’indique pas quelles offres étaient valides : non évaluable."),
     ("Winning bid exactly at the lower award limit", "Oferta ganadora justo en el límite inferior de adjudicación", "Offre gagnante exactement au seuil inférieur d’attribution"),
     ("The winning bid is not at the lower award limit.", "La oferta ganadora no está en el límite inferior de adjudicación.", "L’offre gagnante n’est pas au seuil inférieur d’attribution."),
-    ("The winning bid is within 1.01 percentage points of the tender’s lower award limit (낙찰하한율), where competitive bids cluster. Rigged tenders were rarely this close to the floor, so this lowers the bid-rigging index by 11 points.",
-     "La oferta ganadora está a menos de 1,01 puntos porcentuales del límite inferior de adjudicación de la licitación (낙찰하한율), donde se agrupan las ofertas competitivas. Las licitaciones amañadas rara vez estaban tan cerca del límite, por lo que esto resta 11 puntos al índice de manipulación de ofertas.",
-     "L’offre gagnante est à moins de 1,01 point de pourcentage du seuil inférieur d’attribution de l’appel d’offres (낙찰하한율), où se regroupent les offres concurrentielles. Les appels d’offres truqués étaient rarement aussi proches du seuil : l’indice d’entente sur les offres perd donc 11 points."),
+    ("The winning bid is within 1.01 percentage points of the tender’s lower award limit (낙찰하한율), where competitive bids cluster. Rigged tenders were rarely this close to the floor, so this lowers the index by 11 points.",
+     "La oferta ganadora está a menos de 1,01 puntos porcentuales del límite inferior de adjudicación de la licitación (낙찰하한율), donde se agrupan las ofertas competitivas. Las licitaciones amañadas rara vez estaban tan cerca del límite, por lo que esto resta 11 puntos al índice.",
+     "L’offre gagnante est à moins de 1,01 point de pourcentage du seuil inférieur d’attribution de l’appel d’offres (낙찰하한율), où se regroupent les offres concurrentielles. Les appels d’offres truqués étaient rarement aussi proches du seuil : l’indice perd donc 11 points."),
     ("Few bids (exactly two)", "Pocas ofertas (exactamente dos)", "Peu d’offres (exactement deux)"),
     ("Two bids", "Dos ofertas", "Deux offres"), ("One valid bid", "Una oferta válida", "Une offre valide"),
     ("At award floor", "En el umbral de adjudicación", "Au seuil d’attribution"),
-    ("Bid rigging index", "Índice de manipulación de ofertas", "Indice d’entente sur les offres"),
-    ("Corruption index", "Índice de corrupción", "Indice de corruption"),
-    ("×1.0, no points.", "×1.0, sin puntos.", "×1.0, sans points."),
-    ("The higher index sets the record’s index and order.", "El índice más alto fija el índice y el orden del registro.", "L’indice le plus élevé fixe l’indice et le rang de la fiche."),
+]
+# ---- Dataset sources: open APIs used (Korea, 2026-11-04) ----
+EXACT += [
+    ("Open APIs shown on this site", "API abiertas mostradas en este sitio", "API ouvertes affichées sur ce site"),
+    ("Open APIs used in the research behind the indicators", "API abiertas usadas en la investigación detrás de los indicadores", "API ouvertes utilisées dans la recherche derrière les indicateurs"),
+    ("Contracts, change orders and every bidder's offer: the table, offers, bid ratios and award floors",
+     "Contratos, modificaciones y la oferta de cada licitador: la tabla, las ofertas, los porcentajes de oferta y los umbrales de adjudicación",
+     "Marchés, avenants et l’offre de chaque soumissionnaire : le tableau, les offres, les taux d’offre et les seuils d’attribution"),
+    ("Contracting institutions: institution type, province and city filters", "Entidades contratantes: filtros de tipo de entidad, provincia y ciudad", "Institutions contractantes : filtres par type d’institution, province et ville"),
+    ("Bid openings: reserve-price picks, submission times and evaluation scores of each bidder", "Aperturas de ofertas: elecciones de precios de reserva, horas de presentación y puntuaciones de cada licitador", "Ouvertures des plis : choix des prix de réserve, heures de dépôt et notes de chaque soumissionnaire"),
+    ("Bid notices and their change history: deadlines, eligibility and estimated prices", "Anuncios de licitación y su historial de cambios: plazos, requisitos y precios estimados", "Avis d’appel d’offres et historique de leurs modifications : délais, conditions de participation et prix estimés"),
+    ("Contract terms, completion dates, change history and consortium members", "Plazos contractuales, fechas de finalización, historial de cambios y miembros de consorcios", "Durées des marchés, dates d’achèvement, historique des modifications et membres des groupements"),
+    ("Advance specifications and the objections filed against them", "Especificaciones previas y las objeciones presentadas contra ellas", "Spécifications préalables et objections déposées à leur encontre"),
+    ("Procurement plans published before the tender", "Planes de compras publicados antes de la licitación", "Plans d’achat publiés avant l’appel d’offres"),
+    ("Surveyed unit prices of works materials, for price benchmarks", "Precios unitarios relevados de materiales de obra, como referencia de precios", "Prix unitaires relevés des matériaux de travaux, comme références de prix"),
+    ("Shopping-mall delivery requests: call-offs under framework and multiple-award contracts", "Pedidos del centro comercial en línea: compras derivadas de acuerdos marco y contratos con varios adjudicatarios", "Demandes de livraison de la boutique en ligne : commandes passées sur accords-cadres et marchés à attributaires multiples"),
+    ("Every bidder of every opening since 2010 and item-level call-offs (also 15050835)", "Cada licitador de cada apertura desde 2010 y pedidos por artículo (también 15050835)", "Chaque soumissionnaire de chaque ouverture depuis 2010 et commandes par article (aussi 15050835)"),
+    ("Defence procurement bids and contracts outside KONEPS (also 15158419)", "Licitaciones y contratos de defensa fuera de KONEPS (también 15158419)", "Offres et marchés de défense hors KONEPS (aussi 15158419)"),
+    ("LH contracts outside KONEPS", "Contratos de LH fuera de KONEPS", "Marchés de LH hors KONEPS"),
+    ("KOGAS bids outside KONEPS", "Licitaciones de KOGAS fuera de KONEPS", "Appels d’offres de KOGAS hors KONEPS"),
+]
+# ---- Korea explorer and filters: strings added without translations (filled 2026-11-04) ----
+EXACT += [
+    ("All", "Todos", "Tous"),
+    ("All countries", "Todos los países", "Tous les pays"),
+    ("Amount changes", "Cambios de importe", "Modifications du montant"),
+    ("Bid ratio", "Porcentaje de oferta", "Taux d’offre"),
+    ("Bids opened", "Apertura de ofertas", "Ouverture des plis"),
+    ("Business type", "Tipo de contrato", "Type de marché"),
+    ("Business type · A–Z", "Tipo de contrato · A–Z", "Type de marché · A–Z"),
+    ("Business type · Z–A", "Tipo de contrato · Z–A", "Type de marché · Z–A"),
+    ("Buyer name or ID contains", "El nombre o ID del comprador contiene", "Le nom ou l’identifiant de l’acheteur contient"),
+    ("Supplier name contains", "El nombre del proveedor contiene", "Le nom du titulaire contient"),
+    ("Procedure contains", "El procedimiento contiene", "La procédure contient"),
+    ("Data files used (separate host)", "Archivos de datos usados (servidor aparte)", "Fichiers de données utilisés (hébergement séparé)"),
+    ("Pricing", "Forma de precio", "Mode de prix"),
+    ("Record country", "País del registro", "Pays de l’enregistrement"),
+    ("Record date from", "Fecha del registro desde", "Date de l’enregistrement à partir du"),
+    ("Record date to", "Fecha del registro hasta", "Date de l’enregistrement jusqu’au"),
+    ("Supplier region", "Región del proveedor", "Région du titulaire"),
+    ("Tender notice", "Anuncio de licitación", "Avis d’appel d’offres"),
+    ("direct award", "adjudicación directa", "attribution directe"),
+    ("concentration", "concentración", "concentration"),
+    ("price", "precio", "prix"),
+    ("all contracting institutions — contracts · KONEPS", "todas las entidades contratantes — contratos · KONEPS", "toutes les institutions contractantes — marchés · KONEPS"),
+    ("Dates are inclusive and use each source’s displayed record date, not a universal signature date. Records with unknown dates do not match an active date range. Coverage remains limited to published snapshots.",
+     "Las fechas son inclusivas y usan la fecha de registro mostrada por cada fuente, no una fecha de firma universal. Los registros con fecha desconocida no coinciden con un rango de fechas activo. La cobertura se limita a las instantáneas publicadas.",
+     "Les dates sont incluses et reprennent la date d’enregistrement affichée par chaque source, pas une date de signature universelle. Les enregistrements sans date ne correspondent à aucune période active. La couverture reste limitée aux instantanés publiés."),
+]
+PATTERNS += [
+    ("{a} versions in all", "{a} versiones en total", "{a} versions au total"),
+    ("{a} % of the reserve price", "{a} % del precio de reserva", "{a} % du prix de réserve"),
+    ("floor {a} %", "umbral {a} %", "seuil {a} %"),
+    ("· lower award limit {a} %", "· umbral inferior de adjudicación {a} %", "· seuil inférieur d’attribution {a} %"),
+    ("↳ Other · {a}", "↳ Otros · {a}", "↳ Autres · {a}"),
+    ("Contract amount of the latest version in the period; the original contract was {a} ({b} versions).",
+     "Importe del contrato en su última versión del periodo; el contrato original era de {a} ({b} versiones).",
+     "Montant du marché dans sa dernière version de la période ; le marché initial était de {a} ({b} versions)."),
+    ("Contract {a} · Buyer {b} · KR-BRN {c}", "Contrato {a} · Comprador {b} · KR-BRN {c}", "Marché {a} · Acheteur {b} · KR-BRN {c}"),
 ]

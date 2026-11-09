@@ -29,6 +29,11 @@ class I18nTable(unittest.TestCase):
             self.assertEqual(sorted(SLOT.findall(es)), slots, en)
             self.assertEqual(sorted(SLOT.findall(fr)), slots, en)
 
+    def test_korean_patterns_keep_every_slot(self):
+        from i18n_table_ko import KO_PATTERNS
+        for en, ko in KO_PATTERNS.items():
+            self.assertEqual(sorted(SLOT.findall(ko)), sorted(SLOT.findall(en)), en)
+
 
 if __name__ == "__main__":
     unittest.main()

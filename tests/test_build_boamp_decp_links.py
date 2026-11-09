@@ -122,6 +122,7 @@ class LinksTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.links()
 
+    @unittest.skipUnless((ROOT / 'data/boamp-raw.json.gz').exists(), 'raw snapshot is private (not in git)')
     def test_current_artifact_deterministic_public_safe(self):
         expected = m.build()
         self.assertEqual(expected, m.build())

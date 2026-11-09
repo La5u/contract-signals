@@ -52,8 +52,8 @@ const DATASET_ALIASES = { cities: 'decp', all: 'decp' };
 const KOREA_BASE = globalThis.location && /^(127\.0\.0\.1|localhost)$/.test(globalThis.location.hostname) ? `${globalThis.location.origin}/korea-site` : 'https://kr.contracts.lasu.dev';
 // South Korea: every contracting institution's contracts, as static files on a separate host
 // (tools/build-korea-site.py; never in the repository). A shard holds several buyers' rows as arrays;
-// this turns one buyer's rows into explorer records. Individual businesses keep their published trade
-// name, flagged; their registration number is not in the files (docs/personal-data.md).
+// this turns one buyer's rows into explorer records. Sole traders appear under a keyed pseudonym,
+// flagged; their name and registration number are not in the files (docs/personal-data.md).
 function koreaRecords(meta, shard, buyer, rows = shard.buyers[buyer[0]] || []) {
   const [code, buyerName] = buyer;
   const col = Object.fromEntries(meta.columns.map((k, i) => [k, i]));

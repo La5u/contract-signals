@@ -19,6 +19,9 @@ def load(name, file):
 
 
 ted = load("ted", "import-ted-cohorts.py")
+pseudo = load("pseudo", "pseudonymise-eu-individuals.py")
+# Raw snapshots are private (not in git, 2026-11-09): rebuild checks run only where they are.
+needs_raw = lambda d: unittest.skipUnless((ROOT / "data" / d / "raw").is_dir(), "raw snapshot is private (not in git)")  # EU individuals pseudonymised (2026-11-09)
 ua = load("ua", "import-prozorro.py")
 uk = load("uk", "import-find-a-tender.py")
 cl = load("cl", "import-chilecompra.py")
@@ -29,6 +32,7 @@ class TedTests(unittest.TestCase):
         self.assertIn("505 187 531", ted.variants(ted.COHORTS["portugal"], "505187531"))
         self.assertIn("RO4288110", ted.variants(ted.COHORTS["romania"], "4288110"))
 
+    @needs_raw("ted-portugal")
     def test_published_extracts_are_what_the_importer_builds(self):
         for key in ted.COHORTS:
             manifest = json.loads((ted.raw_dir(key) / "manifest.json").read_text(encoding="utf-8"))
@@ -41,9 +45,11 @@ class TedTests(unittest.TestCase):
             if key == "romania":   # SEAP buyer-year totals, attached by the importer (score 3.9)
                 ted.seap_totals(list(built.values()))
             published = json.loads((ROOT / f"data/ted-{key}.json").read_text(encoding="utf-8"))
+            built = {r["id"]: r for r in pseudo.pseudonymise(list(built.values()))}
             for row in published:
                 self.assertEqual(row, built[row["id"]], row["id"])
 
+    @needs_raw("ted-portugal")
     def test_republished_lots_are_counted_once(self):
         # A later award notice that lists a lot again (same procedure, contract reference and conclusion
         # date) is not a new award: only the first listing is published, the rest are counted in coverage.
@@ -159,6 +165,7 @@ class ProzorroTests(unittest.TestCase):
         self.assertEqual(ua.supplier_identifier({"scheme": "UA-EDR", "id": "39502491"})["identifierType"], "EDRPOU")
         self.assertEqual(ua.supplier_identifier({"scheme": "UA-EDR", "id": "1234567890"})["identifierType"], "RNOKPP")
 
+    @needs_raw("prozorro")
     def test_published_extract_is_what_the_importer_builds(self):
         manifest = json.loads((ua.RAW / "manifest.json").read_text(encoding="utf-8"))
         built = {}
@@ -168,6 +175,7 @@ class ProzorroTests(unittest.TestCase):
                 if tender["procuringEntity"]["identifier"].get("id") == buyer["code"]:
                     built.update({r["id"]: r for r in ua.contract_rows(tender)[0]})
         ua.merge_contract_changes(list(built.values()))
+        built = {r["id"]: r for r in pseudo.pseudonymise(list(built.values()))}
         for row in json.loads(ua.EXTRACT.read_text(encoding="utf-8")):
             self.assertEqual(row, built[row["id"]], row["id"])
 
@@ -182,6 +190,7 @@ class FindATenderTests(unittest.TestCase):
         self.assertIsNone(uk.offers_for(release, "3", False))
         self.assertIsNone(uk.offers_for({}, "1", True))
 
+    @needs_raw("uk-fts")
     def test_published_extract_is_what_the_importer_builds(self):
         manifest = json.loads((uk.RAW / "manifest.json").read_text(encoding="utf-8"))
         built = {}
@@ -201,6 +210,7 @@ class ChileCompraTests(unittest.TestCase):
         self.assertIs(cl.tender_kind("Licitación Privada Menor a 100 UTM."), False)
         self.assertIsNone(cl.tender_kind(None))
 
+    @needs_raw("chile-mp")
     def test_published_extract_is_what_the_importer_builds(self):
         manifest = json.loads((cl.RAW / "manifest.json").read_text(encoding="utf-8"))
         built = {}
@@ -215,6 +225,7 @@ class ChileCompraTests(unittest.TestCase):
                 tender = cl.load_gz(tpath)["releases"][0] if tpath.exists() and cl.api_error(tpath) is None else None
                 built.update({r["id"]: r for r in cl.award_rows(code, tender, package)[0]})
         published = json.loads(cl.EXTRACT.read_text(encoding="utf-8"))
+        built = {r["id"]: r for r in pseudo.pseudonymise(list(built.values()))}
         self.assertEqual(len(published), 522)
         for row in published:
             self.assertEqual(row, built[row["id"]], row["id"])

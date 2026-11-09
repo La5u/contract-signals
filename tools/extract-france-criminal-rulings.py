@@ -85,9 +85,11 @@ def filter_decisions(out):
 
 
 def main():
-    p = cartel.parser(None, 'opencode-go/deepseek-v4.1-flash', 6)
+    p = cartel.parser(None, 'gpt-6.1-terra', 6)  # not DeepSeek: criminal rulings are Art. 10 GDPR data, no transfer to China
     p.add_argument('--filter', action='store_true', help='write to-read.txt; --out defaults to france-judilibre')
     args = p.parse_args()
+    if 'deepseek' in args.model.lower():
+        p.error('criminal rulings must not be sent to DeepSeek (docs/privacy-assessment.md)')
     if not 1 <= args.workers <= 6 or (args.limit is not None and args.limit < 0):
         p.error('workers must be between 1 and 6 and limit nonnegative')
     if args.filter:

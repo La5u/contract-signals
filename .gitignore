@@ -10,3 +10,9 @@ research/labels/ukraine-*candidate-features.json
 korea-site
 .wrangler/
 research/labels/ukraine-*-round-amend-features.json
+# Raw source snapshots: kept locally for rebuilds and tests, never published (contacts and personal names; 2026-11-09).
+data/*/raw/
+data/*-raw.json
+data/*-raw.json.gz
+# Real names behind the pseudonyms, for the local view only (tools/pseudonymise-eu-individuals.py).
+data/private/
