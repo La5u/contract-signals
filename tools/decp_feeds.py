@@ -22,6 +22,7 @@ their own normalisation. Rules (research/france-cross-dataset-check.md):
   holder+date+object, or (holderless) amount+date is added as a single-source record.
 """
 import gzip
+import html
 import json
 import re
 from collections import defaultdict
@@ -453,7 +454,7 @@ def feed_fields(contract, cpv_full, direct):
             'date': r['dateNotification'], 'durationMonths': number(r.get('dureeMois')),
             'cpv': cpv_full.get(cpv, cpv), 'procedure': r.get('procedure'),
             'priceType': ', '.join(sorted(x.strip() for x in r['typesPrix'].split(','))) if isinstance(r.get('typesPrix'), str) and ',' in r['typesPrix'] else r.get('typesPrix'), 'priceForm': r.get('formePrix'),
-            'nature': r.get('nature'), 'description': r.get('objet') or 'Objet non renseigné', 'contractId': r['id'],
+            'nature': r.get('nature'), 'description': html.unescape(r.get('objet') or '') or 'Objet non renseigné', 'contractId': r['id'],
             'lotId': None, 'noticeId': None, 'publicationDate': r.get('datePublicationDonnees'), 'frameworkId': r.get('idAccordCadre'),
             'executionModalities': r.get('modalitesExecution'), 'techniques': r.get('techniques'),
             'supplier': ' / '.join(f"{s.get('identifierType') or 'Identifiant'} {s['id']}" for s in supplier_ids) or None,

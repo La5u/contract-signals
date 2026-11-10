@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Import the preselected six-city DECP cohort; --offline regenerates from raw JSON."""
-import argparse, json, re, math, sys, urllib.parse, urllib.request
+import argparse, html, json, re, math, sys, urllib.parse, urllib.request
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
@@ -66,7 +66,7 @@ def initial_tuple(r):
     offers = r.get("offresrecues")
     try: offers = int(offers) if str(offers).isdigit() and int(offers) >= 0 else None
     except (TypeError, ValueError): offers = None
-    return {"description": clean(r.get("objet")), "amount": number(r.get("montant")), "offers": offers,
+    return {"description": html.unescape(clean(r.get("objet")) or "") or None, "amount": number(r.get("montant")), "offers": offers,
       "date": date(r.get("datenotification")), "publicationDate": date(r.get("datepublicationdonnees")), "durationMonths": number(r.get("dureemois")), "cpv": clean(r.get("codecpv")),
       "procedure": clean(r.get("procedure")), "priceType": price_types(r.get("typesprix")), "priceForm": clean(r.get("formeprix")),
       "nature": clean(r.get("nature")), "supplierIds": supplier_ids(r), "frameworkId": identifier(r.get("idaccordcadre")),

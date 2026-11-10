@@ -13,6 +13,7 @@ was checked against the file published on 2026-09-13 (see coverage "rebuild").
 import argparse
 import gzip
 import hashlib
+import html
 import json
 import math
 import re
@@ -212,7 +213,7 @@ def lot_rows(record):
             "id": f"boamp-{record['idweb']}-{lot_id.lower()}",
             "date": issue, "buyer": record.get("nomacheteur"),
             "supplier": " / ".join(m["name"] for m in members if m["name"]),
-            "description": " — ".join(x for x in [record.get("objet"), lot_title] if x) or None,
+            "description": html.unescape(" — ".join(x for x in [record.get("objet"), lot_title] if x)) or None,
             "amount": amount, "procedure": record.get("procedure_libelle"), "offers": offers, "durationMonths": duration,
             "directAward": DIRECT.get(procedure_code), "officialFinding": None, "dataStatus": "verified",
             "source": record.get("url_avis") or f"https://www.boamp.fr/pages/avis/?q=idweb:{record['idweb']}",
