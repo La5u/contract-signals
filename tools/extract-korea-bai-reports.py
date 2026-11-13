@@ -224,14 +224,15 @@ def extract_one(nid, model, chunk, timeout):
             res = json.loads(cache.read_text())
         else:
             res = None
-            for m in model.split(','):  # e.g. free DeepSeek first, Haiku when it stalls or fails twice
+            for m in model.split(','):  # e.g. DeepSeek via Mistral first, Haiku when it stalls or fails twice
                 for attempt in range(2):
                     try:
                         res = ask(PROMPT.format(part=k, parts=len(parts)) + part, m, timeout, work)
                         res['model'] = m
                         break
                     except (ValueError, subprocess.TimeoutExpired):
-                        time.sleep(10)
+                        if not m.startswith('mistral/'):  # the mistral wrapper already retries 429/5xx with backoff
+                            time.sleep(10)
                 if res:
                     break
             if not res:
@@ -302,7 +303,9 @@ def main():
     parser.add_argument('--last-year', type=int, default=2026)
     parser.add_argument('--chunk', type=int, default=90_000, help='characters per model call')
     parser.add_argument('--timeout', type=int, default=420)
-    parser.add_argument('--workers', type=int, default=2)
+    parser.add_argument('--workers', type=int, default=8,
+                        help='parallel reports (default 8: Mistral calls are light HTTP requests; lower it for opencode/claude -p chains, '
+                             'whose processes are heavy, e.g. 2)')
     parser.add_argument('--reverse', action='store_true',
                         help='extract: read the sample from the end (a second run with another model meets the first)')
     args = parser.parse_args()
