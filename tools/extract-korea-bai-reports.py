@@ -12,8 +12,8 @@ Stages (all resumable, private cache ~/.cache/contract-signals/korea/bai/):
   random order; per release the view page, its report PDF (attachment named 공개문/감사결과/전문, else any PDF that is
   not the press release) -> <newsId>/report.pdf and report.txt (pdftotext -layout). A report enters the sample when
   it has at least --min-terms procurement terms (계약, 입찰, 낙찰, 공사, 용역); stops at N.
-- `extract`: one model call per chunk of report.txt (--chunk characters) through `opencode run` or `claude -p`, a
-  fallback chain (default free DeepSeek, then Haiku when it fails or stalls), the court-ruling schema (tools/extract-korea-court-rulings.py) adapted to
+- `extract`: one model call per chunk of report.txt (--chunk characters) through the Mistral API, `opencode run` or `claude -p`, a
+  fallback chain (default DeepSeek via Mistral, then Haiku when it fails or stalls), the court-ruling schema (tools/extract-korea-court-rulings.py) adapted to
   audit findings; chunk answers are merged into <newsId>/result.json.
 - `check`: verbatim quotes, contracts per finding -> checked.jsonl in the court format, so
   `tools/match-korea-court-contracts.py --rulings bai/checked.jsonl --out bai/links.jsonl --days-out bai/days.txt`
@@ -179,6 +179,12 @@ def ask(prompt, model, timeout, cwd):
         cmd = ['claude', '-p', '--model', model, *court.CLAUDE_LEAN]
     elif model.startswith(('opencode/', 'opencode-go/')):
         cmd = ['opencode', 'run', '--pure', '-m', model]
+    elif model.startswith('mistral/'):  # Mistral API through the wrapper (retries, records tokens); JSON mode, prompt on stdin
+        proc = subprocess.run([str(Path.home() / '.local/bin/mistral'), '--json', '-m', model.split('/', 1)[1], '-t', str(timeout)],
+                              input=prompt, capture_output=True, text=True, timeout=timeout * 6)
+        if proc.returncode:
+            raise ValueError(proc.stderr[-300:] or f'exit {proc.returncode}')
+        return parse_answer(proc.stdout)
     else:  # Codex models (gpt-6-luna, gpt-6.1-sol) through `sol`, which prints only the final answer
         cmd = ['sol', '-e', 'low', '-m', model]
     # own process group: on timeout the whole group is killed (opencode's children otherwise keep the pipe open
@@ -193,6 +199,10 @@ def ask(prompt, model, timeout, cwd):
         raise
     if model in CLAUDE:  # --output-format json: the answer is the envelope's `result` string
         out = json.loads(out).get('result') or ''
+    return parse_answer(out)
+
+
+def parse_answer(out):
     start, end = out.find('{'), out.rfind('}')
     res = json.loads(out[start:end + 1])
     if not isinstance(res, dict) or 'findings' not in res:
@@ -286,8 +296,8 @@ def main():
     parser.add_argument('--sample', type=int, default=20)
     parser.add_argument('--min-terms', type=int, default=30)
     parser.add_argument('--seed', type=int, default=20261024)
-    parser.add_argument('--model', default='opencode/deepseek-v4.1-flash-free,haiku',
-                        help='comma-separated fallback chain of opencode/<model>, haiku/sonnet (claude -p) or a Codex model (sol)')
+    parser.add_argument('--model', default='mistral/deepseek-v4-1-flash-1017,haiku',
+                        help='comma-separated fallback chain of mistral/<model> (Mistral API), opencode/<model>, haiku/sonnet (claude -p) or a Codex model (sol)')
     parser.add_argument('--first-year', type=int, default=2016)
     parser.add_argument('--last-year', type=int, default=2026)
     parser.add_argument('--chunk', type=int, default=90_000, help='characters per model call')

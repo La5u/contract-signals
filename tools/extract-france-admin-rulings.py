@@ -11,7 +11,7 @@ status.json are skipped. Stops every worker at the usage limit; rerun after the 
 
 `--check` only (re)runs the checks and writes extract/checked.jsonl (problems: invalid JSON, quote not in ruling.txt,
 low confidence, class A without a contract, ...) and extract/to-second.txt: rulings with a problem or class A or C, for
-a second reading (`--model opencode/deepseek-v4.1-flash-free --out .../extract-deepseek --only $(cat to-second.txt)`).
+a second reading (`--model mistral/deepseek-v4-1-flash-1017 --out .../extract-deepseek --only $(cat to-second.txt)`).
 The model runners are those of tools/extract-korea-court-rulings.py.
 """
 import argparse
@@ -217,7 +217,7 @@ def main():
     kor.CLAUDE_LEAN[-1] = 'You extract data from French court rulings. Answer only with the JSON object asked for.'
     todo = pending(set(args.only or []), args.out, args.force, args.solution)[:args.limit]
     print(f'{len(todo)} rulings to read, {args.workers} workers, {args.model}', flush=True)
-    if todo and args.model not in kor.CLAUDE_MODELS and not args.model.startswith(('opencode/', 'opencode-go/')):
+    if todo and args.model not in kor.CLAUDE_MODELS and not args.model.startswith(('opencode/', 'opencode-go/', 'gemini/', 'mistral/')):
         kor.kftc.server = kor.kftc.AppServer()
     done, lock = 0, threading.Lock()
 

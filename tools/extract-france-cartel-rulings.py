@@ -121,7 +121,7 @@ def read(ids, args, prompt, ruling_text, kind):
     kor.PROMPT, kor.MISSING, kor.ruling_text, kor.selected = prompt, MISSING, ruling_text, lambda rid: True
     kor.CLAUDE_LEAN[-1] = 'You extract data from French court rulings. Answer only with the JSON object asked for.'
     print(f'{len(todo)} rulings to read, {args.workers} workers, {args.model}', flush=True)
-    if todo and args.model not in kor.CLAUDE_MODELS and not args.model.startswith(('opencode/', 'opencode-go/')):
+    if todo and args.model not in kor.CLAUDE_MODELS and not args.model.startswith(('opencode/', 'opencode-go/', 'gemini/', 'mistral/')):
         kor.kftc.server = kor.kftc.AppServer()
     done, lock = 0, threading.Lock()
 

@@ -173,7 +173,7 @@ def main():
         'answer with only one JSON object:').replace('When done, answer only: DONE.', '')
         + '\n===RULING===\n' + (work / 'ruling.txt').read_text()[:limit])
     print(f'{len(todo)} pairs to read, {a.workers} workers, {a.model}', flush=True)
-    if todo and a.model not in kor.CLAUDE_MODELS and not a.model.startswith(('opencode/', 'opencode-go/')):
+    if todo and a.model not in kor.CLAUDE_MODELS and not a.model.startswith(('opencode/', 'opencode-go/', 'gemini/', 'mistral/')):
         kor.kftc.server = kor.kftc.AppServer()
     done, lock = 0, threading.Lock()
     def task(pair):

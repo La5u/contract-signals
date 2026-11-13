@@ -205,7 +205,7 @@ def save_json_answer(work, out, err):
 
 
 def run_opencode(work, model, timeout):
-    """One `opencode run` (free hosted models such as opencode/deepseek-v4.1-flash-free): the ruling is pasted into the
+    """One `opencode run` (free hosted models; DeepSeek now goes through mistral/, see run_mistral): the ruling is pasted into the
     message and the JSON answer is written to result.json here, so the model needs no file or shell tools."""
     try:
         proc = subprocess.run(['opencode', 'run', '--pure', '-m', model], input=inline_prompt(work, INLINE_LIMIT),
@@ -214,6 +214,79 @@ def run_opencode(work, model, timeout):
     except subprocess.TimeoutExpired:
         return '', f'timeout after {timeout} s', 0
     return save_json_answer(work, out, err)
+
+
+# Gemini on Vertex AI (owner's Google Cloud trial credit; public texts only): service-account key and token script, see
+# ~/.claude/notes/google-cloud-credits.md. The token lasts an hour and is renewed after 50 minutes.
+VERTEX_TOKEN = Path.home() / '.config/vertex-token.sh'
+VERTEX_PROJECT = 'braided-potion-514523-h8'
+_token, _token_lock = {'value': None, 'at': 0.0}, threading.Lock()
+
+
+def vertex_token():
+    with _token_lock:
+        if not _token['value'] or time.time() - _token['at'] > 3000:
+            _token['value'] = subprocess.run([str(VERTEX_TOKEN)], capture_output=True, text=True, check=True).stdout.strip()
+            _token['at'] = time.time()
+        return _token['value']
+
+
+def run_gemini(work, model, timeout):
+    """One Gemini call on Vertex AI (gemini/<model>, e.g. gemini/gemini-4-argon, location global) with the ruling
+    pasted in and thinking at its lowest; JSON mode. Overload and quota answers (429, 500, 503) are retried with
+    backoff. Rulings are public texts."""
+    import urllib.request, urllib.error
+    name = model.split('/', 1)[1]
+    level = 'minimal' if '3.5' in name else 'low'
+    body = json.dumps({'contents': [{'role': 'user', 'parts': [{'text': inline_prompt(work, INLINE_LIMIT)}]}],
+                       'generationConfig': {'responseMimeType': 'application/json', 'temperature': 0,
+                                            'thinkingConfig': {'thinkingLevel': level}}}).encode()
+    url = (f'https://aiplatform.googleapis.com/v1/projects/{VERTEX_PROJECT}/locations/global/publishers/google/models/'
+           f'{name}:generateContent')
+    err = ''
+    for attempt in range(8):
+        req = urllib.request.Request(url, body, {'Content-Type': 'application/json', 'Authorization': f'Bearer {vertex_token()}'})
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+                reply = json.load(r)
+            break
+        except urllib.error.HTTPError as e:
+            err = f'HTTP {e.code}: {e.read()[:300].decode(errors="replace")}'
+            if e.code == 401:
+                _token['value'] = None
+            elif e.code not in (429, 500, 503):
+                return '', err, 0
+        except (urllib.error.URLError, TimeoutError) as e:
+            err = f'network: {e}'
+        time.sleep(min(300, 15 * 2 ** attempt))
+    else:
+        return '', err, 0
+    (work / 'gemini-usage.json').write_text(json.dumps({'model': name, 'usage': reply.get('usageMetadata')}))
+    try:  # the bar's spend tally (~/.config/waybar/ai-usage/tally.py); keyed by file so its backfill skips it
+        if str(Path.home() / '.config/waybar/ai-usage') not in sys.path:
+            sys.path.append(str(Path.home() / '.config/waybar/ai-usage'))
+        import tally
+        u = reply.get('usageMetadata') or {}
+        tally.record('gemini', name, u.get('promptTokenCount'),
+                     (u.get('candidatesTokenCount') or 0) + (u.get('thoughtsTokenCount') or 0),
+                     key=os.path.realpath(work / 'gemini-usage.json'))
+    except Exception:
+        pass
+    try:
+        text = ''.join(p.get('text', '') for p in reply['candidates'][0]['content']['parts'] if not p.get('thought'))
+    except (KeyError, IndexError):
+        return '', 'no answer: ' + json.dumps(reply)[:300], 0
+    return save_json_answer(work, text, '')
+
+
+def run_mistral(work, model, timeout):
+    """One call on the Mistral API (mistral/<model>, e.g. mistral/deepseek-v4-1-flash-1017) through ~/.local/bin/mistral,
+    which retries and records tokens for the usage tally; JSON mode. Rulings are public texts."""
+    proc = subprocess.run([str(Path.home() / '.local/bin/mistral'), '--json', '-m', model.split('/', 1)[1], '-t', str(timeout)],
+                          input=inline_prompt(work, INLINE_LIMIT), capture_output=True, text=True, timeout=timeout * 6)
+    if proc.returncode:
+        return '', proc.stderr[-1000:] or f'exit {proc.returncode}', 0
+    return save_json_answer(work, proc.stdout, '')
 
 
 def run_one(serial, model, effort, timeout, out):
@@ -236,6 +309,10 @@ def run_one(serial, model, effort, timeout, out):
                 answer, err, nudges = run_claude(work, model, timeout)
             elif model.startswith(('opencode/', 'opencode-go/')):
                 answer, err, nudges = run_opencode(work, model, timeout)
+            elif model.startswith('gemini/'):
+                answer, err, nudges = run_gemini(work, model, timeout)
+            elif model.startswith('mistral/'):
+                answer, err, nudges = run_mistral(work, model, timeout)
             else:
                 answer, err, nudges = kftc.server.run(work, PROMPT, model, effort, timeout, ('result.json',), MISSING)
         except RuntimeError as e:
@@ -325,7 +402,7 @@ def check(out):
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     parser.add_argument('--workers', type=int, default=16)
-    parser.add_argument('--model', default='gpt-6-luna', help='Codex model, haiku / sonnet / opus (claude -p), or opencode/<model> / opencode-go/<model> (opencode run, e.g. free models)')
+    parser.add_argument('--model', default='gpt-6-luna', help='Codex model, haiku / sonnet / opus (claude -p), opencode/<model> / opencode-go/<model> (opencode run, e.g. free models), gemini/<model> (Gemini on Vertex AI, trial credit, public texts only) or mistral/<model> (Mistral API, e.g. mistral/deepseek-v4-1-flash-1017, public texts only)')
     parser.add_argument('--effort', default='medium')
     parser.add_argument('--out', type=Path, default=BASE / 'extract')
     parser.add_argument('--timeout', type=int, default=1800, help='seconds per ruling')
@@ -344,7 +421,7 @@ def main():
         sys.exit('--only was given no rulings (an empty list would otherwise mean all of them)')
     todo = pending(set(args.only or []), args.out, args.force)[:args.limit]
     print(f'{len(todo)} rulings to read, {args.workers} workers, {args.model}', flush=True)
-    if todo and args.model not in CLAUDE_MODELS and not args.model.startswith(('opencode/', 'opencode-go/')):
+    if todo and args.model not in CLAUDE_MODELS and not args.model.startswith(('opencode/', 'opencode-go/', 'gemini/', 'mistral/')):
         kftc.server = kftc.AppServer()
     done, lock = 0, threading.Lock()
 
